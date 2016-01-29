@@ -145,12 +145,16 @@ void VtkParametricRandomHillsWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParametricRandomHills> native = vtkSmartPointer<vtkParametricRandomHills>::New();
-		VtkParametricRandomHillsWrap* obj = new VtkParametricRandomHillsWrap(native);		obj->Wrap(info.This());
+		VtkParametricRandomHillsWrap* obj = new VtkParametricRandomHillsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

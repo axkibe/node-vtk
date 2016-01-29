@@ -32,6 +32,8 @@ class VtkFixedWidthTextReaderWrap : public VtkTableAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFieldWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStripWhiteSpace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HaveHeadersOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HaveHeadersOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +41,8 @@ class VtkFixedWidthTextReaderWrap : public VtkTableAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFieldWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetStripWhiteSpace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripWhiteSpaceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripWhiteSpaceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

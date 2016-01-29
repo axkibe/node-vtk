@@ -47,6 +47,9 @@ void VtkEdgeSubdivisionCriterionWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkEdgeSubdivisionCriterionWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "DontPassField", DontPassField);
+	Nan::SetPrototypeMethod(tpl, "dontPassField", DontPassField);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -90,10 +93,39 @@ void VtkEdgeSubdivisionCriterionWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkEdgeSubdivisionCriterionWrap::DontPassField(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeSubdivisionCriterionWrap>(info.Holder());
+	vtkEdgeSubdivisionCriterion *native = (vtkEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStreamingTessellatorWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkStreamingTessellatorWrap *a1 = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DontPassField(
+				info[0]->Int32Value(),
+				(vtkStreamingTessellator *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkEdgeSubdivisionCriterionWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

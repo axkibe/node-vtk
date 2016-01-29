@@ -76,12 +76,16 @@ void VtkImageRange3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageRange3D> native = vtkSmartPointer<vtkImageRange3D>::New();
-		VtkImageRange3DWrap* obj = new VtkImageRange3DWrap(native);		obj->Wrap(info.This());
+		VtkImageRange3DWrap* obj = new VtkImageRange3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -92,12 +92,16 @@ void VtkImageDataStreamerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDataStreamer> native = vtkSmartPointer<vtkImageDataStreamer>::New();
-		VtkImageDataStreamerWrap* obj = new VtkImageDataStreamerWrap(native);		obj->Wrap(info.This());
+		VtkImageDataStreamerWrap* obj = new VtkImageDataStreamerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -79,12 +79,16 @@ void VtkMergeColumnsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMergeColumns> native = vtkSmartPointer<vtkMergeColumns>::New();
-		VtkMergeColumnsWrap* obj = new VtkMergeColumnsWrap(native);		obj->Wrap(info.This());
+		VtkMergeColumnsWrap* obj = new VtkMergeColumnsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

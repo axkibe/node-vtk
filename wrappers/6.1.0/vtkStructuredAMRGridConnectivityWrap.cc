@@ -53,8 +53,17 @@ void VtkStructuredAMRGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CreateGhostLayers", CreateGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "createGhostLayers", CreateGhostLayers);
 
+	Nan::SetPrototypeMethod(tpl, "GetBalancedRefinement", GetBalancedRefinement);
+	Nan::SetPrototypeMethod(tpl, "getBalancedRefinement", GetBalancedRefinement);
+
+	Nan::SetPrototypeMethod(tpl, "GetCellCentered", GetCellCentered);
+	Nan::SetPrototypeMethod(tpl, "getCellCentered", GetCellCentered);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetNodeCentered", GetNodeCentered);
+	Nan::SetPrototypeMethod(tpl, "getNodeCentered", GetNodeCentered);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfNeighbors", GetNumberOfNeighbors);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfNeighbors", GetNumberOfNeighbors);
@@ -67,6 +76,15 @@ void VtkStructuredAMRGridConnectivityWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetBalancedRefinement", SetBalancedRefinement);
+	Nan::SetPrototypeMethod(tpl, "setBalancedRefinement", SetBalancedRefinement);
+
+	Nan::SetPrototypeMethod(tpl, "SetCellCentered", SetCellCentered);
+	Nan::SetPrototypeMethod(tpl, "setCellCentered", SetCellCentered);
+
+	Nan::SetPrototypeMethod(tpl, "SetNodeCentered", SetNodeCentered);
+	Nan::SetPrototypeMethod(tpl, "setNodeCentered", SetNodeCentered);
 
 	ptpl.Reset( tpl );
 }
@@ -82,12 +100,16 @@ void VtkStructuredAMRGridConnectivityWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStructuredAMRGridConnectivity> native = vtkSmartPointer<vtkStructuredAMRGridConnectivity>::New();
-		VtkStructuredAMRGridConnectivityWrap* obj = new VtkStructuredAMRGridConnectivityWrap(native);		obj->Wrap(info.This());
+		VtkStructuredAMRGridConnectivityWrap* obj = new VtkStructuredAMRGridConnectivityWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -124,6 +146,34 @@ void VtkStructuredAMRGridConnectivityWrap::CreateGhostLayers(const Nan::Function
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStructuredAMRGridConnectivityWrap::GetBalancedRefinement(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBalancedRefinement();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStructuredAMRGridConnectivityWrap::GetCellCentered(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCellCentered();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkStructuredAMRGridConnectivityWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
@@ -136,6 +186,20 @@ void VtkStructuredAMRGridConnectivityWrap::GetClassName(const Nan::FunctionCallb
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStructuredAMRGridConnectivityWrap::GetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNodeCentered();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStructuredAMRGridConnectivityWrap::GetNumberOfNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +294,63 @@ void VtkStructuredAMRGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallb
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredAMRGridConnectivityWrap::SetBalancedRefinement(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBalancedRefinement(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredAMRGridConnectivityWrap::SetCellCentered(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCellCentered(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredAMRGridConnectivityWrap::SetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNodeCentered(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

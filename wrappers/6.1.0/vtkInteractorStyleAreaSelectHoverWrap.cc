@@ -61,6 +61,9 @@ void VtkInteractorStyleAreaSelectHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLayout", GetLayout);
 	Nan::SetPrototypeMethod(tpl, "getLayout", GetLayout);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseRectangularCoordinates", GetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "getUseRectangularCoordinates", GetUseRectangularCoordinates);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -88,6 +91,9 @@ void VtkInteractorStyleAreaSelectHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayout", SetLayout);
 	Nan::SetPrototypeMethod(tpl, "setLayout", SetLayout);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseRectangularCoordinates", SetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "setUseRectangularCoordinates", SetUseRectangularCoordinates);
+
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOff", UseRectangularCoordinatesOff);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOff", UseRectangularCoordinatesOff);
 
@@ -108,12 +114,16 @@ void VtkInteractorStyleAreaSelectHoverWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleAreaSelectHover> native = vtkSmartPointer<vtkInteractorStyleAreaSelectHover>::New();
-		VtkInteractorStyleAreaSelectHoverWrap* obj = new VtkInteractorStyleAreaSelectHoverWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleAreaSelectHoverWrap* obj = new VtkInteractorStyleAreaSelectHoverWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -182,6 +192,20 @@ void VtkInteractorStyleAreaSelectHoverWrap::GetLayout(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkInteractorStyleAreaSelectHoverWrap::GetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
+	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRectangularCoordinates();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkInteractorStyleAreaSelectHoverWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -372,6 +396,25 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetLayout(const Nan::FunctionCallbac
 		}
 		native->SetLayout(
 			(vtkAreaLayout *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleAreaSelectHoverWrap::SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
+	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRectangularCoordinates(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

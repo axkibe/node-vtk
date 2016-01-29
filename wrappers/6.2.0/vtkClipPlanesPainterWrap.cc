@@ -76,12 +76,16 @@ void VtkClipPlanesPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkClipPlanesPainter> native = vtkSmartPointer<vtkClipPlanesPainter>::New();
-		VtkClipPlanesPainterWrap* obj = new VtkClipPlanesPainterWrap(native);		obj->Wrap(info.This());
+		VtkClipPlanesPainterWrap* obj = new VtkClipPlanesPainterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

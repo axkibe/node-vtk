@@ -91,12 +91,16 @@ void Vtk3DSImporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtk3DSImporter> native = vtkSmartPointer<vtk3DSImporter>::New();
-		Vtk3DSImporterWrap* obj = new Vtk3DSImporterWrap(native);		obj->Wrap(info.This());
+		Vtk3DSImporterWrap* obj = new Vtk3DSImporterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -31,12 +31,14 @@ class VtkArrayReaderWrap : public VtkArrayDataAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadFromInputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadFromInputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

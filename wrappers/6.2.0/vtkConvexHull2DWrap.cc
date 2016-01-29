@@ -85,6 +85,9 @@ void VtkConvexHull2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMinHullSizeInWorldMinValue", GetMinHullSizeInWorldMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMinHullSizeInWorldMinValue", GetMinHullSizeInWorldMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutline", GetOutline);
+	Nan::SetPrototypeMethod(tpl, "getOutline", GetOutline);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
 
@@ -115,6 +118,9 @@ void VtkConvexHull2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinHullSizeInWorld", SetMinHullSizeInWorld);
 	Nan::SetPrototypeMethod(tpl, "setMinHullSizeInWorld", SetMinHullSizeInWorld);
 
+	Nan::SetPrototypeMethod(tpl, "SetOutline", SetOutline);
+	Nan::SetPrototypeMethod(tpl, "setOutline", SetOutline);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
@@ -135,12 +141,16 @@ void VtkConvexHull2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkConvexHull2D> native = vtkSmartPointer<vtkConvexHull2D>::New();
-		VtkConvexHull2DWrap* obj = new VtkConvexHull2DWrap(native);		obj->Wrap(info.This());
+		VtkConvexHull2DWrap* obj = new VtkConvexHull2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -344,6 +354,20 @@ void VtkConvexHull2DWrap::GetMinHullSizeInWorldMinValue(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkConvexHull2DWrap::GetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
+	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutline();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkConvexHull2DWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
@@ -532,6 +556,25 @@ void VtkConvexHull2DWrap::SetMinHullSizeInWorld(const Nan::FunctionCallbackInfo<
 		}
 		native->SetMinHullSizeInWorld(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConvexHull2DWrap::SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
+	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutline(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

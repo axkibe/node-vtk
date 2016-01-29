@@ -80,6 +80,9 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaskType", GetMaskType);
 	Nan::SetPrototypeMethod(tpl, "getMaskType", GetMaskType);
 
+	Nan::SetPrototypeMethod(tpl, "GetReportProgress", GetReportProgress);
+	Nan::SetPrototypeMethod(tpl, "getReportProgress", GetReportProgress);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -113,6 +116,9 @@ void VtkGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 	Nan::SetPrototypeMethod(tpl, "setMaskTypeToLabelMap", SetMaskTypeToLabelMap);
 
+	Nan::SetPrototypeMethod(tpl, "SetReportProgress", SetReportProgress);
+	Nan::SetPrototypeMethod(tpl, "setReportProgress", SetReportProgress);
+
 	ptpl.Reset( tpl );
 }
 
@@ -127,12 +133,16 @@ void VtkGPUVolumeRayCastMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGPUVolumeRayCastMapper> native = vtkSmartPointer<vtkGPUVolumeRayCastMapper>::New();
-		VtkGPUVolumeRayCastMapperWrap* obj = new VtkGPUVolumeRayCastMapperWrap(native);		obj->Wrap(info.This());
+		VtkGPUVolumeRayCastMapperWrap* obj = new VtkGPUVolumeRayCastMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -277,6 +287,20 @@ void VtkGPUVolumeRayCastMapperWrap::GetMaskType(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetMaskType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGPUVolumeRayCastMapperWrap::GetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReportProgress();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -508,5 +532,24 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskTypeToLabelMap(const Nan::FunctionCal
 		return;
 	}
 	native->SetMaskTypeToLabelMap();
+}
+
+void VtkGPUVolumeRayCastMapperWrap::SetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReportProgress(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

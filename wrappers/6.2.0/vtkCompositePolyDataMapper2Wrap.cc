@@ -54,6 +54,9 @@ void VtkCompositePolyDataMapper2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCompositeDataDisplayAttributes", GetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "getCompositeDataDisplayAttributes", GetCompositeDataDisplayAttributes);
 
+	Nan::SetPrototypeMethod(tpl, "GetIsOpaque", GetIsOpaque);
+	Nan::SetPrototypeMethod(tpl, "getIsOpaque", GetIsOpaque);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -89,12 +92,16 @@ void VtkCompositePolyDataMapper2Wrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCompositePolyDataMapper2> native = vtkSmartPointer<vtkCompositePolyDataMapper2>::New();
-		VtkCompositePolyDataMapper2Wrap* obj = new VtkCompositePolyDataMapper2Wrap(native);		obj->Wrap(info.This());
+		VtkCompositePolyDataMapper2Wrap* obj = new VtkCompositePolyDataMapper2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -135,6 +142,20 @@ void VtkCompositePolyDataMapper2Wrap::GetCompositeDataDisplayAttributes(const Na
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkCompositePolyDataMapper2Wrap::GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIsOpaque();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCompositePolyDataMapper2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -53,6 +53,12 @@ void VtkTreeFieldAggregatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetField", GetField);
 	Nan::SetPrototypeMethod(tpl, "getField", GetField);
 
+	Nan::SetPrototypeMethod(tpl, "GetLeafVertexUnitSize", GetLeafVertexUnitSize);
+	Nan::SetPrototypeMethod(tpl, "getLeafVertexUnitSize", GetLeafVertexUnitSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetLogScale", GetLogScale);
+	Nan::SetPrototypeMethod(tpl, "getLogScale", GetLogScale);
+
 	Nan::SetPrototypeMethod(tpl, "GetMinValue", GetMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMinValue", GetMinValue);
 
@@ -80,6 +86,12 @@ void VtkTreeFieldAggregatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetField", SetField);
 	Nan::SetPrototypeMethod(tpl, "setField", SetField);
 
+	Nan::SetPrototypeMethod(tpl, "SetLeafVertexUnitSize", SetLeafVertexUnitSize);
+	Nan::SetPrototypeMethod(tpl, "setLeafVertexUnitSize", SetLeafVertexUnitSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetLogScale", SetLogScale);
+	Nan::SetPrototypeMethod(tpl, "setLogScale", SetLogScale);
+
 	Nan::SetPrototypeMethod(tpl, "SetMinValue", SetMinValue);
 	Nan::SetPrototypeMethod(tpl, "setMinValue", SetMinValue);
 
@@ -97,12 +109,16 @@ void VtkTreeFieldAggregatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeFieldAggregator> native = vtkSmartPointer<vtkTreeFieldAggregator>::New();
-		VtkTreeFieldAggregatorWrap* obj = new VtkTreeFieldAggregatorWrap(native);		obj->Wrap(info.This());
+		VtkTreeFieldAggregatorWrap* obj = new VtkTreeFieldAggregatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -134,6 +150,34 @@ void VtkTreeFieldAggregatorWrap::GetField(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetField();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTreeFieldAggregatorWrap::GetLeafVertexUnitSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
+	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLeafVertexUnitSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeFieldAggregatorWrap::GetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
+	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLogScale();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTreeFieldAggregatorWrap::GetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,6 +332,44 @@ void VtkTreeFieldAggregatorWrap::SetField(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetField(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeFieldAggregatorWrap::SetLeafVertexUnitSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
+	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLeafVertexUnitSize(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeFieldAggregatorWrap::SetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
+	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLogScale(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

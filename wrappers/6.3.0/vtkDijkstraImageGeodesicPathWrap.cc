@@ -105,12 +105,16 @@ void VtkDijkstraImageGeodesicPathWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDijkstraImageGeodesicPath> native = vtkSmartPointer<vtkDijkstraImageGeodesicPath>::New();
-		VtkDijkstraImageGeodesicPathWrap* obj = new VtkDijkstraImageGeodesicPathWrap(native);		obj->Wrap(info.This());
+		VtkDijkstraImageGeodesicPathWrap* obj = new VtkDijkstraImageGeodesicPathWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

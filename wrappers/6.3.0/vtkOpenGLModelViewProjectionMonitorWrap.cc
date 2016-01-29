@@ -58,6 +58,9 @@ void VtkOpenGLModelViewProjectionMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "StateChanged", StateChanged);
+	Nan::SetPrototypeMethod(tpl, "stateChanged", StateChanged);
+
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
@@ -75,12 +78,16 @@ void VtkOpenGLModelViewProjectionMonitorWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLModelViewProjectionMonitor> native = vtkSmartPointer<vtkOpenGLModelViewProjectionMonitor>::New();
-		VtkOpenGLModelViewProjectionMonitorWrap* obj = new VtkOpenGLModelViewProjectionMonitorWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLModelViewProjectionMonitorWrap* obj = new VtkOpenGLModelViewProjectionMonitorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -174,6 +181,20 @@ void VtkOpenGLModelViewProjectionMonitorWrap::SafeDownCast(const Nan::FunctionCa
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLModelViewProjectionMonitorWrap::StateChanged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLModelViewProjectionMonitorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLModelViewProjectionMonitorWrap>(info.Holder());
+	vtkOpenGLModelViewProjectionMonitor *native = (vtkOpenGLModelViewProjectionMonitor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->StateChanged();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOpenGLModelViewProjectionMonitorWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)

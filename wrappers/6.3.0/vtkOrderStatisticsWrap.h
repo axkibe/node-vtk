@@ -31,10 +31,12 @@ class VtkOrderStatisticsWrap : public VtkStatisticsAlgorithmWrap
 
 		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetQuantize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuantileDefinition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetQuantize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

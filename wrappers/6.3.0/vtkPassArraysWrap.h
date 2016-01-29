@@ -40,6 +40,8 @@ class VtkPassArraysWrap : public VtkDataObjectAlgorithmWrap
 		static void ClearFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearPointDataArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRemoveArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +51,8 @@ class VtkPassArraysWrap : public VtkDataObjectAlgorithmWrap
 		static void RemoveFieldDataArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemovePointDataArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRemoveArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFieldTypesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFieldTypesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

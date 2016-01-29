@@ -238,12 +238,16 @@ void VtkTubeFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTubeFilter> native = vtkSmartPointer<vtkTubeFilter>::New();
-		VtkTubeFilterWrap* obj = new VtkTubeFilterWrap(native);		obj->Wrap(info.This());
+		VtkTubeFilterWrap* obj = new VtkTubeFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

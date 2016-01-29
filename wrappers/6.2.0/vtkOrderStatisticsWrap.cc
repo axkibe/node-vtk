@@ -55,6 +55,9 @@ void VtkOrderStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetQuantize", GetQuantize);
+	Nan::SetPrototypeMethod(tpl, "getQuantize", GetQuantize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -66,6 +69,9 @@ void VtkOrderStatisticsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetQuantileDefinition", SetQuantileDefinition);
 	Nan::SetPrototypeMethod(tpl, "setQuantileDefinition", SetQuantileDefinition);
+
+	Nan::SetPrototypeMethod(tpl, "SetQuantize", SetQuantize);
+	Nan::SetPrototypeMethod(tpl, "setQuantize", SetQuantize);
 
 	ptpl.Reset( tpl );
 }
@@ -81,12 +87,16 @@ void VtkOrderStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOrderStatistics> native = vtkSmartPointer<vtkOrderStatistics>::New();
-		VtkOrderStatisticsWrap* obj = new VtkOrderStatisticsWrap(native);		obj->Wrap(info.This());
+		VtkOrderStatisticsWrap* obj = new VtkOrderStatisticsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -129,6 +139,20 @@ void VtkOrderStatisticsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkOrderStatisticsWrap::GetQuantize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOrderStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkOrderStatisticsWrap>(info.Holder());
+	vtkOrderStatistics *native = (vtkOrderStatistics *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetQuantize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOrderStatisticsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -220,6 +244,25 @@ void VtkOrderStatisticsWrap::SetQuantileDefinition(const Nan::FunctionCallbackIn
 		}
 		native->SetQuantileDefinition(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOrderStatisticsWrap::SetQuantize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOrderStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkOrderStatisticsWrap>(info.Holder());
+	vtkOrderStatistics *native = (vtkOrderStatistics *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetQuantize(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

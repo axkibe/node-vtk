@@ -79,12 +79,16 @@ void VtkImageCacheFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageCacheFilter> native = vtkSmartPointer<vtkImageCacheFilter>::New();
-		VtkImageCacheFilterWrap* obj = new VtkImageCacheFilterWrap(native);		obj->Wrap(info.This());
+		VtkImageCacheFilterWrap* obj = new VtkImageCacheFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

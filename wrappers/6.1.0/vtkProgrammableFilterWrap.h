@@ -32,6 +32,7 @@ class VtkProgrammableFilterWrap : public VtkPassInputTypeAlgorithmWrap
 		static void CopyArraysOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyArraysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCopyArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyDataInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRectilinearGridInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkProgrammableFilterWrap : public VtkPassInputTypeAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCopyArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

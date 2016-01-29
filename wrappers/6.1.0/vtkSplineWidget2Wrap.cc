@@ -80,12 +80,16 @@ void VtkSplineWidget2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSplineWidget2> native = vtkSmartPointer<vtkSplineWidget2>::New();
-		VtkSplineWidget2Wrap* obj = new VtkSplineWidget2Wrap(native);		obj->Wrap(info.This());
+		VtkSplineWidget2Wrap* obj = new VtkSplineWidget2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

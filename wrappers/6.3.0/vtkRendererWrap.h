@@ -75,6 +75,7 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void GetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTexturedBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTiledAspectRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -126,6 +127,7 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void SetPreserveColorBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreserveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTexturedBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTwoSidedLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StereoMidpoint(const Nan::FunctionCallbackInfo<v8::Value>& info);

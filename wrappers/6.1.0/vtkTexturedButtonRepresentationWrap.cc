@@ -153,12 +153,16 @@ void VtkTexturedButtonRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTexturedButtonRepresentation> native = vtkSmartPointer<vtkTexturedButtonRepresentation>::New();
-		VtkTexturedButtonRepresentationWrap* obj = new VtkTexturedButtonRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkTexturedButtonRepresentationWrap* obj = new VtkTexturedButtonRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

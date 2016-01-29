@@ -78,6 +78,9 @@ void VtkViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsRepresentationPresent", IsRepresentationPresent);
+	Nan::SetPrototypeMethod(tpl, "isRepresentationPresent", IsRepresentationPresent);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -122,12 +125,16 @@ void VtkViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkView> native = vtkSmartPointer<vtkView>::New();
-		VtkViewWrap* obj = new VtkViewWrap(native);		obj->Wrap(info.This());
+		VtkViewWrap* obj = new VtkViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -331,6 +338,28 @@ void VtkViewWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewWrap::IsRepresentationPresent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
+	vtkView *native = (vtkView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsRepresentationPresent(
+			(vtkDataRepresentation *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

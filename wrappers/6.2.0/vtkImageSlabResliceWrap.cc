@@ -103,12 +103,16 @@ void VtkImageSlabResliceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageSlabReslice> native = vtkSmartPointer<vtkImageSlabReslice>::New();
-		VtkImageSlabResliceWrap* obj = new VtkImageSlabResliceWrap(native);		obj->Wrap(info.This());
+		VtkImageSlabResliceWrap* obj = new VtkImageSlabResliceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

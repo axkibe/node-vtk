@@ -60,6 +60,9 @@ void VtkKdTreeSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelectionFieldName", GetSelectionFieldName);
 	Nan::SetPrototypeMethod(tpl, "getSelectionFieldName", GetSelectionFieldName);
 
+	Nan::SetPrototypeMethod(tpl, "GetSingleSelection", GetSingleSelection);
+	Nan::SetPrototypeMethod(tpl, "getSingleSelection", GetSingleSelection);
+
 	Nan::SetPrototypeMethod(tpl, "GetSingleSelectionThreshold", GetSingleSelectionThreshold);
 	Nan::SetPrototypeMethod(tpl, "getSingleSelectionThreshold", GetSingleSelectionThreshold);
 
@@ -84,6 +87,9 @@ void VtkKdTreeSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionFieldName", SetSelectionFieldName);
 	Nan::SetPrototypeMethod(tpl, "setSelectionFieldName", SetSelectionFieldName);
 
+	Nan::SetPrototypeMethod(tpl, "SetSingleSelection", SetSingleSelection);
+	Nan::SetPrototypeMethod(tpl, "setSingleSelection", SetSingleSelection);
+
 	Nan::SetPrototypeMethod(tpl, "SetSingleSelectionThreshold", SetSingleSelectionThreshold);
 	Nan::SetPrototypeMethod(tpl, "setSingleSelectionThreshold", SetSingleSelectionThreshold);
 
@@ -107,12 +113,16 @@ void VtkKdTreeSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkKdTreeSelector> native = vtkSmartPointer<vtkKdTreeSelector>::New();
-		VtkKdTreeSelectorWrap* obj = new VtkKdTreeSelectorWrap(native);		obj->Wrap(info.This());
+		VtkKdTreeSelectorWrap* obj = new VtkKdTreeSelectorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -181,6 +191,20 @@ void VtkKdTreeSelectorWrap::GetSelectionFieldName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetSelectionFieldName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkKdTreeSelectorWrap::GetSingleSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdTreeSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeSelectorWrap>(info.Holder());
+	vtkKdTreeSelector *native = (vtkKdTreeSelector *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSingleSelection();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkKdTreeSelectorWrap::GetSingleSelectionThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -365,6 +389,25 @@ void VtkKdTreeSelectorWrap::SetSelectionFieldName(const Nan::FunctionCallbackInf
 		}
 		native->SetSelectionFieldName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKdTreeSelectorWrap::SetSingleSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdTreeSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeSelectorWrap>(info.Holder());
+	vtkKdTreeSelector *native = (vtkKdTreeSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSingleSelection(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

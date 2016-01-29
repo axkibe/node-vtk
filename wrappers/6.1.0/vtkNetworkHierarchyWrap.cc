@@ -79,12 +79,16 @@ void VtkNetworkHierarchyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkNetworkHierarchy> native = vtkSmartPointer<vtkNetworkHierarchy>::New();
-		VtkNetworkHierarchyWrap* obj = new VtkNetworkHierarchyWrap(native);		obj->Wrap(info.This());
+		VtkNetworkHierarchyWrap* obj = new VtkNetworkHierarchyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

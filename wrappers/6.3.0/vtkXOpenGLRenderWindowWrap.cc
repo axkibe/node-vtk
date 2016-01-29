@@ -68,8 +68,14 @@ void VtkXOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
+	Nan::SetPrototypeMethod(tpl, "InitializeFromCurrentContext", InitializeFromCurrentContext);
+	Nan::SetPrototypeMethod(tpl, "initializeFromCurrentContext", InitializeFromCurrentContext);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsCurrent", IsCurrent);
+	Nan::SetPrototypeMethod(tpl, "isCurrent", IsCurrent);
 
 	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
 	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
@@ -154,12 +160,16 @@ void VtkXOpenGLRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXOpenGLRenderWindow> native = vtkSmartPointer<vtkXOpenGLRenderWindow>::New();
-		VtkXOpenGLRenderWindowWrap* obj = new VtkXOpenGLRenderWindowWrap(native);		obj->Wrap(info.This());
+		VtkXOpenGLRenderWindowWrap* obj = new VtkXOpenGLRenderWindowWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -255,6 +265,20 @@ void VtkXOpenGLRenderWindowWrap::Initialize(const Nan::FunctionCallbackInfo<v8::
 	native->Initialize();
 }
 
+void VtkXOpenGLRenderWindowWrap::InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
+	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->InitializeFromCurrentContext();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkXOpenGLRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
@@ -275,6 +299,20 @@ void VtkXOpenGLRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXOpenGLRenderWindowWrap::IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
+	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsCurrent();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkXOpenGLRenderWindowWrap::IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info)

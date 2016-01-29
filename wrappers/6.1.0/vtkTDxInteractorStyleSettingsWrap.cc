@@ -61,6 +61,15 @@ void VtkTDxInteractorStyleSettingsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTranslationZSensitivity", GetTranslationZSensitivity);
 	Nan::SetPrototypeMethod(tpl, "getTranslationZSensitivity", GetTranslationZSensitivity);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseRotationX", GetUseRotationX);
+	Nan::SetPrototypeMethod(tpl, "getUseRotationX", GetUseRotationX);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseRotationY", GetUseRotationY);
+	Nan::SetPrototypeMethod(tpl, "getUseRotationY", GetUseRotationY);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseRotationZ", GetUseRotationZ);
+	Nan::SetPrototypeMethod(tpl, "getUseRotationZ", GetUseRotationZ);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -82,6 +91,15 @@ void VtkTDxInteractorStyleSettingsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslationZSensitivity", SetTranslationZSensitivity);
 	Nan::SetPrototypeMethod(tpl, "setTranslationZSensitivity", SetTranslationZSensitivity);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseRotationX", SetUseRotationX);
+	Nan::SetPrototypeMethod(tpl, "setUseRotationX", SetUseRotationX);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseRotationY", SetUseRotationY);
+	Nan::SetPrototypeMethod(tpl, "setUseRotationY", SetUseRotationY);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseRotationZ", SetUseRotationZ);
+	Nan::SetPrototypeMethod(tpl, "setUseRotationZ", SetUseRotationZ);
+
 	ptpl.Reset( tpl );
 }
 
@@ -96,12 +114,16 @@ void VtkTDxInteractorStyleSettingsWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTDxInteractorStyleSettings> native = vtkSmartPointer<vtkTDxInteractorStyleSettings>::New();
-		VtkTDxInteractorStyleSettingsWrap* obj = new VtkTDxInteractorStyleSettingsWrap(native);		obj->Wrap(info.This());
+		VtkTDxInteractorStyleSettingsWrap* obj = new VtkTDxInteractorStyleSettingsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -174,6 +196,48 @@ void VtkTDxInteractorStyleSettingsWrap::GetTranslationZSensitivity(const Nan::Fu
 		return;
 	}
 	r = native->GetTranslationZSensitivity();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTDxInteractorStyleSettingsWrap::GetUseRotationX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRotationX();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTDxInteractorStyleSettingsWrap::GetUseRotationY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRotationY();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTDxInteractorStyleSettingsWrap::GetUseRotationZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRotationZ();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -323,6 +387,63 @@ void VtkTDxInteractorStyleSettingsWrap::SetTranslationZSensitivity(const Nan::Fu
 		}
 		native->SetTranslationZSensitivity(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTDxInteractorStyleSettingsWrap::SetUseRotationX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRotationX(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTDxInteractorStyleSettingsWrap::SetUseRotationY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRotationY(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTDxInteractorStyleSettingsWrap::SetUseRotationZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTDxInteractorStyleSettingsWrap *wrapper = ObjectWrap::Unwrap<VtkTDxInteractorStyleSettingsWrap>(info.Holder());
+	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRotationZ(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

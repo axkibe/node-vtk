@@ -29,12 +29,20 @@ class VtkDataTransferHelperWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Download(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadAsync1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DownloadAsync2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinTextureDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShaderSupportsTextureInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTextureExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +50,7 @@ class VtkDataTransferHelperWrap : public VtkObjectWrap
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGPUExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinTextureDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetShaderSupportsTextureInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

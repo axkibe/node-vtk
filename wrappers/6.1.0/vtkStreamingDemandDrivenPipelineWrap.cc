@@ -227,12 +227,16 @@ void VtkStreamingDemandDrivenPipelineWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStreamingDemandDrivenPipeline> native = vtkSmartPointer<vtkStreamingDemandDrivenPipeline>::New();
-		VtkStreamingDemandDrivenPipelineWrap* obj = new VtkStreamingDemandDrivenPipelineWrap(native);		obj->Wrap(info.This());
+		VtkStreamingDemandDrivenPipelineWrap* obj = new VtkStreamingDemandDrivenPipelineWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -53,6 +53,9 @@ void VtkGeoSphereTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetToRectangular", GetToRectangular);
+	Nan::SetPrototypeMethod(tpl, "getToRectangular", GetToRectangular);
+
 	Nan::SetPrototypeMethod(tpl, "Inverse", Inverse);
 	Nan::SetPrototypeMethod(tpl, "inverse", Inverse);
 
@@ -70,6 +73,9 @@ void VtkGeoSphereTransformWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetBaseAltitude", SetBaseAltitude);
 	Nan::SetPrototypeMethod(tpl, "setBaseAltitude", SetBaseAltitude);
+
+	Nan::SetPrototypeMethod(tpl, "SetToRectangular", SetToRectangular);
+	Nan::SetPrototypeMethod(tpl, "setToRectangular", SetToRectangular);
 
 	Nan::SetPrototypeMethod(tpl, "ToRectangularOff", ToRectangularOff);
 	Nan::SetPrototypeMethod(tpl, "toRectangularOff", ToRectangularOff);
@@ -91,12 +97,16 @@ void VtkGeoSphereTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoSphereTransform> native = vtkSmartPointer<vtkGeoSphereTransform>::New();
-		VtkGeoSphereTransformWrap* obj = new VtkGeoSphereTransformWrap(native);		obj->Wrap(info.This());
+		VtkGeoSphereTransformWrap* obj = new VtkGeoSphereTransformWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -128,6 +138,20 @@ void VtkGeoSphereTransformWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGeoSphereTransformWrap::GetToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
+	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetToRectangular();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoSphereTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -254,6 +278,25 @@ void VtkGeoSphereTransformWrap::SetBaseAltitude(const Nan::FunctionCallbackInfo<
 		}
 		native->SetBaseAltitude(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoSphereTransformWrap::SetToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
+	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetToRectangular(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

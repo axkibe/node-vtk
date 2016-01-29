@@ -693,12 +693,16 @@ void VtkXYPlotActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXYPlotActor> native = vtkSmartPointer<vtkXYPlotActor>::New();
-		VtkXYPlotActorWrap* obj = new VtkXYPlotActorWrap(native);		obj->Wrap(info.This());
+		VtkXYPlotActorWrap* obj = new VtkXYPlotActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

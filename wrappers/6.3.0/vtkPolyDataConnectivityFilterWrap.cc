@@ -195,12 +195,16 @@ void VtkPolyDataConnectivityFilterWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolyDataConnectivityFilter> native = vtkSmartPointer<vtkPolyDataConnectivityFilter>::New();
-		VtkPolyDataConnectivityFilterWrap* obj = new VtkPolyDataConnectivityFilterWrap(native);		obj->Wrap(info.This());
+		VtkPolyDataConnectivityFilterWrap* obj = new VtkPolyDataConnectivityFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

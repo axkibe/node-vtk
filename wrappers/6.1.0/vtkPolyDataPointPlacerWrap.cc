@@ -93,12 +93,16 @@ void VtkPolyDataPointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolyDataPointPlacer> native = vtkSmartPointer<vtkPolyDataPointPlacer>::New();
-		VtkPolyDataPointPlacerWrap* obj = new VtkPolyDataPointPlacerWrap(native);		obj->Wrap(info.This());
+		VtkPolyDataPointPlacerWrap* obj = new VtkPolyDataPointPlacerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

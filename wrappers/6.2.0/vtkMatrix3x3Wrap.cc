@@ -70,6 +70,9 @@ void VtkMatrix3x3Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsIdentity", IsIdentity);
+	Nan::SetPrototypeMethod(tpl, "isIdentity", IsIdentity);
+
 	Nan::SetPrototypeMethod(tpl, "Multiply3x3", Multiply3x3);
 	Nan::SetPrototypeMethod(tpl, "multiply3x3", Multiply3x3);
 
@@ -102,12 +105,16 @@ void VtkMatrix3x3Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMatrix3x3> native = vtkSmartPointer<vtkMatrix3x3>::New();
-		VtkMatrix3x3Wrap* obj = new VtkMatrix3x3Wrap(native);		obj->Wrap(info.This());
+		VtkMatrix3x3Wrap* obj = new VtkMatrix3x3Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -288,6 +295,20 @@ void VtkMatrix3x3Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMatrix3x3Wrap::IsIdentity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMatrix3x3Wrap *wrapper = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info.Holder());
+	vtkMatrix3x3 *native = (vtkMatrix3x3 *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsIdentity();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMatrix3x3Wrap::Multiply3x3(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -86,12 +86,16 @@ void VtkTransformPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTransformPolyDataFilter> native = vtkSmartPointer<vtkTransformPolyDataFilter>::New();
-		VtkTransformPolyDataFilterWrap* obj = new VtkTransformPolyDataFilterWrap(native);		obj->Wrap(info.This());
+		VtkTransformPolyDataFilterWrap* obj = new VtkTransformPolyDataFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

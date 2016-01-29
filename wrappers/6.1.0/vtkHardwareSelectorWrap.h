@@ -30,6 +30,7 @@ class VtkHardwareSelectorWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void BeginRenderProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CaptureBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EndRenderProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkHardwareSelectorWrap : public VtkObjectWrap
 		static void GetProcessID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPropFromID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseProcessIdFromData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +48,7 @@ class VtkHardwareSelectorWrap : public VtkObjectWrap
 		static void SetFieldAssociation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseProcessIdFromData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

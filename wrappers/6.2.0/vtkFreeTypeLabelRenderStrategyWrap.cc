@@ -63,6 +63,12 @@ void VtkFreeTypeLabelRenderStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SupportsBoundedSize", SupportsBoundedSize);
+	Nan::SetPrototypeMethod(tpl, "supportsBoundedSize", SupportsBoundedSize);
+
+	Nan::SetPrototypeMethod(tpl, "SupportsRotation", SupportsRotation);
+	Nan::SetPrototypeMethod(tpl, "supportsRotation", SupportsRotation);
+
 	ptpl.Reset( tpl );
 }
 
@@ -77,12 +83,16 @@ void VtkFreeTypeLabelRenderStrategyWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFreeTypeLabelRenderStrategy> native = vtkSmartPointer<vtkFreeTypeLabelRenderStrategy>::New();
-		VtkFreeTypeLabelRenderStrategyWrap* obj = new VtkFreeTypeLabelRenderStrategyWrap(native);		obj->Wrap(info.This());
+		VtkFreeTypeLabelRenderStrategyWrap* obj = new VtkFreeTypeLabelRenderStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -196,5 +206,33 @@ void VtkFreeTypeLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFreeTypeLabelRenderStrategyWrap::SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFreeTypeLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFreeTypeLabelRenderStrategyWrap>(info.Holder());
+	vtkFreeTypeLabelRenderStrategy *native = (vtkFreeTypeLabelRenderStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->SupportsBoundedSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFreeTypeLabelRenderStrategyWrap::SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFreeTypeLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkFreeTypeLabelRenderStrategyWrap>(info.Holder());
+	vtkFreeTypeLabelRenderStrategy *native = (vtkFreeTypeLabelRenderStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->SupportsRotation();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 

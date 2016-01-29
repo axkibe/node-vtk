@@ -71,6 +71,9 @@ void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDiscretize", GetDiscretize);
 	Nan::SetPrototypeMethod(tpl, "getDiscretize", GetDiscretize);
 
+	Nan::SetPrototypeMethod(tpl, "GetEnableOpacityMapping", GetEnableOpacityMapping);
+	Nan::SetPrototypeMethod(tpl, "getEnableOpacityMapping", GetEnableOpacityMapping);
+
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
@@ -101,6 +104,9 @@ void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDiscretize", SetDiscretize);
 	Nan::SetPrototypeMethod(tpl, "setDiscretize", SetDiscretize);
 
+	Nan::SetPrototypeMethod(tpl, "SetEnableOpacityMapping", SetEnableOpacityMapping);
+	Nan::SetPrototypeMethod(tpl, "setEnableOpacityMapping", SetEnableOpacityMapping);
+
 	Nan::SetPrototypeMethod(tpl, "SetNanColor", SetNanColor);
 	Nan::SetPrototypeMethod(tpl, "setNanColor", SetNanColor);
 
@@ -127,12 +133,16 @@ void VtkDiscretizableColorTransferFunctionWrap::New(const Nan::FunctionCallbackI
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDiscretizableColorTransferFunction> native = vtkSmartPointer<vtkDiscretizableColorTransferFunction>::New();
-		VtkDiscretizableColorTransferFunctionWrap* obj = new VtkDiscretizableColorTransferFunctionWrap(native);		obj->Wrap(info.This());
+		VtkDiscretizableColorTransferFunctionWrap* obj = new VtkDiscretizableColorTransferFunctionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -223,6 +233,20 @@ void VtkDiscretizableColorTransferFunctionWrap::GetDiscretize(const Nan::Functio
 		return;
 	}
 	r = native->GetDiscretize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDiscretizableColorTransferFunctionWrap::GetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
+	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEnableOpacityMapping();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -445,6 +469,25 @@ void VtkDiscretizableColorTransferFunctionWrap::SetDiscretize(const Nan::Functio
 		}
 		native->SetDiscretize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDiscretizableColorTransferFunctionWrap::SetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
+	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableOpacityMapping(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

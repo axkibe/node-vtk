@@ -78,12 +78,16 @@ void VtkSliceAndDiceLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSliceAndDiceLayoutStrategy> native = vtkSmartPointer<vtkSliceAndDiceLayoutStrategy>::New();
-		VtkSliceAndDiceLayoutStrategyWrap* obj = new VtkSliceAndDiceLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkSliceAndDiceLayoutStrategyWrap* obj = new VtkSliceAndDiceLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

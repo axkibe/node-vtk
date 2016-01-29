@@ -94,6 +94,9 @@ void VtkPolyDataMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTransformCoordinate", GetTransformCoordinate);
 	Nan::SetPrototypeMethod(tpl, "getTransformCoordinate", GetTransformCoordinate);
 
+	Nan::SetPrototypeMethod(tpl, "GetTransformCoordinateUseDouble", GetTransformCoordinateUseDouble);
+	Nan::SetPrototypeMethod(tpl, "getTransformCoordinateUseDouble", GetTransformCoordinateUseDouble);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseLookupTableScalarRange", GetUseLookupTableScalarRange);
 	Nan::SetPrototypeMethod(tpl, "getUseLookupTableScalarRange", GetUseLookupTableScalarRange);
 
@@ -160,6 +163,9 @@ void VtkPolyDataMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransformCoordinate", SetTransformCoordinate);
 	Nan::SetPrototypeMethod(tpl, "setTransformCoordinate", SetTransformCoordinate);
 
+	Nan::SetPrototypeMethod(tpl, "SetTransformCoordinateUseDouble", SetTransformCoordinateUseDouble);
+	Nan::SetPrototypeMethod(tpl, "setTransformCoordinateUseDouble", SetTransformCoordinateUseDouble);
+
 	Nan::SetPrototypeMethod(tpl, "SetUseLookupTableScalarRange", SetUseLookupTableScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setUseLookupTableScalarRange", SetUseLookupTableScalarRange);
 
@@ -192,12 +198,16 @@ void VtkPolyDataMapper2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolyDataMapper2D> native = vtkSmartPointer<vtkPolyDataMapper2D>::New();
-		VtkPolyDataMapper2DWrap* obj = new VtkPolyDataMapper2DWrap(native);		obj->Wrap(info.This());
+		VtkPolyDataMapper2DWrap* obj = new VtkPolyDataMapper2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -448,6 +458,20 @@ void VtkPolyDataMapper2DWrap::GetTransformCoordinate(const Nan::FunctionCallback
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPolyDataMapper2DWrap::GetTransformCoordinateUseDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
+	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTransformCoordinateUseDouble();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPolyDataMapper2DWrap::GetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -824,6 +848,25 @@ void VtkPolyDataMapper2DWrap::SetTransformCoordinate(const Nan::FunctionCallback
 		}
 		native->SetTransformCoordinate(
 			(vtkCoordinate *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolyDataMapper2DWrap::SetTransformCoordinateUseDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
+	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTransformCoordinateUseDouble(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

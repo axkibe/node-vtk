@@ -85,12 +85,16 @@ void VtkCylinderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCylinder> native = vtkSmartPointer<vtkCylinder>::New();
-		VtkCylinderWrap* obj = new VtkCylinderWrap(native);		obj->Wrap(info.This());
+		VtkCylinderWrap* obj = new VtkCylinderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

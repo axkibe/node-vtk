@@ -78,12 +78,16 @@ void VtkProgressObserverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProgressObserver> native = vtkSmartPointer<vtkProgressObserver>::New();
-		VtkProgressObserverWrap* obj = new VtkProgressObserverWrap(native);		obj->Wrap(info.This());
+		VtkProgressObserverWrap* obj = new VtkProgressObserverWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

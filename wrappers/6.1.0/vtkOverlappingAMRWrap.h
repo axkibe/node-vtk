@@ -36,6 +36,7 @@ class VtkOverlappingAMRWrap : public VtkUniformGridAMRWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

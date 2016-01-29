@@ -93,12 +93,16 @@ void VtkProgrammableSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProgrammableSource> native = vtkSmartPointer<vtkProgrammableSource>::New();
-		VtkProgrammableSourceWrap* obj = new VtkProgrammableSourceWrap(native);		obj->Wrap(info.This());
+		VtkProgrammableSourceWrap* obj = new VtkProgrammableSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

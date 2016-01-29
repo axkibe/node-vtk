@@ -61,6 +61,9 @@ void VtkUndirectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsStructureValid", IsStructureValid);
+	Nan::SetPrototypeMethod(tpl, "isStructureValid", IsStructureValid);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -81,12 +84,16 @@ void VtkUndirectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUndirectedGraph> native = vtkSmartPointer<vtkUndirectedGraph>::New();
-		VtkUndirectedGraphWrap* obj = new VtkUndirectedGraphWrap(native);		obj->Wrap(info.This());
+		VtkUndirectedGraphWrap* obj = new VtkUndirectedGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -190,6 +197,28 @@ void VtkUndirectedGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUndirectedGraphWrap::IsStructureValid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUndirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkUndirectedGraphWrap>(info.Holder());
+	vtkUndirectedGraph *native = (vtkUndirectedGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsStructureValid(
+			(vtkGraph *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

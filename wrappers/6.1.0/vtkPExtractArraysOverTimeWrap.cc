@@ -80,12 +80,16 @@ void VtkPExtractArraysOverTimeWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPExtractArraysOverTime> native = vtkSmartPointer<vtkPExtractArraysOverTime>::New();
-		VtkPExtractArraysOverTimeWrap* obj = new VtkPExtractArraysOverTimeWrap(native);		obj->Wrap(info.This());
+		VtkPExtractArraysOverTimeWrap* obj = new VtkPExtractArraysOverTimeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

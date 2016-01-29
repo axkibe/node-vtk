@@ -81,12 +81,16 @@ void VtkSelectionAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSelectionAlgorithm> native = vtkSmartPointer<vtkSelectionAlgorithm>::New();
-		VtkSelectionAlgorithmWrap* obj = new VtkSelectionAlgorithmWrap(native);		obj->Wrap(info.This());
+		VtkSelectionAlgorithmWrap* obj = new VtkSelectionAlgorithmWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

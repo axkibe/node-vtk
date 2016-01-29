@@ -53,6 +53,9 @@ void VtkInteractorStyleRubberBand2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInteraction", GetInteraction);
 	Nan::SetPrototypeMethod(tpl, "getInteraction", GetInteraction);
 
+	Nan::SetPrototypeMethod(tpl, "GetRenderOnMouseMove", GetRenderOnMouseMove);
+	Nan::SetPrototypeMethod(tpl, "getRenderOnMouseMove", GetRenderOnMouseMove);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -95,6 +98,9 @@ void VtkInteractorStyleRubberBand2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetRenderOnMouseMove", SetRenderOnMouseMove);
+	Nan::SetPrototypeMethod(tpl, "setRenderOnMouseMove", SetRenderOnMouseMove);
+
 	ptpl.Reset( tpl );
 }
 
@@ -109,12 +115,16 @@ void VtkInteractorStyleRubberBand2DWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleRubberBand2D> native = vtkSmartPointer<vtkInteractorStyleRubberBand2D>::New();
-		VtkInteractorStyleRubberBand2DWrap* obj = new VtkInteractorStyleRubberBand2DWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleRubberBand2DWrap* obj = new VtkInteractorStyleRubberBand2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -145,6 +155,20 @@ void VtkInteractorStyleRubberBand2DWrap::GetInteraction(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetInteraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorStyleRubberBand2DWrap::GetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
+	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderOnMouseMove();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -351,6 +375,25 @@ void VtkInteractorStyleRubberBand2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorStyleRubberBand2DWrap::SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
+	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderOnMouseMove(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

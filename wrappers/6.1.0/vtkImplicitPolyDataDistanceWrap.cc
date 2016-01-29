@@ -92,12 +92,16 @@ void VtkImplicitPolyDataDistanceWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImplicitPolyDataDistance> native = vtkSmartPointer<vtkImplicitPolyDataDistance>::New();
-		VtkImplicitPolyDataDistanceWrap* obj = new VtkImplicitPolyDataDistanceWrap(native);		obj->Wrap(info.This());
+		VtkImplicitPolyDataDistanceWrap* obj = new VtkImplicitPolyDataDistanceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

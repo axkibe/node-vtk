@@ -74,6 +74,12 @@ void VtkTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLogSpacingValue", GetLogSpacingValue);
 	Nan::SetPrototypeMethod(tpl, "getLogSpacingValue", GetLogSpacingValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetRadial", GetRadial);
+	Nan::SetPrototypeMethod(tpl, "getRadial", GetRadial);
+
+	Nan::SetPrototypeMethod(tpl, "GetReverseEdges", GetReverseEdges);
+	Nan::SetPrototypeMethod(tpl, "getReverseEdges", GetReverseEdges);
+
 	Nan::SetPrototypeMethod(tpl, "GetRotation", GetRotation);
 	Nan::SetPrototypeMethod(tpl, "getRotation", GetRotation);
 
@@ -113,6 +119,12 @@ void VtkTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLogSpacingValue", SetLogSpacingValue);
 	Nan::SetPrototypeMethod(tpl, "setLogSpacingValue", SetLogSpacingValue);
 
+	Nan::SetPrototypeMethod(tpl, "SetRadial", SetRadial);
+	Nan::SetPrototypeMethod(tpl, "setRadial", SetRadial);
+
+	Nan::SetPrototypeMethod(tpl, "SetReverseEdges", SetReverseEdges);
+	Nan::SetPrototypeMethod(tpl, "setReverseEdges", SetReverseEdges);
+
 	Nan::SetPrototypeMethod(tpl, "SetRotation", SetRotation);
 	Nan::SetPrototypeMethod(tpl, "setRotation", SetRotation);
 
@@ -130,12 +142,16 @@ void VtkTreeLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeLayoutStrategy> native = vtkSmartPointer<vtkTreeLayoutStrategy>::New();
-		VtkTreeLayoutStrategyWrap* obj = new VtkTreeLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkTreeLayoutStrategyWrap* obj = new VtkTreeLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -264,6 +280,34 @@ void VtkTreeLayoutStrategyWrap::GetLogSpacingValue(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetLogSpacingValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeLayoutStrategyWrap::GetRadial(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeLayoutStrategyWrap>(info.Holder());
+	vtkTreeLayoutStrategy *native = (vtkTreeLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadial();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeLayoutStrategyWrap::GetReverseEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeLayoutStrategyWrap>(info.Holder());
+	vtkTreeLayoutStrategy *native = (vtkTreeLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReverseEdges();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -488,6 +532,44 @@ void VtkTreeLayoutStrategyWrap::SetLogSpacingValue(const Nan::FunctionCallbackIn
 		}
 		native->SetLogSpacingValue(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeLayoutStrategyWrap::SetRadial(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeLayoutStrategyWrap>(info.Holder());
+	vtkTreeLayoutStrategy *native = (vtkTreeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRadial(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeLayoutStrategyWrap::SetReverseEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeLayoutStrategyWrap>(info.Holder());
+	vtkTreeLayoutStrategy *native = (vtkTreeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReverseEdges(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

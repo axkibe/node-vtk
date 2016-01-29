@@ -30,10 +30,15 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AutoScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBehavior(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLogScaleActive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +54,7 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void GetTickLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickScenePositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTicksVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnscaledMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUnscaledMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,9 +64,16 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void LogScaleOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LogScaleOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void NiceNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RecalculateTickSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAxisVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBehavior(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCustomTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGridVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMargins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -74,6 +87,7 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void SetScalingFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTickLabelAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTicksVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnscaledMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnscaledMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnscaledMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);

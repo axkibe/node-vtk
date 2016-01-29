@@ -30,12 +30,15 @@ class VtkScatterPlotMatrixWrap : public VtkChartMatrixWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AdvanceAnimation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BeginAnimationPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearAnimationPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisLabelNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisLabelPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndexedLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMainChart(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,10 +52,14 @@ class VtkScatterPlotMatrixWrap : public VtkChartMatrixWrap
 		static void GetVisibleColumns(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAxisLabelNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAxisLabelPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAxisLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColumnVisibilityAll(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGridVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIndexedLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);

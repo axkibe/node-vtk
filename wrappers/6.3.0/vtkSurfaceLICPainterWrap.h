@@ -65,6 +65,7 @@ class VtkSurfaceLICPainterWrap : public VtkPainterWrap
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaskOnSurfaceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaskOnSurfaceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -49,6 +49,9 @@ void VtkStringToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetScaleToPowerOfTwo", GetScaleToPowerOfTwo);
+	Nan::SetPrototypeMethod(tpl, "getScaleToPowerOfTwo", GetScaleToPowerOfTwo);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -57,6 +60,9 @@ void VtkStringToImageWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetScaleToPowerOfTwo", SetScaleToPowerOfTwo);
+	Nan::SetPrototypeMethod(tpl, "setScaleToPowerOfTwo", SetScaleToPowerOfTwo);
 
 	ptpl.Reset( tpl );
 }
@@ -77,7 +83,10 @@ void VtkStringToImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -95,6 +104,20 @@ void VtkStringToImageWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStringToImageWrap::GetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToImageWrap *wrapper = ObjectWrap::Unwrap<VtkStringToImageWrap>(info.Holder());
+	vtkStringToImage *native = (vtkStringToImage *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaleToPowerOfTwo();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStringToImageWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -168,6 +191,25 @@ void VtkStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToImageWrap::SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToImageWrap *wrapper = ObjectWrap::Unwrap<VtkStringToImageWrap>(info.Holder());
+	vtkStringToImage *native = (vtkStringToImage *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaleToPowerOfTwo(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

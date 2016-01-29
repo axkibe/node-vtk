@@ -73,12 +73,16 @@ void VtkHyperTreeGridToUnstructuredGridWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHyperTreeGridToUnstructuredGrid> native = vtkSmartPointer<vtkHyperTreeGridToUnstructuredGrid>::New();
-		VtkHyperTreeGridToUnstructuredGridWrap* obj = new VtkHyperTreeGridToUnstructuredGridWrap(native);		obj->Wrap(info.This());
+		VtkHyperTreeGridToUnstructuredGridWrap* obj = new VtkHyperTreeGridToUnstructuredGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

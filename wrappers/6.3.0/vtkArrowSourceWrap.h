@@ -30,6 +30,7 @@ class VtkArrowSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInvert(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaftRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaftRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaftRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,7 @@ class VtkArrowSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInvert(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShaftRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShaftResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTipLength(const Nan::FunctionCallbackInfo<v8::Value>& info);

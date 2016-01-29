@@ -94,12 +94,16 @@ void VtkGeoTreeNodeCacheWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoTreeNodeCache> native = vtkSmartPointer<vtkGeoTreeNodeCache>::New();
-		VtkGeoTreeNodeCacheWrap* obj = new VtkGeoTreeNodeCacheWrap(native);		obj->Wrap(info.This());
+		VtkGeoTreeNodeCacheWrap* obj = new VtkGeoTreeNodeCacheWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

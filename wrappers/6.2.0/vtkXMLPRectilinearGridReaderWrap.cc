@@ -77,12 +77,16 @@ void VtkXMLPRectilinearGridReaderWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLPRectilinearGridReader> native = vtkSmartPointer<vtkXMLPRectilinearGridReader>::New();
-		VtkXMLPRectilinearGridReaderWrap* obj = new VtkXMLPRectilinearGridReaderWrap(native);		obj->Wrap(info.This());
+		VtkXMLPRectilinearGridReaderWrap* obj = new VtkXMLPRectilinearGridReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

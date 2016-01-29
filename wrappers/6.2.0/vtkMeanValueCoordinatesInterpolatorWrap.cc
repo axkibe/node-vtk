@@ -72,12 +72,16 @@ void VtkMeanValueCoordinatesInterpolatorWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMeanValueCoordinatesInterpolator> native = vtkSmartPointer<vtkMeanValueCoordinatesInterpolator>::New();
-		VtkMeanValueCoordinatesInterpolatorWrap* obj = new VtkMeanValueCoordinatesInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkMeanValueCoordinatesInterpolatorWrap* obj = new VtkMeanValueCoordinatesInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

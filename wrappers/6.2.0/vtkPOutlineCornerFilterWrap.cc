@@ -92,12 +92,16 @@ void VtkPOutlineCornerFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPOutlineCornerFilter> native = vtkSmartPointer<vtkPOutlineCornerFilter>::New();
-		VtkPOutlineCornerFilterWrap* obj = new VtkPOutlineCornerFilterWrap(native);		obj->Wrap(info.This());
+		VtkPOutlineCornerFilterWrap* obj = new VtkPOutlineCornerFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

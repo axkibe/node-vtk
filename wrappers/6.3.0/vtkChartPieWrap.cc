@@ -9,6 +9,7 @@
 #include "vtkChartWrap.h"
 #include "vtkChartPieWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkPlotWrap.h"
 #include "vtkChartLegendWrap.h"
 #include "vtkContextSceneWrap.h"
@@ -65,11 +66,17 @@ void VtkChartPieWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
+
+	Nan::SetPrototypeMethod(tpl, "SetShowLegend", SetShowLegend);
+	Nan::SetPrototypeMethod(tpl, "setShowLegend", SetShowLegend);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -88,12 +95,16 @@ void VtkChartPieWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartPie> native = vtkSmartPointer<vtkChartPie>::New();
-		VtkChartPieWrap* obj = new VtkChartPieWrap(native);		obj->Wrap(info.This());
+		VtkChartPieWrap* obj = new VtkChartPieWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -211,6 +222,28 @@ void VtkChartPieWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartPieWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
+	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
@@ -256,6 +289,25 @@ void VtkChartPieWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->SetScene(
 			(vtkContextScene *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartPieWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
+	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShowLegend(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

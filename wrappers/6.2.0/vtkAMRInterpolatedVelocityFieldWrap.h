@@ -35,6 +35,7 @@ class VtkAMRInterpolatedVelocityFieldWrap : public VtkAbstractInterpolatedVeloci
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAMRData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLastDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

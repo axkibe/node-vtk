@@ -73,12 +73,16 @@ void VtkTypeInt64ArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTypeInt64Array> native = vtkSmartPointer<vtkTypeInt64Array>::New();
-		VtkTypeInt64ArrayWrap* obj = new VtkTypeInt64ArrayWrap(native);		obj->Wrap(info.This());
+		VtkTypeInt64ArrayWrap* obj = new VtkTypeInt64ArrayWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

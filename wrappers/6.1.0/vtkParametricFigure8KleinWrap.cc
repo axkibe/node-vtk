@@ -82,12 +82,16 @@ void VtkParametricFigure8KleinWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParametricFigure8Klein> native = vtkSmartPointer<vtkParametricFigure8Klein>::New();
-		VtkParametricFigure8KleinWrap* obj = new VtkParametricFigure8KleinWrap(native);		obj->Wrap(info.This());
+		VtkParametricFigure8KleinWrap* obj = new VtkParametricFigure8KleinWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

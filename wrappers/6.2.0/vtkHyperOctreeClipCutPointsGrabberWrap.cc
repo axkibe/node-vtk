@@ -87,12 +87,16 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHyperOctreeClipCutPointsGrabber> native = vtkSmartPointer<vtkHyperOctreeClipCutPointsGrabber>::New();
-		VtkHyperOctreeClipCutPointsGrabberWrap* obj = new VtkHyperOctreeClipCutPointsGrabberWrap(native);		obj->Wrap(info.This());
+		VtkHyperOctreeClipCutPointsGrabberWrap* obj = new VtkHyperOctreeClipCutPointsGrabberWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

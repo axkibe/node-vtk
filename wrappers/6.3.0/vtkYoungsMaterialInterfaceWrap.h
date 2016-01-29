@@ -42,6 +42,7 @@ class VtkYoungsMaterialInterfaceWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetNumberOfMaterials(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOnionPeel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReverseMaterialOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseAllBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseFractionAsDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseNormalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,6 +65,7 @@ class VtkYoungsMaterialInterfaceWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetNumberOfMaterials(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOnionPeel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverseMaterialOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseAllBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseFractionAsDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolumeFractionRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseAllBlocksOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

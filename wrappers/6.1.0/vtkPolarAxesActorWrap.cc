@@ -58,6 +58,12 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AutoSubdividePolarAxisOn", AutoSubdividePolarAxisOn);
 	Nan::SetPrototypeMethod(tpl, "autoSubdividePolarAxisOn", AutoSubdividePolarAxisOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAutoScaleRadius", GetAutoScaleRadius);
+	Nan::SetPrototypeMethod(tpl, "getAutoScaleRadius", GetAutoScaleRadius);
+
+	Nan::SetPrototypeMethod(tpl, "GetAutoSubdividePolarAxis", GetAutoSubdividePolarAxis);
+	Nan::SetPrototypeMethod(tpl, "getAutoSubdividePolarAxis", GetAutoSubdividePolarAxis);
+
 	Nan::SetPrototypeMethod(tpl, "GetCamera", GetCamera);
 	Nan::SetPrototypeMethod(tpl, "getCamera", GetCamera);
 
@@ -129,6 +135,9 @@ void VtkPolarAxesActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRadialTitleVisibility", GetRadialTitleVisibility);
 	Nan::SetPrototypeMethod(tpl, "getRadialTitleVisibility", GetRadialTitleVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetRadialUnits", GetRadialUnits);
+	Nan::SetPrototypeMethod(tpl, "getRadialUnits", GetRadialUnits);
 
 	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
@@ -211,6 +220,12 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAutoScaleRadius", SetAutoScaleRadius);
+	Nan::SetPrototypeMethod(tpl, "setAutoScaleRadius", SetAutoScaleRadius);
+
+	Nan::SetPrototypeMethod(tpl, "SetAutoSubdividePolarAxis", SetAutoSubdividePolarAxis);
+	Nan::SetPrototypeMethod(tpl, "setAutoSubdividePolarAxis", SetAutoSubdividePolarAxis);
+
 	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
 	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
@@ -280,6 +295,9 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadialTitleVisibility", SetRadialTitleVisibility);
 	Nan::SetPrototypeMethod(tpl, "setRadialTitleVisibility", SetRadialTitleVisibility);
 
+	Nan::SetPrototypeMethod(tpl, "SetRadialUnits", SetRadialUnits);
+	Nan::SetPrototypeMethod(tpl, "setRadialUnits", SetRadialUnits);
+
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
@@ -303,12 +321,16 @@ void VtkPolarAxesActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolarAxesActor> native = vtkSmartPointer<vtkPolarAxesActor>::New();
-		VtkPolarAxesActorWrap* obj = new VtkPolarAxesActorWrap(native);		obj->Wrap(info.This());
+		VtkPolarAxesActorWrap* obj = new VtkPolarAxesActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -336,6 +358,34 @@ void VtkPolarAxesActorWrap::AutoSubdividePolarAxisOn(const Nan::FunctionCallback
 		return;
 	}
 	native->AutoSubdividePolarAxisOn();
+}
+
+void VtkPolarAxesActorWrap::GetAutoScaleRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoScaleRadius();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolarAxesActorWrap::GetAutoSubdividePolarAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoSubdividePolarAxis();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPolarAxesActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -725,6 +775,20 @@ void VtkPolarAxesActorWrap::GetRadialTitleVisibility(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetRadialTitleVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolarAxesActorWrap::GetRadialUnits(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadialUnits();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1129,6 +1193,44 @@ void VtkPolarAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolarAxesActorWrap::SetAutoScaleRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoScaleRadius(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolarAxesActorWrap::SetAutoSubdividePolarAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoSubdividePolarAxis(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -1601,6 +1703,25 @@ void VtkPolarAxesActorWrap::SetRadialTitleVisibility(const Nan::FunctionCallback
 		}
 		native->SetRadialTitleVisibility(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPolarAxesActorWrap::SetRadialUnits(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRadialUnits(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

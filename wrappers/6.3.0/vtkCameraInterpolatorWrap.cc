@@ -152,12 +152,16 @@ void VtkCameraInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCameraInterpolator> native = vtkSmartPointer<vtkCameraInterpolator>::New();
-		VtkCameraInterpolatorWrap* obj = new VtkCameraInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkCameraInterpolatorWrap* obj = new VtkCameraInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

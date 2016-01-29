@@ -31,14 +31,21 @@ class VtkAbstractContextItemWrap : public VtkObjectWrap
 
 		static void ClearItems(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PaintChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

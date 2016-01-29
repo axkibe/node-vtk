@@ -101,12 +101,16 @@ void VtkDummyControllerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDummyController> native = vtkSmartPointer<vtkDummyController>::New();
-		VtkDummyControllerWrap* obj = new VtkDummyControllerWrap(native);		obj->Wrap(info.This());
+		VtkDummyControllerWrap* obj = new VtkDummyControllerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -88,6 +88,9 @@ void VtkTreeAreaViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAreaLabelFontSize", GetAreaLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "getAreaLabelFontSize", GetAreaLabelFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetAreaLabelVisibility", GetAreaLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getAreaLabelVisibility", GetAreaLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetAreaSizeArrayName", GetAreaSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "getAreaSizeArrayName", GetAreaSizeArrayName);
 
@@ -96,6 +99,12 @@ void VtkTreeAreaViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorAreas", GetColorAreas);
+	Nan::SetPrototypeMethod(tpl, "getColorAreas", GetColorAreas);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorEdges", GetColorEdges);
+	Nan::SetPrototypeMethod(tpl, "getColorEdges", GetColorEdges);
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgeColorArrayName", GetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeColorArrayName", GetEdgeColorArrayName);
@@ -106,6 +115,12 @@ void VtkTreeAreaViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelFontSize", GetEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLabelFontSize", GetEdgeLabelFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelVisibility", GetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeLabelVisibility", GetEdgeLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelPriorityArrayName", GetLabelPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "getLabelPriorityArrayName", GetLabelPriorityArrayName);
 
@@ -114,6 +129,9 @@ void VtkTreeAreaViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetShrinkPercentage", GetShrinkPercentage);
 	Nan::SetPrototypeMethod(tpl, "getShrinkPercentage", GetShrinkPercentage);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseRectangularCoordinates", GetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "getUseRectangularCoordinates", GetUseRectangularCoordinates);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -136,11 +154,20 @@ void VtkTreeAreaViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAreaLabelFontSize", SetAreaLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "setAreaLabelFontSize", SetAreaLabelFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "SetAreaLabelVisibility", SetAreaLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setAreaLabelVisibility", SetAreaLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetAreaSizeArrayName", SetAreaSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setAreaSizeArrayName", SetAreaSizeArrayName);
 
 	Nan::SetPrototypeMethod(tpl, "SetBundlingStrength", SetBundlingStrength);
 	Nan::SetPrototypeMethod(tpl, "setBundlingStrength", SetBundlingStrength);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorAreas", SetColorAreas);
+	Nan::SetPrototypeMethod(tpl, "setColorAreas", SetColorAreas);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorEdges", SetColorEdges);
+	Nan::SetPrototypeMethod(tpl, "setColorEdges", SetColorEdges);
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeColorArrayName", SetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeColorArrayName", SetEdgeColorArrayName);
@@ -153,6 +180,12 @@ void VtkTreeAreaViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelFontSize", SetEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLabelFontSize", SetEdgeLabelFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelVisibility", SetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeLabelVisibility", SetEdgeLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetGraphFromInput", SetGraphFromInput);
 	Nan::SetPrototypeMethod(tpl, "setGraphFromInput", SetGraphFromInput);
@@ -175,6 +208,9 @@ void VtkTreeAreaViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTreeFromInputConnection", SetTreeFromInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setTreeFromInputConnection", SetTreeFromInputConnection);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseRectangularCoordinates", SetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "setUseRectangularCoordinates", SetUseRectangularCoordinates);
+
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOff", UseRectangularCoordinatesOff);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOff", UseRectangularCoordinatesOff);
 
@@ -195,12 +231,16 @@ void VtkTreeAreaViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeAreaView> native = vtkSmartPointer<vtkTreeAreaView>::New();
-		VtkTreeAreaViewWrap* obj = new VtkTreeAreaViewWrap(native);		obj->Wrap(info.This());
+		VtkTreeAreaViewWrap* obj = new VtkTreeAreaViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -358,6 +398,20 @@ void VtkTreeAreaViewWrap::GetAreaLabelFontSize(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTreeAreaViewWrap::GetAreaLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAreaLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTreeAreaViewWrap::GetAreaSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
@@ -400,6 +454,34 @@ void VtkTreeAreaViewWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTreeAreaViewWrap::GetColorAreas(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorAreas();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeAreaViewWrap::GetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorEdges();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTreeAreaViewWrap::GetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
@@ -439,6 +521,34 @@ void VtkTreeAreaViewWrap::GetEdgeLabelFontSize(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetEdgeLabelFontSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeAreaViewWrap::GetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeAreaViewWrap::GetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeScalarBarVisibility();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -490,6 +600,20 @@ void VtkTreeAreaViewWrap::GetShrinkPercentage(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetShrinkPercentage();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTreeAreaViewWrap::GetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRectangularCoordinates();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -648,6 +772,25 @@ void VtkTreeAreaViewWrap::SetAreaLabelFontSize(const Nan::FunctionCallbackInfo<v
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTreeAreaViewWrap::SetAreaLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAreaLabelVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTreeAreaViewWrap::SetAreaSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
@@ -681,6 +824,44 @@ void VtkTreeAreaViewWrap::SetBundlingStrength(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetBundlingStrength(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeAreaViewWrap::SetColorAreas(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorAreas(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeAreaViewWrap::SetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorEdges(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -752,6 +933,44 @@ void VtkTreeAreaViewWrap::SetEdgeLabelFontSize(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetEdgeLabelFontSize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeAreaViewWrap::SetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeLabelVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeAreaViewWrap::SetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeScalarBarVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -936,6 +1155,25 @@ void VtkTreeAreaViewWrap::SetTreeFromInputConnection(const Nan::FunctionCallback
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeAreaViewWrap::SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeAreaViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeAreaViewWrap>(info.Holder());
+	vtkTreeAreaView *native = (vtkTreeAreaView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRectangularCoordinates(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

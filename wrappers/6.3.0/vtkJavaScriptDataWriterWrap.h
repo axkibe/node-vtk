@@ -31,11 +31,13 @@ class VtkJavaScriptDataWriterWrap : public VtkWriterWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIncludeFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIncludeFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

@@ -241,12 +241,16 @@ void VtkGlyph3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGlyph3D> native = vtkSmartPointer<vtkGlyph3D>::New();
-		VtkGlyph3DWrap* obj = new VtkGlyph3DWrap(native);		obj->Wrap(info.This());
+		VtkGlyph3DWrap* obj = new VtkGlyph3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

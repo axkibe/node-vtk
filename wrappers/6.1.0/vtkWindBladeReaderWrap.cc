@@ -114,12 +114,16 @@ void VtkWindBladeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkWindBladeReader> native = vtkSmartPointer<vtkWindBladeReader>::New();
-		VtkWindBladeReaderWrap* obj = new VtkWindBladeReaderWrap(native);		obj->Wrap(info.This());
+		VtkWindBladeReaderWrap* obj = new VtkWindBladeReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

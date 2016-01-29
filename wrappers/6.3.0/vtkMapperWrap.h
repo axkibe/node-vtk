@@ -45,6 +45,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputAsDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolveCoincidentTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +57,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetScalarModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStatic(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalImmediateModeRenderingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalImmediateModeRenderingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

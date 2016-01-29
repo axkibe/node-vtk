@@ -94,12 +94,16 @@ void VtkLightActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLightActor> native = vtkSmartPointer<vtkLightActor>::New();
-		VtkLightActorWrap* obj = new VtkLightActorWrap(native);		obj->Wrap(info.This());
+		VtkLightActorWrap* obj = new VtkLightActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

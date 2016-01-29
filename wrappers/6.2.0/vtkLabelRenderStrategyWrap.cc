@@ -82,6 +82,12 @@ void VtkLabelRenderStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartFrame", StartFrame);
 	Nan::SetPrototypeMethod(tpl, "startFrame", StartFrame);
 
+	Nan::SetPrototypeMethod(tpl, "SupportsBoundedSize", SupportsBoundedSize);
+	Nan::SetPrototypeMethod(tpl, "supportsBoundedSize", SupportsBoundedSize);
+
+	Nan::SetPrototypeMethod(tpl, "SupportsRotation", SupportsRotation);
+	Nan::SetPrototypeMethod(tpl, "supportsRotation", SupportsRotation);
+
 	ptpl.Reset( tpl );
 }
 
@@ -101,7 +107,10 @@ void VtkLabelRenderStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -325,5 +334,33 @@ void VtkLabelRenderStrategyWrap::StartFrame(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	native->StartFrame();
+}
+
+void VtkLabelRenderStrategyWrap::SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
+	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->SupportsBoundedSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelRenderStrategyWrap::SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelRenderStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkLabelRenderStrategyWrap>(info.Holder());
+	vtkLabelRenderStrategy *native = (vtkLabelRenderStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->SupportsRotation();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 

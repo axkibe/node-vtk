@@ -32,6 +32,7 @@ class VtkGeoViewWrap : public VtkRenderViewWrap
 		static void AddDefaultImageRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeoInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerrain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LockHeadingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkGeoViewWrap : public VtkRenderViewWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGeoInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerrain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

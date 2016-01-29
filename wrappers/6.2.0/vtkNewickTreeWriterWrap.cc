@@ -77,12 +77,16 @@ void VtkNewickTreeWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkNewickTreeWriter> native = vtkSmartPointer<vtkNewickTreeWriter>::New();
-		VtkNewickTreeWriterWrap* obj = new VtkNewickTreeWriterWrap(native);		obj->Wrap(info.This());
+		VtkNewickTreeWriterWrap* obj = new VtkNewickTreeWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -46,6 +46,9 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkXMLHierarchicalBoxDataFileConverterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Convert", Convert);
+	Nan::SetPrototypeMethod(tpl, "convert", Convert);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -84,15 +87,33 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::New(const Nan::FunctionCallback
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLHierarchicalBoxDataFileConverter> native = vtkSmartPointer<vtkXMLHierarchicalBoxDataFileConverter>::New();
-		VtkXMLHierarchicalBoxDataFileConverterWrap* obj = new VtkXMLHierarchicalBoxDataFileConverterWrap(native);		obj->Wrap(info.This());
+		VtkXMLHierarchicalBoxDataFileConverterWrap* obj = new VtkXMLHierarchicalBoxDataFileConverterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkXMLHierarchicalBoxDataFileConverterWrap::Convert(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLHierarchicalBoxDataFileConverterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLHierarchicalBoxDataFileConverterWrap>(info.Holder());
+	vtkXMLHierarchicalBoxDataFileConverter *native = (vtkXMLHierarchicalBoxDataFileConverter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Convert();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkXMLHierarchicalBoxDataFileConverterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -120,6 +120,9 @@ void VtkPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolationMinValue", GetInterpolationMinValue);
 	Nan::SetPrototypeMethod(tpl, "getInterpolationMinValue", GetInterpolationMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetLighting", GetLighting);
+	Nan::SetPrototypeMethod(tpl, "getLighting", GetLighting);
+
 	Nan::SetPrototypeMethod(tpl, "GetLineStipplePattern", GetLineStipplePattern);
 	Nan::SetPrototypeMethod(tpl, "getLineStipplePattern", GetLineStipplePattern);
 
@@ -255,6 +258,9 @@ void VtkPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationToPhong", SetInterpolationToPhong);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationToPhong", SetInterpolationToPhong);
 
+	Nan::SetPrototypeMethod(tpl, "SetLighting", SetLighting);
+	Nan::SetPrototypeMethod(tpl, "setLighting", SetLighting);
+
 	Nan::SetPrototypeMethod(tpl, "SetLineStipplePattern", SetLineStipplePattern);
 	Nan::SetPrototypeMethod(tpl, "setLineStipplePattern", SetLineStipplePattern);
 
@@ -311,12 +317,16 @@ void VtkPropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProperty> native = vtkSmartPointer<vtkProperty>::New();
-		VtkPropertyWrap* obj = new VtkPropertyWrap(native);		obj->Wrap(info.This());
+		VtkPropertyWrap* obj = new VtkPropertyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -727,6 +737,20 @@ void VtkPropertyWrap::GetInterpolationMinValue(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInterpolationMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropertyWrap::GetLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLighting();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1557,6 +1581,25 @@ void VtkPropertyWrap::SetInterpolationToPhong(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	native->SetInterpolationToPhong();
+}
+
+void VtkPropertyWrap::SetLighting(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkPropertyWrap>(info.Holder());
+	vtkProperty *native = (vtkProperty *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLighting(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPropertyWrap::SetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info)

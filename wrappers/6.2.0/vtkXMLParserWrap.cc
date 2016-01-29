@@ -99,12 +99,16 @@ void VtkXMLParserWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLParser> native = vtkSmartPointer<vtkXMLParser>::New();
-		VtkXMLParserWrap* obj = new VtkXMLParserWrap(native);		obj->Wrap(info.This());
+		VtkXMLParserWrap* obj = new VtkXMLParserWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -129,6 +129,9 @@ void VtkGL2PSExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetText", GetText);
 	Nan::SetPrototypeMethod(tpl, "getText", GetText);
 
+	Nan::SetPrototypeMethod(tpl, "GetTextAsPath", GetTextAsPath);
+	Nan::SetPrototypeMethod(tpl, "getTextAsPath", GetTextAsPath);
+
 	Nan::SetPrototypeMethod(tpl, "GetTitle", GetTitle);
 	Nan::SetPrototypeMethod(tpl, "getTitle", GetTitle);
 
@@ -228,6 +231,9 @@ void VtkGL2PSExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetText", SetText);
 	Nan::SetPrototypeMethod(tpl, "setText", SetText);
 
+	Nan::SetPrototypeMethod(tpl, "SetTextAsPath", SetTextAsPath);
+	Nan::SetPrototypeMethod(tpl, "setTextAsPath", SetTextAsPath);
+
 	Nan::SetPrototypeMethod(tpl, "SetTitle", SetTitle);
 	Nan::SetPrototypeMethod(tpl, "setTitle", SetTitle);
 
@@ -281,12 +287,16 @@ void VtkGL2PSExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGL2PSExporter> native = vtkSmartPointer<vtkGL2PSExporter>::New();
-		VtkGL2PSExporterWrap* obj = new VtkGL2PSExporterWrap(native);		obj->Wrap(info.This());
+		VtkGL2PSExporterWrap* obj = new VtkGL2PSExporterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -664,6 +674,20 @@ void VtkGL2PSExporterWrap::GetText(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetText();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGL2PSExporterWrap::GetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
+	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTextAsPath();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1201,6 +1225,25 @@ void VtkGL2PSExporterWrap::SetText(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		native->SetText(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGL2PSExporterWrap::SetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
+	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTextAsPath(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

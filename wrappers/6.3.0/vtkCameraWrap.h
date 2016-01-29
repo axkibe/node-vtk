@@ -43,6 +43,7 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void GetEyeSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFocalDisk(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeftEye(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModelViewTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -76,6 +77,7 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void SetEyeTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFocalDisk(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLeftEye(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModelTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetObliqueAngles(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -79,6 +79,9 @@ void VtkNIFTIImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSFormMatrix", GetSFormMatrix);
 	Nan::SetPrototypeMethod(tpl, "getSFormMatrix", GetSFormMatrix);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeAsVector", GetTimeAsVector);
+	Nan::SetPrototypeMethod(tpl, "getTimeAsVector", GetTimeAsVector);
+
 	Nan::SetPrototypeMethod(tpl, "GetTimeDimension", GetTimeDimension);
 	Nan::SetPrototypeMethod(tpl, "getTimeDimension", GetTimeDimension);
 
@@ -93,6 +96,9 @@ void VtkNIFTIImageReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetTimeAsVector", SetTimeAsVector);
+	Nan::SetPrototypeMethod(tpl, "setTimeAsVector", SetTimeAsVector);
 
 	Nan::SetPrototypeMethod(tpl, "TimeAsVectorOff", TimeAsVectorOff);
 	Nan::SetPrototypeMethod(tpl, "timeAsVectorOff", TimeAsVectorOff);
@@ -114,12 +120,16 @@ void VtkNIFTIImageReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkNIFTIImageReader> native = vtkSmartPointer<vtkNIFTIImageReader>::New();
-		VtkNIFTIImageReaderWrap* obj = new VtkNIFTIImageReaderWrap(native);		obj->Wrap(info.This());
+		VtkNIFTIImageReaderWrap* obj = new VtkNIFTIImageReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -300,6 +310,20 @@ void VtkNIFTIImageReaderWrap::GetSFormMatrix(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkNIFTIImageReaderWrap::GetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
+	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeAsVector();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkNIFTIImageReaderWrap::GetTimeDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
@@ -399,6 +423,25 @@ void VtkNIFTIImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkNIFTIImageReaderWrap::SetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
+	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTimeAsVector(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

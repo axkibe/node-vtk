@@ -80,12 +80,16 @@ void VtkImplicitFunctionCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImplicitFunctionCollection> native = vtkSmartPointer<vtkImplicitFunctionCollection>::New();
-		VtkImplicitFunctionCollectionWrap* obj = new VtkImplicitFunctionCollectionWrap(native);		obj->Wrap(info.This());
+		VtkImplicitFunctionCollectionWrap* obj = new VtkImplicitFunctionCollectionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -164,12 +164,16 @@ void VtkParallelopipedRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParallelopipedRepresentation> native = vtkSmartPointer<vtkParallelopipedRepresentation>::New();
-		VtkParallelopipedRepresentationWrap* obj = new VtkParallelopipedRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkParallelopipedRepresentationWrap* obj = new VtkParallelopipedRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -40,6 +40,7 @@ class VtkPainterDeviceAdapterWrap : public VtkObjectWrap
 		static void MakeBlending(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void QueryBlending(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void QueryLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);

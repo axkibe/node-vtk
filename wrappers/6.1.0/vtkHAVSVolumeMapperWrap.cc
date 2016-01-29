@@ -9,6 +9,7 @@
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
 #include "vtkHAVSVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkRendererWrap.h"
 
 using namespace v8;
 
@@ -50,11 +51,20 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGPUDataStructures", GetGPUDataStructures);
+	Nan::SetPrototypeMethod(tpl, "getGPUDataStructures", GetGPUDataStructures);
+
 	Nan::SetPrototypeMethod(tpl, "GetKBufferSize", GetKBufferSize);
 	Nan::SetPrototypeMethod(tpl, "getKBufferSize", GetKBufferSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetLevelOfDetail", GetLevelOfDetail);
+	Nan::SetPrototypeMethod(tpl, "getLevelOfDetail", GetLevelOfDetail);
+
 	Nan::SetPrototypeMethod(tpl, "GetLevelOfDetailMethod", GetLevelOfDetailMethod);
 	Nan::SetPrototypeMethod(tpl, "getLevelOfDetailMethod", GetLevelOfDetailMethod);
+
+	Nan::SetPrototypeMethod(tpl, "GetPartiallyRemoveNonConvexities", GetPartiallyRemoveNonConvexities);
+	Nan::SetPrototypeMethod(tpl, "getPartiallyRemoveNonConvexities", GetPartiallyRemoveNonConvexities);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -65,6 +75,9 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetGPUDataStructures", SetGPUDataStructures);
+	Nan::SetPrototypeMethod(tpl, "setGPUDataStructures", SetGPUDataStructures);
+
 	Nan::SetPrototypeMethod(tpl, "SetKBufferSize", SetKBufferSize);
 	Nan::SetPrototypeMethod(tpl, "setKBufferSize", SetKBufferSize);
 
@@ -74,6 +87,9 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKBufferSizeTo6", SetKBufferSizeTo6);
 	Nan::SetPrototypeMethod(tpl, "setKBufferSizeTo6", SetKBufferSizeTo6);
 
+	Nan::SetPrototypeMethod(tpl, "SetLevelOfDetail", SetLevelOfDetail);
+	Nan::SetPrototypeMethod(tpl, "setLevelOfDetail", SetLevelOfDetail);
+
 	Nan::SetPrototypeMethod(tpl, "SetLevelOfDetailMethod", SetLevelOfDetailMethod);
 	Nan::SetPrototypeMethod(tpl, "setLevelOfDetailMethod", SetLevelOfDetailMethod);
 
@@ -82,6 +98,12 @@ void VtkHAVSVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetLevelOfDetailMethodField", SetLevelOfDetailMethodField);
 	Nan::SetPrototypeMethod(tpl, "setLevelOfDetailMethodField", SetLevelOfDetailMethodField);
+
+	Nan::SetPrototypeMethod(tpl, "SetPartiallyRemoveNonConvexities", SetPartiallyRemoveNonConvexities);
+	Nan::SetPrototypeMethod(tpl, "setPartiallyRemoveNonConvexities", SetPartiallyRemoveNonConvexities);
+
+	Nan::SetPrototypeMethod(tpl, "SupportedByHardware", SupportedByHardware);
+	Nan::SetPrototypeMethod(tpl, "supportedByHardware", SupportedByHardware);
 
 	ptpl.Reset( tpl );
 }
@@ -97,12 +119,16 @@ void VtkHAVSVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHAVSVolumeMapper> native = vtkSmartPointer<vtkHAVSVolumeMapper>::New();
-		VtkHAVSVolumeMapperWrap* obj = new VtkHAVSVolumeMapperWrap(native);		obj->Wrap(info.This());
+		VtkHAVSVolumeMapperWrap* obj = new VtkHAVSVolumeMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -122,6 +148,20 @@ void VtkHAVSVolumeMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkHAVSVolumeMapperWrap::GetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGPUDataStructures();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkHAVSVolumeMapperWrap::GetKBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
@@ -136,6 +176,20 @@ void VtkHAVSVolumeMapperWrap::GetKBufferSize(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkHAVSVolumeMapperWrap::GetLevelOfDetail(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLevelOfDetail();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkHAVSVolumeMapperWrap::GetLevelOfDetailMethod(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
@@ -147,6 +201,20 @@ void VtkHAVSVolumeMapperWrap::GetLevelOfDetailMethod(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLevelOfDetailMethod();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHAVSVolumeMapperWrap::GetPartiallyRemoveNonConvexities(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPartiallyRemoveNonConvexities();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -226,6 +294,25 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHAVSVolumeMapperWrap::SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGPUDataStructures(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHAVSVolumeMapperWrap::SetKBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
@@ -269,6 +356,25 @@ void VtkHAVSVolumeMapperWrap::SetKBufferSizeTo6(const Nan::FunctionCallbackInfo<
 	native->SetKBufferSizeTo6();
 }
 
+void VtkHAVSVolumeMapperWrap::SetLevelOfDetail(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLevelOfDetail(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHAVSVolumeMapperWrap::SetLevelOfDetailMethod(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
@@ -310,5 +416,46 @@ void VtkHAVSVolumeMapperWrap::SetLevelOfDetailMethodField(const Nan::FunctionCal
 		return;
 	}
 	native->SetLevelOfDetailMethodField();
+}
+
+void VtkHAVSVolumeMapperWrap::SetPartiallyRemoveNonConvexities(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPartiallyRemoveNonConvexities(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHAVSVolumeMapperWrap::SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
+	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SupportedByHardware(
+			(vtkRenderer *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

@@ -31,11 +31,13 @@ class VtkMultiCorrelativeStatisticsWrap : public VtkStatisticsAlgorithmWrap
 
 		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMedianAbsoluteDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MedianAbsoluteDeviationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MedianAbsoluteDeviationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMedianAbsoluteDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

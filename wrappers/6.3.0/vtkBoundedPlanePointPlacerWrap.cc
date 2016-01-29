@@ -127,12 +127,16 @@ void VtkBoundedPlanePointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBoundedPlanePointPlacer> native = vtkSmartPointer<vtkBoundedPlanePointPlacer>::New();
-		VtkBoundedPlanePointPlacerWrap* obj = new VtkBoundedPlanePointPlacerWrap(native);		obj->Wrap(info.This());
+		VtkBoundedPlanePointPlacerWrap* obj = new VtkBoundedPlanePointPlacerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

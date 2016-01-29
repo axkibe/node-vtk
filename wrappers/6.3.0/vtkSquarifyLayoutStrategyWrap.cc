@@ -78,12 +78,16 @@ void VtkSquarifyLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSquarifyLayoutStrategy> native = vtkSmartPointer<vtkSquarifyLayoutStrategy>::New();
-		VtkSquarifyLayoutStrategyWrap* obj = new VtkSquarifyLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkSquarifyLayoutStrategyWrap* obj = new VtkSquarifyLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

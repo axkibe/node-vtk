@@ -30,11 +30,13 @@ class VtkSMPContourGridWrap : public VtkContourGridWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMergePieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MergePiecesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MergePiecesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMergePieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

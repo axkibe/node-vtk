@@ -80,12 +80,16 @@ void VtkLookupTableItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLookupTableItem> native = vtkSmartPointer<vtkLookupTableItem>::New();
-		VtkLookupTableItemWrap* obj = new VtkLookupTableItemWrap(native);		obj->Wrap(info.This());
+		VtkLookupTableItemWrap* obj = new VtkLookupTableItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

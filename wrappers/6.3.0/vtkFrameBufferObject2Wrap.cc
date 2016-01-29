@@ -65,6 +65,9 @@ void VtkFrameBufferObject2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsSupported", IsSupported);
+	Nan::SetPrototypeMethod(tpl, "isSupported", IsSupported);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -94,12 +97,16 @@ void VtkFrameBufferObject2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFrameBufferObject2> native = vtkSmartPointer<vtkFrameBufferObject2>::New();
-		VtkFrameBufferObject2Wrap* obj = new VtkFrameBufferObject2Wrap(native);		obj->Wrap(info.This());
+		VtkFrameBufferObject2Wrap* obj = new VtkFrameBufferObject2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -204,6 +211,28 @@ void VtkFrameBufferObject2Wrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsSupported(
+			(vtkRenderWindow *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

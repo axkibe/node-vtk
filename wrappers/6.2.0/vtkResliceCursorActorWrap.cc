@@ -103,12 +103,16 @@ void VtkResliceCursorActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkResliceCursorActor> native = vtkSmartPointer<vtkResliceCursorActor>::New();
-		VtkResliceCursorActorWrap* obj = new VtkResliceCursorActorWrap(native);		obj->Wrap(info.This());
+		VtkResliceCursorActorWrap* obj = new VtkResliceCursorActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

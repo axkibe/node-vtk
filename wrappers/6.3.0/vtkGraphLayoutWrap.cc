@@ -58,6 +58,9 @@ void VtkGraphLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTransform", GetTransform);
 	Nan::SetPrototypeMethod(tpl, "getTransform", GetTransform);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseTransform", GetUseTransform);
+	Nan::SetPrototypeMethod(tpl, "getUseTransform", GetUseTransform);
+
 	Nan::SetPrototypeMethod(tpl, "GetZRange", GetZRange);
 	Nan::SetPrototypeMethod(tpl, "getZRange", GetZRange);
 
@@ -78,6 +81,9 @@ void VtkGraphLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseTransform", SetUseTransform);
+	Nan::SetPrototypeMethod(tpl, "setUseTransform", SetUseTransform);
 
 	Nan::SetPrototypeMethod(tpl, "SetZRange", SetZRange);
 	Nan::SetPrototypeMethod(tpl, "setZRange", SetZRange);
@@ -102,12 +108,16 @@ void VtkGraphLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGraphLayout> native = vtkSmartPointer<vtkGraphLayout>::New();
-		VtkGraphLayoutWrap* obj = new VtkGraphLayoutWrap(native);		obj->Wrap(info.This());
+		VtkGraphLayoutWrap* obj = new VtkGraphLayoutWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -171,6 +181,20 @@ void VtkGraphLayoutWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGraphLayoutWrap::GetUseTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
+	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseTransform();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutWrap::GetZRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -311,6 +335,25 @@ void VtkGraphLayoutWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 		}
 		native->SetTransform(
 			(vtkAbstractTransform *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutWrap::SetUseTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
+	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseTransform(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

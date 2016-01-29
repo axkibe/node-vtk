@@ -32,10 +32,12 @@ class VtkGraphToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void EdgeGlyphOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EdgeGlyphOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEdgeGlyphOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeGlyphPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEdgeGlyphOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeGlyphPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

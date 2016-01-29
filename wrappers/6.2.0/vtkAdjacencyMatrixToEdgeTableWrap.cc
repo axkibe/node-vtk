@@ -85,12 +85,16 @@ void VtkAdjacencyMatrixToEdgeTableWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAdjacencyMatrixToEdgeTable> native = vtkSmartPointer<vtkAdjacencyMatrixToEdgeTable>::New();
-		VtkAdjacencyMatrixToEdgeTableWrap* obj = new VtkAdjacencyMatrixToEdgeTableWrap(native);		obj->Wrap(info.This());
+		VtkAdjacencyMatrixToEdgeTableWrap* obj = new VtkAdjacencyMatrixToEdgeTableWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -82,12 +82,16 @@ void VtkPNMReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPNMReader> native = vtkSmartPointer<vtkPNMReader>::New();
-		VtkPNMReaderWrap* obj = new VtkPNMReaderWrap(native);		obj->Wrap(info.This());
+		VtkPNMReaderWrap* obj = new VtkPNMReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

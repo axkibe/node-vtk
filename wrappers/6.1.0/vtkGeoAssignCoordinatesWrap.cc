@@ -57,6 +57,9 @@ void VtkGeoAssignCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCoordinatesInArrays", GetCoordinatesInArrays);
+	Nan::SetPrototypeMethod(tpl, "getCoordinatesInArrays", GetCoordinatesInArrays);
+
 	Nan::SetPrototypeMethod(tpl, "GetGlobeRadius", GetGlobeRadius);
 	Nan::SetPrototypeMethod(tpl, "getGlobeRadius", GetGlobeRadius);
 
@@ -77,6 +80,9 @@ void VtkGeoAssignCoordinatesWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCoordinatesInArrays", SetCoordinatesInArrays);
+	Nan::SetPrototypeMethod(tpl, "setCoordinatesInArrays", SetCoordinatesInArrays);
 
 	Nan::SetPrototypeMethod(tpl, "SetGlobeRadius", SetGlobeRadius);
 	Nan::SetPrototypeMethod(tpl, "setGlobeRadius", SetGlobeRadius);
@@ -104,12 +110,16 @@ void VtkGeoAssignCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoAssignCoordinates> native = vtkSmartPointer<vtkGeoAssignCoordinates>::New();
-		VtkGeoAssignCoordinatesWrap* obj = new VtkGeoAssignCoordinatesWrap(native);		obj->Wrap(info.This());
+		VtkGeoAssignCoordinatesWrap* obj = new VtkGeoAssignCoordinatesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -151,6 +161,20 @@ void VtkGeoAssignCoordinatesWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGeoAssignCoordinatesWrap::GetCoordinatesInArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
+	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCoordinatesInArrays();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoAssignCoordinatesWrap::GetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -289,6 +313,25 @@ void VtkGeoAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoAssignCoordinatesWrap::SetCoordinatesInArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
+	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCoordinatesInArrays(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -210,12 +210,16 @@ void VtkQuadricClusteringWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkQuadricClustering> native = vtkSmartPointer<vtkQuadricClustering>::New();
-		VtkQuadricClusteringWrap* obj = new VtkQuadricClusteringWrap(native);		obj->Wrap(info.This());
+		VtkQuadricClusteringWrap* obj = new VtkQuadricClusteringWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

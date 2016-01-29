@@ -32,6 +32,7 @@ class VtkContextBufferIdWrap : public VtkAbstractContextBufferIdWrap
 		static void Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsAllocated(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValues(const Nan::FunctionCallbackInfo<v8::Value>& info);

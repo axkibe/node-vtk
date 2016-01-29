@@ -82,12 +82,16 @@ void VtkPassThroughLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPassThroughLayoutStrategy> native = vtkSmartPointer<vtkPassThroughLayoutStrategy>::New();
-		VtkPassThroughLayoutStrategyWrap* obj = new VtkPassThroughLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkPassThroughLayoutStrategyWrap* obj = new VtkPassThroughLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -53,8 +53,17 @@ void VtkKCoreDecompositionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CheckInputGraphOn", CheckInputGraphOn);
 	Nan::SetPrototypeMethod(tpl, "checkInputGraphOn", CheckInputGraphOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetCheckInputGraph", GetCheckInputGraph);
+	Nan::SetPrototypeMethod(tpl, "getCheckInputGraph", GetCheckInputGraph);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseInDegreeNeighbors", GetUseInDegreeNeighbors);
+	Nan::SetPrototypeMethod(tpl, "getUseInDegreeNeighbors", GetUseInDegreeNeighbors);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseOutDegreeNeighbors", GetUseOutDegreeNeighbors);
+	Nan::SetPrototypeMethod(tpl, "getUseOutDegreeNeighbors", GetUseOutDegreeNeighbors);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -65,8 +74,17 @@ void VtkKCoreDecompositionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCheckInputGraph", SetCheckInputGraph);
+	Nan::SetPrototypeMethod(tpl, "setCheckInputGraph", SetCheckInputGraph);
+
 	Nan::SetPrototypeMethod(tpl, "SetOutputArrayName", SetOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "setOutputArrayName", SetOutputArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseInDegreeNeighbors", SetUseInDegreeNeighbors);
+	Nan::SetPrototypeMethod(tpl, "setUseInDegreeNeighbors", SetUseInDegreeNeighbors);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseOutDegreeNeighbors", SetUseOutDegreeNeighbors);
+	Nan::SetPrototypeMethod(tpl, "setUseOutDegreeNeighbors", SetUseOutDegreeNeighbors);
 
 	Nan::SetPrototypeMethod(tpl, "UseInDegreeNeighborsOff", UseInDegreeNeighborsOff);
 	Nan::SetPrototypeMethod(tpl, "useInDegreeNeighborsOff", UseInDegreeNeighborsOff);
@@ -94,12 +112,16 @@ void VtkKCoreDecompositionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkKCoreDecomposition> native = vtkSmartPointer<vtkKCoreDecomposition>::New();
-		VtkKCoreDecompositionWrap* obj = new VtkKCoreDecompositionWrap(native);		obj->Wrap(info.This());
+		VtkKCoreDecompositionWrap* obj = new VtkKCoreDecompositionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -129,6 +151,20 @@ void VtkKCoreDecompositionWrap::CheckInputGraphOn(const Nan::FunctionCallbackInf
 	native->CheckInputGraphOn();
 }
 
+void VtkKCoreDecompositionWrap::GetCheckInputGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCheckInputGraph();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkKCoreDecompositionWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
@@ -141,6 +177,34 @@ void VtkKCoreDecompositionWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkKCoreDecompositionWrap::GetUseInDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseInDegreeNeighbors();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkKCoreDecompositionWrap::GetUseOutDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseOutDegreeNeighbors();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkKCoreDecompositionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +283,25 @@ void VtkKCoreDecompositionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkKCoreDecompositionWrap::SetCheckInputGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCheckInputGraph(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkKCoreDecompositionWrap::SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
@@ -233,6 +316,44 @@ void VtkKCoreDecompositionWrap::SetOutputArrayName(const Nan::FunctionCallbackIn
 		}
 		native->SetOutputArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKCoreDecompositionWrap::SetUseInDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseInDegreeNeighbors(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKCoreDecompositionWrap::SetUseOutDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
+	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseOutDegreeNeighbors(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

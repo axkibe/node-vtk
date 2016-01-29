@@ -32,6 +32,8 @@ class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PassScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +56,8 @@ class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetIconSheetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIconSizeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIconSizeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

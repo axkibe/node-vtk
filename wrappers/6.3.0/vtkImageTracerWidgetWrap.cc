@@ -258,12 +258,16 @@ void VtkImageTracerWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageTracerWidget> native = vtkSmartPointer<vtkImageTracerWidget>::New();
-		VtkImageTracerWidgetWrap* obj = new VtkImageTracerWidgetWrap(native);		obj->Wrap(info.This());
+		VtkImageTracerWidgetWrap* obj = new VtkImageTracerWidgetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -73,12 +73,16 @@ void VtkImageToStructuredGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageToStructuredGrid> native = vtkSmartPointer<vtkImageToStructuredGrid>::New();
-		VtkImageToStructuredGridWrap* obj = new VtkImageToStructuredGridWrap(native);		obj->Wrap(info.This());
+		VtkImageToStructuredGridWrap* obj = new VtkImageToStructuredGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

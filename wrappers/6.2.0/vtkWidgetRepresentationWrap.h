@@ -41,6 +41,7 @@ class VtkWidgetRepresentationWrap : public VtkPropWrap
 		static void GetNeedToRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeedToRenderMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeedToRenderMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaceFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaceFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaceFactorMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -62,6 +63,7 @@ class VtkWidgetRepresentationWrap : public VtkPropWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNeedToRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlaceFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);

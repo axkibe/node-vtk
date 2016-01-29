@@ -39,6 +39,7 @@ class VtkGraphAnnotationLayersFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetHullShapeToConvexHull(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinHullSizeInDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinHullSizeInWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

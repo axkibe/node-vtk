@@ -167,12 +167,16 @@ void VtkInteractorStyleImageWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleImage> native = vtkSmartPointer<vtkInteractorStyleImage>::New();
-		VtkInteractorStyleImageWrap* obj = new VtkInteractorStyleImageWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleImageWrap* obj = new VtkInteractorStyleImageWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

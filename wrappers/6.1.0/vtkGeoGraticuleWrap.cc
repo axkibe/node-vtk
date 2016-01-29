@@ -115,12 +115,16 @@ void VtkGeoGraticuleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoGraticule> native = vtkSmartPointer<vtkGeoGraticule>::New();
-		VtkGeoGraticuleWrap* obj = new VtkGeoGraticuleWrap(native);		obj->Wrap(info.This());
+		VtkGeoGraticuleWrap* obj = new VtkGeoGraticuleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

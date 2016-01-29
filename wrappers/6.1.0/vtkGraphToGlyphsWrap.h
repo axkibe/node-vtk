@@ -32,14 +32,18 @@ class VtkGraphToGlyphsWrap : public VtkPolyDataAlgorithmWrap
 		static void FilledOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FilledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlyphType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlyphType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

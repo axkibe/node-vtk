@@ -81,12 +81,16 @@ void VtkAnnotationLayersAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAnnotationLayersAlgorithm> native = vtkSmartPointer<vtkAnnotationLayersAlgorithm>::New();
-		VtkAnnotationLayersAlgorithmWrap* obj = new VtkAnnotationLayersAlgorithmWrap(native);		obj->Wrap(info.This());
+		VtkAnnotationLayersAlgorithmWrap* obj = new VtkAnnotationLayersAlgorithmWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

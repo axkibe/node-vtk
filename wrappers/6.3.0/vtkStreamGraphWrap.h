@@ -32,11 +32,13 @@ class VtkStreamGraphWrap : public VtkGraphAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeWindowArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeWindowArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

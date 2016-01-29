@@ -82,12 +82,16 @@ void VtkOpenGLGlyph3DMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLGlyph3DMapper> native = vtkSmartPointer<vtkOpenGLGlyph3DMapper>::New();
-		VtkOpenGLGlyph3DMapperWrap* obj = new VtkOpenGLGlyph3DMapperWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLGlyph3DMapperWrap* obj = new VtkOpenGLGlyph3DMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -139,12 +139,16 @@ void VtkImageAnisotropicDiffusion2DWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageAnisotropicDiffusion2D> native = vtkSmartPointer<vtkImageAnisotropicDiffusion2D>::New();
-		VtkImageAnisotropicDiffusion2DWrap* obj = new VtkImageAnisotropicDiffusion2DWrap(native);		obj->Wrap(info.This());
+		VtkImageAnisotropicDiffusion2DWrap* obj = new VtkImageAnisotropicDiffusion2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

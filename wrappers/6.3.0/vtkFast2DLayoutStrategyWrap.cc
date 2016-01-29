@@ -130,12 +130,16 @@ void VtkFast2DLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFast2DLayoutStrategy> native = vtkSmartPointer<vtkFast2DLayoutStrategy>::New();
-		VtkFast2DLayoutStrategyWrap* obj = new VtkFast2DLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkFast2DLayoutStrategyWrap* obj = new VtkFast2DLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

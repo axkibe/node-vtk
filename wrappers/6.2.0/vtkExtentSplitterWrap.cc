@@ -105,12 +105,16 @@ void VtkExtentSplitterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtentSplitter> native = vtkSmartPointer<vtkExtentSplitter>::New();
-		VtkExtentSplitterWrap* obj = new VtkExtentSplitterWrap(native);		obj->Wrap(info.This());
+		VtkExtentSplitterWrap* obj = new VtkExtentSplitterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

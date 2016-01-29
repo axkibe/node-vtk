@@ -31,6 +31,7 @@ class VtkGraphLayoutStrategyWrap : public VtkObjectWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeWeightField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWeightEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsLayoutComplete(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkGraphLayoutStrategyWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeWeightField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWeightEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

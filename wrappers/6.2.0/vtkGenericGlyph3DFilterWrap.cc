@@ -236,12 +236,16 @@ void VtkGenericGlyph3DFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericGlyph3DFilter> native = vtkSmartPointer<vtkGenericGlyph3DFilter>::New();
-		VtkGenericGlyph3DFilterWrap* obj = new VtkGenericGlyph3DFilterWrap(native);		obj->Wrap(info.This());
+		VtkGenericGlyph3DFilterWrap* obj = new VtkGenericGlyph3DFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

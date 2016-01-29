@@ -47,6 +47,9 @@ void VtkTemporalInterpolatorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkTemporalInterpolatorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCacheData", GetCacheData);
+	Nan::SetPrototypeMethod(tpl, "getCacheData", GetCacheData);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,6 +67,9 @@ void VtkTemporalInterpolatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCacheData", SetCacheData);
+	Nan::SetPrototypeMethod(tpl, "setCacheData", SetCacheData);
 
 	Nan::SetPrototypeMethod(tpl, "SetDiscreteTimeStepInterval", SetDiscreteTimeStepInterval);
 	Nan::SetPrototypeMethod(tpl, "setDiscreteTimeStepInterval", SetDiscreteTimeStepInterval);
@@ -85,15 +91,33 @@ void VtkTemporalInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTemporalInterpolator> native = vtkSmartPointer<vtkTemporalInterpolator>::New();
-		VtkTemporalInterpolatorWrap* obj = new VtkTemporalInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkTemporalInterpolatorWrap* obj = new VtkTemporalInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTemporalInterpolatorWrap::GetCacheData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatorWrap>(info.Holder());
+	vtkTemporalInterpolator *native = (vtkTemporalInterpolator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCacheData();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTemporalInterpolatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -209,6 +233,25 @@ void VtkTemporalInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTemporalInterpolatorWrap::SetCacheData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatorWrap>(info.Holder());
+	vtkTemporalInterpolator *native = (vtkTemporalInterpolator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCacheData(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

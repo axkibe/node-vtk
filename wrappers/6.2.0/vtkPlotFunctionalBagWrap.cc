@@ -9,6 +9,7 @@
 #include "vtkPlotWrap.h"
 #include "vtkPlotFunctionalBagWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 
 using namespace v8;
@@ -57,11 +58,20 @@ void VtkPlotFunctionalBagWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetVisible", GetVisible);
+	Nan::SetPrototypeMethod(tpl, "getVisible", GetVisible);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsBag", IsBag);
+	Nan::SetPrototypeMethod(tpl, "isBag", IsBag);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -86,12 +96,16 @@ void VtkPlotFunctionalBagWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlotFunctionalBag> native = vtkSmartPointer<vtkPlotFunctionalBag>::New();
-		VtkPlotFunctionalBagWrap* obj = new VtkPlotFunctionalBagWrap(native);		obj->Wrap(info.This());
+		VtkPlotFunctionalBagWrap* obj = new VtkPlotFunctionalBagWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -146,6 +160,20 @@ void VtkPlotFunctionalBagWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkPlotFunctionalBagWrap::GetVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
+	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVisible();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPlotFunctionalBagWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
@@ -166,6 +194,20 @@ void VtkPlotFunctionalBagWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotFunctionalBagWrap::IsBag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
+	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsBag();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotFunctionalBagWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -189,6 +231,28 @@ void VtkPlotFunctionalBagWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotFunctionalBagWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
+	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotFunctionalBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

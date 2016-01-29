@@ -66,6 +66,9 @@ void VtkAMRInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAMRData", SetAMRData);
 	Nan::SetPrototypeMethod(tpl, "setAMRData", SetAMRData);
 
+	Nan::SetPrototypeMethod(tpl, "SetLastDataSet", SetLastDataSet);
+	Nan::SetPrototypeMethod(tpl, "setLastDataSet", SetLastDataSet);
+
 	ptpl.Reset( tpl );
 }
 
@@ -80,12 +83,16 @@ void VtkAMRInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRInterpolatedVelocityField> native = vtkSmartPointer<vtkAMRInterpolatedVelocityField>::New();
-		VtkAMRInterpolatedVelocityFieldWrap* obj = new VtkAMRInterpolatedVelocityFieldWrap(native);		obj->Wrap(info.This());
+		VtkAMRInterpolatedVelocityFieldWrap* obj = new VtkAMRInterpolatedVelocityFieldWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -220,6 +227,31 @@ void VtkAMRInterpolatedVelocityFieldWrap::SetAMRData(const Nan::FunctionCallback
 			(vtkOverlappingAMR *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInterpolatedVelocityFieldWrap::SetLastDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkAMRInterpolatedVelocityField *native = (vtkAMRInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetLastDataSet(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

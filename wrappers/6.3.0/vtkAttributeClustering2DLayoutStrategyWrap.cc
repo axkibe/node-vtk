@@ -136,12 +136,16 @@ void VtkAttributeClustering2DLayoutStrategyWrap::New(const Nan::FunctionCallback
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAttributeClustering2DLayoutStrategy> native = vtkSmartPointer<vtkAttributeClustering2DLayoutStrategy>::New();
-		VtkAttributeClustering2DLayoutStrategyWrap* obj = new VtkAttributeClustering2DLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkAttributeClustering2DLayoutStrategyWrap* obj = new VtkAttributeClustering2DLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

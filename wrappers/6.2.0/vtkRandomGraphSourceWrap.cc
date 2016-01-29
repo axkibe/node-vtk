@@ -71,8 +71,17 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GeneratePedigreeIdsOn", GeneratePedigreeIdsOn);
 	Nan::SetPrototypeMethod(tpl, "generatePedigreeIdsOn", GeneratePedigreeIdsOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAllowParallelEdges", GetAllowParallelEdges);
+	Nan::SetPrototypeMethod(tpl, "getAllowParallelEdges", GetAllowParallelEdges);
+
+	Nan::SetPrototypeMethod(tpl, "GetAllowSelfLoops", GetAllowSelfLoops);
+	Nan::SetPrototypeMethod(tpl, "getAllowSelfLoops", GetAllowSelfLoops);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDirected", GetDirected);
+	Nan::SetPrototypeMethod(tpl, "getDirected", GetDirected);
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgePedigreeIdArrayName", GetEdgePedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgePedigreeIdArrayName", GetEdgePedigreeIdArrayName);
@@ -88,6 +97,12 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgeWeightArrayName", GetEdgeWeightArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeWeightArrayName", GetEdgeWeightArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetGeneratePedigreeIds", GetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getGeneratePedigreeIds", GetGeneratePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "GetIncludeEdgeWeights", GetIncludeEdgeWeights);
+	Nan::SetPrototypeMethod(tpl, "getIncludeEdgeWeights", GetIncludeEdgeWeights);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfEdges", GetNumberOfEdges);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfEdges", GetNumberOfEdges);
@@ -110,6 +125,12 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSeed", GetSeed);
 	Nan::SetPrototypeMethod(tpl, "getSeed", GetSeed);
 
+	Nan::SetPrototypeMethod(tpl, "GetStartWithTree", GetStartWithTree);
+	Nan::SetPrototypeMethod(tpl, "getStartWithTree", GetStartWithTree);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseEdgeProbability", GetUseEdgeProbability);
+	Nan::SetPrototypeMethod(tpl, "getUseEdgeProbability", GetUseEdgeProbability);
+
 	Nan::SetPrototypeMethod(tpl, "GetVertexPedigreeIdArrayName", GetVertexPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVertexPedigreeIdArrayName", GetVertexPedigreeIdArrayName);
 
@@ -128,6 +149,15 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAllowParallelEdges", SetAllowParallelEdges);
+	Nan::SetPrototypeMethod(tpl, "setAllowParallelEdges", SetAllowParallelEdges);
+
+	Nan::SetPrototypeMethod(tpl, "SetAllowSelfLoops", SetAllowSelfLoops);
+	Nan::SetPrototypeMethod(tpl, "setAllowSelfLoops", SetAllowSelfLoops);
+
+	Nan::SetPrototypeMethod(tpl, "SetDirected", SetDirected);
+	Nan::SetPrototypeMethod(tpl, "setDirected", SetDirected);
+
 	Nan::SetPrototypeMethod(tpl, "SetEdgePedigreeIdArrayName", SetEdgePedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgePedigreeIdArrayName", SetEdgePedigreeIdArrayName);
 
@@ -137,6 +167,12 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEdgeWeightArrayName", SetEdgeWeightArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeWeightArrayName", SetEdgeWeightArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "SetGeneratePedigreeIds", SetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setGeneratePedigreeIds", SetGeneratePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "SetIncludeEdgeWeights", SetIncludeEdgeWeights);
+	Nan::SetPrototypeMethod(tpl, "setIncludeEdgeWeights", SetIncludeEdgeWeights);
+
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfEdges", SetNumberOfEdges);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfEdges", SetNumberOfEdges);
 
@@ -145,6 +181,12 @@ void VtkRandomGraphSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSeed", SetSeed);
 	Nan::SetPrototypeMethod(tpl, "setSeed", SetSeed);
+
+	Nan::SetPrototypeMethod(tpl, "SetStartWithTree", SetStartWithTree);
+	Nan::SetPrototypeMethod(tpl, "setStartWithTree", SetStartWithTree);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseEdgeProbability", SetUseEdgeProbability);
+	Nan::SetPrototypeMethod(tpl, "setUseEdgeProbability", SetUseEdgeProbability);
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexPedigreeIdArrayName", SetVertexPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexPedigreeIdArrayName", SetVertexPedigreeIdArrayName);
@@ -175,12 +217,16 @@ void VtkRandomGraphSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRandomGraphSource> native = vtkSmartPointer<vtkRandomGraphSource>::New();
-		VtkRandomGraphSourceWrap* obj = new VtkRandomGraphSourceWrap(native);		obj->Wrap(info.This());
+		VtkRandomGraphSourceWrap* obj = new VtkRandomGraphSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -282,6 +328,34 @@ void VtkRandomGraphSourceWrap::GeneratePedigreeIdsOn(const Nan::FunctionCallback
 	native->GeneratePedigreeIdsOn();
 }
 
+void VtkRandomGraphSourceWrap::GetAllowParallelEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAllowParallelEdges();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRandomGraphSourceWrap::GetAllowSelfLoops(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAllowSelfLoops();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRandomGraphSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
@@ -294,6 +368,20 @@ void VtkRandomGraphSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRandomGraphSourceWrap::GetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirected();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRandomGraphSourceWrap::GetEdgePedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -364,6 +452,34 @@ void VtkRandomGraphSourceWrap::GetEdgeWeightArrayName(const Nan::FunctionCallbac
 	}
 	r = native->GetEdgeWeightArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRandomGraphSourceWrap::GetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeneratePedigreeIds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRandomGraphSourceWrap::GetIncludeEdgeWeights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIncludeEdgeWeights();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRandomGraphSourceWrap::GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -461,6 +577,34 @@ void VtkRandomGraphSourceWrap::GetSeed(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetSeed();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRandomGraphSourceWrap::GetStartWithTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartWithTree();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRandomGraphSourceWrap::GetUseEdgeProbability(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseEdgeProbability();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -578,6 +722,63 @@ void VtkRandomGraphSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRandomGraphSourceWrap::SetAllowParallelEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAllowParallelEdges(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomGraphSourceWrap::SetAllowSelfLoops(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAllowSelfLoops(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomGraphSourceWrap::SetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDirected(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRandomGraphSourceWrap::SetEdgePedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
@@ -637,6 +838,44 @@ void VtkRandomGraphSourceWrap::SetEdgeWeightArrayName(const Nan::FunctionCallbac
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRandomGraphSourceWrap::SetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeneratePedigreeIds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomGraphSourceWrap::SetIncludeEdgeWeights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIncludeEdgeWeights(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRandomGraphSourceWrap::SetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
@@ -688,6 +927,44 @@ void VtkRandomGraphSourceWrap::SetSeed(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetSeed(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomGraphSourceWrap::SetStartWithTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetStartWithTree(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomGraphSourceWrap::SetUseEdgeProbability(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
+	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseEdgeProbability(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

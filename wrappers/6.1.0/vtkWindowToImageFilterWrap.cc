@@ -58,6 +58,9 @@ void VtkWindowToImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFixBoundary", GetFixBoundary);
+	Nan::SetPrototypeMethod(tpl, "getFixBoundary", GetFixBoundary);
+
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
@@ -96,6 +99,9 @@ void VtkWindowToImageFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetFixBoundary", SetFixBoundary);
+	Nan::SetPrototypeMethod(tpl, "setFixBoundary", SetFixBoundary);
 
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
@@ -144,12 +150,16 @@ void VtkWindowToImageFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkWindowToImageFilter> native = vtkSmartPointer<vtkWindowToImageFilter>::New();
-		VtkWindowToImageFilterWrap* obj = new VtkWindowToImageFilterWrap(native);		obj->Wrap(info.This());
+		VtkWindowToImageFilterWrap* obj = new VtkWindowToImageFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -191,6 +201,20 @@ void VtkWindowToImageFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkWindowToImageFilterWrap::GetFixBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
+	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFixBoundary();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkWindowToImageFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -418,6 +442,25 @@ void VtkWindowToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWindowToImageFilterWrap::SetFixBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
+	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFixBoundary(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

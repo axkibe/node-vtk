@@ -124,12 +124,16 @@ void VtkInteractorStyleTreeMapHoverWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleTreeMapHover> native = vtkSmartPointer<vtkInteractorStyleTreeMapHover>::New();
-		VtkInteractorStyleTreeMapHoverWrap* obj = new VtkInteractorStyleTreeMapHoverWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleTreeMapHoverWrap* obj = new VtkInteractorStyleTreeMapHoverWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

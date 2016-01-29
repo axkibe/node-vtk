@@ -43,6 +43,7 @@ class VtkPolyDataMapper2DWrap : public VtkMapper2DWrap
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTransformCoordinateUseDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -65,6 +66,7 @@ class VtkPolyDataMapper2DWrap : public VtkMapper2DWrap
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransformCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTransformCoordinateUseDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformCoordinateUseDoubleOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

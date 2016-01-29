@@ -91,12 +91,16 @@ void VtkPolyDataStreamerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolyDataStreamer> native = vtkSmartPointer<vtkPolyDataStreamer>::New();
-		VtkPolyDataStreamerWrap* obj = new VtkPolyDataStreamerWrap(native);		obj->Wrap(info.This());
+		VtkPolyDataStreamerWrap* obj = new VtkPolyDataStreamerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

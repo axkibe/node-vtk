@@ -114,12 +114,16 @@ void VtkTreeHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeHeatmapItem> native = vtkSmartPointer<vtkTreeHeatmapItem>::New();
-		VtkTreeHeatmapItemWrap* obj = new VtkTreeHeatmapItemWrap(native);		obj->Wrap(info.This());
+		VtkTreeHeatmapItemWrap* obj = new VtkTreeHeatmapItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

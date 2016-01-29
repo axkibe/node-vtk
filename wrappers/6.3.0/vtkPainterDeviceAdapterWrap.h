@@ -37,6 +37,7 @@ class VtkPainterDeviceAdapterWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsAttributesSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributePointer(const Nan::FunctionCallbackInfo<v8::Value>& info);

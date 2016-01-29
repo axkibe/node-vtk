@@ -31,12 +31,14 @@ class VtkGeoSphereTransformWrap : public VtkAbstractTransformWrap
 
 		static void GetBaseAltitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBaseAltitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToRectangularOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToRectangularOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

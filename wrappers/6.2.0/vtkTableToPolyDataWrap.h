@@ -32,6 +32,8 @@ class VtkTableToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void Create2DPointsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Create2DPointsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCreate2DPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPreserveCoordinateColumnsAsDataArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXColumnIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXColumnIndexMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +60,8 @@ class VtkTableToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void PreserveCoordinateColumnsAsDataArraysOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PreserveCoordinateColumnsAsDataArraysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCreate2DPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPreserveCoordinateColumnsAsDataArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXColumnIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);

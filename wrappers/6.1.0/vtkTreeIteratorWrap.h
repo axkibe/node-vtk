@@ -31,6 +31,7 @@ class VtkTreeIteratorWrap : public VtkObjectWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasNext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Restart(const Nan::FunctionCallbackInfo<v8::Value>& info);

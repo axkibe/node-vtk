@@ -91,12 +91,16 @@ void VtkHoverWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHoverWidget> native = vtkSmartPointer<vtkHoverWidget>::New();
-		VtkHoverWidgetWrap* obj = new VtkHoverWidgetWrap(native);		obj->Wrap(info.This());
+		VtkHoverWidgetWrap* obj = new VtkHoverWidgetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

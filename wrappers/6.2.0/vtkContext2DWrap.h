@@ -37,6 +37,7 @@ class VtkContext2DWrap : public VtkObjectWrap
 		static void BufferIdModeEnd(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeStringBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DrawMarkers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawMathTextString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawPointSprites(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,12 +46,15 @@ class VtkContext2DWrap : public VtkObjectWrap
 		static void DrawQuadStrip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawStringRect(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void End(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBufferIdMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MathTextIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PopMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PushMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);

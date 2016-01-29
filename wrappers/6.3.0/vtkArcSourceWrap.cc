@@ -59,6 +59,9 @@ void VtkArcSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNegative", GetNegative);
+	Nan::SetPrototypeMethod(tpl, "getNegative", GetNegative);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
@@ -70,6 +73,9 @@ void VtkArcSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetResolutionMinValue", GetResolutionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getResolutionMinValue", GetResolutionMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseNormalAndAngle", GetUseNormalAndAngle);
+	Nan::SetPrototypeMethod(tpl, "getUseNormalAndAngle", GetUseNormalAndAngle);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -92,6 +98,9 @@ void VtkArcSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCenter", SetCenter);
 	Nan::SetPrototypeMethod(tpl, "setCenter", SetCenter);
 
+	Nan::SetPrototypeMethod(tpl, "SetNegative", SetNegative);
+	Nan::SetPrototypeMethod(tpl, "setNegative", SetNegative);
+
 	Nan::SetPrototypeMethod(tpl, "SetNormal", SetNormal);
 	Nan::SetPrototypeMethod(tpl, "setNormal", SetNormal);
 
@@ -109,6 +118,9 @@ void VtkArcSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseNormalAndAngle", SetUseNormalAndAngle);
+	Nan::SetPrototypeMethod(tpl, "setUseNormalAndAngle", SetUseNormalAndAngle);
 
 	Nan::SetPrototypeMethod(tpl, "UseNormalAndAngleOff", UseNormalAndAngleOff);
 	Nan::SetPrototypeMethod(tpl, "useNormalAndAngleOff", UseNormalAndAngleOff);
@@ -130,12 +142,16 @@ void VtkArcSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkArcSource> native = vtkSmartPointer<vtkArcSource>::New();
-		VtkArcSourceWrap* obj = new VtkArcSourceWrap(native);		obj->Wrap(info.This());
+		VtkArcSourceWrap* obj = new VtkArcSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -197,6 +213,20 @@ void VtkArcSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkArcSourceWrap::GetNegative(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNegative();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkArcSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
@@ -250,6 +280,20 @@ void VtkArcSourceWrap::GetResolutionMinValue(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetResolutionMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkArcSourceWrap::GetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseNormalAndAngle();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -399,6 +443,25 @@ void VtkArcSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkArcSourceWrap::SetNegative(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNegative(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkArcSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
@@ -539,6 +602,25 @@ void VtkArcSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetResolution(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArcSourceWrap::SetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseNormalAndAngle(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

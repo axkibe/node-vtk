@@ -30,12 +30,14 @@ class VtkTreeDifferenceFilterWrap : public VtkGraphAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComparisonArrayIsVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComparisonArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetComparisonArrayIsVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComparisonArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);

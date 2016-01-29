@@ -84,12 +84,16 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::New(const Nan::FunctionCal
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnstructuredGridHomogeneousRayIntegrator> native = vtkSmartPointer<vtkUnstructuredGridHomogeneousRayIntegrator>::New();
-		VtkUnstructuredGridHomogeneousRayIntegratorWrap* obj = new VtkUnstructuredGridHomogeneousRayIntegratorWrap(native);		obj->Wrap(info.This());
+		VtkUnstructuredGridHomogeneousRayIntegratorWrap* obj = new VtkUnstructuredGridHomogeneousRayIntegratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

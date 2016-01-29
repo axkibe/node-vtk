@@ -36,11 +36,13 @@ class VtkTableToGraphWrap : public VtkGraphAlgorithmWrap
 		static void DirectedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DirectedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LinkColumnPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexTableConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

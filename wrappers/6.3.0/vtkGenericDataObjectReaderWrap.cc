@@ -112,12 +112,16 @@ void VtkGenericDataObjectReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericDataObjectReader> native = vtkSmartPointer<vtkGenericDataObjectReader>::New();
-		VtkGenericDataObjectReaderWrap* obj = new VtkGenericDataObjectReaderWrap(native);		obj->Wrap(info.This());
+		VtkGenericDataObjectReaderWrap* obj = new VtkGenericDataObjectReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

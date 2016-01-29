@@ -114,6 +114,12 @@ void VtkImageDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetVoxelGradient", GetVoxelGradient);
 	Nan::SetPrototypeMethod(tpl, "getVoxelGradient", GetVoxelGradient);
 
+	Nan::SetPrototypeMethod(tpl, "HasNumberOfScalarComponents", HasNumberOfScalarComponents);
+	Nan::SetPrototypeMethod(tpl, "hasNumberOfScalarComponents", HasNumberOfScalarComponents);
+
+	Nan::SetPrototypeMethod(tpl, "HasScalarType", HasScalarType);
+	Nan::SetPrototypeMethod(tpl, "hasScalarType", HasScalarType);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -167,12 +173,16 @@ void VtkImageDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageData> native = vtkSmartPointer<vtkImageData>::New();
-		VtkImageDataWrap* obj = new VtkImageDataWrap(native);		obj->Wrap(info.This());
+		VtkImageDataWrap* obj = new VtkImageDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -700,6 +710,50 @@ void VtkImageDataWrap::GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageDataWrap::HasNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasNumberOfScalarComponents(
+			(vtkInformation *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageDataWrap::HasScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasScalarType(
+			(vtkInformation *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

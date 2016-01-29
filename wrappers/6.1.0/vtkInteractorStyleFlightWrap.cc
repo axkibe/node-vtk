@@ -172,12 +172,16 @@ void VtkInteractorStyleFlightWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleFlight> native = vtkSmartPointer<vtkInteractorStyleFlight>::New();
-		VtkInteractorStyleFlightWrap* obj = new VtkInteractorStyleFlightWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleFlightWrap* obj = new VtkInteractorStyleFlightWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

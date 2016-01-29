@@ -108,12 +108,16 @@ void VtkDuplicatePolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDuplicatePolyData> native = vtkSmartPointer<vtkDuplicatePolyData>::New();
-		VtkDuplicatePolyDataWrap* obj = new VtkDuplicatePolyDataWrap(native);		obj->Wrap(info.This());
+		VtkDuplicatePolyDataWrap* obj = new VtkDuplicatePolyDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

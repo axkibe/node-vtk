@@ -33,11 +33,16 @@ class VtkTIFFReaderWrap : public VtkImageReader2Wrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientationTypeSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacingSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OriginSpecifiedFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OriginSpecifiedFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOriginSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSpacingSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SpacingSpecifiedFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SpacingSpecifiedFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

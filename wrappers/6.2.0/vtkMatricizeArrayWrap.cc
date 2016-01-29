@@ -73,12 +73,16 @@ void VtkMatricizeArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMatricizeArray> native = vtkSmartPointer<vtkMatricizeArray>::New();
-		VtkMatricizeArrayWrap* obj = new VtkMatricizeArrayWrap(native);		obj->Wrap(info.This());
+		VtkMatricizeArrayWrap* obj = new VtkMatricizeArrayWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

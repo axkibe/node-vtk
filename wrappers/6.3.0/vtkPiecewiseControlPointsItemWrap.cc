@@ -66,6 +66,9 @@ void VtkPiecewiseControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiecewiseFunction", SetPiecewiseFunction);
 	Nan::SetPrototypeMethod(tpl, "setPiecewiseFunction", SetPiecewiseFunction);
 
+	Nan::SetPrototypeMethod(tpl, "SetStrokeMode", SetStrokeMode);
+	Nan::SetPrototypeMethod(tpl, "setStrokeMode", SetStrokeMode);
+
 	ptpl.Reset( tpl );
 }
 
@@ -80,12 +83,16 @@ void VtkPiecewiseControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPiecewiseControlPointsItem> native = vtkSmartPointer<vtkPiecewiseControlPointsItem>::New();
-		VtkPiecewiseControlPointsItemWrap* obj = new VtkPiecewiseControlPointsItemWrap(native);		obj->Wrap(info.This());
+		VtkPiecewiseControlPointsItemWrap* obj = new VtkPiecewiseControlPointsItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -218,6 +225,25 @@ void VtkPiecewiseControlPointsItemWrap::SetPiecewiseFunction(const Nan::Function
 		}
 		native->SetPiecewiseFunction(
 			(vtkPiecewiseFunction *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPiecewiseControlPointsItemWrap::SetStrokeMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPiecewiseControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseControlPointsItemWrap>(info.Holder());
+	vtkPiecewiseControlPointsItem *native = (vtkPiecewiseControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetStrokeMode(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

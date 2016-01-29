@@ -42,6 +42,7 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void GetSelectionPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTooltipNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +59,7 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void SetSelectionPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTooltipNotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

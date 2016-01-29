@@ -36,6 +36,7 @@ class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctio
 		static void EnableOpacityMappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiscretize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +47,7 @@ class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctio
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiscretize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);

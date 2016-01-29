@@ -34,6 +34,7 @@ class VtkAMRCutPlaneWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevelOfResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkAMRCutPlaneWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelOfResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNativeCutterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNativeCutterOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

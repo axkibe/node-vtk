@@ -50,6 +50,9 @@ void VtkMetaImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCompression", GetCompression);
+	Nan::SetPrototypeMethod(tpl, "getCompression", GetCompression);
+
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
@@ -64,6 +67,9 @@ void VtkMetaImageWriterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCompression", SetCompression);
+	Nan::SetPrototypeMethod(tpl, "setCompression", SetCompression);
 
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
@@ -88,12 +94,16 @@ void VtkMetaImageWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMetaImageWriter> native = vtkSmartPointer<vtkMetaImageWriter>::New();
-		VtkMetaImageWriterWrap* obj = new VtkMetaImageWriterWrap(native);		obj->Wrap(info.This());
+		VtkMetaImageWriterWrap* obj = new VtkMetaImageWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -111,6 +121,20 @@ void VtkMetaImageWriterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMetaImageWriterWrap::GetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMetaImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageWriterWrap>(info.Holder());
+	vtkMetaImageWriter *native = (vtkMetaImageWriter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCompression();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMetaImageWriterWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -212,6 +236,25 @@ void VtkMetaImageWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMetaImageWriterWrap::SetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMetaImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMetaImageWriterWrap>(info.Holder());
+	vtkMetaImageWriter *native = (vtkMetaImageWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCompression(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

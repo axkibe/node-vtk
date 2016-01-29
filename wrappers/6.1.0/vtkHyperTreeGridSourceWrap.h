@@ -35,6 +35,9 @@ class VtkHyperTreeGridSourceWrap : public VtkHyperTreeGridAlgorithmWrap
 		static void GetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMaskBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuadric(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseDescriptor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +51,9 @@ class VtkHyperTreeGridSourceWrap : public VtkHyperTreeGridAlgorithmWrap
 		static void SetMaterialMaskBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuadric(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseDescriptor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDescriptorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDescriptorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseMaterialMaskOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -161,12 +161,16 @@ void VtkImageCanvasSource2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageCanvasSource2D> native = vtkSmartPointer<vtkImageCanvasSource2D>::New();
-		VtkImageCanvasSource2DWrap* obj = new VtkImageCanvasSource2DWrap(native);		obj->Wrap(info.This());
+		VtkImageCanvasSource2DWrap* obj = new VtkImageCanvasSource2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -62,6 +62,9 @@ void VtkHierarchicalGraphViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColorGraphEdgesByArray", GetColorGraphEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "getColorGraphEdgesByArray", GetColorGraphEdgesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetGraphEdgeColorArrayName", GetGraphEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "getGraphEdgeColorArrayName", GetGraphEdgeColorArrayName);
 
@@ -70,6 +73,12 @@ void VtkHierarchicalGraphViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetGraphEdgeLabelFontSize", GetGraphEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "getGraphEdgeLabelFontSize", GetGraphEdgeLabelFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetGraphEdgeLabelVisibility", GetGraphEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getGraphEdgeLabelVisibility", GetGraphEdgeLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetGraphVisibility", GetGraphVisibility);
+	Nan::SetPrototypeMethod(tpl, "getGraphVisibility", GetGraphVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GraphEdgeLabelVisibilityOff", GraphEdgeLabelVisibilityOff);
 	Nan::SetPrototypeMethod(tpl, "graphEdgeLabelVisibilityOff", GraphEdgeLabelVisibilityOff);
@@ -95,6 +104,9 @@ void VtkHierarchicalGraphViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBundlingStrength", SetBundlingStrength);
 	Nan::SetPrototypeMethod(tpl, "setBundlingStrength", SetBundlingStrength);
 
+	Nan::SetPrototypeMethod(tpl, "SetColorGraphEdgesByArray", SetColorGraphEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "setColorGraphEdgesByArray", SetColorGraphEdgesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "SetGraphEdgeColorArrayName", SetGraphEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setGraphEdgeColorArrayName", SetGraphEdgeColorArrayName);
 
@@ -107,11 +119,17 @@ void VtkHierarchicalGraphViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraphEdgeLabelFontSize", SetGraphEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "setGraphEdgeLabelFontSize", SetGraphEdgeLabelFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "SetGraphEdgeLabelVisibility", SetGraphEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setGraphEdgeLabelVisibility", SetGraphEdgeLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetGraphFromInput", SetGraphFromInput);
 	Nan::SetPrototypeMethod(tpl, "setGraphFromInput", SetGraphFromInput);
 
 	Nan::SetPrototypeMethod(tpl, "SetGraphFromInputConnection", SetGraphFromInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setGraphFromInputConnection", SetGraphFromInputConnection);
+
+	Nan::SetPrototypeMethod(tpl, "SetGraphVisibility", SetGraphVisibility);
+	Nan::SetPrototypeMethod(tpl, "setGraphVisibility", SetGraphVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetHierarchyFromInput", SetHierarchyFromInput);
 	Nan::SetPrototypeMethod(tpl, "setHierarchyFromInput", SetHierarchyFromInput);
@@ -133,12 +151,16 @@ void VtkHierarchicalGraphViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHierarchicalGraphView> native = vtkSmartPointer<vtkHierarchicalGraphView>::New();
-		VtkHierarchicalGraphViewWrap* obj = new VtkHierarchicalGraphViewWrap(native);		obj->Wrap(info.This());
+		VtkHierarchicalGraphViewWrap* obj = new VtkHierarchicalGraphViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -196,6 +218,20 @@ void VtkHierarchicalGraphViewWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkHierarchicalGraphViewWrap::GetColorGraphEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorGraphEdgesByArray();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkHierarchicalGraphViewWrap::GetGraphEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
@@ -235,6 +271,34 @@ void VtkHierarchicalGraphViewWrap::GetGraphEdgeLabelFontSize(const Nan::Function
 		return;
 	}
 	r = native->GetGraphEdgeLabelFontSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHierarchicalGraphViewWrap::GetGraphEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGraphEdgeLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHierarchicalGraphViewWrap::GetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGraphVisibility();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -381,6 +445,25 @@ void VtkHierarchicalGraphViewWrap::SetBundlingStrength(const Nan::FunctionCallba
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHierarchicalGraphViewWrap::SetColorGraphEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorGraphEdgesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHierarchicalGraphViewWrap::SetGraphEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
@@ -452,6 +535,25 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeLabelFontSize(const Nan::Function
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHierarchicalGraphViewWrap::SetGraphEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGraphEdgeLabelVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHierarchicalGraphViewWrap::SetGraphFromInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
@@ -509,6 +611,25 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInputConnection(const Nan::Functi
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHierarchicalGraphViewWrap::SetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
+	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGraphVisibility(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

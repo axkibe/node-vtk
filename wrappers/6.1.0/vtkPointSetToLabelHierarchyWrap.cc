@@ -78,6 +78,9 @@ void VtkPointSetToLabelHierarchyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTextProperty", GetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getTextProperty", GetTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseUnicodeStrings", GetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "getUseUnicodeStrings", GetUseUnicodeStrings);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -114,6 +117,9 @@ void VtkPointSetToLabelHierarchyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseUnicodeStrings", SetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "setUseUnicodeStrings", SetUseUnicodeStrings);
+
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOff", UseUnicodeStringsOff);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOff", UseUnicodeStringsOff);
 
@@ -134,12 +140,16 @@ void VtkPointSetToLabelHierarchyWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPointSetToLabelHierarchy> native = vtkSmartPointer<vtkPointSetToLabelHierarchy>::New();
-		VtkPointSetToLabelHierarchyWrap* obj = new VtkPointSetToLabelHierarchyWrap(native);		obj->Wrap(info.This());
+		VtkPointSetToLabelHierarchyWrap* obj = new VtkPointSetToLabelHierarchyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -292,6 +302,20 @@ void VtkPointSetToLabelHierarchyWrap::GetTextProperty(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPointSetToLabelHierarchyWrap::GetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
+	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseUnicodeStrings();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPointSetToLabelHierarchyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -542,6 +566,25 @@ void VtkPointSetToLabelHierarchyWrap::SetTextProperty(const Nan::FunctionCallbac
 		}
 		native->SetTextProperty(
 			(vtkTextProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointSetToLabelHierarchyWrap::SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
+	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseUnicodeStrings(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

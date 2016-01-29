@@ -9,6 +9,8 @@
 #include "vtkFunctionSetWrap.h"
 #include "vtkCachingInterpolatedVelocityFieldWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkDataSetWrap.h"
+#include "vtkAbstractCellLocatorWrap.h"
 
 using namespace v8;
 
@@ -77,6 +79,9 @@ void VtkCachingInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
 
+	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
+	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
+
 	ptpl.Reset( tpl );
 }
 
@@ -91,12 +96,16 @@ void VtkCachingInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCachingInterpolatedVelocityField> native = vtkSmartPointer<vtkCachingInterpolatedVelocityField>::New();
-		VtkCachingInterpolatedVelocityFieldWrap* obj = new VtkCachingInterpolatedVelocityFieldWrap(native);		obj->Wrap(info.This());
+		VtkCachingInterpolatedVelocityFieldWrap* obj = new VtkCachingInterpolatedVelocityFieldWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -276,6 +285,39 @@ void VtkCachingInterpolatedVelocityFieldWrap::SelectVectors(const Nan::FunctionC
 			*a0
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCachingInterpolatedVelocityFieldWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCachingInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCachingInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkCachingInterpolatedVelocityField *native = (vtkCachingInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataSetWrap *a1 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkAbstractCellLocatorWrap *a3 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetDataSet(
+						info[0]->Int32Value(),
+						(vtkDataSet *) a1->native.GetPointer(),
+						info[2]->BooleanValue(),
+						(vtkAbstractCellLocator *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -40,6 +40,7 @@ class VtkImageSincInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		static void GetWindowHalfWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSeparable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenormalizationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenormalizationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

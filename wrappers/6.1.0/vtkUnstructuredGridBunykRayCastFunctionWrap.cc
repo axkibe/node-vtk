@@ -89,12 +89,16 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::New(const Nan::FunctionCallbac
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnstructuredGridBunykRayCastFunction> native = vtkSmartPointer<vtkUnstructuredGridBunykRayCastFunction>::New();
-		VtkUnstructuredGridBunykRayCastFunctionWrap* obj = new VtkUnstructuredGridBunykRayCastFunctionWrap(native);		obj->Wrap(info.This());
+		VtkUnstructuredGridBunykRayCastFunctionWrap* obj = new VtkUnstructuredGridBunykRayCastFunctionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

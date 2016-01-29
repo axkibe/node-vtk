@@ -31,6 +31,7 @@ class VtkAxisActorWrap : public VtkActorWrap
 
 		static void AxisVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BuildAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CalculateLabelOffsetOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CalculateLabelOffsetOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CalculateTitleOffsetOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

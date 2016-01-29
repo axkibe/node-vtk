@@ -93,12 +93,16 @@ void VtkImageStencilSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageStencilSource> native = vtkSmartPointer<vtkImageStencilSource>::New();
-		VtkImageStencilSourceWrap* obj = new VtkImageStencilSourceWrap(native);		obj->Wrap(info.This());
+		VtkImageStencilSourceWrap* obj = new VtkImageStencilSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

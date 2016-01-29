@@ -31,7 +31,11 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 
 		static void ClampingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClampingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMasking(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNestedDisplayLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,7 +43,11 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSourceIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseSelectionIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaskingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaskingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,8 +60,12 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScalingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMasking(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNestedDisplayLists(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientationArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientationModeToDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -65,11 +77,14 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void SetScaleModeToNoDataScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleModeToScaleByMagnitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleModeToScaleByVectorComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionIdArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceIndexArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSourceIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseSelectionIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SourceIndexingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SourceIndexingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseSelectionIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

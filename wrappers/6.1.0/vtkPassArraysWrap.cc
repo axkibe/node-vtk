@@ -80,6 +80,12 @@ void VtkPassArraysWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetRemoveArrays", GetRemoveArrays);
+	Nan::SetPrototypeMethod(tpl, "getRemoveArrays", GetRemoveArrays);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseFieldTypes", GetUseFieldTypes);
+	Nan::SetPrototypeMethod(tpl, "getUseFieldTypes", GetUseFieldTypes);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -107,6 +113,12 @@ void VtkPassArraysWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetRemoveArrays", SetRemoveArrays);
+	Nan::SetPrototypeMethod(tpl, "setRemoveArrays", SetRemoveArrays);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseFieldTypes", SetUseFieldTypes);
+	Nan::SetPrototypeMethod(tpl, "setUseFieldTypes", SetUseFieldTypes);
+
 	Nan::SetPrototypeMethod(tpl, "UseFieldTypesOff", UseFieldTypesOff);
 	Nan::SetPrototypeMethod(tpl, "useFieldTypesOff", UseFieldTypesOff);
 
@@ -127,12 +139,16 @@ void VtkPassArraysWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPassArrays> native = vtkSmartPointer<vtkPassArrays>::New();
-		VtkPassArraysWrap* obj = new VtkPassArraysWrap(native);		obj->Wrap(info.This());
+		VtkPassArraysWrap* obj = new VtkPassArraysWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -315,6 +331,34 @@ void VtkPassArraysWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkPassArraysWrap::GetRemoveArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
+	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRemoveArrays();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPassArraysWrap::GetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
+	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseFieldTypes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPassArraysWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
@@ -494,6 +538,44 @@ void VtkPassArraysWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPassArraysWrap::SetRemoveArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
+	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRemoveArrays(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPassArraysWrap::SetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
+	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseFieldTypes(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

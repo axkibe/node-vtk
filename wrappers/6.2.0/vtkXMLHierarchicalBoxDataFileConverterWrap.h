@@ -29,6 +29,7 @@ class VtkXMLHierarchicalBoxDataFileConverterWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Convert(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);

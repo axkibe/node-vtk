@@ -61,6 +61,9 @@ void VtkNIFTIImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNIFTIVersion", GetNIFTIVersion);
 	Nan::SetPrototypeMethod(tpl, "getNIFTIVersion", GetNIFTIVersion);
 
+	Nan::SetPrototypeMethod(tpl, "GetPlanarRGB", GetPlanarRGB);
+	Nan::SetPrototypeMethod(tpl, "getPlanarRGB", GetPlanarRGB);
+
 	Nan::SetPrototypeMethod(tpl, "GetQFac", GetQFac);
 	Nan::SetPrototypeMethod(tpl, "getQFac", GetQFac);
 
@@ -106,6 +109,9 @@ void VtkNIFTIImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNIFTIVersion", SetNIFTIVersion);
 	Nan::SetPrototypeMethod(tpl, "setNIFTIVersion", SetNIFTIVersion);
 
+	Nan::SetPrototypeMethod(tpl, "SetPlanarRGB", SetPlanarRGB);
+	Nan::SetPrototypeMethod(tpl, "setPlanarRGB", SetPlanarRGB);
+
 	Nan::SetPrototypeMethod(tpl, "SetQFac", SetQFac);
 	Nan::SetPrototypeMethod(tpl, "setQFac", SetQFac);
 
@@ -141,12 +147,16 @@ void VtkNIFTIImageWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkNIFTIImageWriter> native = vtkSmartPointer<vtkNIFTIImageWriter>::New();
-		VtkNIFTIImageWriterWrap* obj = new VtkNIFTIImageWriterWrap(native);		obj->Wrap(info.This());
+		VtkNIFTIImageWriterWrap* obj = new VtkNIFTIImageWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -214,6 +224,20 @@ void VtkNIFTIImageWriterWrap::GetNIFTIVersion(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNIFTIVersion();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkNIFTIImageWriterWrap::GetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageWriterWrap>(info.Holder());
+	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPlanarRGB();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -486,6 +510,25 @@ void VtkNIFTIImageWriterWrap::SetNIFTIVersion(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetNIFTIVersion(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkNIFTIImageWriterWrap::SetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageWriterWrap>(info.Holder());
+	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPlanarRGB(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

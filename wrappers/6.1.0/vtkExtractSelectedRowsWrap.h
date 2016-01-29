@@ -32,10 +32,12 @@ class VtkExtractSelectedRowsWrap : public VtkTableAlgorithmWrap
 		static void AddOriginalRowIdsArrayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddOriginalRowIdsArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAddOriginalRowIdsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAddOriginalRowIdsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLayersConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

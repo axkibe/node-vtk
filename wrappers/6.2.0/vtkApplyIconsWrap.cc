@@ -68,6 +68,9 @@ void VtkApplyIconsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelectionMode", GetSelectionMode);
 	Nan::SetPrototypeMethod(tpl, "getSelectionMode", GetSelectionMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseLookupTable", GetUseLookupTable);
+	Nan::SetPrototypeMethod(tpl, "getUseLookupTable", GetUseLookupTable);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -107,6 +110,9 @@ void VtkApplyIconsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionModeToSelectedOffset", SetSelectionModeToSelectedOffset);
 	Nan::SetPrototypeMethod(tpl, "setSelectionModeToSelectedOffset", SetSelectionModeToSelectedOffset);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseLookupTable", SetUseLookupTable);
+	Nan::SetPrototypeMethod(tpl, "setUseLookupTable", SetUseLookupTable);
+
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableOff", UseLookupTableOff);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableOff", UseLookupTableOff);
 
@@ -127,12 +133,16 @@ void VtkApplyIconsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkApplyIcons> native = vtkSmartPointer<vtkApplyIcons>::New();
-		VtkApplyIconsWrap* obj = new VtkApplyIconsWrap(native);		obj->Wrap(info.This());
+		VtkApplyIconsWrap* obj = new VtkApplyIconsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -231,6 +241,20 @@ void VtkApplyIconsWrap::GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetSelectionMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkApplyIconsWrap::GetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
+	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseLookupTable();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -492,6 +516,25 @@ void VtkApplyIconsWrap::SetSelectionModeToSelectedOffset(const Nan::FunctionCall
 		return;
 	}
 	native->SetSelectionModeToSelectedOffset();
+}
+
+void VtkApplyIconsWrap::SetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
+	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseLookupTable(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkApplyIconsWrap::UseLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

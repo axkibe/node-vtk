@@ -29,13 +29,16 @@ class VtkTextRendererWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void FreeTypeIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultBackend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MathTextIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDefaultBackend(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

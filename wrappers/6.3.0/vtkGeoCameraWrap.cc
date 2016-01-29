@@ -60,6 +60,9 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLatitude", GetLatitude);
 	Nan::SetPrototypeMethod(tpl, "getLatitude", GetLatitude);
 
+	Nan::SetPrototypeMethod(tpl, "GetLockHeading", GetLockHeading);
+	Nan::SetPrototypeMethod(tpl, "getLockHeading", GetLockHeading);
+
 	Nan::SetPrototypeMethod(tpl, "GetLongitude", GetLongitude);
 	Nan::SetPrototypeMethod(tpl, "getLongitude", GetLongitude);
 
@@ -102,6 +105,9 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLatitude", SetLatitude);
 	Nan::SetPrototypeMethod(tpl, "setLatitude", SetLatitude);
 
+	Nan::SetPrototypeMethod(tpl, "SetLockHeading", SetLockHeading);
+	Nan::SetPrototypeMethod(tpl, "setLockHeading", SetLockHeading);
+
 	Nan::SetPrototypeMethod(tpl, "SetLongitude", SetLongitude);
 	Nan::SetPrototypeMethod(tpl, "setLongitude", SetLongitude);
 
@@ -131,12 +137,16 @@ void VtkGeoCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoCamera> native = vtkSmartPointer<vtkGeoCamera>::New();
-		VtkGeoCameraWrap* obj = new VtkGeoCameraWrap(native);		obj->Wrap(info.This());
+		VtkGeoCameraWrap* obj = new VtkGeoCameraWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -195,6 +205,20 @@ void VtkGeoCameraWrap::GetLatitude(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetLatitude();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoCameraWrap::GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
+	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLockHeading();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -450,6 +474,25 @@ void VtkGeoCameraWrap::SetLatitude(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		native->SetLatitude(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoCameraWrap::SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
+	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLockHeading(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

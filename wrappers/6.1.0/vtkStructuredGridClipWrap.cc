@@ -91,12 +91,16 @@ void VtkStructuredGridClipWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStructuredGridClip> native = vtkSmartPointer<vtkStructuredGridClip>::New();
-		VtkStructuredGridClipWrap* obj = new VtkStructuredGridClipWrap(native);		obj->Wrap(info.This());
+		VtkStructuredGridClipWrap* obj = new VtkStructuredGridClipWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

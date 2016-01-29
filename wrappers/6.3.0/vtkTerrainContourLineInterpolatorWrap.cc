@@ -89,12 +89,16 @@ void VtkTerrainContourLineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTerrainContourLineInterpolator> native = vtkSmartPointer<vtkTerrainContourLineInterpolator>::New();
-		VtkTerrainContourLineInterpolatorWrap* obj = new VtkTerrainContourLineInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkTerrainContourLineInterpolatorWrap* obj = new VtkTerrainContourLineInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -33,6 +33,7 @@ class VtkOpenGLHardwareSupportWrap : public VtkObjectWrap
 		static void GetExtensionManager(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFixedTextureUnits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTextureUnits(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsMultiTexturing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

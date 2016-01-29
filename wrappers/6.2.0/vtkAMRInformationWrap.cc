@@ -46,6 +46,9 @@ void VtkAMRInformationWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAMRInformationWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Audit", Audit);
+	Nan::SetPrototypeMethod(tpl, "audit", Audit);
+
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
@@ -63,6 +66,12 @@ void VtkAMRInformationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetGridDescription", GetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "getGridDescription", GetGridDescription);
+
+	Nan::SetPrototypeMethod(tpl, "HasChildrenInformation", HasChildrenInformation);
+	Nan::SetPrototypeMethod(tpl, "hasChildrenInformation", HasChildrenInformation);
+
+	Nan::SetPrototypeMethod(tpl, "HasRefinementRatio", HasRefinementRatio);
+	Nan::SetPrototypeMethod(tpl, "hasRefinementRatio", HasRefinementRatio);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -93,15 +102,33 @@ void VtkAMRInformationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRInformation> native = vtkSmartPointer<vtkAMRInformation>::New();
-		VtkAMRInformationWrap* obj = new VtkAMRInformationWrap(native);		obj->Wrap(info.This());
+		VtkAMRInformationWrap* obj = new VtkAMRInformationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkAMRInformationWrap::Audit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Audit();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAMRInformationWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -194,6 +221,34 @@ void VtkAMRInformationWrap::GetGridDescription(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetGridDescription();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRInformationWrap::HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasChildrenInformation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRInformationWrap::HasRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasRefinementRatio();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

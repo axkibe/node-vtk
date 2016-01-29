@@ -79,12 +79,16 @@ void VtkImageEuclideanToPolarWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageEuclideanToPolar> native = vtkSmartPointer<vtkImageEuclideanToPolar>::New();
-		VtkImageEuclideanToPolarWrap* obj = new VtkImageEuclideanToPolarWrap(native);		obj->Wrap(info.This());
+		VtkImageEuclideanToPolarWrap* obj = new VtkImageEuclideanToPolarWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

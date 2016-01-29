@@ -104,12 +104,16 @@ void VtkBSPIntersectionsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBSPIntersections> native = vtkSmartPointer<vtkBSPIntersections>::New();
-		VtkBSPIntersectionsWrap* obj = new VtkBSPIntersectionsWrap(native);		obj->Wrap(info.This());
+		VtkBSPIntersectionsWrap* obj = new VtkBSPIntersectionsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

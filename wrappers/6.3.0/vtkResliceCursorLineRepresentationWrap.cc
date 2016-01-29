@@ -111,12 +111,16 @@ void VtkResliceCursorLineRepresentationWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkResliceCursorLineRepresentation> native = vtkSmartPointer<vtkResliceCursorLineRepresentation>::New();
-		VtkResliceCursorLineRepresentationWrap* obj = new VtkResliceCursorLineRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkResliceCursorLineRepresentationWrap* obj = new VtkResliceCursorLineRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

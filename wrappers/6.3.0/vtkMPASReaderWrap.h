@@ -38,6 +38,8 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsAtmosphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsZeroCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,14 +49,20 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProjectLatLon(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShowMultilayerView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenterLon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIsAtmosphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIsZeroCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetProjectLatLon(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetShowMultilayerView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVerticalLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

@@ -117,12 +117,16 @@ void VtkIncrementalOctreePointLocatorWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkIncrementalOctreePointLocator> native = vtkSmartPointer<vtkIncrementalOctreePointLocator>::New();
-		VtkIncrementalOctreePointLocatorWrap* obj = new VtkIncrementalOctreePointLocatorWrap(native);		obj->Wrap(info.This());
+		VtkIncrementalOctreePointLocatorWrap* obj = new VtkIncrementalOctreePointLocatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

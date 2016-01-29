@@ -9,6 +9,7 @@
 #include "vtkPlotPointsWrap.h"
 #include "vtkPlotLineWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 
 using namespace v8;
 
@@ -56,6 +57,9 @@ void VtkPlotLineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -73,12 +77,16 @@ void VtkPlotLineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlotLine> native = vtkSmartPointer<vtkPlotLine>::New();
-		VtkPlotLineWrap* obj = new VtkPlotLineWrap(native);		obj->Wrap(info.This());
+		VtkPlotLineWrap* obj = new VtkPlotLineWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -141,6 +149,28 @@ void VtkPlotLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotLineWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
+	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

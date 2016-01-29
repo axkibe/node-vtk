@@ -118,12 +118,16 @@ void VtkInteractorStyleTrackballCameraWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleTrackballCamera> native = vtkSmartPointer<vtkInteractorStyleTrackballCamera>::New();
-		VtkInteractorStyleTrackballCameraWrap* obj = new VtkInteractorStyleTrackballCameraWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleTrackballCameraWrap* obj = new VtkInteractorStyleTrackballCameraWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

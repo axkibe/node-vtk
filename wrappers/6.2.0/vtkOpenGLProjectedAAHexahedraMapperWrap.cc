@@ -9,6 +9,7 @@
 #include "vtkProjectedAAHexahedraMapperWrap.h"
 #include "vtkOpenGLProjectedAAHexahedraMapperWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkRenderWindowWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
@@ -56,6 +57,9 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsRenderSupported", IsRenderSupported);
+	Nan::SetPrototypeMethod(tpl, "isRenderSupported", IsRenderSupported);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -82,12 +86,16 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLProjectedAAHexahedraMapper> native = vtkSmartPointer<vtkOpenGLProjectedAAHexahedraMapper>::New();
-		VtkOpenGLProjectedAAHexahedraMapperWrap* obj = new VtkOpenGLProjectedAAHexahedraMapperWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLProjectedAAHexahedraMapperWrap* obj = new VtkOpenGLProjectedAAHexahedraMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -122,6 +130,28 @@ void VtkOpenGLProjectedAAHexahedraMapperWrap::IsA(const Nan::FunctionCallbackInf
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLProjectedAAHexahedraMapperWrap::IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLProjectedAAHexahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedAAHexahedraMapperWrap>(info.Holder());
+	vtkOpenGLProjectedAAHexahedraMapper *native = (vtkOpenGLProjectedAAHexahedraMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsRenderSupported(
+			(vtkRenderWindow *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

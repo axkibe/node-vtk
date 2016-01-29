@@ -42,6 +42,7 @@ class VtkMathWrap : public VtkObjectWrap
 		static void GetSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Inf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsFinite(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsInf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsNan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Nan(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -228,12 +228,16 @@ void VtkGenericEnSightReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericEnSightReader> native = vtkSmartPointer<vtkGenericEnSightReader>::New();
-		VtkGenericEnSightReaderWrap* obj = new VtkGenericEnSightReaderWrap(native);		obj->Wrap(info.This());
+		VtkGenericEnSightReaderWrap* obj = new VtkGenericEnSightReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -142,12 +142,16 @@ void VtkX3DExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkX3DExporter> native = vtkSmartPointer<vtkX3DExporter>::New();
-		VtkX3DExporterWrap* obj = new VtkX3DExporterWrap(native);		obj->Wrap(info.This());
+		VtkX3DExporterWrap* obj = new VtkX3DExporterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

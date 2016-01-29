@@ -118,12 +118,16 @@ void VtkOggTheoraWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOggTheoraWriter> native = vtkSmartPointer<vtkOggTheoraWriter>::New();
-		VtkOggTheoraWriterWrap* obj = new VtkOggTheoraWriterWrap(native);		obj->Wrap(info.This());
+		VtkOggTheoraWriterWrap* obj = new VtkOggTheoraWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

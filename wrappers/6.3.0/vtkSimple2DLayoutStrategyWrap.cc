@@ -68,6 +68,9 @@ void VtkSimple2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayoutMinValue", GetIterationsPerLayoutMinValue);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayoutMinValue", GetIterationsPerLayoutMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetJitter", GetJitter);
+	Nan::SetPrototypeMethod(tpl, "getJitter", GetJitter);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaxNumberOfIterations", GetMaxNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "getMaxNumberOfIterations", GetMaxNumberOfIterations);
 
@@ -110,6 +113,9 @@ void VtkSimple2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIterationsPerLayout", SetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "setIterationsPerLayout", SetIterationsPerLayout);
 
+	Nan::SetPrototypeMethod(tpl, "SetJitter", SetJitter);
+	Nan::SetPrototypeMethod(tpl, "setJitter", SetJitter);
+
 	Nan::SetPrototypeMethod(tpl, "SetMaxNumberOfIterations", SetMaxNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "setMaxNumberOfIterations", SetMaxNumberOfIterations);
 
@@ -130,12 +136,16 @@ void VtkSimple2DLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSimple2DLayoutStrategy> native = vtkSmartPointer<vtkSimple2DLayoutStrategy>::New();
-		VtkSimple2DLayoutStrategyWrap* obj = new VtkSimple2DLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkSimple2DLayoutStrategyWrap* obj = new VtkSimple2DLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -236,6 +246,20 @@ void VtkSimple2DLayoutStrategyWrap::GetIterationsPerLayoutMinValue(const Nan::Fu
 		return;
 	}
 	r = native->GetIterationsPerLayoutMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSimple2DLayoutStrategyWrap::GetJitter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimple2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple2DLayoutStrategyWrap>(info.Holder());
+	vtkSimple2DLayoutStrategy *native = (vtkSimple2DLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetJitter();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -469,6 +493,25 @@ void VtkSimple2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::FunctionCa
 		}
 		native->SetIterationsPerLayout(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSimple2DLayoutStrategyWrap::SetJitter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimple2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple2DLayoutStrategyWrap>(info.Holder());
+	vtkSimple2DLayoutStrategy *native = (vtkSimple2DLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetJitter(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

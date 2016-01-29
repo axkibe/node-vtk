@@ -234,12 +234,16 @@ void VtkGenericCellWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericCell> native = vtkSmartPointer<vtkGenericCell>::New();
-		VtkGenericCellWrap* obj = new VtkGenericCellWrap(native);		obj->Wrap(info.This());
+		VtkGenericCellWrap* obj = new VtkGenericCellWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

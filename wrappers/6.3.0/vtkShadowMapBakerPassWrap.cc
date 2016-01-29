@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkWindowWrap.h"
+#include "vtkLightWrap.h"
 
 using namespace v8;
 
@@ -55,11 +56,20 @@ void VtkShadowMapBakerPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCompositeZPass", GetCompositeZPass);
 	Nan::SetPrototypeMethod(tpl, "getCompositeZPass", GetCompositeZPass);
 
+	Nan::SetPrototypeMethod(tpl, "GetHasShadows", GetHasShadows);
+	Nan::SetPrototypeMethod(tpl, "getHasShadows", GetHasShadows);
+
+	Nan::SetPrototypeMethod(tpl, "GetNeedUpdate", GetNeedUpdate);
+	Nan::SetPrototypeMethod(tpl, "getNeedUpdate", GetNeedUpdate);
+
 	Nan::SetPrototypeMethod(tpl, "GetOpaquePass", GetOpaquePass);
 	Nan::SetPrototypeMethod(tpl, "getOpaquePass", GetOpaquePass);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "LightCreatesShadow", LightCreatesShadow);
+	Nan::SetPrototypeMethod(tpl, "lightCreatesShadow", LightCreatesShadow);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -97,12 +107,16 @@ void VtkShadowMapBakerPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkShadowMapBakerPass> native = vtkSmartPointer<vtkShadowMapBakerPass>::New();
-		VtkShadowMapBakerPassWrap* obj = new VtkShadowMapBakerPassWrap(native);		obj->Wrap(info.This());
+		VtkShadowMapBakerPassWrap* obj = new VtkShadowMapBakerPassWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -145,6 +159,34 @@ void VtkShadowMapBakerPassWrap::GetCompositeZPass(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkShadowMapBakerPassWrap::GetHasShadows(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
+	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHasShadows();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkShadowMapBakerPassWrap::GetNeedUpdate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
+	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNeedUpdate();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkShadowMapBakerPassWrap::GetOpaquePass(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
@@ -183,6 +225,28 @@ void VtkShadowMapBakerPassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& 
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkShadowMapBakerPassWrap::LightCreatesShadow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
+	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->LightCreatesShadow(
+			(vtkLight *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

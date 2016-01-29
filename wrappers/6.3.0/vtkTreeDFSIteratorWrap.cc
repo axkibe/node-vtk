@@ -79,12 +79,16 @@ void VtkTreeDFSIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeDFSIterator> native = vtkSmartPointer<vtkTreeDFSIterator>::New();
-		VtkTreeDFSIteratorWrap* obj = new VtkTreeDFSIteratorWrap(native);		obj->Wrap(info.This());
+		VtkTreeDFSIteratorWrap* obj = new VtkTreeDFSIteratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

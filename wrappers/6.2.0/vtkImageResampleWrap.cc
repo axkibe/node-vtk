@@ -89,12 +89,16 @@ void VtkImageResampleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageResample> native = vtkSmartPointer<vtkImageResample>::New();
-		VtkImageResampleWrap* obj = new VtkImageResampleWrap(native);		obj->Wrap(info.This());
+		VtkImageResampleWrap* obj = new VtkImageResampleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

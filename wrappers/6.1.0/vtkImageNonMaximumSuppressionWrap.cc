@@ -104,12 +104,16 @@ void VtkImageNonMaximumSuppressionWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageNonMaximumSuppression> native = vtkSmartPointer<vtkImageNonMaximumSuppression>::New();
-		VtkImageNonMaximumSuppressionWrap* obj = new VtkImageNonMaximumSuppressionWrap(native);		obj->Wrap(info.This());
+		VtkImageNonMaximumSuppressionWrap* obj = new VtkImageNonMaximumSuppressionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

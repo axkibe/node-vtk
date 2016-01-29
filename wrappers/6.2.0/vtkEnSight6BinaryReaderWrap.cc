@@ -73,12 +73,16 @@ void VtkEnSight6BinaryReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkEnSight6BinaryReader> native = vtkSmartPointer<vtkEnSight6BinaryReader>::New();
-		VtkEnSight6BinaryReaderWrap* obj = new VtkEnSight6BinaryReaderWrap(native);		obj->Wrap(info.This());
+		VtkEnSight6BinaryReaderWrap* obj = new VtkEnSight6BinaryReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

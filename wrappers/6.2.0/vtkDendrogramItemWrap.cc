@@ -76,6 +76,15 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDisplayNumberOfCollapsedLeafNodes", GetDisplayNumberOfCollapsedLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "getDisplayNumberOfCollapsedLeafNodes", GetDisplayNumberOfCollapsedLeafNodes);
+
+	Nan::SetPrototypeMethod(tpl, "GetDrawLabels", GetDrawLabels);
+	Nan::SetPrototypeMethod(tpl, "getDrawLabels", GetDrawLabels);
+
+	Nan::SetPrototypeMethod(tpl, "GetExtendLeafNodes", GetExtendLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "getExtendLeafNodes", GetExtendLeafNodes);
+
 	Nan::SetPrototypeMethod(tpl, "GetLeafSpacing", GetLeafSpacing);
 	Nan::SetPrototypeMethod(tpl, "getLeafSpacing", GetLeafSpacing);
 
@@ -97,6 +106,9 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "PrepareToPaint", PrepareToPaint);
 	Nan::SetPrototypeMethod(tpl, "prepareToPaint", PrepareToPaint);
 
@@ -105,6 +117,15 @@ void VtkDendrogramItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetColorArray", SetColorArray);
 	Nan::SetPrototypeMethod(tpl, "setColorArray", SetColorArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetDisplayNumberOfCollapsedLeafNodes", SetDisplayNumberOfCollapsedLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "setDisplayNumberOfCollapsedLeafNodes", SetDisplayNumberOfCollapsedLeafNodes);
+
+	Nan::SetPrototypeMethod(tpl, "SetDrawLabels", SetDrawLabels);
+	Nan::SetPrototypeMethod(tpl, "setDrawLabels", SetDrawLabels);
+
+	Nan::SetPrototypeMethod(tpl, "SetExtendLeafNodes", SetExtendLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "setExtendLeafNodes", SetExtendLeafNodes);
 
 	Nan::SetPrototypeMethod(tpl, "SetLeafSpacing", SetLeafSpacing);
 	Nan::SetPrototypeMethod(tpl, "setLeafSpacing", SetLeafSpacing);
@@ -129,12 +150,16 @@ void VtkDendrogramItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDendrogramItem> native = vtkSmartPointer<vtkDendrogramItem>::New();
-		VtkDendrogramItemWrap* obj = new VtkDendrogramItemWrap(native);		obj->Wrap(info.This());
+		VtkDendrogramItemWrap* obj = new VtkDendrogramItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -265,6 +290,48 @@ void VtkDendrogramItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDendrogramItemWrap::GetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDisplayNumberOfCollapsedLeafNodes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDendrogramItemWrap::GetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDrawLabels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDendrogramItemWrap::GetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtendLeafNodes();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDendrogramItemWrap::GetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -407,6 +474,28 @@ void VtkDendrogramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkDendrogramItemWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDendrogramItemWrap::PrepareToPaint(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
@@ -472,6 +561,63 @@ void VtkDendrogramItemWrap::SetColorArray(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetColorArray(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDendrogramItemWrap::SetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayNumberOfCollapsedLeafNodes(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDendrogramItemWrap::SetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDrawLabels(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDendrogramItemWrap::SetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetExtendLeafNodes(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

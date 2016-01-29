@@ -85,12 +85,16 @@ void VtkImageLaplacianWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageLaplacian> native = vtkSmartPointer<vtkImageLaplacian>::New();
-		VtkImageLaplacianWrap* obj = new VtkImageLaplacianWrap(native);		obj->Wrap(info.This());
+		VtkImageLaplacianWrap* obj = new VtkImageLaplacianWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

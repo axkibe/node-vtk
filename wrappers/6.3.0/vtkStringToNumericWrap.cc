@@ -92,11 +92,35 @@ void VtkStringToNumericWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetConvertCellData", GetConvertCellData);
+	Nan::SetPrototypeMethod(tpl, "getConvertCellData", GetConvertCellData);
+
+	Nan::SetPrototypeMethod(tpl, "GetConvertEdgeData", GetConvertEdgeData);
+	Nan::SetPrototypeMethod(tpl, "getConvertEdgeData", GetConvertEdgeData);
+
+	Nan::SetPrototypeMethod(tpl, "GetConvertFieldData", GetConvertFieldData);
+	Nan::SetPrototypeMethod(tpl, "getConvertFieldData", GetConvertFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "GetConvertPointData", GetConvertPointData);
+	Nan::SetPrototypeMethod(tpl, "getConvertPointData", GetConvertPointData);
+
+	Nan::SetPrototypeMethod(tpl, "GetConvertRowData", GetConvertRowData);
+	Nan::SetPrototypeMethod(tpl, "getConvertRowData", GetConvertRowData);
+
+	Nan::SetPrototypeMethod(tpl, "GetConvertVertexData", GetConvertVertexData);
+	Nan::SetPrototypeMethod(tpl, "getConvertVertexData", GetConvertVertexData);
+
 	Nan::SetPrototypeMethod(tpl, "GetDefaultDoubleValue", GetDefaultDoubleValue);
 	Nan::SetPrototypeMethod(tpl, "getDefaultDoubleValue", GetDefaultDoubleValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetDefaultIntegerValue", GetDefaultIntegerValue);
 	Nan::SetPrototypeMethod(tpl, "getDefaultIntegerValue", GetDefaultIntegerValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetForceDouble", GetForceDouble);
+	Nan::SetPrototypeMethod(tpl, "getForceDouble", GetForceDouble);
+
+	Nan::SetPrototypeMethod(tpl, "GetTrimWhitespacePriorToNumericConversion", GetTrimWhitespacePriorToNumericConversion);
+	Nan::SetPrototypeMethod(tpl, "getTrimWhitespacePriorToNumericConversion", GetTrimWhitespacePriorToNumericConversion);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -107,11 +131,35 @@ void VtkStringToNumericWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetConvertCellData", SetConvertCellData);
+	Nan::SetPrototypeMethod(tpl, "setConvertCellData", SetConvertCellData);
+
+	Nan::SetPrototypeMethod(tpl, "SetConvertEdgeData", SetConvertEdgeData);
+	Nan::SetPrototypeMethod(tpl, "setConvertEdgeData", SetConvertEdgeData);
+
+	Nan::SetPrototypeMethod(tpl, "SetConvertFieldData", SetConvertFieldData);
+	Nan::SetPrototypeMethod(tpl, "setConvertFieldData", SetConvertFieldData);
+
+	Nan::SetPrototypeMethod(tpl, "SetConvertPointData", SetConvertPointData);
+	Nan::SetPrototypeMethod(tpl, "setConvertPointData", SetConvertPointData);
+
+	Nan::SetPrototypeMethod(tpl, "SetConvertRowData", SetConvertRowData);
+	Nan::SetPrototypeMethod(tpl, "setConvertRowData", SetConvertRowData);
+
+	Nan::SetPrototypeMethod(tpl, "SetConvertVertexData", SetConvertVertexData);
+	Nan::SetPrototypeMethod(tpl, "setConvertVertexData", SetConvertVertexData);
+
 	Nan::SetPrototypeMethod(tpl, "SetDefaultDoubleValue", SetDefaultDoubleValue);
 	Nan::SetPrototypeMethod(tpl, "setDefaultDoubleValue", SetDefaultDoubleValue);
 
 	Nan::SetPrototypeMethod(tpl, "SetDefaultIntegerValue", SetDefaultIntegerValue);
 	Nan::SetPrototypeMethod(tpl, "setDefaultIntegerValue", SetDefaultIntegerValue);
+
+	Nan::SetPrototypeMethod(tpl, "SetForceDouble", SetForceDouble);
+	Nan::SetPrototypeMethod(tpl, "setForceDouble", SetForceDouble);
+
+	Nan::SetPrototypeMethod(tpl, "SetTrimWhitespacePriorToNumericConversion", SetTrimWhitespacePriorToNumericConversion);
+	Nan::SetPrototypeMethod(tpl, "setTrimWhitespacePriorToNumericConversion", SetTrimWhitespacePriorToNumericConversion);
 
 	Nan::SetPrototypeMethod(tpl, "TrimWhitespacePriorToNumericConversionOff", TrimWhitespacePriorToNumericConversionOff);
 	Nan::SetPrototypeMethod(tpl, "trimWhitespacePriorToNumericConversionOff", TrimWhitespacePriorToNumericConversionOff);
@@ -133,12 +181,16 @@ void VtkStringToNumericWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStringToNumeric> native = vtkSmartPointer<vtkStringToNumeric>::New();
-		VtkStringToNumericWrap* obj = new VtkStringToNumericWrap(native);		obj->Wrap(info.This());
+		VtkStringToNumericWrap* obj = new VtkStringToNumericWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -326,6 +378,90 @@ void VtkStringToNumericWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkStringToNumericWrap::GetConvertCellData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertCellData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetConvertEdgeData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertEdgeData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetConvertFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertFieldData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetConvertPointData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertPointData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetConvertRowData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertRowData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetConvertVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConvertVertexData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkStringToNumericWrap::GetDefaultDoubleValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
@@ -351,6 +487,34 @@ void VtkStringToNumericWrap::GetDefaultIntegerValue(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetDefaultIntegerValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetForceDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetForceDouble();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStringToNumericWrap::GetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTrimWhitespacePriorToNumericConversion();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -430,6 +594,120 @@ void VtkStringToNumericWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStringToNumericWrap::SetConvertCellData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertCellData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetConvertEdgeData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertEdgeData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetConvertFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertFieldData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetConvertPointData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertPointData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetConvertRowData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertRowData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetConvertVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConvertVertexData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStringToNumericWrap::SetDefaultDoubleValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
@@ -462,6 +740,44 @@ void VtkStringToNumericWrap::SetDefaultIntegerValue(const Nan::FunctionCallbackI
 		}
 		native->SetDefaultIntegerValue(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetForceDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetForceDouble(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStringToNumericWrap::SetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
+	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTrimWhitespacePriorToNumericConversion(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

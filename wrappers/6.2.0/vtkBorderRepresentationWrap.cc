@@ -204,12 +204,16 @@ void VtkBorderRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBorderRepresentation> native = vtkSmartPointer<vtkBorderRepresentation>::New();
-		VtkBorderRepresentationWrap* obj = new VtkBorderRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkBorderRepresentationWrap* obj = new VtkBorderRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

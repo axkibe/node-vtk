@@ -157,12 +157,16 @@ void VtkGreedyTerrainDecimationWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGreedyTerrainDecimation> native = vtkSmartPointer<vtkGreedyTerrainDecimation>::New();
-		VtkGreedyTerrainDecimationWrap* obj = new VtkGreedyTerrainDecimationWrap(native);		obj->Wrap(info.This());
+		VtkGreedyTerrainDecimationWrap* obj = new VtkGreedyTerrainDecimationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

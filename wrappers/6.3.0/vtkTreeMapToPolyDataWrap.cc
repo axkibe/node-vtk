@@ -51,6 +51,9 @@ void VtkTreeMapToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetAddNormals", GetAddNormals);
+	Nan::SetPrototypeMethod(tpl, "getAddNormals", GetAddNormals);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -65,6 +68,9 @@ void VtkTreeMapToPolyDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAddNormals", SetAddNormals);
+	Nan::SetPrototypeMethod(tpl, "setAddNormals", SetAddNormals);
 
 	Nan::SetPrototypeMethod(tpl, "SetLevelArrayName", SetLevelArrayName);
 	Nan::SetPrototypeMethod(tpl, "setLevelArrayName", SetLevelArrayName);
@@ -89,12 +95,16 @@ void VtkTreeMapToPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeMapToPolyData> native = vtkSmartPointer<vtkTreeMapToPolyData>::New();
-		VtkTreeMapToPolyDataWrap* obj = new VtkTreeMapToPolyDataWrap(native);		obj->Wrap(info.This());
+		VtkTreeMapToPolyDataWrap* obj = new VtkTreeMapToPolyDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -124,6 +134,20 @@ void VtkTreeMapToPolyDataWrap::FillInputPortInformation(const Nan::FunctionCallb
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeMapToPolyDataWrap::GetAddNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeMapToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info.Holder());
+	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAddNormals();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTreeMapToPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -225,6 +249,25 @@ void VtkTreeMapToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeMapToPolyDataWrap::SetAddNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeMapToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info.Holder());
+	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAddNormals(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -62,6 +62,9 @@ void VtkArrayDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetWriteToOutputString", GetWriteToOutputString);
+	Nan::SetPrototypeMethod(tpl, "getWriteToOutputString", GetWriteToOutputString);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -76,6 +79,9 @@ void VtkArrayDataWriterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
+
+	Nan::SetPrototypeMethod(tpl, "SetWriteToOutputString", SetWriteToOutputString);
+	Nan::SetPrototypeMethod(tpl, "setWriteToOutputString", SetWriteToOutputString);
 
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
@@ -100,12 +106,16 @@ void VtkArrayDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkArrayDataWriter> native = vtkSmartPointer<vtkArrayDataWriter>::New();
-		VtkArrayDataWriterWrap* obj = new VtkArrayDataWriterWrap(native);		obj->Wrap(info.This());
+		VtkArrayDataWriterWrap* obj = new VtkArrayDataWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -175,6 +185,20 @@ void VtkArrayDataWriterWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkArrayDataWriterWrap::GetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
+	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWriteToOutputString();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkArrayDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -286,6 +310,25 @@ void VtkArrayDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetFileName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArrayDataWriterWrap::SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
+	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWriteToOutputString(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

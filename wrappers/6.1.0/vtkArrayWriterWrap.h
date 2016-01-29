@@ -34,11 +34,13 @@ class VtkArrayWriterWrap : public VtkWriterWrap
 		static void GetBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

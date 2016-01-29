@@ -90,12 +90,16 @@ void VtkTerrainDataPointPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTerrainDataPointPlacer> native = vtkSmartPointer<vtkTerrainDataPointPlacer>::New();
-		VtkTerrainDataPointPlacerWrap* obj = new VtkTerrainDataPointPlacerWrap(native);		obj->Wrap(info.This());
+		VtkTerrainDataPointPlacerWrap* obj = new VtkTerrainDataPointPlacerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -151,12 +151,16 @@ void VtkTemporalFractalWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTemporalFractal> native = vtkSmartPointer<vtkTemporalFractal>::New();
-		VtkTemporalFractalWrap* obj = new VtkTemporalFractalWrap(native);		obj->Wrap(info.This());
+		VtkTemporalFractalWrap* obj = new VtkTemporalFractalWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

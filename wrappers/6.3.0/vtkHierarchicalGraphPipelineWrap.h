@@ -37,11 +37,14 @@ class VtkHierarchicalGraphPipelineWrap : public VtkObjectWrap
 		static void GetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColorEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHoverArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LabelVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,10 +54,13 @@ class VtkHierarchicalGraphPipelineWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColorEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHoverArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

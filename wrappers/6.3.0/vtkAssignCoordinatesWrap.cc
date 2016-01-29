@@ -68,6 +68,9 @@ void VtkAssignCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetJitter", SetJitter);
+	Nan::SetPrototypeMethod(tpl, "setJitter", SetJitter);
+
 	Nan::SetPrototypeMethod(tpl, "SetXCoordArrayName", SetXCoordArrayName);
 	Nan::SetPrototypeMethod(tpl, "setXCoordArrayName", SetXCoordArrayName);
 
@@ -91,12 +94,16 @@ void VtkAssignCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAssignCoordinates> native = vtkSmartPointer<vtkAssignCoordinates>::New();
-		VtkAssignCoordinatesWrap* obj = new VtkAssignCoordinatesWrap(native);		obj->Wrap(info.This());
+		VtkAssignCoordinatesWrap* obj = new VtkAssignCoordinatesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -229,6 +236,25 @@ void VtkAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAssignCoordinatesWrap::SetJitter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkAssignCoordinatesWrap>(info.Holder());
+	vtkAssignCoordinates *native = (vtkAssignCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetJitter(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

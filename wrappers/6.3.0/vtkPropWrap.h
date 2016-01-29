@@ -50,8 +50,11 @@ class VtkPropWrap : public VtkObjectWrap
 		static void GetPickable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitPathTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -63,6 +66,10 @@ class VtkPropWrap : public VtkObjectWrap
 		static void PokeMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderFilteredOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderFilteredOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderFilteredTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderFilteredVolumetricGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -75,6 +82,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void SetPickable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPropertyKeys(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

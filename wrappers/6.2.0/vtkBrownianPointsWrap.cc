@@ -97,12 +97,16 @@ void VtkBrownianPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBrownianPoints> native = vtkSmartPointer<vtkBrownianPoints>::New();
-		VtkBrownianPointsWrap* obj = new VtkBrownianPointsWrap(native);		obj->Wrap(info.This());
+		VtkBrownianPointsWrap* obj = new VtkBrownianPointsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

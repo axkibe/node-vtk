@@ -34,9 +34,11 @@ class VtkTemporalInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsStatic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SelectVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDataSetAtTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowCacheResults(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

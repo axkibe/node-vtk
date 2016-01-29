@@ -51,6 +51,9 @@ void VtkColorTransferControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColorFill", GetColorFill);
+	Nan::SetPrototypeMethod(tpl, "getColorFill", GetColorFill);
+
 	Nan::SetPrototypeMethod(tpl, "GetColorTransferFunction", GetColorTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "getColorTransferFunction", GetColorTransferFunction);
 
@@ -62,6 +65,9 @@ void VtkColorTransferControlPointsItemWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorFill", SetColorFill);
+	Nan::SetPrototypeMethod(tpl, "setColorFill", SetColorFill);
 
 	Nan::SetPrototypeMethod(tpl, "SetColorTransferFunction", SetColorTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "setColorTransferFunction", SetColorTransferFunction);
@@ -80,12 +86,16 @@ void VtkColorTransferControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkColorTransferControlPointsItem> native = vtkSmartPointer<vtkColorTransferControlPointsItem>::New();
-		VtkColorTransferControlPointsItemWrap* obj = new VtkColorTransferControlPointsItemWrap(native);		obj->Wrap(info.This());
+		VtkColorTransferControlPointsItemWrap* obj = new VtkColorTransferControlPointsItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -103,6 +113,20 @@ void VtkColorTransferControlPointsItemWrap::GetClassName(const Nan::FunctionCall
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkColorTransferControlPointsItemWrap::GetColorFill(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferControlPointsItemWrap>(info.Holder());
+	vtkColorTransferControlPointsItem *native = (vtkColorTransferControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorFill();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkColorTransferControlPointsItemWrap::GetColorTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,6 +223,25 @@ void VtkColorTransferControlPointsItemWrap::SafeDownCast(const Nan::FunctionCall
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkColorTransferControlPointsItemWrap::SetColorFill(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferControlPointsItemWrap>(info.Holder());
+	vtkColorTransferControlPointsItem *native = (vtkColorTransferControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorFill(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

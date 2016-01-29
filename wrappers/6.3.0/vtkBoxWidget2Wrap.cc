@@ -128,12 +128,16 @@ void VtkBoxWidget2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBoxWidget2> native = vtkSmartPointer<vtkBoxWidget2>::New();
-		VtkBoxWidget2Wrap* obj = new VtkBoxWidget2Wrap(native);		obj->Wrap(info.This());
+		VtkBoxWidget2Wrap* obj = new VtkBoxWidget2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

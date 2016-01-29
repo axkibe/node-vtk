@@ -91,12 +91,16 @@ void VtkImageDataToUniformGridWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDataToUniformGrid> native = vtkSmartPointer<vtkImageDataToUniformGrid>::New();
-		VtkImageDataToUniformGridWrap* obj = new VtkImageDataToUniformGridWrap(native);		obj->Wrap(info.This());
+		VtkImageDataToUniformGridWrap* obj = new VtkImageDataToUniformGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

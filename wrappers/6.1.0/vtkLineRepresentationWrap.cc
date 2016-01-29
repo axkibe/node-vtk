@@ -207,12 +207,16 @@ void VtkLineRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLineRepresentation> native = vtkSmartPointer<vtkLineRepresentation>::New();
-		VtkLineRepresentationWrap* obj = new VtkLineRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkLineRepresentationWrap* obj = new VtkLineRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

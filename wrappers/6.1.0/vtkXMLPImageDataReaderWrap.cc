@@ -81,12 +81,16 @@ void VtkXMLPImageDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLPImageDataReader> native = vtkSmartPointer<vtkXMLPImageDataReader>::New();
-		VtkXMLPImageDataReaderWrap* obj = new VtkXMLPImageDataReaderWrap(native);		obj->Wrap(info.This());
+		VtkXMLPImageDataReaderWrap* obj = new VtkXMLPImageDataReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

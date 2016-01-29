@@ -173,12 +173,16 @@ void VtkIterativeClosestPointTransformWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkIterativeClosestPointTransform> native = vtkSmartPointer<vtkIterativeClosestPointTransform>::New();
-		VtkIterativeClosestPointTransformWrap* obj = new VtkIterativeClosestPointTransformWrap(native);		obj->Wrap(info.This());
+		VtkIterativeClosestPointTransformWrap* obj = new VtkIterativeClosestPointTransformWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

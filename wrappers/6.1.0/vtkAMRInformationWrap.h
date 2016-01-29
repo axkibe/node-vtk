@@ -29,12 +29,15 @@ class VtkAMRInformationWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Audit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateParentChildInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

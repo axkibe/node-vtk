@@ -54,6 +54,9 @@ void VtkDistanceToCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
 
+	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
+	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
 
@@ -75,6 +78,9 @@ void VtkDistanceToCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaling", SetScaling);
+	Nan::SetPrototypeMethod(tpl, "setScaling", SetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
@@ -92,12 +98,16 @@ void VtkDistanceToCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDistanceToCamera> native = vtkSmartPointer<vtkDistanceToCamera>::New();
-		VtkDistanceToCameraWrap* obj = new VtkDistanceToCameraWrap(native);		obj->Wrap(info.This());
+		VtkDistanceToCameraWrap* obj = new VtkDistanceToCameraWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -138,6 +148,20 @@ void VtkDistanceToCameraWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDistanceToCameraWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
+	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaling();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDistanceToCameraWrap::GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -268,6 +292,25 @@ void VtkDistanceToCameraWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetRenderer(
 			(vtkRenderer *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDistanceToCameraWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
+	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaling(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

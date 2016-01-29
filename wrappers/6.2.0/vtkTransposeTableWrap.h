@@ -31,12 +31,16 @@ class VtkTransposeTableWrap : public VtkTableAlgorithmWrap
 
 		static void AddIdColumnOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AddIdColumnOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAddIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIdColumnName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAddIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIdColumnName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIdColumnOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIdColumnOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

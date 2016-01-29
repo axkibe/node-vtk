@@ -33,7 +33,11 @@ class VtkStatisticsAlgorithmWrap : public VtkTableAlgorithmWrap
 		static void AddColumnPair(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssessNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAssessOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDeriveOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLearnOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTestOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RequestSelectedColumns(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,11 +45,15 @@ class VtkStatisticsAlgorithmWrap : public VtkTableAlgorithmWrap
 		static void ResetRequests(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAssessNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAssessOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColumnStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDeriveOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputModel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputModelConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLearnOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLearnOptionParameterConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLearnOptionParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTestOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

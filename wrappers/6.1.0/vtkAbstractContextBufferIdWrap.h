@@ -34,6 +34,7 @@ class VtkAbstractContextBufferIdWrap : public VtkObjectWrap
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsAllocated(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

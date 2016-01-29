@@ -117,12 +117,16 @@ void VtkExodusModelWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExodusModel> native = vtkSmartPointer<vtkExodusModel>::New();
-		VtkExodusModelWrap* obj = new VtkExodusModelWrap(native);		obj->Wrap(info.This());
+		VtkExodusModelWrap* obj = new VtkExodusModelWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -33,6 +33,7 @@ class VtkTreeRingViewWrap : public VtkTreeAreaViewWrap
 		static void GetInteriorLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteriorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRootAtCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RootAtCenterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkTreeRingViewWrap : public VtkTreeAreaViewWrap
 		static void SetInteriorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootAngles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRootAtCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

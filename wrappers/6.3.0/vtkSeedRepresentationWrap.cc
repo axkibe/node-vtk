@@ -113,12 +113,16 @@ void VtkSeedRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSeedRepresentation> native = vtkSmartPointer<vtkSeedRepresentation>::New();
-		VtkSeedRepresentationWrap* obj = new VtkSeedRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkSeedRepresentationWrap* obj = new VtkSeedRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

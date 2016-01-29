@@ -116,12 +116,16 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::New(const Nan::FunctionC
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParallelCoordinatesHistogramRepresentation> native = vtkSmartPointer<vtkParallelCoordinatesHistogramRepresentation>::New();
-		VtkParallelCoordinatesHistogramRepresentationWrap* obj = new VtkParallelCoordinatesHistogramRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkParallelCoordinatesHistogramRepresentationWrap* obj = new VtkParallelCoordinatesHistogramRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

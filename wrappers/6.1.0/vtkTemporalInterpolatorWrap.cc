@@ -85,12 +85,16 @@ void VtkTemporalInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTemporalInterpolator> native = vtkSmartPointer<vtkTemporalInterpolator>::New();
-		VtkTemporalInterpolatorWrap* obj = new VtkTemporalInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkTemporalInterpolatorWrap* obj = new VtkTemporalInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -9,6 +9,7 @@
 #include "vtkChartWrap.h"
 #include "vtkChartParallelCoordinatesWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkStringArrayWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkPlotParallelCoordinatesWrap.h"
@@ -65,11 +66,17 @@ void VtkChartParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "RecalculateBounds", RecalculateBounds);
 	Nan::SetPrototypeMethod(tpl, "recalculateBounds", RecalculateBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetColumnVisibilityAll", SetColumnVisibilityAll);
+	Nan::SetPrototypeMethod(tpl, "setColumnVisibilityAll", SetColumnVisibilityAll);
 
 	Nan::SetPrototypeMethod(tpl, "SetPlot", SetPlot);
 	Nan::SetPrototypeMethod(tpl, "setPlot", SetPlot);
@@ -91,12 +98,16 @@ void VtkChartParallelCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartParallelCoordinates> native = vtkSmartPointer<vtkChartParallelCoordinates>::New();
-		VtkChartParallelCoordinatesWrap* obj = new VtkChartParallelCoordinatesWrap(native);		obj->Wrap(info.This());
+		VtkChartParallelCoordinatesWrap* obj = new VtkChartParallelCoordinatesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -214,6 +225,28 @@ void VtkChartParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartParallelCoordinatesWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
+	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartParallelCoordinatesWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
@@ -252,6 +285,25 @@ void VtkChartParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartParallelCoordinatesWrap::SetColumnVisibilityAll(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
+	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColumnVisibilityAll(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -84,6 +84,12 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointTextProperty", GetPointTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getPointTextProperty", GetPointTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetScaleCellLookupTable", GetScaleCellLookupTable);
+	Nan::SetPrototypeMethod(tpl, "getScaleCellLookupTable", GetScaleCellLookupTable);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalePointLookupTable", GetScalePointLookupTable);
+	Nan::SetPrototypeMethod(tpl, "getScalePointLookupTable", GetScalePointLookupTable);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectedCellOpacity", GetSelectedCellOpacity);
 	Nan::SetPrototypeMethod(tpl, "getSelectedCellOpacity", GetSelectedCellOpacity);
 
@@ -92,6 +98,12 @@ void VtkViewThemeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "LookupMatchesCellTheme", LookupMatchesCellTheme);
+	Nan::SetPrototypeMethod(tpl, "lookupMatchesCellTheme", LookupMatchesCellTheme);
+
+	Nan::SetPrototypeMethod(tpl, "LookupMatchesPointTheme", LookupMatchesPointTheme);
+	Nan::SetPrototypeMethod(tpl, "lookupMatchesPointTheme", LookupMatchesPointTheme);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -177,6 +189,12 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointValueRange", SetPointValueRange);
 	Nan::SetPrototypeMethod(tpl, "setPointValueRange", SetPointValueRange);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaleCellLookupTable", SetScaleCellLookupTable);
+	Nan::SetPrototypeMethod(tpl, "setScaleCellLookupTable", SetScaleCellLookupTable);
+
+	Nan::SetPrototypeMethod(tpl, "SetScalePointLookupTable", SetScalePointLookupTable);
+	Nan::SetPrototypeMethod(tpl, "setScalePointLookupTable", SetScalePointLookupTable);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectedCellColor", SetSelectedCellColor);
 	Nan::SetPrototypeMethod(tpl, "setSelectedCellColor", SetSelectedCellColor);
 
@@ -206,12 +224,16 @@ void VtkViewThemeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkViewTheme> native = vtkSmartPointer<vtkViewTheme>::New();
-		VtkViewThemeWrap* obj = new VtkViewThemeWrap(native);		obj->Wrap(info.This());
+		VtkViewThemeWrap* obj = new VtkViewThemeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -448,6 +470,34 @@ void VtkViewThemeWrap::GetPointTextProperty(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkViewThemeWrap::GetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaleCellLookupTable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkViewThemeWrap::GetScalePointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalePointLookupTable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkViewThemeWrap::GetSelectedCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
@@ -491,6 +541,50 @@ void VtkViewThemeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::LookupMatchesCellTheme(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->LookupMatchesCellTheme(
+			(vtkScalarsToColors *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::LookupMatchesPointTheme(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->LookupMatchesPointTheme(
+			(vtkScalarsToColors *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -1098,6 +1192,44 @@ void VtkViewThemeWrap::SetPointValueRange(const Nan::FunctionCallbackInfo<v8::Va
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::SetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaleCellLookupTable(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewThemeWrap::SetScalePointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewThemeWrap *wrapper = ObjectWrap::Unwrap<VtkViewThemeWrap>(info.Holder());
+	vtkViewTheme *native = (vtkViewTheme *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScalePointLookupTable(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

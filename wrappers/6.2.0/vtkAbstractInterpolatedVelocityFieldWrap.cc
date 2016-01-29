@@ -60,11 +60,17 @@ void VtkAbstractInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCacheMiss", GetCacheMiss);
 	Nan::SetPrototypeMethod(tpl, "getCacheMiss", GetCacheMiss);
 
+	Nan::SetPrototypeMethod(tpl, "GetCaching", GetCaching);
+	Nan::SetPrototypeMethod(tpl, "getCaching", GetCaching);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetLastDataSet", GetLastDataSet);
 	Nan::SetPrototypeMethod(tpl, "getLastDataSet", GetLastDataSet);
+
+	Nan::SetPrototypeMethod(tpl, "GetNormalizeVector", GetNormalizeVector);
+	Nan::SetPrototypeMethod(tpl, "getNormalizeVector", GetNormalizeVector);
 
 	Nan::SetPrototypeMethod(tpl, "GetVectorsSelection", GetVectorsSelection);
 	Nan::SetPrototypeMethod(tpl, "getVectorsSelection", GetVectorsSelection);
@@ -83,6 +89,12 @@ void VtkAbstractInterpolatedVelocityFieldWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
+
+	Nan::SetPrototypeMethod(tpl, "SetCaching", SetCaching);
+	Nan::SetPrototypeMethod(tpl, "setCaching", SetCaching);
+
+	Nan::SetPrototypeMethod(tpl, "SetNormalizeVector", SetNormalizeVector);
+	Nan::SetPrototypeMethod(tpl, "setNormalizeVector", SetNormalizeVector);
 
 	ptpl.Reset( tpl );
 }
@@ -103,7 +115,10 @@ void VtkAbstractInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackIn
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -169,6 +184,20 @@ void VtkAbstractInterpolatedVelocityFieldWrap::GetCacheMiss(const Nan::FunctionC
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAbstractInterpolatedVelocityFieldWrap::GetCaching(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCaching();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAbstractInterpolatedVelocityFieldWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
@@ -204,6 +233,20 @@ void VtkAbstractInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Functio
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAbstractInterpolatedVelocityFieldWrap::GetNormalizeVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormalizeVector();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractInterpolatedVelocityFieldWrap::GetVectorsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -330,6 +373,44 @@ void VtkAbstractInterpolatedVelocityFieldWrap::SelectVectors(const Nan::Function
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractInterpolatedVelocityFieldWrap::SetCaching(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCaching(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractInterpolatedVelocityFieldWrap::SetNormalizeVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkAbstractInterpolatedVelocityField *native = (vtkAbstractInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNormalizeVector(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

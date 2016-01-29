@@ -9,6 +9,7 @@
 #include "vtkPlotWrap.h"
 #include "vtkPlotParallelCoordinatesWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 
@@ -67,6 +68,12 @@ void VtkPlotParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
+	Nan::SetPrototypeMethod(tpl, "ResetSelectionRange", ResetSelectionRange);
+	Nan::SetPrototypeMethod(tpl, "resetSelectionRange", ResetSelectionRange);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -102,12 +109,16 @@ void VtkPlotParallelCoordinatesWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlotParallelCoordinates> native = vtkSmartPointer<vtkPlotParallelCoordinates>::New();
-		VtkPlotParallelCoordinatesWrap* obj = new VtkPlotParallelCoordinatesWrap(native);		obj->Wrap(info.This());
+		VtkPlotParallelCoordinatesWrap* obj = new VtkPlotParallelCoordinatesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -219,6 +230,42 @@ void VtkPlotParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotParallelCoordinatesWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
+	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotParallelCoordinatesWrap::ResetSelectionRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
+	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->ResetSelectionRange();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

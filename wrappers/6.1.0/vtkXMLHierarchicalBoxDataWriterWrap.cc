@@ -76,12 +76,16 @@ void VtkXMLHierarchicalBoxDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLHierarchicalBoxDataWriter> native = vtkSmartPointer<vtkXMLHierarchicalBoxDataWriter>::New();
-		VtkXMLHierarchicalBoxDataWriterWrap* obj = new VtkXMLHierarchicalBoxDataWriterWrap(native);		obj->Wrap(info.This());
+		VtkXMLHierarchicalBoxDataWriterWrap* obj = new VtkXMLHierarchicalBoxDataWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

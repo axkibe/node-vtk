@@ -70,6 +70,9 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTransferToNodes", GetTransferToNodes);
 	Nan::SetPrototypeMethod(tpl, "getTransferToNodes", GetTransferToNodes);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseBiasVector", GetUseBiasVector);
+	Nan::SetPrototypeMethod(tpl, "getUseBiasVector", GetUseBiasVector);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -103,6 +106,9 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransferToNodes", SetTransferToNodes);
 	Nan::SetPrototypeMethod(tpl, "setTransferToNodes", SetTransferToNodes);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseBiasVector", SetUseBiasVector);
+	Nan::SetPrototypeMethod(tpl, "setUseBiasVector", SetUseBiasVector);
+
 	ptpl.Reset( tpl );
 }
 
@@ -117,12 +123,16 @@ void VtkAMRResampleFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRResampleFilter> native = vtkSmartPointer<vtkAMRResampleFilter>::New();
-		VtkAMRResampleFilterWrap* obj = new VtkAMRResampleFilterWrap(native);		obj->Wrap(info.This());
+		VtkAMRResampleFilterWrap* obj = new VtkAMRResampleFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -256,6 +266,20 @@ void VtkAMRResampleFilterWrap::GetTransferToNodes(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTransferToNodes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRResampleFilterWrap::GetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseBiasVector();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -514,6 +538,25 @@ void VtkAMRResampleFilterWrap::SetTransferToNodes(const Nan::FunctionCallbackInf
 		}
 		native->SetTransferToNodes(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRResampleFilterWrap::SetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseBiasVector(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -133,12 +133,16 @@ void VtkImageShiftScaleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageShiftScale> native = vtkSmartPointer<vtkImageShiftScale>::New();
-		VtkImageShiftScaleWrap* obj = new VtkImageShiftScaleWrap(native);		obj->Wrap(info.This());
+		VtkImageShiftScaleWrap* obj = new VtkImageShiftScaleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

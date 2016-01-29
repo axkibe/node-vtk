@@ -9,12 +9,14 @@
 #include "vtkChartMatrixWrap.h"
 #include "vtkScatterPlotMatrixWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkContextSceneWrap.h"
 #include "vtkAnnotationLinkWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkStringArrayWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkTooltipItemWrap.h"
+#include "vtkRenderWindowInteractorWrap.h"
 #include "vtkChartWrap.h"
 
 using namespace v8;
@@ -57,6 +59,9 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AdvanceAnimation", AdvanceAnimation);
 	Nan::SetPrototypeMethod(tpl, "advanceAnimation", AdvanceAnimation);
 
+	Nan::SetPrototypeMethod(tpl, "BeginAnimationPath", BeginAnimationPath);
+	Nan::SetPrototypeMethod(tpl, "beginAnimationPath", BeginAnimationPath);
+
 	Nan::SetPrototypeMethod(tpl, "ClearAnimationPath", ClearAnimationPath);
 	Nan::SetPrototypeMethod(tpl, "clearAnimationPath", ClearAnimationPath);
 
@@ -72,8 +77,14 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxisLabelProperties", GetAxisLabelProperties);
 	Nan::SetPrototypeMethod(tpl, "getAxisLabelProperties", GetAxisLabelProperties);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxisLabelVisibility", GetAxisLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getAxisLabelVisibility", GetAxisLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetGridVisibility", GetGridVisibility);
+	Nan::SetPrototypeMethod(tpl, "getGridVisibility", GetGridVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetIndexedLabels", GetIndexedLabels);
 	Nan::SetPrototypeMethod(tpl, "getIndexedLabels", GetIndexedLabels);
@@ -114,6 +125,9 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -125,6 +139,15 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAxisLabelProperties", SetAxisLabelProperties);
 	Nan::SetPrototypeMethod(tpl, "setAxisLabelProperties", SetAxisLabelProperties);
+
+	Nan::SetPrototypeMethod(tpl, "SetAxisLabelVisibility", SetAxisLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setAxisLabelVisibility", SetAxisLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetColumnVisibilityAll", SetColumnVisibilityAll);
+	Nan::SetPrototypeMethod(tpl, "setColumnVisibilityAll", SetColumnVisibilityAll);
+
+	Nan::SetPrototypeMethod(tpl, "SetGridVisibility", SetGridVisibility);
+	Nan::SetPrototypeMethod(tpl, "setGridVisibility", SetGridVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetIndexedLabels", SetIndexedLabels);
 	Nan::SetPrototypeMethod(tpl, "setIndexedLabels", SetIndexedLabels);
@@ -185,12 +208,16 @@ void VtkScatterPlotMatrixWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkScatterPlotMatrix> native = vtkSmartPointer<vtkScatterPlotMatrix>::New();
-		VtkScatterPlotMatrixWrap* obj = new VtkScatterPlotMatrixWrap(native);		obj->Wrap(info.This());
+		VtkScatterPlotMatrixWrap* obj = new VtkScatterPlotMatrixWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -206,6 +233,28 @@ void VtkScatterPlotMatrixWrap::AdvanceAnimation(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	native->AdvanceAnimation();
+}
+
+void VtkScatterPlotMatrixWrap::BeginAnimationPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->BeginAnimationPath(
+			(vtkRenderWindowInteractor *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkScatterPlotMatrixWrap::ClearAnimationPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -315,6 +364,27 @@ void VtkScatterPlotMatrixWrap::GetAxisLabelProperties(const Nan::FunctionCallbac
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkScatterPlotMatrixWrap::GetAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetAxisLabelVisibility(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkScatterPlotMatrixWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
@@ -327,6 +397,27 @@ void VtkScatterPlotMatrixWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkScatterPlotMatrixWrap::GetGridVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGridVisibility(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkScatterPlotMatrixWrap::GetIndexedLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -598,6 +689,28 @@ void VtkScatterPlotMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkScatterPlotMatrixWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkScatterPlotMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
@@ -692,6 +805,71 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelProperties(const Nan::FunctionCallbac
 			native->SetAxisLabelProperties(
 				info[0]->Int32Value(),
 				(vtkTextProperty *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScatterPlotMatrixWrap::SetAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetAxisLabelVisibility(
+				info[0]->Int32Value(),
+				info[1]->BooleanValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScatterPlotMatrixWrap::SetColumnVisibilityAll(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColumnVisibilityAll(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScatterPlotMatrixWrap::SetGridVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
+	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetGridVisibility(
+				info[0]->Int32Value(),
+				info[1]->BooleanValue()
 			);
 			return;
 		}

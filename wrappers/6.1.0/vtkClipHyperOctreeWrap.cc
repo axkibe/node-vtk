@@ -136,12 +136,16 @@ void VtkClipHyperOctreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkClipHyperOctree> native = vtkSmartPointer<vtkClipHyperOctree>::New();
-		VtkClipHyperOctreeWrap* obj = new VtkClipHyperOctreeWrap(native);		obj->Wrap(info.This());
+		VtkClipHyperOctreeWrap* obj = new VtkClipHyperOctreeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

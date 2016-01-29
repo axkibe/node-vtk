@@ -67,6 +67,9 @@ void VtkOpenGLLightMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLightId", SetLightId);
 	Nan::SetPrototypeMethod(tpl, "setLightId", SetLightId);
 
+	Nan::SetPrototypeMethod(tpl, "StateChanged", StateChanged);
+	Nan::SetPrototypeMethod(tpl, "stateChanged", StateChanged);
+
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
@@ -84,12 +87,16 @@ void VtkOpenGLLightMonitorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLLightMonitor> native = vtkSmartPointer<vtkOpenGLLightMonitor>::New();
-		VtkOpenGLLightMonitorWrap* obj = new VtkOpenGLLightMonitorWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLLightMonitorWrap* obj = new VtkOpenGLLightMonitorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -235,6 +242,20 @@ void VtkOpenGLLightMonitorWrap::SetLightId(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLLightMonitorWrap::StateChanged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLLightMonitorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLLightMonitorWrap>(info.Holder());
+	vtkOpenGLLightMonitor *native = (vtkOpenGLLightMonitor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->StateChanged();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOpenGLLightMonitorWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)

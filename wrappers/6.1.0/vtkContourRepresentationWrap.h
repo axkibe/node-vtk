@@ -81,6 +81,7 @@ class VtkContourRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetNthNodeSelected(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPixelTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointPlacer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRebuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowSelectedNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWorldTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSelectedNodesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

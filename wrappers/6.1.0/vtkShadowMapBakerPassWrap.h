@@ -31,8 +31,11 @@ class VtkShadowMapBakerPassWrap : public VtkRenderPassWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeZPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHasShadows(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNeedUpdate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpaquePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void LightCreatesShadow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OCCLUDER(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RECEIVER(const Nan::FunctionCallbackInfo<v8::Value>& info);

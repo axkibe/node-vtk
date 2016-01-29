@@ -91,7 +91,10 @@ void VtkGenericSubdivisionErrorMetricWrap::New(const Nan::FunctionCallbackInfo<v
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -51,6 +51,9 @@ class VtkAbstractArrayWrap : public VtkObjectWrap
 		static void GetNumberOfComponentsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProminentComponentValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTuples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAComponentName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasStandardMemoryLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertTuples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

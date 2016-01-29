@@ -213,12 +213,16 @@ void VtkCaptionActor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCaptionActor2D> native = vtkSmartPointer<vtkCaptionActor2D>::New();
-		VtkCaptionActor2DWrap* obj = new VtkCaptionActor2DWrap(native);		obj->Wrap(info.This());
+		VtkCaptionActor2DWrap* obj = new VtkCaptionActor2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

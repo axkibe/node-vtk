@@ -125,6 +125,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDolly", GetDolly);
 	Nan::SetPrototypeMethod(tpl, "getDolly", GetDolly);
 
+	Nan::SetPrototypeMethod(tpl, "GetEnableRender", GetEnableRender);
+	Nan::SetPrototypeMethod(tpl, "getEnableRender", GetEnableRender);
+
 	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
 	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
 
@@ -190,6 +193,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetTimerEventType", GetTimerEventType);
 	Nan::SetPrototypeMethod(tpl, "getTimerEventType", GetTimerEventType);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseTDx", GetUseTDx);
+	Nan::SetPrototypeMethod(tpl, "getUseTDx", GetUseTDx);
 
 	Nan::SetPrototypeMethod(tpl, "GetVTKTimerId", GetVTKTimerId);
 	Nan::SetPrototypeMethod(tpl, "getVTKTimerId", GetVTKTimerId);
@@ -275,6 +281,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDolly", SetDolly);
 	Nan::SetPrototypeMethod(tpl, "setDolly", SetDolly);
 
+	Nan::SetPrototypeMethod(tpl, "SetEnableRender", SetEnableRender);
+	Nan::SetPrototypeMethod(tpl, "setEnableRender", SetEnableRender);
+
 	Nan::SetPrototypeMethod(tpl, "SetEventInformation", SetEventInformation);
 	Nan::SetPrototypeMethod(tpl, "setEventInformation", SetEventInformation);
 
@@ -344,6 +353,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimerEventType", SetTimerEventType);
 	Nan::SetPrototypeMethod(tpl, "setTimerEventType", SetTimerEventType);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseTDx", SetUseTDx);
+	Nan::SetPrototypeMethod(tpl, "setUseTDx", SetUseTDx);
+
 	Nan::SetPrototypeMethod(tpl, "ShowCursor", ShowCursor);
 	Nan::SetPrototypeMethod(tpl, "showCursor", ShowCursor);
 
@@ -376,12 +388,16 @@ void VtkRenderWindowInteractorWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderWindowInteractor> native = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-		VtkRenderWindowInteractorWrap* obj = new VtkRenderWindowInteractorWrap(native);		obj->Wrap(info.This());
+		VtkRenderWindowInteractorWrap* obj = new VtkRenderWindowInteractorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -783,6 +799,20 @@ void VtkRenderWindowInteractorWrap::GetDolly(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRenderWindowInteractorWrap::GetEnableRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEnableRender();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderWindowInteractorWrap::GetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
@@ -1133,6 +1163,20 @@ void VtkRenderWindowInteractorWrap::GetTimerEventType(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetTimerEventType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowInteractorWrap::GetUseTDx(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseTDx();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1561,6 +1605,25 @@ void VtkRenderWindowInteractorWrap::SetDolly(const Nan::FunctionCallbackInfo<v8:
 		}
 		native->SetDolly(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::SetEnableRender(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableRender(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -2114,6 +2177,25 @@ void VtkRenderWindowInteractorWrap::SetTimerEventType(const Nan::FunctionCallbac
 		}
 		native->SetTimerEventType(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderWindowInteractorWrap::SetUseTDx(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info.Holder());
+	vtkRenderWindowInteractor *native = (vtkRenderWindowInteractor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseTDx(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

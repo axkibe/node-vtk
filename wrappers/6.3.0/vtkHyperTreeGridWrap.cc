@@ -85,6 +85,9 @@ void VtkHyperTreeGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetTransposedRootIndexing", GetTransposedRootIndexing);
+	Nan::SetPrototypeMethod(tpl, "getTransposedRootIndexing", GetTransposedRootIndexing);
+
 	Nan::SetPrototypeMethod(tpl, "GetXCoordinates", GetXCoordinates);
 	Nan::SetPrototypeMethod(tpl, "getXCoordinates", GetXCoordinates);
 
@@ -125,6 +128,9 @@ void VtkHyperTreeGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaterialMaskIndex", SetMaterialMaskIndex);
 	Nan::SetPrototypeMethod(tpl, "setMaterialMaskIndex", SetMaterialMaskIndex);
 
+	Nan::SetPrototypeMethod(tpl, "SetTransposedRootIndexing", SetTransposedRootIndexing);
+	Nan::SetPrototypeMethod(tpl, "setTransposedRootIndexing", SetTransposedRootIndexing);
+
 	Nan::SetPrototypeMethod(tpl, "SetXCoordinates", SetXCoordinates);
 	Nan::SetPrototypeMethod(tpl, "setXCoordinates", SetXCoordinates);
 
@@ -151,12 +157,16 @@ void VtkHyperTreeGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHyperTreeGrid> native = vtkSmartPointer<vtkHyperTreeGrid>::New();
-		VtkHyperTreeGridWrap* obj = new VtkHyperTreeGridWrap(native);		obj->Wrap(info.This());
+		VtkHyperTreeGridWrap* obj = new VtkHyperTreeGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -348,6 +358,20 @@ void VtkHyperTreeGridWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetMaxCellSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperTreeGridWrap::GetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
+	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTransposedRootIndexing();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -651,6 +675,25 @@ void VtkHyperTreeGridWrap::SetMaterialMaskIndex(const Nan::FunctionCallbackInfo<
 		}
 		native->SetMaterialMaskIndex(
 			(vtkIdTypeArray *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperTreeGridWrap::SetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
+	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTransposedRootIndexing(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

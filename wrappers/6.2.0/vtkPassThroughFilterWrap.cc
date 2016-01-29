@@ -73,12 +73,16 @@ void VtkPassThroughFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPassThroughFilter> native = vtkSmartPointer<vtkPassThroughFilter>::New();
-		VtkPassThroughFilterWrap* obj = new VtkPassThroughFilterWrap(native);		obj->Wrap(info.This());
+		VtkPassThroughFilterWrap* obj = new VtkPassThroughFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

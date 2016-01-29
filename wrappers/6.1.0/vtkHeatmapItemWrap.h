@@ -37,6 +37,7 @@ class VtkHeatmapItemWrap : public VtkContextItemWrap
 		static void GetTextAngleForOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);

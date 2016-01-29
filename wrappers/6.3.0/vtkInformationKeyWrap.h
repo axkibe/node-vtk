@@ -36,6 +36,7 @@ class VtkInformationKeyWrap : public VtkObjectBaseWrap
 		static void GetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Has(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void NeedToExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Print(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Remove(const Nan::FunctionCallbackInfo<v8::Value>& info);

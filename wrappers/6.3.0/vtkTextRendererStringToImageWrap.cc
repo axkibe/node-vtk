@@ -62,6 +62,9 @@ void VtkTextRendererStringToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaleToPowerOfTwo", SetScaleToPowerOfTwo);
+	Nan::SetPrototypeMethod(tpl, "setScaleToPowerOfTwo", SetScaleToPowerOfTwo);
+
 	ptpl.Reset( tpl );
 }
 
@@ -76,12 +79,16 @@ void VtkTextRendererStringToImageWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTextRendererStringToImage> native = vtkSmartPointer<vtkTextRendererStringToImage>::New();
-		VtkTextRendererStringToImageWrap* obj = new VtkTextRendererStringToImageWrap(native);		obj->Wrap(info.This());
+		VtkTextRendererStringToImageWrap* obj = new VtkTextRendererStringToImageWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -192,6 +199,25 @@ void VtkTextRendererStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackI
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextRendererStringToImageWrap::SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextRendererStringToImageWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererStringToImageWrap>(info.Holder());
+	vtkTextRendererStringToImage *native = (vtkTextRendererStringToImage *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaleToPowerOfTwo(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

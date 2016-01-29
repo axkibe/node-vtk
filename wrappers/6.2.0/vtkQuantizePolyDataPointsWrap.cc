@@ -85,12 +85,16 @@ void VtkQuantizePolyDataPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkQuantizePolyDataPoints> native = vtkSmartPointer<vtkQuantizePolyDataPoints>::New();
-		VtkQuantizePolyDataPointsWrap* obj = new VtkQuantizePolyDataPointsWrap(native);		obj->Wrap(info.This());
+		VtkQuantizePolyDataPointsWrap* obj = new VtkQuantizePolyDataPointsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

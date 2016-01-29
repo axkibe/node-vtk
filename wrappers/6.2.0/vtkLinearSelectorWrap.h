@@ -30,6 +30,7 @@ class VtkLinearSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIncludeVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexEliminationTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkLinearSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEndPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIncludeVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);

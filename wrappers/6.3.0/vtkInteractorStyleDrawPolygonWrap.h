@@ -32,12 +32,14 @@ class VtkInteractorStyleDrawPolygonWrap : public VtkInteractorStyleWrap
 		static void DrawPolygonPixelsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawPolygonPixelsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDrawPolygonPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDrawPolygonPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

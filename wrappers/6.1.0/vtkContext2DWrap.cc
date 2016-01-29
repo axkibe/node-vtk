@@ -78,6 +78,9 @@ void VtkContext2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DrawLine", DrawLine);
 	Nan::SetPrototypeMethod(tpl, "drawLine", DrawLine);
 
+	Nan::SetPrototypeMethod(tpl, "DrawMarkers", DrawMarkers);
+	Nan::SetPrototypeMethod(tpl, "drawMarkers", DrawMarkers);
+
 	Nan::SetPrototypeMethod(tpl, "DrawMathTextString", DrawMathTextString);
 	Nan::SetPrototypeMethod(tpl, "drawMathTextString", DrawMathTextString);
 
@@ -102,8 +105,14 @@ void VtkContext2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DrawStringRect", DrawStringRect);
 	Nan::SetPrototypeMethod(tpl, "drawStringRect", DrawStringRect);
 
+	Nan::SetPrototypeMethod(tpl, "End", End);
+	Nan::SetPrototypeMethod(tpl, "end", End);
+
 	Nan::SetPrototypeMethod(tpl, "GetBrush", GetBrush);
 	Nan::SetPrototypeMethod(tpl, "getBrush", GetBrush);
+
+	Nan::SetPrototypeMethod(tpl, "GetBufferIdMode", GetBufferIdMode);
+	Nan::SetPrototypeMethod(tpl, "getBufferIdMode", GetBufferIdMode);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -119,6 +128,9 @@ void VtkContext2DWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "MathTextIsSupported", MathTextIsSupported);
+	Nan::SetPrototypeMethod(tpl, "mathTextIsSupported", MathTextIsSupported);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -149,12 +161,16 @@ void VtkContext2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkContext2D> native = vtkSmartPointer<vtkContext2D>::New();
-		VtkContext2DWrap* obj = new VtkContext2DWrap(native);		obj->Wrap(info.This());
+		VtkContext2DWrap* obj = new VtkContext2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -313,6 +329,50 @@ void VtkContext2DWrap::DrawLine(const Nan::FunctionCallbackInfo<v8::Value>& info
 			(vtkPoints2D *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContext2DWrap::DrawMarkers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
+	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPoints2DWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkPoints2DWrap *a2 = ObjectWrap::Unwrap<VtkPoints2DWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkUnsignedCharArrayWrap *a3 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->DrawMarkers(
+						info[0]->Int32Value(),
+						info[1]->BooleanValue(),
+						(vtkPoints2D *) a2->native.GetPointer(),
+						(vtkUnsignedCharArray *) a3->native.GetPointer()
+					);
+					return;
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->DrawMarkers(
+					info[0]->Int32Value(),
+					info[1]->BooleanValue(),
+					(vtkPoints2D *) a2->native.GetPointer()
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -527,6 +587,20 @@ void VtkContext2DWrap::DrawStringRect(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContext2DWrap::End(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
+	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->End();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkContext2DWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
@@ -548,6 +622,20 @@ void VtkContext2DWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkContext2DWrap::GetBufferIdMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
+	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBufferIdMode();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkContext2DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -653,6 +741,20 @@ void VtkContext2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContext2DWrap::MathTextIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContext2DWrap *wrapper = ObjectWrap::Unwrap<VtkContext2DWrap>(info.Holder());
+	vtkContext2D *native = (vtkContext2D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MathTextIsSupported();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkContext2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

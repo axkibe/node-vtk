@@ -119,12 +119,16 @@ void VtkMedicalImageReader2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMedicalImageReader2> native = vtkSmartPointer<vtkMedicalImageReader2>::New();
-		VtkMedicalImageReader2Wrap* obj = new VtkMedicalImageReader2Wrap(native);		obj->Wrap(info.This());
+		VtkMedicalImageReader2Wrap* obj = new VtkMedicalImageReader2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

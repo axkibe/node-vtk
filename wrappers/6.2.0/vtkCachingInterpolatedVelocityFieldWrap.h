@@ -39,6 +39,7 @@ class VtkCachingInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SelectVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

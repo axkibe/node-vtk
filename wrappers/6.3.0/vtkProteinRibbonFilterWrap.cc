@@ -50,6 +50,9 @@ void VtkProteinRibbonFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDrawSmallMoleculesAsSpheres", GetDrawSmallMoleculesAsSpheres);
+	Nan::SetPrototypeMethod(tpl, "getDrawSmallMoleculesAsSpheres", GetDrawSmallMoleculesAsSpheres);
+
 	Nan::SetPrototypeMethod(tpl, "GetSphereResolution", GetSphereResolution);
 	Nan::SetPrototypeMethod(tpl, "getSphereResolution", GetSphereResolution);
 
@@ -64,6 +67,9 @@ void VtkProteinRibbonFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDrawSmallMoleculesAsSpheres", SetDrawSmallMoleculesAsSpheres);
+	Nan::SetPrototypeMethod(tpl, "setDrawSmallMoleculesAsSpheres", SetDrawSmallMoleculesAsSpheres);
 
 	Nan::SetPrototypeMethod(tpl, "SetSphereResolution", SetSphereResolution);
 	Nan::SetPrototypeMethod(tpl, "setSphereResolution", SetSphereResolution);
@@ -85,12 +91,16 @@ void VtkProteinRibbonFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProteinRibbonFilter> native = vtkSmartPointer<vtkProteinRibbonFilter>::New();
-		VtkProteinRibbonFilterWrap* obj = new VtkProteinRibbonFilterWrap(native);		obj->Wrap(info.This());
+		VtkProteinRibbonFilterWrap* obj = new VtkProteinRibbonFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -108,6 +118,20 @@ void VtkProteinRibbonFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkProteinRibbonFilterWrap::GetDrawSmallMoleculesAsSpheres(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDrawSmallMoleculesAsSpheres();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkProteinRibbonFilterWrap::GetSphereResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -209,6 +233,25 @@ void VtkProteinRibbonFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProteinRibbonFilterWrap::SetDrawSmallMoleculesAsSpheres(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProteinRibbonFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProteinRibbonFilterWrap>(info.Holder());
+	vtkProteinRibbonFilter *native = (vtkProteinRibbonFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDrawSmallMoleculesAsSpheres(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

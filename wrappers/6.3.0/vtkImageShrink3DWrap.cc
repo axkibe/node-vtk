@@ -139,12 +139,16 @@ void VtkImageShrink3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageShrink3D> native = vtkSmartPointer<vtkImageShrink3D>::New();
-		VtkImageShrink3DWrap* obj = new VtkImageShrink3DWrap(native);		obj->Wrap(info.This());
+		VtkImageShrink3DWrap* obj = new VtkImageShrink3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -85,12 +85,16 @@ void VtkExecutionTimerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExecutionTimer> native = vtkSmartPointer<vtkExecutionTimer>::New();
-		VtkExecutionTimerWrap* obj = new VtkExecutionTimerWrap(native);		obj->Wrap(info.This());
+		VtkExecutionTimerWrap* obj = new VtkExecutionTimerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

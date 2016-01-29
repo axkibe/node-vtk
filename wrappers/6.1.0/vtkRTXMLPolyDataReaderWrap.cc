@@ -91,12 +91,16 @@ void VtkRTXMLPolyDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRTXMLPolyDataReader> native = vtkSmartPointer<vtkRTXMLPolyDataReader>::New();
-		VtkRTXMLPolyDataReaderWrap* obj = new VtkRTXMLPolyDataReaderWrap(native);		obj->Wrap(info.This());
+		VtkRTXMLPolyDataReaderWrap* obj = new VtkRTXMLPolyDataReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

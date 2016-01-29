@@ -30,6 +30,7 @@ class VtkDepthPeelingPassWrap : public VtkRenderPassWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastRenderingUsedDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOcclusionRatioMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

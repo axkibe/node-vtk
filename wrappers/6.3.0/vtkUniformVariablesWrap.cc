@@ -58,6 +58,9 @@ void VtkUniformVariablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsAtEnd", IsAtEnd);
+	Nan::SetPrototypeMethod(tpl, "isAtEnd", IsAtEnd);
+
 	Nan::SetPrototypeMethod(tpl, "Merge", Merge);
 	Nan::SetPrototypeMethod(tpl, "merge", Merge);
 
@@ -99,12 +102,16 @@ void VtkUniformVariablesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUniformVariables> native = vtkSmartPointer<vtkUniformVariables>::New();
-		VtkUniformVariablesWrap* obj = new VtkUniformVariablesWrap(native);		obj->Wrap(info.This());
+		VtkUniformVariablesWrap* obj = new VtkUniformVariablesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -178,6 +185,20 @@ void VtkUniformVariablesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUniformVariablesWrap::IsAtEnd(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
+	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsAtEnd();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUniformVariablesWrap::Merge(const Nan::FunctionCallbackInfo<v8::Value>& info)

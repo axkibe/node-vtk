@@ -73,12 +73,16 @@ void VtkStreaklineFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStreaklineFilter> native = vtkSmartPointer<vtkStreaklineFilter>::New();
-		VtkStreaklineFilterWrap* obj = new VtkStreaklineFilterWrap(native);		obj->Wrap(info.This());
+		VtkStreaklineFilterWrap* obj = new VtkStreaklineFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

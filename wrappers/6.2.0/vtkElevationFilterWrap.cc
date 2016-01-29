@@ -82,12 +82,16 @@ void VtkElevationFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkElevationFilter> native = vtkSmartPointer<vtkElevationFilter>::New();
-		VtkElevationFilterWrap* obj = new VtkElevationFilterWrap(native);		obj->Wrap(info.This());
+		VtkElevationFilterWrap* obj = new VtkElevationFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

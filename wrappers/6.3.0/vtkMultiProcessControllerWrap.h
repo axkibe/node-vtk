@@ -44,6 +44,7 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void GatherV(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBreakFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBreakRMITag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBroadcastTriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCommunicator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalController(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -65,6 +66,7 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void Scatter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Send(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBreakFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBroadcastTriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobalController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfProcesses(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSingleProcessObject(const Nan::FunctionCallbackInfo<v8::Value>& info);

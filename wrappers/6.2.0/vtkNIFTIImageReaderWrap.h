@@ -39,11 +39,13 @@ class VtkNIFTIImageReaderWrap : public VtkImageReader2Wrap
 		static void GetRescaleIntercept(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRescaleSlope(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

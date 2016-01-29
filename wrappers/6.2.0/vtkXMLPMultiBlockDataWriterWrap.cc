@@ -83,12 +83,16 @@ void VtkXMLPMultiBlockDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLPMultiBlockDataWriter> native = vtkSmartPointer<vtkXMLPMultiBlockDataWriter>::New();
-		VtkXMLPMultiBlockDataWriterWrap* obj = new VtkXMLPMultiBlockDataWriterWrap(native);		obj->Wrap(info.This());
+		VtkXMLPMultiBlockDataWriterWrap* obj = new VtkXMLPMultiBlockDataWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

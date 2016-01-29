@@ -30,11 +30,14 @@ class VtkOpenGLProjectedTetrahedraMapperWrap : public VtkProjectedTetrahedraMapp
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseFloatingPointFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseFloatingPointFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFloatingPointFrameBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFloatingPointFrameBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

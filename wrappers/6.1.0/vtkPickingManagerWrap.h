@@ -34,15 +34,20 @@ class VtkPickingManagerWrap : public VtkObjectWrap
 		static void EnabledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAssemblyPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfObjectsLinked(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPickers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOptimizeOnInteractorEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Pick(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemovePicker(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOptimizeOnInteractorEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

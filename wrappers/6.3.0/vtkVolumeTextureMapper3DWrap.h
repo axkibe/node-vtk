@@ -35,6 +35,7 @@ class VtkVolumeTextureMapper3DWrap : public VtkVolumeMapperWrap
 		static void GetPreferredRenderMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreferredRenderMethodMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreferredRenderMethodMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseCompressedTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,6 +44,7 @@ class VtkVolumeTextureMapper3DWrap : public VtkVolumeMapperWrap
 		static void SetPreferredMethodToFragmentProgram(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreferredMethodToNVidia(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreferredRenderMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseCompressedTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

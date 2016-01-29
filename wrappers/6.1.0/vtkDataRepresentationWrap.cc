@@ -81,6 +81,9 @@ void VtkDataRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInternalSelectionOutputPort", GetInternalSelectionOutputPort);
 	Nan::SetPrototypeMethod(tpl, "getInternalSelectionOutputPort", GetInternalSelectionOutputPort);
 
+	Nan::SetPrototypeMethod(tpl, "GetSelectable", GetSelectable);
+	Nan::SetPrototypeMethod(tpl, "getSelectable", GetSelectable);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectionArrayName", GetSelectionArrayName);
 	Nan::SetPrototypeMethod(tpl, "getSelectionArrayName", GetSelectionArrayName);
 
@@ -111,6 +114,9 @@ void VtkDataRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLink", SetAnnotationLink);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLink", SetAnnotationLink);
 
+	Nan::SetPrototypeMethod(tpl, "SetSelectable", SetSelectable);
+	Nan::SetPrototypeMethod(tpl, "setSelectable", SetSelectable);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectionArrayName", SetSelectionArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSelectionArrayName", SetSelectionArrayName);
 
@@ -140,12 +146,16 @@ void VtkDataRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDataRepresentation> native = vtkSmartPointer<vtkDataRepresentation>::New();
-		VtkDataRepresentationWrap* obj = new VtkDataRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkDataRepresentationWrap* obj = new VtkDataRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -161,6 +171,20 @@ void VtkDataRepresentationWrap::Annotate(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAnnotationLayersWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAnnotationLayersWrap *a1 = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->Annotate(
+					(vtkView *) a0->native.GetPointer(),
+					(vtkAnnotationLayers *) a1->native.GetPointer(),
+					info[2]->BooleanValue()
+				);
+				return;
+			}
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -513,6 +537,20 @@ void VtkDataRepresentationWrap::GetInternalSelectionOutputPort(const Nan::Functi
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkDataRepresentationWrap::GetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info.Holder());
+	vtkDataRepresentation *native = (vtkDataRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDataRepresentationWrap::GetSelectionArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info.Holder());
@@ -650,6 +688,20 @@ void VtkDataRepresentationWrap::Select(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkSelectionWrap *a1 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->Select(
+					(vtkView *) a0->native.GetPointer(),
+					(vtkSelection *) a1->native.GetPointer(),
+					info[2]->BooleanValue()
+				);
+				return;
+			}
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -703,6 +755,25 @@ void VtkDataRepresentationWrap::SetAnnotationLink(const Nan::FunctionCallbackInf
 		}
 		native->SetAnnotationLink(
 			(vtkAnnotationLink *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataRepresentationWrap::SetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info.Holder());
+	vtkDataRepresentation *native = (vtkDataRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSelectable(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -775,6 +846,19 @@ void VtkDataRepresentationWrap::UpdateAnnotations(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLayersWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLayersWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->UpdateAnnotations(
+				(vtkAnnotationLayers *) a0->native.GetPointer(),
+				info[1]->BooleanValue()
+			);
+			return;
+		}
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
@@ -795,6 +879,19 @@ void VtkDataRepresentationWrap::UpdateSelection(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->UpdateSelection(
+				(vtkSelection *) a0->native.GetPointer(),
+				info[1]->BooleanValue()
+			);
+			return;
+		}
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");

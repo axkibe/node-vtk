@@ -9,6 +9,7 @@
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkChartMatrixWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 
 using namespace v8;
 
@@ -59,6 +60,9 @@ void VtkChartMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -82,12 +86,16 @@ void VtkChartMatrixWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartMatrix> native = vtkSmartPointer<vtkChartMatrix>::New();
-		VtkChartMatrixWrap* obj = new VtkChartMatrixWrap(native);		obj->Wrap(info.This());
+		VtkChartMatrixWrap* obj = new VtkChartMatrixWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -162,6 +170,28 @@ void VtkChartMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkChartMatrixWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
+	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkChartMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

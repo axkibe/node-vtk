@@ -202,12 +202,16 @@ void VtkSpiderPlotActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSpiderPlotActor> native = vtkSmartPointer<vtkSpiderPlotActor>::New();
-		VtkSpiderPlotActorWrap* obj = new VtkSpiderPlotActorWrap(native);		obj->Wrap(info.This());
+		VtkSpiderPlotActorWrap* obj = new VtkSpiderPlotActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

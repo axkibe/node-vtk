@@ -83,6 +83,9 @@ void VtkTextureWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMappedScalars", GetMappedScalars);
 	Nan::SetPrototypeMethod(tpl, "getMappedScalars", GetMappedScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetPremultipliedAlpha", GetPremultipliedAlpha);
+	Nan::SetPrototypeMethod(tpl, "getPremultipliedAlpha", GetPremultipliedAlpha);
+
 	Nan::SetPrototypeMethod(tpl, "GetQuality", GetQuality);
 	Nan::SetPrototypeMethod(tpl, "getQuality", GetQuality);
 
@@ -164,6 +167,9 @@ void VtkTextureWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMapColorScalarsThroughLookupTable", SetMapColorScalarsThroughLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setMapColorScalarsThroughLookupTable", SetMapColorScalarsThroughLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "SetPremultipliedAlpha", SetPremultipliedAlpha);
+	Nan::SetPrototypeMethod(tpl, "setPremultipliedAlpha", SetPremultipliedAlpha);
+
 	Nan::SetPrototypeMethod(tpl, "SetQuality", SetQuality);
 	Nan::SetPrototypeMethod(tpl, "setQuality", SetQuality);
 
@@ -199,12 +205,16 @@ void VtkTextureWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTexture> native = vtkSmartPointer<vtkTexture>::New();
-		VtkTextureWrap* obj = new VtkTextureWrap(native);		obj->Wrap(info.This());
+		VtkTextureWrap* obj = new VtkTextureWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -371,6 +381,20 @@ void VtkTextureWrap::GetMappedScalars(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTextureWrap::GetPremultipliedAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
+	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPremultipliedAlpha();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTextureWrap::GetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -818,6 +842,25 @@ void VtkTextureWrap::SetMapColorScalarsThroughLookupTable(const Nan::FunctionCal
 		}
 		native->SetMapColorScalarsThroughLookupTable(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureWrap::SetPremultipliedAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
+	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPremultipliedAlpha(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

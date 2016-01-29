@@ -64,8 +64,20 @@ void VtkStatisticsAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAssessNames", GetAssessNames);
 	Nan::SetPrototypeMethod(tpl, "getAssessNames", GetAssessNames);
 
+	Nan::SetPrototypeMethod(tpl, "GetAssessOption", GetAssessOption);
+	Nan::SetPrototypeMethod(tpl, "getAssessOption", GetAssessOption);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDeriveOption", GetDeriveOption);
+	Nan::SetPrototypeMethod(tpl, "getDeriveOption", GetDeriveOption);
+
+	Nan::SetPrototypeMethod(tpl, "GetLearnOption", GetLearnOption);
+	Nan::SetPrototypeMethod(tpl, "getLearnOption", GetLearnOption);
+
+	Nan::SetPrototypeMethod(tpl, "GetTestOption", GetTestOption);
+	Nan::SetPrototypeMethod(tpl, "getTestOption", GetTestOption);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -88,8 +100,14 @@ void VtkStatisticsAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAssessNames", SetAssessNames);
 	Nan::SetPrototypeMethod(tpl, "setAssessNames", SetAssessNames);
 
+	Nan::SetPrototypeMethod(tpl, "SetAssessOption", SetAssessOption);
+	Nan::SetPrototypeMethod(tpl, "setAssessOption", SetAssessOption);
+
 	Nan::SetPrototypeMethod(tpl, "SetColumnStatus", SetColumnStatus);
 	Nan::SetPrototypeMethod(tpl, "setColumnStatus", SetColumnStatus);
+
+	Nan::SetPrototypeMethod(tpl, "SetDeriveOption", SetDeriveOption);
+	Nan::SetPrototypeMethod(tpl, "setDeriveOption", SetDeriveOption);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputModel", SetInputModel);
 	Nan::SetPrototypeMethod(tpl, "setInputModel", SetInputModel);
@@ -97,11 +115,17 @@ void VtkStatisticsAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputModelConnection", SetInputModelConnection);
 	Nan::SetPrototypeMethod(tpl, "setInputModelConnection", SetInputModelConnection);
 
+	Nan::SetPrototypeMethod(tpl, "SetLearnOption", SetLearnOption);
+	Nan::SetPrototypeMethod(tpl, "setLearnOption", SetLearnOption);
+
 	Nan::SetPrototypeMethod(tpl, "SetLearnOptionParameterConnection", SetLearnOptionParameterConnection);
 	Nan::SetPrototypeMethod(tpl, "setLearnOptionParameterConnection", SetLearnOptionParameterConnection);
 
 	Nan::SetPrototypeMethod(tpl, "SetLearnOptionParameters", SetLearnOptionParameters);
 	Nan::SetPrototypeMethod(tpl, "setLearnOptionParameters", SetLearnOptionParameters);
+
+	Nan::SetPrototypeMethod(tpl, "SetTestOption", SetTestOption);
+	Nan::SetPrototypeMethod(tpl, "setTestOption", SetTestOption);
 
 	ptpl.Reset( tpl );
 }
@@ -122,7 +146,10 @@ void VtkStatisticsAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -221,6 +248,20 @@ void VtkStatisticsAlgorithmWrap::GetAssessNames(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkStatisticsAlgorithmWrap::GetAssessOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAssessOption();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkStatisticsAlgorithmWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
@@ -233,6 +274,48 @@ void VtkStatisticsAlgorithmWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStatisticsAlgorithmWrap::GetDeriveOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDeriveOption();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStatisticsAlgorithmWrap::GetLearnOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLearnOption();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStatisticsAlgorithmWrap::GetTestOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTestOption();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStatisticsAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -369,6 +452,25 @@ void VtkStatisticsAlgorithmWrap::SetAssessNames(const Nan::FunctionCallbackInfo<
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStatisticsAlgorithmWrap::SetAssessOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAssessOption(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStatisticsAlgorithmWrap::SetColumnStatus(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
@@ -389,6 +491,25 @@ void VtkStatisticsAlgorithmWrap::SetColumnStatus(const Nan::FunctionCallbackInfo
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStatisticsAlgorithmWrap::SetDeriveOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDeriveOption(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -433,6 +554,25 @@ void VtkStatisticsAlgorithmWrap::SetInputModelConnection(const Nan::FunctionCall
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStatisticsAlgorithmWrap::SetLearnOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLearnOption(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStatisticsAlgorithmWrap::SetLearnOptionParameterConnection(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
@@ -467,6 +607,25 @@ void VtkStatisticsAlgorithmWrap::SetLearnOptionParameters(const Nan::FunctionCal
 		}
 		native->SetLearnOptionParameters(
 			(vtkDataObject *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStatisticsAlgorithmWrap::SetTestOption(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
+	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTestOption(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

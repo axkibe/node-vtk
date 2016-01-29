@@ -88,12 +88,16 @@ void VtkConeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCone> native = vtkSmartPointer<vtkCone>::New();
-		VtkConeWrap* obj = new VtkConeWrap(native);		obj->Wrap(info.This());
+		VtkConeWrap* obj = new VtkConeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

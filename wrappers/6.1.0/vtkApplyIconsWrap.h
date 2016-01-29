@@ -36,6 +36,7 @@ class VtkApplyIconsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void GetIconOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedIcon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +50,7 @@ class VtkApplyIconsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetSelectionModeToIgnoreSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToSelectedIcon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToSelectedOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

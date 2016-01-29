@@ -31,12 +31,14 @@ class VtkExtractSelectedGraphWrap : public VtkGraphAlgorithmWrap
 
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRemoveIsolatedVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveIsolatedVerticesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveIsolatedVerticesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLayersConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRemoveIsolatedVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

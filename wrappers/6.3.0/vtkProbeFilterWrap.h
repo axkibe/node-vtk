@@ -32,6 +32,7 @@ class VtkProbeFilterWrap : public VtkDataSetAlgorithmWrap
 		static void ComputeToleranceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeToleranceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassFieldArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassPointArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +50,7 @@ class VtkProbeFilterWrap : public VtkDataSetAlgorithmWrap
 		static void PassPointArraysOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PassPointArraysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetComputeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassFieldArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassPointArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);

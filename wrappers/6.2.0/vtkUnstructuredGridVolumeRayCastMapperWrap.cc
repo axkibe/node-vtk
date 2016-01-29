@@ -141,12 +141,16 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::New(const Nan::FunctionCallback
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnstructuredGridVolumeRayCastMapper> native = vtkSmartPointer<vtkUnstructuredGridVolumeRayCastMapper>::New();
-		VtkUnstructuredGridVolumeRayCastMapperWrap* obj = new VtkUnstructuredGridVolumeRayCastMapperWrap(native);		obj->Wrap(info.This());
+		VtkUnstructuredGridVolumeRayCastMapperWrap* obj = new VtkUnstructuredGridVolumeRayCastMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

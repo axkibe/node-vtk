@@ -35,6 +35,7 @@ class VtkConvertSelectionWrap : public VtkSelectionAlgorithmWrap
 		static void GetArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMatchAnyValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +53,7 @@ class VtkConvertSelectionWrap : public VtkSelectionAlgorithmWrap
 		static void SetArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataObjectConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMatchAnyValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionExtractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToGlobalIdSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);

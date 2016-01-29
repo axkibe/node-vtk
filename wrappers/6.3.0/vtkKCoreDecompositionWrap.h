@@ -31,11 +31,17 @@ class VtkKCoreDecompositionWrap : public VtkGraphAlgorithmWrap
 
 		static void CheckInputGraphOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CheckInputGraphOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCheckInputGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseInDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseOutDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCheckInputGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseInDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseOutDegreeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInDegreeNeighborsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInDegreeNeighborsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseOutDegreeNeighborsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -73,12 +73,16 @@ void VtkStructuredPointsGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStructuredPointsGeometryFilter> native = vtkSmartPointer<vtkStructuredPointsGeometryFilter>::New();
-		VtkStructuredPointsGeometryFilterWrap* obj = new VtkStructuredPointsGeometryFilterWrap(native);		obj->Wrap(info.This());
+		VtkStructuredPointsGeometryFilterWrap* obj = new VtkStructuredPointsGeometryFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -36,6 +36,7 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void DisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsPicking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -65,6 +66,7 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);

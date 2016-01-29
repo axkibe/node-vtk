@@ -31,6 +31,7 @@ class VtkLabeledContourMapperWrap : public VtkMapperWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyDataMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextPropertyMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkLabeledContourMapperWrap : public VtkMapperWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextPropertyMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);

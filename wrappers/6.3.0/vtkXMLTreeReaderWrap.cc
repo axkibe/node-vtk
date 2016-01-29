@@ -68,6 +68,21 @@ void VtkXMLTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGenerateEdgePedigreeIds", GetGenerateEdgePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getGenerateEdgePedigreeIds", GetGenerateEdgePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "GetGenerateVertexPedigreeIds", GetGenerateVertexPedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getGenerateVertexPedigreeIds", GetGenerateVertexPedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaskArrays", GetMaskArrays);
+	Nan::SetPrototypeMethod(tpl, "getMaskArrays", GetMaskArrays);
+
+	Nan::SetPrototypeMethod(tpl, "GetReadCharData", GetReadCharData);
+	Nan::SetPrototypeMethod(tpl, "getReadCharData", GetReadCharData);
+
+	Nan::SetPrototypeMethod(tpl, "GetReadTagName", GetReadTagName);
+	Nan::SetPrototypeMethod(tpl, "getReadTagName", GetReadTagName);
+
 	Nan::SetPrototypeMethod(tpl, "GetVertexPedigreeIdArrayName", GetVertexPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVertexPedigreeIdArrayName", GetVertexPedigreeIdArrayName);
 
@@ -107,6 +122,21 @@ void VtkXMLTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "SetGenerateEdgePedigreeIds", SetGenerateEdgePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setGenerateEdgePedigreeIds", SetGenerateEdgePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "SetGenerateVertexPedigreeIds", SetGenerateVertexPedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setGenerateVertexPedigreeIds", SetGenerateVertexPedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "SetMaskArrays", SetMaskArrays);
+	Nan::SetPrototypeMethod(tpl, "setMaskArrays", SetMaskArrays);
+
+	Nan::SetPrototypeMethod(tpl, "SetReadCharData", SetReadCharData);
+	Nan::SetPrototypeMethod(tpl, "setReadCharData", SetReadCharData);
+
+	Nan::SetPrototypeMethod(tpl, "SetReadTagName", SetReadTagName);
+	Nan::SetPrototypeMethod(tpl, "setReadTagName", SetReadTagName);
+
 	Nan::SetPrototypeMethod(tpl, "SetVertexPedigreeIdArrayName", SetVertexPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexPedigreeIdArrayName", SetVertexPedigreeIdArrayName);
 
@@ -127,12 +157,16 @@ void VtkXMLTreeReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLTreeReader> native = vtkSmartPointer<vtkXMLTreeReader>::New();
-		VtkXMLTreeReaderWrap* obj = new VtkXMLTreeReaderWrap(native);		obj->Wrap(info.This());
+		VtkXMLTreeReaderWrap* obj = new VtkXMLTreeReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -226,6 +260,76 @@ void VtkXMLTreeReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkXMLTreeReaderWrap::GetGenerateEdgePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGenerateEdgePedigreeIds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLTreeReaderWrap::GetGenerateVertexPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGenerateVertexPedigreeIds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLTreeReaderWrap::GetMaskArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaskArrays();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLTreeReaderWrap::GetReadCharData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReadCharData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLTreeReaderWrap::GetReadTagName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReadTagName();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkXMLTreeReaderWrap::GetVertexPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -438,6 +542,101 @@ void VtkXMLTreeReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetFileName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLTreeReaderWrap::SetGenerateEdgePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGenerateEdgePedigreeIds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLTreeReaderWrap::SetGenerateVertexPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGenerateVertexPedigreeIds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLTreeReaderWrap::SetMaskArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaskArrays(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLTreeReaderWrap::SetReadCharData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReadCharData(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLTreeReaderWrap::SetReadTagName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
+	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReadTagName(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

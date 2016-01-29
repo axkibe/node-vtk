@@ -131,12 +131,16 @@ void VtkAxesTransformRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAxesTransformRepresentation> native = vtkSmartPointer<vtkAxesTransformRepresentation>::New();
-		VtkAxesTransformRepresentationWrap* obj = new VtkAxesTransformRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkAxesTransformRepresentationWrap* obj = new VtkAxesTransformRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -142,12 +142,16 @@ void VtkRectilinearSynchronizedTemplatesWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRectilinearSynchronizedTemplates> native = vtkSmartPointer<vtkRectilinearSynchronizedTemplates>::New();
-		VtkRectilinearSynchronizedTemplatesWrap* obj = new VtkRectilinearSynchronizedTemplatesWrap(native);		obj->Wrap(info.This());
+		VtkRectilinearSynchronizedTemplatesWrap* obj = new VtkRectilinearSynchronizedTemplatesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

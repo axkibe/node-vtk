@@ -58,6 +58,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetCartesian", GetCartesian);
+	Nan::SetPrototypeMethod(tpl, "getCartesian", GetCartesian);
+
 	Nan::SetPrototypeMethod(tpl, "GetCartesianCoordsXArrayName", GetCartesianCoordsXArrayName);
 	Nan::SetPrototypeMethod(tpl, "getCartesianCoordsXArrayName", GetCartesianCoordsXArrayName);
 
@@ -66,6 +69,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetPolar", GetPolar);
+	Nan::SetPrototypeMethod(tpl, "getPolar", GetPolar);
 
 	Nan::SetPrototypeMethod(tpl, "GetPolarCoordsAngleArrayName", GetPolarCoordsAngleArrayName);
 	Nan::SetPrototypeMethod(tpl, "getPolarCoordsAngleArrayName", GetPolarCoordsAngleArrayName);
@@ -88,6 +94,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCartesian", SetCartesian);
+	Nan::SetPrototypeMethod(tpl, "setCartesian", SetCartesian);
+
 	Nan::SetPrototypeMethod(tpl, "SetCartesianCoordsXArrayName", SetCartesianCoordsXArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCartesianCoordsXArrayName", SetCartesianCoordsXArrayName);
 
@@ -99,6 +108,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetKCoreLabelArrayName", SetKCoreLabelArrayName);
 	Nan::SetPrototypeMethod(tpl, "setKCoreLabelArrayName", SetKCoreLabelArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetPolar", SetPolar);
+	Nan::SetPrototypeMethod(tpl, "setPolar", SetPolar);
 
 	Nan::SetPrototypeMethod(tpl, "SetPolarCoordsAngleArrayName", SetPolarCoordsAngleArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPolarCoordsAngleArrayName", SetPolarCoordsAngleArrayName);
@@ -120,12 +132,16 @@ void VtkKCoreLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkKCoreLayout> native = vtkSmartPointer<vtkKCoreLayout>::New();
-		VtkKCoreLayoutWrap* obj = new VtkKCoreLayoutWrap(native);		obj->Wrap(info.This());
+		VtkKCoreLayoutWrap* obj = new VtkKCoreLayoutWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -181,6 +197,20 @@ void VtkKCoreLayoutWrap::FillInputPortInformation(const Nan::FunctionCallbackInf
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkKCoreLayoutWrap::GetCartesian(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCartesian();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkKCoreLayoutWrap::GetCartesianCoordsXArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
@@ -221,6 +251,20 @@ void VtkKCoreLayoutWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkKCoreLayoutWrap::GetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPolar();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkKCoreLayoutWrap::GetPolarCoordsAngleArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -351,6 +395,25 @@ void VtkKCoreLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkKCoreLayoutWrap::SetCartesian(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCartesian(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkKCoreLayoutWrap::SetCartesianCoordsXArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
@@ -425,6 +488,25 @@ void VtkKCoreLayoutWrap::SetKCoreLabelArrayName(const Nan::FunctionCallbackInfo<
 		}
 		native->SetKCoreLabelArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkKCoreLayoutWrap::SetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
+	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPolar(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

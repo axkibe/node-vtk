@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkPenWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkDoubleArrayWrap.h"
 #include "vtkFloatArrayWrap.h"
 #include "vtkStringArrayWrap.h"
@@ -55,6 +56,9 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AutoScale", AutoScale);
 	Nan::SetPrototypeMethod(tpl, "autoScale", AutoScale);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxisVisible", GetAxisVisible);
+	Nan::SetPrototypeMethod(tpl, "getAxisVisible", GetAxisVisible);
+
 	Nan::SetPrototypeMethod(tpl, "GetBehavior", GetBehavior);
 	Nan::SetPrototypeMethod(tpl, "getBehavior", GetBehavior);
 
@@ -64,8 +68,20 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGridPen", GetGridPen);
 	Nan::SetPrototypeMethod(tpl, "getGridPen", GetGridPen);
 
+	Nan::SetPrototypeMethod(tpl, "GetGridVisible", GetGridVisible);
+	Nan::SetPrototypeMethod(tpl, "getGridVisible", GetGridVisible);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelProperties", GetLabelProperties);
 	Nan::SetPrototypeMethod(tpl, "getLabelProperties", GetLabelProperties);
+
+	Nan::SetPrototypeMethod(tpl, "GetLabelsVisible", GetLabelsVisible);
+	Nan::SetPrototypeMethod(tpl, "getLabelsVisible", GetLabelsVisible);
+
+	Nan::SetPrototypeMethod(tpl, "GetLogScale", GetLogScale);
+	Nan::SetPrototypeMethod(tpl, "getLogScale", GetLogScale);
+
+	Nan::SetPrototypeMethod(tpl, "GetLogScaleActive", GetLogScaleActive);
+	Nan::SetPrototypeMethod(tpl, "getLogScaleActive", GetLogScaleActive);
 
 	Nan::SetPrototypeMethod(tpl, "GetMaximum", GetMaximum);
 	Nan::SetPrototypeMethod(tpl, "getMaximum", GetMaximum);
@@ -112,6 +128,9 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTickScenePositions", GetTickScenePositions);
 	Nan::SetPrototypeMethod(tpl, "getTickScenePositions", GetTickScenePositions);
 
+	Nan::SetPrototypeMethod(tpl, "GetTicksVisible", GetTicksVisible);
+	Nan::SetPrototypeMethod(tpl, "getTicksVisible", GetTicksVisible);
+
 	Nan::SetPrototypeMethod(tpl, "GetTitleProperties", GetTitleProperties);
 	Nan::SetPrototypeMethod(tpl, "getTitleProperties", GetTitleProperties);
 
@@ -139,14 +158,35 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "NiceNumber", NiceNumber);
+	Nan::SetPrototypeMethod(tpl, "niceNumber", NiceNumber);
+
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "RecalculateTickSpacing", RecalculateTickSpacing);
 	Nan::SetPrototypeMethod(tpl, "recalculateTickSpacing", RecalculateTickSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAxisVisible", SetAxisVisible);
+	Nan::SetPrototypeMethod(tpl, "setAxisVisible", SetAxisVisible);
+
 	Nan::SetPrototypeMethod(tpl, "SetBehavior", SetBehavior);
 	Nan::SetPrototypeMethod(tpl, "setBehavior", SetBehavior);
+
+	Nan::SetPrototypeMethod(tpl, "SetCustomTickPositions", SetCustomTickPositions);
+	Nan::SetPrototypeMethod(tpl, "setCustomTickPositions", SetCustomTickPositions);
+
+	Nan::SetPrototypeMethod(tpl, "SetGridVisible", SetGridVisible);
+	Nan::SetPrototypeMethod(tpl, "setGridVisible", SetGridVisible);
+
+	Nan::SetPrototypeMethod(tpl, "SetLabelsVisible", SetLabelsVisible);
+	Nan::SetPrototypeMethod(tpl, "setLabelsVisible", SetLabelsVisible);
+
+	Nan::SetPrototypeMethod(tpl, "SetLogScale", SetLogScale);
+	Nan::SetPrototypeMethod(tpl, "setLogScale", SetLogScale);
 
 	Nan::SetPrototypeMethod(tpl, "SetMargins", SetMargins);
 	Nan::SetPrototypeMethod(tpl, "setMargins", SetMargins);
@@ -193,6 +233,9 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTickPositions", SetTickPositions);
 	Nan::SetPrototypeMethod(tpl, "setTickPositions", SetTickPositions);
 
+	Nan::SetPrototypeMethod(tpl, "SetTicksVisible", SetTicksVisible);
+	Nan::SetPrototypeMethod(tpl, "setTicksVisible", SetTicksVisible);
+
 	Nan::SetPrototypeMethod(tpl, "SetUnscaledMaximum", SetUnscaledMaximum);
 	Nan::SetPrototypeMethod(tpl, "setUnscaledMaximum", SetUnscaledMaximum);
 
@@ -225,12 +268,16 @@ void VtkAxisWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAxis> native = vtkSmartPointer<vtkAxis>::New();
-		VtkAxisWrap* obj = new VtkAxisWrap(native);		obj->Wrap(info.This());
+		VtkAxisWrap* obj = new VtkAxisWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -246,6 +293,20 @@ void VtkAxisWrap::AutoScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	native->AutoScale();
+}
+
+void VtkAxisWrap::GetAxisVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisVisible();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAxisWrap::GetBehavior(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -299,6 +360,20 @@ void VtkAxisWrap::GetGridPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAxisWrap::GetGridVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGridVisible();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAxisWrap::GetLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
@@ -320,6 +395,48 @@ void VtkAxisWrap::GetLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAxisWrap::GetLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLabelsVisible();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAxisWrap::GetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLogScale();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAxisWrap::GetLogScaleActive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLogScaleActive();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAxisWrap::GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -568,6 +685,20 @@ void VtkAxisWrap::GetTickScenePositions(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAxisWrap::GetTicksVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTicksVisible();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAxisWrap::GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
@@ -716,6 +847,53 @@ void VtkAxisWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAxisWrap::NiceNumber(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			double r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->NiceNumber(
+				info[0]->NumberValue(),
+				info[1]->BooleanValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAxisWrap::RecalculateTickSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
@@ -759,6 +937,25 @@ void VtkAxisWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAxisWrap::SetAxisVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAxisVisible(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkAxisWrap::SetBehavior(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
@@ -772,6 +969,90 @@ void VtkAxisWrap::SetBehavior(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->SetBehavior(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetCustomTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkStringArrayWrap *a1 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->SetCustomTickPositions(
+				(vtkDoubleArray *) a0->native.GetPointer(),
+				(vtkStringArray *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetGridVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGridVisible(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelsVisible(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLogScale(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -1067,6 +1348,25 @@ void VtkAxisWrap::SetTickPositions(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		native->SetTickPositions(
 			(vtkDoubleArray *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisWrap::SetTicksVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisWrap *wrapper = ObjectWrap::Unwrap<VtkAxisWrap>(info.Holder());
+	vtkAxis *native = (vtkAxis *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTicksVisible(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

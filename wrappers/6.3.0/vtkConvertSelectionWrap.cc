@@ -74,6 +74,9 @@ void VtkConvertSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInputFieldType", GetInputFieldType);
 	Nan::SetPrototypeMethod(tpl, "getInputFieldType", GetInputFieldType);
 
+	Nan::SetPrototypeMethod(tpl, "GetMatchAnyValues", GetMatchAnyValues);
+	Nan::SetPrototypeMethod(tpl, "getMatchAnyValues", GetMatchAnyValues);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputType", GetOutputType);
 	Nan::SetPrototypeMethod(tpl, "getOutputType", GetOutputType);
 
@@ -125,6 +128,9 @@ void VtkConvertSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputFieldType", SetInputFieldType);
 	Nan::SetPrototypeMethod(tpl, "setInputFieldType", SetInputFieldType);
 
+	Nan::SetPrototypeMethod(tpl, "SetMatchAnyValues", SetMatchAnyValues);
+	Nan::SetPrototypeMethod(tpl, "setMatchAnyValues", SetMatchAnyValues);
+
 	Nan::SetPrototypeMethod(tpl, "SetOutputType", SetOutputType);
 	Nan::SetPrototypeMethod(tpl, "setOutputType", SetOutputType);
 
@@ -160,12 +166,16 @@ void VtkConvertSelectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkConvertSelection> native = vtkSmartPointer<vtkConvertSelection>::New();
-		VtkConvertSelectionWrap* obj = new VtkConvertSelectionWrap(native);		obj->Wrap(info.This());
+		VtkConvertSelectionWrap* obj = new VtkConvertSelectionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -265,6 +275,20 @@ void VtkConvertSelectionWrap::GetInputFieldType(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInputFieldType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkConvertSelectionWrap::GetMatchAnyValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConvertSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkConvertSelectionWrap>(info.Holder());
+	vtkConvertSelection *native = (vtkConvertSelection *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMatchAnyValues();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -662,6 +686,25 @@ void VtkConvertSelectionWrap::SetInputFieldType(const Nan::FunctionCallbackInfo<
 		}
 		native->SetInputFieldType(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkConvertSelectionWrap::SetMatchAnyValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConvertSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkConvertSelectionWrap>(info.Holder());
+	vtkConvertSelection *native = (vtkConvertSelection *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMatchAnyValues(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

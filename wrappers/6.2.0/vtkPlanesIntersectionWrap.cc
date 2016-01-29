@@ -74,12 +74,16 @@ void VtkPlanesIntersectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlanesIntersection> native = vtkSmartPointer<vtkPlanesIntersection>::New();
-		VtkPlanesIntersectionWrap* obj = new VtkPlanesIntersectionWrap(native);		obj->Wrap(info.This());
+		VtkPlanesIntersectionWrap* obj = new VtkPlanesIntersectionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

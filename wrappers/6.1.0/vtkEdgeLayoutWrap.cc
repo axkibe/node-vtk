@@ -80,12 +80,16 @@ void VtkEdgeLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkEdgeLayout> native = vtkSmartPointer<vtkEdgeLayout>::New();
-		VtkEdgeLayoutWrap* obj = new VtkEdgeLayoutWrap(native);		obj->Wrap(info.This());
+		VtkEdgeLayoutWrap* obj = new VtkEdgeLayoutWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

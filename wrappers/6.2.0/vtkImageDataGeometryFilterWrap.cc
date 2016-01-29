@@ -112,12 +112,16 @@ void VtkImageDataGeometryFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDataGeometryFilter> native = vtkSmartPointer<vtkImageDataGeometryFilter>::New();
-		VtkImageDataGeometryFilterWrap* obj = new VtkImageDataGeometryFilterWrap(native);		obj->Wrap(info.This());
+		VtkImageDataGeometryFilterWrap* obj = new VtkImageDataGeometryFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

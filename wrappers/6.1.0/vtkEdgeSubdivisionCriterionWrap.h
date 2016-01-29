@@ -29,6 +29,7 @@ class VtkEdgeSubdivisionCriterionWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void DontPassField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFields(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputField(const Nan::FunctionCallbackInfo<v8::Value>& info);

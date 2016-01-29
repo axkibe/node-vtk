@@ -174,6 +174,9 @@ void VtkOpenFOAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ListTimeStepsByControlDictOn", ListTimeStepsByControlDictOn);
 	Nan::SetPrototypeMethod(tpl, "listTimeStepsByControlDictOn", ListTimeStepsByControlDictOn);
 
+	Nan::SetPrototypeMethod(tpl, "MakeMetaDataAtTimeStep", MakeMetaDataAtTimeStep);
+	Nan::SetPrototypeMethod(tpl, "makeMetaDataAtTimeStep", MakeMetaDataAtTimeStep);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -234,6 +237,9 @@ void VtkOpenFOAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRefresh", SetRefresh);
 	Nan::SetPrototypeMethod(tpl, "setRefresh", SetRefresh);
 
+	Nan::SetPrototypeMethod(tpl, "SetTimeValue", SetTimeValue);
+	Nan::SetPrototypeMethod(tpl, "setTimeValue", SetTimeValue);
+
 	ptpl.Reset( tpl );
 }
 
@@ -248,12 +254,16 @@ void VtkOpenFOAMReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenFOAMReader> native = vtkSmartPointer<vtkOpenFOAMReader>::New();
-		VtkOpenFOAMReaderWrap* obj = new VtkOpenFOAMReaderWrap(native);		obj->Wrap(info.This());
+		VtkOpenFOAMReaderWrap* obj = new VtkOpenFOAMReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -896,6 +906,27 @@ void VtkOpenFOAMReaderWrap::ListTimeStepsByControlDictOn(const Nan::FunctionCall
 	native->ListTimeStepsByControlDictOn();
 }
 
+void VtkOpenFOAMReaderWrap::MakeMetaDataAtTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
+	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->MakeMetaDataAtTimeStep(
+			info[0]->BooleanValue()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkOpenFOAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
@@ -1277,5 +1308,26 @@ void VtkOpenFOAMReaderWrap::SetRefresh(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	native->SetRefresh();
+}
+
+void VtkOpenFOAMReaderWrap::SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
+	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetTimeValue(
+			info[0]->NumberValue()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

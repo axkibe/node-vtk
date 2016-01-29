@@ -36,10 +36,12 @@ class VtkGraphHierarchicalBundleEdgesWrap : public VtkGraphAlgorithmWrap
 		static void GetBundlingStrengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBundlingStrengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirectMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDirectMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

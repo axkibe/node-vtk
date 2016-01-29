@@ -36,11 +36,13 @@ class VtkQuadraticPolygonWrap : public VtkNonLinearCellWrap
 		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsPrimaryCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NonDegenerateTriangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

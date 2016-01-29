@@ -79,12 +79,16 @@ void VtkXGMLReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXGMLReader> native = vtkSmartPointer<vtkXGMLReader>::New();
-		VtkXGMLReaderWrap* obj = new VtkXGMLReaderWrap(native);		obj->Wrap(info.This());
+		VtkXGMLReaderWrap* obj = new VtkXGMLReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

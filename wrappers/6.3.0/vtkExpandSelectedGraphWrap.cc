@@ -61,6 +61,12 @@ void VtkExpandSelectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDomain", GetDomain);
 	Nan::SetPrototypeMethod(tpl, "getDomain", GetDomain);
 
+	Nan::SetPrototypeMethod(tpl, "GetIncludeShortestPaths", GetIncludeShortestPaths);
+	Nan::SetPrototypeMethod(tpl, "getIncludeShortestPaths", GetIncludeShortestPaths);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseDomain", GetUseDomain);
+	Nan::SetPrototypeMethod(tpl, "getUseDomain", GetUseDomain);
+
 	Nan::SetPrototypeMethod(tpl, "IncludeShortestPathsOff", IncludeShortestPathsOff);
 	Nan::SetPrototypeMethod(tpl, "includeShortestPathsOff", IncludeShortestPathsOff);
 
@@ -85,6 +91,12 @@ void VtkExpandSelectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraphConnection", SetGraphConnection);
 	Nan::SetPrototypeMethod(tpl, "setGraphConnection", SetGraphConnection);
 
+	Nan::SetPrototypeMethod(tpl, "SetIncludeShortestPaths", SetIncludeShortestPaths);
+	Nan::SetPrototypeMethod(tpl, "setIncludeShortestPaths", SetIncludeShortestPaths);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseDomain", SetUseDomain);
+	Nan::SetPrototypeMethod(tpl, "setUseDomain", SetUseDomain);
+
 	Nan::SetPrototypeMethod(tpl, "UseDomainOff", UseDomainOff);
 	Nan::SetPrototypeMethod(tpl, "useDomainOff", UseDomainOff);
 
@@ -105,12 +117,16 @@ void VtkExpandSelectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExpandSelectedGraph> native = vtkSmartPointer<vtkExpandSelectedGraph>::New();
-		VtkExpandSelectedGraphWrap* obj = new VtkExpandSelectedGraphWrap(native);		obj->Wrap(info.This());
+		VtkExpandSelectedGraphWrap* obj = new VtkExpandSelectedGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -182,6 +198,34 @@ void VtkExpandSelectedGraphWrap::GetDomain(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetDomain();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkExpandSelectedGraphWrap::GetIncludeShortestPaths(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
+	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIncludeShortestPaths();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExpandSelectedGraphWrap::GetUseDomain(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
+	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseDomain();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExpandSelectedGraphWrap::IncludeShortestPathsOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -337,6 +381,44 @@ void VtkExpandSelectedGraphWrap::SetGraphConnection(const Nan::FunctionCallbackI
 		}
 		native->SetGraphConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExpandSelectedGraphWrap::SetIncludeShortestPaths(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
+	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIncludeShortestPaths(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExpandSelectedGraphWrap::SetUseDomain(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
+	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseDomain(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

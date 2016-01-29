@@ -68,6 +68,9 @@ void VtkParticleTracerBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetComputeVorticity", GetComputeVorticity);
+	Nan::SetPrototypeMethod(tpl, "getComputeVorticity", GetComputeVorticity);
+
 	Nan::SetPrototypeMethod(tpl, "GetDisableResetCache", GetDisableResetCache);
 	Nan::SetPrototypeMethod(tpl, "getDisableResetCache", GetDisableResetCache);
 
@@ -131,6 +134,9 @@ void VtkParticleTracerBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetComputeVorticity", SetComputeVorticity);
+	Nan::SetPrototypeMethod(tpl, "setComputeVorticity", SetComputeVorticity);
+
 	Nan::SetPrototypeMethod(tpl, "SetDisableResetCache", SetDisableResetCache);
 	Nan::SetPrototypeMethod(tpl, "setDisableResetCache", SetDisableResetCache);
 
@@ -192,7 +198,10 @@ void VtkParticleTracerBaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -278,6 +287,20 @@ void VtkParticleTracerBaseWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkParticleTracerBaseWrap::GetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
+	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComputeVorticity();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkParticleTracerBaseWrap::GetDisableResetCache(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -613,6 +636,25 @@ void VtkParticleTracerBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParticleTracerBaseWrap::SetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
+	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetComputeVorticity(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

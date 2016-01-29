@@ -94,12 +94,16 @@ void VtkCutMaterialWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCutMaterial> native = vtkSmartPointer<vtkCutMaterial>::New();
-		VtkCutMaterialWrap* obj = new VtkCutMaterialWrap(native);		obj->Wrap(info.This());
+		VtkCutMaterialWrap* obj = new VtkCutMaterialWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

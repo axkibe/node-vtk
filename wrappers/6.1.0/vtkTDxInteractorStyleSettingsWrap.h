@@ -34,6 +34,9 @@ class VtkTDxInteractorStyleSettingsWrap : public VtkObjectWrap
 		static void GetTranslationXSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTranslationYSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTranslationZSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseRotationX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseRotationY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseRotationZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +44,9 @@ class VtkTDxInteractorStyleSettingsWrap : public VtkObjectWrap
 		static void SetTranslationXSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslationYSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslationZSensitivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseRotationX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseRotationY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseRotationZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

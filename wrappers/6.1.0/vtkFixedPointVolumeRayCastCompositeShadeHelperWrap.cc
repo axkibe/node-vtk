@@ -78,12 +78,16 @@ void VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::New(const Nan::Function
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFixedPointVolumeRayCastCompositeShadeHelper> native = vtkSmartPointer<vtkFixedPointVolumeRayCastCompositeShadeHelper>::New();
-		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap* obj = new VtkFixedPointVolumeRayCastCompositeShadeHelperWrap(native);		obj->Wrap(info.This());
+		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap* obj = new VtkFixedPointVolumeRayCastCompositeShadeHelperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -88,12 +88,16 @@ void VtkEllipsoidTensorProbeRepresentationWrap::New(const Nan::FunctionCallbackI
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkEllipsoidTensorProbeRepresentation> native = vtkSmartPointer<vtkEllipsoidTensorProbeRepresentation>::New();
-		VtkEllipsoidTensorProbeRepresentationWrap* obj = new VtkEllipsoidTensorProbeRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkEllipsoidTensorProbeRepresentationWrap* obj = new VtkEllipsoidTensorProbeRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

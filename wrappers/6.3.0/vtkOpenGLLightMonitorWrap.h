@@ -36,6 +36,7 @@ class VtkOpenGLLightMonitorWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLightId(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StateChanged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

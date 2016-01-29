@@ -77,12 +77,16 @@ void VtkOverlappingAMRAlgorithmWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOverlappingAMRAlgorithm> native = vtkSmartPointer<vtkOverlappingAMRAlgorithm>::New();
-		VtkOverlappingAMRAlgorithmWrap* obj = new VtkOverlappingAMRAlgorithmWrap(native);		obj->Wrap(info.This());
+		VtkOverlappingAMRAlgorithmWrap* obj = new VtkOverlappingAMRAlgorithmWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

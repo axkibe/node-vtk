@@ -38,6 +38,7 @@ class VtkDataRepresentationWrap : public VtkPassInputTypeAlgorithmWrap
 		static void GetInternalAnnotationOutputPort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInternalOutputPort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInternalSelectionOutputPort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionType(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +49,7 @@ class VtkDataRepresentationWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SelectableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SelectableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionType(const Nan::FunctionCallbackInfo<v8::Value>& info);

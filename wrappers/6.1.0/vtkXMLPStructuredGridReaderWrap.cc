@@ -77,12 +77,16 @@ void VtkXMLPStructuredGridReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLPStructuredGridReader> native = vtkSmartPointer<vtkXMLPStructuredGridReader>::New();
-		VtkXMLPStructuredGridReaderWrap* obj = new VtkXMLPStructuredGridReaderWrap(native);		obj->Wrap(info.This());
+		VtkXMLPStructuredGridReaderWrap* obj = new VtkXMLPStructuredGridReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

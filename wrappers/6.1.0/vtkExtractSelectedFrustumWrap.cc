@@ -120,12 +120,16 @@ void VtkExtractSelectedFrustumWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractSelectedFrustum> native = vtkSmartPointer<vtkExtractSelectedFrustum>::New();
-		VtkExtractSelectedFrustumWrap* obj = new VtkExtractSelectedFrustumWrap(native);		obj->Wrap(info.This());
+		VtkExtractSelectedFrustumWrap* obj = new VtkExtractSelectedFrustumWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

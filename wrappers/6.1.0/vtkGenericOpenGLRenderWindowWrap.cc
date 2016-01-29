@@ -71,6 +71,9 @@ void VtkGenericOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsCurrent", IsCurrent);
+	Nan::SetPrototypeMethod(tpl, "isCurrent", IsCurrent);
+
 	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
 	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
 
@@ -91,6 +94,9 @@ void VtkGenericOpenGLRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFullScreen", SetFullScreen);
 	Nan::SetPrototypeMethod(tpl, "setFullScreen", SetFullScreen);
+
+	Nan::SetPrototypeMethod(tpl, "SetIsCurrent", SetIsCurrent);
+	Nan::SetPrototypeMethod(tpl, "setIsCurrent", SetIsCurrent);
 
 	Nan::SetPrototypeMethod(tpl, "SetIsDirect", SetIsDirect);
 	Nan::SetPrototypeMethod(tpl, "setIsDirect", SetIsDirect);
@@ -133,12 +139,16 @@ void VtkGenericOpenGLRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericOpenGLRenderWindow> native = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
-		VtkGenericOpenGLRenderWindowWrap* obj = new VtkGenericOpenGLRenderWindowWrap(native);		obj->Wrap(info.This());
+		VtkGenericOpenGLRenderWindowWrap* obj = new VtkGenericOpenGLRenderWindowWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -252,6 +262,20 @@ void VtkGenericOpenGLRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsCurrent();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGenericOpenGLRenderWindowWrap::IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -371,6 +395,25 @@ void VtkGenericOpenGLRenderWindowWrap::SetFullScreen(const Nan::FunctionCallback
 		}
 		native->SetFullScreen(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetIsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIsCurrent(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -112,12 +112,16 @@ void VtkInteractorStyleJoystickCameraWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleJoystickCamera> native = vtkSmartPointer<vtkInteractorStyleJoystickCamera>::New();
-		VtkInteractorStyleJoystickCameraWrap* obj = new VtkInteractorStyleJoystickCameraWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleJoystickCameraWrap* obj = new VtkInteractorStyleJoystickCameraWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -32,6 +32,7 @@ class VtkProjectedTetrahedraMapperWrap : public VtkUnstructuredGridVolumeMapperW
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisibilitySort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapScalarsToColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

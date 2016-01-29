@@ -47,6 +47,10 @@ class VtkDataSetWrap : public VtkDataObjectWrap
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointGhostArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAnyBlankCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAnyBlankPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAnyGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAnyGhostPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewCellIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);

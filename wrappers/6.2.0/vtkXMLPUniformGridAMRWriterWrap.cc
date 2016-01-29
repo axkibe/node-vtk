@@ -83,12 +83,16 @@ void VtkXMLPUniformGridAMRWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLPUniformGridAMRWriter> native = vtkSmartPointer<vtkXMLPUniformGridAMRWriter>::New();
-		VtkXMLPUniformGridAMRWriterWrap* obj = new VtkXMLPUniformGridAMRWriterWrap(native);		obj->Wrap(info.This());
+		VtkXMLPUniformGridAMRWriterWrap* obj = new VtkXMLPUniformGridAMRWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

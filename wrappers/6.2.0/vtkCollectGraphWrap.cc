@@ -105,12 +105,16 @@ void VtkCollectGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCollectGraph> native = vtkSmartPointer<vtkCollectGraph>::New();
-		VtkCollectGraphWrap* obj = new VtkCollectGraphWrap(native);		obj->Wrap(info.This());
+		VtkCollectGraphWrap* obj = new VtkCollectGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

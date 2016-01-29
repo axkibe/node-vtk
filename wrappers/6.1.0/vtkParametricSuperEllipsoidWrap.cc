@@ -106,12 +106,16 @@ void VtkParametricSuperEllipsoidWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParametricSuperEllipsoid> native = vtkSmartPointer<vtkParametricSuperEllipsoid>::New();
-		VtkParametricSuperEllipsoidWrap* obj = new VtkParametricSuperEllipsoidWrap(native);		obj->Wrap(info.This());
+		VtkParametricSuperEllipsoidWrap* obj = new VtkParametricSuperEllipsoidWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

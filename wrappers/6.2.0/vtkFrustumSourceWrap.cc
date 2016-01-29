@@ -60,6 +60,9 @@ void VtkFrustumSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPlanes", GetPlanes);
 	Nan::SetPrototypeMethod(tpl, "getPlanes", GetPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "GetShowLines", GetShowLines);
+	Nan::SetPrototypeMethod(tpl, "getShowLines", GetShowLines);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -77,6 +80,9 @@ void VtkFrustumSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
+
+	Nan::SetPrototypeMethod(tpl, "SetShowLines", SetShowLines);
+	Nan::SetPrototypeMethod(tpl, "setShowLines", SetShowLines);
 
 	Nan::SetPrototypeMethod(tpl, "ShowLinesOff", ShowLinesOff);
 	Nan::SetPrototypeMethod(tpl, "showLinesOff", ShowLinesOff);
@@ -98,12 +104,16 @@ void VtkFrustumSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFrustumSource> native = vtkSmartPointer<vtkFrustumSource>::New();
-		VtkFrustumSourceWrap* obj = new VtkFrustumSourceWrap(native);		obj->Wrap(info.This());
+		VtkFrustumSourceWrap* obj = new VtkFrustumSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -172,6 +182,20 @@ void VtkFrustumSourceWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkFrustumSourceWrap::GetShowLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
+	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShowLines();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkFrustumSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -302,6 +326,25 @@ void VtkFrustumSourceWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetPlanes(
 			(vtkPlanes *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrustumSourceWrap::SetShowLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
+	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShowLines(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

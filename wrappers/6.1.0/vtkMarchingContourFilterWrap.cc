@@ -146,12 +146,16 @@ void VtkMarchingContourFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMarchingContourFilter> native = vtkSmartPointer<vtkMarchingContourFilter>::New();
-		VtkMarchingContourFilterWrap* obj = new VtkMarchingContourFilterWrap(native);		obj->Wrap(info.This());
+		VtkMarchingContourFilterWrap* obj = new VtkMarchingContourFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

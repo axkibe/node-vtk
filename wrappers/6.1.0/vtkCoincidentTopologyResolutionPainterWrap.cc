@@ -84,12 +84,16 @@ void VtkCoincidentTopologyResolutionPainterWrap::New(const Nan::FunctionCallback
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCoincidentTopologyResolutionPainter> native = vtkSmartPointer<vtkCoincidentTopologyResolutionPainter>::New();
-		VtkCoincidentTopologyResolutionPainterWrap* obj = new VtkCoincidentTopologyResolutionPainterWrap(native);		obj->Wrap(info.This());
+		VtkCoincidentTopologyResolutionPainterWrap* obj = new VtkCoincidentTopologyResolutionPainterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

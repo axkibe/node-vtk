@@ -72,12 +72,16 @@ void VtkPipelineSizeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPipelineSize> native = vtkSmartPointer<vtkPipelineSize>::New();
-		VtkPipelineSizeWrap* obj = new VtkPipelineSizeWrap(native);		obj->Wrap(info.This());
+		VtkPipelineSizeWrap* obj = new VtkPipelineSizeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -30,6 +30,7 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntegrationDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntegrationDirectionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,10 +44,12 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void GetMinimumIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotationScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSurfaceStreamlines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInitialIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrationDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrationDirectionToBackward(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -70,6 +73,7 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSurfaceStreamlines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceStreamlinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceStreamlinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

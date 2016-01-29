@@ -9,6 +9,7 @@
 #include "vtkFunctionSetWrap.h"
 #include "vtkTemporalInterpolatedVelocityFieldWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkDataSetWrap.h"
 
 using namespace v8;
 
@@ -62,6 +63,9 @@ void VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsStatic", IsStatic);
+	Nan::SetPrototypeMethod(tpl, "isStatic", IsStatic);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -70,6 +74,9 @@ void VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SelectVectors", SelectVectors);
 	Nan::SetPrototypeMethod(tpl, "selectVectors", SelectVectors);
+
+	Nan::SetPrototypeMethod(tpl, "SetDataSetAtTime", SetDataSetAtTime);
+	Nan::SetPrototypeMethod(tpl, "setDataSetAtTime", SetDataSetAtTime);
 
 	Nan::SetPrototypeMethod(tpl, "ShowCacheResults", ShowCacheResults);
 	Nan::SetPrototypeMethod(tpl, "showCacheResults", ShowCacheResults);
@@ -88,12 +95,16 @@ void VtkTemporalInterpolatedVelocityFieldWrap::New(const Nan::FunctionCallbackIn
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTemporalInterpolatedVelocityField> native = vtkSmartPointer<vtkTemporalInterpolatedVelocityField>::New();
-		VtkTemporalInterpolatedVelocityFieldWrap* obj = new VtkTemporalInterpolatedVelocityFieldWrap(native);		obj->Wrap(info.This());
+		VtkTemporalInterpolatedVelocityFieldWrap* obj = new VtkTemporalInterpolatedVelocityFieldWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -173,6 +184,27 @@ void VtkTemporalInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTemporalInterpolatedVelocityFieldWrap::IsStatic(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsStatic(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTemporalInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
@@ -243,6 +275,42 @@ void VtkTemporalInterpolatedVelocityFieldWrap::SelectVectors(const Nan::Function
 			*a0
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTemporalInterpolatedVelocityFieldWrap::SetDataSetAtTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkDataSetWrap *a3 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->SetDataSetAtTime(
+							info[0]->Int32Value(),
+							info[1]->Int32Value(),
+							info[2]->NumberValue(),
+							(vtkDataSet *) a3->native.GetPointer(),
+							info[4]->BooleanValue()
+						);
+						return;
+					}
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

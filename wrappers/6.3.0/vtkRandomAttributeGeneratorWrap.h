@@ -63,6 +63,7 @@ class VtkRandomAttributeGeneratorWrap : public VtkPassInputTypeAlgorithmWrap
 		static void GeneratePointTensorsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePointVectorsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePointVectorsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAttributesConstantPerBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateCellArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -86,6 +87,7 @@ class VtkRandomAttributeGeneratorWrap : public VtkPassInputTypeAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAttributesConstantPerBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComponentRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataTypeToBit(const Nan::FunctionCallbackInfo<v8::Value>& info);

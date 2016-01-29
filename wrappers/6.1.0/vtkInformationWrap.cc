@@ -141,12 +141,16 @@ void VtkInformationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInformation> native = vtkSmartPointer<vtkInformation>::New();
-		VtkInformationWrap* obj = new VtkInformationWrap(native);		obj->Wrap(info.This());
+		VtkInformationWrap* obj = new VtkInformationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

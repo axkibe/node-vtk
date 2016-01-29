@@ -33,6 +33,7 @@ class VtkUniformVariablesWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsAtEnd(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Merge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Next(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -73,12 +73,16 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::New(const Nan::FunctionCall
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOrientedPolygonalHandleRepresentation3D> native = vtkSmartPointer<vtkOrientedPolygonalHandleRepresentation3D>::New();
-		VtkOrientedPolygonalHandleRepresentation3DWrap* obj = new VtkOrientedPolygonalHandleRepresentation3DWrap(native);		obj->Wrap(info.This());
+		VtkOrientedPolygonalHandleRepresentation3DWrap* obj = new VtkOrientedPolygonalHandleRepresentation3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

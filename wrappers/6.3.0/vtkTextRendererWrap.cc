@@ -46,6 +46,9 @@ void VtkTextRendererWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkTextRendererWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "FreeTypeIsSupported", FreeTypeIsSupported);
+	Nan::SetPrototypeMethod(tpl, "freeTypeIsSupported", FreeTypeIsSupported);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -58,6 +61,9 @@ void VtkTextRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "MathTextIsSupported", MathTextIsSupported);
+	Nan::SetPrototypeMethod(tpl, "mathTextIsSupported", MathTextIsSupported);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -66,6 +72,9 @@ void VtkTextRendererWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetDefaultBackend", SetDefaultBackend);
 	Nan::SetPrototypeMethod(tpl, "setDefaultBackend", SetDefaultBackend);
+
+	Nan::SetPrototypeMethod(tpl, "SetScaleToPowerOfTwo", SetScaleToPowerOfTwo);
+	Nan::SetPrototypeMethod(tpl, "setScaleToPowerOfTwo", SetScaleToPowerOfTwo);
 
 	ptpl.Reset( tpl );
 }
@@ -81,15 +90,33 @@ void VtkTextRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTextRenderer> native = vtkSmartPointer<vtkTextRenderer>::New();
-		VtkTextRendererWrap* obj = new VtkTextRendererWrap(native);		obj->Wrap(info.This());
+		VtkTextRendererWrap* obj = new VtkTextRendererWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTextRendererWrap::FreeTypeIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererWrap>(info.Holder());
+	vtkTextRenderer *native = (vtkTextRenderer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->FreeTypeIsSupported();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTextRendererWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -165,6 +192,20 @@ void VtkTextRendererWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTextRendererWrap::MathTextIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererWrap>(info.Holder());
+	vtkTextRenderer *native = (vtkTextRenderer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MathTextIsSupported();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTextRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererWrap>(info.Holder());
@@ -232,6 +273,25 @@ void VtkTextRendererWrap::SetDefaultBackend(const Nan::FunctionCallbackInfo<v8::
 		}
 		native->SetDefaultBackend(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextRendererWrap::SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkTextRendererWrap>(info.Holder());
+	vtkTextRenderer *native = (vtkTextRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaleToPowerOfTwo(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -45,6 +45,7 @@ class VtkSocketCommunicatorWrap : public VtkCommunicatorWrap
 		static void GetSwapBytesInReceivedData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVersion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Handshake(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBufferredMessages(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LogToFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

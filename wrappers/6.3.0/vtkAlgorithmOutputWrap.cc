@@ -85,12 +85,16 @@ void VtkAlgorithmOutputWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAlgorithmOutput> native = vtkSmartPointer<vtkAlgorithmOutput>::New();
-		VtkAlgorithmOutputWrap* obj = new VtkAlgorithmOutputWrap(native);		obj->Wrap(info.This());
+		VtkAlgorithmOutputWrap* obj = new VtkAlgorithmOutputWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

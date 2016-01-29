@@ -59,6 +59,15 @@ void VtkTIFFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileExtensions", GetFileExtensions);
 	Nan::SetPrototypeMethod(tpl, "getFileExtensions", GetFileExtensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrientationTypeSpecifiedFlag", GetOrientationTypeSpecifiedFlag);
+	Nan::SetPrototypeMethod(tpl, "getOrientationTypeSpecifiedFlag", GetOrientationTypeSpecifiedFlag);
+
+	Nan::SetPrototypeMethod(tpl, "GetOriginSpecifiedFlag", GetOriginSpecifiedFlag);
+	Nan::SetPrototypeMethod(tpl, "getOriginSpecifiedFlag", GetOriginSpecifiedFlag);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacingSpecifiedFlag", GetSpacingSpecifiedFlag);
+	Nan::SetPrototypeMethod(tpl, "getSpacingSpecifiedFlag", GetSpacingSpecifiedFlag);
+
 	Nan::SetPrototypeMethod(tpl, "InitializeColors", InitializeColors);
 	Nan::SetPrototypeMethod(tpl, "initializeColors", InitializeColors);
 
@@ -76,6 +85,12 @@ void VtkTIFFReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetOriginSpecifiedFlag", SetOriginSpecifiedFlag);
+	Nan::SetPrototypeMethod(tpl, "setOriginSpecifiedFlag", SetOriginSpecifiedFlag);
+
+	Nan::SetPrototypeMethod(tpl, "SetSpacingSpecifiedFlag", SetSpacingSpecifiedFlag);
+	Nan::SetPrototypeMethod(tpl, "setSpacingSpecifiedFlag", SetSpacingSpecifiedFlag);
 
 	Nan::SetPrototypeMethod(tpl, "SpacingSpecifiedFlagOff", SpacingSpecifiedFlagOff);
 	Nan::SetPrototypeMethod(tpl, "spacingSpecifiedFlagOff", SpacingSpecifiedFlagOff);
@@ -97,12 +112,16 @@ void VtkTIFFReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTIFFReader> native = vtkSmartPointer<vtkTIFFReader>::New();
-		VtkTIFFReaderWrap* obj = new VtkTIFFReaderWrap(native);		obj->Wrap(info.This());
+		VtkTIFFReaderWrap* obj = new VtkTIFFReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -170,6 +189,48 @@ void VtkTIFFReaderWrap::GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetFileExtensions();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTIFFReaderWrap::GetOrientationTypeSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientationTypeSpecifiedFlag();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTIFFReaderWrap::GetOriginSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOriginSpecifiedFlag();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTIFFReaderWrap::GetSpacingSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpacingSpecifiedFlag();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTIFFReaderWrap::InitializeColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -279,6 +340,44 @@ void VtkTIFFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTIFFReaderWrap::SetOriginSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOriginSpecifiedFlag(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTIFFReaderWrap::SetSpacingSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSpacingSpecifiedFlag(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

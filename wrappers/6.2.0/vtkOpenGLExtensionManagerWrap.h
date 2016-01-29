@@ -29,6 +29,18 @@ class VtkOpenGLExtensionManagerWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void DriverGLRendererHas(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverGLRendererHasToken(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverGLRendererIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverGLRendererIsOSMesa(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverGLVersionIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverIsATI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverIsIntel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverIsMesa(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverIsMicrosoft(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverIsNvidia(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverVersionAtLeast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void DriverVersionIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ExtensionSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDriverGLRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +53,7 @@ class VtkOpenGLExtensionManagerWrap : public VtkObjectWrap
 		static void GetDriverVersionMinor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDriverVersionPatch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtensionsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIgnoreDriverBugs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnoreDriverBugsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnoreDriverBugsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +64,7 @@ class VtkOpenGLExtensionManagerWrap : public VtkObjectWrap
 		static void LoadSupportedExtension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIgnoreDriverBugs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -31,6 +31,8 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 
 		static void AutoSubdividePolarAxisOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoSubdividePolarAxisOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoScaleRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoSubdividePolarAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistanceLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +57,7 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void GetRadialAxesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadialAxesVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadialTitleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRadialUnits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSmallestVisiblePolarAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSmallestVisiblePolarAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -82,6 +85,8 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAutoScaleRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAutoSubdividePolarAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDistanceLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -105,6 +110,7 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void SetRadialAxesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadialAxesVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadialTitleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRadialUnits(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSmallestVisiblePolarAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewAngleLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);

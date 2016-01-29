@@ -116,12 +116,16 @@ void VtkExtractGeometryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractGeometry> native = vtkSmartPointer<vtkExtractGeometry>::New();
-		VtkExtractGeometryWrap* obj = new VtkExtractGeometryWrap(native);		obj->Wrap(info.This());
+		VtkExtractGeometryWrap* obj = new VtkExtractGeometryWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

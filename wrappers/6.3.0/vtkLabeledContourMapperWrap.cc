@@ -61,6 +61,9 @@ void VtkLabeledContourMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetLabelVisibility", GetLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getLabelVisibility", GetLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetPolyDataMapper", GetPolyDataMapper);
 	Nan::SetPrototypeMethod(tpl, "getPolyDataMapper", GetPolyDataMapper);
 
@@ -94,6 +97,9 @@ void VtkLabeledContourMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	Nan::SetPrototypeMethod(tpl, "SetLabelVisibility", SetLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setLabelVisibility", SetLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetTextProperties", SetTextProperties);
 	Nan::SetPrototypeMethod(tpl, "setTextProperties", SetTextProperties);
 
@@ -117,12 +123,16 @@ void VtkLabeledContourMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabeledContourMapper> native = vtkSmartPointer<vtkLabeledContourMapper>::New();
-		VtkLabeledContourMapperWrap* obj = new VtkLabeledContourMapperWrap(native);		obj->Wrap(info.This());
+		VtkLabeledContourMapperWrap* obj = new VtkLabeledContourMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -163,6 +173,20 @@ void VtkLabeledContourMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLabeledContourMapperWrap::GetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledContourMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledContourMapperWrap>(info.Holder());
+	vtkLabeledContourMapper *native = (vtkLabeledContourMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLabeledContourMapperWrap::GetPolyDataMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -393,6 +417,25 @@ void VtkLabeledContourMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetInputData(
 			(vtkPolyData *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabeledContourMapperWrap::SetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabeledContourMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabeledContourMapperWrap>(info.Holder());
+	vtkLabeledContourMapper *native = (vtkLabeledContourMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLabelVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

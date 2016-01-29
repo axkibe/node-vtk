@@ -86,6 +86,9 @@ void VtkYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetReverseMaterialOrder", GetReverseMaterialOrder);
 	Nan::SetPrototypeMethod(tpl, "getReverseMaterialOrder", GetReverseMaterialOrder);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseAllBlocks", GetUseAllBlocks);
+	Nan::SetPrototypeMethod(tpl, "getUseAllBlocks", GetUseAllBlocks);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseFractionAsDistance", GetUseFractionAsDistance);
 	Nan::SetPrototypeMethod(tpl, "getUseFractionAsDistance", GetUseFractionAsDistance);
 
@@ -152,6 +155,9 @@ void VtkYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReverseMaterialOrder", SetReverseMaterialOrder);
 	Nan::SetPrototypeMethod(tpl, "setReverseMaterialOrder", SetReverseMaterialOrder);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseAllBlocks", SetUseAllBlocks);
+	Nan::SetPrototypeMethod(tpl, "setUseAllBlocks", SetUseAllBlocks);
+
 	Nan::SetPrototypeMethod(tpl, "SetUseFractionAsDistance", SetUseFractionAsDistance);
 	Nan::SetPrototypeMethod(tpl, "setUseFractionAsDistance", SetUseFractionAsDistance);
 
@@ -184,12 +190,16 @@ void VtkYoungsMaterialInterfaceWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkYoungsMaterialInterface> native = vtkSmartPointer<vtkYoungsMaterialInterface>::New();
-		VtkYoungsMaterialInterfaceWrap* obj = new VtkYoungsMaterialInterfaceWrap(native);		obj->Wrap(info.This());
+		VtkYoungsMaterialInterfaceWrap* obj = new VtkYoungsMaterialInterfaceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -371,6 +381,20 @@ void VtkYoungsMaterialInterfaceWrap::GetReverseMaterialOrder(const Nan::Function
 		return;
 	}
 	r = native->GetReverseMaterialOrder();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkYoungsMaterialInterfaceWrap::GetUseAllBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
+	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseAllBlocks();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -832,6 +856,25 @@ void VtkYoungsMaterialInterfaceWrap::SetReverseMaterialOrder(const Nan::Function
 		}
 		native->SetReverseMaterialOrder(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkYoungsMaterialInterfaceWrap::SetUseAllBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
+	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseAllBlocks(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

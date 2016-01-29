@@ -50,6 +50,9 @@ void VtkSMPContourGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMergePieces", GetMergePieces);
+	Nan::SetPrototypeMethod(tpl, "getMergePieces", GetMergePieces);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -65,6 +68,9 @@ void VtkSMPContourGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetMergePieces", SetMergePieces);
+	Nan::SetPrototypeMethod(tpl, "setMergePieces", SetMergePieces);
+
 	ptpl.Reset( tpl );
 }
 
@@ -79,12 +85,16 @@ void VtkSMPContourGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSMPContourGrid> native = vtkSmartPointer<vtkSMPContourGrid>::New();
-		VtkSMPContourGridWrap* obj = new VtkSMPContourGridWrap(native);		obj->Wrap(info.This());
+		VtkSMPContourGridWrap* obj = new VtkSMPContourGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -102,6 +112,20 @@ void VtkSMPContourGridWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSMPContourGridWrap::GetMergePieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSMPContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkSMPContourGridWrap>(info.Holder());
+	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMergePieces();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSMPContourGridWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,6 +223,25 @@ void VtkSMPContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSMPContourGridWrap::SetMergePieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSMPContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkSMPContourGridWrap>(info.Holder());
+	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMergePieces(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -93,12 +93,16 @@ void VtkFastNumericConversionWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFastNumericConversion> native = vtkSmartPointer<vtkFastNumericConversion>::New();
-		VtkFastNumericConversionWrap* obj = new VtkFastNumericConversionWrap(native);		obj->Wrap(info.This());
+		VtkFastNumericConversionWrap* obj = new VtkFastNumericConversionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

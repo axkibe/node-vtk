@@ -78,6 +78,9 @@ void VtkGeoTerrainNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetParent", GetParent);
 	Nan::SetPrototypeMethod(tpl, "getParent", GetParent);
 
+	Nan::SetPrototypeMethod(tpl, "HasData", HasData);
+	Nan::SetPrototypeMethod(tpl, "hasData", HasData);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -119,12 +122,16 @@ void VtkGeoTerrainNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoTerrainNode> native = vtkSmartPointer<vtkGeoTerrainNode>::New();
-		VtkGeoTerrainNodeWrap* obj = new VtkGeoTerrainNodeWrap(native);		obj->Wrap(info.This());
+		VtkGeoTerrainNodeWrap* obj = new VtkGeoTerrainNodeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -317,6 +324,20 @@ void VtkGeoTerrainNodeWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGeoTerrainNodeWrap::HasData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTerrainNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainNodeWrap>(info.Holder());
+	vtkGeoTerrainNode *native = (vtkGeoTerrainNode *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasData();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoTerrainNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

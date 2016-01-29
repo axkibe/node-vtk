@@ -55,6 +55,9 @@ void VtkMultiCorrelativeStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMedianAbsoluteDeviation", GetMedianAbsoluteDeviation);
+	Nan::SetPrototypeMethod(tpl, "getMedianAbsoluteDeviation", GetMedianAbsoluteDeviation);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -70,6 +73,9 @@ void VtkMultiCorrelativeStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetMedianAbsoluteDeviation", SetMedianAbsoluteDeviation);
+	Nan::SetPrototypeMethod(tpl, "setMedianAbsoluteDeviation", SetMedianAbsoluteDeviation);
+
 	ptpl.Reset( tpl );
 }
 
@@ -84,12 +90,16 @@ void VtkMultiCorrelativeStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMultiCorrelativeStatistics> native = vtkSmartPointer<vtkMultiCorrelativeStatistics>::New();
-		VtkMultiCorrelativeStatisticsWrap* obj = new VtkMultiCorrelativeStatisticsWrap(native);		obj->Wrap(info.This());
+		VtkMultiCorrelativeStatisticsWrap* obj = new VtkMultiCorrelativeStatisticsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -132,6 +142,20 @@ void VtkMultiCorrelativeStatisticsWrap::GetClassName(const Nan::FunctionCallback
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMultiCorrelativeStatisticsWrap::GetMedianAbsoluteDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkMultiCorrelativeStatisticsWrap>(info.Holder());
+	vtkMultiCorrelativeStatistics *native = (vtkMultiCorrelativeStatistics *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMedianAbsoluteDeviation();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMultiCorrelativeStatisticsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -229,6 +253,25 @@ void VtkMultiCorrelativeStatisticsWrap::SafeDownCast(const Nan::FunctionCallback
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiCorrelativeStatisticsWrap::SetMedianAbsoluteDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkMultiCorrelativeStatisticsWrap>(info.Holder());
+	vtkMultiCorrelativeStatistics *native = (vtkMultiCorrelativeStatistics *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMedianAbsoluteDeviation(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

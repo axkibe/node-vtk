@@ -53,6 +53,12 @@ void VtkMergeTablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFirstTablePrefix", GetFirstTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "getFirstTablePrefix", GetFirstTablePrefix);
 
+	Nan::SetPrototypeMethod(tpl, "GetMergeColumnsByName", GetMergeColumnsByName);
+	Nan::SetPrototypeMethod(tpl, "getMergeColumnsByName", GetMergeColumnsByName);
+
+	Nan::SetPrototypeMethod(tpl, "GetPrefixAllButMerged", GetPrefixAllButMerged);
+	Nan::SetPrototypeMethod(tpl, "getPrefixAllButMerged", GetPrefixAllButMerged);
+
 	Nan::SetPrototypeMethod(tpl, "GetSecondTablePrefix", GetSecondTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "getSecondTablePrefix", GetSecondTablePrefix);
 
@@ -80,6 +86,12 @@ void VtkMergeTablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFirstTablePrefix", SetFirstTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "setFirstTablePrefix", SetFirstTablePrefix);
 
+	Nan::SetPrototypeMethod(tpl, "SetMergeColumnsByName", SetMergeColumnsByName);
+	Nan::SetPrototypeMethod(tpl, "setMergeColumnsByName", SetMergeColumnsByName);
+
+	Nan::SetPrototypeMethod(tpl, "SetPrefixAllButMerged", SetPrefixAllButMerged);
+	Nan::SetPrototypeMethod(tpl, "setPrefixAllButMerged", SetPrefixAllButMerged);
+
 	Nan::SetPrototypeMethod(tpl, "SetSecondTablePrefix", SetSecondTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "setSecondTablePrefix", SetSecondTablePrefix);
 
@@ -97,12 +109,16 @@ void VtkMergeTablesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMergeTables> native = vtkSmartPointer<vtkMergeTables>::New();
-		VtkMergeTablesWrap* obj = new VtkMergeTablesWrap(native);		obj->Wrap(info.This());
+		VtkMergeTablesWrap* obj = new VtkMergeTablesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -134,6 +150,34 @@ void VtkMergeTablesWrap::GetFirstTablePrefix(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetFirstTablePrefix();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMergeTablesWrap::GetMergeColumnsByName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
+	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMergeColumnsByName();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMergeTablesWrap::GetPrefixAllButMerged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
+	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPrefixAllButMerged();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMergeTablesWrap::GetSecondTablePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,6 +332,44 @@ void VtkMergeTablesWrap::SetFirstTablePrefix(const Nan::FunctionCallbackInfo<v8:
 		}
 		native->SetFirstTablePrefix(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMergeTablesWrap::SetMergeColumnsByName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
+	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMergeColumnsByName(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMergeTablesWrap::SetPrefixAllButMerged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
+	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPrefixAllButMerged(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -56,6 +56,9 @@ void VtkSpanTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDepthFirstSpanningTree", GetDepthFirstSpanningTree);
+	Nan::SetPrototypeMethod(tpl, "getDepthFirstSpanningTree", GetDepthFirstSpanningTree);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -67,6 +70,9 @@ void VtkSpanTreeLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDepthFirstSpanningTree", SetDepthFirstSpanningTree);
+	Nan::SetPrototypeMethod(tpl, "setDepthFirstSpanningTree", SetDepthFirstSpanningTree);
 
 	ptpl.Reset( tpl );
 }
@@ -82,12 +88,16 @@ void VtkSpanTreeLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSpanTreeLayoutStrategy> native = vtkSmartPointer<vtkSpanTreeLayoutStrategy>::New();
-		VtkSpanTreeLayoutStrategyWrap* obj = new VtkSpanTreeLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkSpanTreeLayoutStrategyWrap* obj = new VtkSpanTreeLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -129,6 +139,20 @@ void VtkSpanTreeLayoutStrategyWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSpanTreeLayoutStrategyWrap::GetDepthFirstSpanningTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
+	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDepthFirstSpanningTree();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSpanTreeLayoutStrategyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -214,6 +238,25 @@ void VtkSpanTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSpanTreeLayoutStrategyWrap::SetDepthFirstSpanningTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
+	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDepthFirstSpanningTree(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

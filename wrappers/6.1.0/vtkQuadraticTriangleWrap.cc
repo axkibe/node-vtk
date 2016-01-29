@@ -97,12 +97,16 @@ void VtkQuadraticTriangleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkQuadraticTriangle> native = vtkSmartPointer<vtkQuadraticTriangle>::New();
-		VtkQuadraticTriangleWrap* obj = new VtkQuadraticTriangleWrap(native);		obj->Wrap(info.This());
+		VtkQuadraticTriangleWrap* obj = new VtkQuadraticTriangleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

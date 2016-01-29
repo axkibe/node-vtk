@@ -55,6 +55,9 @@ void VtkExtractSelectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetRemoveIsolatedVertices", GetRemoveIsolatedVertices);
+	Nan::SetPrototypeMethod(tpl, "getRemoveIsolatedVertices", GetRemoveIsolatedVertices);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -73,6 +76,9 @@ void VtkExtractSelectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLayersConnection", SetAnnotationLayersConnection);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLayersConnection", SetAnnotationLayersConnection);
 
+	Nan::SetPrototypeMethod(tpl, "SetRemoveIsolatedVertices", SetRemoveIsolatedVertices);
+	Nan::SetPrototypeMethod(tpl, "setRemoveIsolatedVertices", SetRemoveIsolatedVertices);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
@@ -90,12 +96,16 @@ void VtkExtractSelectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractSelectedGraph> native = vtkSmartPointer<vtkExtractSelectedGraph>::New();
-		VtkExtractSelectedGraphWrap* obj = new VtkExtractSelectedGraphWrap(native);		obj->Wrap(info.This());
+		VtkExtractSelectedGraphWrap* obj = new VtkExtractSelectedGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -139,6 +149,20 @@ void VtkExtractSelectedGraphWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkExtractSelectedGraphWrap::GetRemoveIsolatedVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
+	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRemoveIsolatedVertices();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExtractSelectedGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -255,6 +279,25 @@ void VtkExtractSelectedGraphWrap::SetAnnotationLayersConnection(const Nan::Funct
 		}
 		native->SetAnnotationLayersConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractSelectedGraphWrap::SetRemoveIsolatedVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
+	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRemoveIsolatedVertices(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

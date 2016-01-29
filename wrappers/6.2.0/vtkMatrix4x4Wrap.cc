@@ -102,12 +102,16 @@ void VtkMatrix4x4Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMatrix4x4> native = vtkSmartPointer<vtkMatrix4x4>::New();
-		VtkMatrix4x4Wrap* obj = new VtkMatrix4x4Wrap(native);		obj->Wrap(info.This());
+		VtkMatrix4x4Wrap* obj = new VtkMatrix4x4Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

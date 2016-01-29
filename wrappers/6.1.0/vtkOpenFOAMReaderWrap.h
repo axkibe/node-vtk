@@ -71,6 +71,7 @@ class VtkOpenFOAMReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ListTimeStepsByControlDictOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ListTimeStepsByControlDictOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void MakeMetaDataAtTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PositionsIsIn13FormatOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PositionsIsIn13FormatOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -91,6 +92,7 @@ class VtkOpenFOAMReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetPositionsIsIn13Format(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadZones(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRefresh(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

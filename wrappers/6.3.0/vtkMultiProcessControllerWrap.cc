@@ -98,6 +98,9 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetBreakRMITag", GetBreakRMITag);
 	Nan::SetPrototypeMethod(tpl, "getBreakRMITag", GetBreakRMITag);
 
+	Nan::SetPrototypeMethod(tpl, "GetBroadcastTriggerRMI", GetBroadcastTriggerRMI);
+	Nan::SetPrototypeMethod(tpl, "getBroadcastTriggerRMI", GetBroadcastTriggerRMI);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -161,6 +164,9 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBreakFlag", SetBreakFlag);
 	Nan::SetPrototypeMethod(tpl, "setBreakFlag", SetBreakFlag);
 
+	Nan::SetPrototypeMethod(tpl, "SetBroadcastTriggerRMI", SetBroadcastTriggerRMI);
+	Nan::SetPrototypeMethod(tpl, "setBroadcastTriggerRMI", SetBroadcastTriggerRMI);
+
 	Nan::SetPrototypeMethod(tpl, "SetGlobalController", SetGlobalController);
 	Nan::SetPrototypeMethod(tpl, "setGlobalController", SetGlobalController);
 
@@ -201,7 +207,10 @@ void VtkMultiProcessControllerWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -559,6 +568,20 @@ void VtkMultiProcessControllerWrap::GetBreakRMITag(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetBreakRMITag();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMultiProcessControllerWrap::GetBroadcastTriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
+	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBroadcastTriggerRMI();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1045,6 +1068,25 @@ void VtkMultiProcessControllerWrap::SetBreakFlag(const Nan::FunctionCallbackInfo
 		}
 		native->SetBreakFlag(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiProcessControllerWrap::SetBroadcastTriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
+	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBroadcastTriggerRMI(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

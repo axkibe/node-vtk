@@ -54,11 +54,17 @@ void VtkPainterPolyDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetIsOpaque", GetIsOpaque);
+	Nan::SetPrototypeMethod(tpl, "getIsOpaque", GetIsOpaque);
+
 	Nan::SetPrototypeMethod(tpl, "GetPainter", GetPainter);
 	Nan::SetPrototypeMethod(tpl, "getPainter", GetPainter);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectionPainter", GetSelectionPainter);
 	Nan::SetPrototypeMethod(tpl, "getSelectionPainter", GetSelectionPainter);
+
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -107,12 +113,16 @@ void VtkPainterPolyDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPainterPolyDataMapper> native = vtkSmartPointer<vtkPainterPolyDataMapper>::New();
-		VtkPainterPolyDataMapperWrap* obj = new VtkPainterPolyDataMapperWrap(native);		obj->Wrap(info.This());
+		VtkPainterPolyDataMapperWrap* obj = new VtkPainterPolyDataMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -130,6 +140,20 @@ void VtkPainterPolyDataMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPainterPolyDataMapperWrap::GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
+	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIsOpaque();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPainterPolyDataMapperWrap::GetPainter(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -176,6 +200,20 @@ void VtkPainterPolyDataMapperWrap::GetSelectionPainter(const Nan::FunctionCallba
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPainterPolyDataMapperWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
+	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPainterPolyDataMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

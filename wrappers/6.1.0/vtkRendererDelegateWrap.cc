@@ -50,6 +50,9 @@ void VtkRendererDelegateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetUsed", GetUsed);
+	Nan::SetPrototypeMethod(tpl, "getUsed", GetUsed);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -61,6 +64,9 @@ void VtkRendererDelegateWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetUsed", SetUsed);
+	Nan::SetPrototypeMethod(tpl, "setUsed", SetUsed);
 
 	Nan::SetPrototypeMethod(tpl, "UsedOff", UsedOff);
 	Nan::SetPrototypeMethod(tpl, "usedOff", UsedOff);
@@ -87,7 +93,10 @@ void VtkRendererDelegateWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -105,6 +114,20 @@ void VtkRendererDelegateWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRendererDelegateWrap::GetUsed(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererDelegateWrap *wrapper = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info.Holder());
+	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUsed();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRendererDelegateWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -198,6 +221,25 @@ void VtkRendererDelegateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererDelegateWrap::SetUsed(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererDelegateWrap *wrapper = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info.Holder());
+	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUsed(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

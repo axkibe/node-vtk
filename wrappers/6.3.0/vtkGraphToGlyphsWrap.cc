@@ -57,11 +57,17 @@ void VtkGraphToGlyphsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFilled", GetFilled);
+	Nan::SetPrototypeMethod(tpl, "getFilled", GetFilled);
+
 	Nan::SetPrototypeMethod(tpl, "GetGlyphType", GetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "getGlyphType", GetGlyphType);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
+	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
 
 	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
@@ -75,11 +81,17 @@ void VtkGraphToGlyphsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetFilled", SetFilled);
+	Nan::SetPrototypeMethod(tpl, "setFilled", SetFilled);
+
 	Nan::SetPrototypeMethod(tpl, "SetGlyphType", SetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "setGlyphType", SetGlyphType);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "SetScaling", SetScaling);
+	Nan::SetPrototypeMethod(tpl, "setScaling", SetScaling);
 
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
@@ -98,12 +110,16 @@ void VtkGraphToGlyphsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGraphToGlyphs> native = vtkSmartPointer<vtkGraphToGlyphs>::New();
-		VtkGraphToGlyphsWrap* obj = new VtkGraphToGlyphsWrap(native);		obj->Wrap(info.This());
+		VtkGraphToGlyphsWrap* obj = new VtkGraphToGlyphsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -147,6 +163,20 @@ void VtkGraphToGlyphsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkGraphToGlyphsWrap::GetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
+	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFilled();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGraphToGlyphsWrap::GetGlyphType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
@@ -182,6 +212,20 @@ void VtkGraphToGlyphsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGraphToGlyphsWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
+	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaling();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphToGlyphsWrap::GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -274,6 +318,25 @@ void VtkGraphToGlyphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGraphToGlyphsWrap::SetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
+	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFilled(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphToGlyphsWrap::SetGlyphType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
@@ -307,6 +370,25 @@ void VtkGraphToGlyphsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetRenderer(
 			(vtkRenderer *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphToGlyphsWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
+	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaling(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -73,12 +73,16 @@ void VtkRectilinearGridOutlineFilterWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRectilinearGridOutlineFilter> native = vtkSmartPointer<vtkRectilinearGridOutlineFilter>::New();
-		VtkRectilinearGridOutlineFilterWrap* obj = new VtkRectilinearGridOutlineFilterWrap(native);		obj->Wrap(info.This());
+		VtkRectilinearGridOutlineFilterWrap* obj = new VtkRectilinearGridOutlineFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

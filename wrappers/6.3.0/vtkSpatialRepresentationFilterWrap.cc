@@ -60,6 +60,9 @@ void VtkSpatialRepresentationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGenerateLeaves", GetGenerateLeaves);
+	Nan::SetPrototypeMethod(tpl, "getGenerateLeaves", GetGenerateLeaves);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumLevel", GetMaximumLevel);
 	Nan::SetPrototypeMethod(tpl, "getMaximumLevel", GetMaximumLevel);
 
@@ -78,6 +81,9 @@ void VtkSpatialRepresentationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetGenerateLeaves", SetGenerateLeaves);
+	Nan::SetPrototypeMethod(tpl, "setGenerateLeaves", SetGenerateLeaves);
+
 	Nan::SetPrototypeMethod(tpl, "SetSpatialRepresentation", SetSpatialRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setSpatialRepresentation", SetSpatialRepresentation);
 
@@ -95,12 +101,16 @@ void VtkSpatialRepresentationFilterWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSpatialRepresentationFilter> native = vtkSmartPointer<vtkSpatialRepresentationFilter>::New();
-		VtkSpatialRepresentationFilterWrap* obj = new VtkSpatialRepresentationFilterWrap(native);		obj->Wrap(info.This());
+		VtkSpatialRepresentationFilterWrap* obj = new VtkSpatialRepresentationFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -161,6 +171,20 @@ void VtkSpatialRepresentationFilterWrap::GetClassName(const Nan::FunctionCallbac
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSpatialRepresentationFilterWrap::GetGenerateLeaves(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
+	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGenerateLeaves();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSpatialRepresentationFilterWrap::GetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -283,6 +307,25 @@ void VtkSpatialRepresentationFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSpatialRepresentationFilterWrap::SetGenerateLeaves(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
+	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGenerateLeaves(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

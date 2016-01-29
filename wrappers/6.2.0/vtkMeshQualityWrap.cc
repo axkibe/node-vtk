@@ -578,12 +578,16 @@ void VtkMeshQualityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMeshQuality> native = vtkSmartPointer<vtkMeshQuality>::New();
-		VtkMeshQualityWrap* obj = new VtkMeshQualityWrap(native);		obj->Wrap(info.This());
+		VtkMeshQualityWrap* obj = new VtkMeshQualityWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

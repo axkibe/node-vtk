@@ -38,6 +38,9 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void ExtendLeafNodesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleForOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,9 +48,13 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PrepareToPaint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayNumberOfCollapsedLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDrawLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetExtendLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);

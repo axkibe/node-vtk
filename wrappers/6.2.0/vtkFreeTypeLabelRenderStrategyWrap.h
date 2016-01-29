@@ -34,6 +34,8 @@ class VtkFreeTypeLabelRenderStrategyWrap : public VtkLabelRenderStrategyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -81,12 +81,16 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::New(const Nan::FunctionCallba
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnstructuredGridPartialPreIntegration> native = vtkSmartPointer<vtkUnstructuredGridPartialPreIntegration>::New();
-		VtkUnstructuredGridPartialPreIntegrationWrap* obj = new VtkUnstructuredGridPartialPreIntegrationWrap(native);		obj->Wrap(info.This());
+		VtkUnstructuredGridPartialPreIntegrationWrap* obj = new VtkUnstructuredGridPartialPreIntegrationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

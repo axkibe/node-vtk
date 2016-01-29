@@ -48,6 +48,9 @@ void VtkWriterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkWriterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "EncodeString", EncodeString);
+	Nan::SetPrototypeMethod(tpl, "encodeString", EncodeString);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -88,10 +91,42 @@ void VtkWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkWriterWrap::EncodeString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWriterWrap *wrapper = ObjectWrap::Unwrap<VtkWriterWrap>(info.Holder());
+	vtkWriter *native = (vtkWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->EncodeString(
+					*a0,
+					*a1,
+					info[2]->BooleanValue()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkWriterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

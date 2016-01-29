@@ -79,12 +79,16 @@ void VtkPerturbCoincidentVerticesWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPerturbCoincidentVertices> native = vtkSmartPointer<vtkPerturbCoincidentVertices>::New();
-		VtkPerturbCoincidentVerticesWrap* obj = new VtkPerturbCoincidentVerticesWrap(native);		obj->Wrap(info.This());
+		VtkPerturbCoincidentVerticesWrap* obj = new VtkPerturbCoincidentVerticesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

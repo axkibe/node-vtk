@@ -61,6 +61,9 @@ void VtkProcrustesAlignmentFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
 
+	Nan::SetPrototypeMethod(tpl, "GetStartFromCentroid", GetStartFromCentroid);
+	Nan::SetPrototypeMethod(tpl, "getStartFromCentroid", GetStartFromCentroid);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -72,6 +75,9 @@ void VtkProcrustesAlignmentFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "SetStartFromCentroid", SetStartFromCentroid);
+	Nan::SetPrototypeMethod(tpl, "setStartFromCentroid", SetStartFromCentroid);
 
 	Nan::SetPrototypeMethod(tpl, "StartFromCentroidOff", StartFromCentroidOff);
 	Nan::SetPrototypeMethod(tpl, "startFromCentroidOff", StartFromCentroidOff);
@@ -93,12 +99,16 @@ void VtkProcrustesAlignmentFilterWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProcrustesAlignmentFilter> native = vtkSmartPointer<vtkProcrustesAlignmentFilter>::New();
-		VtkProcrustesAlignmentFilterWrap* obj = new VtkProcrustesAlignmentFilterWrap(native);		obj->Wrap(info.This());
+		VtkProcrustesAlignmentFilterWrap* obj = new VtkProcrustesAlignmentFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -175,6 +185,20 @@ void VtkProcrustesAlignmentFilterWrap::GetOutputPointsPrecision(const Nan::Funct
 		return;
 	}
 	r = native->GetOutputPointsPrecision();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProcrustesAlignmentFilterWrap::GetStartFromCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProcrustesAlignmentFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProcrustesAlignmentFilterWrap>(info.Holder());
+	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartFromCentroid();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -267,6 +291,25 @@ void VtkProcrustesAlignmentFilterWrap::SetOutputPointsPrecision(const Nan::Funct
 		}
 		native->SetOutputPointsPrecision(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProcrustesAlignmentFilterWrap::SetStartFromCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProcrustesAlignmentFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProcrustesAlignmentFilterWrap>(info.Holder());
+	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetStartFromCentroid(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

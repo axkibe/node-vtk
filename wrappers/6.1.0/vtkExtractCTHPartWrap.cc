@@ -64,6 +64,9 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateTrianglesOn", GenerateTrianglesOn);
 	Nan::SetPrototypeMethod(tpl, "generateTrianglesOn", GenerateTrianglesOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetCapping", GetCapping);
+	Nan::SetPrototypeMethod(tpl, "getCapping", GetCapping);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -73,8 +76,14 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetController", GetController);
 	Nan::SetPrototypeMethod(tpl, "getController", GetController);
 
+	Nan::SetPrototypeMethod(tpl, "GetGenerateTriangles", GetGenerateTriangles);
+	Nan::SetPrototypeMethod(tpl, "getGenerateTriangles", GetGenerateTriangles);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfVolumeArrayNames", GetNumberOfVolumeArrayNames);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfVolumeArrayNames", GetNumberOfVolumeArrayNames);
+
+	Nan::SetPrototypeMethod(tpl, "GetRemoveGhostCells", GetRemoveGhostCells);
+	Nan::SetPrototypeMethod(tpl, "getRemoveGhostCells", GetRemoveGhostCells);
 
 	Nan::SetPrototypeMethod(tpl, "GetVolumeArrayName", GetVolumeArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVolumeArrayName", GetVolumeArrayName);
@@ -106,11 +115,20 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCapping", SetCapping);
+	Nan::SetPrototypeMethod(tpl, "setCapping", SetCapping);
+
 	Nan::SetPrototypeMethod(tpl, "SetClipPlane", SetClipPlane);
 	Nan::SetPrototypeMethod(tpl, "setClipPlane", SetClipPlane);
 
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
+
+	Nan::SetPrototypeMethod(tpl, "SetGenerateTriangles", SetGenerateTriangles);
+	Nan::SetPrototypeMethod(tpl, "setGenerateTriangles", SetGenerateTriangles);
+
+	Nan::SetPrototypeMethod(tpl, "SetRemoveGhostCells", SetRemoveGhostCells);
+	Nan::SetPrototypeMethod(tpl, "setRemoveGhostCells", SetRemoveGhostCells);
 
 	Nan::SetPrototypeMethod(tpl, "SetVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 	Nan::SetPrototypeMethod(tpl, "setVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
@@ -129,12 +147,16 @@ void VtkExtractCTHPartWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractCTHPart> native = vtkSmartPointer<vtkExtractCTHPart>::New();
-		VtkExtractCTHPartWrap* obj = new VtkExtractCTHPartWrap(native);		obj->Wrap(info.This());
+		VtkExtractCTHPartWrap* obj = new VtkExtractCTHPartWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -208,6 +230,20 @@ void VtkExtractCTHPartWrap::GenerateTrianglesOn(const Nan::FunctionCallbackInfo<
 	native->GenerateTrianglesOn();
 }
 
+void VtkExtractCTHPartWrap::GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCapping();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkExtractCTHPartWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
@@ -268,6 +304,20 @@ void VtkExtractCTHPartWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkExtractCTHPartWrap::GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGenerateTriangles();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkExtractCTHPartWrap::GetNumberOfVolumeArrayNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
@@ -279,6 +329,20 @@ void VtkExtractCTHPartWrap::GetNumberOfVolumeArrayNames(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetNumberOfVolumeArrayNames();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExtractCTHPartWrap::GetRemoveGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRemoveGhostCells();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -457,6 +521,25 @@ void VtkExtractCTHPartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkExtractCTHPartWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCapping(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkExtractCTHPartWrap::SetClipPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
@@ -491,6 +574,44 @@ void VtkExtractCTHPartWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetController(
 			(vtkMultiProcessController *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractCTHPartWrap::SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGenerateTriangles(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractCTHPartWrap::SetRemoveGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
+	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRemoveGhostCells(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

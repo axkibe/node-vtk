@@ -94,12 +94,16 @@ void VtkContourTriangulatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkContourTriangulator> native = vtkSmartPointer<vtkContourTriangulator>::New();
-		VtkContourTriangulatorWrap* obj = new VtkContourTriangulatorWrap(native);		obj->Wrap(info.This());
+		VtkContourTriangulatorWrap* obj = new VtkContourTriangulatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

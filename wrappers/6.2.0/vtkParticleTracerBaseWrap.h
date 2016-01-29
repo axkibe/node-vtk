@@ -35,6 +35,7 @@ class VtkParticleTracerBaseWrap : public VtkPolyDataAlgorithmWrap
 		static void EnableParticleWritingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnableParticleWritingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisableResetCache(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableParticleWriting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetForceReinjectionEveryNSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +57,7 @@ class VtkParticleTracerBaseWrap : public VtkPolyDataAlgorithmWrap
 		static void PrintParticleHistories(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllSources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisableResetCache(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableParticleWriting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetForceReinjectionEveryNSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -73,12 +73,16 @@ void VtkParticlePathFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParticlePathFilter> native = vtkSmartPointer<vtkParticlePathFilter>::New();
-		VtkParticlePathFilterWrap* obj = new VtkParticlePathFilterWrap(native);		obj->Wrap(info.This());
+		VtkParticlePathFilterWrap* obj = new VtkParticlePathFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

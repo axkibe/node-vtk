@@ -70,6 +70,9 @@ void VtkGeoImageNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTexture", GetTexture);
 	Nan::SetPrototypeMethod(tpl, "getTexture", GetTexture);
 
+	Nan::SetPrototypeMethod(tpl, "HasData", HasData);
+	Nan::SetPrototypeMethod(tpl, "hasData", HasData);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -105,12 +108,16 @@ void VtkGeoImageNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoImageNode> native = vtkSmartPointer<vtkGeoImageNode>::New();
-		VtkGeoImageNodeWrap* obj = new VtkGeoImageNodeWrap(native);		obj->Wrap(info.This());
+		VtkGeoImageNodeWrap* obj = new VtkGeoImageNodeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -259,6 +266,20 @@ void VtkGeoImageNodeWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGeoImageNodeWrap::HasData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoImageNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoImageNodeWrap>(info.Holder());
+	vtkGeoImageNode *native = (vtkGeoImageNode *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasData();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoImageNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

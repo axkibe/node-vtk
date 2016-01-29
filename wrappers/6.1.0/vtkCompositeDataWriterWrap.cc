@@ -77,12 +77,16 @@ void VtkCompositeDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCompositeDataWriter> native = vtkSmartPointer<vtkCompositeDataWriter>::New();
-		VtkCompositeDataWriterWrap* obj = new VtkCompositeDataWriterWrap(native);		obj->Wrap(info.This());
+		VtkCompositeDataWriterWrap* obj = new VtkCompositeDataWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

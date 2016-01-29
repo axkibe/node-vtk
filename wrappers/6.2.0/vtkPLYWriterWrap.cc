@@ -165,12 +165,16 @@ void VtkPLYWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPLYWriter> native = vtkSmartPointer<vtkPLYWriter>::New();
-		VtkPLYWriterWrap* obj = new VtkPLYWriterWrap(native);		obj->Wrap(info.This());
+		VtkPLYWriterWrap* obj = new VtkPLYWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

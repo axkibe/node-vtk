@@ -31,11 +31,17 @@ class VtkStructuredAMRGridConnectivityWrap : public VtkAbstractGridConnectivityW
 
 		static void ComputeNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBalancedRefinement(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBalancedRefinement(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCellCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

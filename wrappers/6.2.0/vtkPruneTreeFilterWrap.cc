@@ -50,6 +50,9 @@ void VtkPruneTreeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetShouldPruneParentVertex", GetShouldPruneParentVertex);
+	Nan::SetPrototypeMethod(tpl, "getShouldPruneParentVertex", GetShouldPruneParentVertex);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -58,6 +61,9 @@ void VtkPruneTreeFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetShouldPruneParentVertex", SetShouldPruneParentVertex);
+	Nan::SetPrototypeMethod(tpl, "setShouldPruneParentVertex", SetShouldPruneParentVertex);
 
 	ptpl.Reset( tpl );
 }
@@ -73,12 +79,16 @@ void VtkPruneTreeFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPruneTreeFilter> native = vtkSmartPointer<vtkPruneTreeFilter>::New();
-		VtkPruneTreeFilterWrap* obj = new VtkPruneTreeFilterWrap(native);		obj->Wrap(info.This());
+		VtkPruneTreeFilterWrap* obj = new VtkPruneTreeFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -96,6 +106,20 @@ void VtkPruneTreeFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPruneTreeFilterWrap::GetShouldPruneParentVertex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPruneTreeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPruneTreeFilterWrap>(info.Holder());
+	vtkPruneTreeFilter *native = (vtkPruneTreeFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShouldPruneParentVertex();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPruneTreeFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -169,6 +193,25 @@ void VtkPruneTreeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPruneTreeFilterWrap::SetShouldPruneParentVertex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPruneTreeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPruneTreeFilterWrap>(info.Holder());
+	vtkPruneTreeFilter *native = (vtkPruneTreeFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShouldPruneParentVertex(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

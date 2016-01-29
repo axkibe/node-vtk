@@ -35,6 +35,7 @@ class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SaveCurrentBindings(const Nan::FunctionCallbackInfo<v8::Value>& info);

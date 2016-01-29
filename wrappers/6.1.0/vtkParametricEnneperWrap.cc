@@ -76,12 +76,16 @@ void VtkParametricEnneperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParametricEnneper> native = vtkSmartPointer<vtkParametricEnneper>::New();
-		VtkParametricEnneperWrap* obj = new VtkParametricEnneperWrap(native);		obj->Wrap(info.This());
+		VtkParametricEnneperWrap* obj = new VtkParametricEnneperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

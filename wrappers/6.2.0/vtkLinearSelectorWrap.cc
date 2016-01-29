@@ -51,6 +51,9 @@ void VtkLinearSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetIncludeVertices", GetIncludeVertices);
+	Nan::SetPrototypeMethod(tpl, "getIncludeVertices", GetIncludeVertices);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoints", GetPoints);
 	Nan::SetPrototypeMethod(tpl, "getPoints", GetPoints);
 
@@ -84,6 +87,9 @@ void VtkLinearSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEndPoint", SetEndPoint);
 	Nan::SetPrototypeMethod(tpl, "setEndPoint", SetEndPoint);
 
+	Nan::SetPrototypeMethod(tpl, "SetIncludeVertices", SetIncludeVertices);
+	Nan::SetPrototypeMethod(tpl, "setIncludeVertices", SetIncludeVertices);
+
 	Nan::SetPrototypeMethod(tpl, "SetPoints", SetPoints);
 	Nan::SetPrototypeMethod(tpl, "setPoints", SetPoints);
 
@@ -110,12 +116,16 @@ void VtkLinearSelectorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLinearSelector> native = vtkSmartPointer<vtkLinearSelector>::New();
-		VtkLinearSelectorWrap* obj = new VtkLinearSelectorWrap(native);		obj->Wrap(info.This());
+		VtkLinearSelectorWrap* obj = new VtkLinearSelectorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -133,6 +143,20 @@ void VtkLinearSelectorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkLinearSelectorWrap::GetIncludeVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearSelectorWrap>(info.Holder());
+	vtkLinearSelector *native = (vtkLinearSelector *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIncludeVertices();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLinearSelectorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -337,6 +361,25 @@ void VtkLinearSelectorWrap::SetEndPoint(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLinearSelectorWrap::SetIncludeVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkLinearSelectorWrap>(info.Holder());
+	vtkLinearSelector *native = (vtkLinearSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIncludeVertices(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -39,6 +39,7 @@ class VtkTextureWrap : public VtkImageAlgorithmWrap
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapColorScalarsThroughLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPremultipliedAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepeat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRestrictPowerOf2ImageSmaller(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -66,6 +67,7 @@ class VtkTextureWrap : public VtkImageAlgorithmWrap
 		static void SetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMapColorScalarsThroughLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPremultipliedAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQualityTo16Bit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQualityTo32Bit(const Nan::FunctionCallbackInfo<v8::Value>& info);

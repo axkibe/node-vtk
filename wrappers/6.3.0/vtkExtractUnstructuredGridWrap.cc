@@ -134,12 +134,16 @@ void VtkExtractUnstructuredGridWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractUnstructuredGrid> native = vtkSmartPointer<vtkExtractUnstructuredGrid>::New();
-		VtkExtractUnstructuredGridWrap* obj = new VtkExtractUnstructuredGridWrap(native);		obj->Wrap(info.This());
+		VtkExtractUnstructuredGridWrap* obj = new VtkExtractUnstructuredGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

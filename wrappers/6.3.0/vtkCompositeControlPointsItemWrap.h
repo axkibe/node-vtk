@@ -32,12 +32,14 @@ class VtkCompositeControlPointsItemWrap : public VtkColorTransferControlPointsIt
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseOpacityPointHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointsFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseOpacityPointHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

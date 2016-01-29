@@ -29,6 +29,7 @@ class VtkSplitColumnComponentsWrap : public VtkTableAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCalculateMagnitudes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNamingMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNamingModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -36,6 +37,7 @@ class VtkSplitColumnComponentsWrap : public VtkTableAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCalculateMagnitudes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNamingMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNamingModeToNamesWithParens(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNamingModeToNamesWithUnderscores(const Nan::FunctionCallbackInfo<v8::Value>& info);

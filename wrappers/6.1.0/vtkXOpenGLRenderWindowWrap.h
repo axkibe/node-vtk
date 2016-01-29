@@ -36,7 +36,9 @@ class VtkXOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void GetEventPending(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

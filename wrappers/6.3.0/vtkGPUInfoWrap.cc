@@ -72,12 +72,16 @@ void VtkGPUInfoWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGPUInfo> native = vtkSmartPointer<vtkGPUInfo>::New();
-		VtkGPUInfoWrap* obj = new VtkGPUInfoWrap(native);		obj->Wrap(info.This());
+		VtkGPUInfoWrap* obj = new VtkGPUInfoWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

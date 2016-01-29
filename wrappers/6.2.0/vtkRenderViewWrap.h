@@ -34,11 +34,13 @@ class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 		static void DisplayHoverTextOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayHoverTextOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplayHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelPlacementMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +52,7 @@ class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 		static void RenderOnMouseMoveOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOnMouseMoveOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDisplayHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisplaySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIconTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,6 +67,7 @@ class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 		static void SetLabelRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelRenderModeToFreetype(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelRenderModeToQt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToFrustum(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -157,12 +157,16 @@ void VtkProp3DAxisFollowerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProp3DAxisFollower> native = vtkSmartPointer<vtkProp3DAxisFollower>::New();
-		VtkProp3DAxisFollowerWrap* obj = new VtkProp3DAxisFollowerWrap(native);		obj->Wrap(info.This());
+		VtkProp3DAxisFollowerWrap* obj = new VtkProp3DAxisFollowerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

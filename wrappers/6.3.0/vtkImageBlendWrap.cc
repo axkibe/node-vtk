@@ -130,12 +130,16 @@ void VtkImageBlendWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageBlend> native = vtkSmartPointer<vtkImageBlend>::New();
-		VtkImageBlendWrap* obj = new VtkImageBlendWrap(native);		obj->Wrap(info.This());
+		VtkImageBlendWrap* obj = new VtkImageBlendWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

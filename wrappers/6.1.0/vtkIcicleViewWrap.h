@@ -32,11 +32,15 @@ class VtkIcicleViewWrap : public VtkTreeAreaViewWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRootWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTopToBottom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseGradientColoring(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTopToBottom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseGradientColoring(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopToBottomOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopToBottomOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseGradientColoringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

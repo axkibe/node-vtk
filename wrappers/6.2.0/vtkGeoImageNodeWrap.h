@@ -36,6 +36,7 @@ class VtkGeoImageNodeWrap : public VtkGeoTreeNodeWrap
 		static void GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LoadAnImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

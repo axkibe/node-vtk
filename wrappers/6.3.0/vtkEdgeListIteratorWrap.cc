@@ -54,6 +54,9 @@ void VtkEdgeListIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGraph", GetGraph);
 	Nan::SetPrototypeMethod(tpl, "getGraph", GetGraph);
 
+	Nan::SetPrototypeMethod(tpl, "HasNext", HasNext);
+	Nan::SetPrototypeMethod(tpl, "hasNext", HasNext);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -83,12 +86,16 @@ void VtkEdgeListIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkEdgeListIterator> native = vtkSmartPointer<vtkEdgeListIterator>::New();
-		VtkEdgeListIteratorWrap* obj = new VtkEdgeListIteratorWrap(native);		obj->Wrap(info.This());
+		VtkEdgeListIteratorWrap* obj = new VtkEdgeListIteratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -129,6 +136,20 @@ void VtkEdgeListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkEdgeListIteratorWrap::HasNext(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEdgeListIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeListIteratorWrap>(info.Holder());
+	vtkEdgeListIterator *native = (vtkEdgeListIterator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasNext();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkEdgeListIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -31,6 +31,7 @@ class VtkCompositePolyDataMapper2Wrap : public VtkPainterPolyDataMapperWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeDataDisplayAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);

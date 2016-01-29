@@ -83,12 +83,16 @@ void VtkPolyDataToReebGraphFilterWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolyDataToReebGraphFilter> native = vtkSmartPointer<vtkPolyDataToReebGraphFilter>::New();
-		VtkPolyDataToReebGraphFilterWrap* obj = new VtkPolyDataToReebGraphFilterWrap(native);		obj->Wrap(info.This());
+		VtkPolyDataToReebGraphFilterWrap* obj = new VtkPolyDataToReebGraphFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

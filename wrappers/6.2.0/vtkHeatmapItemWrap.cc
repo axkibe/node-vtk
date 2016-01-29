@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "vtkContext2DWrap.h"
 
 using namespace v8;
 
@@ -76,6 +77,9 @@ void VtkHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -105,12 +109,16 @@ void VtkHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHeatmapItem> native = vtkSmartPointer<vtkHeatmapItem>::New();
-		VtkHeatmapItemWrap* obj = new VtkHeatmapItemWrap(native);		obj->Wrap(info.This());
+		VtkHeatmapItemWrap* obj = new VtkHeatmapItemWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -282,6 +290,28 @@ void VtkHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHeatmapItemWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info.Holder());
+	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

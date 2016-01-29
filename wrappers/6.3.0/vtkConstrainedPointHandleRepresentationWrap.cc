@@ -191,12 +191,16 @@ void VtkConstrainedPointHandleRepresentationWrap::New(const Nan::FunctionCallbac
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkConstrainedPointHandleRepresentation> native = vtkSmartPointer<vtkConstrainedPointHandleRepresentation>::New();
-		VtkConstrainedPointHandleRepresentationWrap* obj = new VtkConstrainedPointHandleRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkConstrainedPointHandleRepresentationWrap* obj = new VtkConstrainedPointHandleRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -98,12 +98,16 @@ void VtkCompassWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCompassWidget> native = vtkSmartPointer<vtkCompassWidget>::New();
-		VtkCompassWidgetWrap* obj = new VtkCompassWidgetWrap(native);		obj->Wrap(info.This());
+		VtkCompassWidgetWrap* obj = new VtkCompassWidgetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

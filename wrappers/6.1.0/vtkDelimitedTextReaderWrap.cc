@@ -74,17 +74,35 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDefaultIntegerValue", GetDefaultIntegerValue);
 	Nan::SetPrototypeMethod(tpl, "getDefaultIntegerValue", GetDefaultIntegerValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetDetectNumericColumns", GetDetectNumericColumns);
+	Nan::SetPrototypeMethod(tpl, "getDetectNumericColumns", GetDetectNumericColumns);
+
 	Nan::SetPrototypeMethod(tpl, "GetFieldDelimiterCharacters", GetFieldDelimiterCharacters);
 	Nan::SetPrototypeMethod(tpl, "getFieldDelimiterCharacters", GetFieldDelimiterCharacters);
 
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetForceDouble", GetForceDouble);
+	Nan::SetPrototypeMethod(tpl, "getForceDouble", GetForceDouble);
+
+	Nan::SetPrototypeMethod(tpl, "GetGeneratePedigreeIds", GetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getGeneratePedigreeIds", GetGeneratePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "GetHaveHeaders", GetHaveHeaders);
+	Nan::SetPrototypeMethod(tpl, "getHaveHeaders", GetHaveHeaders);
+
 	Nan::SetPrototypeMethod(tpl, "GetInputString", GetInputString);
 	Nan::SetPrototypeMethod(tpl, "getInputString", GetInputString);
 
 	Nan::SetPrototypeMethod(tpl, "GetInputStringLength", GetInputStringLength);
 	Nan::SetPrototypeMethod(tpl, "getInputStringLength", GetInputStringLength);
+
+	Nan::SetPrototypeMethod(tpl, "GetMergeConsecutiveDelimiters", GetMergeConsecutiveDelimiters);
+	Nan::SetPrototypeMethod(tpl, "getMergeConsecutiveDelimiters", GetMergeConsecutiveDelimiters);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputPedigreeIds", GetOutputPedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getOutputPedigreeIds", GetOutputPedigreeIds);
 
 	Nan::SetPrototypeMethod(tpl, "GetPedigreeIdArrayName", GetPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getPedigreeIdArrayName", GetPedigreeIdArrayName);
@@ -94,6 +112,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetStringDelimiter", GetStringDelimiter);
 	Nan::SetPrototypeMethod(tpl, "getStringDelimiter", GetStringDelimiter);
+
+	Nan::SetPrototypeMethod(tpl, "GetTrimWhitespacePriorToNumericConversion", GetTrimWhitespacePriorToNumericConversion);
+	Nan::SetPrototypeMethod(tpl, "getTrimWhitespacePriorToNumericConversion", GetTrimWhitespacePriorToNumericConversion);
 
 	Nan::SetPrototypeMethod(tpl, "GetUTF8FieldDelimiters", GetUTF8FieldDelimiters);
 	Nan::SetPrototypeMethod(tpl, "getUTF8FieldDelimiters", GetUTF8FieldDelimiters);
@@ -106,6 +127,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUnicodeCharacterSet", GetUnicodeCharacterSet);
 	Nan::SetPrototypeMethod(tpl, "getUnicodeCharacterSet", GetUnicodeCharacterSet);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseStringDelimiter", GetUseStringDelimiter);
+	Nan::SetPrototypeMethod(tpl, "getUseStringDelimiter", GetUseStringDelimiter);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -140,14 +164,32 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDefaultIntegerValue", SetDefaultIntegerValue);
 	Nan::SetPrototypeMethod(tpl, "setDefaultIntegerValue", SetDefaultIntegerValue);
 
+	Nan::SetPrototypeMethod(tpl, "SetDetectNumericColumns", SetDetectNumericColumns);
+	Nan::SetPrototypeMethod(tpl, "setDetectNumericColumns", SetDetectNumericColumns);
+
 	Nan::SetPrototypeMethod(tpl, "SetFieldDelimiterCharacters", SetFieldDelimiterCharacters);
 	Nan::SetPrototypeMethod(tpl, "setFieldDelimiterCharacters", SetFieldDelimiterCharacters);
 
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "SetForceDouble", SetForceDouble);
+	Nan::SetPrototypeMethod(tpl, "setForceDouble", SetForceDouble);
+
+	Nan::SetPrototypeMethod(tpl, "SetGeneratePedigreeIds", SetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setGeneratePedigreeIds", SetGeneratePedigreeIds);
+
+	Nan::SetPrototypeMethod(tpl, "SetHaveHeaders", SetHaveHeaders);
+	Nan::SetPrototypeMethod(tpl, "setHaveHeaders", SetHaveHeaders);
+
 	Nan::SetPrototypeMethod(tpl, "SetInputString", SetInputString);
 	Nan::SetPrototypeMethod(tpl, "setInputString", SetInputString);
+
+	Nan::SetPrototypeMethod(tpl, "SetMergeConsecutiveDelimiters", SetMergeConsecutiveDelimiters);
+	Nan::SetPrototypeMethod(tpl, "setMergeConsecutiveDelimiters", SetMergeConsecutiveDelimiters);
+
+	Nan::SetPrototypeMethod(tpl, "SetOutputPedigreeIds", SetOutputPedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setOutputPedigreeIds", SetOutputPedigreeIds);
 
 	Nan::SetPrototypeMethod(tpl, "SetPedigreeIdArrayName", SetPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPedigreeIdArrayName", SetPedigreeIdArrayName);
@@ -157,6 +199,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetStringDelimiter", SetStringDelimiter);
 	Nan::SetPrototypeMethod(tpl, "setStringDelimiter", SetStringDelimiter);
+
+	Nan::SetPrototypeMethod(tpl, "SetTrimWhitespacePriorToNumericConversion", SetTrimWhitespacePriorToNumericConversion);
+	Nan::SetPrototypeMethod(tpl, "setTrimWhitespacePriorToNumericConversion", SetTrimWhitespacePriorToNumericConversion);
 
 	Nan::SetPrototypeMethod(tpl, "SetUTF8FieldDelimiters", SetUTF8FieldDelimiters);
 	Nan::SetPrototypeMethod(tpl, "setUTF8FieldDelimiters", SetUTF8FieldDelimiters);
@@ -169,6 +214,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetUnicodeCharacterSet", SetUnicodeCharacterSet);
 	Nan::SetPrototypeMethod(tpl, "setUnicodeCharacterSet", SetUnicodeCharacterSet);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseStringDelimiter", SetUseStringDelimiter);
+	Nan::SetPrototypeMethod(tpl, "setUseStringDelimiter", SetUseStringDelimiter);
 
 	Nan::SetPrototypeMethod(tpl, "TrimWhitespacePriorToNumericConversionOff", TrimWhitespacePriorToNumericConversionOff);
 	Nan::SetPrototypeMethod(tpl, "trimWhitespacePriorToNumericConversionOff", TrimWhitespacePriorToNumericConversionOff);
@@ -196,12 +244,16 @@ void VtkDelimitedTextReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDelimitedTextReader> native = vtkSmartPointer<vtkDelimitedTextReader>::New();
-		VtkDelimitedTextReaderWrap* obj = new VtkDelimitedTextReaderWrap(native);		obj->Wrap(info.This());
+		VtkDelimitedTextReaderWrap* obj = new VtkDelimitedTextReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -321,6 +373,20 @@ void VtkDelimitedTextReaderWrap::GetDefaultIntegerValue(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDelimitedTextReaderWrap::GetDetectNumericColumns(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDetectNumericColumns();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDelimitedTextReaderWrap::GetFieldDelimiterCharacters(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
@@ -349,6 +415,48 @@ void VtkDelimitedTextReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkDelimitedTextReaderWrap::GetForceDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetForceDouble();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeneratePedigreeIds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHaveHeaders();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkDelimitedTextReaderWrap::GetInputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
@@ -374,6 +482,34 @@ void VtkDelimitedTextReaderWrap::GetInputStringLength(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetInputStringLength();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetMergeConsecutiveDelimiters(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMergeConsecutiveDelimiters();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetOutputPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputPedigreeIds();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -416,6 +552,20 @@ void VtkDelimitedTextReaderWrap::GetStringDelimiter(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetStringDelimiter();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTrimWhitespacePriorToNumericConversion();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -473,6 +623,20 @@ void VtkDelimitedTextReaderWrap::GetUnicodeCharacterSet(const Nan::FunctionCallb
 	}
 	r = native->GetUnicodeCharacterSet();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDelimitedTextReaderWrap::GetUseStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseStringDelimiter();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDelimitedTextReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -661,6 +825,25 @@ void VtkDelimitedTextReaderWrap::SetDefaultIntegerValue(const Nan::FunctionCallb
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkDelimitedTextReaderWrap::SetDetectNumericColumns(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDetectNumericColumns(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDelimitedTextReaderWrap::SetFieldDelimiterCharacters(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
@@ -701,6 +884,63 @@ void VtkDelimitedTextReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8:
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkDelimitedTextReaderWrap::SetForceDouble(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetForceDouble(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeneratePedigreeIds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHaveHeaders(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDelimitedTextReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
@@ -728,6 +968,44 @@ void VtkDelimitedTextReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<
 		}
 		native->SetInputString(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetMergeConsecutiveDelimiters(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMergeConsecutiveDelimiters(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetOutputPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputPedigreeIds(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -792,6 +1070,25 @@ void VtkDelimitedTextReaderWrap::SetStringDelimiter(const Nan::FunctionCallbackI
 		}
 		native->SetStringDelimiter(
 			a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTrimWhitespacePriorToNumericConversion(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -872,6 +1169,25 @@ void VtkDelimitedTextReaderWrap::SetUnicodeCharacterSet(const Nan::FunctionCallb
 		}
 		native->SetUnicodeCharacterSet(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetUseStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseStringDelimiter(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

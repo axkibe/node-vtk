@@ -33,6 +33,7 @@ class VtkInteractorStyleAreaSelectHoverWrap : public VtkInteractorStyleRubberBan
 		static void GetHighLightWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkInteractorStyleAreaSelectHoverWrap : public VtkInteractorStyleRubberBan
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

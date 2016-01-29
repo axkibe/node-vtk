@@ -121,12 +121,16 @@ void VtkRIBExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRIBExporter> native = vtkSmartPointer<vtkRIBExporter>::New();
-		VtkRIBExporterWrap* obj = new VtkRIBExporterWrap(native);		obj->Wrap(info.This());
+		VtkRIBExporterWrap* obj = new VtkRIBExporterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

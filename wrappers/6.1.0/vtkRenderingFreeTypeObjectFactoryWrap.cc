@@ -79,12 +79,16 @@ void VtkRenderingFreeTypeObjectFactoryWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderingFreeTypeObjectFactory> native = vtkSmartPointer<vtkRenderingFreeTypeObjectFactory>::New();
-		VtkRenderingFreeTypeObjectFactoryWrap* obj = new VtkRenderingFreeTypeObjectFactoryWrap(native);		obj->Wrap(info.This());
+		VtkRenderingFreeTypeObjectFactoryWrap* obj = new VtkRenderingFreeTypeObjectFactoryWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

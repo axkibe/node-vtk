@@ -40,6 +40,7 @@ class VtkRIBPropertyWrap : public VtkPropertyWrap
 		static void GetParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSurfaceShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSurfaceShaderParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSurfaceShaderUsesDefaultParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +49,7 @@ class VtkRIBPropertyWrap : public VtkPropertyWrap
 		static void SetParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSurfaceShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSurfaceShaderParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSurfaceShaderUsesDefaultParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceShaderUsesDefaultParametersOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceShaderUsesDefaultParametersOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

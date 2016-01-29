@@ -72,6 +72,9 @@ void VtkTableToGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirected", GetDirected);
+	Nan::SetPrototypeMethod(tpl, "getDirected", GetDirected);
+
 	Nan::SetPrototypeMethod(tpl, "GetLinkGraph", GetLinkGraph);
 	Nan::SetPrototypeMethod(tpl, "getLinkGraph", GetLinkGraph);
 
@@ -86,6 +89,9 @@ void VtkTableToGraphWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDirected", SetDirected);
+	Nan::SetPrototypeMethod(tpl, "setDirected", SetDirected);
 
 	Nan::SetPrototypeMethod(tpl, "SetLinkGraph", SetLinkGraph);
 	Nan::SetPrototypeMethod(tpl, "setLinkGraph", SetLinkGraph);
@@ -107,12 +113,16 @@ void VtkTableToGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTableToGraph> native = vtkSmartPointer<vtkTableToGraph>::New();
-		VtkTableToGraphWrap* obj = new VtkTableToGraphWrap(native);		obj->Wrap(info.This());
+		VtkTableToGraphWrap* obj = new VtkTableToGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -232,6 +242,20 @@ void VtkTableToGraphWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTableToGraphWrap::GetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
+	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirected();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTableToGraphWrap::GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -358,6 +382,25 @@ void VtkTableToGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTableToGraphWrap::SetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
+	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDirected(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

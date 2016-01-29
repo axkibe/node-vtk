@@ -77,12 +77,16 @@ void VtkRectilinearGridWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRectilinearGridWriter> native = vtkSmartPointer<vtkRectilinearGridWriter>::New();
-		VtkRectilinearGridWriterWrap* obj = new VtkRectilinearGridWriterWrap(native);		obj->Wrap(info.This());
+		VtkRectilinearGridWriterWrap* obj = new VtkRectilinearGridWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

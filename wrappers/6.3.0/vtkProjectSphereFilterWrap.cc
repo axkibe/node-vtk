@@ -50,6 +50,12 @@ void VtkProjectSphereFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetKeepPolePoints", GetKeepPolePoints);
+	Nan::SetPrototypeMethod(tpl, "getKeepPolePoints", GetKeepPolePoints);
+
+	Nan::SetPrototypeMethod(tpl, "GetTranslateZ", GetTranslateZ);
+	Nan::SetPrototypeMethod(tpl, "getTranslateZ", GetTranslateZ);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -67,6 +73,12 @@ void VtkProjectSphereFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCenter", SetCenter);
 	Nan::SetPrototypeMethod(tpl, "setCenter", SetCenter);
+
+	Nan::SetPrototypeMethod(tpl, "SetKeepPolePoints", SetKeepPolePoints);
+	Nan::SetPrototypeMethod(tpl, "setKeepPolePoints", SetKeepPolePoints);
+
+	Nan::SetPrototypeMethod(tpl, "SetTranslateZ", SetTranslateZ);
+	Nan::SetPrototypeMethod(tpl, "setTranslateZ", SetTranslateZ);
 
 	Nan::SetPrototypeMethod(tpl, "TranslateZOff", TranslateZOff);
 	Nan::SetPrototypeMethod(tpl, "translateZOff", TranslateZOff);
@@ -88,12 +100,16 @@ void VtkProjectSphereFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProjectSphereFilter> native = vtkSmartPointer<vtkProjectSphereFilter>::New();
-		VtkProjectSphereFilterWrap* obj = new VtkProjectSphereFilterWrap(native);		obj->Wrap(info.This());
+		VtkProjectSphereFilterWrap* obj = new VtkProjectSphereFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -111,6 +127,34 @@ void VtkProjectSphereFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkProjectSphereFilterWrap::GetKeepPolePoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
+	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetKeepPolePoints();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProjectSphereFilterWrap::GetTranslateZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
+	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTranslateZ();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkProjectSphereFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -236,6 +280,44 @@ void VtkProjectSphereFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProjectSphereFilterWrap::SetKeepPolePoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
+	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetKeepPolePoints(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkProjectSphereFilterWrap::SetTranslateZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
+	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTranslateZ(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

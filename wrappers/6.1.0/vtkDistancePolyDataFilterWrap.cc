@@ -113,12 +113,16 @@ void VtkDistancePolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDistancePolyDataFilter> native = vtkSmartPointer<vtkDistancePolyDataFilter>::New();
-		VtkDistancePolyDataFilterWrap* obj = new VtkDistancePolyDataFilterWrap(native);		obj->Wrap(info.This());
+		VtkDistancePolyDataFilterWrap* obj = new VtkDistancePolyDataFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

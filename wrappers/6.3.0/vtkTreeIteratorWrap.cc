@@ -53,6 +53,9 @@ void VtkTreeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTree", GetTree);
 	Nan::SetPrototypeMethod(tpl, "getTree", GetTree);
 
+	Nan::SetPrototypeMethod(tpl, "HasNext", HasNext);
+	Nan::SetPrototypeMethod(tpl, "hasNext", HasNext);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -87,7 +90,10 @@ void VtkTreeIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -128,6 +134,20 @@ void VtkTreeIteratorWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkTreeIteratorWrap::HasNext(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeIteratorWrap>(info.Holder());
+	vtkTreeIterator *native = (vtkTreeIterator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasNext();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTreeIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

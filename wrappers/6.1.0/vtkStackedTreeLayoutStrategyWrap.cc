@@ -58,6 +58,9 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInteriorRadius", GetInteriorRadius);
 	Nan::SetPrototypeMethod(tpl, "getInteriorRadius", GetInteriorRadius);
 
+	Nan::SetPrototypeMethod(tpl, "GetReverse", GetReverse);
+	Nan::SetPrototypeMethod(tpl, "getReverse", GetReverse);
+
 	Nan::SetPrototypeMethod(tpl, "GetRingThickness", GetRingThickness);
 	Nan::SetPrototypeMethod(tpl, "getRingThickness", GetRingThickness);
 
@@ -66,6 +69,9 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRootStartAngle", GetRootStartAngle);
 	Nan::SetPrototypeMethod(tpl, "getRootStartAngle", GetRootStartAngle);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseRectangularCoordinates", GetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "getUseRectangularCoordinates", GetUseRectangularCoordinates);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -94,6 +100,9 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInteriorRadius", SetInteriorRadius);
 	Nan::SetPrototypeMethod(tpl, "setInteriorRadius", SetInteriorRadius);
 
+	Nan::SetPrototypeMethod(tpl, "SetReverse", SetReverse);
+	Nan::SetPrototypeMethod(tpl, "setReverse", SetReverse);
+
 	Nan::SetPrototypeMethod(tpl, "SetRingThickness", SetRingThickness);
 	Nan::SetPrototypeMethod(tpl, "setRingThickness", SetRingThickness);
 
@@ -102,6 +111,9 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRootStartAngle", SetRootStartAngle);
 	Nan::SetPrototypeMethod(tpl, "setRootStartAngle", SetRootStartAngle);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseRectangularCoordinates", SetUseRectangularCoordinates);
+	Nan::SetPrototypeMethod(tpl, "setUseRectangularCoordinates", SetUseRectangularCoordinates);
 
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOff", UseRectangularCoordinatesOff);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOff", UseRectangularCoordinatesOff);
@@ -123,12 +135,16 @@ void VtkStackedTreeLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStackedTreeLayoutStrategy> native = vtkSmartPointer<vtkStackedTreeLayoutStrategy>::New();
-		VtkStackedTreeLayoutStrategyWrap* obj = new VtkStackedTreeLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkStackedTreeLayoutStrategyWrap* obj = new VtkStackedTreeLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -176,6 +192,20 @@ void VtkStackedTreeLayoutStrategyWrap::GetInteriorRadius(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkStackedTreeLayoutStrategyWrap::GetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
+	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReverse();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkStackedTreeLayoutStrategyWrap::GetRingThickness(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
@@ -215,6 +245,20 @@ void VtkStackedTreeLayoutStrategyWrap::GetRootStartAngle(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetRootStartAngle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStackedTreeLayoutStrategyWrap::GetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
+	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseRectangularCoordinates();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -421,6 +465,25 @@ void VtkStackedTreeLayoutStrategyWrap::SetInteriorRadius(const Nan::FunctionCall
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStackedTreeLayoutStrategyWrap::SetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
+	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReverse(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkStackedTreeLayoutStrategyWrap::SetRingThickness(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
@@ -472,6 +535,25 @@ void VtkStackedTreeLayoutStrategyWrap::SetRootStartAngle(const Nan::FunctionCall
 		}
 		native->SetRootStartAngle(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStackedTreeLayoutStrategyWrap::SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
+	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseRectangularCoordinates(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

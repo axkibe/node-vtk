@@ -53,6 +53,9 @@ void VtkJavaScriptDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetIncludeFieldNames", GetIncludeFieldNames);
+	Nan::SetPrototypeMethod(tpl, "getIncludeFieldNames", GetIncludeFieldNames);
+
 	Nan::SetPrototypeMethod(tpl, "GetVariableName", GetVariableName);
 	Nan::SetPrototypeMethod(tpl, "getVariableName", GetVariableName);
 
@@ -67,6 +70,9 @@ void VtkJavaScriptDataWriterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
+
+	Nan::SetPrototypeMethod(tpl, "SetIncludeFieldNames", SetIncludeFieldNames);
+	Nan::SetPrototypeMethod(tpl, "setIncludeFieldNames", SetIncludeFieldNames);
 
 	Nan::SetPrototypeMethod(tpl, "SetVariableName", SetVariableName);
 	Nan::SetPrototypeMethod(tpl, "setVariableName", SetVariableName);
@@ -85,12 +91,16 @@ void VtkJavaScriptDataWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkJavaScriptDataWriter> native = vtkSmartPointer<vtkJavaScriptDataWriter>::New();
-		VtkJavaScriptDataWriterWrap* obj = new VtkJavaScriptDataWriterWrap(native);		obj->Wrap(info.This());
+		VtkJavaScriptDataWriterWrap* obj = new VtkJavaScriptDataWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -122,6 +132,20 @@ void VtkJavaScriptDataWriterWrap::GetFileName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkJavaScriptDataWriterWrap::GetIncludeFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJavaScriptDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJavaScriptDataWriterWrap>(info.Holder());
+	vtkJavaScriptDataWriter *native = (vtkJavaScriptDataWriter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIncludeFieldNames();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkJavaScriptDataWriterWrap::GetVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -228,6 +252,25 @@ void VtkJavaScriptDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetFileName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkJavaScriptDataWriterWrap::SetIncludeFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJavaScriptDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJavaScriptDataWriterWrap>(info.Holder());
+	vtkJavaScriptDataWriter *native = (vtkJavaScriptDataWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIncludeFieldNames(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

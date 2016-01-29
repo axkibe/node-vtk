@@ -32,10 +32,12 @@ class VtkSQLDatabaseTableSourceWrap : public VtkTableAlgorithmWrap
 		static void GeneratePedigreeIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePedigreeIdsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

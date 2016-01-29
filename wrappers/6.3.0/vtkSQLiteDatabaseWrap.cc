@@ -73,11 +73,23 @@ void VtkSQLiteDatabaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTables", GetTables);
 	Nan::SetPrototypeMethod(tpl, "getTables", GetTables);
 
+	Nan::SetPrototypeMethod(tpl, "HasError", HasError);
+	Nan::SetPrototypeMethod(tpl, "hasError", HasError);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsOpen", IsOpen);
+	Nan::SetPrototypeMethod(tpl, "isOpen", IsOpen);
+
+	Nan::SetPrototypeMethod(tpl, "IsSupported", IsSupported);
+	Nan::SetPrototypeMethod(tpl, "isSupported", IsSupported);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Open", Open);
+	Nan::SetPrototypeMethod(tpl, "open", Open);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -99,12 +111,16 @@ void VtkSQLiteDatabaseWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSQLiteDatabase> native = vtkSmartPointer<vtkSQLiteDatabase>::New();
-		VtkSQLiteDatabaseWrap* obj = new VtkSQLiteDatabaseWrap(native);		obj->Wrap(info.This());
+		VtkSQLiteDatabaseWrap* obj = new VtkSQLiteDatabaseWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -255,6 +271,20 @@ void VtkSQLiteDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkSQLiteDatabaseWrap::HasError(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
+	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasError();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkSQLiteDatabaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
@@ -270,6 +300,41 @@ void VtkSQLiteDatabaseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSQLiteDatabaseWrap::IsOpen(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
+	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsOpen();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSQLiteDatabaseWrap::IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
+	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsSupported(
+			info[0]->Int32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -298,6 +363,43 @@ void VtkSQLiteDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkSQLiteDatabaseWrap::Open(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
+	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Open(
+				*a0,
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Open(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSQLiteDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

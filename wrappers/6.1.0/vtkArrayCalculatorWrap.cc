@@ -104,6 +104,12 @@ void VtkArrayCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetResultArrayType", GetResultArrayType);
 	Nan::SetPrototypeMethod(tpl, "getResultArrayType", GetResultArrayType);
 
+	Nan::SetPrototypeMethod(tpl, "GetResultNormals", GetResultNormals);
+	Nan::SetPrototypeMethod(tpl, "getResultNormals", GetResultNormals);
+
+	Nan::SetPrototypeMethod(tpl, "GetResultTCoords", GetResultTCoords);
+	Nan::SetPrototypeMethod(tpl, "getResultTCoords", GetResultTCoords);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarArrayName", GetScalarArrayName);
 	Nan::SetPrototypeMethod(tpl, "getScalarArrayName", GetScalarArrayName);
 
@@ -197,6 +203,12 @@ void VtkArrayCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResultArrayType", SetResultArrayType);
 	Nan::SetPrototypeMethod(tpl, "setResultArrayType", SetResultArrayType);
 
+	Nan::SetPrototypeMethod(tpl, "SetResultNormals", SetResultNormals);
+	Nan::SetPrototypeMethod(tpl, "setResultNormals", SetResultNormals);
+
+	Nan::SetPrototypeMethod(tpl, "SetResultTCoords", SetResultTCoords);
+	Nan::SetPrototypeMethod(tpl, "setResultTCoords", SetResultTCoords);
+
 	ptpl.Reset( tpl );
 }
 
@@ -211,12 +223,16 @@ void VtkArrayCalculatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkArrayCalculator> native = vtkSmartPointer<vtkArrayCalculator>::New();
-		VtkArrayCalculatorWrap* obj = new VtkArrayCalculatorWrap(native);		obj->Wrap(info.This());
+		VtkArrayCalculatorWrap* obj = new VtkArrayCalculatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -575,6 +591,34 @@ void VtkArrayCalculatorWrap::GetResultArrayType(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetResultArrayType();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkArrayCalculatorWrap::GetResultNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
+	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResultNormals();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkArrayCalculatorWrap::GetResultTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
+	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResultTCoords();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1080,6 +1124,44 @@ void VtkArrayCalculatorWrap::SetResultArrayType(const Nan::FunctionCallbackInfo<
 		}
 		native->SetResultArrayType(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArrayCalculatorWrap::SetResultNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
+	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResultNormals(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArrayCalculatorWrap::SetResultTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
+	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResultTCoords(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

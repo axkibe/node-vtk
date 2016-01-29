@@ -47,6 +47,7 @@ class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecisionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseValueAsOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsideOutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,6 +61,7 @@ class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseValueAsOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseValueAsOffsetOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseValueAsOffsetOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -9,6 +9,7 @@
 #include "vtkChartWrap.h"
 #include "vtkChartXYWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkPlotWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkChartLegendWrap.h"
@@ -75,11 +76,20 @@ void VtkChartXYWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ForceAxesToBoundsOn", ForceAxesToBoundsOn);
 	Nan::SetPrototypeMethod(tpl, "forceAxesToBoundsOn", ForceAxesToBoundsOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAutoAxes", GetAutoAxes);
+	Nan::SetPrototypeMethod(tpl, "getAutoAxes", GetAutoAxes);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxis", GetAxis);
 	Nan::SetPrototypeMethod(tpl, "getAxis", GetAxis);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDrawAxesAtOrigin", GetDrawAxesAtOrigin);
+	Nan::SetPrototypeMethod(tpl, "getDrawAxesAtOrigin", GetDrawAxesAtOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetForceAxesToBounds", GetForceAxesToBounds);
+	Nan::SetPrototypeMethod(tpl, "getForceAxesToBounds", GetForceAxesToBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetHiddenAxisBorder", GetHiddenAxisBorder);
 	Nan::SetPrototypeMethod(tpl, "getHiddenAxisBorder", GetHiddenAxisBorder);
@@ -99,11 +109,23 @@ void VtkChartXYWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "RecalculateBounds", RecalculateBounds);
 	Nan::SetPrototypeMethod(tpl, "recalculateBounds", RecalculateBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAutoAxes", SetAutoAxes);
+	Nan::SetPrototypeMethod(tpl, "setAutoAxes", SetAutoAxes);
+
+	Nan::SetPrototypeMethod(tpl, "SetDrawAxesAtOrigin", SetDrawAxesAtOrigin);
+	Nan::SetPrototypeMethod(tpl, "setDrawAxesAtOrigin", SetDrawAxesAtOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "SetForceAxesToBounds", SetForceAxesToBounds);
+	Nan::SetPrototypeMethod(tpl, "setForceAxesToBounds", SetForceAxesToBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SetHiddenAxisBorder", SetHiddenAxisBorder);
 	Nan::SetPrototypeMethod(tpl, "setHiddenAxisBorder", SetHiddenAxisBorder);
@@ -113,6 +135,9 @@ void VtkChartXYWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSelectionMethod", SetSelectionMethod);
 	Nan::SetPrototypeMethod(tpl, "setSelectionMethod", SetSelectionMethod);
+
+	Nan::SetPrototypeMethod(tpl, "SetShowLegend", SetShowLegend);
+	Nan::SetPrototypeMethod(tpl, "setShowLegend", SetShowLegend);
 
 	Nan::SetPrototypeMethod(tpl, "SetTooltip", SetTooltip);
 	Nan::SetPrototypeMethod(tpl, "setTooltip", SetTooltip);
@@ -134,12 +159,16 @@ void VtkChartXYWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartXY> native = vtkSmartPointer<vtkChartXY>::New();
-		VtkChartXYWrap* obj = new VtkChartXYWrap(native);		obj->Wrap(info.This());
+		VtkChartXYWrap* obj = new VtkChartXYWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -259,6 +288,20 @@ void VtkChartXYWrap::ForceAxesToBoundsOn(const Nan::FunctionCallbackInfo<v8::Val
 	native->ForceAxesToBoundsOn();
 }
 
+void VtkChartXYWrap::GetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoAxes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkChartXYWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
@@ -301,6 +344,34 @@ void VtkChartXYWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkChartXYWrap::GetDrawAxesAtOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDrawAxesAtOrigin();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkChartXYWrap::GetForceAxesToBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetForceAxesToBounds();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkChartXYWrap::GetHiddenAxisBorder(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -430,6 +501,28 @@ void VtkChartXYWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartXYWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartXYWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
@@ -468,6 +561,63 @@ void VtkChartXYWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::SetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoAxes(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::SetDrawAxesAtOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDrawAxesAtOrigin(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::SetForceAxesToBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetForceAxesToBounds(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -529,6 +679,25 @@ void VtkChartXYWrap::SetSelectionMethod(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		native->SetSelectionMethod(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
+	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShowLegend(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

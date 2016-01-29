@@ -92,12 +92,16 @@ void VtkTransmitStructuredDataPieceWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTransmitStructuredDataPiece> native = vtkSmartPointer<vtkTransmitStructuredDataPiece>::New();
-		VtkTransmitStructuredDataPieceWrap* obj = new VtkTransmitStructuredDataPieceWrap(native);		obj->Wrap(info.This());
+		VtkTransmitStructuredDataPieceWrap* obj = new VtkTransmitStructuredDataPieceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

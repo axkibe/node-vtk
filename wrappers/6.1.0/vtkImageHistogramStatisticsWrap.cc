@@ -94,12 +94,16 @@ void VtkImageHistogramStatisticsWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageHistogramStatistics> native = vtkSmartPointer<vtkImageHistogramStatistics>::New();
-		VtkImageHistogramStatisticsWrap* obj = new VtkImageHistogramStatisticsWrap(native);		obj->Wrap(info.This());
+		VtkImageHistogramStatisticsWrap* obj = new VtkImageHistogramStatisticsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -92,12 +92,16 @@ void VtkCellTreeLocatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCellTreeLocator> native = vtkSmartPointer<vtkCellTreeLocator>::New();
-		VtkCellTreeLocatorWrap* obj = new VtkCellTreeLocatorWrap(native);		obj->Wrap(info.This());
+		VtkCellTreeLocatorWrap* obj = new VtkCellTreeLocatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

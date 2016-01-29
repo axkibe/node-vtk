@@ -247,12 +247,16 @@ void VtkMultiBlockPLOT3DReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMultiBlockPLOT3DReader> native = vtkSmartPointer<vtkMultiBlockPLOT3DReader>::New();
-		VtkMultiBlockPLOT3DReaderWrap* obj = new VtkMultiBlockPLOT3DReaderWrap(native);		obj->Wrap(info.This());
+		VtkMultiBlockPLOT3DReaderWrap* obj = new VtkMultiBlockPLOT3DReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

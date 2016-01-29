@@ -76,12 +76,16 @@ void VtkImageContinuousDilate3DWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageContinuousDilate3D> native = vtkSmartPointer<vtkImageContinuousDilate3D>::New();
-		VtkImageContinuousDilate3DWrap* obj = new VtkImageContinuousDilate3DWrap(native);		obj->Wrap(info.This());
+		VtkImageContinuousDilate3DWrap* obj = new VtkImageContinuousDilate3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

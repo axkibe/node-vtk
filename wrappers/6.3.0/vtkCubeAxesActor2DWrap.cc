@@ -315,12 +315,16 @@ void VtkCubeAxesActor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCubeAxesActor2D> native = vtkSmartPointer<vtkCubeAxesActor2D>::New();
-		VtkCubeAxesActor2DWrap* obj = new VtkCubeAxesActor2DWrap(native);		obj->Wrap(info.This());
+		VtkCubeAxesActor2DWrap* obj = new VtkCubeAxesActor2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

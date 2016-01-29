@@ -47,6 +47,9 @@ void VtkUTF8TextCodecWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkUTF8TextCodecWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CanHandle", CanHandle);
+	Nan::SetPrototypeMethod(tpl, "canHandle", CanHandle);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -76,15 +79,41 @@ void VtkUTF8TextCodecWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUTF8TextCodec> native = vtkSmartPointer<vtkUTF8TextCodec>::New();
-		VtkUTF8TextCodecWrap* obj = new VtkUTF8TextCodecWrap(native);		obj->Wrap(info.This());
+		VtkUTF8TextCodecWrap* obj = new VtkUTF8TextCodecWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkUTF8TextCodecWrap::CanHandle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUTF8TextCodecWrap *wrapper = ObjectWrap::Unwrap<VtkUTF8TextCodecWrap>(info.Holder());
+	vtkUTF8TextCodec *native = (vtkUTF8TextCodec *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CanHandle(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUTF8TextCodecWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

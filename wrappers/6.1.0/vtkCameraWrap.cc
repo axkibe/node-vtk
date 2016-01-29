@@ -93,6 +93,9 @@ void VtkCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFocalDisk", GetFocalDisk);
 	Nan::SetPrototypeMethod(tpl, "getFocalDisk", GetFocalDisk);
 
+	Nan::SetPrototypeMethod(tpl, "GetFreezeFocalPoint", GetFreezeFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "getFreezeFocalPoint", GetFreezeFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetLeftEye", GetLeftEye);
 	Nan::SetPrototypeMethod(tpl, "getLeftEye", GetLeftEye);
 
@@ -192,6 +195,9 @@ void VtkCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFocalPoint", SetFocalPoint);
 	Nan::SetPrototypeMethod(tpl, "setFocalPoint", SetFocalPoint);
 
+	Nan::SetPrototypeMethod(tpl, "SetFreezeFocalPoint", SetFreezeFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "setFreezeFocalPoint", SetFreezeFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "SetLeftEye", SetLeftEye);
 	Nan::SetPrototypeMethod(tpl, "setLeftEye", SetLeftEye);
 
@@ -290,12 +296,16 @@ void VtkCameraWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCamera> native = vtkSmartPointer<vtkCamera>::New();
-		VtkCameraWrap* obj = new VtkCameraWrap(native);		obj->Wrap(info.This());
+		VtkCameraWrap* obj = new VtkCameraWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -561,6 +571,20 @@ void VtkCameraWrap::GetFocalDisk(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetFocalDisk();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCameraWrap::GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFreezeFocalPoint();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1225,6 +1249,25 @@ void VtkCameraWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& in
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCameraWrap::SetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCameraWrap *wrapper = ObjectWrap::Unwrap<VtkCameraWrap>(info.Holder());
+	vtkCamera *native = (vtkCamera *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFreezeFocalPoint(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

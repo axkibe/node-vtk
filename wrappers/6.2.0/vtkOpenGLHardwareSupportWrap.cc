@@ -59,6 +59,9 @@ void VtkOpenGLHardwareSupportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfTextureUnits", GetNumberOfTextureUnits);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfTextureUnits", GetNumberOfTextureUnits);
 
+	Nan::SetPrototypeMethod(tpl, "GetSupportsMultiTexturing", GetSupportsMultiTexturing);
+	Nan::SetPrototypeMethod(tpl, "getSupportsMultiTexturing", GetSupportsMultiTexturing);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -85,12 +88,16 @@ void VtkOpenGLHardwareSupportWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLHardwareSupport> native = vtkSmartPointer<vtkOpenGLHardwareSupport>::New();
-		VtkOpenGLHardwareSupportWrap* obj = new VtkOpenGLHardwareSupportWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLHardwareSupportWrap* obj = new VtkOpenGLHardwareSupportWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -158,6 +165,20 @@ void VtkOpenGLHardwareSupportWrap::GetNumberOfTextureUnits(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetNumberOfTextureUnits();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLHardwareSupportWrap::GetSupportsMultiTexturing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLHardwareSupportWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSupportWrap>(info.Holder());
+	vtkOpenGLHardwareSupport *native = (vtkOpenGLHardwareSupport *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsMultiTexturing();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

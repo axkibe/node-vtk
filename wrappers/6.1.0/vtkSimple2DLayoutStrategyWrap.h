@@ -36,6 +36,7 @@ class VtkSimple2DLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void GetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetJitter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterationsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterationsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,6 +51,7 @@ class VtkSimple2DLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetJitter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -73,12 +73,16 @@ void VtkCPExodusIIElementBlockWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCPExodusIIElementBlock> native = vtkSmartPointer<vtkCPExodusIIElementBlock>::New();
-		VtkCPExodusIIElementBlockWrap* obj = new VtkCPExodusIIElementBlockWrap(native);		obj->Wrap(info.This());
+		VtkCPExodusIIElementBlockWrap* obj = new VtkCPExodusIIElementBlockWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

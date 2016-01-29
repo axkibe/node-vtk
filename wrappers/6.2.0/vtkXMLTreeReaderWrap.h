@@ -36,6 +36,11 @@ class VtkXMLTreeReaderWrap : public VtkTreeAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgePedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGenerateEdgePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGenerateVertexPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaskArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReadCharData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReadTagName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXMLString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +54,11 @@ class VtkXMLTreeReaderWrap : public VtkTreeAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgePedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGenerateEdgePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGenerateVertexPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaskArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReadCharData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReadTagName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMLString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

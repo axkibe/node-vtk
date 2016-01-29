@@ -41,9 +41,13 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void GetPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalePointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void LookupMatchesCellTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void LookupMatchesPointTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScaleCellLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -72,6 +76,8 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void SetPointSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScalePointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedCellColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -48,6 +48,8 @@ class VtkArrayCalculatorWrap : public VtkDataSetAlgorithmWrap
 		static void GetReplacementValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResultArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResultArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResultNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResultTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedScalarComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -79,6 +81,8 @@ class VtkArrayCalculatorWrap : public VtkDataSetAlgorithmWrap
 		static void SetReplacementValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetResultNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetResultTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

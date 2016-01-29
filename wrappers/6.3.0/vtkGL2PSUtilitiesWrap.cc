@@ -54,6 +54,9 @@ void VtkGL2PSUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
+	Nan::SetPrototypeMethod(tpl, "GetTextAsPath", GetTextAsPath);
+	Nan::SetPrototypeMethod(tpl, "getTextAsPath", GetTextAsPath);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -83,12 +86,16 @@ void VtkGL2PSUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGL2PSUtilities> native = vtkSmartPointer<vtkGL2PSUtilities>::New();
-		VtkGL2PSUtilitiesWrap* obj = new VtkGL2PSUtilitiesWrap(native);		obj->Wrap(info.This());
+		VtkGL2PSUtilitiesWrap* obj = new VtkGL2PSUtilitiesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -129,6 +136,20 @@ void VtkGL2PSUtilitiesWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGL2PSUtilitiesWrap::GetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGL2PSUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSUtilitiesWrap>(info.Holder());
+	vtkGL2PSUtilities *native = (vtkGL2PSUtilities *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTextAsPath();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGL2PSUtilitiesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

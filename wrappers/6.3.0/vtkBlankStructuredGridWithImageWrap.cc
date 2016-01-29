@@ -80,12 +80,16 @@ void VtkBlankStructuredGridWithImageWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBlankStructuredGridWithImage> native = vtkSmartPointer<vtkBlankStructuredGridWithImage>::New();
-		VtkBlankStructuredGridWithImageWrap* obj = new VtkBlankStructuredGridWithImageWrap(native);		obj->Wrap(info.This());
+		VtkBlankStructuredGridWithImageWrap* obj = new VtkBlankStructuredGridWithImageWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

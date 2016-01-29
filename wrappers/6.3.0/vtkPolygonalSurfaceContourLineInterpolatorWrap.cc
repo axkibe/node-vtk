@@ -88,12 +88,16 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::New(const Nan::FunctionCall
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPolygonalSurfaceContourLineInterpolator> native = vtkSmartPointer<vtkPolygonalSurfaceContourLineInterpolator>::New();
-		VtkPolygonalSurfaceContourLineInterpolatorWrap* obj = new VtkPolygonalSurfaceContourLineInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkPolygonalSurfaceContourLineInterpolatorWrap* obj = new VtkPolygonalSurfaceContourLineInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

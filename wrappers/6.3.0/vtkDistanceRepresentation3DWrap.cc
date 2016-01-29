@@ -132,12 +132,16 @@ void VtkDistanceRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDistanceRepresentation3D> native = vtkSmartPointer<vtkDistanceRepresentation3D>::New();
-		VtkDistanceRepresentation3DWrap* obj = new VtkDistanceRepresentation3DWrap(native);		obj->Wrap(info.This());
+		VtkDistanceRepresentation3DWrap* obj = new VtkDistanceRepresentation3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

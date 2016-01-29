@@ -56,6 +56,12 @@ void VtkIcicleViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRootWidth", GetRootWidth);
 	Nan::SetPrototypeMethod(tpl, "getRootWidth", GetRootWidth);
 
+	Nan::SetPrototypeMethod(tpl, "GetTopToBottom", GetTopToBottom);
+	Nan::SetPrototypeMethod(tpl, "getTopToBottom", GetTopToBottom);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseGradientColoring", GetUseGradientColoring);
+	Nan::SetPrototypeMethod(tpl, "getUseGradientColoring", GetUseGradientColoring);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -70,6 +76,12 @@ void VtkIcicleViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRootWidth", SetRootWidth);
 	Nan::SetPrototypeMethod(tpl, "setRootWidth", SetRootWidth);
+
+	Nan::SetPrototypeMethod(tpl, "SetTopToBottom", SetTopToBottom);
+	Nan::SetPrototypeMethod(tpl, "setTopToBottom", SetTopToBottom);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseGradientColoring", SetUseGradientColoring);
+	Nan::SetPrototypeMethod(tpl, "setUseGradientColoring", SetUseGradientColoring);
 
 	Nan::SetPrototypeMethod(tpl, "TopToBottomOff", TopToBottomOff);
 	Nan::SetPrototypeMethod(tpl, "topToBottomOff", TopToBottomOff);
@@ -97,12 +109,16 @@ void VtkIcicleViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkIcicleView> native = vtkSmartPointer<vtkIcicleView>::New();
-		VtkIcicleViewWrap* obj = new VtkIcicleViewWrap(native);		obj->Wrap(info.This());
+		VtkIcicleViewWrap* obj = new VtkIcicleViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -147,6 +163,34 @@ void VtkIcicleViewWrap::GetRootWidth(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetRootWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIcicleViewWrap::GetTopToBottom(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
+	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTopToBottom();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIcicleViewWrap::GetUseGradientColoring(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
+	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseGradientColoring();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -258,6 +302,44 @@ void VtkIcicleViewWrap::SetRootWidth(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetRootWidth(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIcicleViewWrap::SetTopToBottom(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
+	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTopToBottom(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIcicleViewWrap::SetUseGradientColoring(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
+	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseGradientColoring(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

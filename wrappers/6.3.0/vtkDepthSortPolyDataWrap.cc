@@ -135,12 +135,16 @@ void VtkDepthSortPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDepthSortPolyData> native = vtkSmartPointer<vtkDepthSortPolyData>::New();
-		VtkDepthSortPolyDataWrap* obj = new VtkDepthSortPolyDataWrap(native);		obj->Wrap(info.This());
+		VtkDepthSortPolyDataWrap* obj = new VtkDepthSortPolyDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

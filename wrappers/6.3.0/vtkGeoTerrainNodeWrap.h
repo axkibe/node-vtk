@@ -39,6 +39,7 @@ class VtkGeoTerrainNodeWrap : public VtkGeoTreeNodeWrap
 		static void GetGraticuleLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

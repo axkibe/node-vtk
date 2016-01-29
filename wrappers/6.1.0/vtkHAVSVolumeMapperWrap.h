@@ -30,17 +30,24 @@ class VtkHAVSVolumeMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLevelOfDetail(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevelOfDetailMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPartiallyRemoveNonConvexities(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSizeTo2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKBufferSizeTo6(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLevelOfDetail(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelOfDetailMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelOfDetailMethodArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelOfDetailMethodField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPartiallyRemoveNonConvexities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

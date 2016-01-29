@@ -30,8 +30,10 @@ class VtkPainterPolyDataMapperWrap : public VtkPolyDataMapperWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapDataArrayToMultiTextureAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapDataArrayToVertexAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);

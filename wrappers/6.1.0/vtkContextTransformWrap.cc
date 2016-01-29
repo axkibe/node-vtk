@@ -9,6 +9,7 @@
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContextTransformWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkTransform2DWrap.h"
 
 using namespace v8;
@@ -57,6 +58,9 @@ void VtkContextTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPanMouseButton", GetPanMouseButton);
 	Nan::SetPrototypeMethod(tpl, "getPanMouseButton", GetPanMouseButton);
 
+	Nan::SetPrototypeMethod(tpl, "GetPanYOnMouseWheel", GetPanYOnMouseWheel);
+	Nan::SetPrototypeMethod(tpl, "getPanYOnMouseWheel", GetPanYOnMouseWheel);
+
 	Nan::SetPrototypeMethod(tpl, "GetSecondaryPanModifier", GetSecondaryPanModifier);
 	Nan::SetPrototypeMethod(tpl, "getSecondaryPanModifier", GetSecondaryPanModifier);
 
@@ -78,11 +82,17 @@ void VtkContextTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetZoomMouseButton", GetZoomMouseButton);
 	Nan::SetPrototypeMethod(tpl, "getZoomMouseButton", GetZoomMouseButton);
 
+	Nan::SetPrototypeMethod(tpl, "GetZoomOnMouseWheel", GetZoomOnMouseWheel);
+	Nan::SetPrototypeMethod(tpl, "getZoomOnMouseWheel", GetZoomOnMouseWheel);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
 
 	Nan::SetPrototypeMethod(tpl, "PanYOnMouseWheelOff", PanYOnMouseWheelOff);
 	Nan::SetPrototypeMethod(tpl, "panYOnMouseWheelOff", PanYOnMouseWheelOff);
@@ -98,6 +108,9 @@ void VtkContextTransformWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetPanMouseButton", SetPanMouseButton);
 	Nan::SetPrototypeMethod(tpl, "setPanMouseButton", SetPanMouseButton);
+
+	Nan::SetPrototypeMethod(tpl, "SetPanYOnMouseWheel", SetPanYOnMouseWheel);
+	Nan::SetPrototypeMethod(tpl, "setPanYOnMouseWheel", SetPanYOnMouseWheel);
 
 	Nan::SetPrototypeMethod(tpl, "SetSecondaryPanModifier", SetSecondaryPanModifier);
 	Nan::SetPrototypeMethod(tpl, "setSecondaryPanModifier", SetSecondaryPanModifier);
@@ -116,6 +129,9 @@ void VtkContextTransformWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetZoomMouseButton", SetZoomMouseButton);
 	Nan::SetPrototypeMethod(tpl, "setZoomMouseButton", SetZoomMouseButton);
+
+	Nan::SetPrototypeMethod(tpl, "SetZoomOnMouseWheel", SetZoomOnMouseWheel);
+	Nan::SetPrototypeMethod(tpl, "setZoomOnMouseWheel", SetZoomOnMouseWheel);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -140,12 +156,16 @@ void VtkContextTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkContextTransform> native = vtkSmartPointer<vtkContextTransform>::New();
-		VtkContextTransformWrap* obj = new VtkContextTransformWrap(native);		obj->Wrap(info.This());
+		VtkContextTransformWrap* obj = new VtkContextTransformWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -190,6 +210,20 @@ void VtkContextTransformWrap::GetPanMouseButton(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetPanMouseButton();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextTransformWrap::GetPanYOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPanYOnMouseWheel();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -300,6 +334,20 @@ void VtkContextTransformWrap::GetZoomMouseButton(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkContextTransformWrap::GetZoomOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZoomOnMouseWheel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkContextTransformWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
@@ -343,6 +391,28 @@ void VtkContextTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkContextTransformWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContextTransformWrap::PanYOnMouseWheelOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -432,6 +502,25 @@ void VtkContextTransformWrap::SetPanMouseButton(const Nan::FunctionCallbackInfo<
 		}
 		native->SetPanMouseButton(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextTransformWrap::SetPanYOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPanYOnMouseWheel(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -546,6 +635,25 @@ void VtkContextTransformWrap::SetZoomMouseButton(const Nan::FunctionCallbackInfo
 		}
 		native->SetZoomMouseButton(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextTransformWrap::SetZoomOnMouseWheel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
+	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetZoomOnMouseWheel(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

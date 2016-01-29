@@ -127,12 +127,16 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::New(const Nan::FunctionCallbackI
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnstructuredGridVolumeZSweepMapper> native = vtkSmartPointer<vtkUnstructuredGridVolumeZSweepMapper>::New();
-		VtkUnstructuredGridVolumeZSweepMapperWrap* obj = new VtkUnstructuredGridVolumeZSweepMapperWrap(native);		obj->Wrap(info.This());
+		VtkUnstructuredGridVolumeZSweepMapperWrap* obj = new VtkUnstructuredGridVolumeZSweepMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

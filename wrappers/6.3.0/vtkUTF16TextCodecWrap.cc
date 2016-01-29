@@ -47,6 +47,9 @@ void VtkUTF16TextCodecWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkUTF16TextCodecWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CanHandle", CanHandle);
+	Nan::SetPrototypeMethod(tpl, "canHandle", CanHandle);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +65,9 @@ void VtkUTF16TextCodecWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetBigEndian", SetBigEndian);
+	Nan::SetPrototypeMethod(tpl, "setBigEndian", SetBigEndian);
+
 	ptpl.Reset( tpl );
 }
 
@@ -76,15 +82,41 @@ void VtkUTF16TextCodecWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUTF16TextCodec> native = vtkSmartPointer<vtkUTF16TextCodec>::New();
-		VtkUTF16TextCodecWrap* obj = new VtkUTF16TextCodecWrap(native);		obj->Wrap(info.This());
+		VtkUTF16TextCodecWrap* obj = new VtkUTF16TextCodecWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkUTF16TextCodecWrap::CanHandle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUTF16TextCodecWrap *wrapper = ObjectWrap::Unwrap<VtkUTF16TextCodecWrap>(info.Holder());
+	vtkUTF16TextCodec *native = (vtkUTF16TextCodec *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CanHandle(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUTF16TextCodecWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -186,6 +218,25 @@ void VtkUTF16TextCodecWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkUTF16TextCodecWrap::SetBigEndian(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUTF16TextCodecWrap *wrapper = ObjectWrap::Unwrap<VtkUTF16TextCodecWrap>(info.Holder());
+	vtkUTF16TextCodec *native = (vtkUTF16TextCodec *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBigEndian(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

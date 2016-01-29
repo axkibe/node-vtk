@@ -86,12 +86,16 @@ void VtkCheckerboardWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCheckerboardWidget> native = vtkSmartPointer<vtkCheckerboardWidget>::New();
-		VtkCheckerboardWidgetWrap* obj = new VtkCheckerboardWidgetWrap(native);		obj->Wrap(info.This());
+		VtkCheckerboardWidgetWrap* obj = new VtkCheckerboardWidgetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

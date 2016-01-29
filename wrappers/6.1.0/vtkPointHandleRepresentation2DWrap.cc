@@ -125,12 +125,16 @@ void VtkPointHandleRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPointHandleRepresentation2D> native = vtkSmartPointer<vtkPointHandleRepresentation2D>::New();
-		VtkPointHandleRepresentation2DWrap* obj = new VtkPointHandleRepresentation2DWrap(native);		obj->Wrap(info.This());
+		VtkPointHandleRepresentation2DWrap* obj = new VtkPointHandleRepresentation2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

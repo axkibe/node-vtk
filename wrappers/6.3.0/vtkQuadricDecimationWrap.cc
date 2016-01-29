@@ -190,12 +190,16 @@ void VtkQuadricDecimationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkQuadricDecimation> native = vtkSmartPointer<vtkQuadricDecimation>::New();
-		VtkQuadricDecimationWrap* obj = new VtkQuadricDecimationWrap(native);		obj->Wrap(info.This());
+		VtkQuadricDecimationWrap* obj = new VtkQuadricDecimationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

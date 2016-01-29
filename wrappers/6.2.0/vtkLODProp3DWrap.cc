@@ -223,12 +223,16 @@ void VtkLODProp3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLODProp3D> native = vtkSmartPointer<vtkLODProp3D>::New();
-		VtkLODProp3DWrap* obj = new VtkLODProp3DWrap(native);		obj->Wrap(info.This());
+		VtkLODProp3DWrap* obj = new VtkLODProp3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

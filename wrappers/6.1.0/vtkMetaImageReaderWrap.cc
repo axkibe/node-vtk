@@ -142,12 +142,16 @@ void VtkMetaImageReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMetaImageReader> native = vtkSmartPointer<vtkMetaImageReader>::New();
-		VtkMetaImageReaderWrap* obj = new VtkMetaImageReaderWrap(native);		obj->Wrap(info.This());
+		VtkMetaImageReaderWrap* obj = new VtkMetaImageReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

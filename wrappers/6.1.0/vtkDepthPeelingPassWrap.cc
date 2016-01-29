@@ -51,6 +51,9 @@ void VtkDepthPeelingPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
+	Nan::SetPrototypeMethod(tpl, "getLastRenderingUsedDepthPeeling", GetLastRenderingUsedDepthPeeling);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfPeels", GetMaximumNumberOfPeels);
 	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfPeels", GetMaximumNumberOfPeels);
 
@@ -101,12 +104,16 @@ void VtkDepthPeelingPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDepthPeelingPass> native = vtkSmartPointer<vtkDepthPeelingPass>::New();
-		VtkDepthPeelingPassWrap* obj = new VtkDepthPeelingPassWrap(native);		obj->Wrap(info.This());
+		VtkDepthPeelingPassWrap* obj = new VtkDepthPeelingPassWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -124,6 +131,20 @@ void VtkDepthPeelingPassWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDepthPeelingPassWrap::GetLastRenderingUsedDepthPeeling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDepthPeelingPassWrap *wrapper = ObjectWrap::Unwrap<VtkDepthPeelingPassWrap>(info.Holder());
+	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastRenderingUsedDepthPeeling();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDepthPeelingPassWrap::GetMaximumNumberOfPeels(const Nan::FunctionCallbackInfo<v8::Value>& info)

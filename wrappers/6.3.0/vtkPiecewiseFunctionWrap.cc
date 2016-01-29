@@ -138,12 +138,16 @@ void VtkPiecewiseFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPiecewiseFunction> native = vtkSmartPointer<vtkPiecewiseFunction>::New();
-		VtkPiecewiseFunctionWrap* obj = new VtkPiecewiseFunctionWrap(native);		obj->Wrap(info.This());
+		VtkPiecewiseFunctionWrap* obj = new VtkPiecewiseFunctionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

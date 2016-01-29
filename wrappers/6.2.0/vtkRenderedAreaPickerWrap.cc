@@ -77,12 +77,16 @@ void VtkRenderedAreaPickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderedAreaPicker> native = vtkSmartPointer<vtkRenderedAreaPicker>::New();
-		VtkRenderedAreaPickerWrap* obj = new VtkRenderedAreaPickerWrap(native);		obj->Wrap(info.This());
+		VtkRenderedAreaPickerWrap* obj = new VtkRenderedAreaPickerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

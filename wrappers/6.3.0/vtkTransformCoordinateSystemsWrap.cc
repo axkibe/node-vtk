@@ -110,12 +110,16 @@ void VtkTransformCoordinateSystemsWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTransformCoordinateSystems> native = vtkSmartPointer<vtkTransformCoordinateSystems>::New();
-		VtkTransformCoordinateSystemsWrap* obj = new VtkTransformCoordinateSystemsWrap(native);		obj->Wrap(info.This());
+		VtkTransformCoordinateSystemsWrap* obj = new VtkTransformCoordinateSystemsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

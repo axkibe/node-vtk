@@ -149,6 +149,9 @@ void VtkRandomAttributeGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GeneratePointVectorsOn", GeneratePointVectorsOn);
 	Nan::SetPrototypeMethod(tpl, "generatePointVectorsOn", GeneratePointVectorsOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAttributesConstantPerBlock", GetAttributesConstantPerBlock);
+	Nan::SetPrototypeMethod(tpl, "getAttributesConstantPerBlock", GetAttributesConstantPerBlock);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -217,6 +220,9 @@ void VtkRandomAttributeGeneratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAttributesConstantPerBlock", SetAttributesConstantPerBlock);
+	Nan::SetPrototypeMethod(tpl, "setAttributesConstantPerBlock", SetAttributesConstantPerBlock);
 
 	Nan::SetPrototypeMethod(tpl, "SetComponentRange", SetComponentRange);
 	Nan::SetPrototypeMethod(tpl, "setComponentRange", SetComponentRange);
@@ -319,12 +325,16 @@ void VtkRandomAttributeGeneratorWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRandomAttributeGenerator> native = vtkSmartPointer<vtkRandomAttributeGenerator>::New();
-		VtkRandomAttributeGeneratorWrap* obj = new VtkRandomAttributeGeneratorWrap(native);		obj->Wrap(info.This());
+		VtkRandomAttributeGeneratorWrap* obj = new VtkRandomAttributeGeneratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -738,6 +748,20 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointVectorsOn(const Nan::Function
 	native->GeneratePointVectorsOn();
 }
 
+void VtkRandomAttributeGeneratorWrap::GetAttributesConstantPerBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
+	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAttributesConstantPerBlock();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRandomAttributeGeneratorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
@@ -1089,6 +1113,25 @@ void VtkRandomAttributeGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRandomAttributeGeneratorWrap::SetAttributesConstantPerBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
+	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAttributesConstantPerBlock(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

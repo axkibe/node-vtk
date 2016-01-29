@@ -75,6 +75,9 @@ void VtkEnSightWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "GetTransientGeometry", GetTransientGeometry);
+	Nan::SetPrototypeMethod(tpl, "getTransientGeometry", GetTransientGeometry);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -108,6 +111,9 @@ void VtkEnSightWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "SetTransientGeometry", SetTransientGeometry);
+	Nan::SetPrototypeMethod(tpl, "setTransientGeometry", SetTransientGeometry);
+
 	Nan::SetPrototypeMethod(tpl, "WriteCaseFile", WriteCaseFile);
 	Nan::SetPrototypeMethod(tpl, "writeCaseFile", WriteCaseFile);
 
@@ -128,12 +134,16 @@ void VtkEnSightWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkEnSightWriter> native = vtkSmartPointer<vtkEnSightWriter>::New();
-		VtkEnSightWriterWrap* obj = new VtkEnSightWriterWrap(native);		obj->Wrap(info.This());
+		VtkEnSightWriterWrap* obj = new VtkEnSightWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -271,6 +281,20 @@ void VtkEnSightWriterWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetTimeStep();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEnSightWriterWrap::GetTransientGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEnSightWriterWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightWriterWrap>(info.Holder());
+	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTransientGeometry();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -500,6 +524,25 @@ void VtkEnSightWriterWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetTimeStep(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEnSightWriterWrap::SetTransientGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEnSightWriterWrap *wrapper = ObjectWrap::Unwrap<VtkEnSightWriterWrap>(info.Holder());
+	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTransientGeometry(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

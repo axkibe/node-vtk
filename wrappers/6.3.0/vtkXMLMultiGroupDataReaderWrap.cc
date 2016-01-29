@@ -73,12 +73,16 @@ void VtkXMLMultiGroupDataReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLMultiGroupDataReader> native = vtkSmartPointer<vtkXMLMultiGroupDataReader>::New();
-		VtkXMLMultiGroupDataReaderWrap* obj = new VtkXMLMultiGroupDataReaderWrap(native);		obj->Wrap(info.This());
+		VtkXMLMultiGroupDataReaderWrap* obj = new VtkXMLMultiGroupDataReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

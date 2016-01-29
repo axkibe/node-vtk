@@ -99,6 +99,9 @@ void VtkMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
 	Nan::SetPrototypeMethod(tpl, "getInterpolateScalarsBeforeMapping", GetInterpolateScalarsBeforeMapping);
 
+	Nan::SetPrototypeMethod(tpl, "GetIsOpaque", GetIsOpaque);
+	Nan::SetPrototypeMethod(tpl, "getIsOpaque", GetIsOpaque);
+
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
@@ -131,6 +134,9 @@ void VtkMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetStatic", GetStatic);
 	Nan::SetPrototypeMethod(tpl, "getStatic", GetStatic);
+
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
 
 	Nan::SetPrototypeMethod(tpl, "GetUseLookupTableScalarRange", GetUseLookupTableScalarRange);
 	Nan::SetPrototypeMethod(tpl, "getUseLookupTableScalarRange", GetUseLookupTableScalarRange);
@@ -316,7 +322,10 @@ void VtkMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -574,6 +583,20 @@ void VtkMapperWrap::GetInterpolateScalarsBeforeMapping(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkMapperWrap::GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIsOpaque();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkMapperWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
@@ -734,6 +757,20 @@ void VtkMapperWrap::GetStatic(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetStatic();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMapperWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

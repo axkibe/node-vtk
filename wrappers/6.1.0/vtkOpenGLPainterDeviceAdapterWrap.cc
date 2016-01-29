@@ -81,6 +81,9 @@ void VtkOpenGLPainterDeviceAdapterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "MakeMultisampling", MakeMultisampling);
 	Nan::SetPrototypeMethod(tpl, "makeMultisampling", MakeMultisampling);
 
+	Nan::SetPrototypeMethod(tpl, "MakeVertexEmphasis", MakeVertexEmphasis);
+	Nan::SetPrototypeMethod(tpl, "makeVertexEmphasis", MakeVertexEmphasis);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -113,12 +116,16 @@ void VtkOpenGLPainterDeviceAdapterWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLPainterDeviceAdapter> native = vtkSmartPointer<vtkOpenGLPainterDeviceAdapter>::New();
-		VtkOpenGLPainterDeviceAdapterWrap* obj = new VtkOpenGLPainterDeviceAdapterWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLPainterDeviceAdapterWrap* obj = new VtkOpenGLPainterDeviceAdapterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -323,6 +330,25 @@ void VtkOpenGLPainterDeviceAdapterWrap::MakeMultisampling(const Nan::FunctionCal
 		}
 		native->MakeMultisampling(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLPainterDeviceAdapterWrap::MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPainterDeviceAdapterWrap>(info.Holder());
+	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->MakeVertexEmphasis(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

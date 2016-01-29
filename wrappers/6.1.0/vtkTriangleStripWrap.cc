@@ -99,12 +99,16 @@ void VtkTriangleStripWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTriangleStrip> native = vtkSmartPointer<vtkTriangleStrip>::New();
-		VtkTriangleStripWrap* obj = new VtkTriangleStripWrap(native);		obj->Wrap(info.This());
+		VtkTriangleStripWrap* obj = new VtkTriangleStripWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

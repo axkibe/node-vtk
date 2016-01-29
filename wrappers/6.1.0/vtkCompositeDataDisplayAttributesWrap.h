@@ -30,6 +30,9 @@ class VtkCompositeDataDisplayAttributesWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockOpacities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockVisibilities(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);

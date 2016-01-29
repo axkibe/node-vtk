@@ -33,12 +33,14 @@ class VtkSpatialRepresentationFilterWrap : public VtkMultiBlockDataSetAlgorithmW
 		static void GenerateLeavesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateLeavesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGenerateLeaves(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpatialRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ResetLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGenerateLeaves(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpatialRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

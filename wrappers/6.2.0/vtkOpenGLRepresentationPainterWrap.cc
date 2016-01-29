@@ -76,12 +76,16 @@ void VtkOpenGLRepresentationPainterWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLRepresentationPainter> native = vtkSmartPointer<vtkOpenGLRepresentationPainter>::New();
-		VtkOpenGLRepresentationPainterWrap* obj = new VtkOpenGLRepresentationPainterWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLRepresentationPainterWrap* obj = new VtkOpenGLRepresentationPainterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

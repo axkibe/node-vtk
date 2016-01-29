@@ -69,6 +69,9 @@ void VtkRenderViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDisplayHoverText", GetDisplayHoverText);
+	Nan::SetPrototypeMethod(tpl, "getDisplayHoverText", GetDisplayHoverText);
+
 	Nan::SetPrototypeMethod(tpl, "GetIconTexture", GetIconTexture);
 	Nan::SetPrototypeMethod(tpl, "getIconTexture", GetIconTexture);
 
@@ -83,6 +86,9 @@ void VtkRenderViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLabelRenderMode", GetLabelRenderMode);
 	Nan::SetPrototypeMethod(tpl, "getLabelRenderMode", GetLabelRenderMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderOnMouseMove", GetRenderOnMouseMove);
+	Nan::SetPrototypeMethod(tpl, "getRenderOnMouseMove", GetRenderOnMouseMove);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectionMode", GetSelectionMode);
 	Nan::SetPrototypeMethod(tpl, "getSelectionMode", GetSelectionMode);
@@ -116,6 +122,9 @@ void VtkRenderViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDisplayHoverText", SetDisplayHoverText);
+	Nan::SetPrototypeMethod(tpl, "setDisplayHoverText", SetDisplayHoverText);
 
 	Nan::SetPrototypeMethod(tpl, "SetDisplaySize", SetDisplaySize);
 	Nan::SetPrototypeMethod(tpl, "setDisplaySize", SetDisplaySize);
@@ -159,6 +168,9 @@ void VtkRenderViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelRenderModeToQt", SetLabelRenderModeToQt);
 	Nan::SetPrototypeMethod(tpl, "setLabelRenderModeToQt", SetLabelRenderModeToQt);
 
+	Nan::SetPrototypeMethod(tpl, "SetRenderOnMouseMove", SetRenderOnMouseMove);
+	Nan::SetPrototypeMethod(tpl, "setRenderOnMouseMove", SetRenderOnMouseMove);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
 
@@ -188,12 +200,16 @@ void VtkRenderViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderView> native = vtkSmartPointer<vtkRenderView>::New();
-		VtkRenderViewWrap* obj = new VtkRenderViewWrap(native);		obj->Wrap(info.This());
+		VtkRenderViewWrap* obj = new VtkRenderViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -275,6 +291,20 @@ void VtkRenderViewWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRenderViewWrap::GetDisplayHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderViewWrap *wrapper = ObjectWrap::Unwrap<VtkRenderViewWrap>(info.Holder());
+	vtkRenderView *native = (vtkRenderView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDisplayHoverText();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderViewWrap::GetIconTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -362,6 +392,20 @@ void VtkRenderViewWrap::GetLabelRenderMode(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLabelRenderMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderViewWrap::GetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderViewWrap *wrapper = ObjectWrap::Unwrap<VtkRenderViewWrap>(info.Holder());
+	vtkRenderView *native = (vtkRenderView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderOnMouseMove();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -557,6 +601,25 @@ void VtkRenderViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderViewWrap::SetDisplayHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderViewWrap *wrapper = ObjectWrap::Unwrap<VtkRenderViewWrap>(info.Holder());
+	vtkRenderView *native = (vtkRenderView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDisplayHoverText(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -795,6 +858,25 @@ void VtkRenderViewWrap::SetLabelRenderModeToQt(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	native->SetLabelRenderModeToQt();
+}
+
+void VtkRenderViewWrap::SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderViewWrap *wrapper = ObjectWrap::Unwrap<VtkRenderViewWrap>(info.Holder());
+	vtkRenderView *native = (vtkRenderView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderOnMouseMove(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderViewWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -78,12 +78,16 @@ void VtkCriticalSectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCriticalSection> native = vtkSmartPointer<vtkCriticalSection>::New();
-		VtkCriticalSectionWrap* obj = new VtkCriticalSectionWrap(native);		obj->Wrap(info.This());
+		VtkCriticalSectionWrap* obj = new VtkCriticalSectionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

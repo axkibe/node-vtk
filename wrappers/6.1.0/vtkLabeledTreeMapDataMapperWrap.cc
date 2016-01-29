@@ -116,12 +116,16 @@ void VtkLabeledTreeMapDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabeledTreeMapDataMapper> native = vtkSmartPointer<vtkLabeledTreeMapDataMapper>::New();
-		VtkLabeledTreeMapDataMapperWrap* obj = new VtkLabeledTreeMapDataMapperWrap(native);		obj->Wrap(info.This());
+		VtkLabeledTreeMapDataMapperWrap* obj = new VtkLabeledTreeMapDataMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

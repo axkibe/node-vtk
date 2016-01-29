@@ -37,6 +37,7 @@ class VtkGenericOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void GetEventPending(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +45,7 @@ class VtkGenericOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void PushState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFullScreen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNextWindowInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParentInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);

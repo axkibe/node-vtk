@@ -98,12 +98,16 @@ void VtkSubPixelPositionEdgelsWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSubPixelPositionEdgels> native = vtkSmartPointer<vtkSubPixelPositionEdgels>::New();
-		VtkSubPixelPositionEdgelsWrap* obj = new VtkSubPixelPositionEdgelsWrap(native);		obj->Wrap(info.This());
+		VtkSubPixelPositionEdgelsWrap* obj = new VtkSubPixelPositionEdgelsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

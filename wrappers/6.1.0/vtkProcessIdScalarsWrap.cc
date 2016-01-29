@@ -101,12 +101,16 @@ void VtkProcessIdScalarsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProcessIdScalars> native = vtkSmartPointer<vtkProcessIdScalars>::New();
-		VtkProcessIdScalarsWrap* obj = new VtkProcessIdScalarsWrap(native);		obj->Wrap(info.This());
+		VtkProcessIdScalarsWrap* obj = new VtkProcessIdScalarsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -29,6 +29,8 @@ class VtkGeoProjectionSourceWrap : public VtkGeoSourceWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void FetchChild(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FetchRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinCellsPerNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjection(const Nan::FunctionCallbackInfo<v8::Value>& info);

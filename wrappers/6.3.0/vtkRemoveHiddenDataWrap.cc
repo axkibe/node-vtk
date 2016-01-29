@@ -73,12 +73,16 @@ void VtkRemoveHiddenDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRemoveHiddenData> native = vtkSmartPointer<vtkRemoveHiddenData>::New();
-		VtkRemoveHiddenDataWrap* obj = new VtkRemoveHiddenDataWrap(native);		obj->Wrap(info.This());
+		VtkRemoveHiddenDataWrap* obj = new VtkRemoveHiddenDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

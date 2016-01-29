@@ -31,6 +31,7 @@ class VtkGlobeSourceWrap : public VtkPolyDataAlgorithmWrap
 
 		static void AutoCalculateCurtainHeightOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoCalculateCurtainHeightOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoCalculateCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurtainHeightMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +59,7 @@ class VtkGlobeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void QuadrilateralTessellationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void QuadrilateralTessellationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAutoCalculateCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEndLatitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEndLongitude(const Nan::FunctionCallbackInfo<v8::Value>& info);

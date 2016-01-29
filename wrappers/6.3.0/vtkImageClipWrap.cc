@@ -91,12 +91,16 @@ void VtkImageClipWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageClip> native = vtkSmartPointer<vtkImageClip>::New();
-		VtkImageClipWrap* obj = new VtkImageClipWrap(native);		obj->Wrap(info.This());
+		VtkImageClipWrap* obj = new VtkImageClipWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

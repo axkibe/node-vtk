@@ -80,12 +80,16 @@ void VtkXMLStructuredGridWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLStructuredGridWriter> native = vtkSmartPointer<vtkXMLStructuredGridWriter>::New();
-		VtkXMLStructuredGridWriterWrap* obj = new VtkXMLStructuredGridWriterWrap(native);		obj->Wrap(info.This());
+		VtkXMLStructuredGridWriterWrap* obj = new VtkXMLStructuredGridWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

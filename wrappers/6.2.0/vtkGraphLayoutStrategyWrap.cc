@@ -53,6 +53,9 @@ void VtkGraphLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeWeightField", GetEdgeWeightField);
 	Nan::SetPrototypeMethod(tpl, "getEdgeWeightField", GetEdgeWeightField);
 
+	Nan::SetPrototypeMethod(tpl, "GetWeightEdges", GetWeightEdges);
+	Nan::SetPrototypeMethod(tpl, "getWeightEdges", GetWeightEdges);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -77,6 +80,9 @@ void VtkGraphLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+	Nan::SetPrototypeMethod(tpl, "SetWeightEdges", SetWeightEdges);
+	Nan::SetPrototypeMethod(tpl, "setWeightEdges", SetWeightEdges);
+
 	ptpl.Reset( tpl );
 }
 
@@ -96,7 +102,10 @@ void VtkGraphLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -128,6 +137,20 @@ void VtkGraphLayoutStrategyWrap::GetEdgeWeightField(const Nan::FunctionCallbackI
 	}
 	r = native->GetEdgeWeightField();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGraphLayoutStrategyWrap::GetWeightEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info.Holder());
+	vtkGraphLayoutStrategy *native = (vtkGraphLayoutStrategy *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWeightEdges();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -278,6 +301,25 @@ void VtkGraphLayoutStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetGraph(
 			(vtkGraph *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutStrategyWrap::SetWeightEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info.Holder());
+	vtkGraphLayoutStrategy *native = (vtkGraphLayoutStrategy *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWeightEdges(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

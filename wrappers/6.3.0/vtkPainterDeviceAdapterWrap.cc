@@ -72,6 +72,9 @@ void VtkPainterDeviceAdapterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsAttributesSupported", IsAttributesSupported);
 	Nan::SetPrototypeMethod(tpl, "isAttributesSupported", IsAttributesSupported);
 
+	Nan::SetPrototypeMethod(tpl, "MakeVertexEmphasis", MakeVertexEmphasis);
+	Nan::SetPrototypeMethod(tpl, "makeVertexEmphasis", MakeVertexEmphasis);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -98,12 +101,16 @@ void VtkPainterDeviceAdapterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPainterDeviceAdapter> native = vtkSmartPointer<vtkPainterDeviceAdapter>::New();
-		VtkPainterDeviceAdapterWrap* obj = new VtkPainterDeviceAdapterWrap(native);		obj->Wrap(info.This());
+		VtkPainterDeviceAdapterWrap* obj = new VtkPainterDeviceAdapterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -252,6 +259,25 @@ void VtkPainterDeviceAdapterWrap::IsAttributesSupported(const Nan::FunctionCallb
 			info[0]->Int32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPainterDeviceAdapterWrap::MakeVertexEmphasis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkPainterDeviceAdapterWrap>(info.Holder());
+	vtkPainterDeviceAdapter *native = (vtkPainterDeviceAdapter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->MakeVertexEmphasis(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

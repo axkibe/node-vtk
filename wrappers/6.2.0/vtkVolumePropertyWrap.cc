@@ -123,6 +123,9 @@ void VtkVolumePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetStoredGradientOpacity", GetStoredGradientOpacity);
 	Nan::SetPrototypeMethod(tpl, "getStoredGradientOpacity", GetStoredGradientOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "HasGradientOpacity", HasGradientOpacity);
+	Nan::SetPrototypeMethod(tpl, "hasGradientOpacity", HasGradientOpacity);
+
 	Nan::SetPrototypeMethod(tpl, "IndependentComponentsOff", IndependentComponentsOff);
 	Nan::SetPrototypeMethod(tpl, "independentComponentsOff", IndependentComponentsOff);
 
@@ -206,12 +209,16 @@ void VtkVolumePropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVolumeProperty> native = vtkSmartPointer<vtkVolumeProperty>::New();
-		VtkVolumePropertyWrap* obj = new VtkVolumePropertyWrap(native);		obj->Wrap(info.This());
+		VtkVolumePropertyWrap* obj = new VtkVolumePropertyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -870,6 +877,27 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVolumePropertyWrap::HasGradientOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
+	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasGradientOpacity(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkVolumePropertyWrap::IndependentComponentsOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

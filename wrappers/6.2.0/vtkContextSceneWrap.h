@@ -33,21 +33,30 @@ class VtkContextSceneWrap : public VtkObjectWrap
 		static void GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSceneHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSceneWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScaleTilesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ScaleTilesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -40,6 +40,8 @@ class VtkLabelRenderStrategyWrap : public VtkObjectWrap
 		static void SetDefaultTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartFrame(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

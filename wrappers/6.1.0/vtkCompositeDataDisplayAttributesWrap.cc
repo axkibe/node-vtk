@@ -49,6 +49,15 @@ void VtkCompositeDataDisplayAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "HasBlockColors", HasBlockColors);
+	Nan::SetPrototypeMethod(tpl, "hasBlockColors", HasBlockColors);
+
+	Nan::SetPrototypeMethod(tpl, "HasBlockOpacities", HasBlockOpacities);
+	Nan::SetPrototypeMethod(tpl, "hasBlockOpacities", HasBlockOpacities);
+
+	Nan::SetPrototypeMethod(tpl, "HasBlockVisibilities", HasBlockVisibilities);
+	Nan::SetPrototypeMethod(tpl, "hasBlockVisibilities", HasBlockVisibilities);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -81,12 +90,16 @@ void VtkCompositeDataDisplayAttributesWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCompositeDataDisplayAttributes> native = vtkSmartPointer<vtkCompositeDataDisplayAttributes>::New();
-		VtkCompositeDataDisplayAttributesWrap* obj = new VtkCompositeDataDisplayAttributesWrap(native);		obj->Wrap(info.This());
+		VtkCompositeDataDisplayAttributesWrap* obj = new VtkCompositeDataDisplayAttributesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -104,6 +117,48 @@ void VtkCompositeDataDisplayAttributesWrap::GetClassName(const Nan::FunctionCall
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkCompositeDataDisplayAttributesWrap::HasBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
+	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasBlockColors();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCompositeDataDisplayAttributesWrap::HasBlockOpacities(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
+	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasBlockOpacities();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCompositeDataDisplayAttributesWrap::HasBlockVisibilities(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
+	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasBlockVisibilities();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCompositeDataDisplayAttributesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

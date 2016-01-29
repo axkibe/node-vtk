@@ -37,8 +37,12 @@ class VtkSQLiteDatabaseWrap : public VtkSQLDatabaseWrap
 		static void GetQueryInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRecord(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTables(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsOpen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Open(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDatabaseFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

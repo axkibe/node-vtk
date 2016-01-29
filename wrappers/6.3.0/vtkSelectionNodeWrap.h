@@ -37,6 +37,7 @@ class VtkSelectionNodeWrap : public VtkObjectWrap
 		static void ConvertSelectionFieldToAttributeType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EPSILON(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EqualProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FIELD_TYPE(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContentType(const Nan::FunctionCallbackInfo<v8::Value>& info);

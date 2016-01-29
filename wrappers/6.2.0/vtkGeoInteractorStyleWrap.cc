@@ -59,6 +59,9 @@ void VtkGeoInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGeoCamera", GetGeoCamera);
 	Nan::SetPrototypeMethod(tpl, "getGeoCamera", GetGeoCamera);
 
+	Nan::SetPrototypeMethod(tpl, "GetLockHeading", GetLockHeading);
+	Nan::SetPrototypeMethod(tpl, "getLockHeading", GetLockHeading);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -125,6 +128,9 @@ void VtkGeoInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+	Nan::SetPrototypeMethod(tpl, "SetLockHeading", SetLockHeading);
+	Nan::SetPrototypeMethod(tpl, "setLockHeading", SetLockHeading);
+
 	Nan::SetPrototypeMethod(tpl, "StartState", StartState);
 	Nan::SetPrototypeMethod(tpl, "startState", StartState);
 
@@ -145,12 +151,16 @@ void VtkGeoInteractorStyleWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoInteractorStyle> native = vtkSmartPointer<vtkGeoInteractorStyle>::New();
-		VtkGeoInteractorStyleWrap* obj = new VtkGeoInteractorStyleWrap(native);		obj->Wrap(info.This());
+		VtkGeoInteractorStyleWrap* obj = new VtkGeoInteractorStyleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -203,6 +213,20 @@ void VtkGeoInteractorStyleWrap::GetGeoCamera(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGeoInteractorStyleWrap::GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
+	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLockHeading();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGeoInteractorStyleWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -519,6 +543,25 @@ void VtkGeoInteractorStyleWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetInteractor(
 			(vtkRenderWindowInteractor *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoInteractorStyleWrap::SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
+	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLockHeading(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

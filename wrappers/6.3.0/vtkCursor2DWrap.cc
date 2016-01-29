@@ -157,12 +157,16 @@ void VtkCursor2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCursor2D> native = vtkSmartPointer<vtkCursor2D>::New();
-		VtkCursor2DWrap* obj = new VtkCursor2DWrap(native);		obj->Wrap(info.This());
+		VtkCursor2DWrap* obj = new VtkCursor2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

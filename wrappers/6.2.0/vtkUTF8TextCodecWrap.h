@@ -29,6 +29,7 @@ class VtkUTF8TextCodecWrap : public VtkTextCodecWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CanHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Name(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -116,12 +116,16 @@ void VtkImageMapToColorsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageMapToColors> native = vtkSmartPointer<vtkImageMapToColors>::New();
-		VtkImageMapToColorsWrap* obj = new VtkImageMapToColorsWrap(native);		obj->Wrap(info.This());
+		VtkImageMapToColorsWrap* obj = new VtkImageMapToColorsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

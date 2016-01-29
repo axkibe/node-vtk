@@ -82,12 +82,16 @@ void VtkTableToArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTableToArray> native = vtkSmartPointer<vtkTableToArray>::New();
-		VtkTableToArrayWrap* obj = new VtkTableToArrayWrap(native);		obj->Wrap(info.This());
+		VtkTableToArrayWrap* obj = new VtkTableToArrayWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

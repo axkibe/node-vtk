@@ -121,12 +121,16 @@ void VtkImageDifferenceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDifference> native = vtkSmartPointer<vtkImageDifference>::New();
-		VtkImageDifferenceWrap* obj = new VtkImageDifferenceWrap(native);		obj->Wrap(info.This());
+		VtkImageDifferenceWrap* obj = new VtkImageDifferenceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

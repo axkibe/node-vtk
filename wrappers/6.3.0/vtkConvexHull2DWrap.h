@@ -41,6 +41,7 @@ class VtkConvexHull2DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetMinHullSizeInWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinHullSizeInWorldMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinHullSizeInWorldMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +52,7 @@ class VtkConvexHull2DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetHullShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinHullSizeInDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinHullSizeInWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

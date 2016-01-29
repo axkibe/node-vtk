@@ -149,12 +149,16 @@ void VtkImageCroppingRegionsWidgetWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageCroppingRegionsWidget> native = vtkSmartPointer<vtkImageCroppingRegionsWidget>::New();
-		VtkImageCroppingRegionsWidgetWrap* obj = new VtkImageCroppingRegionsWidgetWrap(native);		obj->Wrap(info.This());
+		VtkImageCroppingRegionsWidgetWrap* obj = new VtkImageCroppingRegionsWidgetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -69,6 +69,9 @@ void VtkVolumeTextureMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPreferredRenderMethodMinValue", GetPreferredRenderMethodMinValue);
 	Nan::SetPrototypeMethod(tpl, "getPreferredRenderMethodMinValue", GetPreferredRenderMethodMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseCompressedTexture", GetUseCompressedTexture);
+	Nan::SetPrototypeMethod(tpl, "getUseCompressedTexture", GetUseCompressedTexture);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -93,6 +96,9 @@ void VtkVolumeTextureMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreferredRenderMethod", SetPreferredRenderMethod);
 	Nan::SetPrototypeMethod(tpl, "setPreferredRenderMethod", SetPreferredRenderMethod);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseCompressedTexture", SetUseCompressedTexture);
+	Nan::SetPrototypeMethod(tpl, "setUseCompressedTexture", SetUseCompressedTexture);
+
 	ptpl.Reset( tpl );
 }
 
@@ -107,12 +113,16 @@ void VtkVolumeTextureMapper3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVolumeTextureMapper3D> native = vtkSmartPointer<vtkVolumeTextureMapper3D>::New();
-		VtkVolumeTextureMapper3DWrap* obj = new VtkVolumeTextureMapper3DWrap(native);		obj->Wrap(info.This());
+		VtkVolumeTextureMapper3DWrap* obj = new VtkVolumeTextureMapper3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -207,6 +217,20 @@ void VtkVolumeTextureMapper3DWrap::GetPreferredRenderMethodMinValue(const Nan::F
 		return;
 	}
 	r = native->GetPreferredRenderMethodMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeTextureMapper3DWrap::GetUseCompressedTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
+	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseCompressedTexture();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -375,6 +399,25 @@ void VtkVolumeTextureMapper3DWrap::SetPreferredRenderMethod(const Nan::FunctionC
 		}
 		native->SetPreferredRenderMethod(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVolumeTextureMapper3DWrap::SetUseCompressedTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
+	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseCompressedTexture(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

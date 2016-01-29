@@ -38,6 +38,8 @@ class VtkTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void GetLeafSpacingMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeafSpacingMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRadial(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReverseEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +53,8 @@ class VtkTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetDistanceArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRadial(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReverseEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

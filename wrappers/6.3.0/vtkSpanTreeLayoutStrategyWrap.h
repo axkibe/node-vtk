@@ -32,10 +32,12 @@ class VtkSpanTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void DepthFirstSpanningTreeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DepthFirstSpanningTreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDepthFirstSpanningTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDepthFirstSpanningTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -53,6 +53,9 @@ void VtkGlobeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AutoCalculateCurtainHeightOn", AutoCalculateCurtainHeightOn);
 	Nan::SetPrototypeMethod(tpl, "autoCalculateCurtainHeightOn", AutoCalculateCurtainHeightOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAutoCalculateCurtainHeight", GetAutoCalculateCurtainHeight);
+	Nan::SetPrototypeMethod(tpl, "getAutoCalculateCurtainHeight", GetAutoCalculateCurtainHeight);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -134,6 +137,9 @@ void VtkGlobeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAutoCalculateCurtainHeight", SetAutoCalculateCurtainHeight);
+	Nan::SetPrototypeMethod(tpl, "setAutoCalculateCurtainHeight", SetAutoCalculateCurtainHeight);
+
 	Nan::SetPrototypeMethod(tpl, "SetCurtainHeight", SetCurtainHeight);
 	Nan::SetPrototypeMethod(tpl, "setCurtainHeight", SetCurtainHeight);
 
@@ -178,12 +184,16 @@ void VtkGlobeSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGlobeSource> native = vtkSmartPointer<vtkGlobeSource>::New();
-		VtkGlobeSourceWrap* obj = new VtkGlobeSourceWrap(native);		obj->Wrap(info.This());
+		VtkGlobeSourceWrap* obj = new VtkGlobeSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -211,6 +221,20 @@ void VtkGlobeSourceWrap::AutoCalculateCurtainHeightOn(const Nan::FunctionCallbac
 		return;
 	}
 	native->AutoCalculateCurtainHeightOn();
+}
+
+void VtkGlobeSourceWrap::GetAutoCalculateCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
+	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoCalculateCurtainHeight();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGlobeSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -616,6 +640,25 @@ void VtkGlobeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlobeSourceWrap::SetAutoCalculateCurtainHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
+	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoCalculateCurtainHeight(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

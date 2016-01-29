@@ -31,6 +31,7 @@ class VtkInteractorStyleRubberBand3DWrap : public VtkInteractorStyleTrackballCam
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +46,7 @@ class VtkInteractorStyleRubberBand3DWrap : public VtkInteractorStyleTrackballCam
 		static void RenderOnMouseMoveOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOnMouseMoveOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

@@ -32,9 +32,11 @@ class VtkStackedTreeLayoutStrategyWrap : public VtkAreaLayoutStrategyWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteriorLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteriorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRingThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRootEndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRootStartAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LayoutEdgePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,9 +46,11 @@ class VtkStackedTreeLayoutStrategyWrap : public VtkAreaLayoutStrategyWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteriorLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteriorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRingThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootEndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootStartAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

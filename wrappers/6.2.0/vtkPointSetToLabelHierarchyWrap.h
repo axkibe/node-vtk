@@ -39,6 +39,7 @@ class VtkPointSetToLabelHierarchyWrap : public VtkLabelHierarchyAlgorithmWrap
 		static void GetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTargetLabelCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +52,7 @@ class VtkPointSetToLabelHierarchyWrap : public VtkLabelHierarchyAlgorithmWrap
 		static void SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetLabelCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

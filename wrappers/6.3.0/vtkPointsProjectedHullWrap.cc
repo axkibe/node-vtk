@@ -87,12 +87,16 @@ void VtkPointsProjectedHullWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPointsProjectedHull> native = vtkSmartPointer<vtkPointsProjectedHull>::New();
-		VtkPointsProjectedHullWrap* obj = new VtkPointsProjectedHullWrap(native);		obj->Wrap(info.This());
+		VtkPointsProjectedHullWrap* obj = new VtkPointsProjectedHullWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

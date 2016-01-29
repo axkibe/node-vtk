@@ -101,12 +101,16 @@ void VtkBMPReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBMPReader> native = vtkSmartPointer<vtkBMPReader>::New();
-		VtkBMPReaderWrap* obj = new VtkBMPReaderWrap(native);		obj->Wrap(info.This());
+		VtkBMPReaderWrap* obj = new VtkBMPReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

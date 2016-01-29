@@ -53,6 +53,9 @@ void VtkAMRUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "HasPartiallyOverlappingGhostCells", HasPartiallyOverlappingGhostCells);
+	Nan::SetPrototypeMethod(tpl, "hasPartiallyOverlappingGhostCells", HasPartiallyOverlappingGhostCells);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -84,7 +87,10 @@ void VtkAMRUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -122,6 +128,28 @@ void VtkAMRUtilitiesWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAMRUtilitiesWrap::HasPartiallyOverlappingGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkAMRUtilitiesWrap>(info.Holder());
+	vtkAMRUtilities *native = (vtkAMRUtilities *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkOverlappingAMRWrap *a0 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasPartiallyOverlappingGhostCells(
+			(vtkOverlappingAMR *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRUtilitiesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

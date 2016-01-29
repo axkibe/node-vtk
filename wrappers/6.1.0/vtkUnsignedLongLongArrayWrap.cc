@@ -76,12 +76,16 @@ void VtkUnsignedLongLongArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUnsignedLongLongArray> native = vtkSmartPointer<vtkUnsignedLongLongArray>::New();
-		VtkUnsignedLongLongArrayWrap* obj = new VtkUnsignedLongLongArrayWrap(native);		obj->Wrap(info.This());
+		VtkUnsignedLongLongArrayWrap* obj = new VtkUnsignedLongLongArrayWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

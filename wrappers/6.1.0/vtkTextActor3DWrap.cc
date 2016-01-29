@@ -107,12 +107,16 @@ void VtkTextActor3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTextActor3D> native = vtkSmartPointer<vtkTextActor3D>::New();
-		VtkTextActor3DWrap* obj = new VtkTextActor3DWrap(native);		obj->Wrap(info.This());
+		VtkTextActor3DWrap* obj = new VtkTextActor3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

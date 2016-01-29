@@ -73,6 +73,9 @@ void VtkOverlappingAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRefinementRatio", GetRefinementRatio);
 	Nan::SetPrototypeMethod(tpl, "getRefinementRatio", GetRefinementRatio);
 
+	Nan::SetPrototypeMethod(tpl, "HasChildrenInformation", HasChildrenInformation);
+	Nan::SetPrototypeMethod(tpl, "hasChildrenInformation", HasChildrenInformation);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -104,12 +107,16 @@ void VtkOverlappingAMRWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOverlappingAMR> native = vtkSmartPointer<vtkOverlappingAMR>::New();
-		VtkOverlappingAMRWrap* obj = new VtkOverlappingAMRWrap(native);		obj->Wrap(info.This());
+		VtkOverlappingAMRWrap* obj = new VtkOverlappingAMRWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -265,6 +272,20 @@ void VtkOverlappingAMRWrap::GetRefinementRatio(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOverlappingAMRWrap::HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasChildrenInformation();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOverlappingAMRWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

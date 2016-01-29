@@ -53,6 +53,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetDesiredUpdateRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDesiredUpdateRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEnableRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialized(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -75,6 +76,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetTimerEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimerEventPlatformId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimerEventType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseTDx(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVTKTimerId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -103,6 +105,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void SetControlKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDesiredUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEnableRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEventInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEventInformationFlipY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEventPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -126,6 +129,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void SetTimerEventId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerEventPlatformId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerEventType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseTDx(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartPickCallback(const Nan::FunctionCallbackInfo<v8::Value>& info);

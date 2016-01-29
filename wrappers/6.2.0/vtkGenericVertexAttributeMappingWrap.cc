@@ -61,6 +61,9 @@ void VtkGenericVertexAttributeMappingWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "RemoveAllMappings", RemoveAllMappings);
 	Nan::SetPrototypeMethod(tpl, "removeAllMappings", RemoveAllMappings);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveMapping", RemoveMapping);
+	Nan::SetPrototypeMethod(tpl, "removeMapping", RemoveMapping);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -78,12 +81,16 @@ void VtkGenericVertexAttributeMappingWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGenericVertexAttributeMapping> native = vtkSmartPointer<vtkGenericVertexAttributeMapping>::New();
-		VtkGenericVertexAttributeMappingWrap* obj = new VtkGenericVertexAttributeMappingWrap(native);		obj->Wrap(info.This());
+		VtkGenericVertexAttributeMappingWrap* obj = new VtkGenericVertexAttributeMappingWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -216,6 +223,28 @@ void VtkGenericVertexAttributeMappingWrap::RemoveAllMappings(const Nan::Function
 		return;
 	}
 	native->RemoveAllMappings();
+}
+
+void VtkGenericVertexAttributeMappingWrap::RemoveMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemoveMapping(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGenericVertexAttributeMappingWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

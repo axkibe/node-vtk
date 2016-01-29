@@ -64,6 +64,9 @@ void VtkAMRCutPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLevelOfResolution", GetLevelOfResolution);
 	Nan::SetPrototypeMethod(tpl, "getLevelOfResolution", GetLevelOfResolution);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseNativeCutter", GetUseNativeCutter);
+	Nan::SetPrototypeMethod(tpl, "getUseNativeCutter", GetUseNativeCutter);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -85,6 +88,9 @@ void VtkAMRCutPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormal", SetNormal);
 	Nan::SetPrototypeMethod(tpl, "setNormal", SetNormal);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseNativeCutter", SetUseNativeCutter);
+	Nan::SetPrototypeMethod(tpl, "setUseNativeCutter", SetUseNativeCutter);
+
 	Nan::SetPrototypeMethod(tpl, "UseNativeCutterOff", UseNativeCutterOff);
 	Nan::SetPrototypeMethod(tpl, "useNativeCutterOff", UseNativeCutterOff);
 
@@ -105,12 +111,16 @@ void VtkAMRCutPlaneWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRCutPlane> native = vtkSmartPointer<vtkAMRCutPlane>::New();
-		VtkAMRCutPlaneWrap* obj = new VtkAMRCutPlaneWrap(native);		obj->Wrap(info.This());
+		VtkAMRCutPlaneWrap* obj = new VtkAMRCutPlaneWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -216,6 +226,20 @@ void VtkAMRCutPlaneWrap::GetLevelOfResolution(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLevelOfResolution();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRCutPlaneWrap::GetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
+	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseNativeCutter();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -384,6 +408,25 @@ void VtkAMRCutPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRCutPlaneWrap::SetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
+	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseNativeCutter(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

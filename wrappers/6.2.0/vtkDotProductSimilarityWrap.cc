@@ -109,12 +109,16 @@ void VtkDotProductSimilarityWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDotProductSimilarity> native = vtkSmartPointer<vtkDotProductSimilarity>::New();
-		VtkDotProductSimilarityWrap* obj = new VtkDotProductSimilarityWrap(native);		obj->Wrap(info.This());
+		VtkDotProductSimilarityWrap* obj = new VtkDotProductSimilarityWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

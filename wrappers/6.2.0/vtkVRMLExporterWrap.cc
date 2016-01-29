@@ -85,12 +85,16 @@ void VtkVRMLExporterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVRMLExporter> native = vtkSmartPointer<vtkVRMLExporter>::New();
-		VtkVRMLExporterWrap* obj = new VtkVRMLExporterWrap(native);		obj->Wrap(info.This());
+		VtkVRMLExporterWrap* obj = new VtkVRMLExporterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -60,6 +60,15 @@ void VtkAMRDataSetCacheWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "HasAMRBlock", HasAMRBlock);
+	Nan::SetPrototypeMethod(tpl, "hasAMRBlock", HasAMRBlock);
+
+	Nan::SetPrototypeMethod(tpl, "HasAMRBlockCellData", HasAMRBlockCellData);
+	Nan::SetPrototypeMethod(tpl, "hasAMRBlockCellData", HasAMRBlockCellData);
+
+	Nan::SetPrototypeMethod(tpl, "HasAMRBlockPointData", HasAMRBlockPointData);
+	Nan::SetPrototypeMethod(tpl, "hasAMRBlockPointData", HasAMRBlockPointData);
+
 	Nan::SetPrototypeMethod(tpl, "InsertAMRBlock", InsertAMRBlock);
 	Nan::SetPrototypeMethod(tpl, "insertAMRBlock", InsertAMRBlock);
 
@@ -92,12 +101,16 @@ void VtkAMRDataSetCacheWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRDataSetCache> native = vtkSmartPointer<vtkAMRDataSetCache>::New();
-		VtkAMRDataSetCacheWrap* obj = new VtkAMRDataSetCacheWrap(native);		obj->Wrap(info.This());
+		VtkAMRDataSetCacheWrap* obj = new VtkAMRDataSetCacheWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -215,6 +228,79 @@ void VtkAMRDataSetCacheWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAMRDataSetCacheWrap::HasAMRBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRDataSetCacheWrap *wrapper = ObjectWrap::Unwrap<VtkAMRDataSetCacheWrap>(info.Holder());
+	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasAMRBlock(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRDataSetCacheWrap::HasAMRBlockCellData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRDataSetCacheWrap *wrapper = ObjectWrap::Unwrap<VtkAMRDataSetCacheWrap>(info.Holder());
+	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->HasAMRBlockCellData(
+				info[0]->Int32Value(),
+				*a1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRDataSetCacheWrap::HasAMRBlockPointData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRDataSetCacheWrap *wrapper = ObjectWrap::Unwrap<VtkAMRDataSetCacheWrap>(info.Holder());
+	vtkAMRDataSetCache *native = (vtkAMRDataSetCache *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->HasAMRBlockPointData(
+				info[0]->Int32Value(),
+				*a1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRDataSetCacheWrap::InsertAMRBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)

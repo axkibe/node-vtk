@@ -75,6 +75,12 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetRenderAtoms", GetRenderAtoms);
+	Nan::SetPrototypeMethod(tpl, "getRenderAtoms", GetRenderAtoms);
+
+	Nan::SetPrototypeMethod(tpl, "GetRenderBonds", GetRenderBonds);
+	Nan::SetPrototypeMethod(tpl, "getRenderBonds", GetRenderBonds);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectedAtoms", GetSelectedAtoms);
 	Nan::SetPrototypeMethod(tpl, "getSelectedAtoms", GetSelectedAtoms);
 
@@ -83,6 +89,12 @@ void VtkMoleculeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectedBonds", GetSelectedBonds);
 	Nan::SetPrototypeMethod(tpl, "getSelectedBonds", GetSelectedBonds);
+
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseMultiCylindersForBonds", GetUseMultiCylindersForBonds);
+	Nan::SetPrototypeMethod(tpl, "getUseMultiCylindersForBonds", GetUseMultiCylindersForBonds);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -135,6 +147,15 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+	Nan::SetPrototypeMethod(tpl, "SetRenderAtoms", SetRenderAtoms);
+	Nan::SetPrototypeMethod(tpl, "setRenderAtoms", SetRenderAtoms);
+
+	Nan::SetPrototypeMethod(tpl, "SetRenderBonds", SetRenderBonds);
+	Nan::SetPrototypeMethod(tpl, "setRenderBonds", SetRenderBonds);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseMultiCylindersForBonds", SetUseMultiCylindersForBonds);
+	Nan::SetPrototypeMethod(tpl, "setUseMultiCylindersForBonds", SetUseMultiCylindersForBonds);
+
 	Nan::SetPrototypeMethod(tpl, "UseBallAndStickSettings", UseBallAndStickSettings);
 	Nan::SetPrototypeMethod(tpl, "useBallAndStickSettings", UseBallAndStickSettings);
 
@@ -167,12 +188,16 @@ void VtkMoleculeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMoleculeMapper> native = vtkSmartPointer<vtkMoleculeMapper>::New();
-		VtkMoleculeMapperWrap* obj = new VtkMoleculeMapperWrap(native);		obj->Wrap(info.This());
+		VtkMoleculeMapperWrap* obj = new VtkMoleculeMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -297,6 +322,34 @@ void VtkMoleculeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkMoleculeMapperWrap::GetRenderAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderAtoms();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMoleculeMapperWrap::GetRenderBonds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderBonds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkMoleculeMapperWrap::GetSelectedAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
@@ -375,6 +428,34 @@ void VtkMoleculeMapperWrap::GetSelectedBonds(const Nan::FunctionCallbackInfo<v8:
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMoleculeMapperWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMoleculeMapperWrap::GetUseMultiCylindersForBonds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseMultiCylindersForBonds();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMoleculeMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -658,6 +739,63 @@ void VtkMoleculeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetInputData(
 			(vtkMolecule *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMoleculeMapperWrap::SetRenderAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderAtoms(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMoleculeMapperWrap::SetRenderBonds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderBonds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMoleculeMapperWrap::SetUseMultiCylindersForBonds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseMultiCylindersForBonds(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

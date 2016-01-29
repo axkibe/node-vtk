@@ -33,6 +33,8 @@ class VtkDelimitedTextWriterWrap : public VtkWriterWrap
 		static void GetFieldDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RegisterAndGetOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +42,8 @@ class VtkDelimitedTextWriterWrap : public VtkWriterWrap
 		static void SetFieldDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

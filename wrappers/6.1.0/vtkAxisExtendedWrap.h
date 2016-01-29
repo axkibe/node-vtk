@@ -38,6 +38,7 @@ class VtkAxisExtendedWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDesiredFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIsAxisVertical(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +47,7 @@ class VtkAxisExtendedWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDesiredFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIsAxisVertical(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);

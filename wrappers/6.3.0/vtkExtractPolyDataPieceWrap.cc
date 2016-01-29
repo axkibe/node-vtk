@@ -85,12 +85,16 @@ void VtkExtractPolyDataPieceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractPolyDataPiece> native = vtkSmartPointer<vtkExtractPolyDataPiece>::New();
-		VtkExtractPolyDataPieceWrap* obj = new VtkExtractPolyDataPieceWrap(native);		obj->Wrap(info.This());
+		VtkExtractPolyDataPieceWrap* obj = new VtkExtractPolyDataPieceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

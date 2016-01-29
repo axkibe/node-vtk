@@ -33,6 +33,7 @@ class VtkImageInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		static void GetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSeparable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

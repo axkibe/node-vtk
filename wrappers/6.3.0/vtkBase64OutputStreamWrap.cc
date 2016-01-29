@@ -79,12 +79,16 @@ void VtkBase64OutputStreamWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBase64OutputStream> native = vtkSmartPointer<vtkBase64OutputStream>::New();
-		VtkBase64OutputStreamWrap* obj = new VtkBase64OutputStreamWrap(native);		obj->Wrap(info.This());
+		VtkBase64OutputStreamWrap* obj = new VtkBase64OutputStreamWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

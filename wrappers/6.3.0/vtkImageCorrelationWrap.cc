@@ -92,12 +92,16 @@ void VtkImageCorrelationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageCorrelation> native = vtkSmartPointer<vtkImageCorrelation>::New();
-		VtkImageCorrelationWrap* obj = new VtkImageCorrelationWrap(native);		obj->Wrap(info.This());
+		VtkImageCorrelationWrap* obj = new VtkImageCorrelationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

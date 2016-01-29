@@ -47,6 +47,7 @@ class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void GetPointDataArraySelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsCachingEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);

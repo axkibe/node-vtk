@@ -33,9 +33,11 @@ class VtkGarbageCollectorWrap : public VtkObjectWrap
 		static void DeferredCollectionPop(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeferredCollectionPush(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGlobalDebugFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGlobalDebugFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

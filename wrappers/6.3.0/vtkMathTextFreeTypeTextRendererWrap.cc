@@ -47,11 +47,17 @@ void VtkMathTextFreeTypeTextRendererWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkMathTextFreeTypeTextRendererWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "FreeTypeIsSupported", FreeTypeIsSupported);
+	Nan::SetPrototypeMethod(tpl, "freeTypeIsSupported", FreeTypeIsSupported);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "MathTextIsSupported", MathTextIsSupported);
+	Nan::SetPrototypeMethod(tpl, "mathTextIsSupported", MathTextIsSupported);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -73,15 +79,33 @@ void VtkMathTextFreeTypeTextRendererWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMathTextFreeTypeTextRenderer> native = vtkSmartPointer<vtkMathTextFreeTypeTextRenderer>::New();
-		VtkMathTextFreeTypeTextRendererWrap* obj = new VtkMathTextFreeTypeTextRendererWrap(native);		obj->Wrap(info.This());
+		VtkMathTextFreeTypeTextRendererWrap* obj = new VtkMathTextFreeTypeTextRendererWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkMathTextFreeTypeTextRendererWrap::FreeTypeIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMathTextFreeTypeTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextFreeTypeTextRendererWrap>(info.Holder());
+	vtkMathTextFreeTypeTextRenderer *native = (vtkMathTextFreeTypeTextRenderer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->FreeTypeIsSupported();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMathTextFreeTypeTextRendererWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -118,6 +142,20 @@ void VtkMathTextFreeTypeTextRendererWrap::IsA(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMathTextFreeTypeTextRendererWrap::MathTextIsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMathTextFreeTypeTextRendererWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextFreeTypeTextRendererWrap>(info.Holder());
+	vtkMathTextFreeTypeTextRenderer *native = (vtkMathTextFreeTypeTextRenderer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->MathTextIsSupported();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMathTextFreeTypeTextRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -80,12 +80,16 @@ void VtkCollapseGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCollapseGraph> native = vtkSmartPointer<vtkCollapseGraph>::New();
-		VtkCollapseGraphWrap* obj = new VtkCollapseGraphWrap(native);		obj->Wrap(info.This());
+		VtkCollapseGraphWrap* obj = new VtkCollapseGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

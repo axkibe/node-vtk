@@ -9,6 +9,7 @@
 #include "vtkGeoSourceWrap.h"
 #include "vtkGeoAlignedImageSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkGeoTreeNodeWrap.h"
 #include "vtkImageDataWrap.h"
 
 using namespace v8;
@@ -48,6 +49,12 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGeoAlignedImageSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "FetchChild", FetchChild);
+	Nan::SetPrototypeMethod(tpl, "fetchChild", FetchChild);
+
+	Nan::SetPrototypeMethod(tpl, "FetchRoot", FetchRoot);
+	Nan::SetPrototypeMethod(tpl, "fetchRoot", FetchRoot);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +69,9 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetOverlapMinValue", GetOverlapMinValue);
 	Nan::SetPrototypeMethod(tpl, "getOverlapMinValue", GetOverlapMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetPowerOfTwoSize", GetPowerOfTwoSize);
+	Nan::SetPrototypeMethod(tpl, "getPowerOfTwoSize", GetPowerOfTwoSize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -90,6 +100,9 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOverlap", SetOverlap);
 	Nan::SetPrototypeMethod(tpl, "setOverlap", SetOverlap);
 
+	Nan::SetPrototypeMethod(tpl, "SetPowerOfTwoSize", SetPowerOfTwoSize);
+	Nan::SetPrototypeMethod(tpl, "setPowerOfTwoSize", SetPowerOfTwoSize);
+
 	ptpl.Reset( tpl );
 }
 
@@ -104,15 +117,72 @@ void VtkGeoAlignedImageSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoAlignedImageSource> native = vtkSmartPointer<vtkGeoAlignedImageSource>::New();
-		VtkGeoAlignedImageSourceWrap* obj = new VtkGeoAlignedImageSourceWrap(native);		obj->Wrap(info.This());
+		VtkGeoAlignedImageSourceWrap* obj = new VtkGeoAlignedImageSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkGeoAlignedImageSourceWrap::FetchChild(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkGeoTreeNodeWrap *a2 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[2]->ToObject());
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->FetchChild(
+					(vtkGeoTreeNode *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					(vtkGeoTreeNode *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoAlignedImageSourceWrap::FetchRoot(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->FetchRoot(
+			(vtkGeoTreeNode *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeoAlignedImageSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -191,6 +261,20 @@ void VtkGeoAlignedImageSourceWrap::GetOverlapMinValue(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetOverlapMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoAlignedImageSourceWrap::GetPowerOfTwoSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPowerOfTwoSize();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -373,6 +457,25 @@ void VtkGeoAlignedImageSourceWrap::SetOverlap(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetOverlap(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoAlignedImageSourceWrap::SetPowerOfTwoSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPowerOfTwoSize(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

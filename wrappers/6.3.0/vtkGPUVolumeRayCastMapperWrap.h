@@ -38,6 +38,7 @@ class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +50,7 @@ class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void SetMaskType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskTypeToBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskTypeToLabelMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

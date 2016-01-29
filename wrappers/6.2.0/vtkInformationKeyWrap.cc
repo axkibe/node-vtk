@@ -70,6 +70,9 @@ void VtkInformationKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "NeedToExecute", NeedToExecute);
+	Nan::SetPrototypeMethod(tpl, "needToExecute", NeedToExecute);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -110,7 +113,10 @@ void VtkInformationKeyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -253,6 +259,33 @@ void VtkInformationKeyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInformationKeyWrap::NeedToExecute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInformationKeyWrap *wrapper = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info.Holder());
+	vtkInformationKey *native = (vtkInformationKey *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->NeedToExecute(
+				(vtkInformation *) a0->native.GetPointer(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

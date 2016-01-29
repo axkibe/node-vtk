@@ -74,6 +74,12 @@ void VtkUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
 
+	Nan::SetPrototypeMethod(tpl, "HasAnyBlankCells", HasAnyBlankCells);
+	Nan::SetPrototypeMethod(tpl, "hasAnyBlankCells", HasAnyBlankCells);
+
+	Nan::SetPrototypeMethod(tpl, "HasAnyBlankPoints", HasAnyBlankPoints);
+	Nan::SetPrototypeMethod(tpl, "hasAnyBlankPoints", HasAnyBlankPoints);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -109,12 +115,16 @@ void VtkUniformGridWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUniformGrid> native = vtkSmartPointer<vtkUniformGrid>::New();
-		VtkUniformGridWrap* obj = new VtkUniformGridWrap(native);		obj->Wrap(info.This());
+		VtkUniformGridWrap* obj = new VtkUniformGridWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -302,6 +312,34 @@ void VtkUniformGridWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetMaxCellSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridWrap::HasAnyBlankCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
+	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyBlankCells();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridWrap::HasAnyBlankPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
+	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyBlankPoints();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

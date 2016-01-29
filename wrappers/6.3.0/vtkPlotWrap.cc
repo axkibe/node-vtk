@@ -72,11 +72,17 @@ void VtkPlotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabels", GetLabels);
 	Nan::SetPrototypeMethod(tpl, "getLabels", GetLabels);
 
+	Nan::SetPrototypeMethod(tpl, "GetLegendVisibility", GetLegendVisibility);
+	Nan::SetPrototypeMethod(tpl, "getLegendVisibility", GetLegendVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfLabels", GetNumberOfLabels);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfLabels", GetNumberOfLabels);
 
 	Nan::SetPrototypeMethod(tpl, "GetPen", GetPen);
 	Nan::SetPrototypeMethod(tpl, "getPen", GetPen);
+
+	Nan::SetPrototypeMethod(tpl, "GetSelectable", GetSelectable);
+	Nan::SetPrototypeMethod(tpl, "getSelectable", GetSelectable);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelection", GetSelection);
 	Nan::SetPrototypeMethod(tpl, "getSelection", GetSelection);
@@ -92,6 +98,9 @@ void VtkPlotWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetTooltipPrecision", GetTooltipPrecision);
 	Nan::SetPrototypeMethod(tpl, "getTooltipPrecision", GetTooltipPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseIndexForXSeries", GetUseIndexForXSeries);
+	Nan::SetPrototypeMethod(tpl, "getUseIndexForXSeries", GetUseIndexForXSeries);
 
 	Nan::SetPrototypeMethod(tpl, "GetXAxis", GetXAxis);
 	Nan::SetPrototypeMethod(tpl, "getXAxis", GetXAxis);
@@ -135,8 +144,14 @@ void VtkPlotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabels", SetLabels);
 	Nan::SetPrototypeMethod(tpl, "setLabels", SetLabels);
 
+	Nan::SetPrototypeMethod(tpl, "SetLegendVisibility", SetLegendVisibility);
+	Nan::SetPrototypeMethod(tpl, "setLegendVisibility", SetLegendVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetPen", SetPen);
 	Nan::SetPrototypeMethod(tpl, "setPen", SetPen);
+
+	Nan::SetPrototypeMethod(tpl, "SetSelectable", SetSelectable);
+	Nan::SetPrototypeMethod(tpl, "setSelectable", SetSelectable);
 
 	Nan::SetPrototypeMethod(tpl, "SetSelection", SetSelection);
 	Nan::SetPrototypeMethod(tpl, "setSelection", SetSelection);
@@ -152,6 +167,9 @@ void VtkPlotWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetTooltipPrecision", SetTooltipPrecision);
 	Nan::SetPrototypeMethod(tpl, "setTooltipPrecision", SetTooltipPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseIndexForXSeries", SetUseIndexForXSeries);
+	Nan::SetPrototypeMethod(tpl, "setUseIndexForXSeries", SetUseIndexForXSeries);
 
 	Nan::SetPrototypeMethod(tpl, "SetXAxis", SetXAxis);
 	Nan::SetPrototypeMethod(tpl, "setXAxis", SetXAxis);
@@ -181,7 +199,10 @@ void VtkPlotWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -316,6 +337,20 @@ void VtkPlotWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkPlotWrap::GetLegendVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLegendVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPlotWrap::GetNumberOfLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
@@ -351,6 +386,20 @@ void VtkPlotWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotWrap::GetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectable();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -447,6 +496,20 @@ void VtkPlotWrap::GetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTooltipPrecision();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPlotWrap::GetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseIndexForXSeries();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -727,6 +790,25 @@ void VtkPlotWrap::SetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPlotWrap::SetLegendVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetLegendVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotWrap::SetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
@@ -741,6 +823,25 @@ void VtkPlotWrap::SetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		native->SetPen(
 			(vtkPen *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotWrap::SetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSelectable(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -839,6 +940,25 @@ void VtkPlotWrap::SetTooltipPrecision(const Nan::FunctionCallbackInfo<v8::Value>
 		}
 		native->SetTooltipPrecision(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotWrap::SetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
+	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseIndexForXSeries(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

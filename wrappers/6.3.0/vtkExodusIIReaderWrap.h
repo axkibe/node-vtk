@@ -189,6 +189,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetSideSetResultArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSideSetSourceElementIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSideSetSourceElementSideArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -248,6 +249,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetPointResultArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSideSetArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSideSetResultArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMLFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

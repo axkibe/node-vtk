@@ -86,8 +86,11 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void HasGraphicError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsDrawable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsPickingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsPickingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LineSmoothingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

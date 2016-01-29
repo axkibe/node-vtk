@@ -53,6 +53,9 @@ void VtkDataSetCellIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsDoneWithTraversal", IsDoneWithTraversal);
+	Nan::SetPrototypeMethod(tpl, "isDoneWithTraversal", IsDoneWithTraversal);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -73,12 +76,16 @@ void VtkDataSetCellIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDataSetCellIterator> native = vtkSmartPointer<vtkDataSetCellIterator>::New();
-		VtkDataSetCellIteratorWrap* obj = new VtkDataSetCellIteratorWrap(native);		obj->Wrap(info.This());
+		VtkDataSetCellIteratorWrap* obj = new VtkDataSetCellIteratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -118,6 +125,20 @@ void VtkDataSetCellIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDataSetCellIteratorWrap::IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetCellIteratorWrap>(info.Holder());
+	vtkDataSetCellIterator *native = (vtkDataSetCellIterator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsDoneWithTraversal();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataSetCellIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

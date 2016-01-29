@@ -11,6 +11,7 @@
 #include "vtkObjectWrap.h"
 #include "vtkAnnotationLinkWrap.h"
 #include "vtkAxisWrap.h"
+#include "vtkContext2DWrap.h"
 
 using namespace v8;
 
@@ -64,6 +65,9 @@ void VtkChartXYZWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "RecalculateBounds", RecalculateBounds);
 	Nan::SetPrototypeMethod(tpl, "recalculateBounds", RecalculateBounds);
 
@@ -78,6 +82,18 @@ void VtkChartXYZWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLink", SetAnnotationLink);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLink", SetAnnotationLink);
+
+	Nan::SetPrototypeMethod(tpl, "SetAroundX", SetAroundX);
+	Nan::SetPrototypeMethod(tpl, "setAroundX", SetAroundX);
+
+	Nan::SetPrototypeMethod(tpl, "SetAutoRotate", SetAutoRotate);
+	Nan::SetPrototypeMethod(tpl, "setAutoRotate", SetAutoRotate);
+
+	Nan::SetPrototypeMethod(tpl, "SetDecorateAxes", SetDecorateAxes);
+	Nan::SetPrototypeMethod(tpl, "setDecorateAxes", SetDecorateAxes);
+
+	Nan::SetPrototypeMethod(tpl, "SetFitToScene", SetFitToScene);
+	Nan::SetPrototypeMethod(tpl, "setFitToScene", SetFitToScene);
 
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
@@ -96,12 +112,16 @@ void VtkChartXYZWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartXYZ> native = vtkSmartPointer<vtkChartXYZ>::New();
-		VtkChartXYZWrap* obj = new VtkChartXYZWrap(native);		obj->Wrap(info.This());
+		VtkChartXYZWrap* obj = new VtkChartXYZWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -208,6 +228,28 @@ void VtkChartXYZWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartXYZWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
+	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartXYZWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
@@ -296,6 +338,82 @@ void VtkChartXYZWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		native->SetAnnotationLink(
 			(vtkAnnotationLink *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYZWrap::SetAroundX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
+	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAroundX(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYZWrap::SetAutoRotate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
+	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoRotate(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYZWrap::SetDecorateAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
+	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDecorateAxes(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartXYZWrap::SetFitToScene(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartXYZWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYZWrap>(info.Holder());
+	vtkChartXYZ *native = (vtkChartXYZ *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFitToScene(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

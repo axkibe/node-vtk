@@ -79,12 +79,16 @@ void VtkSimplePointsWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSimplePointsWriter> native = vtkSmartPointer<vtkSimplePointsWriter>::New();
-		VtkSimplePointsWriterWrap* obj = new VtkSimplePointsWriterWrap(native);		obj->Wrap(info.This());
+		VtkSimplePointsWriterWrap* obj = new VtkSimplePointsWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

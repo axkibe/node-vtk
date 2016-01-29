@@ -85,6 +85,9 @@ void VtkMathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsFinite", IsFinite);
+	Nan::SetPrototypeMethod(tpl, "isFinite", IsFinite);
+
 	Nan::SetPrototypeMethod(tpl, "IsInf", IsInf);
 	Nan::SetPrototypeMethod(tpl, "isInf", IsInf);
 
@@ -135,12 +138,16 @@ void VtkMathWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMath> native = vtkSmartPointer<vtkMath>::New();
-		VtkMathWrap* obj = new VtkMathWrap(native);		obj->Wrap(info.This());
+		VtkMathWrap* obj = new VtkMathWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -499,6 +506,27 @@ void VtkMathWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMathWrap::IsFinite(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMathWrap *wrapper = ObjectWrap::Unwrap<VtkMathWrap>(info.Holder());
+	vtkMath *native = (vtkMath *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsFinite(
+			info[0]->NumberValue()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

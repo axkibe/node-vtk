@@ -10,6 +10,7 @@
 #include "vtkChartLegendWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkChartWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkPenWrap.h"
 #include "vtkBrushWrap.h"
 #include "vtkTextPropertyWrap.h"
@@ -60,14 +61,23 @@ void VtkChartLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetBrush", GetBrush);
 	Nan::SetPrototypeMethod(tpl, "getBrush", GetBrush);
 
+	Nan::SetPrototypeMethod(tpl, "GetCacheBounds", GetCacheBounds);
+	Nan::SetPrototypeMethod(tpl, "getCacheBounds", GetCacheBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetChart", GetChart);
 	Nan::SetPrototypeMethod(tpl, "getChart", GetChart);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDragEnabled", GetDragEnabled);
+	Nan::SetPrototypeMethod(tpl, "getDragEnabled", GetDragEnabled);
+
 	Nan::SetPrototypeMethod(tpl, "GetHorizontalAlignment", GetHorizontalAlignment);
 	Nan::SetPrototypeMethod(tpl, "getHorizontalAlignment", GetHorizontalAlignment);
+
+	Nan::SetPrototypeMethod(tpl, "GetInline", GetInline);
+	Nan::SetPrototypeMethod(tpl, "getInline", GetInline);
 
 	Nan::SetPrototypeMethod(tpl, "GetLabelProperties", GetLabelProperties);
 	Nan::SetPrototypeMethod(tpl, "getLabelProperties", GetLabelProperties);
@@ -93,14 +103,26 @@ void VtkChartLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCacheBounds", SetCacheBounds);
+	Nan::SetPrototypeMethod(tpl, "setCacheBounds", SetCacheBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SetChart", SetChart);
 	Nan::SetPrototypeMethod(tpl, "setChart", SetChart);
 
+	Nan::SetPrototypeMethod(tpl, "SetDragEnabled", SetDragEnabled);
+	Nan::SetPrototypeMethod(tpl, "setDragEnabled", SetDragEnabled);
+
 	Nan::SetPrototypeMethod(tpl, "SetHorizontalAlignment", SetHorizontalAlignment);
 	Nan::SetPrototypeMethod(tpl, "setHorizontalAlignment", SetHorizontalAlignment);
+
+	Nan::SetPrototypeMethod(tpl, "SetInline", SetInline);
+	Nan::SetPrototypeMethod(tpl, "setInline", SetInline);
 
 	Nan::SetPrototypeMethod(tpl, "SetLabelSize", SetLabelSize);
 	Nan::SetPrototypeMethod(tpl, "setLabelSize", SetLabelSize);
@@ -131,12 +153,16 @@ void VtkChartLegendWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkChartLegend> native = vtkSmartPointer<vtkChartLegend>::New();
-		VtkChartLegendWrap* obj = new VtkChartLegendWrap(native);		obj->Wrap(info.This());
+		VtkChartLegendWrap* obj = new VtkChartLegendWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -189,6 +215,20 @@ void VtkChartLegendWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartLegendWrap::GetCacheBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCacheBounds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkChartLegendWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
@@ -226,6 +266,20 @@ void VtkChartLegendWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkChartLegendWrap::GetDragEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDragEnabled();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkChartLegendWrap::GetHorizontalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
@@ -237,6 +291,20 @@ void VtkChartLegendWrap::GetHorizontalAlignment(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetHorizontalAlignment();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkChartLegendWrap::GetInline(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInline();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -387,6 +455,28 @@ void VtkChartLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartLegendWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
@@ -418,6 +508,25 @@ void VtkChartLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkChartLegendWrap::SetCacheBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCacheBounds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartLegendWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
@@ -438,6 +547,25 @@ void VtkChartLegendWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& in
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkChartLegendWrap::SetDragEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDragEnabled(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartLegendWrap::SetHorizontalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
@@ -451,6 +579,25 @@ void VtkChartLegendWrap::SetHorizontalAlignment(const Nan::FunctionCallbackInfo<
 		}
 		native->SetHorizontalAlignment(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartLegendWrap::SetInline(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
+	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInline(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -197,6 +197,9 @@ void VtkRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelector", GetSelector);
 	Nan::SetPrototypeMethod(tpl, "getSelector", GetSelector);
 
+	Nan::SetPrototypeMethod(tpl, "GetTexturedBackground", GetTexturedBackground);
+	Nan::SetPrototypeMethod(tpl, "getTexturedBackground", GetTexturedBackground);
+
 	Nan::SetPrototypeMethod(tpl, "GetTiledAspectRatio", GetTiledAspectRatio);
 	Nan::SetPrototypeMethod(tpl, "getTiledAspectRatio", GetTiledAspectRatio);
 
@@ -341,6 +344,9 @@ void VtkRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
 
+	Nan::SetPrototypeMethod(tpl, "SetTexturedBackground", SetTexturedBackground);
+	Nan::SetPrototypeMethod(tpl, "setTexturedBackground", SetTexturedBackground);
+
 	Nan::SetPrototypeMethod(tpl, "SetTwoSidedLighting", SetTwoSidedLighting);
 	Nan::SetPrototypeMethod(tpl, "setTwoSidedLighting", SetTwoSidedLighting);
 
@@ -400,12 +406,16 @@ void VtkRendererWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderer> native = vtkSmartPointer<vtkRenderer>::New();
-		VtkRendererWrap* obj = new VtkRendererWrap(native);		obj->Wrap(info.This());
+		VtkRendererWrap* obj = new VtkRendererWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -1119,6 +1129,20 @@ void VtkRendererWrap::GetSelector(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRendererWrap::GetTexturedBackground(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTexturedBackground();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRendererWrap::GetTiledAspectRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -2100,6 +2124,25 @@ void VtkRendererWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 		}
 		native->SetRenderWindow(
 			(vtkRenderWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRendererWrap::SetTexturedBackground(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRendererWrap *wrapper = ObjectWrap::Unwrap<VtkRendererWrap>(info.Holder());
+	vtkRenderer *native = (vtkRenderer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTexturedBackground(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

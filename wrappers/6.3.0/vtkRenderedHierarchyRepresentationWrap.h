@@ -33,10 +33,13 @@ class VtkRenderedHierarchyRepresentationWrap : public VtkRenderedGraphRepresenta
 		static void ColorGraphEdgesByArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColorGraphEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphEdgeLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphEdgeLabelFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGraphEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraphSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GraphEdgeLabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GraphEdgeLabelVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GraphVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,11 +48,14 @@ class VtkRenderedHierarchyRepresentationWrap : public VtkRenderedGraphRepresenta
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColorGraphEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphEdgeColorToSplineFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphEdgeLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphEdgeLabelFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGraphEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

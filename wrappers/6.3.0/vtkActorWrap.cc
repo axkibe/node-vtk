@@ -73,6 +73,9 @@ void VtkActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
+
 	Nan::SetPrototypeMethod(tpl, "GetTexture", GetTexture);
 	Nan::SetPrototypeMethod(tpl, "getTexture", GetTexture);
 
@@ -132,12 +135,16 @@ void VtkActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkActor> native = vtkSmartPointer<vtkActor>::New();
-		VtkActorWrap* obj = new VtkActorWrap(native);		obj->Wrap(info.This());
+		VtkActorWrap* obj = new VtkActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -256,6 +263,20 @@ void VtkActorWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkActorWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkActorWrap *wrapper = ObjectWrap::Unwrap<VtkActorWrap>(info.Holder());
+	vtkActor *native = (vtkActor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkActorWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info)

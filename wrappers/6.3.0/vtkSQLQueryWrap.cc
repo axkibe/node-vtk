@@ -48,6 +48,24 @@ void VtkSQLQueryWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkSQLQueryWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "BeginTransaction", BeginTransaction);
+	Nan::SetPrototypeMethod(tpl, "beginTransaction", BeginTransaction);
+
+	Nan::SetPrototypeMethod(tpl, "BindParameter", BindParameter);
+	Nan::SetPrototypeMethod(tpl, "bindParameter", BindParameter);
+
+	Nan::SetPrototypeMethod(tpl, "ClearParameterBindings", ClearParameterBindings);
+	Nan::SetPrototypeMethod(tpl, "clearParameterBindings", ClearParameterBindings);
+
+	Nan::SetPrototypeMethod(tpl, "CommitTransaction", CommitTransaction);
+	Nan::SetPrototypeMethod(tpl, "commitTransaction", CommitTransaction);
+
+	Nan::SetPrototypeMethod(tpl, "EscapeString", EscapeString);
+	Nan::SetPrototypeMethod(tpl, "escapeString", EscapeString);
+
+	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
+	Nan::SetPrototypeMethod(tpl, "execute", Execute);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -60,11 +78,20 @@ void VtkSQLQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsActive", IsActive);
+	Nan::SetPrototypeMethod(tpl, "isActive", IsActive);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RollbackTransaction", RollbackTransaction);
+	Nan::SetPrototypeMethod(tpl, "rollbackTransaction", RollbackTransaction);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetQuery", SetQuery);
+	Nan::SetPrototypeMethod(tpl, "setQuery", SetQuery);
 
 	ptpl.Reset( tpl );
 }
@@ -85,10 +112,151 @@ void VtkSQLQueryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkSQLQueryWrap::BeginTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->BeginTransaction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSQLQueryWrap::BindParameter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				*a1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->NumberValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSQLQueryWrap::ClearParameterBindings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->ClearParameterBindings();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSQLQueryWrap::CommitTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->CommitTransaction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSQLQueryWrap::EscapeString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			char const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->EscapeString(
+				*a0,
+				info[1]->BooleanValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSQLQueryWrap::Execute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Execute();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSQLQueryWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -164,6 +332,20 @@ void VtkSQLQueryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkSQLQueryWrap::IsActive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsActive();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkSQLQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
@@ -185,6 +367,20 @@ void VtkSQLQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkSQLQueryWrap::RollbackTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->RollbackTransaction();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSQLQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -213,6 +409,28 @@ void VtkSQLQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSQLQueryWrap::SetQuery(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLQueryWrap *wrapper = ObjectWrap::Unwrap<VtkSQLQueryWrap>(info.Holder());
+	vtkSQLQuery *native = (vtkSQLQuery *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetQuery(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

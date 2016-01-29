@@ -76,6 +76,9 @@ void VtkInteractorObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetKeyPressActivationValue", GetKeyPressActivationValue);
 	Nan::SetPrototypeMethod(tpl, "getKeyPressActivationValue", GetKeyPressActivationValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetPickingManaged", GetPickingManaged);
+	Nan::SetPrototypeMethod(tpl, "getPickingManaged", GetPickingManaged);
+
 	Nan::SetPrototypeMethod(tpl, "GrabFocus", GrabFocus);
 	Nan::SetPrototypeMethod(tpl, "grabFocus", GrabFocus);
 
@@ -130,6 +133,9 @@ void VtkInteractorObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKeyPressActivationValue", SetKeyPressActivationValue);
 	Nan::SetPrototypeMethod(tpl, "setKeyPressActivationValue", SetKeyPressActivationValue);
 
+	Nan::SetPrototypeMethod(tpl, "SetPickingManaged", SetPickingManaged);
+	Nan::SetPrototypeMethod(tpl, "setPickingManaged", SetPickingManaged);
+
 	ptpl.Reset( tpl );
 }
 
@@ -149,7 +155,10 @@ void VtkInteractorObserverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -301,6 +310,20 @@ void VtkInteractorObserverWrap::GetKeyPressActivationValue(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetKeyPressActivationValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorObserverWrap::GetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickingManaged();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -618,6 +641,25 @@ void VtkInteractorObserverWrap::SetKeyPressActivationValue(const Nan::FunctionCa
 		}
 		native->SetKeyPressActivationValue(
 			a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkInteractorObserverWrap::SetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
+	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPickingManaged(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

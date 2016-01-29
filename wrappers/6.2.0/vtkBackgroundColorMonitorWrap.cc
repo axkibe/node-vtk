@@ -59,6 +59,9 @@ void VtkBackgroundColorMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "StateChanged", StateChanged);
+	Nan::SetPrototypeMethod(tpl, "stateChanged", StateChanged);
+
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
@@ -76,12 +79,16 @@ void VtkBackgroundColorMonitorWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBackgroundColorMonitor> native = vtkSmartPointer<vtkBackgroundColorMonitor>::New();
-		VtkBackgroundColorMonitorWrap* obj = new VtkBackgroundColorMonitorWrap(native);		obj->Wrap(info.This());
+		VtkBackgroundColorMonitorWrap* obj = new VtkBackgroundColorMonitorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -172,6 +179,28 @@ void VtkBackgroundColorMonitorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBackgroundColorMonitorWrap::StateChanged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBackgroundColorMonitorWrap *wrapper = ObjectWrap::Unwrap<VtkBackgroundColorMonitorWrap>(info.Holder());
+	vtkBackgroundColorMonitor *native = (vtkBackgroundColorMonitor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->StateChanged(
+			(vtkRenderer *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

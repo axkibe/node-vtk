@@ -87,6 +87,9 @@ void VtkWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNeedToRenderMinValue", GetNeedToRenderMinValue);
 	Nan::SetPrototypeMethod(tpl, "getNeedToRenderMinValue", GetNeedToRenderMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetPickingManaged", GetPickingManaged);
+	Nan::SetPrototypeMethod(tpl, "getPickingManaged", GetPickingManaged);
+
 	Nan::SetPrototypeMethod(tpl, "GetPlaceFactor", GetPlaceFactor);
 	Nan::SetPrototypeMethod(tpl, "getPlaceFactor", GetPlaceFactor);
 
@@ -150,6 +153,9 @@ void VtkWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNeedToRender", SetNeedToRender);
 	Nan::SetPrototypeMethod(tpl, "setNeedToRender", SetNeedToRender);
 
+	Nan::SetPrototypeMethod(tpl, "SetPickingManaged", SetPickingManaged);
+	Nan::SetPrototypeMethod(tpl, "setPickingManaged", SetPickingManaged);
+
 	Nan::SetPrototypeMethod(tpl, "SetPlaceFactor", SetPlaceFactor);
 	Nan::SetPrototypeMethod(tpl, "setPlaceFactor", SetPlaceFactor);
 
@@ -178,7 +184,10 @@ void VtkWidgetRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -374,6 +383,20 @@ void VtkWidgetRepresentationWrap::GetNeedToRenderMinValue(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetNeedToRenderMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkWidgetRepresentationWrap::GetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
+	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickingManaged();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -759,6 +782,25 @@ void VtkWidgetRepresentationWrap::SetNeedToRender(const Nan::FunctionCallbackInf
 		}
 		native->SetNeedToRender(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetRepresentationWrap::SetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetRepresentationWrap>(info.Holder());
+	vtkWidgetRepresentation *native = (vtkWidgetRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPickingManaged(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -36,6 +36,7 @@ class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetDemandDrivenMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransferToNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +48,7 @@ class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferToNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

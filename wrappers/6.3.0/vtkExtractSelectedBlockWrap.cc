@@ -73,12 +73,16 @@ void VtkExtractSelectedBlockWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractSelectedBlock> native = vtkSmartPointer<vtkExtractSelectedBlock>::New();
-		VtkExtractSelectedBlockWrap* obj = new VtkExtractSelectedBlockWrap(native);		obj->Wrap(info.This());
+		VtkExtractSelectedBlockWrap* obj = new VtkExtractSelectedBlockWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

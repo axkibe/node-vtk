@@ -80,12 +80,16 @@ void VtkPExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPExtractHistogram2D> native = vtkSmartPointer<vtkPExtractHistogram2D>::New();
-		VtkPExtractHistogram2DWrap* obj = new VtkPExtractHistogram2DWrap(native);		obj->Wrap(info.This());
+		VtkPExtractHistogram2DWrap* obj = new VtkPExtractHistogram2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

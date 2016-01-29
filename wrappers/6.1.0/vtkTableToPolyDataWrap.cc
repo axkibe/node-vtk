@@ -56,6 +56,12 @@ void VtkTableToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCreate2DPoints", GetCreate2DPoints);
+	Nan::SetPrototypeMethod(tpl, "getCreate2DPoints", GetCreate2DPoints);
+
+	Nan::SetPrototypeMethod(tpl, "GetPreserveCoordinateColumnsAsDataArrays", GetPreserveCoordinateColumnsAsDataArrays);
+	Nan::SetPrototypeMethod(tpl, "getPreserveCoordinateColumnsAsDataArrays", GetPreserveCoordinateColumnsAsDataArrays);
+
 	Nan::SetPrototypeMethod(tpl, "GetXColumn", GetXColumn);
 	Nan::SetPrototypeMethod(tpl, "getXColumn", GetXColumn);
 
@@ -134,6 +140,12 @@ void VtkTableToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCreate2DPoints", SetCreate2DPoints);
+	Nan::SetPrototypeMethod(tpl, "setCreate2DPoints", SetCreate2DPoints);
+
+	Nan::SetPrototypeMethod(tpl, "SetPreserveCoordinateColumnsAsDataArrays", SetPreserveCoordinateColumnsAsDataArrays);
+	Nan::SetPrototypeMethod(tpl, "setPreserveCoordinateColumnsAsDataArrays", SetPreserveCoordinateColumnsAsDataArrays);
+
 	Nan::SetPrototypeMethod(tpl, "SetXColumn", SetXColumn);
 	Nan::SetPrototypeMethod(tpl, "setXColumn", SetXColumn);
 
@@ -175,12 +187,16 @@ void VtkTableToPolyDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTableToPolyData> native = vtkSmartPointer<vtkTableToPolyData>::New();
-		VtkTableToPolyDataWrap* obj = new VtkTableToPolyDataWrap(native);		obj->Wrap(info.This());
+		VtkTableToPolyDataWrap* obj = new VtkTableToPolyDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -222,6 +238,34 @@ void VtkTableToPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTableToPolyDataWrap::GetCreate2DPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
+	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCreate2DPoints();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTableToPolyDataWrap::GetPreserveCoordinateColumnsAsDataArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
+	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPreserveCoordinateColumnsAsDataArrays();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTableToPolyDataWrap::GetXColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -613,6 +657,44 @@ void VtkTableToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTableToPolyDataWrap::SetCreate2DPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
+	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCreate2DPoints(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTableToPolyDataWrap::SetPreserveCoordinateColumnsAsDataArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
+	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPreserveCoordinateColumnsAsDataArrays(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

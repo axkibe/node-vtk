@@ -94,12 +94,16 @@ void VtkVolumeRayCastMIPFunctionWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVolumeRayCastMIPFunction> native = vtkSmartPointer<vtkVolumeRayCastMIPFunction>::New();
-		VtkVolumeRayCastMIPFunctionWrap* obj = new VtkVolumeRayCastMIPFunctionWrap(native);		obj->Wrap(info.This());
+		VtkVolumeRayCastMIPFunctionWrap* obj = new VtkVolumeRayCastMIPFunctionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -50,6 +50,9 @@ void VtkHyperTreeCursorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Clone", Clone);
 	Nan::SetPrototypeMethod(tpl, "clone", Clone);
 
+	Nan::SetPrototypeMethod(tpl, "Found", Found);
+	Nan::SetPrototypeMethod(tpl, "found", Found);
+
 	Nan::SetPrototypeMethod(tpl, "GetChildIndex", GetChildIndex);
 	Nan::SetPrototypeMethod(tpl, "getChildIndex", GetChildIndex);
 
@@ -73,6 +76,18 @@ void VtkHyperTreeCursorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsEqual", IsEqual);
+	Nan::SetPrototypeMethod(tpl, "isEqual", IsEqual);
+
+	Nan::SetPrototypeMethod(tpl, "IsLeaf", IsLeaf);
+	Nan::SetPrototypeMethod(tpl, "isLeaf", IsLeaf);
+
+	Nan::SetPrototypeMethod(tpl, "IsRoot", IsRoot);
+	Nan::SetPrototypeMethod(tpl, "isRoot", IsRoot);
+
+	Nan::SetPrototypeMethod(tpl, "IsTerminalNode", IsTerminalNode);
+	Nan::SetPrototypeMethod(tpl, "isTerminalNode", IsTerminalNode);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -114,7 +129,10 @@ void VtkHyperTreeCursorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -141,6 +159,20 @@ void VtkHyperTreeCursorWrap::Clone(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHyperTreeCursorWrap::Found(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
+	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Found();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperTreeCursorWrap::GetChildIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -277,6 +309,70 @@ void VtkHyperTreeCursorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperTreeCursorWrap::IsEqual(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
+	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperTreeCursorWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkHyperTreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsEqual(
+			(vtkHyperTreeCursor *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperTreeCursorWrap::IsLeaf(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
+	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsLeaf();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperTreeCursorWrap::IsRoot(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
+	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsRoot();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperTreeCursorWrap::IsTerminalNode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeCursorWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeCursorWrap>(info.Holder());
+	vtkHyperTreeCursor *native = (vtkHyperTreeCursor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsTerminalNode();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkHyperTreeCursorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

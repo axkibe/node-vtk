@@ -182,12 +182,16 @@ void VtkLabeledDataMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabeledDataMapper> native = vtkSmartPointer<vtkLabeledDataMapper>::New();
-		VtkLabeledDataMapperWrap* obj = new VtkLabeledDataMapperWrap(native);		obj->Wrap(info.This());
+		VtkLabeledDataMapperWrap* obj = new VtkLabeledDataMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

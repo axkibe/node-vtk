@@ -41,6 +41,7 @@ class VtkDSPFilterDefinitionWrap : public VtkObjectWrap
 		static void GetNumeratorWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsThisInputVariableInstanceNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PushBackDenominatorWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PushBackForwardNumeratorWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);

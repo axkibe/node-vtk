@@ -29,6 +29,7 @@ class VtkWindowWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void DetectDPI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DoubleBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DoubleBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EraseOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

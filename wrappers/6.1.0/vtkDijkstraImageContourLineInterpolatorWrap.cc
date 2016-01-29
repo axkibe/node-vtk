@@ -89,12 +89,16 @@ void VtkDijkstraImageContourLineInterpolatorWrap::New(const Nan::FunctionCallbac
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDijkstraImageContourLineInterpolator> native = vtkSmartPointer<vtkDijkstraImageContourLineInterpolator>::New();
-		VtkDijkstraImageContourLineInterpolatorWrap* obj = new VtkDijkstraImageContourLineInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkDijkstraImageContourLineInterpolatorWrap* obj = new VtkDijkstraImageContourLineInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

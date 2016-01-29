@@ -32,7 +32,9 @@ class VtkFrameBufferObjectWrap : public VtkObjectWrap
 		static void Bind(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDepthBufferNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllColorBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +42,9 @@ class VtkFrameBufferObjectWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDepthBufferNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void StartNonOrtho(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

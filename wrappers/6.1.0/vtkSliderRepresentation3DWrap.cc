@@ -153,12 +153,16 @@ void VtkSliderRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSliderRepresentation3D> native = vtkSmartPointer<vtkSliderRepresentation3D>::New();
-		VtkSliderRepresentation3DWrap* obj = new VtkSliderRepresentation3DWrap(native);		obj->Wrap(info.This());
+		VtkSliderRepresentation3DWrap* obj = new VtkSliderRepresentation3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

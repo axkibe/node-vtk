@@ -32,6 +32,7 @@ class VtkGeoAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void CoordinatesInArraysOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CoordinatesInArraysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCoordinatesInArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +40,7 @@ class VtkGeoAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCoordinatesInArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLatitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLongitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);

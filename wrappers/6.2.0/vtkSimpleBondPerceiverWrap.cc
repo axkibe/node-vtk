@@ -73,12 +73,16 @@ void VtkSimpleBondPerceiverWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSimpleBondPerceiver> native = vtkSmartPointer<vtkSimpleBondPerceiver>::New();
-		VtkSimpleBondPerceiverWrap* obj = new VtkSimpleBondPerceiverWrap(native);		obj->Wrap(info.This());
+		VtkSimpleBondPerceiverWrap* obj = new VtkSimpleBondPerceiverWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

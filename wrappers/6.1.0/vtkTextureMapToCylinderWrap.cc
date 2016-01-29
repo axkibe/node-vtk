@@ -103,12 +103,16 @@ void VtkTextureMapToCylinderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTextureMapToCylinder> native = vtkSmartPointer<vtkTextureMapToCylinder>::New();
-		VtkTextureMapToCylinderWrap* obj = new VtkTextureMapToCylinderWrap(native);		obj->Wrap(info.This());
+		VtkTextureMapToCylinderWrap* obj = new VtkTextureMapToCylinderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

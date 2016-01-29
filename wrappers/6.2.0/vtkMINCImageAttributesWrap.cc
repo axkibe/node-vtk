@@ -172,12 +172,16 @@ void VtkMINCImageAttributesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkMINCImageAttributes> native = vtkSmartPointer<vtkMINCImageAttributes>::New();
-		VtkMINCImageAttributesWrap* obj = new VtkMINCImageAttributesWrap(native);		obj->Wrap(info.This());
+		VtkMINCImageAttributesWrap* obj = new VtkMINCImageAttributesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

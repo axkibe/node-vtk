@@ -79,12 +79,16 @@ void VtkDisplayListPainterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDisplayListPainter> native = vtkSmartPointer<vtkDisplayListPainter>::New();
-		VtkDisplayListPainterWrap* obj = new VtkDisplayListPainterWrap(native);		obj->Wrap(info.This());
+		VtkDisplayListPainterWrap* obj = new VtkDisplayListPainterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

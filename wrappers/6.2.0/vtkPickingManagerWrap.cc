@@ -66,6 +66,9 @@ void VtkPickingManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEnabled", GetEnabled);
+	Nan::SetPrototypeMethod(tpl, "getEnabled", GetEnabled);
+
 	Nan::SetPrototypeMethod(tpl, "GetInteractor", GetInteractor);
 	Nan::SetPrototypeMethod(tpl, "getInteractor", GetInteractor);
 
@@ -75,11 +78,17 @@ void VtkPickingManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPickers", GetNumberOfPickers);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPickers", GetNumberOfPickers);
 
+	Nan::SetPrototypeMethod(tpl, "GetOptimizeOnInteractorEvents", GetOptimizeOnInteractorEvents);
+	Nan::SetPrototypeMethod(tpl, "getOptimizeOnInteractorEvents", GetOptimizeOnInteractorEvents);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Pick", Pick);
+	Nan::SetPrototypeMethod(tpl, "pick", Pick);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveObject", RemoveObject);
 	Nan::SetPrototypeMethod(tpl, "removeObject", RemoveObject);
@@ -90,8 +99,14 @@ void VtkPickingManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetEnabled", SetEnabled);
+	Nan::SetPrototypeMethod(tpl, "setEnabled", SetEnabled);
+
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
+
+	Nan::SetPrototypeMethod(tpl, "SetOptimizeOnInteractorEvents", SetOptimizeOnInteractorEvents);
+	Nan::SetPrototypeMethod(tpl, "setOptimizeOnInteractorEvents", SetOptimizeOnInteractorEvents);
 
 	ptpl.Reset( tpl );
 }
@@ -107,12 +122,16 @@ void VtkPickingManagerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPickingManager> native = vtkSmartPointer<vtkPickingManager>::New();
-		VtkPickingManagerWrap* obj = new VtkPickingManagerWrap(native);		obj->Wrap(info.This());
+		VtkPickingManagerWrap* obj = new VtkPickingManagerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -234,6 +253,20 @@ void VtkPickingManagerWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkPickingManagerWrap::GetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
+	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEnabled();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPickingManagerWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
@@ -293,6 +326,20 @@ void VtkPickingManagerWrap::GetNumberOfPickers(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPickingManagerWrap::GetOptimizeOnInteractorEvents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
+	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOptimizeOnInteractorEvents();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPickingManagerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
@@ -336,6 +383,44 @@ void VtkPickingManagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPickingManagerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
+	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractPickerWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractPickerWrap *a0 = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Pick(
+				(vtkAbstractPicker *) a0->native.GetPointer(),
+				(vtkObject *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Pick(
+			(vtkAbstractPicker *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPickingManagerWrap::RemoveObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,6 +499,25 @@ void VtkPickingManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPickingManagerWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
+	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnabled(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPickingManagerWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
@@ -428,6 +532,25 @@ void VtkPickingManagerWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetInteractor(
 			(vtkRenderWindowInteractor *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPickingManagerWrap::SetOptimizeOnInteractorEvents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
+	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOptimizeOnInteractorEvents(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

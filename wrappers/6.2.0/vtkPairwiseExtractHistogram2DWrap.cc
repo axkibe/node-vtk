@@ -119,12 +119,16 @@ void VtkPairwiseExtractHistogram2DWrap::New(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPairwiseExtractHistogram2D> native = vtkSmartPointer<vtkPairwiseExtractHistogram2D>::New();
-		VtkPairwiseExtractHistogram2DWrap* obj = new VtkPairwiseExtractHistogram2DWrap(native);		obj->Wrap(info.This());
+		VtkPairwiseExtractHistogram2DWrap* obj = new VtkPairwiseExtractHistogram2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

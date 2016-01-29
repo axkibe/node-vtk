@@ -85,12 +85,16 @@ void VtkFillHolesFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFillHolesFilter> native = vtkSmartPointer<vtkFillHolesFilter>::New();
-		VtkFillHolesFilterWrap* obj = new VtkFillHolesFilterWrap(native);		obj->Wrap(info.This());
+		VtkFillHolesFilterWrap* obj = new VtkFillHolesFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

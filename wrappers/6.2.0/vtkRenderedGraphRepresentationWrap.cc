@@ -112,6 +112,12 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColorEdgesByArray", GetColorEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "getColorEdgesByArray", GetColorEdgesByArray);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorVerticesByArray", GetColorVerticesByArray);
+	Nan::SetPrototypeMethod(tpl, "getColorVerticesByArray", GetColorVerticesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetEdgeColorArrayName", GetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeColorArrayName", GetEdgeColorArrayName);
 
@@ -127,6 +133,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeIconPriorityArrayName", GetEdgeIconPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeIconPriorityArrayName", GetEdgeIconPriorityArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeIconVisibility", GetEdgeIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeIconVisibility", GetEdgeIconVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelArrayName", GetEdgeLabelArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLabelArrayName", GetEdgeLabelArrayName);
 
@@ -135,6 +144,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelTextProperty", GetEdgeLabelTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLabelTextProperty", GetEdgeLabelTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelVisibility", GetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeLabelVisibility", GetEdgeLabelVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLayoutStrategy", GetEdgeLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLayoutStrategy", GetEdgeLayoutStrategy);
@@ -145,6 +157,21 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeScalarBar", GetEdgeScalarBar);
 	Nan::SetPrototypeMethod(tpl, "getEdgeScalarBar", GetEdgeScalarBar);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeSelection", GetEdgeSelection);
+	Nan::SetPrototypeMethod(tpl, "getEdgeSelection", GetEdgeSelection);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeVisibility", GetEdgeVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeVisibility", GetEdgeVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetEnableEdgesByArray", GetEnableEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "getEnableEdgesByArray", GetEnableEdgesByArray);
+
+	Nan::SetPrototypeMethod(tpl, "GetEnableVerticesByArray", GetEnableVerticesByArray);
+	Nan::SetPrototypeMethod(tpl, "getEnableVerticesByArray", GetEnableVerticesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetEnabledEdgesArrayName", GetEnabledEdgesArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEnabledEdgesArrayName", GetEnabledEdgesArrayName);
 
@@ -154,14 +181,29 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGlyphType", GetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "getGlyphType", GetGlyphType);
 
+	Nan::SetPrototypeMethod(tpl, "GetHideEdgeLabelsOnInteraction", GetHideEdgeLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "getHideEdgeLabelsOnInteraction", GetHideEdgeLabelsOnInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "GetHideVertexLabelsOnInteraction", GetHideVertexLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "getHideVertexLabelsOnInteraction", GetHideVertexLabelsOnInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategyName", GetLayoutStrategyName);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategyName", GetLayoutStrategyName);
 
+	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
+	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalingArrayName", GetScalingArrayName);
 	Nan::SetPrototypeMethod(tpl, "getScalingArrayName", GetScalingArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseEdgeIconTypeMap", GetUseEdgeIconTypeMap);
+	Nan::SetPrototypeMethod(tpl, "getUseEdgeIconTypeMap", GetUseEdgeIconTypeMap);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseVertexIconTypeMap", GetUseVertexIconTypeMap);
+	Nan::SetPrototypeMethod(tpl, "getUseVertexIconTypeMap", GetUseVertexIconTypeMap);
 
 	Nan::SetPrototypeMethod(tpl, "GetVertexColorArrayName", GetVertexColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVertexColorArrayName", GetVertexColorArrayName);
@@ -184,6 +226,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetVertexIconSelectionMode", GetVertexIconSelectionMode);
 	Nan::SetPrototypeMethod(tpl, "getVertexIconSelectionMode", GetVertexIconSelectionMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetVertexIconVisibility", GetVertexIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVertexIconVisibility", GetVertexIconVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetVertexLabelArrayName", GetVertexLabelArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVertexLabelArrayName", GetVertexLabelArrayName);
 
@@ -193,8 +238,14 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetVertexLabelTextProperty", GetVertexLabelTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getVertexLabelTextProperty", GetVertexLabelTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetVertexLabelVisibility", GetVertexLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVertexLabelVisibility", GetVertexLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetVertexScalarBar", GetVertexScalarBar);
 	Nan::SetPrototypeMethod(tpl, "getVertexScalarBar", GetVertexScalarBar);
+
+	Nan::SetPrototypeMethod(tpl, "GetVertexScalarBarVisibility", GetVertexScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVertexScalarBarVisibility", GetVertexScalarBarVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetVertexSelectedIcon", GetVertexSelectedIcon);
 	Nan::SetPrototypeMethod(tpl, "getVertexSelectedIcon", GetVertexSelectedIcon);
@@ -214,6 +265,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsLayoutComplete", IsLayoutComplete);
+	Nan::SetPrototypeMethod(tpl, "isLayoutComplete", IsLayoutComplete);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -225,6 +279,12 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "ScalingOn", ScalingOn);
 	Nan::SetPrototypeMethod(tpl, "scalingOn", ScalingOn);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorEdgesByArray", SetColorEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "setColorEdgesByArray", SetColorEdgesByArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorVerticesByArray", SetColorVerticesByArray);
+	Nan::SetPrototypeMethod(tpl, "setColorVerticesByArray", SetColorVerticesByArray);
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeColorArrayName", SetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeColorArrayName", SetEdgeColorArrayName);
@@ -241,6 +301,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEdgeIconPriorityArrayName", SetEdgeIconPriorityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeIconPriorityArrayName", SetEdgeIconPriorityArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "SetEdgeIconVisibility", SetEdgeIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeIconVisibility", SetEdgeIconVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelArrayName", SetEdgeLabelArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLabelArrayName", SetEdgeLabelArrayName);
 
@@ -249,6 +312,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelTextProperty", SetEdgeLabelTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLabelTextProperty", SetEdgeLabelTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelVisibility", SetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeLabelVisibility", SetEdgeLabelVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLayoutStrategy", SetEdgeLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLayoutStrategy", SetEdgeLayoutStrategy);
@@ -262,6 +328,21 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLayoutStrategyToPassThrough", SetEdgeLayoutStrategyToPassThrough);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLayoutStrategyToPassThrough", SetEdgeLayoutStrategyToPassThrough);
 
+	Nan::SetPrototypeMethod(tpl, "SetEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeSelection", SetEdgeSelection);
+	Nan::SetPrototypeMethod(tpl, "setEdgeSelection", SetEdgeSelection);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeVisibility", SetEdgeVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeVisibility", SetEdgeVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetEnableEdgesByArray", SetEnableEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "setEnableEdgesByArray", SetEnableEdgesByArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetEnableVerticesByArray", SetEnableVerticesByArray);
+	Nan::SetPrototypeMethod(tpl, "setEnableVerticesByArray", SetEnableVerticesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "SetEnabledEdgesArrayName", SetEnabledEdgesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEnabledEdgesArrayName", SetEnabledEdgesArrayName);
 
@@ -270,6 +351,12 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetGlyphType", SetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "setGlyphType", SetGlyphType);
+
+	Nan::SetPrototypeMethod(tpl, "SetHideEdgeLabelsOnInteraction", SetHideEdgeLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "setHideEdgeLabelsOnInteraction", SetHideEdgeLabelsOnInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "SetHideVertexLabelsOnInteraction", SetHideVertexLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "setHideVertexLabelsOnInteraction", SetHideVertexLabelsOnInteraction);
 
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategy", SetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategy", SetLayoutStrategy);
@@ -313,8 +400,17 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategyToTree", SetLayoutStrategyToTree);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategyToTree", SetLayoutStrategyToTree);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaling", SetScaling);
+	Nan::SetPrototypeMethod(tpl, "setScaling", SetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "SetScalingArrayName", SetScalingArrayName);
 	Nan::SetPrototypeMethod(tpl, "setScalingArrayName", SetScalingArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseEdgeIconTypeMap", SetUseEdgeIconTypeMap);
+	Nan::SetPrototypeMethod(tpl, "setUseEdgeIconTypeMap", SetUseEdgeIconTypeMap);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseVertexIconTypeMap", SetUseVertexIconTypeMap);
+	Nan::SetPrototypeMethod(tpl, "setUseVertexIconTypeMap", SetUseVertexIconTypeMap);
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexColorArrayName", SetVertexColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexColorArrayName", SetVertexColorArrayName);
@@ -349,6 +445,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexIconSelectionModeToSelectedOffset", SetVertexIconSelectionModeToSelectedOffset);
 	Nan::SetPrototypeMethod(tpl, "setVertexIconSelectionModeToSelectedOffset", SetVertexIconSelectionModeToSelectedOffset);
 
+	Nan::SetPrototypeMethod(tpl, "SetVertexIconVisibility", SetVertexIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVertexIconVisibility", SetVertexIconVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelArrayName", SetVertexLabelArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelArrayName", SetVertexLabelArrayName);
 
@@ -357,6 +456,12 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelTextProperty", SetVertexLabelTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelTextProperty", SetVertexLabelTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "SetVertexLabelVisibility", SetVertexLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVertexLabelVisibility", SetVertexLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetVertexScalarBarVisibility", SetVertexScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVertexScalarBarVisibility", SetVertexScalarBarVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexSelectedIcon", SetVertexSelectedIcon);
 	Nan::SetPrototypeMethod(tpl, "setVertexSelectedIcon", SetVertexSelectedIcon);
@@ -402,12 +507,16 @@ void VtkRenderedGraphRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderedGraphRepresentation> native = vtkSmartPointer<vtkRenderedGraphRepresentation>::New();
-		VtkRenderedGraphRepresentationWrap* obj = new VtkRenderedGraphRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkRenderedGraphRepresentationWrap* obj = new VtkRenderedGraphRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -687,6 +796,34 @@ void VtkRenderedGraphRepresentationWrap::GetClassName(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRenderedGraphRepresentationWrap::GetColorEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorEdgesByArray();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetColorVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorVerticesByArray();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -757,6 +894,20 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeIconPriorityArrayName(const Nan:
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRenderedGraphRepresentationWrap::GetEdgeIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeIconVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetEdgeLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -806,6 +957,20 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLabelTextProperty(const Nan::Fun
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderedGraphRepresentationWrap::GetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderedGraphRepresentationWrap::GetEdgeLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -868,6 +1033,76 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeScalarBar(const Nan::FunctionCal
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkRenderedGraphRepresentationWrap::GetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeScalarBarVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetEdgeSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeSelection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEnableEdgesByArray();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetEnableVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEnableVerticesByArray();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetEnabledEdgesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -910,6 +1145,34 @@ void VtkRenderedGraphRepresentationWrap::GetGlyphType(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRenderedGraphRepresentationWrap::GetHideEdgeLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHideEdgeLabelsOnInteraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetHideVertexLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHideVertexLabelsOnInteraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -947,6 +1210,20 @@ void VtkRenderedGraphRepresentationWrap::GetLayoutStrategyName(const Nan::Functi
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRenderedGraphRepresentationWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -959,6 +1236,34 @@ void VtkRenderedGraphRepresentationWrap::GetScalingArrayName(const Nan::Function
 	}
 	r = native->GetScalingArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRenderedGraphRepresentationWrap::GetUseEdgeIconTypeMap(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseEdgeIconTypeMap();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderedGraphRepresentationWrap::GetUseVertexIconTypeMap(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseVertexIconTypeMap();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderedGraphRepresentationWrap::GetVertexColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1059,6 +1364,20 @@ void VtkRenderedGraphRepresentationWrap::GetVertexIconSelectionMode(const Nan::F
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRenderedGraphRepresentationWrap::GetVertexIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVertexIconVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetVertexLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -1110,6 +1429,20 @@ void VtkRenderedGraphRepresentationWrap::GetVertexLabelTextProperty(const Nan::F
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkRenderedGraphRepresentationWrap::GetVertexLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVertexLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::GetVertexScalarBar(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -1131,6 +1464,20 @@ void VtkRenderedGraphRepresentationWrap::GetVertexScalarBar(const Nan::FunctionC
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderedGraphRepresentationWrap::GetVertexScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVertexScalarBarVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderedGraphRepresentationWrap::GetVertexSelectedIcon(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1217,6 +1564,20 @@ void VtkRenderedGraphRepresentationWrap::IsA(const Nan::FunctionCallbackInfo<v8:
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRenderedGraphRepresentationWrap::IsLayoutComplete(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsLayoutComplete();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderedGraphRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -1293,6 +1654,44 @@ void VtkRenderedGraphRepresentationWrap::ScalingOn(const Nan::FunctionCallbackIn
 		return;
 	}
 	native->ScalingOn();
+}
+
+void VtkRenderedGraphRepresentationWrap::SetColorEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorEdgesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetColorVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorVerticesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderedGraphRepresentationWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1394,6 +1793,25 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconPriorityArrayName(const Nan:
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRenderedGraphRepresentationWrap::SetEdgeIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeIconVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRenderedGraphRepresentationWrap::SetEdgeLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -1448,6 +1866,25 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelTextProperty(const Nan::Fun
 		}
 		native->SetEdgeLabelTextProperty(
 			(vtkTextProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeLabelVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -1530,6 +1967,101 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategyToPassThrough(cons
 	native->SetEdgeLayoutStrategyToPassThrough();
 }
 
+void VtkRenderedGraphRepresentationWrap::SetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeScalarBarVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetEdgeSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeSelection(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableEdgesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetEnableVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableVerticesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRenderedGraphRepresentationWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -1583,6 +2115,44 @@ void VtkRenderedGraphRepresentationWrap::SetGlyphType(const Nan::FunctionCallbac
 		}
 		native->SetGlyphType(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetHideEdgeLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHideEdgeLabelsOnInteraction(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetHideVertexLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHideVertexLabelsOnInteraction(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -1788,12 +2358,55 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToTree(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetLayoutStrategyToTree(
+						info[0]->BooleanValue(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
+	}
 	if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->SetLayoutStrategyToTree();
+}
+
+void VtkRenderedGraphRepresentationWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaling(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderedGraphRepresentationWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1810,6 +2423,44 @@ void VtkRenderedGraphRepresentationWrap::SetScalingArrayName(const Nan::Function
 		}
 		native->SetScalingArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetUseEdgeIconTypeMap(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseEdgeIconTypeMap(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetUseVertexIconTypeMap(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseVertexIconTypeMap(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -2001,6 +2652,25 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionModeToSelectedOff
 	native->SetVertexIconSelectionModeToSelectedOffset();
 }
 
+void VtkRenderedGraphRepresentationWrap::SetVertexIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexIconVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkRenderedGraphRepresentationWrap::SetVertexLabelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
@@ -2055,6 +2725,44 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelTextProperty(const Nan::F
 		}
 		native->SetVertexLabelTextProperty(
 			(vtkTextProperty *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetVertexLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexLabelVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderedGraphRepresentationWrap::SetVertexScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
+	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexScalarBarVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

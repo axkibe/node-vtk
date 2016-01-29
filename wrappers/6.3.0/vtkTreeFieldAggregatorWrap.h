@@ -31,6 +31,8 @@ class VtkTreeFieldAggregatorWrap : public VtkTreeAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLeafVertexUnitSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LeafVertexUnitSizeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +42,8 @@ class VtkTreeFieldAggregatorWrap : public VtkTreeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLeafVertexUnitSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

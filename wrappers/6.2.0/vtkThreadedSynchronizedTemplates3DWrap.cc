@@ -148,12 +148,16 @@ void VtkThreadedSynchronizedTemplates3DWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkThreadedSynchronizedTemplates3D> native = vtkSmartPointer<vtkThreadedSynchronizedTemplates3D>::New();
-		VtkThreadedSynchronizedTemplates3DWrap* obj = new VtkThreadedSynchronizedTemplates3DWrap(native);		obj->Wrap(info.This());
+		VtkThreadedSynchronizedTemplates3DWrap* obj = new VtkThreadedSynchronizedTemplates3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -56,6 +56,9 @@ void VtkSQLDatabaseTableSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGeneratePedigreeIds", GetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "getGeneratePedigreeIds", GetGeneratePedigreeIds);
+
 	Nan::SetPrototypeMethod(tpl, "GetPedigreeIdArrayName", GetPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "getPedigreeIdArrayName", GetPedigreeIdArrayName);
 
@@ -67,6 +70,9 @@ void VtkSQLDatabaseTableSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetGeneratePedigreeIds", SetGeneratePedigreeIds);
+	Nan::SetPrototypeMethod(tpl, "setGeneratePedigreeIds", SetGeneratePedigreeIds);
 
 	Nan::SetPrototypeMethod(tpl, "SetPedigreeIdArrayName", SetPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPedigreeIdArrayName", SetPedigreeIdArrayName);
@@ -85,12 +91,16 @@ void VtkSQLDatabaseTableSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSQLDatabaseTableSource> native = vtkSmartPointer<vtkSQLDatabaseTableSource>::New();
-		VtkSQLDatabaseTableSourceWrap* obj = new VtkSQLDatabaseTableSourceWrap(native);		obj->Wrap(info.This());
+		VtkSQLDatabaseTableSourceWrap* obj = new VtkSQLDatabaseTableSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -132,6 +142,20 @@ void VtkSQLDatabaseTableSourceWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSQLDatabaseTableSourceWrap::GetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
+	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeneratePedigreeIds();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSQLDatabaseTableSourceWrap::GetPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -219,6 +243,25 @@ void VtkSQLDatabaseTableSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSQLDatabaseTableSourceWrap::SetGeneratePedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
+	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeneratePedigreeIds(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

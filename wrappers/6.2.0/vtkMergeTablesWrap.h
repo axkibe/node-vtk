@@ -31,6 +31,8 @@ class VtkMergeTablesWrap : public VtkTableAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFirstTablePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMergeColumnsByName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPrefixAllButMerged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSecondTablePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MergeColumnsByNameOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +42,8 @@ class VtkMergeTablesWrap : public VtkTableAlgorithmWrap
 		static void PrefixAllButMergedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFirstTablePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMergeColumnsByName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPrefixAllButMerged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSecondTablePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

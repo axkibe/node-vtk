@@ -91,12 +91,16 @@ void VtkScenePickerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkScenePicker> native = vtkSmartPointer<vtkScenePicker>::New();
-		VtkScenePickerWrap* obj = new VtkScenePickerWrap(native);		obj->Wrap(info.This());
+		VtkScenePickerWrap* obj = new VtkScenePickerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

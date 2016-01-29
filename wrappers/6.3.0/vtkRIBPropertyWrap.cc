@@ -80,6 +80,9 @@ void VtkRIBPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSurfaceShaderParameters", GetSurfaceShaderParameters);
 	Nan::SetPrototypeMethod(tpl, "getSurfaceShaderParameters", GetSurfaceShaderParameters);
 
+	Nan::SetPrototypeMethod(tpl, "GetSurfaceShaderUsesDefaultParameters", GetSurfaceShaderUsesDefaultParameters);
+	Nan::SetPrototypeMethod(tpl, "getSurfaceShaderUsesDefaultParameters", GetSurfaceShaderUsesDefaultParameters);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -104,6 +107,9 @@ void VtkRIBPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSurfaceShaderParameter", SetSurfaceShaderParameter);
 	Nan::SetPrototypeMethod(tpl, "setSurfaceShaderParameter", SetSurfaceShaderParameter);
 
+	Nan::SetPrototypeMethod(tpl, "SetSurfaceShaderUsesDefaultParameters", SetSurfaceShaderUsesDefaultParameters);
+	Nan::SetPrototypeMethod(tpl, "setSurfaceShaderUsesDefaultParameters", SetSurfaceShaderUsesDefaultParameters);
+
 	Nan::SetPrototypeMethod(tpl, "SetVariable", SetVariable);
 	Nan::SetPrototypeMethod(tpl, "setVariable", SetVariable);
 
@@ -127,12 +133,16 @@ void VtkRIBPropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRIBProperty> native = vtkSmartPointer<vtkRIBProperty>::New();
-		VtkRIBPropertyWrap* obj = new VtkRIBPropertyWrap(native);		obj->Wrap(info.This());
+		VtkRIBPropertyWrap* obj = new VtkRIBPropertyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -336,6 +346,20 @@ void VtkRIBPropertyWrap::GetSurfaceShaderParameters(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRIBPropertyWrap::GetSurfaceShaderUsesDefaultParameters(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
+	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSurfaceShaderUsesDefaultParameters();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRIBPropertyWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
@@ -523,6 +547,25 @@ void VtkRIBPropertyWrap::SetSurfaceShaderParameter(const Nan::FunctionCallbackIn
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRIBPropertyWrap::SetSurfaceShaderUsesDefaultParameters(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRIBPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkRIBPropertyWrap>(info.Holder());
+	vtkRIBProperty *native = (vtkRIBProperty *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSurfaceShaderUsesDefaultParameters(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

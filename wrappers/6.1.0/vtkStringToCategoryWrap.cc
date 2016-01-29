@@ -79,12 +79,16 @@ void VtkStringToCategoryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStringToCategory> native = vtkSmartPointer<vtkStringToCategory>::New();
-		VtkStringToCategoryWrap* obj = new VtkStringToCategoryWrap(native);		obj->Wrap(info.This());
+		VtkStringToCategoryWrap* obj = new VtkStringToCategoryWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

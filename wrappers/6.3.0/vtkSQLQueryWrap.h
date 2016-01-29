@@ -29,12 +29,21 @@ class VtkSQLQueryWrap : public VtkRowQueryWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void BeginTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void BindParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ClearParameterBindings(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CommitTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void EscapeString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Execute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuery(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsActive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RollbackTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetQuery(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

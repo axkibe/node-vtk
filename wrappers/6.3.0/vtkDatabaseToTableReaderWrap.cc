@@ -48,6 +48,9 @@ void VtkDatabaseToTableReaderWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkDatabaseToTableReaderWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CheckIfTableExists", CheckIfTableExists);
+	Nan::SetPrototypeMethod(tpl, "checkIfTableExists", CheckIfTableExists);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +65,12 @@ void VtkDatabaseToTableReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDatabase", SetDatabase);
+	Nan::SetPrototypeMethod(tpl, "setDatabase", SetDatabase);
+
+	Nan::SetPrototypeMethod(tpl, "SetTableName", SetTableName);
+	Nan::SetPrototypeMethod(tpl, "setTableName", SetTableName);
 
 	ptpl.Reset( tpl );
 }
@@ -82,10 +91,27 @@ void VtkDatabaseToTableReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkDatabaseToTableReaderWrap::CheckIfTableExists(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDatabaseToTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDatabaseToTableReaderWrap>(info.Holder());
+	vtkDatabaseToTableReader *native = (vtkDatabaseToTableReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->CheckIfTableExists();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDatabaseToTableReaderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -196,6 +222,50 @@ void VtkDatabaseToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDatabaseToTableReaderWrap::SetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDatabaseToTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDatabaseToTableReaderWrap>(info.Holder());
+	vtkDatabaseToTableReader *native = (vtkDatabaseToTableReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSQLDatabaseWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkSQLDatabaseWrap *a0 = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetDatabase(
+			(vtkSQLDatabase *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDatabaseToTableReaderWrap::SetTableName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDatabaseToTableReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDatabaseToTableReaderWrap>(info.Holder());
+	vtkDatabaseToTableReader *native = (vtkDatabaseToTableReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SetTableName(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

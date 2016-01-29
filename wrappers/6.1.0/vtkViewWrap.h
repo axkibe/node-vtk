@@ -38,6 +38,7 @@ class VtkViewWrap : public VtkObjectWrap
 		static void GetObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsRepresentationPresent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllRepresentations(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -108,12 +108,16 @@ void VtkVariantArrayWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVariantArray> native = vtkSmartPointer<vtkVariantArray>::New();
-		VtkVariantArrayWrap* obj = new VtkVariantArrayWrap(native);		obj->Wrap(info.This());
+		VtkVariantArrayWrap* obj = new VtkVariantArrayWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

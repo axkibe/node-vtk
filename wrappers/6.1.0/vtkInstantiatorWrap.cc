@@ -75,12 +75,16 @@ void VtkInstantiatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInstantiator> native = vtkSmartPointer<vtkInstantiator>::New();
-		VtkInstantiatorWrap* obj = new VtkInstantiatorWrap(native);		obj->Wrap(info.This());
+		VtkInstantiatorWrap* obj = new VtkInstantiatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -58,6 +58,9 @@ void VtkExtractSelectedRowsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetAddOriginalRowIdsArray", GetAddOriginalRowIdsArray);
+	Nan::SetPrototypeMethod(tpl, "getAddOriginalRowIdsArray", GetAddOriginalRowIdsArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,6 +72,9 @@ void VtkExtractSelectedRowsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAddOriginalRowIdsArray", SetAddOriginalRowIdsArray);
+	Nan::SetPrototypeMethod(tpl, "setAddOriginalRowIdsArray", SetAddOriginalRowIdsArray);
 
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLayersConnection", SetAnnotationLayersConnection);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLayersConnection", SetAnnotationLayersConnection);
@@ -90,12 +96,16 @@ void VtkExtractSelectedRowsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractSelectedRows> native = vtkSmartPointer<vtkExtractSelectedRows>::New();
-		VtkExtractSelectedRowsWrap* obj = new VtkExtractSelectedRowsWrap(native);		obj->Wrap(info.This());
+		VtkExtractSelectedRowsWrap* obj = new VtkExtractSelectedRowsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -149,6 +159,20 @@ void VtkExtractSelectedRowsWrap::FillInputPortInformation(const Nan::FunctionCal
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractSelectedRowsWrap::GetAddOriginalRowIdsArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractSelectedRowsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedRowsWrap>(info.Holder());
+	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAddOriginalRowIdsArray();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExtractSelectedRowsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -236,6 +260,25 @@ void VtkExtractSelectedRowsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExtractSelectedRowsWrap::SetAddOriginalRowIdsArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractSelectedRowsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedRowsWrap>(info.Holder());
+	vtkExtractSelectedRows *native = (vtkExtractSelectedRows *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAddOriginalRowIdsArray(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

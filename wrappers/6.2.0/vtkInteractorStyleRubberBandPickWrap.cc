@@ -88,12 +88,16 @@ void VtkInteractorStyleRubberBandPickWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkInteractorStyleRubberBandPick> native = vtkSmartPointer<vtkInteractorStyleRubberBandPick>::New();
-		VtkInteractorStyleRubberBandPickWrap* obj = new VtkInteractorStyleRubberBandPickWrap(native);		obj->Wrap(info.This());
+		VtkInteractorStyleRubberBandPickWrap* obj = new VtkInteractorStyleRubberBandPickWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

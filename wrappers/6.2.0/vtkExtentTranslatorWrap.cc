@@ -120,12 +120,16 @@ void VtkExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtentTranslator> native = vtkSmartPointer<vtkExtentTranslator>::New();
-		VtkExtentTranslatorWrap* obj = new VtkExtentTranslatorWrap(native);		obj->Wrap(info.This());
+		VtkExtentTranslatorWrap* obj = new VtkExtentTranslatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

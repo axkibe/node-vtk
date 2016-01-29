@@ -61,6 +61,9 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGeneratePerturbedLabelSpokes", GetGeneratePerturbedLabelSpokes);
+	Nan::SetPrototypeMethod(tpl, "getGeneratePerturbedLabelSpokes", GetGeneratePerturbedLabelSpokes);
+
 	Nan::SetPrototypeMethod(tpl, "GetGravity", GetGravity);
 	Nan::SetPrototypeMethod(tpl, "getGravity", GetGravity);
 
@@ -85,8 +88,20 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOutputCoordinateSystemMinValue", GetOutputCoordinateSystemMinValue);
 	Nan::SetPrototypeMethod(tpl, "getOutputCoordinateSystemMinValue", GetOutputCoordinateSystemMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputTraversedBounds", GetOutputTraversedBounds);
+	Nan::SetPrototypeMethod(tpl, "getOutputTraversedBounds", GetOutputTraversedBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetPositionsAsNormals", GetPositionsAsNormals);
+	Nan::SetPrototypeMethod(tpl, "getPositionsAsNormals", GetPositionsAsNormals);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseDepthBuffer", GetUseDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "getUseDepthBuffer", GetUseDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseUnicodeStrings", GetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "getUseUnicodeStrings", GetUseUnicodeStrings);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -115,6 +130,9 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetGeneratePerturbedLabelSpokes", SetGeneratePerturbedLabelSpokes);
+	Nan::SetPrototypeMethod(tpl, "setGeneratePerturbedLabelSpokes", SetGeneratePerturbedLabelSpokes);
+
 	Nan::SetPrototypeMethod(tpl, "SetGravity", SetGravity);
 	Nan::SetPrototypeMethod(tpl, "setGravity", SetGravity);
 
@@ -127,8 +145,20 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputCoordinateSystem", SetOutputCoordinateSystem);
 	Nan::SetPrototypeMethod(tpl, "setOutputCoordinateSystem", SetOutputCoordinateSystem);
 
+	Nan::SetPrototypeMethod(tpl, "SetOutputTraversedBounds", SetOutputTraversedBounds);
+	Nan::SetPrototypeMethod(tpl, "setOutputTraversedBounds", SetOutputTraversedBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetPositionsAsNormals", SetPositionsAsNormals);
+	Nan::SetPrototypeMethod(tpl, "setPositionsAsNormals", SetPositionsAsNormals);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseDepthBuffer", SetUseDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "setUseDepthBuffer", SetUseDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseUnicodeStrings", SetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "setUseUnicodeStrings", SetUseUnicodeStrings);
 
 	Nan::SetPrototypeMethod(tpl, "UseDepthBufferOff", UseDepthBufferOff);
 	Nan::SetPrototypeMethod(tpl, "useDepthBufferOff", UseDepthBufferOff);
@@ -156,12 +186,16 @@ void VtkLabelPlacerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabelPlacer> native = vtkSmartPointer<vtkLabelPlacer>::New();
-		VtkLabelPlacerWrap* obj = new VtkLabelPlacerWrap(native);		obj->Wrap(info.This());
+		VtkLabelPlacerWrap* obj = new VtkLabelPlacerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -226,6 +260,20 @@ void VtkLabelPlacerWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkLabelPlacerWrap::GetGeneratePerturbedLabelSpokes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeneratePerturbedLabelSpokes();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLabelPlacerWrap::GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -340,6 +388,34 @@ void VtkLabelPlacerWrap::GetOutputCoordinateSystemMinValue(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLabelPlacerWrap::GetOutputTraversedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputTraversedBounds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacerWrap::GetPositionsAsNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPositionsAsNormals();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkLabelPlacerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
@@ -361,6 +437,34 @@ void VtkLabelPlacerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLabelPlacerWrap::GetUseDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseDepthBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacerWrap::GetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseUnicodeStrings();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLabelPlacerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -511,6 +615,25 @@ void VtkLabelPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkLabelPlacerWrap::SetGeneratePerturbedLabelSpokes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeneratePerturbedLabelSpokes(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLabelPlacerWrap::SetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
@@ -587,6 +710,44 @@ void VtkLabelPlacerWrap::SetOutputCoordinateSystem(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkLabelPlacerWrap::SetOutputTraversedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputTraversedBounds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacerWrap::SetPositionsAsNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPositionsAsNormals(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLabelPlacerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
@@ -601,6 +762,44 @@ void VtkLabelPlacerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetRenderer(
 			(vtkRenderer *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacerWrap::SetUseDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseDepthBuffer(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacerWrap::SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
+	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseUnicodeStrings(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

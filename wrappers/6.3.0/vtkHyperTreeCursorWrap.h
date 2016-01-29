@@ -30,6 +30,7 @@ class VtkHyperTreeCursorWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void Clone(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Found(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetChildIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,10 @@ class VtkHyperTreeCursorWrap : public VtkObjectWrap
 		static void GetNumberOfChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsEqual(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsLeaf(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsTerminalNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SameTree(const Nan::FunctionCallbackInfo<v8::Value>& info);

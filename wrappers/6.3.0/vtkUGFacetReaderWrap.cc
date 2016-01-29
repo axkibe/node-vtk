@@ -110,12 +110,16 @@ void VtkUGFacetReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkUGFacetReader> native = vtkSmartPointer<vtkUGFacetReader>::New();
-		VtkUGFacetReaderWrap* obj = new VtkUGFacetReaderWrap(native);		obj->Wrap(info.This());
+		VtkUGFacetReaderWrap* obj = new VtkUGFacetReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

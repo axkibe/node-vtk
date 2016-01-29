@@ -38,6 +38,7 @@ class VtkEnSightWriterWrap : public VtkWriterWrap
 		static void GetPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTransientGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +50,7 @@ class VtkEnSightWriterWrap : public VtkWriterWrap
 		static void SetPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTransientGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteCaseFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteSOSCaseFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

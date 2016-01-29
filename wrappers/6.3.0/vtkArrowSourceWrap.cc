@@ -50,6 +50,9 @@ void VtkArrowSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetInvert", GetInvert);
+	Nan::SetPrototypeMethod(tpl, "getInvert", GetInvert);
+
 	Nan::SetPrototypeMethod(tpl, "GetShaftRadius", GetShaftRadius);
 	Nan::SetPrototypeMethod(tpl, "getShaftRadius", GetShaftRadius);
 
@@ -110,6 +113,9 @@ void VtkArrowSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetInvert", SetInvert);
+	Nan::SetPrototypeMethod(tpl, "setInvert", SetInvert);
+
 	Nan::SetPrototypeMethod(tpl, "SetShaftRadius", SetShaftRadius);
 	Nan::SetPrototypeMethod(tpl, "setShaftRadius", SetShaftRadius);
 
@@ -139,12 +145,16 @@ void VtkArrowSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkArrowSource> native = vtkSmartPointer<vtkArrowSource>::New();
-		VtkArrowSourceWrap* obj = new VtkArrowSourceWrap(native);		obj->Wrap(info.This());
+		VtkArrowSourceWrap* obj = new VtkArrowSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -162,6 +172,20 @@ void VtkArrowSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkArrowSourceWrap::GetInvert(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrowSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArrowSourceWrap>(info.Holder());
+	vtkArrowSource *native = (vtkArrowSource *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInvert();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkArrowSourceWrap::GetShaftRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -469,6 +493,25 @@ void VtkArrowSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArrowSourceWrap::SetInvert(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrowSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArrowSourceWrap>(info.Holder());
+	vtkArrowSource *native = (vtkArrowSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInvert(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

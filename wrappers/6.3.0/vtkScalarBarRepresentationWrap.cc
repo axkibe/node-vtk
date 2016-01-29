@@ -57,6 +57,9 @@ void VtkScalarBarRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors2D", GetActors2D);
 	Nan::SetPrototypeMethod(tpl, "getActors2D", GetActors2D);
 
+	Nan::SetPrototypeMethod(tpl, "GetAutoOrient", GetAutoOrient);
+	Nan::SetPrototypeMethod(tpl, "getAutoOrient", GetAutoOrient);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -93,6 +96,9 @@ void VtkScalarBarRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAutoOrient", SetAutoOrient);
+	Nan::SetPrototypeMethod(tpl, "setAutoOrient", SetAutoOrient);
+
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
@@ -116,12 +122,16 @@ void VtkScalarBarRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkScalarBarRepresentation> native = vtkSmartPointer<vtkScalarBarRepresentation>::New();
-		VtkScalarBarRepresentationWrap* obj = new VtkScalarBarRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkScalarBarRepresentationWrap* obj = new VtkScalarBarRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -157,6 +167,20 @@ void VtkScalarBarRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScalarBarRepresentationWrap::GetAutoOrient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarBarRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info.Holder());
+	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoOrient();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkScalarBarRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -395,6 +419,25 @@ void VtkScalarBarRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkScalarBarRepresentationWrap::SetAutoOrient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarBarRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info.Holder());
+	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoOrient(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

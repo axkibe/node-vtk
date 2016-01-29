@@ -53,6 +53,9 @@ void VtkArrayReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetReadFromInputString", GetReadFromInputString);
+	Nan::SetPrototypeMethod(tpl, "getReadFromInputString", GetReadFromInputString);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -71,6 +74,9 @@ void VtkArrayReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "SetReadFromInputString", SetReadFromInputString);
+	Nan::SetPrototypeMethod(tpl, "setReadFromInputString", SetReadFromInputString);
+
 	ptpl.Reset( tpl );
 }
 
@@ -85,12 +91,16 @@ void VtkArrayReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkArrayReader> native = vtkSmartPointer<vtkArrayReader>::New();
-		VtkArrayReaderWrap* obj = new VtkArrayReaderWrap(native);		obj->Wrap(info.This());
+		VtkArrayReaderWrap* obj = new VtkArrayReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -122,6 +132,20 @@ void VtkArrayReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkArrayReaderWrap::GetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayReaderWrap *wrapper = ObjectWrap::Unwrap<VtkArrayReaderWrap>(info.Holder());
+	vtkArrayReader *native = (vtkArrayReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReadFromInputString();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkArrayReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -238,6 +262,25 @@ void VtkArrayReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetFileName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkArrayReaderWrap::SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArrayReaderWrap *wrapper = ObjectWrap::Unwrap<VtkArrayReaderWrap>(info.Holder());
+	vtkArrayReader *native = (vtkArrayReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReadFromInputString(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

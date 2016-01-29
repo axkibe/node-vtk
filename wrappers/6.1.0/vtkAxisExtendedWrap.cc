@@ -73,6 +73,9 @@ void VtkAxisExtendedWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFontSize", GetFontSize);
 	Nan::SetPrototypeMethod(tpl, "getFontSize", GetFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetIsAxisVertical", GetIsAxisVertical);
+	Nan::SetPrototypeMethod(tpl, "getIsAxisVertical", GetIsAxisVertical);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelFormat", GetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getLabelFormat", GetLabelFormat);
 
@@ -96,6 +99,9 @@ void VtkAxisExtendedWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetFontSize", SetFontSize);
 	Nan::SetPrototypeMethod(tpl, "setFontSize", SetFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetIsAxisVertical", SetIsAxisVertical);
+	Nan::SetPrototypeMethod(tpl, "setIsAxisVertical", SetIsAxisVertical);
 
 	Nan::SetPrototypeMethod(tpl, "SetLabelFormat", SetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "setLabelFormat", SetLabelFormat);
@@ -126,12 +132,16 @@ void VtkAxisExtendedWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAxisExtended> native = vtkSmartPointer<vtkAxisExtended>::New();
-		VtkAxisExtendedWrap* obj = new VtkAxisExtendedWrap(native);		obj->Wrap(info.This());
+		VtkAxisExtendedWrap* obj = new VtkAxisExtendedWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -361,6 +371,20 @@ void VtkAxisExtendedWrap::GetFontSize(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAxisExtendedWrap::GetIsAxisVertical(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisExtendedWrap *wrapper = ObjectWrap::Unwrap<VtkAxisExtendedWrap>(info.Holder());
+	vtkAxisExtended *native = (vtkAxisExtended *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIsAxisVertical();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAxisExtendedWrap::GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxisExtendedWrap *wrapper = ObjectWrap::Unwrap<VtkAxisExtendedWrap>(info.Holder());
@@ -511,6 +535,25 @@ void VtkAxisExtendedWrap::SetFontSize(const Nan::FunctionCallbackInfo<v8::Value>
 		}
 		native->SetFontSize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAxisExtendedWrap::SetIsAxisVertical(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisExtendedWrap *wrapper = ObjectWrap::Unwrap<VtkAxisExtendedWrap>(info.Holder());
+	vtkAxisExtended *native = (vtkAxisExtended *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIsAxisVertical(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

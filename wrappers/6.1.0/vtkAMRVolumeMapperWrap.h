@@ -36,12 +36,14 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCropping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestedResamplingMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResamplerUpdateTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseDefaultThreading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +54,7 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void SetCropping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -69,6 +72,7 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void SetRequestedResamplingMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResamplerUpdateTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseDefaultThreading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateResampler(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateResamplerFrustrumMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

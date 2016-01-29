@@ -12,6 +12,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "vtkRenderWindowWrap.h"
 
 using namespace v8;
 
@@ -53,8 +54,14 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseFloatingPointFrameBuffer", GetUseFloatingPointFrameBuffer);
+	Nan::SetPrototypeMethod(tpl, "getUseFloatingPointFrameBuffer", GetUseFloatingPointFrameBuffer);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsSupported", IsSupported);
+	Nan::SetPrototypeMethod(tpl, "isSupported", IsSupported);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -67,6 +74,9 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseFloatingPointFrameBuffer", SetUseFloatingPointFrameBuffer);
+	Nan::SetPrototypeMethod(tpl, "setUseFloatingPointFrameBuffer", SetUseFloatingPointFrameBuffer);
 
 	Nan::SetPrototypeMethod(tpl, "UseFloatingPointFrameBufferOff", UseFloatingPointFrameBufferOff);
 	Nan::SetPrototypeMethod(tpl, "useFloatingPointFrameBufferOff", UseFloatingPointFrameBufferOff);
@@ -88,12 +98,16 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLProjectedTetrahedraMapper> native = vtkSmartPointer<vtkOpenGLProjectedTetrahedraMapper>::New();
-		VtkOpenGLProjectedTetrahedraMapperWrap* obj = new VtkOpenGLProjectedTetrahedraMapperWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLProjectedTetrahedraMapperWrap* obj = new VtkOpenGLProjectedTetrahedraMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -113,6 +127,20 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::GetClassName(const Nan::FunctionCal
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkOpenGLProjectedTetrahedraMapperWrap::GetUseFloatingPointFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
+	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseFloatingPointFrameBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkOpenGLProjectedTetrahedraMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
@@ -128,6 +156,28 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::IsA(const Nan::FunctionCallbackInfo
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLProjectedTetrahedraMapperWrap::IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
+	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsSupported(
+			(vtkRenderWindow *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -229,6 +279,25 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCal
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLProjectedTetrahedraMapperWrap::SetUseFloatingPointFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
+	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseFloatingPointFrameBuffer(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

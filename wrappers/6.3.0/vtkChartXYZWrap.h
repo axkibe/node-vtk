@@ -34,11 +34,16 @@ class VtkChartXYZWrap : public VtkContextItemWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RecalculateTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAroundX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAutoRotate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDecorateAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFitToScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 

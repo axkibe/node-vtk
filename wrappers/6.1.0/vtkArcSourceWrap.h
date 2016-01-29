@@ -33,10 +33,12 @@ class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void GetAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNegative(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NegativeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NegativeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,12 +46,14 @@ class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNegative(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalAndAngleOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalAndAngleOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

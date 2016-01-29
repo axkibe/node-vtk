@@ -130,12 +130,16 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::New(const Nan::Functio
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOrientedGlyphFocalPlaneContourRepresentation> native = vtkSmartPointer<vtkOrientedGlyphFocalPlaneContourRepresentation>::New();
-		VtkOrientedGlyphFocalPlaneContourRepresentationWrap* obj = new VtkOrientedGlyphFocalPlaneContourRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkOrientedGlyphFocalPlaneContourRepresentationWrap* obj = new VtkOrientedGlyphFocalPlaneContourRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

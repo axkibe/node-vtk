@@ -54,6 +54,9 @@ void VtkStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetComputeVorticity", GetComputeVorticity);
+	Nan::SetPrototypeMethod(tpl, "getComputeVorticity", GetComputeVorticity);
+
 	Nan::SetPrototypeMethod(tpl, "GetInitialIntegrationStep", GetInitialIntegrationStep);
 	Nan::SetPrototypeMethod(tpl, "getInitialIntegrationStep", GetInitialIntegrationStep);
 
@@ -104,6 +107,9 @@ void VtkStreamTracerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetComputeVorticity", SetComputeVorticity);
+	Nan::SetPrototypeMethod(tpl, "setComputeVorticity", SetComputeVorticity);
 
 	Nan::SetPrototypeMethod(tpl, "SetInitialIntegrationStep", SetInitialIntegrationStep);
 	Nan::SetPrototypeMethod(tpl, "setInitialIntegrationStep", SetInitialIntegrationStep);
@@ -191,12 +197,16 @@ void VtkStreamTracerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStreamTracer> native = vtkSmartPointer<vtkStreamTracer>::New();
-		VtkStreamTracerWrap* obj = new VtkStreamTracerWrap(native);		obj->Wrap(info.This());
+		VtkStreamTracerWrap* obj = new VtkStreamTracerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -214,6 +224,20 @@ void VtkStreamTracerWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStreamTracerWrap::GetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamTracerWrap>(info.Holder());
+	vtkStreamTracer *native = (vtkStreamTracer *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComputeVorticity();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStreamTracerWrap::GetInitialIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -501,6 +525,25 @@ void VtkStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamTracerWrap::SetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamTracerWrap>(info.Holder());
+	vtkStreamTracer *native = (vtkStreamTracer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetComputeVorticity(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

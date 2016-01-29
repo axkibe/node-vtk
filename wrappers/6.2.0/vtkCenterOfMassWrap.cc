@@ -50,6 +50,9 @@ void VtkCenterOfMassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseScalarsAsWeights", GetUseScalarsAsWeights);
+	Nan::SetPrototypeMethod(tpl, "getUseScalarsAsWeights", GetUseScalarsAsWeights);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -61,6 +64,9 @@ void VtkCenterOfMassWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCenter", SetCenter);
 	Nan::SetPrototypeMethod(tpl, "setCenter", SetCenter);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseScalarsAsWeights", SetUseScalarsAsWeights);
+	Nan::SetPrototypeMethod(tpl, "setUseScalarsAsWeights", SetUseScalarsAsWeights);
 
 	ptpl.Reset( tpl );
 }
@@ -76,12 +82,16 @@ void VtkCenterOfMassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCenterOfMass> native = vtkSmartPointer<vtkCenterOfMass>::New();
-		VtkCenterOfMassWrap* obj = new VtkCenterOfMassWrap(native);		obj->Wrap(info.This());
+		VtkCenterOfMassWrap* obj = new VtkCenterOfMassWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -99,6 +109,20 @@ void VtkCenterOfMassWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkCenterOfMassWrap::GetUseScalarsAsWeights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenterOfMassWrap *wrapper = ObjectWrap::Unwrap<VtkCenterOfMassWrap>(info.Holder());
+	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseScalarsAsWeights();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCenterOfMassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -200,6 +224,25 @@ void VtkCenterOfMassWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCenterOfMassWrap::SetUseScalarsAsWeights(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenterOfMassWrap *wrapper = ObjectWrap::Unwrap<VtkCenterOfMassWrap>(info.Holder());
+	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseScalarsAsWeights(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -9,6 +9,7 @@
 #include "vtkContextItemWrap.h"
 #include "vtkChartWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkPlotWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkAnnotationLinkWrap.h"
@@ -65,6 +66,9 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAnnotationLink", GetAnnotationLink);
 	Nan::SetPrototypeMethod(tpl, "getAnnotationLink", GetAnnotationLink);
 
+	Nan::SetPrototypeMethod(tpl, "GetAutoSize", GetAutoSize);
+	Nan::SetPrototypeMethod(tpl, "getAutoSize", GetAutoSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxis", GetAxis);
 	Nan::SetPrototypeMethod(tpl, "getAxis", GetAxis);
 
@@ -83,11 +87,17 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLegend", GetLegend);
 	Nan::SetPrototypeMethod(tpl, "getLegend", GetLegend);
 
+	Nan::SetPrototypeMethod(tpl, "GetRenderEmpty", GetRenderEmpty);
+	Nan::SetPrototypeMethod(tpl, "getRenderEmpty", GetRenderEmpty);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectionMethod", GetSelectionMethod);
 	Nan::SetPrototypeMethod(tpl, "getSelectionMethod", GetSelectionMethod);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectionMode", GetSelectionMode);
 	Nan::SetPrototypeMethod(tpl, "getSelectionMode", GetSelectionMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetShowLegend", GetShowLegend);
+	Nan::SetPrototypeMethod(tpl, "getShowLegend", GetShowLegend);
 
 	Nan::SetPrototypeMethod(tpl, "GetTitleProperties", GetTitleProperties);
 	Nan::SetPrototypeMethod(tpl, "getTitleProperties", GetTitleProperties);
@@ -98,8 +108,14 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "RecalculateBounds", RecalculateBounds);
 	Nan::SetPrototypeMethod(tpl, "recalculateBounds", RecalculateBounds);
+
+	Nan::SetPrototypeMethod(tpl, "RemovePlotInstance", RemovePlotInstance);
+	Nan::SetPrototypeMethod(tpl, "removePlotInstance", RemovePlotInstance);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -109,6 +125,9 @@ void VtkChartWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLink", SetAnnotationLink);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLink", SetAnnotationLink);
+
+	Nan::SetPrototypeMethod(tpl, "SetAutoSize", SetAutoSize);
+	Nan::SetPrototypeMethod(tpl, "setAutoSize", SetAutoSize);
 
 	Nan::SetPrototypeMethod(tpl, "SetBackgroundBrush", SetBackgroundBrush);
 	Nan::SetPrototypeMethod(tpl, "setBackgroundBrush", SetBackgroundBrush);
@@ -137,6 +156,9 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoint2", SetPoint2);
 	Nan::SetPrototypeMethod(tpl, "setPoint2", SetPoint2);
 
+	Nan::SetPrototypeMethod(tpl, "SetRenderEmpty", SetRenderEmpty);
+	Nan::SetPrototypeMethod(tpl, "setRenderEmpty", SetRenderEmpty);
+
 	Nan::SetPrototypeMethod(tpl, "SetRightBorder", SetRightBorder);
 	Nan::SetPrototypeMethod(tpl, "setRightBorder", SetRightBorder);
 
@@ -145,6 +167,9 @@ void VtkChartWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSelectionMode", SetSelectionMode);
 	Nan::SetPrototypeMethod(tpl, "setSelectionMode", SetSelectionMode);
+
+	Nan::SetPrototypeMethod(tpl, "SetShowLegend", SetShowLegend);
+	Nan::SetPrototypeMethod(tpl, "setShowLegend", SetShowLegend);
 
 	Nan::SetPrototypeMethod(tpl, "SetTopBorder", SetTopBorder);
 	Nan::SetPrototypeMethod(tpl, "setTopBorder", SetTopBorder);
@@ -168,7 +193,10 @@ void VtkChartWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -258,6 +286,20 @@ void VtkChartWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkChartWrap::GetAutoSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAutoSize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkChartWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -385,6 +427,20 @@ void VtkChartWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartWrap::GetRenderEmpty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRenderEmpty();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkChartWrap::GetSelectionMethod(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
@@ -410,6 +466,20 @@ void VtkChartWrap::GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetSelectionMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkChartWrap::GetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShowLegend();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -481,6 +551,28 @@ void VtkChartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkChartWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
@@ -491,6 +583,28 @@ void VtkChartWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	native->RecalculateBounds();
+}
+
+void VtkChartWrap::RemovePlotInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlotWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPlotWrap *a0 = ObjectWrap::Unwrap<VtkPlotWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemovePlotInstance(
+			(vtkPlot *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkChartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -561,6 +675,25 @@ void VtkChartWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		native->SetAnnotationLink(
 			(vtkAnnotationLink *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartWrap::SetAutoSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAutoSize(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -767,6 +900,25 @@ void VtkChartWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkChartWrap::SetRenderEmpty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRenderEmpty(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkChartWrap::SetRightBorder(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
@@ -818,6 +970,25 @@ void VtkChartWrap::SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 		}
 		native->SetSelectionMode(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkChartWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShowLegend(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

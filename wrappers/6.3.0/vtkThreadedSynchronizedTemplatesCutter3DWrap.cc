@@ -97,12 +97,16 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::New(const Nan::FunctionCallba
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkThreadedSynchronizedTemplatesCutter3D> native = vtkSmartPointer<vtkThreadedSynchronizedTemplatesCutter3D>::New();
-		VtkThreadedSynchronizedTemplatesCutter3DWrap* obj = new VtkThreadedSynchronizedTemplatesCutter3DWrap(native);		obj->Wrap(info.This());
+		VtkThreadedSynchronizedTemplatesCutter3DWrap* obj = new VtkThreadedSynchronizedTemplatesCutter3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

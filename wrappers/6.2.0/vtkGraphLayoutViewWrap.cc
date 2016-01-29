@@ -88,6 +88,12 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColorEdges", GetColorEdges);
+	Nan::SetPrototypeMethod(tpl, "getColorEdges", GetColorEdges);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorVertices", GetColorVertices);
+	Nan::SetPrototypeMethod(tpl, "getColorVertices", GetColorVertices);
+
 	Nan::SetPrototypeMethod(tpl, "GetEdgeColorArrayName", GetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeColorArrayName", GetEdgeColorArrayName);
 
@@ -97,11 +103,23 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelFontSize", GetEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLabelFontSize", GetEdgeLabelFontSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeLabelVisibility", GetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeLabelVisibility", GetEdgeLabelVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLayoutStrategy", GetEdgeLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLayoutStrategy", GetEdgeLayoutStrategy);
 
 	Nan::SetPrototypeMethod(tpl, "GetEdgeLayoutStrategyName", GetEdgeLayoutStrategyName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeLayoutStrategyName", GetEdgeLayoutStrategyName);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeScalarBarVisibility", GetEdgeScalarBarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeSelection", GetEdgeSelection);
+	Nan::SetPrototypeMethod(tpl, "getEdgeSelection", GetEdgeSelection);
+
+	Nan::SetPrototypeMethod(tpl, "GetEdgeVisibility", GetEdgeVisibility);
+	Nan::SetPrototypeMethod(tpl, "getEdgeVisibility", GetEdgeVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetEnableEdgesByArray", GetEnableEdgesByArray);
 	Nan::SetPrototypeMethod(tpl, "getEnableEdgesByArray", GetEnableEdgesByArray);
@@ -118,14 +136,26 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGlyphType", GetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "getGlyphType", GetGlyphType);
 
+	Nan::SetPrototypeMethod(tpl, "GetHideEdgeLabelsOnInteraction", GetHideEdgeLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "getHideEdgeLabelsOnInteraction", GetHideEdgeLabelsOnInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "GetHideVertexLabelsOnInteraction", GetHideVertexLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "getHideVertexLabelsOnInteraction", GetHideVertexLabelsOnInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "GetIconArrayName", GetIconArrayName);
 	Nan::SetPrototypeMethod(tpl, "getIconArrayName", GetIconArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetIconVisibility", GetIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "getIconVisibility", GetIconVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategyName", GetLayoutStrategyName);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategyName", GetLayoutStrategyName);
+
+	Nan::SetPrototypeMethod(tpl, "GetScaledGlyphs", GetScaledGlyphs);
+	Nan::SetPrototypeMethod(tpl, "getScaledGlyphs", GetScaledGlyphs);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalingArrayName", GetScalingArrayName);
 	Nan::SetPrototypeMethod(tpl, "getScalingArrayName", GetScalingArrayName);
@@ -138,6 +168,12 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetVertexLabelFontSize", GetVertexLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "getVertexLabelFontSize", GetVertexLabelFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetVertexLabelVisibility", GetVertexLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVertexLabelVisibility", GetVertexLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "GetVertexScalarBarVisibility", GetVertexScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "getVertexScalarBarVisibility", GetVertexScalarBarVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "HideEdgeLabelsOnInteractionOff", HideEdgeLabelsOnInteractionOff);
 	Nan::SetPrototypeMethod(tpl, "hideEdgeLabelsOnInteractionOff", HideEdgeLabelsOnInteractionOff);
@@ -175,6 +211,12 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ScaledGlyphsOn", ScaledGlyphsOn);
 	Nan::SetPrototypeMethod(tpl, "scaledGlyphsOn", ScaledGlyphsOn);
 
+	Nan::SetPrototypeMethod(tpl, "SetColorEdges", SetColorEdges);
+	Nan::SetPrototypeMethod(tpl, "setColorEdges", SetColorEdges);
+
+	Nan::SetPrototypeMethod(tpl, "SetColorVertices", SetColorVertices);
+	Nan::SetPrototypeMethod(tpl, "setColorVertices", SetColorVertices);
+
 	Nan::SetPrototypeMethod(tpl, "SetEdgeColorArrayName", SetEdgeColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeColorArrayName", SetEdgeColorArrayName);
 
@@ -183,6 +225,9 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelFontSize", SetEdgeLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLabelFontSize", SetEdgeLabelFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeLabelVisibility", SetEdgeLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeLabelVisibility", SetEdgeLabelVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLayoutStrategy", SetEdgeLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLayoutStrategy", SetEdgeLayoutStrategy);
@@ -193,6 +238,21 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEdgeLayoutStrategyToPassThrough", SetEdgeLayoutStrategyToPassThrough);
 	Nan::SetPrototypeMethod(tpl, "setEdgeLayoutStrategyToPassThrough", SetEdgeLayoutStrategyToPassThrough);
 
+	Nan::SetPrototypeMethod(tpl, "SetEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeScalarBarVisibility", SetEdgeScalarBarVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeSelection", SetEdgeSelection);
+	Nan::SetPrototypeMethod(tpl, "setEdgeSelection", SetEdgeSelection);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeVisibility", SetEdgeVisibility);
+	Nan::SetPrototypeMethod(tpl, "setEdgeVisibility", SetEdgeVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetEnableEdgesByArray", SetEnableEdgesByArray);
+	Nan::SetPrototypeMethod(tpl, "setEnableEdgesByArray", SetEnableEdgesByArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetEnableVerticesByArray", SetEnableVerticesByArray);
+	Nan::SetPrototypeMethod(tpl, "setEnableVerticesByArray", SetEnableVerticesByArray);
+
 	Nan::SetPrototypeMethod(tpl, "SetEnabledEdgesArrayName", SetEnabledEdgesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEnabledEdgesArrayName", SetEnabledEdgesArrayName);
 
@@ -202,11 +262,20 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGlyphType", SetGlyphType);
 	Nan::SetPrototypeMethod(tpl, "setGlyphType", SetGlyphType);
 
+	Nan::SetPrototypeMethod(tpl, "SetHideEdgeLabelsOnInteraction", SetHideEdgeLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "setHideEdgeLabelsOnInteraction", SetHideEdgeLabelsOnInteraction);
+
+	Nan::SetPrototypeMethod(tpl, "SetHideVertexLabelsOnInteraction", SetHideVertexLabelsOnInteraction);
+	Nan::SetPrototypeMethod(tpl, "setHideVertexLabelsOnInteraction", SetHideVertexLabelsOnInteraction);
+
 	Nan::SetPrototypeMethod(tpl, "SetIconAlignment", SetIconAlignment);
 	Nan::SetPrototypeMethod(tpl, "setIconAlignment", SetIconAlignment);
 
 	Nan::SetPrototypeMethod(tpl, "SetIconArrayName", SetIconArrayName);
 	Nan::SetPrototypeMethod(tpl, "setIconArrayName", SetIconArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetIconVisibility", SetIconVisibility);
+	Nan::SetPrototypeMethod(tpl, "setIconVisibility", SetIconVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategy", SetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategy", SetLayoutStrategy);
@@ -247,6 +316,9 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategyToTree", SetLayoutStrategyToTree);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategyToTree", SetLayoutStrategyToTree);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaledGlyphs", SetScaledGlyphs);
+	Nan::SetPrototypeMethod(tpl, "setScaledGlyphs", SetScaledGlyphs);
+
 	Nan::SetPrototypeMethod(tpl, "SetScalingArrayName", SetScalingArrayName);
 	Nan::SetPrototypeMethod(tpl, "setScalingArrayName", SetScalingArrayName);
 
@@ -258,6 +330,12 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelFontSize", SetVertexLabelFontSize);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelFontSize", SetVertexLabelFontSize);
+
+	Nan::SetPrototypeMethod(tpl, "SetVertexLabelVisibility", SetVertexLabelVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVertexLabelVisibility", SetVertexLabelVisibility);
+
+	Nan::SetPrototypeMethod(tpl, "SetVertexScalarBarVisibility", SetVertexScalarBarVisibility);
+	Nan::SetPrototypeMethod(tpl, "setVertexScalarBarVisibility", SetVertexScalarBarVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "UpdateLayout", UpdateLayout);
 	Nan::SetPrototypeMethod(tpl, "updateLayout", UpdateLayout);
@@ -285,12 +363,16 @@ void VtkGraphLayoutViewWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGraphLayoutView> native = vtkSmartPointer<vtkGraphLayoutView>::New();
-		VtkGraphLayoutViewWrap* obj = new VtkGraphLayoutViewWrap(native);		obj->Wrap(info.This());
+		VtkGraphLayoutViewWrap* obj = new VtkGraphLayoutViewWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -466,6 +548,34 @@ void VtkGraphLayoutViewWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkGraphLayoutViewWrap::GetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorEdges();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetColorVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColorVertices();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGraphLayoutViewWrap::GetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -508,6 +618,20 @@ void VtkGraphLayoutViewWrap::GetEdgeLabelFontSize(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGraphLayoutViewWrap::GetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGraphLayoutViewWrap::GetEdgeLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -543,6 +667,48 @@ void VtkGraphLayoutViewWrap::GetEdgeLayoutStrategyName(const Nan::FunctionCallba
 	}
 	r = native->GetEdgeLayoutStrategyName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGraphLayoutViewWrap::GetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeScalarBarVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetEdgeSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeSelection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutViewWrap::GetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -615,6 +781,34 @@ void VtkGraphLayoutViewWrap::GetGlyphType(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGraphLayoutViewWrap::GetHideEdgeLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHideEdgeLabelsOnInteraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetHideVertexLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHideVertexLabelsOnInteraction();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGraphLayoutViewWrap::GetIconArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -627,6 +821,20 @@ void VtkGraphLayoutViewWrap::GetIconArrayName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetIconArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGraphLayoutViewWrap::GetIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIconVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutViewWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -664,6 +872,20 @@ void VtkGraphLayoutViewWrap::GetLayoutStrategyName(const Nan::FunctionCallbackIn
 	}
 	r = native->GetLayoutStrategyName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGraphLayoutViewWrap::GetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaledGlyphs();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGraphLayoutViewWrap::GetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -719,6 +941,34 @@ void VtkGraphLayoutViewWrap::GetVertexLabelFontSize(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetVertexLabelFontSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetVertexLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVertexLabelVisibility();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutViewWrap::GetVertexScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVertexScalarBarVisibility();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -908,6 +1158,44 @@ void VtkGraphLayoutViewWrap::ScaledGlyphsOn(const Nan::FunctionCallbackInfo<v8::
 	native->ScaledGlyphsOn();
 }
 
+void VtkGraphLayoutViewWrap::SetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorEdges(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetColorVertices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColorVertices(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphLayoutViewWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -961,6 +1249,25 @@ void VtkGraphLayoutViewWrap::SetEdgeLabelFontSize(const Nan::FunctionCallbackInf
 		}
 		native->SetEdgeLabelFontSize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeLabelVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -1024,6 +1331,101 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategyToPassThrough(const Nan::Funct
 	native->SetEdgeLayoutStrategyToPassThrough();
 }
 
+void VtkGraphLayoutViewWrap::SetEdgeScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeScalarBarVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetEdgeSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeSelection(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableEdgesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetEnableVerticesByArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEnableVerticesByArray(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphLayoutViewWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -1083,6 +1485,44 @@ void VtkGraphLayoutViewWrap::SetGlyphType(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGraphLayoutViewWrap::SetHideEdgeLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHideEdgeLabelsOnInteraction(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetHideVertexLabelsOnInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHideVertexLabelsOnInteraction(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphLayoutViewWrap::SetIconAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -1116,6 +1556,25 @@ void VtkGraphLayoutViewWrap::SetIconArrayName(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetIconArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetIconVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIconVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -1299,6 +1758,25 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToTree(const Nan::FunctionCallback
 	native->SetLayoutStrategyToTree();
 }
 
+void VtkGraphLayoutViewWrap::SetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaledGlyphs(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphLayoutViewWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
@@ -1372,6 +1850,44 @@ void VtkGraphLayoutViewWrap::SetVertexLabelFontSize(const Nan::FunctionCallbackI
 		}
 		native->SetVertexLabelFontSize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetVertexLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexLabelVisibility(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphLayoutViewWrap::SetVertexScalarBarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
+	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVertexScalarBarVisibility(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

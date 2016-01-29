@@ -60,6 +60,9 @@ void VtkAreaLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeRoutingPoints", GetEdgeRoutingPoints);
+	Nan::SetPrototypeMethod(tpl, "getEdgeRoutingPoints", GetEdgeRoutingPoints);
+
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
@@ -74,6 +77,9 @@ void VtkAreaLayoutWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetAreaArrayName", SetAreaArrayName);
 	Nan::SetPrototypeMethod(tpl, "setAreaArrayName", SetAreaArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetEdgeRoutingPoints", SetEdgeRoutingPoints);
+	Nan::SetPrototypeMethod(tpl, "setEdgeRoutingPoints", SetEdgeRoutingPoints);
 
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategy", SetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategy", SetLayoutStrategy);
@@ -95,12 +101,16 @@ void VtkAreaLayoutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAreaLayout> native = vtkSmartPointer<vtkAreaLayout>::New();
-		VtkAreaLayoutWrap* obj = new VtkAreaLayoutWrap(native);		obj->Wrap(info.This());
+		VtkAreaLayoutWrap* obj = new VtkAreaLayoutWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -156,6 +166,20 @@ void VtkAreaLayoutWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAreaLayoutWrap::GetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
+	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEdgeRoutingPoints();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAreaLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -271,6 +295,25 @@ void VtkAreaLayoutWrap::SetAreaArrayName(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetAreaArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAreaLayoutWrap::SetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
+	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEdgeRoutingPoints(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -89,12 +89,16 @@ void VtkFixedSizeHandleRepresentation3DWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFixedSizeHandleRepresentation3D> native = vtkSmartPointer<vtkFixedSizeHandleRepresentation3D>::New();
-		VtkFixedSizeHandleRepresentation3DWrap* obj = new VtkFixedSizeHandleRepresentation3DWrap(native);		obj->Wrap(info.This());
+		VtkFixedSizeHandleRepresentation3DWrap* obj = new VtkFixedSizeHandleRepresentation3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

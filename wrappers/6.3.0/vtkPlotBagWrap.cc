@@ -9,6 +9,7 @@
 #include "vtkPlotPointsWrap.h"
 #include "vtkPlotBagWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 #include "vtkStringArrayWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkPenWrap.h"
@@ -50,6 +51,9 @@ void VtkPlotBagWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPlotBagWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBagVisible", GetBagVisible);
+	Nan::SetPrototypeMethod(tpl, "getBagVisible", GetBagVisible);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,8 +72,14 @@ void VtkPlotBagWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetBagVisible", SetBagVisible);
+	Nan::SetPrototypeMethod(tpl, "setBagVisible", SetBagVisible);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
@@ -97,15 +107,33 @@ void VtkPlotBagWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlotBag> native = vtkSmartPointer<vtkPlotBag>::New();
-		VtkPlotBagWrap* obj = new VtkPlotBagWrap(native);		obj->Wrap(info.This());
+		VtkPlotBagWrap* obj = new VtkPlotBagWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkPlotBagWrap::GetBagVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBagWrap>(info.Holder());
+	vtkPlotBag *native = (vtkPlotBag *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBagVisible();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotBagWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -236,6 +264,28 @@ void VtkPlotBagWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkPlotBagWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBagWrap>(info.Holder());
+	vtkPlotBag *native = (vtkPlotBag *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkPlotBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBagWrap>(info.Holder());
@@ -262,6 +312,25 @@ void VtkPlotBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotBagWrap::SetBagVisible(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBagWrap>(info.Holder());
+	vtkPlotBag *native = (vtkPlotBag *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBagVisible(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

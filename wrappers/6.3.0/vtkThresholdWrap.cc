@@ -184,12 +184,16 @@ void VtkThresholdWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkThreshold> native = vtkSmartPointer<vtkThreshold>::New();
-		VtkThresholdWrap* obj = new VtkThresholdWrap(native);		obj->Wrap(info.This());
+		VtkThresholdWrap* obj = new VtkThresholdWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

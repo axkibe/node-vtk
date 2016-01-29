@@ -76,8 +76,14 @@ void VtkGeoTreeNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetWhichChildAreYou", GetWhichChildAreYou);
 	Nan::SetPrototypeMethod(tpl, "getWhichChildAreYou", GetWhichChildAreYou);
 
+	Nan::SetPrototypeMethod(tpl, "HasData", HasData);
+	Nan::SetPrototypeMethod(tpl, "hasData", HasData);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsDescendantOf", IsDescendantOf);
+	Nan::SetPrototypeMethod(tpl, "isDescendantOf", IsDescendantOf);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -123,12 +129,16 @@ void VtkGeoTreeNodeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoTreeNode> native = vtkSmartPointer<vtkGeoTreeNode>::New();
-		VtkGeoTreeNodeWrap* obj = new VtkGeoTreeNodeWrap(native);		obj->Wrap(info.This());
+		VtkGeoTreeNodeWrap* obj = new VtkGeoTreeNodeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -321,6 +331,20 @@ void VtkGeoTreeNodeWrap::GetWhichChildAreYou(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGeoTreeNodeWrap::HasData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
+	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasData();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGeoTreeNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
@@ -336,6 +360,28 @@ void VtkGeoTreeNodeWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoTreeNodeWrap::IsDescendantOf(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info.Holder());
+	vtkGeoTreeNode *native = (vtkGeoTreeNode *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsDescendantOf(
+			(vtkGeoTreeNode *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

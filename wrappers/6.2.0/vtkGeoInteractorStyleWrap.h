@@ -32,6 +32,7 @@ class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void Dolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeoCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LockHeadingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LockHeadingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +55,7 @@ class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

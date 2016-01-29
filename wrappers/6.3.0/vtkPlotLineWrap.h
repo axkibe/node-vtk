@@ -30,11 +30,14 @@ class VtkPlotLineWrap : public VtkPlotPointsWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PolyLineOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PolyLineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

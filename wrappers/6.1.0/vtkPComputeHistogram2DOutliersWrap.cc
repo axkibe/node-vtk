@@ -80,12 +80,16 @@ void VtkPComputeHistogram2DOutliersWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPComputeHistogram2DOutliers> native = vtkSmartPointer<vtkPComputeHistogram2DOutliers>::New();
-		VtkPComputeHistogram2DOutliersWrap* obj = new VtkPComputeHistogram2DOutliersWrap(native);		obj->Wrap(info.This());
+		VtkPComputeHistogram2DOutliersWrap* obj = new VtkPComputeHistogram2DOutliersWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -53,6 +53,9 @@ void VtkVertexListIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGraph", GetGraph);
 	Nan::SetPrototypeMethod(tpl, "getGraph", GetGraph);
 
+	Nan::SetPrototypeMethod(tpl, "HasNext", HasNext);
+	Nan::SetPrototypeMethod(tpl, "hasNext", HasNext);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -79,12 +82,16 @@ void VtkVertexListIteratorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVertexListIterator> native = vtkSmartPointer<vtkVertexListIterator>::New();
-		VtkVertexListIteratorWrap* obj = new VtkVertexListIteratorWrap(native);		obj->Wrap(info.This());
+		VtkVertexListIteratorWrap* obj = new VtkVertexListIteratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -125,6 +132,20 @@ void VtkVertexListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVertexListIteratorWrap::HasNext(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVertexListIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkVertexListIteratorWrap>(info.Holder());
+	vtkVertexListIterator *native = (vtkVertexListIterator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasNext();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVertexListIteratorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -148,12 +148,16 @@ void VtkOrientedGlyphContourRepresentationWrap::New(const Nan::FunctionCallbackI
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOrientedGlyphContourRepresentation> native = vtkSmartPointer<vtkOrientedGlyphContourRepresentation>::New();
-		VtkOrientedGlyphContourRepresentationWrap* obj = new VtkOrientedGlyphContourRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkOrientedGlyphContourRepresentationWrap* obj = new VtkOrientedGlyphContourRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

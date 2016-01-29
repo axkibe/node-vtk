@@ -33,6 +33,8 @@ class VtkExpandSelectedGraphWrap : public VtkSelectionAlgorithmWrap
 		static void GetBFSDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIncludeShortestPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeShortestPathsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeShortestPathsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +43,8 @@ class VtkExpandSelectedGraphWrap : public VtkSelectionAlgorithmWrap
 		static void SetBFSDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIncludeShortestPaths(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDomainOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDomainOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

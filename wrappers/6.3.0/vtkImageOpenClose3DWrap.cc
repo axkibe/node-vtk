@@ -104,12 +104,16 @@ void VtkImageOpenClose3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageOpenClose3D> native = vtkSmartPointer<vtkImageOpenClose3D>::New();
-		VtkImageOpenClose3DWrap* obj = new VtkImageOpenClose3DWrap(native);		obj->Wrap(info.This());
+		VtkImageOpenClose3DWrap* obj = new VtkImageOpenClose3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -73,12 +73,16 @@ void VtkImageMagnitudeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageMagnitude> native = vtkSmartPointer<vtkImageMagnitude>::New();
-		VtkImageMagnitudeWrap* obj = new VtkImageMagnitudeWrap(native);		obj->Wrap(info.This());
+		VtkImageMagnitudeWrap* obj = new VtkImageMagnitudeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

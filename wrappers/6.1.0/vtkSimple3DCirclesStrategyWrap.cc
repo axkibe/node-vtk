@@ -161,12 +161,16 @@ void VtkSimple3DCirclesStrategyWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSimple3DCirclesStrategy> native = vtkSmartPointer<vtkSimple3DCirclesStrategy>::New();
-		VtkSimple3DCirclesStrategyWrap* obj = new VtkSimple3DCirclesStrategyWrap(native);		obj->Wrap(info.This());
+		VtkSimple3DCirclesStrategyWrap* obj = new VtkSimple3DCirclesStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

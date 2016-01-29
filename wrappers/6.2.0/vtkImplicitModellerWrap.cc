@@ -233,12 +233,16 @@ void VtkImplicitModellerWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImplicitModeller> native = vtkSmartPointer<vtkImplicitModeller>::New();
-		VtkImplicitModellerWrap* obj = new VtkImplicitModellerWrap(native);		obj->Wrap(info.This());
+		VtkImplicitModellerWrap* obj = new VtkImplicitModellerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

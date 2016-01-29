@@ -54,6 +54,7 @@ class VtkVolumePropertyWrap : public VtkObjectWrap
 		static void GetSpecular(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecularPower(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStoredGradientOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasGradientOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IndependentComponentsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IndependentComponentsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

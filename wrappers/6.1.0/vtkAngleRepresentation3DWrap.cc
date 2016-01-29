@@ -107,12 +107,16 @@ void VtkAngleRepresentation3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAngleRepresentation3D> native = vtkSmartPointer<vtkAngleRepresentation3D>::New();
-		VtkAngleRepresentation3DWrap* obj = new VtkAngleRepresentation3DWrap(native);		obj->Wrap(info.This());
+		VtkAngleRepresentation3DWrap* obj = new VtkAngleRepresentation3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

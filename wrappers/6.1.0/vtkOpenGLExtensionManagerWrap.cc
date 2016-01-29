@@ -47,6 +47,42 @@ void VtkOpenGLExtensionManagerWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkOpenGLExtensionManagerWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "DriverGLRendererHas", DriverGLRendererHas);
+	Nan::SetPrototypeMethod(tpl, "driverGLRendererHas", DriverGLRendererHas);
+
+	Nan::SetPrototypeMethod(tpl, "DriverGLRendererHasToken", DriverGLRendererHasToken);
+	Nan::SetPrototypeMethod(tpl, "driverGLRendererHasToken", DriverGLRendererHasToken);
+
+	Nan::SetPrototypeMethod(tpl, "DriverGLRendererIs", DriverGLRendererIs);
+	Nan::SetPrototypeMethod(tpl, "driverGLRendererIs", DriverGLRendererIs);
+
+	Nan::SetPrototypeMethod(tpl, "DriverGLRendererIsOSMesa", DriverGLRendererIsOSMesa);
+	Nan::SetPrototypeMethod(tpl, "driverGLRendererIsOSMesa", DriverGLRendererIsOSMesa);
+
+	Nan::SetPrototypeMethod(tpl, "DriverGLVersionIs", DriverGLVersionIs);
+	Nan::SetPrototypeMethod(tpl, "driverGLVersionIs", DriverGLVersionIs);
+
+	Nan::SetPrototypeMethod(tpl, "DriverIsATI", DriverIsATI);
+	Nan::SetPrototypeMethod(tpl, "driverIsATI", DriverIsATI);
+
+	Nan::SetPrototypeMethod(tpl, "DriverIsIntel", DriverIsIntel);
+	Nan::SetPrototypeMethod(tpl, "driverIsIntel", DriverIsIntel);
+
+	Nan::SetPrototypeMethod(tpl, "DriverIsMesa", DriverIsMesa);
+	Nan::SetPrototypeMethod(tpl, "driverIsMesa", DriverIsMesa);
+
+	Nan::SetPrototypeMethod(tpl, "DriverIsMicrosoft", DriverIsMicrosoft);
+	Nan::SetPrototypeMethod(tpl, "driverIsMicrosoft", DriverIsMicrosoft);
+
+	Nan::SetPrototypeMethod(tpl, "DriverIsNvidia", DriverIsNvidia);
+	Nan::SetPrototypeMethod(tpl, "driverIsNvidia", DriverIsNvidia);
+
+	Nan::SetPrototypeMethod(tpl, "DriverVersionAtLeast", DriverVersionAtLeast);
+	Nan::SetPrototypeMethod(tpl, "driverVersionAtLeast", DriverVersionAtLeast);
+
+	Nan::SetPrototypeMethod(tpl, "DriverVersionIs", DriverVersionIs);
+	Nan::SetPrototypeMethod(tpl, "driverVersionIs", DriverVersionIs);
+
 	Nan::SetPrototypeMethod(tpl, "ExtensionSupported", ExtensionSupported);
 	Nan::SetPrototypeMethod(tpl, "extensionSupported", ExtensionSupported);
 
@@ -83,6 +119,9 @@ void VtkOpenGLExtensionManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetExtensionsString", GetExtensionsString);
 	Nan::SetPrototypeMethod(tpl, "getExtensionsString", GetExtensionsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetIgnoreDriverBugs", GetIgnoreDriverBugs);
+	Nan::SetPrototypeMethod(tpl, "getIgnoreDriverBugs", GetIgnoreDriverBugs);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
@@ -113,6 +152,9 @@ void VtkOpenGLExtensionManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetIgnoreDriverBugs", SetIgnoreDriverBugs);
+	Nan::SetPrototypeMethod(tpl, "setIgnoreDriverBugs", SetIgnoreDriverBugs);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderWindow", SetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "setRenderWindow", SetRenderWindow);
 
@@ -133,15 +175,314 @@ void VtkOpenGLExtensionManagerWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLExtensionManager> native = vtkSmartPointer<vtkOpenGLExtensionManager>::New();
-		VtkOpenGLExtensionManagerWrap* obj = new VtkOpenGLExtensionManagerWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLExtensionManagerWrap* obj = new VtkOpenGLExtensionManagerWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverGLRendererHas(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DriverGLRendererHas(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverGLRendererHasToken(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DriverGLRendererHasToken(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverGLRendererIs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DriverGLRendererIs(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverGLRendererIsOSMesa(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverGLRendererIsOSMesa();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverGLVersionIs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->DriverGLVersionIs(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DriverGLVersionIs(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverIsATI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverIsATI();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverIsIntel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverIsIntel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverIsMesa(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverIsMesa();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverIsMicrosoft(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverIsMicrosoft();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverIsNvidia(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->DriverIsNvidia();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverVersionAtLeast(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->DriverVersionAtLeast(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DriverVersionAtLeast(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DriverVersionAtLeast(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::DriverVersionIs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->DriverVersionIs(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->DriverVersionIs(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->DriverVersionIs(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLExtensionManagerWrap::ExtensionSupported(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -318,6 +659,28 @@ void VtkOpenGLExtensionManagerWrap::GetExtensionsString(const Nan::FunctionCallb
 	}
 	r = native->GetExtensionsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkOpenGLExtensionManagerWrap::GetIgnoreDriverBugs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetIgnoreDriverBugs(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLExtensionManagerWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -520,6 +883,25 @@ void VtkOpenGLExtensionManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLExtensionManagerWrap::SetIgnoreDriverBugs(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
+	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetIgnoreDriverBugs(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

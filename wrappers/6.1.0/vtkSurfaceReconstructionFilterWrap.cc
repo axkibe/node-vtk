@@ -85,12 +85,16 @@ void VtkSurfaceReconstructionFilterWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSurfaceReconstructionFilter> native = vtkSmartPointer<vtkSurfaceReconstructionFilter>::New();
-		VtkSurfaceReconstructionFilterWrap* obj = new VtkSurfaceReconstructionFilterWrap(native);		obj->Wrap(info.This());
+		VtkSurfaceReconstructionFilterWrap* obj = new VtkSurfaceReconstructionFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

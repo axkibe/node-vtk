@@ -9,6 +9,7 @@
 #include "vtkPlotPointsWrap.h"
 #include "vtkPlotLineWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
 
 using namespace v8;
 
@@ -50,11 +51,17 @@ void VtkPlotLineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetPolyLine", GetPolyLine);
+	Nan::SetPrototypeMethod(tpl, "getPolyLine", GetPolyLine);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
 
 	Nan::SetPrototypeMethod(tpl, "PolyLineOff", PolyLineOff);
 	Nan::SetPrototypeMethod(tpl, "polyLineOff", PolyLineOff);
@@ -64,6 +71,9 @@ void VtkPlotLineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetPolyLine", SetPolyLine);
+	Nan::SetPrototypeMethod(tpl, "setPolyLine", SetPolyLine);
 
 	ptpl.Reset( tpl );
 }
@@ -79,12 +89,16 @@ void VtkPlotLineWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlotLine> native = vtkSmartPointer<vtkPlotLine>::New();
-		VtkPlotLineWrap* obj = new VtkPlotLineWrap(native);		obj->Wrap(info.This());
+		VtkPlotLineWrap* obj = new VtkPlotLineWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -102,6 +116,20 @@ void VtkPlotLineWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPlotLineWrap::GetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
+	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPolyLine();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPlotLineWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -147,6 +175,28 @@ void VtkPlotLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotLineWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
+	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPlotLineWrap::PolyLineOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,6 +249,25 @@ void VtkPlotLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPlotLineWrap::SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
+	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPolyLine(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

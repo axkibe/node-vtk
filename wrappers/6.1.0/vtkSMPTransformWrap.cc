@@ -87,12 +87,16 @@ void VtkSMPTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSMPTransform> native = vtkSmartPointer<vtkSMPTransform>::New();
-		VtkSMPTransformWrap* obj = new VtkSMPTransformWrap(native);		obj->Wrap(info.This());
+		VtkSMPTransformWrap* obj = new VtkSMPTransformWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

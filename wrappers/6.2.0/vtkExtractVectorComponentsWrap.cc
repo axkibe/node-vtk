@@ -98,12 +98,16 @@ void VtkExtractVectorComponentsWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExtractVectorComponents> native = vtkSmartPointer<vtkExtractVectorComponents>::New();
-		VtkExtractVectorComponentsWrap* obj = new VtkExtractVectorComponentsWrap(native);		obj->Wrap(info.This());
+		VtkExtractVectorComponentsWrap* obj = new VtkExtractVectorComponentsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

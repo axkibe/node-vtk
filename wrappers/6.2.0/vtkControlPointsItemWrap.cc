@@ -9,6 +9,8 @@
 #include "vtkPlotWrap.h"
 #include "vtkControlPointsItemWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkContext2DWrap.h"
+#include "vtkIdTypeArrayWrap.h"
 #include "vtkPenWrap.h"
 #include "vtkBrushWrap.h"
 
@@ -55,6 +57,21 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetControlPointsIds", GetControlPointsIds);
+	Nan::SetPrototypeMethod(tpl, "getControlPointsIds", GetControlPointsIds);
+
+	Nan::SetPrototypeMethod(tpl, "GetEndPointsMovable", GetEndPointsMovable);
+	Nan::SetPrototypeMethod(tpl, "getEndPointsMovable", GetEndPointsMovable);
+
+	Nan::SetPrototypeMethod(tpl, "GetEndPointsRemovable", GetEndPointsRemovable);
+	Nan::SetPrototypeMethod(tpl, "getEndPointsRemovable", GetEndPointsRemovable);
+
+	Nan::SetPrototypeMethod(tpl, "GetEndPointsXMovable", GetEndPointsXMovable);
+	Nan::SetPrototypeMethod(tpl, "getEndPointsXMovable", GetEndPointsXMovable);
+
+	Nan::SetPrototypeMethod(tpl, "GetEndPointsYMovable", GetEndPointsYMovable);
+	Nan::SetPrototypeMethod(tpl, "getEndPointsYMovable", GetEndPointsYMovable);
+
 	Nan::SetPrototypeMethod(tpl, "GetLabelFormat", GetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getLabelFormat", GetLabelFormat);
 
@@ -64,11 +81,23 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelectedPointPen", GetSelectedPointPen);
 	Nan::SetPrototypeMethod(tpl, "getSelectedPointPen", GetSelectedPointPen);
 
+	Nan::SetPrototypeMethod(tpl, "GetShowLabels", GetShowLabels);
+	Nan::SetPrototypeMethod(tpl, "getShowLabels", GetShowLabels);
+
+	Nan::SetPrototypeMethod(tpl, "GetStrokeMode", GetStrokeMode);
+	Nan::SetPrototypeMethod(tpl, "getStrokeMode", GetStrokeMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetSwitchPointsMode", GetSwitchPointsMode);
+	Nan::SetPrototypeMethod(tpl, "getSwitchPointsMode", GetSwitchPointsMode);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveCurrentPoint", RemoveCurrentPoint);
 	Nan::SetPrototypeMethod(tpl, "removeCurrentPoint", RemoveCurrentPoint);
@@ -82,8 +111,23 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SelectAllPoints", SelectAllPoints);
 	Nan::SetPrototypeMethod(tpl, "selectAllPoints", SelectAllPoints);
 
+	Nan::SetPrototypeMethod(tpl, "SetEndPointsRemovable", SetEndPointsRemovable);
+	Nan::SetPrototypeMethod(tpl, "setEndPointsRemovable", SetEndPointsRemovable);
+
+	Nan::SetPrototypeMethod(tpl, "SetEndPointsXMovable", SetEndPointsXMovable);
+	Nan::SetPrototypeMethod(tpl, "setEndPointsXMovable", SetEndPointsXMovable);
+
+	Nan::SetPrototypeMethod(tpl, "SetEndPointsYMovable", SetEndPointsYMovable);
+	Nan::SetPrototypeMethod(tpl, "setEndPointsYMovable", SetEndPointsYMovable);
+
 	Nan::SetPrototypeMethod(tpl, "SetLabelFormat", SetLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "setLabelFormat", SetLabelFormat);
+
+	Nan::SetPrototypeMethod(tpl, "SetShowLabels", SetShowLabels);
+	Nan::SetPrototypeMethod(tpl, "setShowLabels", SetShowLabels);
+
+	Nan::SetPrototypeMethod(tpl, "SetSwitchPointsMode", SetSwitchPointsMode);
+	Nan::SetPrototypeMethod(tpl, "setSwitchPointsMode", SetSwitchPointsMode);
 
 	Nan::SetPrototypeMethod(tpl, "SetUserBounds", SetUserBounds);
 	Nan::SetPrototypeMethod(tpl, "setUserBounds", SetUserBounds);
@@ -110,7 +154,10 @@ void VtkControlPointsItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -140,6 +187,86 @@ void VtkControlPointsItemWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkControlPointsItemWrap::GetControlPointsIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetControlPointsIds(
+				(vtkIdTypeArray *) a0->native.GetPointer(),
+				info[1]->BooleanValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::GetEndPointsMovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEndPointsMovable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkControlPointsItemWrap::GetEndPointsRemovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEndPointsRemovable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkControlPointsItemWrap::GetEndPointsXMovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEndPointsXMovable();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkControlPointsItemWrap::GetEndPointsYMovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEndPointsYMovable();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkControlPointsItemWrap::GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +329,48 @@ void VtkControlPointsItemWrap::GetSelectedPointPen(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkControlPointsItemWrap::GetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShowLabels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkControlPointsItemWrap::GetStrokeMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStrokeMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkControlPointsItemWrap::GetSwitchPointsMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSwitchPointsMode();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkControlPointsItemWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
@@ -245,6 +414,28 @@ void VtkControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkControlPointsItemWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkControlPointsItemWrap::RemoveCurrentPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -314,6 +505,63 @@ void VtkControlPointsItemWrap::SelectAllPoints(const Nan::FunctionCallbackInfo<v
 	native->SelectAllPoints();
 }
 
+void VtkControlPointsItemWrap::SetEndPointsRemovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEndPointsRemovable(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::SetEndPointsXMovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEndPointsXMovable(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::SetEndPointsYMovable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetEndPointsYMovable(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkControlPointsItemWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
@@ -328,6 +576,44 @@ void VtkControlPointsItemWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetLabelFormat(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::SetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetShowLabels(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkControlPointsItemWrap::SetSwitchPointsMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkControlPointsItemWrap *wrapper = ObjectWrap::Unwrap<VtkControlPointsItemWrap>(info.Holder());
+	vtkControlPointsItem *native = (vtkControlPointsItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSwitchPointsMode(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

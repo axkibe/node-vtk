@@ -33,6 +33,9 @@ class VtkAMRDataSetCacheWrap : public VtkObjectWrap
 		static void GetAMRBlockCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAMRBlockPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAMRBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAMRBlockCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasAMRBlockPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertAMRBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertAMRBlockCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InsertAMRBlockPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);

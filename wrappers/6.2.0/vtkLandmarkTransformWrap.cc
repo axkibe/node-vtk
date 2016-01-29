@@ -111,12 +111,16 @@ void VtkLandmarkTransformWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLandmarkTransform> native = vtkSmartPointer<vtkLandmarkTransform>::New();
-		VtkLandmarkTransformWrap* obj = new VtkLandmarkTransformWrap(native);		obj->Wrap(info.This());
+		VtkLandmarkTransformWrap* obj = new VtkLandmarkTransformWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

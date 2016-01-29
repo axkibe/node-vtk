@@ -30,12 +30,16 @@ class VtkProjectSphereFilterWrap : public VtkPointSetAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKeepPolePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTranslateZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeepPolePointsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void KeepPolePointsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetKeepPolePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTranslateZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslateZOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslateZOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

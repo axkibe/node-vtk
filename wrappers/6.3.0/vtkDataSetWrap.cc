@@ -109,6 +109,18 @@ void VtkDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointGhostArray", GetPointGhostArray);
 	Nan::SetPrototypeMethod(tpl, "getPointGhostArray", GetPointGhostArray);
 
+	Nan::SetPrototypeMethod(tpl, "HasAnyBlankCells", HasAnyBlankCells);
+	Nan::SetPrototypeMethod(tpl, "hasAnyBlankCells", HasAnyBlankCells);
+
+	Nan::SetPrototypeMethod(tpl, "HasAnyBlankPoints", HasAnyBlankPoints);
+	Nan::SetPrototypeMethod(tpl, "hasAnyBlankPoints", HasAnyBlankPoints);
+
+	Nan::SetPrototypeMethod(tpl, "HasAnyGhostCells", HasAnyGhostCells);
+	Nan::SetPrototypeMethod(tpl, "hasAnyGhostCells", HasAnyGhostCells);
+
+	Nan::SetPrototypeMethod(tpl, "HasAnyGhostPoints", HasAnyGhostPoints);
+	Nan::SetPrototypeMethod(tpl, "hasAnyGhostPoints", HasAnyGhostPoints);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -155,7 +167,10 @@ void VtkDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -544,6 +559,62 @@ void VtkDataSetWrap::GetPointGhostArray(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataSetWrap::HasAnyBlankCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyBlankCells();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataSetWrap::HasAnyBlankPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyBlankPoints();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataSetWrap::HasAnyGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyGhostCells();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataSetWrap::HasAnyGhostPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetWrap>(info.Holder());
+	vtkDataSet *native = (vtkDataSet *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasAnyGhostPoints();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataSetWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -56,6 +56,12 @@ void VtkIconGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIconScaling", GetIconScaling);
 	Nan::SetPrototypeMethod(tpl, "getIconScaling", GetIconScaling);
 
+	Nan::SetPrototypeMethod(tpl, "GetPassScalars", GetPassScalars);
+	Nan::SetPrototypeMethod(tpl, "getPassScalars", GetPassScalars);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseIconSize", GetUseIconSize);
+	Nan::SetPrototypeMethod(tpl, "getUseIconSize", GetUseIconSize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -122,6 +128,12 @@ void VtkIconGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOffset", SetOffset);
 	Nan::SetPrototypeMethod(tpl, "setOffset", SetOffset);
 
+	Nan::SetPrototypeMethod(tpl, "SetPassScalars", SetPassScalars);
+	Nan::SetPrototypeMethod(tpl, "setPassScalars", SetPassScalars);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseIconSize", SetUseIconSize);
+	Nan::SetPrototypeMethod(tpl, "setUseIconSize", SetUseIconSize);
+
 	Nan::SetPrototypeMethod(tpl, "UseIconSizeOff", UseIconSizeOff);
 	Nan::SetPrototypeMethod(tpl, "useIconSizeOff", UseIconSizeOff);
 
@@ -142,12 +154,16 @@ void VtkIconGlyphFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkIconGlyphFilter> native = vtkSmartPointer<vtkIconGlyphFilter>::New();
-		VtkIconGlyphFilterWrap* obj = new VtkIconGlyphFilterWrap(native);		obj->Wrap(info.This());
+		VtkIconGlyphFilterWrap* obj = new VtkIconGlyphFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -192,6 +208,34 @@ void VtkIconGlyphFilterWrap::GetIconScaling(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetIconScaling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIconGlyphFilterWrap::GetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPassScalars();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIconGlyphFilterWrap::GetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseIconSize();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -553,6 +597,44 @@ void VtkIconGlyphFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIconGlyphFilterWrap::SetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPassScalars(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkIconGlyphFilterWrap::SetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseIconSize(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

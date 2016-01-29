@@ -73,12 +73,16 @@ void VtkImageDataToPointSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDataToPointSet> native = vtkSmartPointer<vtkImageDataToPointSet>::New();
-		VtkImageDataToPointSetWrap* obj = new VtkImageDataToPointSetWrap(native);		obj->Wrap(info.This());
+		VtkImageDataToPointSetWrap* obj = new VtkImageDataToPointSetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

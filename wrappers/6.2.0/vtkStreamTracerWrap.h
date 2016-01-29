@@ -30,6 +30,7 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntegrationDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntegrationDirectionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +48,7 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInitialIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrationDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrationDirectionToBackward(const Nan::FunctionCallbackInfo<v8::Value>& info);

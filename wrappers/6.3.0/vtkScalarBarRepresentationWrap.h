@@ -31,6 +31,7 @@ class VtkScalarBarRepresentationWrap : public VtkBorderRepresentationWrap
 
 		static void BuildRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoOrient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarBarActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,6 +44,7 @@ class VtkScalarBarRepresentationWrap : public VtkBorderRepresentationWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAutoOrient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarBarActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

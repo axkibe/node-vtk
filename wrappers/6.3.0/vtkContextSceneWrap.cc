@@ -8,6 +8,8 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkContextSceneWrap.h"
+#include "vtkContext2DWrap.h"
+#include "vtkAbstractContextItemWrap.h"
 #include "vtkAnnotationLinkWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkAbstractContextBufferIdWrap.h"
@@ -62,6 +64,12 @@ void VtkContextSceneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirty", GetDirty);
+	Nan::SetPrototypeMethod(tpl, "getDirty", GetDirty);
+
+	Nan::SetPrototypeMethod(tpl, "GetScaleTiles", GetScaleTiles);
+	Nan::SetPrototypeMethod(tpl, "getScaleTiles", GetScaleTiles);
+
 	Nan::SetPrototypeMethod(tpl, "GetSceneHeight", GetSceneHeight);
 	Nan::SetPrototypeMethod(tpl, "getSceneHeight", GetSceneHeight);
 
@@ -71,11 +79,17 @@ void VtkContextSceneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTransform", GetTransform);
 	Nan::SetPrototypeMethod(tpl, "getTransform", GetTransform);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseBufferId", GetUseBufferId);
+	Nan::SetPrototypeMethod(tpl, "getUseBufferId", GetUseBufferId);
+
 	Nan::SetPrototypeMethod(tpl, "GetViewHeight", GetViewHeight);
 	Nan::SetPrototypeMethod(tpl, "getViewHeight", GetViewHeight);
 
 	Nan::SetPrototypeMethod(tpl, "GetViewWidth", GetViewWidth);
 	Nan::SetPrototypeMethod(tpl, "getViewWidth", GetViewWidth);
+
+	Nan::SetPrototypeMethod(tpl, "HasTransform", HasTransform);
+	Nan::SetPrototypeMethod(tpl, "hasTransform", HasTransform);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -83,8 +97,14 @@ void VtkContextSceneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "Paint", Paint);
+	Nan::SetPrototypeMethod(tpl, "paint", Paint);
+
 	Nan::SetPrototypeMethod(tpl, "ReleaseGraphicsResources", ReleaseGraphicsResources);
 	Nan::SetPrototypeMethod(tpl, "releaseGraphicsResources", ReleaseGraphicsResources);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveItem", RemoveItem);
+	Nan::SetPrototypeMethod(tpl, "removeItem", RemoveItem);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -98,14 +118,23 @@ void VtkContextSceneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAnnotationLink", SetAnnotationLink);
 	Nan::SetPrototypeMethod(tpl, "setAnnotationLink", SetAnnotationLink);
 
+	Nan::SetPrototypeMethod(tpl, "SetDirty", SetDirty);
+	Nan::SetPrototypeMethod(tpl, "setDirty", SetDirty);
+
 	Nan::SetPrototypeMethod(tpl, "SetGeometry", SetGeometry);
 	Nan::SetPrototypeMethod(tpl, "setGeometry", SetGeometry);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaleTiles", SetScaleTiles);
+	Nan::SetPrototypeMethod(tpl, "setScaleTiles", SetScaleTiles);
+
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseBufferId", SetUseBufferId);
+	Nan::SetPrototypeMethod(tpl, "setUseBufferId", SetUseBufferId);
 
 	ptpl.Reset( tpl );
 }
@@ -121,12 +150,16 @@ void VtkContextSceneWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkContextScene> native = vtkSmartPointer<vtkContextScene>::New();
-		VtkContextSceneWrap* obj = new VtkContextSceneWrap(native);		obj->Wrap(info.This());
+		VtkContextSceneWrap* obj = new VtkContextSceneWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -204,6 +237,34 @@ void VtkContextSceneWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkContextSceneWrap::GetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirty();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextSceneWrap::GetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaleTiles();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkContextSceneWrap::GetSceneHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
@@ -255,6 +316,20 @@ void VtkContextSceneWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkContextSceneWrap::GetUseBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseBufferId();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkContextSceneWrap::GetViewHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
@@ -280,6 +355,20 @@ void VtkContextSceneWrap::GetViewWidth(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetViewWidth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextSceneWrap::HasTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasTransform();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -328,6 +417,28 @@ void VtkContextSceneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkContextSceneWrap::Paint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Paint(
+			(vtkContext2D *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContextSceneWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
@@ -338,6 +449,28 @@ void VtkContextSceneWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 		return;
 	}
 	native->ReleaseGraphicsResources();
+}
+
+void VtkContextSceneWrap::RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractContextItemWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractContextItemWrap *a0 = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RemoveItem(
+			(vtkAbstractContextItem *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContextSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -415,6 +548,25 @@ void VtkContextSceneWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContextSceneWrap::SetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDirty(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContextSceneWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
@@ -458,6 +610,25 @@ void VtkContextSceneWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkContextSceneWrap::SetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaleTiles(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkContextSceneWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
@@ -472,6 +643,25 @@ void VtkContextSceneWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetTransform(
 			(vtkTransform2D *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContextSceneWrap::SetUseBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseBufferId(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

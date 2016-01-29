@@ -32,6 +32,7 @@ class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 		static void FixBoundaryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FixBoundaryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFixBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputBufferType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +46,7 @@ class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 		static void ReadFrontBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadFrontBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFixBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputBufferType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputBufferTypeToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -148,12 +148,16 @@ void VtkLabelHierarchyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabelHierarchy> native = vtkSmartPointer<vtkLabelHierarchy>::New();
-		VtkLabelHierarchyWrap* obj = new VtkLabelHierarchyWrap(native);		obj->Wrap(info.This());
+		VtkLabelHierarchyWrap* obj = new VtkLabelHierarchyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

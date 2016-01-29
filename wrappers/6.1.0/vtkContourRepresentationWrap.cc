@@ -208,6 +208,9 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointPlacer", SetPointPlacer);
 	Nan::SetPrototypeMethod(tpl, "setPointPlacer", SetPointPlacer);
 
+	Nan::SetPrototypeMethod(tpl, "SetRebuildLocator", SetRebuildLocator);
+	Nan::SetPrototypeMethod(tpl, "setRebuildLocator", SetRebuildLocator);
+
 	Nan::SetPrototypeMethod(tpl, "SetShowSelectedNodes", SetShowSelectedNodes);
 	Nan::SetPrototypeMethod(tpl, "setShowSelectedNodes", SetShowSelectedNodes);
 
@@ -242,7 +245,10 @@ void VtkContourRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -1195,6 +1201,25 @@ void VtkContourRepresentationWrap::SetPointPlacer(const Nan::FunctionCallbackInf
 		}
 		native->SetPointPlacer(
 			(vtkPointPlacer *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkContourRepresentationWrap::SetRebuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
+	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRebuildLocator(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

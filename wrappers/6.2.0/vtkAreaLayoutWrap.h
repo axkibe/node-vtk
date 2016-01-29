@@ -33,11 +33,13 @@ class VtkAreaLayoutWrap : public VtkTreeAlgorithmWrap
 		static void EdgeRoutingPointsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAreaArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAreaArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -83,12 +83,16 @@ void VtkPlaneCollectionWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkPlaneCollection> native = vtkSmartPointer<vtkPlaneCollection>::New();
-		VtkPlaneCollectionWrap* obj = new VtkPlaneCollectionWrap(native);		obj->Wrap(info.This());
+		VtkPlaneCollectionWrap* obj = new VtkPlaneCollectionWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

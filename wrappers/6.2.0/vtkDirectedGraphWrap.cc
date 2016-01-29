@@ -61,6 +61,9 @@ void VtkDirectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsStructureValid", IsStructureValid);
+	Nan::SetPrototypeMethod(tpl, "isStructureValid", IsStructureValid);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -81,12 +84,16 @@ void VtkDirectedGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDirectedGraph> native = vtkSmartPointer<vtkDirectedGraph>::New();
-		VtkDirectedGraphWrap* obj = new VtkDirectedGraphWrap(native);		obj->Wrap(info.This());
+		VtkDirectedGraphWrap* obj = new VtkDirectedGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -190,6 +197,28 @@ void VtkDirectedGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDirectedGraphWrap::IsStructureValid(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDirectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkDirectedGraphWrap>(info.Holder());
+	vtkDirectedGraph *native = (vtkDirectedGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsStructureValid(
+			(vtkGraph *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

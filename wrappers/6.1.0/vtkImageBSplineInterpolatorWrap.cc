@@ -62,6 +62,9 @@ void VtkImageBSplineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsSeparable", IsSeparable);
+	Nan::SetPrototypeMethod(tpl, "isSeparable", IsSeparable);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -85,12 +88,16 @@ void VtkImageBSplineInterpolatorWrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageBSplineInterpolator> native = vtkSmartPointer<vtkImageBSplineInterpolator>::New();
-		VtkImageBSplineInterpolatorWrap* obj = new VtkImageBSplineInterpolatorWrap(native);		obj->Wrap(info.This());
+		VtkImageBSplineInterpolatorWrap* obj = new VtkImageBSplineInterpolatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -172,6 +179,20 @@ void VtkImageBSplineInterpolatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageBSplineInterpolatorWrap::IsSeparable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageBSplineInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineInterpolatorWrap>(info.Holder());
+	vtkImageBSplineInterpolator *native = (vtkImageBSplineInterpolator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsSeparable();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageBSplineInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

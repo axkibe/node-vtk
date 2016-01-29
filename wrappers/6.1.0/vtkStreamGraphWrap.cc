@@ -56,6 +56,9 @@ void VtkStreamGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdgeWindowArrayName", GetEdgeWindowArrayName);
 	Nan::SetPrototypeMethod(tpl, "getEdgeWindowArrayName", GetEdgeWindowArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseEdgeWindow", GetUseEdgeWindow);
+	Nan::SetPrototypeMethod(tpl, "getUseEdgeWindow", GetUseEdgeWindow);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -70,6 +73,9 @@ void VtkStreamGraphWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetEdgeWindowArrayName", SetEdgeWindowArrayName);
 	Nan::SetPrototypeMethod(tpl, "setEdgeWindowArrayName", SetEdgeWindowArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseEdgeWindow", SetUseEdgeWindow);
+	Nan::SetPrototypeMethod(tpl, "setUseEdgeWindow", SetUseEdgeWindow);
 
 	Nan::SetPrototypeMethod(tpl, "UseEdgeWindowOff", UseEdgeWindowOff);
 	Nan::SetPrototypeMethod(tpl, "useEdgeWindowOff", UseEdgeWindowOff);
@@ -91,12 +97,16 @@ void VtkStreamGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStreamGraph> native = vtkSmartPointer<vtkStreamGraph>::New();
-		VtkStreamGraphWrap* obj = new VtkStreamGraphWrap(native);		obj->Wrap(info.This());
+		VtkStreamGraphWrap* obj = new VtkStreamGraphWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -142,6 +152,20 @@ void VtkStreamGraphWrap::GetEdgeWindowArrayName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetEdgeWindowArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkStreamGraphWrap::GetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamGraphWrap *wrapper = ObjectWrap::Unwrap<VtkStreamGraphWrap>(info.Holder());
+	vtkStreamGraph *native = (vtkStreamGraph *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseEdgeWindow();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStreamGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -253,6 +277,25 @@ void VtkStreamGraphWrap::SetEdgeWindowArrayName(const Nan::FunctionCallbackInfo<
 		}
 		native->SetEdgeWindowArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStreamGraphWrap::SetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamGraphWrap *wrapper = ObjectWrap::Unwrap<VtkStreamGraphWrap>(info.Holder());
+	vtkStreamGraph *native = (vtkStreamGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseEdgeWindow(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

@@ -139,12 +139,16 @@ void VtkQuadRotationalExtrusionFilterWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkQuadRotationalExtrusionFilter> native = vtkSmartPointer<vtkQuadRotationalExtrusionFilter>::New();
-		VtkQuadRotationalExtrusionFilterWrap* obj = new VtkQuadRotationalExtrusionFilterWrap(native);		obj->Wrap(info.This());
+		VtkQuadRotationalExtrusionFilterWrap* obj = new VtkQuadRotationalExtrusionFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

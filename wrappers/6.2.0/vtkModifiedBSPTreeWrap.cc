@@ -90,12 +90,16 @@ void VtkModifiedBSPTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkModifiedBSPTree> native = vtkSmartPointer<vtkModifiedBSPTree>::New();
-		VtkModifiedBSPTreeWrap* obj = new VtkModifiedBSPTreeWrap(native);		obj->Wrap(info.This());
+		VtkModifiedBSPTreeWrap* obj = new VtkModifiedBSPTreeWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

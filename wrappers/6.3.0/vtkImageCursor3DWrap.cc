@@ -88,12 +88,16 @@ void VtkImageCursor3DWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageCursor3D> native = vtkSmartPointer<vtkImageCursor3D>::New();
-		VtkImageCursor3DWrap* obj = new VtkImageCursor3DWrap(native);		obj->Wrap(info.This());
+		VtkImageCursor3DWrap* obj = new VtkImageCursor3DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

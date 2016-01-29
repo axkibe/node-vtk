@@ -34,6 +34,7 @@ class VtkPlotHistogram2DWrap : public VtkPlotWrap
 		static void GetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);

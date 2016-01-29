@@ -8,6 +8,7 @@
 
 #include "vtkObjectWrap.h"
 #include "vtkRowQueryWrap.h"
+#include "vtkVariantArrayWrap.h"
 
 using namespace v8;
 
@@ -52,6 +53,12 @@ void VtkRowQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CaseSensitiveFieldNamesOn", CaseSensitiveFieldNamesOn);
 	Nan::SetPrototypeMethod(tpl, "caseSensitiveFieldNamesOn", CaseSensitiveFieldNamesOn);
 
+	Nan::SetPrototypeMethod(tpl, "Execute", Execute);
+	Nan::SetPrototypeMethod(tpl, "execute", Execute);
+
+	Nan::SetPrototypeMethod(tpl, "GetCaseSensitiveFieldNames", GetCaseSensitiveFieldNames);
+	Nan::SetPrototypeMethod(tpl, "getCaseSensitiveFieldNames", GetCaseSensitiveFieldNames);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -70,14 +77,26 @@ void VtkRowQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfFields", GetNumberOfFields);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfFields", GetNumberOfFields);
 
+	Nan::SetPrototypeMethod(tpl, "HasError", HasError);
+	Nan::SetPrototypeMethod(tpl, "hasError", HasError);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsActive", IsActive);
+	Nan::SetPrototypeMethod(tpl, "isActive", IsActive);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "NextRow", NextRow);
+	Nan::SetPrototypeMethod(tpl, "nextRow", NextRow);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCaseSensitiveFieldNames", SetCaseSensitiveFieldNames);
+	Nan::SetPrototypeMethod(tpl, "setCaseSensitiveFieldNames", SetCaseSensitiveFieldNames);
 
 	ptpl.Reset( tpl );
 }
@@ -98,7 +117,10 @@ void VtkRowQueryWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -126,6 +148,34 @@ void VtkRowQueryWrap::CaseSensitiveFieldNamesOn(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	native->CaseSensitiveFieldNamesOn();
+}
+
+void VtkRowQueryWrap::Execute(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->Execute();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRowQueryWrap::GetCaseSensitiveFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCaseSensitiveFieldNames();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRowQueryWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -234,6 +284,20 @@ void VtkRowQueryWrap::GetNumberOfFields(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRowQueryWrap::HasError(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasError();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRowQueryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
@@ -254,6 +318,20 @@ void VtkRowQueryWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRowQueryWrap::IsActive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsActive();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRowQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -277,6 +355,35 @@ void VtkRowQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRowQueryWrap::NextRow(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVariantArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkVariantArrayWrap *a0 = ObjectWrap::Unwrap<VtkVariantArrayWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->NextRow(
+			(vtkVariantArray *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->NextRow();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRowQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -305,6 +412,25 @@ void VtkRowQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRowQueryWrap::SetCaseSensitiveFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
+	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCaseSensitiveFieldNames(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

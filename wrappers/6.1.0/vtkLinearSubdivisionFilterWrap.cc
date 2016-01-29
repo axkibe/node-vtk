@@ -73,12 +73,16 @@ void VtkLinearSubdivisionFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLinearSubdivisionFilter> native = vtkSmartPointer<vtkLinearSubdivisionFilter>::New();
-		VtkLinearSubdivisionFilterWrap* obj = new VtkLinearSubdivisionFilterWrap(native);		obj->Wrap(info.This());
+		VtkLinearSubdivisionFilterWrap* obj = new VtkLinearSubdivisionFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

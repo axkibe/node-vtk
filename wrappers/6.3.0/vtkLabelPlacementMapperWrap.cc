@@ -73,6 +73,9 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGeneratePerturbedLabelSpokes", GetGeneratePerturbedLabelSpokes);
+	Nan::SetPrototypeMethod(tpl, "getGeneratePerturbedLabelSpokes", GetGeneratePerturbedLabelSpokes);
+
 	Nan::SetPrototypeMethod(tpl, "GetIteratorType", GetIteratorType);
 	Nan::SetPrototypeMethod(tpl, "getIteratorType", GetIteratorType);
 
@@ -87,6 +90,15 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaximumLabelFractionMinValue", GetMaximumLabelFractionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumLabelFractionMinValue", GetMaximumLabelFractionMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputTraversedBounds", GetOutputTraversedBounds);
+	Nan::SetPrototypeMethod(tpl, "getOutputTraversedBounds", GetOutputTraversedBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetPlaceAllLabels", GetPlaceAllLabels);
+	Nan::SetPrototypeMethod(tpl, "getPlaceAllLabels", GetPlaceAllLabels);
+
+	Nan::SetPrototypeMethod(tpl, "GetPositionsAsNormals", GetPositionsAsNormals);
+	Nan::SetPrototypeMethod(tpl, "getPositionsAsNormals", GetPositionsAsNormals);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderStrategy", GetRenderStrategy);
 	Nan::SetPrototypeMethod(tpl, "getRenderStrategy", GetRenderStrategy);
@@ -108,6 +120,12 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetStyleMinValue", GetStyleMinValue);
 	Nan::SetPrototypeMethod(tpl, "getStyleMinValue", GetStyleMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseDepthBuffer", GetUseDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "getUseDepthBuffer", GetUseDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseUnicodeStrings", GetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "getUseUnicodeStrings", GetUseUnicodeStrings);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -148,6 +166,9 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBackgroundOpacity", SetBackgroundOpacity);
 	Nan::SetPrototypeMethod(tpl, "setBackgroundOpacity", SetBackgroundOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "SetGeneratePerturbedLabelSpokes", SetGeneratePerturbedLabelSpokes);
+	Nan::SetPrototypeMethod(tpl, "setGeneratePerturbedLabelSpokes", SetGeneratePerturbedLabelSpokes);
+
 	Nan::SetPrototypeMethod(tpl, "SetIteratorType", SetIteratorType);
 	Nan::SetPrototypeMethod(tpl, "setIteratorType", SetIteratorType);
 
@@ -156,6 +177,15 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetMaximumLabelFraction", SetMaximumLabelFraction);
 	Nan::SetPrototypeMethod(tpl, "setMaximumLabelFraction", SetMaximumLabelFraction);
+
+	Nan::SetPrototypeMethod(tpl, "SetOutputTraversedBounds", SetOutputTraversedBounds);
+	Nan::SetPrototypeMethod(tpl, "setOutputTraversedBounds", SetOutputTraversedBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetPlaceAllLabels", SetPlaceAllLabels);
+	Nan::SetPrototypeMethod(tpl, "setPlaceAllLabels", SetPlaceAllLabels);
+
+	Nan::SetPrototypeMethod(tpl, "SetPositionsAsNormals", SetPositionsAsNormals);
+	Nan::SetPrototypeMethod(tpl, "setPositionsAsNormals", SetPositionsAsNormals);
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderStrategy", SetRenderStrategy);
 	Nan::SetPrototypeMethod(tpl, "setRenderStrategy", SetRenderStrategy);
@@ -180,6 +210,12 @@ void VtkLabelPlacementMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetStyleToOutline", SetStyleToOutline);
 	Nan::SetPrototypeMethod(tpl, "setStyleToOutline", SetStyleToOutline);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseDepthBuffer", SetUseDepthBuffer);
+	Nan::SetPrototypeMethod(tpl, "setUseDepthBuffer", SetUseDepthBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseUnicodeStrings", SetUseUnicodeStrings);
+	Nan::SetPrototypeMethod(tpl, "setUseUnicodeStrings", SetUseUnicodeStrings);
 
 	Nan::SetPrototypeMethod(tpl, "UseDepthBufferOff", UseDepthBufferOff);
 	Nan::SetPrototypeMethod(tpl, "useDepthBufferOff", UseDepthBufferOff);
@@ -207,12 +243,16 @@ void VtkLabelPlacementMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabelPlacementMapper> native = vtkSmartPointer<vtkLabelPlacementMapper>::New();
-		VtkLabelPlacementMapperWrap* obj = new VtkLabelPlacementMapperWrap(native);		obj->Wrap(info.This());
+		VtkLabelPlacementMapperWrap* obj = new VtkLabelPlacementMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -321,6 +361,20 @@ void VtkLabelPlacementMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkLabelPlacementMapperWrap::GetGeneratePerturbedLabelSpokes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeneratePerturbedLabelSpokes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkLabelPlacementMapperWrap::GetIteratorType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
@@ -388,6 +442,48 @@ void VtkLabelPlacementMapperWrap::GetMaximumLabelFractionMinValue(const Nan::Fun
 		return;
 	}
 	r = native->GetMaximumLabelFractionMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacementMapperWrap::GetOutputTraversedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputTraversedBounds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacementMapperWrap::GetPlaceAllLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPlaceAllLabels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacementMapperWrap::GetPositionsAsNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPositionsAsNormals();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -495,6 +591,34 @@ void VtkLabelPlacementMapperWrap::GetStyleMinValue(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetStyleMinValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacementMapperWrap::GetUseDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseDepthBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLabelPlacementMapperWrap::GetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseUnicodeStrings();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -737,6 +861,25 @@ void VtkLabelPlacementMapperWrap::SetBackgroundOpacity(const Nan::FunctionCallba
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkLabelPlacementMapperWrap::SetGeneratePerturbedLabelSpokes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGeneratePerturbedLabelSpokes(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLabelPlacementMapperWrap::SetIteratorType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
@@ -788,6 +931,63 @@ void VtkLabelPlacementMapperWrap::SetMaximumLabelFraction(const Nan::FunctionCal
 		}
 		native->SetMaximumLabelFraction(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacementMapperWrap::SetOutputTraversedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputTraversedBounds(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacementMapperWrap::SetPlaceAllLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPlaceAllLabels(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacementMapperWrap::SetPositionsAsNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetPositionsAsNormals(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -910,6 +1110,44 @@ void VtkLabelPlacementMapperWrap::SetStyleToOutline(const Nan::FunctionCallbackI
 		return;
 	}
 	native->SetStyleToOutline();
+}
+
+void VtkLabelPlacementMapperWrap::SetUseDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseDepthBuffer(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelPlacementMapperWrap::SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelPlacementMapperWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacementMapperWrap>(info.Holder());
+	vtkLabelPlacementMapper *native = (vtkLabelPlacementMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseUnicodeStrings(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkLabelPlacementMapperWrap::UseDepthBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -39,7 +39,9 @@ class VtkGeoTreeNodeWrap : public VtkObjectWrap
 		static void GetOlder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParentTreeNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWhichChildAreYou(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsDescendantOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetChild(const Nan::FunctionCallbackInfo<v8::Value>& info);

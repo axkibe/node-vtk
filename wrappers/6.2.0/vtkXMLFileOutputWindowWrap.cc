@@ -91,12 +91,16 @@ void VtkXMLFileOutputWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLFileOutputWindow> native = vtkSmartPointer<vtkXMLFileOutputWindow>::New();
-		VtkXMLFileOutputWindowWrap* obj = new VtkXMLFileOutputWindowWrap(native);		obj->Wrap(info.This());
+		VtkXMLFileOutputWindowWrap* obj = new VtkXMLFileOutputWindowWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

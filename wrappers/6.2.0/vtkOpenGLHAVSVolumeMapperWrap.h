@@ -35,6 +35,8 @@ class VtkOpenGLHAVSVolumeMapperWrap : public VtkHAVSVolumeMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

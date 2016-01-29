@@ -33,10 +33,12 @@ class VtkProcrustesAlignmentFilterWrap : public VtkMultiBlockDataSetAlgorithmWra
 		static void GetLandmarkTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMeanPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStartFromCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetStartFromCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartFromCentroidOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartFromCentroidOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

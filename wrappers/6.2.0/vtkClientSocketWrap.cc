@@ -53,6 +53,9 @@ void VtkClientSocketWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetConnectingSide", GetConnectingSide);
+	Nan::SetPrototypeMethod(tpl, "getConnectingSide", GetConnectingSide);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -76,12 +79,16 @@ void VtkClientSocketWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkClientSocket> native = vtkSmartPointer<vtkClientSocket>::New();
-		VtkClientSocketWrap* obj = new VtkClientSocketWrap(native);		obj->Wrap(info.This());
+		VtkClientSocketWrap* obj = new VtkClientSocketWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -125,6 +132,20 @@ void VtkClientSocketWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkClientSocketWrap::GetConnectingSide(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClientSocketWrap *wrapper = ObjectWrap::Unwrap<VtkClientSocketWrap>(info.Holder());
+	vtkClientSocket *native = (vtkClientSocket *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConnectingSide();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkClientSocketWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

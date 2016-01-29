@@ -96,6 +96,9 @@ void VtkSocketCommunicatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Handshake", Handshake);
 	Nan::SetPrototypeMethod(tpl, "handshake", Handshake);
 
+	Nan::SetPrototypeMethod(tpl, "HasBufferredMessages", HasBufferredMessages);
+	Nan::SetPrototypeMethod(tpl, "hasBufferredMessages", HasBufferredMessages);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -146,12 +149,16 @@ void VtkSocketCommunicatorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSocketCommunicator> native = vtkSmartPointer<vtkSocketCommunicator>::New();
-		VtkSocketCommunicatorWrap* obj = new VtkSocketCommunicatorWrap(native);		obj->Wrap(info.This());
+		VtkSocketCommunicatorWrap* obj = new VtkSocketCommunicatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -393,6 +400,20 @@ void VtkSocketCommunicatorWrap::Handshake(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->Handshake();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSocketCommunicatorWrap::HasBufferredMessages(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSocketCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info.Holder());
+	vtkSocketCommunicator *native = (vtkSocketCommunicator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->HasBufferredMessages();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

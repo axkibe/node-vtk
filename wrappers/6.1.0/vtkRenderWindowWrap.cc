@@ -225,11 +225,20 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
 	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
 
+	Nan::SetPrototypeMethod(tpl, "InitializeFromCurrentContext", InitializeFromCurrentContext);
+	Nan::SetPrototypeMethod(tpl, "initializeFromCurrentContext", InitializeFromCurrentContext);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsCurrent", IsCurrent);
+	Nan::SetPrototypeMethod(tpl, "isCurrent", IsCurrent);
+
 	Nan::SetPrototypeMethod(tpl, "IsDirect", IsDirect);
 	Nan::SetPrototypeMethod(tpl, "isDirect", IsDirect);
+
+	Nan::SetPrototypeMethod(tpl, "IsDrawable", IsDrawable);
+	Nan::SetPrototypeMethod(tpl, "isDrawable", IsDrawable);
 
 	Nan::SetPrototypeMethod(tpl, "IsPickingOff", IsPickingOff);
 	Nan::SetPrototypeMethod(tpl, "isPickingOff", IsPickingOff);
@@ -473,12 +482,16 @@ void VtkRenderWindowWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderWindow> native = vtkSmartPointer<vtkRenderWindow>::New();
-		VtkRenderWindowWrap* obj = new VtkRenderWindowWrap(native);		obj->Wrap(info.This());
+		VtkRenderWindowWrap* obj = new VtkRenderWindowWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -1385,6 +1398,20 @@ void VtkRenderWindowWrap::HideCursor(const Nan::FunctionCallbackInfo<v8::Value>&
 	native->HideCursor();
 }
 
+void VtkRenderWindowWrap::InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->InitializeFromCurrentContext();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1407,6 +1434,20 @@ void VtkRenderWindowWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkRenderWindowWrap::IsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsCurrent();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkRenderWindowWrap::IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
@@ -1418,6 +1459,20 @@ void VtkRenderWindowWrap::IsDirect(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->IsDirect();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowWrap::IsDrawable(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsDrawable();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

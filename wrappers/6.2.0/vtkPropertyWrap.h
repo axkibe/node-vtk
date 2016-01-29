@@ -52,6 +52,7 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void GetInterpolationAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineStippleRepeatFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -97,6 +98,7 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void SetInterpolationToFlat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationToGouraud(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationToPhong(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLighting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -31,6 +31,7 @@ class VtkEdgeListIteratorWrap : public VtkObjectWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasNext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NextGraphEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -73,12 +73,16 @@ void VtkStructuredGridGhostDataGeneratorWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkStructuredGridGhostDataGenerator> native = vtkSmartPointer<vtkStructuredGridGhostDataGenerator>::New();
-		VtkStructuredGridGhostDataGeneratorWrap* obj = new VtkStructuredGridGhostDataGeneratorWrap(native);		obj->Wrap(info.This());
+		VtkStructuredGridGhostDataGeneratorWrap* obj = new VtkStructuredGridGhostDataGeneratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

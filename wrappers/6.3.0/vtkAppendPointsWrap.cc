@@ -85,12 +85,16 @@ void VtkAppendPointsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAppendPoints> native = vtkSmartPointer<vtkAppendPoints>::New();
-		VtkAppendPointsWrap* obj = new VtkAppendPointsWrap(native);		obj->Wrap(info.This());
+		VtkAppendPointsWrap* obj = new VtkAppendPointsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

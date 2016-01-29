@@ -127,12 +127,16 @@ void VtkParallelCoordinatesInteractorStyleWrap::New(const Nan::FunctionCallbackI
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParallelCoordinatesInteractorStyle> native = vtkSmartPointer<vtkParallelCoordinatesInteractorStyle>::New();
-		VtkParallelCoordinatesInteractorStyleWrap* obj = new VtkParallelCoordinatesInteractorStyleWrap(native);		obj->Wrap(info.This());
+		VtkParallelCoordinatesInteractorStyleWrap* obj = new VtkParallelCoordinatesInteractorStyleWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

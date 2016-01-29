@@ -74,6 +74,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetInertiaMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickLocationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -158,7 +159,9 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void SetGridLineLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInertia(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetLabelScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSaveTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTickLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);

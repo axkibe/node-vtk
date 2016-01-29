@@ -58,8 +58,20 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ClampingOn", ClampingOn);
 	Nan::SetPrototypeMethod(tpl, "clampingOn", ClampingOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetClamping", GetClamping);
+	Nan::SetPrototypeMethod(tpl, "getClamping", GetClamping);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetMasking", GetMasking);
+	Nan::SetPrototypeMethod(tpl, "getMasking", GetMasking);
+
+	Nan::SetPrototypeMethod(tpl, "GetNestedDisplayLists", GetNestedDisplayLists);
+	Nan::SetPrototypeMethod(tpl, "getNestedDisplayLists", GetNestedDisplayLists);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrient", GetOrient);
+	Nan::SetPrototypeMethod(tpl, "getOrient", GetOrient);
 
 	Nan::SetPrototypeMethod(tpl, "GetOrientationMode", GetOrientationMode);
 	Nan::SetPrototypeMethod(tpl, "getOrientationMode", GetOrientationMode);
@@ -82,8 +94,20 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetScaleModeAsString", GetScaleModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getScaleModeAsString", GetScaleModeAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
+	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "GetSource", GetSource);
 	Nan::SetPrototypeMethod(tpl, "getSource", GetSource);
+
+	Nan::SetPrototypeMethod(tpl, "GetSourceIndexing", GetSourceIndexing);
+	Nan::SetPrototypeMethod(tpl, "getSourceIndexing", GetSourceIndexing);
+
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseSelectionIds", GetUseSelectionIds);
+	Nan::SetPrototypeMethod(tpl, "getUseSelectionIds", GetUseSelectionIds);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -121,11 +145,23 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ScalingOn", ScalingOn);
 	Nan::SetPrototypeMethod(tpl, "scalingOn", ScalingOn);
 
+	Nan::SetPrototypeMethod(tpl, "SetClamping", SetClamping);
+	Nan::SetPrototypeMethod(tpl, "setClamping", SetClamping);
+
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
 	Nan::SetPrototypeMethod(tpl, "SetMaskArray", SetMaskArray);
 	Nan::SetPrototypeMethod(tpl, "setMaskArray", SetMaskArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetMasking", SetMasking);
+	Nan::SetPrototypeMethod(tpl, "setMasking", SetMasking);
+
+	Nan::SetPrototypeMethod(tpl, "SetNestedDisplayLists", SetNestedDisplayLists);
+	Nan::SetPrototypeMethod(tpl, "setNestedDisplayLists", SetNestedDisplayLists);
+
+	Nan::SetPrototypeMethod(tpl, "SetOrient", SetOrient);
+	Nan::SetPrototypeMethod(tpl, "setOrient", SetOrient);
 
 	Nan::SetPrototypeMethod(tpl, "SetOrientationArray", SetOrientationArray);
 	Nan::SetPrototypeMethod(tpl, "setOrientationArray", SetOrientationArray);
@@ -160,6 +196,9 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleModeToScaleByVectorComponents", SetScaleModeToScaleByVectorComponents);
 	Nan::SetPrototypeMethod(tpl, "setScaleModeToScaleByVectorComponents", SetScaleModeToScaleByVectorComponents);
 
+	Nan::SetPrototypeMethod(tpl, "SetScaling", SetScaling);
+	Nan::SetPrototypeMethod(tpl, "setScaling", SetScaling);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectMode", SetSelectMode);
 	Nan::SetPrototypeMethod(tpl, "setSelectMode", SetSelectMode);
 
@@ -174,6 +213,12 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetSourceIndexArray", SetSourceIndexArray);
 	Nan::SetPrototypeMethod(tpl, "setSourceIndexArray", SetSourceIndexArray);
+
+	Nan::SetPrototypeMethod(tpl, "SetSourceIndexing", SetSourceIndexing);
+	Nan::SetPrototypeMethod(tpl, "setSourceIndexing", SetSourceIndexing);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseSelectionIds", SetUseSelectionIds);
+	Nan::SetPrototypeMethod(tpl, "setUseSelectionIds", SetUseSelectionIds);
 
 	Nan::SetPrototypeMethod(tpl, "SourceIndexingOff", SourceIndexingOff);
 	Nan::SetPrototypeMethod(tpl, "sourceIndexingOff", SourceIndexingOff);
@@ -201,12 +246,16 @@ void VtkGlyph3DMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGlyph3DMapper> native = vtkSmartPointer<vtkGlyph3DMapper>::New();
-		VtkGlyph3DMapperWrap* obj = new VtkGlyph3DMapperWrap(native);		obj->Wrap(info.This());
+		VtkGlyph3DMapperWrap* obj = new VtkGlyph3DMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -236,6 +285,20 @@ void VtkGlyph3DMapperWrap::ClampingOn(const Nan::FunctionCallbackInfo<v8::Value>
 	native->ClampingOn();
 }
 
+void VtkGlyph3DMapperWrap::GetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClamping();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGlyph3DMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
@@ -248,6 +311,48 @@ void VtkGlyph3DMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGlyph3DMapperWrap::GetMasking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMasking();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGlyph3DMapperWrap::GetNestedDisplayLists(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNestedDisplayLists();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGlyph3DMapperWrap::GetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrient();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGlyph3DMapperWrap::GetOrientationMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -348,6 +453,20 @@ void VtkGlyph3DMapperWrap::GetScaleModeAsString(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkGlyph3DMapperWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScaling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkGlyph3DMapperWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
@@ -376,6 +495,48 @@ void VtkGlyph3DMapperWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::GetSourceIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSourceIndexing();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGlyph3DMapperWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGlyph3DMapperWrap::GetUseSelectionIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseSelectionIds();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkGlyph3DMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -575,6 +736,25 @@ void VtkGlyph3DMapperWrap::ScalingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 	native->ScalingOn();
 }
 
+void VtkGlyph3DMapperWrap::SetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetClamping(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGlyph3DMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
@@ -621,6 +801,63 @@ void VtkGlyph3DMapperWrap::SetMaskArray(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		native->SetMaskArray(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetMasking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMasking(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetNestedDisplayLists(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNestedDisplayLists(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrient(
+			info[0]->BooleanValue()
 		);
 		return;
 	}
@@ -831,6 +1068,25 @@ void VtkGlyph3DMapperWrap::SetScaleModeToScaleByVectorComponents(const Nan::Func
 	native->SetScaleModeToScaleByVectorComponents();
 }
 
+void VtkGlyph3DMapperWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScaling(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGlyph3DMapperWrap::SetSelectMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
@@ -982,6 +1238,44 @@ void VtkGlyph3DMapperWrap::SetSourceIndexArray(const Nan::FunctionCallbackInfo<v
 		}
 		native->SetSourceIndexArray(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetSourceIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSourceIndexing(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetUseSelectionIds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseSelectionIds(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

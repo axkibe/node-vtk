@@ -82,12 +82,16 @@ void VtkParametricBoyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkParametricBoy> native = vtkSmartPointer<vtkParametricBoy>::New();
-		VtkParametricBoyWrap* obj = new VtkParametricBoyWrap(native);		obj->Wrap(info.This());
+		VtkParametricBoyWrap* obj = new VtkParametricBoyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -35,6 +35,7 @@ class VtkPiecewiseControlPointsItemWrap : public VtkControlPointsItemWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiecewiseFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetStrokeMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };
 
 #endif

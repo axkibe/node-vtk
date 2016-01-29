@@ -191,12 +191,16 @@ void VtkImageToPolyDataFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageToPolyDataFilter> native = vtkSmartPointer<vtkImageToPolyDataFilter>::New();
-		VtkImageToPolyDataFilterWrap* obj = new VtkImageToPolyDataFilterWrap(native);		obj->Wrap(info.This());
+		VtkImageToPolyDataFilterWrap* obj = new VtkImageToPolyDataFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

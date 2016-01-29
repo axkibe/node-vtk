@@ -33,6 +33,7 @@ class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void GetKdTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSingleSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSingleSelectionThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,6 +42,7 @@ class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void SetSelectionAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSingleSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSingleSelectionThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleSelectionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleSelectionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -138,12 +138,16 @@ void VtkHyperOctreeCutterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHyperOctreeCutter> native = vtkSmartPointer<vtkHyperOctreeCutter>::New();
-		VtkHyperOctreeCutterWrap* obj = new VtkHyperOctreeCutterWrap(native);		obj->Wrap(info.This());
+		VtkHyperOctreeCutterWrap* obj = new VtkHyperOctreeCutterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -73,12 +73,16 @@ void VtkHierarchicalDataExtractLevelWrap::New(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHierarchicalDataExtractLevel> native = vtkSmartPointer<vtkHierarchicalDataExtractLevel>::New();
-		VtkHierarchicalDataExtractLevelWrap* obj = new VtkHierarchicalDataExtractLevelWrap(native);		obj->Wrap(info.This());
+		VtkHierarchicalDataExtractLevelWrap* obj = new VtkHierarchicalDataExtractLevelWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

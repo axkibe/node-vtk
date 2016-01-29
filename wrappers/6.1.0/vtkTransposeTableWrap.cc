@@ -53,11 +53,17 @@ void VtkTransposeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddIdColumnOn", AddIdColumnOn);
 	Nan::SetPrototypeMethod(tpl, "addIdColumnOn", AddIdColumnOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAddIdColumn", GetAddIdColumn);
+	Nan::SetPrototypeMethod(tpl, "getAddIdColumn", GetAddIdColumn);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetIdColumnName", GetIdColumnName);
 	Nan::SetPrototypeMethod(tpl, "getIdColumnName", GetIdColumnName);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseIdColumn", GetUseIdColumn);
+	Nan::SetPrototypeMethod(tpl, "getUseIdColumn", GetUseIdColumn);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -68,8 +74,14 @@ void VtkTransposeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetAddIdColumn", SetAddIdColumn);
+	Nan::SetPrototypeMethod(tpl, "setAddIdColumn", SetAddIdColumn);
+
 	Nan::SetPrototypeMethod(tpl, "SetIdColumnName", SetIdColumnName);
 	Nan::SetPrototypeMethod(tpl, "setIdColumnName", SetIdColumnName);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseIdColumn", SetUseIdColumn);
+	Nan::SetPrototypeMethod(tpl, "setUseIdColumn", SetUseIdColumn);
 
 	Nan::SetPrototypeMethod(tpl, "UseIdColumnOff", UseIdColumnOff);
 	Nan::SetPrototypeMethod(tpl, "useIdColumnOff", UseIdColumnOff);
@@ -91,12 +103,16 @@ void VtkTransposeTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTransposeTable> native = vtkSmartPointer<vtkTransposeTable>::New();
-		VtkTransposeTableWrap* obj = new VtkTransposeTableWrap(native);		obj->Wrap(info.This());
+		VtkTransposeTableWrap* obj = new VtkTransposeTableWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -126,6 +142,20 @@ void VtkTransposeTableWrap::AddIdColumnOn(const Nan::FunctionCallbackInfo<v8::Va
 	native->AddIdColumnOn();
 }
 
+void VtkTransposeTableWrap::GetAddIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
+	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAddIdColumn();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTransposeTableWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
@@ -152,6 +182,20 @@ void VtkTransposeTableWrap::GetIdColumnName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetIdColumnName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTransposeTableWrap::GetUseIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
+	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseIdColumn();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTransposeTableWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +274,25 @@ void VtkTransposeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTransposeTableWrap::SetAddIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
+	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAddIdColumn(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTransposeTableWrap::SetIdColumnName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
@@ -244,6 +307,25 @@ void VtkTransposeTableWrap::SetIdColumnName(const Nan::FunctionCallbackInfo<v8::
 		}
 		native->SetIdColumnName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTransposeTableWrap::SetUseIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
+	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseIdColumn(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

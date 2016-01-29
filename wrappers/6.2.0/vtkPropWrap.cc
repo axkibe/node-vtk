@@ -118,11 +118,20 @@ void VtkPropWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRenderTimeMultiplier", GetRenderTimeMultiplier);
 	Nan::SetPrototypeMethod(tpl, "getRenderTimeMultiplier", GetRenderTimeMultiplier);
 
+	Nan::SetPrototypeMethod(tpl, "GetSupportsSelection", GetSupportsSelection);
+	Nan::SetPrototypeMethod(tpl, "getSupportsSelection", GetSupportsSelection);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseBounds", GetUseBounds);
+	Nan::SetPrototypeMethod(tpl, "getUseBounds", GetUseBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetVisibility", GetVisibility);
 	Nan::SetPrototypeMethod(tpl, "getVisibility", GetVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "GetVolumes", GetVolumes);
 	Nan::SetPrototypeMethod(tpl, "getVolumes", GetVolumes);
+
+	Nan::SetPrototypeMethod(tpl, "HasKeys", HasKeys);
+	Nan::SetPrototypeMethod(tpl, "hasKeys", HasKeys);
 
 	Nan::SetPrototypeMethod(tpl, "HasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
 	Nan::SetPrototypeMethod(tpl, "hasTranslucentPolygonalGeometry", HasTranslucentPolygonalGeometry);
@@ -156,6 +165,18 @@ void VtkPropWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "RemoveConsumer", RemoveConsumer);
 	Nan::SetPrototypeMethod(tpl, "removeConsumer", RemoveConsumer);
+
+	Nan::SetPrototypeMethod(tpl, "RenderFilteredOpaqueGeometry", RenderFilteredOpaqueGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderFilteredOpaqueGeometry", RenderFilteredOpaqueGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderFilteredOverlay", RenderFilteredOverlay);
+	Nan::SetPrototypeMethod(tpl, "renderFilteredOverlay", RenderFilteredOverlay);
+
+	Nan::SetPrototypeMethod(tpl, "RenderFilteredTranslucentPolygonalGeometry", RenderFilteredTranslucentPolygonalGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderFilteredTranslucentPolygonalGeometry", RenderFilteredTranslucentPolygonalGeometry);
+
+	Nan::SetPrototypeMethod(tpl, "RenderFilteredVolumetricGeometry", RenderFilteredVolumetricGeometry);
+	Nan::SetPrototypeMethod(tpl, "renderFilteredVolumetricGeometry", RenderFilteredVolumetricGeometry);
 
 	Nan::SetPrototypeMethod(tpl, "RenderOpaqueGeometry", RenderOpaqueGeometry);
 	Nan::SetPrototypeMethod(tpl, "renderOpaqueGeometry", RenderOpaqueGeometry);
@@ -192,6 +213,9 @@ void VtkPropWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetRenderTimeMultiplier", SetRenderTimeMultiplier);
 	Nan::SetPrototypeMethod(tpl, "setRenderTimeMultiplier", SetRenderTimeMultiplier);
+
+	Nan::SetPrototypeMethod(tpl, "SetUseBounds", SetUseBounds);
+	Nan::SetPrototypeMethod(tpl, "setUseBounds", SetUseBounds);
 
 	Nan::SetPrototypeMethod(tpl, "SetVisibility", SetVisibility);
 	Nan::SetPrototypeMethod(tpl, "setVisibility", SetVisibility);
@@ -230,7 +254,10 @@ void VtkPropWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -641,6 +668,34 @@ void VtkPropWrap::GetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPropWrap::GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSupportsSelection();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPropWrap::GetUseBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseBounds();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkPropWrap::GetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
@@ -670,6 +725,28 @@ void VtkPropWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		native->GetVolumes(
 			(vtkPropCollection *) a0->native.GetPointer()
 		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::HasKeys(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasKeys(
+			(vtkInformation *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -860,6 +937,114 @@ void VtkPropWrap::RemoveConsumer(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			(vtkObject *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderFilteredOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->RenderFilteredOpaqueGeometry(
+				(vtkViewport *) a0->native.GetPointer(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderFilteredOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->RenderFilteredOverlay(
+				(vtkViewport *) a0->native.GetPointer(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderFilteredTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->RenderFilteredTranslucentPolygonalGeometry(
+				(vtkViewport *) a0->native.GetPointer(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::RenderFilteredVolumetricGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->RenderFilteredVolumetricGeometry(
+				(vtkViewport *) a0->native.GetPointer(),
+				(vtkInformation *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1109,6 +1294,25 @@ void VtkPropWrap::SetRenderTimeMultiplier(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetRenderTimeMultiplier(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropWrap::SetUseBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropWrap *wrapper = ObjectWrap::Unwrap<VtkPropWrap>(info.Holder());
+	vtkProp *native = (vtkProp *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseBounds(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

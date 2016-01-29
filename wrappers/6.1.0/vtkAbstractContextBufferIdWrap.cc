@@ -61,6 +61,9 @@ void VtkAbstractContextBufferIdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsAllocated", IsAllocated);
+	Nan::SetPrototypeMethod(tpl, "isAllocated", IsAllocated);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -98,7 +101,10 @@ void VtkAbstractContextBufferIdWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -178,6 +184,20 @@ void VtkAbstractContextBufferIdWrap::IsA(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractContextBufferIdWrap::IsAllocated(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextBufferIdWrap>(info.Holder());
+	vtkAbstractContextBufferId *native = (vtkAbstractContextBufferId *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsAllocated();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAbstractContextBufferIdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

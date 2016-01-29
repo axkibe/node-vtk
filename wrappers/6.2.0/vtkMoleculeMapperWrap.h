@@ -36,9 +36,13 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void GetBondColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRenderBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedAtomsAndBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUseMultiCylindersForBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +60,9 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void SetBondColorModeToDiscreteByAtom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorModeToSingleColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRenderAtoms(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRenderBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUseMultiCylindersForBonds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBallAndStickSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFastSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLiquoriceStickSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);

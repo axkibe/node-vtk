@@ -104,6 +104,9 @@ void VtkClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecisionMinValue", GetOutputPointsPrecisionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecisionMinValue", GetOutputPointsPrecisionMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetUseValueAsOffset", GetUseValueAsOffset);
+	Nan::SetPrototypeMethod(tpl, "getUseValueAsOffset", GetUseValueAsOffset);
+
 	Nan::SetPrototypeMethod(tpl, "GetValue", GetValue);
 	Nan::SetPrototypeMethod(tpl, "getValue", GetValue);
 
@@ -143,6 +146,9 @@ void VtkClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseValueAsOffset", SetUseValueAsOffset);
+	Nan::SetPrototypeMethod(tpl, "setUseValueAsOffset", SetUseValueAsOffset);
+
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
@@ -166,12 +172,16 @@ void VtkClipDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkClipDataSet> native = vtkSmartPointer<vtkClipDataSet>::New();
-		VtkClipDataSetWrap* obj = new VtkClipDataSetWrap(native);		obj->Wrap(info.This());
+		VtkClipDataSetWrap* obj = new VtkClipDataSetWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -446,6 +456,20 @@ void VtkClipDataSetWrap::GetOutputPointsPrecisionMinValue(const Nan::FunctionCal
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkClipDataSetWrap::GetUseValueAsOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
+	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseValueAsOffset();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkClipDataSetWrap::GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
@@ -689,6 +713,25 @@ void VtkClipDataSetWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInf
 		}
 		native->SetOutputPointsPrecision(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkClipDataSetWrap::SetUseValueAsOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
+	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseValueAsOffset(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

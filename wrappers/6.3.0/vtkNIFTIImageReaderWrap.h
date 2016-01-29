@@ -34,11 +34,13 @@ class VtkNIFTIImageReaderWrap : public VtkImageReader2Wrap
 		static void GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNIFTIHeader(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQFac(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRescaleIntercept(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRescaleSlope(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,6 +48,8 @@ class VtkNIFTIImageReaderWrap : public VtkImageReader2Wrap
 		static void PlanarRGBOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PlanarRGBOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

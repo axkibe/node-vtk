@@ -79,12 +79,16 @@ void VtkRenderedRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkRenderedRepresentation> native = vtkSmartPointer<vtkRenderedRepresentation>::New();
-		VtkRenderedRepresentationWrap* obj = new VtkRenderedRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkRenderedRepresentationWrap* obj = new VtkRenderedRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -33,6 +33,7 @@ class VtkNIFTIImageWriterWrap : public VtkImageWriterWrap
 		static void GetDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNIFTIHeader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNIFTIVersion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQFac(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRescaleIntercept(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -48,6 +49,7 @@ class VtkNIFTIImageWriterWrap : public VtkImageWriterWrap
 		static void SetDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNIFTIHeader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNIFTIVersion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPlanarRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQFac(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRescaleIntercept(const Nan::FunctionCallbackInfo<v8::Value>& info);

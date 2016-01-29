@@ -80,12 +80,16 @@ void VtkXMLHyperOctreeWriterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkXMLHyperOctreeWriter> native = vtkSmartPointer<vtkXMLHyperOctreeWriter>::New();
-		VtkXMLHyperOctreeWriterWrap* obj = new VtkXMLHyperOctreeWriterWrap(native);		obj->Wrap(info.This());
+		VtkXMLHyperOctreeWriterWrap* obj = new VtkXMLHyperOctreeWriterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

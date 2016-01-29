@@ -188,6 +188,9 @@ void VtkCubeAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLabelTextProperty", GetLabelTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getLabelTextProperty", GetLabelTextProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetRebuildAxes", GetRebuildAxes);
+	Nan::SetPrototypeMethod(tpl, "getRebuildAxes", GetRebuildAxes);
+
 	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
 
@@ -440,8 +443,14 @@ void VtkCubeAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelOffset", SetLabelOffset);
 	Nan::SetPrototypeMethod(tpl, "setLabelOffset", SetLabelOffset);
 
+	Nan::SetPrototypeMethod(tpl, "SetLabelScaling", SetLabelScaling);
+	Nan::SetPrototypeMethod(tpl, "setLabelScaling", SetLabelScaling);
+
 	Nan::SetPrototypeMethod(tpl, "SetOrientedBounds", SetOrientedBounds);
 	Nan::SetPrototypeMethod(tpl, "setOrientedBounds", SetOrientedBounds);
+
+	Nan::SetPrototypeMethod(tpl, "SetRebuildAxes", SetRebuildAxes);
+	Nan::SetPrototypeMethod(tpl, "setRebuildAxes", SetRebuildAxes);
 
 	Nan::SetPrototypeMethod(tpl, "SetSaveTitlePosition", SetSaveTitlePosition);
 	Nan::SetPrototypeMethod(tpl, "setSaveTitlePosition", SetSaveTitlePosition);
@@ -673,12 +682,16 @@ void VtkCubeAxesActorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCubeAxesActor> native = vtkSmartPointer<vtkCubeAxesActor>::New();
-		VtkCubeAxesActorWrap* obj = new VtkCubeAxesActorWrap(native);		obj->Wrap(info.This());
+		VtkCubeAxesActorWrap* obj = new VtkCubeAxesActorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -1317,6 +1330,20 @@ void VtkCubeAxesActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCubeAxesActorWrap::GetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
+	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRebuildAxes();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCubeAxesActorWrap::GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -2859,6 +2886,37 @@ void VtkCubeAxesActorWrap::SetLabelOffset(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCubeAxesActorWrap::SetLabelScaling(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
+	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetLabelScaling(
+						info[0]->BooleanValue(),
+						info[1]->Int32Value(),
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCubeAxesActorWrap::SetOrientedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
@@ -2894,6 +2952,25 @@ void VtkCubeAxesActorWrap::SetOrientedBounds(const Nan::FunctionCallbackInfo<v8:
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCubeAxesActorWrap::SetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCubeAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkCubeAxesActorWrap>(info.Holder());
+	vtkCubeAxesActor *native = (vtkCubeAxesActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetRebuildAxes(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

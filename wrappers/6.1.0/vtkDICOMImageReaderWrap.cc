@@ -118,12 +118,16 @@ void VtkDICOMImageReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDICOMImageReader> native = vtkSmartPointer<vtkDICOMImageReader>::New();
-		VtkDICOMImageReaderWrap* obj = new VtkDICOMImageReaderWrap(native);		obj->Wrap(info.This());
+		VtkDICOMImageReaderWrap* obj = new VtkDICOMImageReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

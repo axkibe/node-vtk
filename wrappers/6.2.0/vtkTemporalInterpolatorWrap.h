@@ -29,12 +29,14 @@ class VtkTemporalInterpolatorWrap : public VtkMultiTimeStepAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCacheData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiscreteTimeStepInterval(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResampleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCacheData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiscreteTimeStepInterval(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResampleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 };

@@ -75,6 +75,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCroppingRegionFlags", GetCroppingRegionFlags);
 	Nan::SetPrototypeMethod(tpl, "getCroppingRegionFlags", GetCroppingRegionFlags);
 
+	Nan::SetPrototypeMethod(tpl, "GetFreezeFocalPoint", GetFreezeFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "getFreezeFocalPoint", GetFreezeFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetInteractiveUpdateRate", GetInteractiveUpdateRate);
 	Nan::SetPrototypeMethod(tpl, "getInteractiveUpdateRate", GetInteractiveUpdateRate);
 
@@ -92,6 +95,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarModeAsString", GetScalarModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getScalarModeAsString", GetScalarModeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetUseDefaultThreading", GetUseDefaultThreading);
+	Nan::SetPrototypeMethod(tpl, "getUseDefaultThreading", GetUseDefaultThreading);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -122,6 +128,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SetCroppingRegionPlanes", SetCroppingRegionPlanes);
 	Nan::SetPrototypeMethod(tpl, "setCroppingRegionPlanes", SetCroppingRegionPlanes);
+
+	Nan::SetPrototypeMethod(tpl, "SetFreezeFocalPoint", SetFreezeFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "setFreezeFocalPoint", SetFreezeFocalPoint);
 
 	Nan::SetPrototypeMethod(tpl, "SetInputConnection", SetInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setInputConnection", SetInputConnection);
@@ -174,6 +183,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarMode", SetScalarMode);
 	Nan::SetPrototypeMethod(tpl, "setScalarMode", SetScalarMode);
 
+	Nan::SetPrototypeMethod(tpl, "SetUseDefaultThreading", SetUseDefaultThreading);
+	Nan::SetPrototypeMethod(tpl, "setUseDefaultThreading", SetUseDefaultThreading);
+
 	Nan::SetPrototypeMethod(tpl, "UpdateResampler", UpdateResampler);
 	Nan::SetPrototypeMethod(tpl, "updateResampler", UpdateResampler);
 
@@ -194,12 +206,16 @@ void VtkAMRVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkAMRVolumeMapper> native = vtkSmartPointer<vtkAMRVolumeMapper>::New();
-		VtkAMRVolumeMapperWrap* obj = new VtkAMRVolumeMapperWrap(native);		obj->Wrap(info.This());
+		VtkAMRVolumeMapperWrap* obj = new VtkAMRVolumeMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -303,6 +319,20 @@ void VtkAMRVolumeMapperWrap::GetCroppingRegionFlags(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAMRVolumeMapperWrap::GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFreezeFocalPoint();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAMRVolumeMapperWrap::GetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
@@ -385,6 +415,20 @@ void VtkAMRVolumeMapperWrap::GetScalarModeAsString(const Nan::FunctionCallbackIn
 	}
 	r = native->GetScalarModeAsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkAMRVolumeMapperWrap::GetUseDefaultThreading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUseDefaultThreading();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAMRVolumeMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -632,6 +676,25 @@ void VtkAMRVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallback
 				}
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRVolumeMapperWrap::SetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFreezeFocalPoint(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -924,6 +987,25 @@ void VtkAMRVolumeMapperWrap::SetScalarMode(const Nan::FunctionCallbackInfo<v8::V
 		}
 		native->SetScalarMode(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRVolumeMapperWrap::SetUseDefaultThreading(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUseDefaultThreading(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

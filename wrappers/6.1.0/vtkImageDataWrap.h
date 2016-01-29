@@ -49,6 +49,8 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void GetScalarTypeMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarTypeMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

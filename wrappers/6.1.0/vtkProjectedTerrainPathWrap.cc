@@ -123,12 +123,16 @@ void VtkProjectedTerrainPathWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkProjectedTerrainPath> native = vtkSmartPointer<vtkProjectedTerrainPath>::New();
-		VtkProjectedTerrainPathWrap* obj = new VtkProjectedTerrainPathWrap(native);		obj->Wrap(info.This());
+		VtkProjectedTerrainPathWrap* obj = new VtkProjectedTerrainPathWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

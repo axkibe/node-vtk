@@ -89,12 +89,16 @@ void VtkImageDataLIC2DExtentTranslatorWrap::New(const Nan::FunctionCallbackInfo<
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageDataLIC2DExtentTranslator> native = vtkSmartPointer<vtkImageDataLIC2DExtentTranslator>::New();
-		VtkImageDataLIC2DExtentTranslatorWrap* obj = new VtkImageDataLIC2DExtentTranslatorWrap(native);		obj->Wrap(info.This());
+		VtkImageDataLIC2DExtentTranslatorWrap* obj = new VtkImageDataLIC2DExtentTranslatorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

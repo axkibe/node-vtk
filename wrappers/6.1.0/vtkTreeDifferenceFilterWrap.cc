@@ -50,6 +50,9 @@ void VtkTreeDifferenceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetComparisonArrayIsVertexData", GetComparisonArrayIsVertexData);
+	Nan::SetPrototypeMethod(tpl, "getComparisonArrayIsVertexData", GetComparisonArrayIsVertexData);
+
 	Nan::SetPrototypeMethod(tpl, "GetComparisonArrayName", GetComparisonArrayName);
 	Nan::SetPrototypeMethod(tpl, "getComparisonArrayName", GetComparisonArrayName);
 
@@ -67,6 +70,9 @@ void VtkTreeDifferenceFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetComparisonArrayIsVertexData", SetComparisonArrayIsVertexData);
+	Nan::SetPrototypeMethod(tpl, "setComparisonArrayIsVertexData", SetComparisonArrayIsVertexData);
 
 	Nan::SetPrototypeMethod(tpl, "SetComparisonArrayName", SetComparisonArrayName);
 	Nan::SetPrototypeMethod(tpl, "setComparisonArrayName", SetComparisonArrayName);
@@ -91,12 +97,16 @@ void VtkTreeDifferenceFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTreeDifferenceFilter> native = vtkSmartPointer<vtkTreeDifferenceFilter>::New();
-		VtkTreeDifferenceFilterWrap* obj = new VtkTreeDifferenceFilterWrap(native);		obj->Wrap(info.This());
+		VtkTreeDifferenceFilterWrap* obj = new VtkTreeDifferenceFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -114,6 +124,20 @@ void VtkTreeDifferenceFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTreeDifferenceFilterWrap::GetComparisonArrayIsVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
+	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComparisonArrayIsVertexData();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTreeDifferenceFilterWrap::GetComparisonArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -229,6 +253,25 @@ void VtkTreeDifferenceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTreeDifferenceFilterWrap::SetComparisonArrayIsVertexData(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeDifferenceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTreeDifferenceFilterWrap>(info.Holder());
+	vtkTreeDifferenceFilter *native = (vtkTreeDifferenceFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetComparisonArrayIsVertexData(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

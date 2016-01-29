@@ -9,6 +9,7 @@
 #include "vtkGeoSourceWrap.h"
 #include "vtkGeoFileTerrainSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkGeoTreeNodeWrap.h"
 
 using namespace v8;
 
@@ -47,6 +48,12 @@ void VtkGeoFileTerrainSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGeoFileTerrainSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "FetchChild", FetchChild);
+	Nan::SetPrototypeMethod(tpl, "fetchChild", FetchChild);
+
+	Nan::SetPrototypeMethod(tpl, "FetchRoot", FetchRoot);
+	Nan::SetPrototypeMethod(tpl, "fetchRoot", FetchRoot);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -79,15 +86,72 @@ void VtkGeoFileTerrainSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGeoFileTerrainSource> native = vtkSmartPointer<vtkGeoFileTerrainSource>::New();
-		VtkGeoFileTerrainSourceWrap* obj = new VtkGeoFileTerrainSourceWrap(native);		obj->Wrap(info.This());
+		VtkGeoFileTerrainSourceWrap* obj = new VtkGeoFileTerrainSourceWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkGeoFileTerrainSourceWrap::FetchChild(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoFileTerrainSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileTerrainSourceWrap>(info.Holder());
+	vtkGeoFileTerrainSource *native = (vtkGeoFileTerrainSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkGeoTreeNodeWrap *a2 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[2]->ToObject());
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->FetchChild(
+					(vtkGeoTreeNode *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					(vtkGeoTreeNode *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGeoFileTerrainSourceWrap::FetchRoot(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoFileTerrainSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoFileTerrainSourceWrap>(info.Holder());
+	vtkGeoFileTerrainSource *native = (vtkGeoFileTerrainSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->FetchRoot(
+			(vtkGeoTreeNode *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGeoFileTerrainSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

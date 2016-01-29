@@ -78,12 +78,16 @@ void VtkFixedPointVolumeRayCastMIPHelperWrap::New(const Nan::FunctionCallbackInf
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFixedPointVolumeRayCastMIPHelper> native = vtkSmartPointer<vtkFixedPointVolumeRayCastMIPHelper>::New();
-		VtkFixedPointVolumeRayCastMIPHelperWrap* obj = new VtkFixedPointVolumeRayCastMIPHelperWrap(native);		obj->Wrap(info.This());
+		VtkFixedPointVolumeRayCastMIPHelperWrap* obj = new VtkFixedPointVolumeRayCastMIPHelperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

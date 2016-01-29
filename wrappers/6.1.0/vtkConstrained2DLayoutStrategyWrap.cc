@@ -136,12 +136,16 @@ void VtkConstrained2DLayoutStrategyWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkConstrained2DLayoutStrategy> native = vtkSmartPointer<vtkConstrained2DLayoutStrategy>::New();
-		VtkConstrained2DLayoutStrategyWrap* obj = new VtkConstrained2DLayoutStrategyWrap(native);		obj->Wrap(info.This());
+		VtkConstrained2DLayoutStrategyWrap* obj = new VtkConstrained2DLayoutStrategyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

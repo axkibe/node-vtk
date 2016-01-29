@@ -116,12 +116,16 @@ void VtkScalarBarRepresentationWrap::New(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkScalarBarRepresentation> native = vtkSmartPointer<vtkScalarBarRepresentation>::New();
-		VtkScalarBarRepresentationWrap* obj = new VtkScalarBarRepresentationWrap(native);		obj->Wrap(info.This());
+		VtkScalarBarRepresentationWrap* obj = new VtkScalarBarRepresentationWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

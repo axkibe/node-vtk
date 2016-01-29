@@ -78,6 +78,12 @@ void VtkDSPFilterGroupWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsThisInputVariableInstanceCached", IsThisInputVariableInstanceCached);
+	Nan::SetPrototypeMethod(tpl, "isThisInputVariableInstanceCached", IsThisInputVariableInstanceCached);
+
+	Nan::SetPrototypeMethod(tpl, "IsThisInputVariableInstanceNeeded", IsThisInputVariableInstanceNeeded);
+	Nan::SetPrototypeMethod(tpl, "isThisInputVariableInstanceNeeded", IsThisInputVariableInstanceNeeded);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -101,12 +107,16 @@ void VtkDSPFilterGroupWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkDSPFilterGroup> native = vtkSmartPointer<vtkDSPFilterGroup>::New();
-		VtkDSPFilterGroupWrap* obj = new VtkDSPFilterGroupWrap(native);		obj->Wrap(info.This());
+		VtkDSPFilterGroupWrap* obj = new VtkDSPFilterGroupWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -346,6 +356,62 @@ void VtkDSPFilterGroupWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDSPFilterGroupWrap::IsThisInputVariableInstanceCached(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDSPFilterGroupWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info.Holder());
+	vtkDSPFilterGroup *native = (vtkDSPFilterGroup *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->IsThisInputVariableInstanceCached(
+				*a0,
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDSPFilterGroupWrap::IsThisInputVariableInstanceNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDSPFilterGroupWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterGroupWrap>(info.Holder());
+	vtkDSPFilterGroup *native = (vtkDSPFilterGroup *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->IsThisInputVariableInstanceNeeded(
+					*a0,
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

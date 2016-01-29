@@ -47,6 +47,9 @@ void VtkSplitColumnComponentsWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkSplitColumnComponentsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCalculateMagnitudes", GetCalculateMagnitudes);
+	Nan::SetPrototypeMethod(tpl, "getCalculateMagnitudes", GetCalculateMagnitudes);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +70,9 @@ void VtkSplitColumnComponentsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetCalculateMagnitudes", SetCalculateMagnitudes);
+	Nan::SetPrototypeMethod(tpl, "setCalculateMagnitudes", SetCalculateMagnitudes);
 
 	Nan::SetPrototypeMethod(tpl, "SetNamingMode", SetNamingMode);
 	Nan::SetPrototypeMethod(tpl, "setNamingMode", SetNamingMode);
@@ -97,15 +103,33 @@ void VtkSplitColumnComponentsWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkSplitColumnComponents> native = vtkSmartPointer<vtkSplitColumnComponents>::New();
-		VtkSplitColumnComponentsWrap* obj = new VtkSplitColumnComponentsWrap(native);		obj->Wrap(info.This());
+		VtkSplitColumnComponentsWrap* obj = new VtkSplitColumnComponentsWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkSplitColumnComponentsWrap::GetCalculateMagnitudes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
+	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCalculateMagnitudes();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSplitColumnComponentsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -235,6 +259,25 @@ void VtkSplitColumnComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSplitColumnComponentsWrap::SetCalculateMagnitudes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
+	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCalculateMagnitudes(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

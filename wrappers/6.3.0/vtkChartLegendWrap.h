@@ -32,9 +32,12 @@ class VtkChartLegendWrap : public VtkContextItemWrap
 		static void CacheBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CacheBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCacheBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetChart(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDragEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHorizontalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,9 +46,13 @@ class VtkChartLegendWrap : public VtkContextItemWrap
 		static void GetVerticalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCacheBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetChart(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDragEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHorizontalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);

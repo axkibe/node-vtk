@@ -56,6 +56,12 @@ void VtkFixedWidthTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetHaveHeaders", GetHaveHeaders);
+	Nan::SetPrototypeMethod(tpl, "getHaveHeaders", GetHaveHeaders);
+
+	Nan::SetPrototypeMethod(tpl, "GetStripWhiteSpace", GetStripWhiteSpace);
+	Nan::SetPrototypeMethod(tpl, "getStripWhiteSpace", GetStripWhiteSpace);
+
 	Nan::SetPrototypeMethod(tpl, "HaveHeadersOff", HaveHeadersOff);
 	Nan::SetPrototypeMethod(tpl, "haveHeadersOff", HaveHeadersOff);
 
@@ -77,6 +83,12 @@ void VtkFixedWidthTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "SetHaveHeaders", SetHaveHeaders);
+	Nan::SetPrototypeMethod(tpl, "setHaveHeaders", SetHaveHeaders);
+
+	Nan::SetPrototypeMethod(tpl, "SetStripWhiteSpace", SetStripWhiteSpace);
+	Nan::SetPrototypeMethod(tpl, "setStripWhiteSpace", SetStripWhiteSpace);
+
 	Nan::SetPrototypeMethod(tpl, "StripWhiteSpaceOff", StripWhiteSpaceOff);
 	Nan::SetPrototypeMethod(tpl, "stripWhiteSpaceOff", StripWhiteSpaceOff);
 
@@ -97,12 +109,16 @@ void VtkFixedWidthTextReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkFixedWidthTextReader> native = vtkSmartPointer<vtkFixedWidthTextReader>::New();
-		VtkFixedWidthTextReaderWrap* obj = new VtkFixedWidthTextReaderWrap(native);		obj->Wrap(info.This());
+		VtkFixedWidthTextReaderWrap* obj = new VtkFixedWidthTextReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -148,6 +164,34 @@ void VtkFixedWidthTextReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkFixedWidthTextReaderWrap::GetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
+	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHaveHeaders();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFixedWidthTextReaderWrap::GetStripWhiteSpace(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
+	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStripWhiteSpace();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkFixedWidthTextReaderWrap::HaveHeadersOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -283,6 +327,44 @@ void VtkFixedWidthTextReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8
 		}
 		native->SetFileName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedWidthTextReaderWrap::SetHaveHeaders(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
+	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetHaveHeaders(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFixedWidthTextReaderWrap::SetStripWhiteSpace(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
+	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetStripWhiteSpace(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

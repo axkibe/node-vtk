@@ -16,8 +16,11 @@
 #include "vtkDistributedGraphHelperWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "vtkGraphInternalsWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkFieldDataWrap.h"
+#include "vtkDirectedGraphWrap.h"
+#include "vtkUndirectedGraphWrap.h"
 
 using namespace v8;
 
@@ -56,6 +59,12 @@ void VtkGraphWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGraphWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CheckedDeepCopy", CheckedDeepCopy);
+	Nan::SetPrototypeMethod(tpl, "checkedDeepCopy", CheckedDeepCopy);
+
+	Nan::SetPrototypeMethod(tpl, "CheckedShallowCopy", CheckedShallowCopy);
+	Nan::SetPrototypeMethod(tpl, "checkedShallowCopy", CheckedShallowCopy);
+
 	Nan::SetPrototypeMethod(tpl, "ComputeBounds", ComputeBounds);
 	Nan::SetPrototypeMethod(tpl, "computeBounds", ComputeBounds);
 
@@ -92,6 +101,9 @@ void VtkGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdges", GetEdges);
 	Nan::SetPrototypeMethod(tpl, "getEdges", GetEdges);
 
+	Nan::SetPrototypeMethod(tpl, "GetGraphInternals", GetGraphInternals);
+	Nan::SetPrototypeMethod(tpl, "getGraphInternals", GetGraphInternals);
+
 	Nan::SetPrototypeMethod(tpl, "GetInducedEdges", GetInducedEdges);
 	Nan::SetPrototypeMethod(tpl, "getInducedEdges", GetInducedEdges);
 
@@ -109,6 +121,9 @@ void VtkGraphWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsSameStructure", IsSameStructure);
+	Nan::SetPrototypeMethod(tpl, "isSameStructure", IsSameStructure);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -131,6 +146,12 @@ void VtkGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+	Nan::SetPrototypeMethod(tpl, "ToDirectedGraph", ToDirectedGraph);
+	Nan::SetPrototypeMethod(tpl, "toDirectedGraph", ToDirectedGraph);
+
+	Nan::SetPrototypeMethod(tpl, "ToUndirectedGraph", ToUndirectedGraph);
+	Nan::SetPrototypeMethod(tpl, "toUndirectedGraph", ToUndirectedGraph);
+
 	ptpl.Reset( tpl );
 }
 
@@ -150,10 +171,57 @@ void VtkGraphWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkGraphWrap::CheckedDeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckedDeepCopy(
+			(vtkGraph *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphWrap::CheckedShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckedShallowCopy(
+			(vtkGraph *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGraphWrap::ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -419,6 +487,36 @@ void VtkGraphWrap::GetEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGraphWrap::GetGraphInternals(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		vtkGraphInternals * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetGraphInternals(
+			info[0]->BooleanValue()
+		);
+			VtkGraphInternalsWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkGraphInternalsWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkGraphInternalsWrap *w = new VtkGraphInternalsWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGraphWrap::GetInducedEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
@@ -537,6 +635,28 @@ void VtkGraphWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphWrap::IsSameStructure(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsSameStructure(
+			(vtkGraph *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -688,5 +808,49 @@ void VtkGraphWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	native->Squeeze();
+}
+
+void VtkGraphWrap::ToDirectedGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDirectedGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkDirectedGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ToDirectedGraph(
+			(vtkDirectedGraph *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphWrap::ToUndirectedGraph(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphWrap *wrapper = ObjectWrap::Unwrap<VtkGraphWrap>(info.Holder());
+	vtkGraph *native = (vtkGraph *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUndirectedGraphWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkUndirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkUndirectedGraphWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ToUndirectedGraph(
+			(vtkUndirectedGraph *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 

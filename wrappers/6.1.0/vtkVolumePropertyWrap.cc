@@ -206,12 +206,16 @@ void VtkVolumePropertyWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkVolumeProperty> native = vtkSmartPointer<vtkVolumeProperty>::New();
-		VtkVolumePropertyWrap* obj = new VtkVolumePropertyWrap(native);		obj->Wrap(info.This());
+		VtkVolumePropertyWrap* obj = new VtkVolumePropertyWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

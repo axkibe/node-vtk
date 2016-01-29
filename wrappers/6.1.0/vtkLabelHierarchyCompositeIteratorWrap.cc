@@ -74,6 +74,9 @@ void VtkLabelHierarchyCompositeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsAtEnd", IsAtEnd);
+	Nan::SetPrototypeMethod(tpl, "isAtEnd", IsAtEnd);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -97,12 +100,16 @@ void VtkLabelHierarchyCompositeIteratorWrap::New(const Nan::FunctionCallbackInfo
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkLabelHierarchyCompositeIterator> native = vtkSmartPointer<vtkLabelHierarchyCompositeIterator>::New();
-		VtkLabelHierarchyCompositeIteratorWrap* obj = new VtkLabelHierarchyCompositeIteratorWrap(native);		obj->Wrap(info.This());
+		VtkLabelHierarchyCompositeIteratorWrap* obj = new VtkLabelHierarchyCompositeIteratorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -262,6 +269,20 @@ void VtkLabelHierarchyCompositeIteratorWrap::IsA(const Nan::FunctionCallbackInfo
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLabelHierarchyCompositeIteratorWrap::IsAtEnd(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
+	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsAtEnd();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkLabelHierarchyCompositeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

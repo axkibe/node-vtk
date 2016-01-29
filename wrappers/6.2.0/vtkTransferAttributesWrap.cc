@@ -60,6 +60,9 @@ void VtkTransferAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirectMapping", GetDirectMapping);
+	Nan::SetPrototypeMethod(tpl, "getDirectMapping", GetDirectMapping);
+
 	Nan::SetPrototypeMethod(tpl, "GetSourceArrayName", GetSourceArrayName);
 	Nan::SetPrototypeMethod(tpl, "getSourceArrayName", GetSourceArrayName);
 
@@ -80,6 +83,9 @@ void VtkTransferAttributesWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetDirectMapping", SetDirectMapping);
+	Nan::SetPrototypeMethod(tpl, "setDirectMapping", SetDirectMapping);
 
 	Nan::SetPrototypeMethod(tpl, "SetSourceArrayName", SetSourceArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSourceArrayName", SetSourceArrayName);
@@ -107,12 +113,16 @@ void VtkTransferAttributesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkTransferAttributes> native = vtkSmartPointer<vtkTransferAttributes>::New();
-		VtkTransferAttributesWrap* obj = new VtkTransferAttributesWrap(native);		obj->Wrap(info.This());
+		VtkTransferAttributesWrap* obj = new VtkTransferAttributesWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -180,6 +190,20 @@ void VtkTransferAttributesWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTransferAttributesWrap::GetDirectMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransferAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkTransferAttributesWrap>(info.Holder());
+	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirectMapping();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTransferAttributesWrap::GetSourceArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -309,6 +333,25 @@ void VtkTransferAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTransferAttributesWrap::SetDirectMapping(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransferAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkTransferAttributesWrap>(info.Holder());
+	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDirectMapping(
+			info[0]->BooleanValue()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

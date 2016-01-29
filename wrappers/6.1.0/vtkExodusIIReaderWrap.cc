@@ -522,6 +522,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointResultArrayStatus", GetPointResultArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "getPointResultArrayStatus", GetPointResultArrayStatus);
 
+	Nan::SetPrototypeMethod(tpl, "GetProducedFastPathOutput", GetProducedFastPathOutput);
+	Nan::SetPrototypeMethod(tpl, "getProducedFastPathOutput", GetProducedFastPathOutput);
+
 	Nan::SetPrototypeMethod(tpl, "GetSIL", GetSIL);
 	Nan::SetPrototypeMethod(tpl, "getSIL", GetSIL);
 
@@ -545,6 +548,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSideSetSourceElementSideArrayName", GetSideSetSourceElementSideArrayName);
 	Nan::SetPrototypeMethod(tpl, "getSideSetSourceElementSideArrayName", GetSideSetSourceElementSideArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetSqueezePoints", GetSqueezePoints);
+	Nan::SetPrototypeMethod(tpl, "getSqueezePoints", GetSqueezePoints);
 
 	Nan::SetPrototypeMethod(tpl, "GetTimeSeriesData", GetTimeSeriesData);
 	Nan::SetPrototypeMethod(tpl, "getTimeSeriesData", GetTimeSeriesData);
@@ -741,6 +747,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSideSetResultArrayStatus", SetSideSetResultArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setSideSetResultArrayStatus", SetSideSetResultArrayStatus);
 
+	Nan::SetPrototypeMethod(tpl, "SetSqueezePoints", SetSqueezePoints);
+	Nan::SetPrototypeMethod(tpl, "setSqueezePoints", SetSqueezePoints);
+
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
@@ -767,12 +776,16 @@ void VtkExodusIIReaderWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkExodusIIReader> native = vtkSmartPointer<vtkExodusIIReader>::New();
-		VtkExodusIIReaderWrap* obj = new VtkExodusIIReaderWrap(native);		obj->Wrap(info.This());
+		VtkExodusIIReaderWrap* obj = new VtkExodusIIReaderWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -3765,6 +3778,20 @@ void VtkExodusIIReaderWrap::GetPointResultArrayStatus(const Nan::FunctionCallbac
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkExodusIIReaderWrap::GetProducedFastPathOutput(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProducedFastPathOutput();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkExodusIIReaderWrap::GetSIL(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
@@ -3914,6 +3941,20 @@ void VtkExodusIIReaderWrap::GetSideSetSourceElementSideArrayName(const Nan::Func
 	}
 	r = native->GetSideSetSourceElementSideArrayName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkExodusIIReaderWrap::GetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	bool r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSqueezePoints();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkExodusIIReaderWrap::GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -5419,6 +5460,25 @@ void VtkExodusIIReaderWrap::SetSideSetResultArrayStatus(const Nan::FunctionCallb
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkExodusIIReaderWrap::SetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSqueezePoints(
+			info[0]->BooleanValue()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

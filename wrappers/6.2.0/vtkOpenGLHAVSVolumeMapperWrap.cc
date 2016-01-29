@@ -68,6 +68,12 @@ void VtkOpenGLHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetGPUDataStructures", SetGPUDataStructures);
+	Nan::SetPrototypeMethod(tpl, "setGPUDataStructures", SetGPUDataStructures);
+
+	Nan::SetPrototypeMethod(tpl, "SupportedByHardware", SupportedByHardware);
+	Nan::SetPrototypeMethod(tpl, "supportedByHardware", SupportedByHardware);
+
 	ptpl.Reset( tpl );
 }
 
@@ -82,12 +88,16 @@ void VtkOpenGLHAVSVolumeMapperWrap::New(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkOpenGLHAVSVolumeMapper> native = vtkSmartPointer<vtkOpenGLHAVSVolumeMapper>::New();
-		VtkOpenGLHAVSVolumeMapperWrap* obj = new VtkOpenGLHAVSVolumeMapperWrap(native);		obj->Wrap(info.This());
+		VtkOpenGLHAVSVolumeMapperWrap* obj = new VtkOpenGLHAVSVolumeMapperWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -223,6 +233,47 @@ void VtkOpenGLHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLHAVSVolumeMapperWrap::SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHAVSVolumeMapperWrap>(info.Holder());
+	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetGPUDataStructures(
+			info[0]->BooleanValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLHAVSVolumeMapperWrap::SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHAVSVolumeMapperWrap>(info.Holder());
+	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->SupportedByHardware(
+			(vtkRenderer *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

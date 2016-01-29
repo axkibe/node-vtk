@@ -85,12 +85,16 @@ void VtkHyperTreeGridAxisCutWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkHyperTreeGridAxisCut> native = vtkSmartPointer<vtkHyperTreeGridAxisCut>::New();
-		VtkHyperTreeGridAxisCutWrap* obj = new VtkHyperTreeGridAxisCutWrap(native);		obj->Wrap(info.This());
+		VtkHyperTreeGridAxisCutWrap* obj = new VtkHyperTreeGridAxisCutWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

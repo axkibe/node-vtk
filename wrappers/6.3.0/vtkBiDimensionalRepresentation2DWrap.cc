@@ -104,12 +104,16 @@ void VtkBiDimensionalRepresentation2DWrap::New(const Nan::FunctionCallbackInfo<v
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkBiDimensionalRepresentation2D> native = vtkSmartPointer<vtkBiDimensionalRepresentation2D>::New();
-		VtkBiDimensionalRepresentation2DWrap* obj = new VtkBiDimensionalRepresentation2DWrap(native);		obj->Wrap(info.This());
+		VtkBiDimensionalRepresentation2DWrap* obj = new VtkBiDimensionalRepresentation2DWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

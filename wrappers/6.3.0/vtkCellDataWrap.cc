@@ -73,12 +73,16 @@ void VtkCellDataWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkCellData> native = vtkSmartPointer<vtkCellData>::New();
-		VtkCellDataWrap* obj = new VtkCellDataWrap(native);		obj->Wrap(info.This());
+		VtkCellDataWrap* obj = new VtkCellDataWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

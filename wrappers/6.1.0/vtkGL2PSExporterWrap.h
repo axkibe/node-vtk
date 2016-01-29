@@ -55,6 +55,7 @@ class VtkGL2PSExporterWrap : public VtkExporterWrap
 		static void GetSortMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSortMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWrite3DPropsAsRasterImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -87,6 +88,7 @@ class VtkGL2PSExporterWrap : public VtkExporterWrap
 		static void SetSortToOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSortToSimple(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTextAsPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWrite3DPropsAsRasterImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SilentOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

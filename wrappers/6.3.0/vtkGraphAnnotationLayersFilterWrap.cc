@@ -78,6 +78,9 @@ void VtkGraphAnnotationLayersFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinHullSizeInWorld", SetMinHullSizeInWorld);
 	Nan::SetPrototypeMethod(tpl, "setMinHullSizeInWorld", SetMinHullSizeInWorld);
 
+	Nan::SetPrototypeMethod(tpl, "SetOutline", SetOutline);
+	Nan::SetPrototypeMethod(tpl, "setOutline", SetOutline);
+
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
@@ -98,12 +101,16 @@ void VtkGraphAnnotationLayersFilterWrap::New(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkGraphAnnotationLayersFilter> native = vtkSmartPointer<vtkGraphAnnotationLayersFilter>::New();
-		VtkGraphAnnotationLayersFilterWrap* obj = new VtkGraphAnnotationLayersFilterWrap(native);		obj->Wrap(info.This());
+		VtkGraphAnnotationLayersFilterWrap* obj = new VtkGraphAnnotationLayersFilterWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
@@ -279,6 +286,25 @@ void VtkGraphAnnotationLayersFilterWrap::SetMinHullSizeInWorld(const Nan::Functi
 		}
 		native->SetMinHullSizeInWorld(
 			info[0]->NumberValue()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGraphAnnotationLayersFilterWrap::SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
+	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsBoolean())
+	{
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutline(
+			info[0]->BooleanValue()
 		);
 		return;
 	}

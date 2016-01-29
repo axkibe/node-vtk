@@ -79,12 +79,16 @@ void VtkKMeansDistanceFunctorWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkKMeansDistanceFunctor> native = vtkSmartPointer<vtkKMeansDistanceFunctor>::New();
-		VtkKMeansDistanceFunctorWrap* obj = new VtkKMeansDistanceFunctorWrap(native);		obj->Wrap(info.This());
+		VtkKMeansDistanceFunctorWrap* obj = new VtkKMeansDistanceFunctorWrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());

@@ -179,12 +179,16 @@ void VtkImageViewer2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() == 0)
 	{
 		vtkSmartPointer<vtkImageViewer2> native = vtkSmartPointer<vtkImageViewer2>::New();
-		VtkImageViewer2Wrap* obj = new VtkImageViewer2Wrap(native);		obj->Wrap(info.This());
+		VtkImageViewer2Wrap* obj = new VtkImageViewer2Wrap(native);
+		obj->Wrap(info.This());
 	}
 	else
 	{
 		if(info[0]->ToObject() != vtkNodeJsNoWrap )
+		{
 			Nan::ThrowError("Parameter Error");
+			return;
+		}
 	}
 
 	info.GetReturnValue().Set(info.This());
