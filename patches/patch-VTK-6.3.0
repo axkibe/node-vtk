@@ -388,8 +388,8 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.3.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-29 11:34:33.889273347 +0100
-@@ -0,0 +1,1426 @@
++++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-01-29 15:30:28.630202195 +0100
+@@ -0,0 +1,1585 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -481,7 +481,7 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +    {
 +    if (vtkWrap_IsVoid(val)) return 1;
 +
-+    if (vtkWrap_IsNArray(val)) return 0;
++    if (vtkWrap_IsArray(val)) return 0;
 +    }
 +
 +  baseType = val->Type & VTK_PARSE_BASE_TYPE;
@@ -541,11 +541,18 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +    {
 +    return 1;
 +    }
-+  else if (vtkWrap_IsArray(val) || vtkWrap_IsNArray(val))
++
++  if (vtkWrap_IsNArray(val))
 +    {
 +    return 0;
 +    }
-+  else if (vtkWrap_IsPointer(val))
++
++  if (vtkWrap_IsArray(val))
++    {
++    return 1;
++    }
++
++  if (vtkWrap_IsPointer(val))
 +    {
 +    if (vtkWrap_IsCharPointer(val))
 +      {
@@ -583,6 +590,11 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +    }
 +
 +  if(finfo->IsOperator)
++    {
++    return 0;
++    }
++
++  if(finfo->IsPureVirtual)
 +    {
 +    return 0;
 +    }
@@ -915,6 +927,26 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +
 +
 +/* -------------------------------------------------------------------- */
++/* Returns the C primitive for vinfo */
++
++static char const * getCPrimitive(ValueInfo *vinfo)
++{
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++
++  switch (baseType)
++    {
++    case VTK_PARSE_BOOL : return "bool";
++    case VTK_PARSE_CHAR : return "char";
++    case VTK_PARSE_INT : return "int";
++    case VTK_PARSE_DOUBLE : return "double";
++    default :
++      fprintf( stderr, "unknown primitive!\n" );
++      exit( 1 );
++    }
++}
++
++
++/* -------------------------------------------------------------------- */
 +/* Writes a parameter variable for some parameters that need it. */
 +
 +static void writeHandlerParameterVar(
@@ -926,7 +958,27 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +{
 +  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
 +
-+  switch(baseType)
++  if (vtkWrap_IsArray(vinfo))
++    {
++    fprintf(f,
++      "\t%sv8::Local<v8::Array>a%d( v8::Local<v8::Array>::Cast( info[%d]->ToObject() ) );\n",
++      indent,
++      p,
++      p
++      );
++
++    fprintf(f,
++      "\t%s%s b%d[%d];\n",
++      indent,
++      getCPrimitive(vinfo),
++      p,
++      vinfo->Count
++      );
++
++    return;
++    }
++
++  switch (baseType)
 +    {
 +    case VTK_PARSE_CHAR :
 +
@@ -961,8 +1013,10 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +    }
 +}
 +
++
 +/* -------------------------------------------------------------------- */
 +/* Writes a parameter value getter for the handlers native call. */
++/* TODO Write the comma afterward for all cases */
 +
 +static void writeHandlerParameterValue(
 +   FILE *f,
@@ -974,77 +1028,88 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +{
 +  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
 +
-+  switch(baseType)
++  if (vtkWrap_IsArray(vinfo))
 +    {
-+    case VTK_PARSE_BOOL :
++       fprintf(f,
++         "\t%s\tb%d%s\n",
++         indent,
++         p,
++         p + 1 < nop ? "," : ""
++         );
++    }
++  else
++  {
++    switch(baseType)
++      {
++      case VTK_PARSE_BOOL :
 +
-+      fprintf(f,
-+        "\t%s\tinfo[%d]->BooleanValue()%s\n",
-+        indent,
-+        p,
-+        p + 1 < nop ? "," : ""
-+        );
-+      break;
-+
-+    case VTK_PARSE_DOUBLE :
-+
-+      fprintf(f,
-+        "\t%s\tinfo[%d]->NumberValue()%s\n",
-+        indent,
-+        p,
-+        p + 1 < nop ? "," : ""
-+        );
-+      break;
-+
-+    case VTK_PARSE_INT :
-+
-+      fprintf(f,
-+        "\t%s\tinfo[%d]->Int32Value()%s\n",
-+        indent,
-+        p,
-+        p + 1 < nop ? "," : ""
-+        );
-+      break;
-+
-+    case VTK_PARSE_CHAR :
-+
-+      if(vtkWrap_IsPointer(vinfo))
-+        {
 +        fprintf(f,
-+          "\t%s\t*a%d%s\n",
++          "\t%s\tinfo[%d]->BooleanValue()%s\n",
 +          indent,
 +          p,
 +          p + 1 < nop ? "," : ""
 +          );
-+        }
-+        else
-+        {
++        break;
++
++      case VTK_PARSE_DOUBLE :
++
 +        fprintf(f,
-+          "\t%s\ta%d%s\n",
++          "\t%s\tinfo[%d]->NumberValue()%s\n",
 +          indent,
 +          p,
 +          p + 1 < nop ? "," : ""
 +          );
-+        }
++        break;
 +
-+      break;
++      case VTK_PARSE_INT :
 +
-+    case VTK_PARSE_OBJECT :
++        fprintf(f,
++          "\t%s\tinfo[%d]->Int32Value()%s\n",
++          indent,
++          p,
++          p + 1 < nop ? "," : ""
++          );
++        break;
 +
-+      fprintf(f,
-+        "\t%s\t(%s *) a%d->native.GetPointer()%s\n",
-+        indent,
-+        vinfo->Class,
-+        p,
-+        p + 1 < nop ? "," : ""
-+        );
++      case VTK_PARSE_CHAR :
 +
-+      break;
++        if(vtkWrap_IsPointer(vinfo))
++          {
++          fprintf(f,
++            "\t%s\t*a%d%s\n",
++            indent,
++            p,
++            p + 1 < nop ? "," : ""
++            );
++          }
++          else
++          {
++          fprintf(f,
++            "\t%s\ta%d%s\n",
++            indent,
++            p,
++            p + 1 < nop ? "," : ""
++            );
++          }
 +
-+    default :
++        break;
 +
-+     fprintf(stderr, "Unexpected parameter type.\n");
-+     exit(1);
++      case VTK_PARSE_OBJECT :
++
++        fprintf(f,
++          "\t%s\t(%s *) a%d->native.GetPointer()%s\n",
++          indent,
++          vinfo->Class,
++          p,
++          p + 1 < nop ? "," : ""
++          );
++
++        break;
++
++      default :
++       fprintf(stderr, "Unexpected parameter type.\n");
++       exit(1);
++      }
 +    }
 +}
 +
@@ -1171,7 +1236,9 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +}
 +
 +/* -------------------------------------------------------------------- */
-+/* TODO */
++/* Returns true if the Wrapper cannot destinguish overloads. */
++/* For example "float" and "double" are the same thing in Javascipt V8 */
++/* which is "Number" */
 +
 +static int parameterEqualInOverload(
 +  ValueInfo *p1info,
@@ -1183,6 +1250,63 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +  if( p1info->Type != VTK_PARSE_OBJECT ) return 0;
 +
 +  return !strcmp(p1info->Class, p2info->Class );
++}
++
++/* -------------------------------------------------------------------- */
++/* Writes the handler for polymorphic arrays which need to be copied in a loop. */
++
++static void writePolymorphArrayParameterHandler(
++  FILE *f,
++  char const *indent,
++  int p,
++  ValueInfo *vinfo
++)
++{
++  int count;
++  char const *test = v8ParameterTestFuncName(vinfo);
++  unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
++  count = vinfo->Count;
++
++  if( !count )
++   {
++   fprintf(stderr, "Array without count!\n");
++   exit(1);
++   }
++
++  fprintf(f, "\t%sif( a%d->Length() < %d )\n", indent, p, count);
++  fprintf(f, "\t%s{\n", indent);
++  fprintf(f, "\t%s\tNan::ThrowError(\"Array too short.\");\n", indent);
++  fprintf(f, "\t%s\treturn;\n", indent);
++  fprintf(f, "\t%s}\n", indent);
++  fprintf(f, "\n");
++
++  fprintf(f, "\t%sfor( i = 0; i < %d; i++ )\n", indent, count);
++  fprintf(f, "\t%s{\n", indent);
++  fprintf(f, "\t%s\tif( !a%d->Get(i)->%s() )\n", indent, p, test );
++  fprintf(f, "\t%s\t{\n", indent);
++  fprintf(f, "\t%s\t\tNan::ThrowError(\"Array contents invalid.\");\n", indent);
++  fprintf(f, "\t%s\t\treturn;\n", indent);
++  fprintf(f, "\t%s\t}\n", indent);
++  switch( baseType )
++    {
++    case VTK_PARSE_BOOL:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->BooleanValue();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_CHAR:
++    case VTK_PARSE_DOUBLE:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->NumberValue();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_INT:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->Int32Value();\n", indent, p, p );
++      break;
++
++    default:
++      fprintf(stderr, "Invalid basetype\n");
++      exit(1);
++    }
++  fprintf(f, "\t%s}\n", indent);
 +}
 +
 +/* -------------------------------------------------------------------- */
@@ -1206,6 +1330,7 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +  FunctionInfo *finfo = *minfo;
 +  int overload;
 +  int writeElse;
++  int needi;
 +
 +  fprintf(f,
 +    "void %s::%s(const Nan::FunctionCallbackInfo<v8::Value>& info)\n",
@@ -1227,6 +1352,25 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +    name
 +    );
 +
++  /* See if an 'i' counter variable is needed */
++  needi = 0;
++  for (overload = 0; overload < overloadCount && !needi; overload++)
++    {
++    finfo = minfo[overload];
++    for (p = 0; p < finfo->NumberOfParameters && !needi; p++)
++      {
++      if (vtkWrap_IsArray( finfo->Parameters[p] ) )
++        {
++        needi = 1;
++        }
++      }
++    }
++
++  if( needi )
++    {
++      fprintf(f, "\t%ssize_t i;\n", indent);
++    }
++
 +  /* Argument checking */
 +
 +  *indent = 0;
@@ -1244,7 +1388,18 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +      unsigned int baseType = (vinfo->Type & VTK_PARSE_BASE_TYPE);
 +      const char *sname;
 +
-+      if( baseType != VTK_PARSE_OBJECT )
++      if (vtkWrap_IsArray( vinfo ))
++        {
++        fprintf(f,
++          "\t%s%sif(info.Length() > %d && info[%d]->IsArray())\n",
++          indent,
++          writeElse ? "else " : "",
++          p,
++          p,
++          v8ParameterTestFuncName(vinfo)
++          );
++        }
++      else if (baseType != VTK_PARSE_OBJECT)
 +        {
 +        fprintf(f,
 +          "\t%s%sif(info.Length() > %d && info[%d]->%s())\n",
@@ -1255,7 +1410,7 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +          v8ParameterTestFuncName(vinfo)
 +          );
 +        }
-+        else
++      else
 +        {
 +        sname = vinfo->Class;
 +
@@ -1277,6 +1432,10 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.3.0/Wrapping/Tools
 +      fprintf(f, "\t%s{\n", indent);
 +      strcat(indent, "\t");
 +      writeHandlerParameterVar(f, indent, p, vinfo );
++      if (vtkWrap_IsArray(vinfo))
++        {
++        writePolymorphArrayParameterHandler(f, indent, p, vinfo);
++        }
 +      }
 +
 +    rinfo = finfo->ReturnValue;
@@ -1968,12 +2127,12 @@ diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.3.0/Wrapping/T
 +
 diff -urBN VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-6.3.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-29 11:34:33.889273347 +0100
++++ VTK-6.3.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-01-29 15:30:28.666201446 +0100
 @@ -0,0 +1,47 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
 +/* to quickly test stuff out */
-+/* #define DO_WHITELIST */
++/*#define DO_WHITELIST*/
 +
 +/* TODO REMOVE */
 +char const *whitelist[] =
