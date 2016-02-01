@@ -291,7 +291,11 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 		}
-		else if(info.Length() > 1 && info[1]->IsArray())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsArray())
 		{
 			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
 			double b1[3];

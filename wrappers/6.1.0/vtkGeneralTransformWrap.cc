@@ -221,6 +221,19 @@ void VtkGeneralTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Concatenate(
+			(vtkMatrix4x4 *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

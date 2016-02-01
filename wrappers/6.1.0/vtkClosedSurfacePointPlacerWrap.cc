@@ -470,6 +470,19 @@ void VtkClosedSurfacePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallb
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBoundingPlanes(
+			(vtkPlaneCollection *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

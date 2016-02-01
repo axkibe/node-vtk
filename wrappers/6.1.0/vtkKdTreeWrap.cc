@@ -320,7 +320,20 @@ void VtkKdTreeWrap::BuildLocatorFromPoints(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->BuildLocatorFromPoints(
+			(vtkPoints *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointSetWrap *a0 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

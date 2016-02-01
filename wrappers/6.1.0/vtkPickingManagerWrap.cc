@@ -420,6 +420,21 @@ void VtkPickingManagerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Pick(
+			(vtkObject *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

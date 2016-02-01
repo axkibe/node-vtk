@@ -733,6 +733,19 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisTitles(const Nan::Function
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetAxisTitles(
+			(vtkStringArray *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

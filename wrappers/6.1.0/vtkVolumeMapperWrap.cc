@@ -671,6 +671,19 @@ void VtkVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputData(
+			(vtkImageData *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

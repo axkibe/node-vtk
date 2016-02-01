@@ -1539,6 +1539,25 @@ void VtkDataReaderWrap::ReadPoints(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointSetWrap *a0 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ReadPoints(
+				(vtkPointSet *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

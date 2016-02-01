@@ -318,7 +318,20 @@ void VtkAbstractMapperWrap::SetClippingPlanes(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAbstractMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info.Holder());
 	vtkAbstractMapper *native = (vtkAbstractMapper *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetClippingPlanes(
+			(vtkPlanes *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

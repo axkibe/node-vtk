@@ -1028,6 +1028,19 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColor(
+			(vtkPiecewiseFunction *) a0->native.GetPointer()
+		);
+		return;
+	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[1]))
@@ -1041,6 +1054,20 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 			native->SetColor(
 				info[0]->Int32Value(),
 				(vtkColorTransferFunction *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetColor(
+				info[0]->Int32Value(),
+				(vtkPiecewiseFunction *) a1->native.GetPointer()
 			);
 			return;
 		}

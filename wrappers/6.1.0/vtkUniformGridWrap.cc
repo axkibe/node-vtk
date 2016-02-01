@@ -336,6 +336,10 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			info.GetReturnValue().Set(wo);
 			return;
 		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		vtkUniformGrid * r;
 		if(info.Length() != 1)
 		{

@@ -980,6 +980,46 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsString())
+			{
+				Nan::Utf8String a2(info[2]);
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetEntry(
+						info[0]->Int32Value(),
+						(vtkPolyData *) a1->native.GetPointer(),
+						*a2,
+						b3
+					);
+					return;
+				}
+			}
 			else if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkImageDataWrap *a2 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[2]->ToObject());

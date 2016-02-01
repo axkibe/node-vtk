@@ -660,7 +660,11 @@ void VtkTextActorWrap::SetConstrainedFontSize(const Nan::FunctionCallbackInfo<v8
 				}
 			}
 		}
-		else if(info.Length() > 1 && info[1]->IsInt32())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{

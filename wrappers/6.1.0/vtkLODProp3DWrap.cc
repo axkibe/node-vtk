@@ -318,7 +318,36 @@ void VtkLODProp3DWrap::AddLOD(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 			}
-			else if(info.Length() > 2 && info[2]->IsNumber())
+			else if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkTextureWrap *a2 = ObjectWrap::Unwrap<VtkTextureWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->AddLOD(
+						(vtkMapper *) a0->native.GetPointer(),
+						(vtkProperty *) a1->native.GetPointer(),
+						(vtkTexture *) a2->native.GetPointer(),
+						info[3]->NumberValue()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapper3DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkImageMapper3DWrap *a0 = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkImagePropertyWrap *a1 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
 			{
 				int r;
 				if(info.Length() != 3)
@@ -335,7 +364,79 @@ void VtkLODProp3DWrap::AddLOD(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 		}
-		else if(info.Length() > 1 && info[1]->IsNumber())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractVolumeMapperWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractVolumeMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AddLOD(
+					(vtkAbstractVolumeMapper *) a0->native.GetPointer(),
+					(vtkVolumeProperty *) a1->native.GetPointer(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkTextureWrap *a1 = ObjectWrap::Unwrap<VtkTextureWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AddLOD(
+					(vtkMapper *) a0->native.GetPointer(),
+					(vtkTexture *) a1->native.GetPointer(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AddLOD(
+					(vtkMapper *) a0->native.GetPointer(),
+					(vtkProperty *) a1->native.GetPointer(),
+					info[2]->NumberValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapper3DWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkImageMapper3DWrap *a0 = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			int r;
 			if(info.Length() != 2)
@@ -345,6 +446,44 @@ void VtkLODProp3DWrap::AddLOD(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			r = native->AddLOD(
 				(vtkImageMapper3D *) a0->native.GetPointer(),
+				info[1]->NumberValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractVolumeMapperWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractVolumeMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->AddLOD(
+				(vtkAbstractVolumeMapper *) a0->native.GetPointer(),
+				info[1]->NumberValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->AddLOD(
+				(vtkMapper *) a0->native.GetPointer(),
 				info[1]->NumberValue()
 			);
 			info.GetReturnValue().Set(Nan::New(r));
@@ -1170,6 +1309,34 @@ void VtkLODProp3DWrap::SetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractVolumeMapperWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkAbstractVolumeMapperWrap *a1 = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetLODMapper(
+				info[0]->Int32Value(),
+				(vtkAbstractVolumeMapper *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetLODMapper(
+				info[0]->Int32Value(),
+				(vtkMapper *) a1->native.GetPointer()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -1191,6 +1358,34 @@ void VtkLODProp3DWrap::SetLODProperty(const Nan::FunctionCallbackInfo<v8::Value>
 			native->SetLODProperty(
 				info[0]->Int32Value(),
 				(vtkImageProperty *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetLODProperty(
+				info[0]->Int32Value(),
+				(vtkVolumeProperty *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetLODProperty(
+				info[0]->Int32Value(),
+				(vtkProperty *) a1->native.GetPointer()
 			);
 			return;
 		}
