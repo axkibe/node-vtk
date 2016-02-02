@@ -318,6 +318,19 @@ void VtkUnstructuredGridVolumeMapperWrap::SetInputData(const Nan::FunctionCallba
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridBaseWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkUnstructuredGridBaseWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputData(
+			(vtkUnstructuredGridBase *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 

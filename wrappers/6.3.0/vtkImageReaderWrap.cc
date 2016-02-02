@@ -115,9 +115,69 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
 	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ComputeInverseTransformedExtent(
+				(int *)(a0->Buffer()->GetContents().Data()),
+				(int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[6];
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 6; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ComputeInverseTransformedExtent(
+				(int *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{
@@ -136,7 +196,7 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			int b1[6];
 			if( a1->Length() < 6 )
 			{
@@ -161,6 +221,26 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 			native->ComputeInverseTransformedExtent(
 				b0,
 				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ComputeInverseTransformedExtent(
+				b0,
+				(int *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
 		}
@@ -269,9 +349,34 @@ void VtkImageReaderWrap::OpenAndSeekFile(const Nan::FunctionCallbackInfo<v8::Val
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
 	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->OpenAndSeekFile(
+				(int *)(a0->Buffer()->GetContents().Data()),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{
@@ -343,9 +448,28 @@ void VtkImageReaderWrap::SetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& 
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
 	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDataVOI(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{

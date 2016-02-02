@@ -262,9 +262,28 @@ void VtkPlotPieWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& i
 	VtkPlotPieWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPieWrap>(info.Holder());
 	vtkPlotPie *native = (vtkPlotPie *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDimensions(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[4];
 		if( a0->Length() < 4 )
 		{

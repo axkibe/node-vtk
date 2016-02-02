@@ -713,28 +713,80 @@ void VtkImageResliceWrap::GetResliceAxesDirectionCosines(const Nan::FunctionCall
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
-		double b0[3];
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
 		if( a0->Length() < 3 )
 		{
 			Nan::ThrowError("Array too short.");
 			return;
 		}
 
-		for( i = 0; i < 3; i++ )
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			if( !a0->Get(i)->IsNumber() )
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
 			{
-				Nan::ThrowError("Array contents invalid.");
+				Nan::ThrowError("Array too short.");
 				return;
 			}
-			b0[i] = a0->Get(i)->NumberValue();
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					b2
+				);
+				return;
+			}
 		}
-		if(info.Length() > 1 && info[1]->IsArray())
+		else if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -753,7 +805,78 @@ void VtkImageResliceWrap::GetResliceAxesDirectionCosines(const Nan::FunctionCall
 			}
 			if(info.Length() > 2 && info[2]->IsArray())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				double b2[3];
 				if( a2->Length() < 3 )
 				{
@@ -783,6 +906,229 @@ void VtkImageResliceWrap::GetResliceAxesDirectionCosines(const Nan::FunctionCall
 				return;
 			}
 		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					b0,
+					(double *)(a1->Buffer()->GetContents().Data()),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					b1,
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					b0,
+					b1,
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetResliceAxesDirectionCosines(
+					b0,
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetResliceAxesDirectionCosines(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
@@ -801,9 +1147,28 @@ void VtkImageResliceWrap::GetResliceAxesOrigin(const Nan::FunctionCallbackInfo<v
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetResliceAxesOrigin(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -1271,9 +1636,28 @@ void VtkImageResliceWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8:
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackgroundColor(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[4];
 		if( a0->Length() < 4 )
 		{
@@ -1560,9 +1944,28 @@ void VtkImageResliceWrap::SetOutputExtent(const Nan::FunctionCallbackInfo<v8::Va
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputExtent(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{
@@ -1641,9 +2044,28 @@ void VtkImageResliceWrap::SetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Va
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputOrigin(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -1729,9 +2151,28 @@ void VtkImageResliceWrap::SetOutputSpacing(const Nan::FunctionCallbackInfo<v8::V
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputSpacing(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -1818,28 +2259,80 @@ void VtkImageResliceWrap::SetResliceAxesDirectionCosines(const Nan::FunctionCall
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
-		double b0[3];
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
 		if( a0->Length() < 3 )
 		{
 			Nan::ThrowError("Array too short.");
 			return;
 		}
 
-		for( i = 0; i < 3; i++ )
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			if( !a0->Get(i)->IsNumber() )
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
 			{
-				Nan::ThrowError("Array contents invalid.");
+				Nan::ThrowError("Array too short.");
 				return;
 			}
-			b0[i] = a0->Get(i)->NumberValue();
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					b2
+				);
+				return;
+			}
 		}
-		if(info.Length() > 1 && info[1]->IsArray())
+		else if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -1858,7 +2351,78 @@ void VtkImageResliceWrap::SetResliceAxesDirectionCosines(const Nan::FunctionCall
 			}
 			if(info.Length() > 2 && info[2]->IsArray())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					b1,
+					b2
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				double b2[3];
 				if( a2->Length() < 3 )
 				{
@@ -1887,6 +2451,229 @@ void VtkImageResliceWrap::SetResliceAxesDirectionCosines(const Nan::FunctionCall
 				);
 				return;
 			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					b0,
+					(double *)(a1->Buffer()->GetContents().Data()),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					(double *)(a0->Buffer()->GetContents().Data()),
+					b1,
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					b0,
+					b1,
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetResliceAxesDirectionCosines(
+					b0,
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResliceAxesDirectionCosines(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[9];
+		if( a0->Length() < 9 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 9; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
 		}
 		if(info.Length() != 1)
 		{
@@ -1950,9 +2737,28 @@ void VtkImageResliceWrap::SetResliceAxesOrigin(const Nan::FunctionCallbackInfo<v
 	VtkImageResliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceWrap>(info.Holder());
 	vtkImageReslice *native = (vtkImageReslice *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResliceAxesOrigin(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{

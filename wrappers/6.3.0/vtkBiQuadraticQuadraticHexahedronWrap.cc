@@ -134,9 +134,36 @@ void VtkBiQuadraticQuadraticHexahedronWrap::CellBoundary(const Nan::FunctionCall
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->CellBoundary(
+					info[0]->Int32Value(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -310,9 +337,69 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 	VtkBiQuadraticQuadraticHexahedronWrap *wrapper = ObjectWrap::Unwrap<VtkBiQuadraticQuadraticHexahedronWrap>(info.Holder());
 	vtkBiQuadraticQuadraticHexahedron *native = (vtkBiQuadraticQuadraticHexahedron *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateDerivs(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[72];
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 72; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateDerivs(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -331,7 +418,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[72];
 			if( a1->Length() < 72 )
 			{
@@ -359,6 +446,26 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateDerivs(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -368,9 +475,69 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 	VtkBiQuadraticQuadraticHexahedronWrap *wrapper = ObjectWrap::Unwrap<VtkBiQuadraticQuadraticHexahedronWrap>(info.Holder());
 	vtkBiQuadraticQuadraticHexahedron *native = (vtkBiQuadraticQuadraticHexahedron *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateFunctions(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[24];
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 24; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateFunctions(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -389,7 +556,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[24];
 			if( a1->Length() < 24 )
 			{
@@ -417,6 +584,26 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolateFunctions(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -426,9 +613,69 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 	VtkBiQuadraticQuadraticHexahedronWrap *wrapper = ObjectWrap::Unwrap<VtkBiQuadraticQuadraticHexahedronWrap>(info.Holder());
 	vtkBiQuadraticQuadraticHexahedron *native = (vtkBiQuadraticQuadraticHexahedron *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationDerivs(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[72];
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 72; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationDerivs(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -447,7 +694,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[72];
 			if( a1->Length() < 72 )
 			{
@@ -475,6 +722,26 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 72 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationDerivs(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -484,9 +751,69 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 	VtkBiQuadraticQuadraticHexahedronWrap *wrapper = ObjectWrap::Unwrap<VtkBiQuadraticQuadraticHexahedronWrap>(info.Holder());
 	vtkBiQuadraticQuadraticHexahedron *native = (vtkBiQuadraticQuadraticHexahedron *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationFunctions(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[24];
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 24; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationFunctions(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -505,7 +832,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[24];
 			if( a1->Length() < 24 )
 			{
@@ -530,6 +857,26 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 			native->InterpolationFunctions(
 				b0,
 				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 24 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->InterpolationFunctions(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
 		}

@@ -233,9 +233,29 @@ void VtkDiscretizableColorTransferFunctionWrap::GetColor(const Nan::FunctionCall
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColor(
+				info[0]->NumberValue(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -425,6 +445,38 @@ void VtkDiscretizableColorTransferFunctionWrap::MapScalars(const Nan::FunctionCa
 			}
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				vtkUnsignedCharArray * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->MapScalars(
+					(vtkDataArray *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+					VtkUnsignedCharArrayWrap::InitPtpl();
+				v8::Local<v8::Value> argv[1] =
+					{ Nan::New(vtkNodeJsNoWrap) };
+				v8::Local<v8::Function> cons =
+					Nan::New<v8::FunctionTemplate>(VtkUnsignedCharArrayWrap::ptpl)->GetFunction();
+				v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+				VtkUnsignedCharArrayWrap *w = new VtkUnsignedCharArrayWrap();
+				w->native = r;
+				w->Wrap(wo);
+				info.GetReturnValue().Set(wo);
+				return;
+			}
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -544,9 +596,28 @@ void VtkDiscretizableColorTransferFunctionWrap::SetNanColor(const Nan::FunctionC
 	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
 	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNanColor(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{

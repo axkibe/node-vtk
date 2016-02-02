@@ -107,9 +107,39 @@ void VtkGeoAlignedImageRepresentationWrap::GetBestImageForBounds(const Nan::Func
 	VtkGeoAlignedImageRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageRepresentationWrap>(info.Holder());
 	vtkGeoAlignedImageRepresentation *native = (vtkGeoAlignedImageRepresentation *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		vtkGeoImageNode * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetBestImageForBounds(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+			VtkGeoImageNodeWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkGeoImageNodeWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkGeoImageNodeWrap *w = new VtkGeoImageNodeWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[4];
 		if( a0->Length() < 4 )
 		{

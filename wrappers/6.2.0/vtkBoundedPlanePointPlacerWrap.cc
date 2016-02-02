@@ -180,47 +180,97 @@ void VtkBoundedPlanePointPlacerWrap::ComputeWorldPosition(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
-			double b1[2];
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
 			if( a1->Length() < 2 )
 			{
 				Nan::ThrowError("Array too short.");
 				return;
 			}
 
-			for( i = 0; i < 2; i++ )
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
 			{
-				if( !a1->Get(i)->IsNumber() )
-				{
-					Nan::ThrowError("Array contents invalid.");
-					return;
-				}
-				b1[i] = a1->Get(i)->NumberValue();
-			}
-			if(info.Length() > 2 && info[2]->IsArray())
-			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
-				double b2[3];
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
 				if( a2->Length() < 3 )
 				{
 					Nan::ThrowError("Array too short.");
 					return;
 				}
 
-				for( i = 0; i < 3; i++ )
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
 				{
-					if( !a2->Get(i)->IsNumber() )
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
 					{
-						Nan::ThrowError("Array contents invalid.");
+						Nan::ThrowError("Array too short.");
 						return;
 					}
-					b2[i] = a2->Get(i)->NumberValue();
+
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+					else if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
 				}
-				if(info.Length() > 3 && info[3]->IsArray())
+				else if(info.Length() > 3 && info[3]->IsArray())
 				{
-					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
 					double b3[3];
 					if( a3->Length() < 3 )
 					{
@@ -239,7 +289,177 @@ void VtkBoundedPlanePointPlacerWrap::ComputeWorldPosition(const Nan::FunctionCal
 					}
 					if(info.Length() > 4 && info[4]->IsArray())
 					{
-						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							b3,
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							b2,
+							b3,
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
 						double b4[9];
 						if( a4->Length() < 9 )
 						{
@@ -272,6 +492,933 @@ void VtkBoundedPlanePointPlacerWrap::ComputeWorldPosition(const Nan::FunctionCal
 						info.GetReturnValue().Set(Nan::New(r));
 						return;
 					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							(double *)(a2->Buffer()->GetContents().Data()),
+							b3,
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							b2,
+							(double *)(a3->Buffer()->GetContents().Data()),
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							b2,
+							(double *)(a3->Buffer()->GetContents().Data()),
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[9];
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 9; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							(double *)(a2->Buffer()->GetContents().Data()),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							b3,
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							b2,
+							b3,
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							b2,
+							b3,
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[3];
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 3; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							(double *)(a2->Buffer()->GetContents().Data()),
+							b3,
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(double *)(a1->Buffer()->GetContents().Data()),
+							b2,
+							(double *)(a3->Buffer()->GetContents().Data()),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							b2,
+							(double *)(a3->Buffer()->GetContents().Data()),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 9 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->ComputeWorldPosition(
+							(vtkRenderer *) a0->native.GetPointer(),
+							b1,
+							(double *)(a2->Buffer()->GetContents().Data()),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						(double *)(a1->Buffer()->GetContents().Data()),
+						(double *)(a2->Buffer()->GetContents().Data()),
+						(double *)(a3->Buffer()->GetContents().Data())
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[9];
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 9; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						(double *)(a1->Buffer()->GetContents().Data()),
+						(double *)(a2->Buffer()->GetContents().Data()),
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[9];
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 9; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						(double *)(a1->Buffer()->GetContents().Data()),
+						b2,
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[9];
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 9; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
 					int r;
 					if(info.Length() != 4)
 					{
@@ -283,6 +1430,202 @@ void VtkBoundedPlanePointPlacerWrap::ComputeWorldPosition(const Nan::FunctionCal
 						b1,
 						b2,
 						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					double b3[9];
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 9; i++ )
+					{
+						if( !a3->Get(i)->IsNumber() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->NumberValue();
+					}
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						b1,
+						(double *)(a2->Buffer()->GetContents().Data()),
+						b3
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						(double *)(a1->Buffer()->GetContents().Data()),
+						b2,
+						(double *)(a3->Buffer()->GetContents().Data())
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[2];
+			if( a1->Length() < 2 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 2; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						b1,
+						b2,
+						(double *)(a3->Buffer()->GetContents().Data())
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
+				{
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 9 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->ComputeWorldPosition(
+						(vtkRenderer *) a0->native.GetPointer(),
+						b1,
+						(double *)(a2->Buffer()->GetContents().Data()),
+						(double *)(a3->Buffer()->GetContents().Data())
 					);
 					info.GetReturnValue().Set(Nan::New(r));
 					return;
@@ -534,6 +1877,19 @@ void VtkBoundedPlanePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallba
 		);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBoundingPlanes(
+			(vtkPlaneCollection *) a0->native.GetPointer()
+		);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -651,9 +2007,75 @@ void VtkBoundedPlanePointPlacerWrap::UpdateWorldPosition(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 9 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->UpdateWorldPosition(
+					(vtkRenderer *) a0->native.GetPointer(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[9];
+				if( a2->Length() < 9 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 9; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->UpdateWorldPosition(
+					(vtkRenderer *) a0->native.GetPointer(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					b2
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -672,7 +2094,7 @@ void VtkBoundedPlanePointPlacerWrap::UpdateWorldPosition(const Nan::FunctionCall
 			}
 			if(info.Length() > 2 && info[2]->IsArray())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				double b2[9];
 				if( a2->Length() < 9 )
 				{
@@ -703,6 +2125,29 @@ void VtkBoundedPlanePointPlacerWrap::UpdateWorldPosition(const Nan::FunctionCall
 				info.GetReturnValue().Set(Nan::New(r));
 				return;
 			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 9 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->UpdateWorldPosition(
+					(vtkRenderer *) a0->native.GetPointer(),
+					b1,
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -713,9 +2158,73 @@ void VtkBoundedPlanePointPlacerWrap::ValidateWorldPosition(const Nan::FunctionCa
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ValidateWorldPosition(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[9];
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 9; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ValidateWorldPosition(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -734,7 +2243,7 @@ void VtkBoundedPlanePointPlacerWrap::ValidateWorldPosition(const Nan::FunctionCa
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[9];
 			if( a1->Length() < 9 )
 			{
@@ -763,6 +2272,69 @@ void VtkBoundedPlanePointPlacerWrap::ValidateWorldPosition(const Nan::FunctionCa
 			);
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 9 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ValidateWorldPosition(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ValidateWorldPosition(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
 		}
 		int r;
 		if(info.Length() != 1)

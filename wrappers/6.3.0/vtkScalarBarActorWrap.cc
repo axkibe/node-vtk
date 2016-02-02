@@ -1038,9 +1038,33 @@ void VtkScalarBarActorWrap::GetScalarBarRect(const Nan::FunctionCallbackInfo<v8:
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetScalarBarRect(
+				(int *)(a0->Buffer()->GetContents().Data()),
+				(vtkViewport *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[4];
 		if( a0->Length() < 4 )
 		{

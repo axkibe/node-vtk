@@ -252,7 +252,26 @@ void VtkCommunicatorWrap::Broadcast(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info.Holder());
 	vtkCommunicator *native = (vtkCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Broadcast(
+				(vtkDataArray *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
@@ -341,7 +360,39 @@ void VtkCommunicatorWrap::GatherV(const Nan::FunctionCallbackInfo<v8::Value>& in
 					}
 				}
 			}
-			else if(info.Length() > 2 && info[2]->IsInt32())
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkSmartPointer<vtkDataObject>Wrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkSmartPointer<vtkDataObject>Wrap *a1 = ObjectWrap::Unwrap<VtkSmartPointer<vtkDataObject>Wrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GatherV(
+					(vtkDataObject *) a0->native.GetPointer(),
+					(vtkSmartPointer<vtkDataObject> *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
 			{
 				int r;
 				if(info.Length() != 3)
@@ -545,6 +596,29 @@ void VtkCommunicatorWrap::Receive(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->Receive(
+					(vtkDataObject *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -698,6 +772,29 @@ void VtkCommunicatorWrap::Send(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				r = native->Send(
 					(vtkDataArray *) a0->native.GetPointer(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->Send(
+					(vtkDataObject *) a0->native.GetPointer(),
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);

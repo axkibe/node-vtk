@@ -155,9 +155,34 @@ void VtkPointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8:
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->FindClosestNPoints(
+					info[0]->Int32Value(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -201,9 +226,38 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->FindDistributedPoints(
+						info[0]->Int32Value(),
+						(double *)(a1->Buffer()->GetContents().Data()),
+						(vtkIdList *) a2->native.GetPointer(),
+						info[3]->Int32Value()
+					);
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -281,9 +335,34 @@ void VtkPointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->FindPointsWithinRadius(
+					info[0]->NumberValue(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -440,9 +519,91 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			vtkIdList * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointsInBucket(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(int *)(a1->Buffer()->GetContents().Data())
+			);
+				VtkIdListWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkIdListWrap *w = new VtkIdListWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			vtkIdList * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointsInBucket(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+				VtkIdListWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkIdListWrap *w = new VtkIdListWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		double b0[3];
 		if( a0->Length() < 3 )
 		{
@@ -461,7 +622,7 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 		}
 		if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			int b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -500,6 +661,37 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 			info.GetReturnValue().Set(wo);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			vtkIdList * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetPointsInBucket(
+				b0,
+				(int *)(a1->Buffer()->GetContents().Data())
+			);
+				VtkIdListWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkIdListWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkIdListWrap *w = new VtkIdListWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -512,9 +704,31 @@ void VtkPointLocatorWrap::InitPointInsertion(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->InitPointInsertion(
+				(vtkPoints *) a0->native.GetPointer(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[6];
 			if( a1->Length() < 6 )
 			{
@@ -641,9 +855,28 @@ void VtkPointLocatorWrap::SetDivisions(const Nan::FunctionCallbackInfo<v8::Value
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDivisions(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[3];
 		if( a0->Length() < 3 )
 		{

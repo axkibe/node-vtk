@@ -699,9 +699,28 @@ void VtkExtractTensorComponentsWrap::SetNormalComponents(const Nan::FunctionCall
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNormalComponents(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{
@@ -825,9 +844,28 @@ void VtkExtractTensorComponentsWrap::SetScalarComponents(const Nan::FunctionCall
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 2 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetScalarComponents(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[2];
 		if( a0->Length() < 2 )
 		{
@@ -933,9 +971,28 @@ void VtkExtractTensorComponentsWrap::SetTCoordComponents(const Nan::FunctionCall
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTCoordComponents(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{
@@ -1002,9 +1059,28 @@ void VtkExtractTensorComponentsWrap::SetVectorComponents(const Nan::FunctionCall
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetVectorComponents(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[6];
 		if( a0->Length() < 6 )
 		{

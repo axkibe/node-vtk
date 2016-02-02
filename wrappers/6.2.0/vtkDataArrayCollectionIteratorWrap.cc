@@ -214,7 +214,20 @@ void VtkDataArrayCollectionIteratorWrap::SetCollection(const Nan::FunctionCallba
 {
 	VtkDataArrayCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataArrayCollectionIteratorWrap>(info.Holder());
 	vtkDataArrayCollectionIterator *native = (vtkDataArrayCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayCollectionWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkDataArrayCollectionWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayCollectionWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCollection(
+			(vtkDataArrayCollection *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
 		if(info.Length() != 1)

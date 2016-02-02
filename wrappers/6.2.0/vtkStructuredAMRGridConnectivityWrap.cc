@@ -205,9 +205,29 @@ void VtkStructuredAMRGridConnectivityWrap::GetGhostedExtent(const Nan::FunctionC
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsInt32Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 6 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetGhostedExtent(
+				info[0]->Int32Value(),
+				(int *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			int b1[6];
 			if( a1->Length() < 6 )
 			{
@@ -330,9 +350,56 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() > 3 && info[3]->IsArray())
+				if(info.Length() > 3 && info[3]->IsInt32Array())
 				{
-					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					v8::Local<v8::Int32Array>a3(v8::Local<v8::Int32Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 6 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[5]))
+						{
+							VtkUnsignedCharArrayWrap *a5 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[5]->ToObject());
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[6]))
+							{
+								VtkPointDataWrap *a6 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[6]->ToObject());
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[7]))
+								{
+									VtkCellDataWrap *a7 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[7]->ToObject());
+									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[8]))
+									{
+										VtkPointsWrap *a8 = ObjectWrap::Unwrap<VtkPointsWrap>(info[8]->ToObject());
+										if(info.Length() != 9)
+										{
+											Nan::ThrowError("Too many parameters.");
+											return;
+										}
+										native->RegisterGrid(
+											info[0]->Int32Value(),
+											info[1]->Int32Value(),
+											info[2]->Int32Value(),
+											(int *)(a3->Buffer()->GetContents().Data()),
+											(vtkUnsignedCharArray *) a4->native.GetPointer(),
+											(vtkUnsignedCharArray *) a5->native.GetPointer(),
+											(vtkPointData *) a6->native.GetPointer(),
+											(vtkCellData *) a7->native.GetPointer(),
+											(vtkPoints *) a8->native.GetPointer()
+										);
+										return;
+									}
+								}
+							}
+						}
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
 					int b3[6];
 					if( a3->Length() < 6 )
 					{
@@ -388,9 +455,55 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 					}
 				}
 			}
+			else if(info.Length() > 2 && info[2]->IsInt32Array())
+			{
+				v8::Local<v8::Int32Array>a2(v8::Local<v8::Int32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkUnsignedCharArrayWrap *a3 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkUnsignedCharArrayWrap *a4 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[4]->ToObject());
+						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[5]))
+						{
+							VtkPointDataWrap *a5 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[5]->ToObject());
+							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[6]))
+							{
+								VtkCellDataWrap *a6 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[6]->ToObject());
+								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[7]))
+								{
+									VtkPointsWrap *a7 = ObjectWrap::Unwrap<VtkPointsWrap>(info[7]->ToObject());
+									if(info.Length() != 8)
+									{
+										Nan::ThrowError("Too many parameters.");
+										return;
+									}
+									native->RegisterGrid(
+										info[0]->Int32Value(),
+										info[1]->Int32Value(),
+										(int *)(a2->Buffer()->GetContents().Data()),
+										(vtkUnsignedCharArray *) a3->native.GetPointer(),
+										(vtkUnsignedCharArray *) a4->native.GetPointer(),
+										(vtkPointData *) a5->native.GetPointer(),
+										(vtkCellData *) a6->native.GetPointer(),
+										(vtkPoints *) a7->native.GetPointer()
+									);
+									return;
+								}
+							}
+						}
+					}
+				}
+			}
 			else if(info.Length() > 2 && info[2]->IsArray())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				int b2[6];
 				if( a2->Length() < 6 )
 				{

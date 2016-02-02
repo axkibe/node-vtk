@@ -189,7 +189,39 @@ void VtkSortDataArrayWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkSortDataArrayWrap *wrapper = ObjectWrap::Unwrap<VtkSortDataArrayWrap>(info.Holder());
 	vtkSortDataArray *native = (vtkSortDataArray *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkAbstractArrayWrap *a1 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Sort(
+				(vtkAbstractArray *) a0->native.GetPointer(),
+				(vtkAbstractArray *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Sort(
+				(vtkAbstractArray *) a0->native.GetPointer(),
+				(vtkIdList *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[1]))
@@ -206,6 +238,24 @@ void VtkSortDataArrayWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value>& info
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Sort(
+				(vtkIdList *) a0->native.GetPointer(),
+				(vtkIdList *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
@@ -213,6 +263,19 @@ void VtkSortDataArrayWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		native->Sort(
 			(vtkAbstractArray *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Sort(
+			(vtkIdList *) a0->native.GetPointer()
 		);
 		return;
 	}

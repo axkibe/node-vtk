@@ -115,7 +115,27 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Build(
+				(vtkUnstructuredGrid *) a0->native.GetPointer(),
+				*a1
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsString())
@@ -134,7 +154,11 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
 			int r;
@@ -145,6 +169,26 @@ void VtkReebGraphWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			r = native->Build(
 				(vtkUnstructuredGrid *) a0->native.GetPointer(),
+				(vtkDataArray *) a1->native.GetPointer()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Build(
+				(vtkPolyData *) a0->native.GetPointer(),
 				(vtkDataArray *) a1->native.GetPointer()
 			);
 			info.GetReturnValue().Set(Nan::New(r));

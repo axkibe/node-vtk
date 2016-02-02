@@ -172,6 +172,34 @@ void VtkTransformInterpolatorWrap::AddTransform(const Nan::FunctionCallbackInfo<
 			);
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddTransform(
+				info[0]->NumberValue(),
+				(vtkMatrix4x4 *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkTransformWrap *a1 = ObjectWrap::Unwrap<VtkTransformWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddTransform(
+				info[0]->NumberValue(),
+				(vtkTransform *) a1->native.GetPointer()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

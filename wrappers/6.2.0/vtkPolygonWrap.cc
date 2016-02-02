@@ -146,9 +146,36 @@ void VtkPolygonWrap::CellBoundary(const Nan::FunctionCallbackInfo<v8::Value>& in
 	size_t i;
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() > 1 && info[1]->IsArray())
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->CellBoundary(
+					info[0]->Int32Value(),
+					(double *)(a1->Buffer()->GetContents().Data()),
+					(vtkIdList *) a2->native.GetPointer()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -212,9 +239,30 @@ void VtkPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsArray())
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->ComputeCentroid(
+					(vtkIdTypeArray *) a0->native.GetPointer(),
+					(vtkPoints *) a1->native.GetPointer(),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				double b2[3];
 				if( a2->Length() < 3 )
 				{
@@ -259,9 +307,30 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsArray())
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->ComputeNormal(
+					(vtkIdTypeArray *) a0->native.GetPointer(),
+					(vtkPoints *) a1->native.GetPointer(),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				double b2[3];
 				if( a2->Length() < 3 )
 				{
@@ -291,9 +360,33 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->ComputeNormal(
+				(vtkPoints *) a0->native.GetPointer(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
 		else if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			double b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -482,9 +575,79 @@ void VtkPolygonWrap::IntersectConvex2DCells(const Nan::FunctionCallbackInfo<v8::
 			VtkCellWrap *a1 = ObjectWrap::Unwrap<VtkCellWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsArray())
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
 				{
-					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->IntersectConvex2DCells(
+							(vtkCell *) a0->native.GetPointer(),
+							(vtkCell *) a1->native.GetPointer(),
+							info[2]->NumberValue(),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+					else if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->IntersectConvex2DCells(
+							(vtkCell *) a0->native.GetPointer(),
+							(vtkCell *) a1->native.GetPointer(),
+							info[2]->NumberValue(),
+							(double *)(a3->Buffer()->GetContents().Data()),
+							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
 					double b3[3];
 					if( a3->Length() < 3 )
 					{
@@ -503,7 +666,7 @@ void VtkPolygonWrap::IntersectConvex2DCells(const Nan::FunctionCallbackInfo<v8::
 					}
 					if(info.Length() > 4 && info[4]->IsArray())
 					{
-						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
 						double b4[3];
 						if( a4->Length() < 3 )
 						{
@@ -532,6 +695,31 @@ void VtkPolygonWrap::IntersectConvex2DCells(const Nan::FunctionCallbackInfo<v8::
 							info[2]->NumberValue(),
 							b3,
 							b4
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+					else if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->IntersectConvex2DCells(
+							(vtkCell *) a0->native.GetPointer(),
+							(vtkCell *) a1->native.GetPointer(),
+							info[2]->NumberValue(),
+							b3,
+							(double *)(a4->Buffer()->GetContents().Data())
 						);
 						info.GetReturnValue().Set(Nan::New(r));
 						return;

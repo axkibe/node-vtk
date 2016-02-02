@@ -1441,9 +1441,30 @@ void VtkDataReaderWrap::ReadLine(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt8Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int8Array>a0(v8::Local<v8::Int8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 256 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ReadLine(
+			(char *)(a0->Buffer()->GetContents().Data())
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		char b0[256];
 		if( a0->Length() < 256 )
 		{
@@ -1546,6 +1567,25 @@ void VtkDataReaderWrap::ReadPoints(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPointSetWrap *a0 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ReadPoints(
+				(vtkPointSet *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -1580,9 +1620,30 @@ void VtkDataReaderWrap::ReadString(const Nan::FunctionCallbackInfo<v8::Value>& i
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt8Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int8Array>a0(v8::Local<v8::Int8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 256 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->ReadString(
+			(char *)(a0->Buffer()->GetContents().Data())
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		char b0[256];
 		if( a0->Length() < 256 )
 		{

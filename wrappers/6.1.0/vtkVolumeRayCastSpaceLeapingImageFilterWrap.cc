@@ -179,28 +179,90 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
-		int b0[6];
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
 		if( a0->Length() < 6 )
 		{
 			Nan::ThrowError("Array too short.");
 			return;
 		}
 
-		for( i = 0; i < 6; i++ )
+		if(info.Length() > 1 && info[1]->IsInt32Array())
 		{
-			if( !a0->Get(i)->IsInt32() )
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
 			{
-				Nan::ThrowError("Array contents invalid.");
+				Nan::ThrowError("Array too short.");
 				return;
 			}
-			b0[i] = a0->Get(i)->Int32Value();
+
+			if(info.Length() > 2 && info[2]->IsInt32Array())
+			{
+				v8::Local<v8::Int32Array>a2(v8::Local<v8::Int32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						(int *)(a1->Buffer()->GetContents().Data()),
+						(int *)(a2->Buffer()->GetContents().Data()),
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						(int *)(a1->Buffer()->GetContents().Data()),
+						b2,
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
 		}
-		if(info.Length() > 1 && info[1]->IsArray())
+		else if(info.Length() > 1 && info[1]->IsArray())
 		{
-			v8::Local<v8::Array>a1( v8::Local<v8::Array>::Cast( info[1]->ToObject() ) );
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
 			int b1[3];
 			if( a1->Length() < 3 )
 			{
@@ -219,7 +281,83 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 			}
 			if(info.Length() > 2 && info[2]->IsArray())
 			{
-				v8::Local<v8::Array>a2( v8::Local<v8::Array>::Cast( info[2]->ToObject() ) );
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						b1,
+						b2,
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
 				int b2[6];
 				if( a2->Length() < 6 )
 				{
@@ -248,6 +386,210 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 						b0,
 						b1,
 						b2,
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				int b2[6];
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 6; i++ )
+				{
+					if( !a2->Get(i)->IsInt32() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->Int32Value();
+				}
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						b0,
+						(int *)(a1->Buffer()->GetContents().Data()),
+						b2,
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsInt32Array())
+	{
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsInt32Array())
+			{
+				v8::Local<v8::Int32Array>a2(v8::Local<v8::Int32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						b1,
+						(int *)(a2->Buffer()->GetContents().Data()),
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		int b0[6];
+		if( a0->Length() < 6 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 6; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsInt32Array())
+			{
+				v8::Local<v8::Int32Array>a2(v8::Local<v8::Int32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						b0,
+						b1,
+						(int *)(a2->Buffer()->GetContents().Data()),
+						(vtkImageData *) a3->native.GetPointer()
+					);
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsInt32Array())
+			{
+				v8::Local<v8::Int32Array>a2(v8::Local<v8::Int32Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 6 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->ComputeInputExtentsForOutput(
+						b0,
+						(int *)(a1->Buffer()->GetContents().Data()),
+						(int *)(a2->Buffer()->GetContents().Data()),
 						(vtkImageData *) a3->native.GetPointer()
 					);
 					return;
@@ -567,9 +909,28 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableSize(const Nan::Functi
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsArray())
+	if(info.Length() > 0 && info[0]->IsInt32Array())
 	{
-		v8::Local<v8::Array>a0( v8::Local<v8::Array>::Cast( info[0]->ToObject() ) );
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTableSize(
+			(int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
 		int b0[4];
 		if( a0->Length() < 4 )
 		{

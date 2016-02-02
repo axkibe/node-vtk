@@ -184,9 +184,32 @@ void VtkInteractorObserverWrap::ComputeDisplayToWorld(const Nan::FunctionCallbac
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() > 4 && info[4]->IsArray())
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
 					{
-						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 4 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->ComputeDisplayToWorld(
+							(vtkRenderer *) a0->native.GetPointer(),
+							info[1]->NumberValue(),
+							info[2]->NumberValue(),
+							info[3]->NumberValue(),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						return;
+					}
+					else if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
 						double b4[4];
 						if( a4->Length() < 4 )
 						{
@@ -238,9 +261,32 @@ void VtkInteractorObserverWrap::ComputeWorldToDisplay(const Nan::FunctionCallbac
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() > 4 && info[4]->IsArray())
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
 					{
-						v8::Local<v8::Array>a4( v8::Local<v8::Array>::Cast( info[4]->ToObject() ) );
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->ComputeWorldToDisplay(
+							(vtkRenderer *) a0->native.GetPointer(),
+							info[1]->NumberValue(),
+							info[2]->NumberValue(),
+							info[3]->NumberValue(),
+							(double *)(a4->Buffer()->GetContents().Data())
+						);
+						return;
+					}
+					else if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
 						double b4[3];
 						if( a4->Length() < 3 )
 						{

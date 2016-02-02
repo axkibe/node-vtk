@@ -213,9 +213,33 @@ void VtkProp3DAxisFollowerWrap::AutoScale(const Nan::FunctionCallbackInfo<v8::Va
 			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() > 3 && info[3]->IsArray())
+				if(info.Length() > 3 && info[3]->IsFloat64Array())
 				{
-					v8::Local<v8::Array>a3( v8::Local<v8::Array>::Cast( info[3]->ToObject() ) );
+					v8::Local<v8::Float64Array>a3(v8::Local<v8::Float64Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 3 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					double r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->AutoScale(
+						(vtkViewport *) a0->native.GetPointer(),
+						(vtkCamera *) a1->native.GetPointer(),
+						info[2]->NumberValue(),
+						(double *)(a3->Buffer()->GetContents().Data())
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
 					double b3[3];
 					if( a3->Length() < 3 )
 					{

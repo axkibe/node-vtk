@@ -171,9 +171,79 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() > 5 && info[5]->IsArray())
+						if(info.Length() > 5 && info[5]->IsFloat64Array())
 						{
-							v8::Local<v8::Array>a5( v8::Local<v8::Array>::Cast( info[5]->ToObject() ) );
+							v8::Local<v8::Float64Array>a5(v8::Local<v8::Float64Array>::Cast(info[5]->ToObject()));
+							if( a5->Length() < 3 )
+							{
+								Nan::ThrowError("Array too short.");
+								return;
+							}
+
+							if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->CreateCanonicalView(
+									(vtkRenderer *) a0->native.GetPointer(),
+									(vtkVolume *) a1->native.GetPointer(),
+									(vtkVolume *) a2->native.GetPointer(),
+									(vtkImageData *) a3->native.GetPointer(),
+									info[4]->Int32Value(),
+									(double *)(a5->Buffer()->GetContents().Data()),
+									(double *)(a6->Buffer()->GetContents().Data())
+								);
+								return;
+							}
+							else if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->CreateCanonicalView(
+									(vtkRenderer *) a0->native.GetPointer(),
+									(vtkVolume *) a1->native.GetPointer(),
+									(vtkVolume *) a2->native.GetPointer(),
+									(vtkImageData *) a3->native.GetPointer(),
+									info[4]->Int32Value(),
+									(double *)(a5->Buffer()->GetContents().Data()),
+									b6
+								);
+								return;
+							}
+						}
+						else if(info.Length() > 5 && info[5]->IsArray())
+						{
+							v8::Local<v8::Array>a5(v8::Local<v8::Array>::Cast(info[5]->ToObject()));
 							double b5[3];
 							if( a5->Length() < 3 )
 							{
@@ -192,7 +262,7 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 							}
 							if(info.Length() > 6 && info[6]->IsArray())
 							{
-								v8::Local<v8::Array>a6( v8::Local<v8::Array>::Cast( info[6]->ToObject() ) );
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
 								double b6[3];
 								if( a6->Length() < 3 )
 								{
@@ -222,6 +292,31 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 									info[4]->Int32Value(),
 									b5,
 									b6
+								);
+								return;
+							}
+							else if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() != 7)
+								{
+									Nan::ThrowError("Too many parameters.");
+									return;
+								}
+								native->CreateCanonicalView(
+									(vtkRenderer *) a0->native.GetPointer(),
+									(vtkVolume *) a1->native.GetPointer(),
+									(vtkVolume *) a2->native.GetPointer(),
+									(vtkImageData *) a3->native.GetPointer(),
+									info[4]->Int32Value(),
+									b5,
+									(double *)(a6->Buffer()->GetContents().Data())
 								);
 								return;
 							}

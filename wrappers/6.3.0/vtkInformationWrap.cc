@@ -177,7 +177,11 @@ void VtkInformationWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>& info
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[1]))
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationUnsignedLongKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -191,7 +195,165 @@ void VtkInformationWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>& info
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsNumber())
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationObjectBaseKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationObjectBaseKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationStringVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationStringKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationIntegerVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationIntegerKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationInformationVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationInformationKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDoubleVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDoubleVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDoubleKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDoubleKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDataObjectKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDataObjectKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Append(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() != 2)
 			{
@@ -204,7 +366,11 @@ void VtkInformationWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>& info
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsInt32())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() != 2)
 			{
@@ -239,6 +405,160 @@ void VtkInformationWrap::AppendUnique(const Nan::FunctionCallbackInfo<v8::Value>
 			native->AppendUnique(
 				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
 				(vtkInformationUnsignedLongKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationObjectBaseKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationObjectBaseKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationStringVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationStringKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationIntegerVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationIntegerKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationInformationVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationInformationKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDoubleVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDoubleVectorKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDoubleKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDoubleKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDataObjectKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationDataObjectKey *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AppendUnique(
+				(vtkInformationKeyVectorKey *) a0->native.GetPointer(),
+				(vtkInformationKey *) a1->native.GetPointer()
 			);
 			return;
 		}
@@ -336,6 +656,222 @@ void VtkInformationWrap::CopyEntry(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationStringVectorKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationStringKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationStringKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationRequestKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationRequestKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationRequestKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationRequestKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationIntegerVectorKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationIntegerKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationIntegerKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationInformationVectorKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationInformationKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationVariantVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationVariantVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationVariantVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationVariantVectorKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationVariantKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationVariantKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationVariantKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationVariantKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDoubleVectorKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationDoubleVectorKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationDataObjectKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationDataObjectKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationKeyWrap *a1 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->CopyEntry(
+					(vtkInformation *) a0->native.GetPointer(),
+					(vtkInformationKey *) a1->native.GetPointer(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -371,6 +907,139 @@ void VtkInformationWrap::Get(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			info.GetReturnValue().Set(wo);
 			return;
 		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			double r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Get(
+				(vtkInformationDoubleVectorKey *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			char const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Get(
+				(vtkInformationStringVectorKey *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Get(
+				(vtkInformationIntegerVectorKey *) a0->native.GetPointer(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDataObjectKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[0]->ToObject());
+		vtkDataObject * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationDataObjectKey *) a0->native.GetPointer()
+		);
+			VtkDataObjectWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkDataObjectWrap *w = new VtkDataObjectWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationObjectBaseKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[0]->ToObject());
+		vtkObjectBase * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationObjectBaseKey *) a0->native.GetPointer()
+		);
+			VtkObjectBaseWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkObjectBaseWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkObjectBaseWrap *w = new VtkObjectBaseWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationVector * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationInformationVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationVectorWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationVectorWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationVectorWrap *w = new VtkInformationVectorWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[0]->ToObject());
 		vtkInformation * r;
 		if(info.Length() != 1)
 		{
@@ -390,6 +1059,51 @@ void VtkInformationWrap::Get(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[0]->ToObject());
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationStringKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationDoubleKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Get(
+			(vtkInformationIntegerKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -413,7 +1127,319 @@ void VtkInformationWrap::GetKey(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkInformationWrap *wrapper = ObjectWrap::Unwrap<VtkInformationWrap>(info.Holder());
 	vtkInformation *native = (vtkInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationVariantVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationVariantKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationUnsignedLongKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationUnsignedLongKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationStringVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationStringKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationRequestKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationRequestKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationRequestKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationRequestKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationIntegerVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationIntegerKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationInformationVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationInformationKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationDoubleVectorKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
+		vtkInformationKey * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetKey(
+			(vtkInformationDoubleKey *) a0->native.GetPointer()
+		);
+			VtkInformationKeyWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationKeyWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationKeyWrap *w = new VtkInformationKeyWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationDataObjectKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[0]->ToObject());
 		vtkInformationKey * r;
@@ -481,7 +1507,52 @@ void VtkInformationWrap::Has(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInformationWrap *wrapper = ObjectWrap::Unwrap<VtkInformationWrap>(info.Holder());
 	vtkInformation *native = (vtkInformation *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDataObjectKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationDataObjectKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationObjectBaseKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationObjectBaseKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationInformationVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[0]->ToObject());
 		int r;
@@ -492,6 +1563,216 @@ void VtkInformationWrap::Has(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->Has(
 			(vtkInformationInformationKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationStringKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationKeyVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationVariantVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationDoubleVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationUnsignedLongKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationUnsignedLongKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerPointerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerPointerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerPointerKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationIntegerPointerKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationStringVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationIntegerVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationVariantKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationDoubleKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIdTypeKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIdTypeKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIdTypeKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationIdTypeKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationIntegerKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationRequestKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationRequestKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationRequestKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationRequestKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Has(
+			(vtkInformationKey *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -536,6 +1817,81 @@ void VtkInformationWrap::Length(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		r = native->Length(
 			(vtkInformationKeyVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Length(
+			(vtkInformationVariantVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Length(
+			(vtkInformationDoubleVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerPointerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerPointerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerPointerKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Length(
+			(vtkInformationIntegerPointerKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Length(
+			(vtkInformationStringVectorKey *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->Length(
+			(vtkInformationIntegerVectorKey *) a0->native.GetPointer()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -612,6 +1968,49 @@ void VtkInformationWrap::Remove(const Nan::FunctionCallbackInfo<v8::Value>& info
 			);
 			return;
 		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDataObjectKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationDataObjectKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationObjectBaseKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationObjectBaseKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationInformationVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
@@ -619,6 +2018,188 @@ void VtkInformationWrap::Remove(const Nan::FunctionCallbackInfo<v8::Value>& info
 		}
 		native->Remove(
 			(vtkInformationInformationKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationStringKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationKeyVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationVariantVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationDoubleVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationUnsignedLongKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationUnsignedLongKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationUnsignedLongKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationUnsignedLongKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerPointerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerPointerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerPointerKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationIntegerPointerKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationStringVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationIntegerVectorKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVariantKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationVariantKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationVariantKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationVariantKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationDoubleKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIdTypeKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIdTypeKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIdTypeKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationIdTypeKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationIntegerKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationRequestKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationRequestKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationRequestKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationRequestKey *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationKeyWrap>(info[0]->ToObject());
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Remove(
+			(vtkInformationKey *) a0->native.GetPointer()
 		);
 		return;
 	}
@@ -680,6 +2261,14 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				);
 				return;
 			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationStringKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationStringKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationStringKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsString())
+		{
+			Nan::Utf8String a1(info[1]);
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -691,7 +2280,65 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDataObjectKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDataObjectKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDataObjectKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Set(
+				(vtkInformationDataObjectKey *) a0->native.GetPointer(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationObjectBaseKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationObjectBaseKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationObjectBaseKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectBaseWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkObjectBaseWrap *a1 = ObjectWrap::Unwrap<VtkObjectBaseWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Set(
+				(vtkInformationObjectBaseKey *) a0->native.GetPointer(),
+				(vtkObjectBase *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkInformationVectorWrap *a1 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[1]->ToObject());
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Set(
+				(vtkInformationInformationVectorKey *) a0->native.GetPointer(),
+				(vtkInformationVector *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationInformationKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationInformationKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationInformationKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() != 2)
@@ -705,7 +2352,11 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsNumber())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
@@ -749,6 +2400,13 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationDoubleKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationDoubleKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationDoubleKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -760,7 +2418,11 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			);
 			return;
 		}
-		else if(info.Length() > 1 && info[1]->IsInt32())
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerVectorKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerVectorKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerVectorKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
@@ -804,6 +2466,13 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationIntegerKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationIntegerKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationIntegerKeyWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
 			if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
@@ -815,6 +2484,10 @@ void VtkInformationWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			);
 			return;
 		}
+	}
+	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationRequestKeyWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkInformationRequestKeyWrap *a0 = ObjectWrap::Unwrap<VtkInformationRequestKeyWrap>(info[0]->ToObject());
 		if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
