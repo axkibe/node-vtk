@@ -140,7 +140,7 @@ void VtkImageCastWrap::ClampOverflowOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkImageCastWrap::ClampOverflowOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -235,7 +235,7 @@ void VtkImageCastWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageCastWrap::InitPtpl();
+	VtkImageCastWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkImageCastWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageCastWrap::InitPtpl();
+		VtkImageCastWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkImageCastWrap::SetClampOverflow(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkImageCastWrap::SetOutputScalarType(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +320,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToChar(const Nan::FunctionCallbackInfo
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -332,7 +332,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToDouble(const Nan::FunctionCallbackIn
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -344,7 +344,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToFloat(const Nan::FunctionCallbackInf
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToInt(const Nan::FunctionCallbackInfo<
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToLong(const Nan::FunctionCallbackInfo
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToShort(const Nan::FunctionCallbackInf
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToUnsignedChar(const Nan::FunctionCall
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -404,7 +404,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToUnsignedInt(const Nan::FunctionCallb
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToUnsignedLong(const Nan::FunctionCall
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -428,7 +428,7 @@ void VtkImageCastWrap::SetOutputScalarTypeToUnsignedShort(const Nan::FunctionCal
 {
 	VtkImageCastWrap *wrapper = ObjectWrap::Unwrap<VtkImageCastWrap>(info.Holder());
 	vtkImageCast *native = (vtkImageCast *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

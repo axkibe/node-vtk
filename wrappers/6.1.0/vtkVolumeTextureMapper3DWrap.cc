@@ -72,6 +72,9 @@ void VtkVolumeTextureMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetUseCompressedTexture", GetUseCompressedTexture);
 	Nan::SetPrototypeMethod(tpl, "getUseCompressedTexture", GetUseCompressedTexture);
 
+	Nan::SetPrototypeMethod(tpl, "GetVolumeDimensions", GetVolumeDimensions);
+	Nan::SetPrototypeMethod(tpl, "getVolumeDimensions", GetVolumeDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -234,6 +237,23 @@ void VtkVolumeTextureMapper3DWrap::GetUseCompressedTexture(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVolumeTextureMapper3DWrap::GetVolumeDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
+	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVolumeDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVolumeTextureMapper3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
@@ -294,7 +314,7 @@ void VtkVolumeTextureMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeTextureMapper3DWrap::InitPtpl();
+	VtkVolumeTextureMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,7 +336,7 @@ void VtkVolumeTextureMapper3DWrap::Render(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -347,7 +367,7 @@ void VtkVolumeTextureMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeTextureMapper3DWrap::InitPtpl();
+		VtkVolumeTextureMapper3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -366,7 +386,7 @@ void VtkVolumeTextureMapper3DWrap::SetPreferredMethodToFragmentProgram(const Nan
 {
 	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
 	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -378,7 +398,7 @@ void VtkVolumeTextureMapper3DWrap::SetPreferredMethodToNVidia(const Nan::Functio
 {
 	VtkVolumeTextureMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper3DWrap>(info.Holder());
 	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +412,7 @@ void VtkVolumeTextureMapper3DWrap::SetPreferredRenderMethod(const Nan::FunctionC
 	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +431,7 @@ void VtkVolumeTextureMapper3DWrap::SetUseCompressedTexture(const Nan::FunctionCa
 	vtkVolumeTextureMapper3D *native = (vtkVolumeTextureMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

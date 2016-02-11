@@ -50,6 +50,9 @@ void VtkCutMaterialWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
 	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenterPoint", GetCenterPoint);
+	Nan::SetPrototypeMethod(tpl, "getCenterPoint", GetCenterPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -58,6 +61,15 @@ void VtkCutMaterialWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaterialArrayName", GetMaterialArrayName);
 	Nan::SetPrototypeMethod(tpl, "getMaterialArrayName", GetMaterialArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumPoint", GetMaximumPoint);
+	Nan::SetPrototypeMethod(tpl, "getMaximumPoint", GetMaximumPoint);
+
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetUpVector", GetUpVector);
+	Nan::SetPrototypeMethod(tpl, "getUpVector", GetUpVector);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -123,6 +135,23 @@ void VtkCutMaterialWrap::GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCutMaterialWrap::GetCenterPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
+	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenterPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCutMaterialWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
@@ -165,6 +194,57 @@ void VtkCutMaterialWrap::GetMaterialArrayName(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCutMaterialWrap::GetMaximumPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
+	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkCutMaterialWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
+	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkCutMaterialWrap::GetUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
+	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCutMaterialWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCutMaterialWrap *wrapper = ObjectWrap::Unwrap<VtkCutMaterialWrap>(info.Holder());
@@ -198,7 +278,7 @@ void VtkCutMaterialWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkCutMaterialWrap::InitPtpl();
+	VtkCutMaterialWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +306,7 @@ void VtkCutMaterialWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCutMaterialWrap::InitPtpl();
+		VtkCutMaterialWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +328,7 @@ void VtkCutMaterialWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -267,7 +347,7 @@ void VtkCutMaterialWrap::SetMaterial(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkCutMaterial *native = (vtkCutMaterial *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -287,7 +367,7 @@ void VtkCutMaterialWrap::SetMaterialArrayName(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +394,7 @@ void VtkCutMaterialWrap::SetUpVector(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +423,7 @@ void VtkCutMaterialWrap::SetUpVector(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +439,7 @@ void VtkCutMaterialWrap::SetUpVector(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

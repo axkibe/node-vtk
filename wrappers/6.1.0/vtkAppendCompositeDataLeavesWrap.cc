@@ -104,7 +104,7 @@ void VtkAppendCompositeDataLeavesWrap::AppendFieldDataOff(const Nan::FunctionCal
 {
 	VtkAppendCompositeDataLeavesWrap *wrapper = ObjectWrap::Unwrap<VtkAppendCompositeDataLeavesWrap>(info.Holder());
 	vtkAppendCompositeDataLeaves *native = (vtkAppendCompositeDataLeaves *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -116,7 +116,7 @@ void VtkAppendCompositeDataLeavesWrap::AppendFieldDataOn(const Nan::FunctionCall
 {
 	VtkAppendCompositeDataLeavesWrap *wrapper = ObjectWrap::Unwrap<VtkAppendCompositeDataLeavesWrap>(info.Holder());
 	vtkAppendCompositeDataLeaves *native = (vtkAppendCompositeDataLeaves *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkAppendCompositeDataLeavesWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkAppendCompositeDataLeavesWrap::InitPtpl();
+	VtkAppendCompositeDataLeavesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkAppendCompositeDataLeavesWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAppendCompositeDataLeavesWrap::InitPtpl();
+		VtkAppendCompositeDataLeavesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkAppendCompositeDataLeavesWrap::SetAppendFieldData(const Nan::FunctionCal
 	vtkAppendCompositeDataLeaves *native = (vtkAppendCompositeDataLeaves *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -36,6 +36,8 @@ class VtkActor2DWrap : public VtkPropWrap
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayerNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPosition2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPositionCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

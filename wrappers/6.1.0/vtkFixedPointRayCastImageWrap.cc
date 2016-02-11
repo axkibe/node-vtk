@@ -58,6 +58,18 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageInUseSize", GetImageInUseSize);
+	Nan::SetPrototypeMethod(tpl, "getImageInUseSize", GetImageInUseSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageMemorySize", GetImageMemorySize);
+	Nan::SetPrototypeMethod(tpl, "getImageMemorySize", GetImageMemorySize);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
+	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
+	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetUseZBuffer", GetUseZBuffer);
 	Nan::SetPrototypeMethod(tpl, "getUseZBuffer", GetUseZBuffer);
 
@@ -66,6 +78,12 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetUseZBufferMinValue", GetUseZBufferMinValue);
 	Nan::SetPrototypeMethod(tpl, "getUseZBufferMinValue", GetUseZBufferMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetZBufferOrigin", GetZBufferOrigin);
+	Nan::SetPrototypeMethod(tpl, "getZBufferOrigin", GetZBufferOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetZBufferSize", GetZBufferSize);
+	Nan::SetPrototypeMethod(tpl, "getZBufferSize", GetZBufferSize);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -136,7 +154,7 @@ void VtkFixedPointRayCastImageWrap::AllocateImage(const Nan::FunctionCallbackInf
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -148,7 +166,7 @@ void VtkFixedPointRayCastImageWrap::AllocateZBuffer(const Nan::FunctionCallbackI
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -160,7 +178,7 @@ void VtkFixedPointRayCastImageWrap::ClearImage(const Nan::FunctionCallbackInfo<v
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,6 +198,74 @@ void VtkFixedPointRayCastImageWrap::GetClassName(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkFixedPointRayCastImageWrap::GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageInUseSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointRayCastImageWrap::GetImageMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageMemorySize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointRayCastImageWrap::GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointRayCastImageWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageViewportSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkFixedPointRayCastImageWrap::GetUseZBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -224,6 +310,40 @@ void VtkFixedPointRayCastImageWrap::GetUseZBufferMinValue(const Nan::FunctionCal
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkFixedPointRayCastImageWrap::GetZBufferOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZBufferOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkFixedPointRayCastImageWrap::GetZBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
+	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZBufferSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkFixedPointRayCastImageWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
@@ -257,7 +377,7 @@ void VtkFixedPointRayCastImageWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkFixedPointRayCastImageWrap::InitPtpl();
+	VtkFixedPointRayCastImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +405,7 @@ void VtkFixedPointRayCastImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFixedPointRayCastImageWrap::InitPtpl();
+		VtkFixedPointRayCastImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,7 +434,7 @@ void VtkFixedPointRayCastImageWrap::SetImageInUseSize(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +463,7 @@ void VtkFixedPointRayCastImageWrap::SetImageInUseSize(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +477,7 @@ void VtkFixedPointRayCastImageWrap::SetImageInUseSize(const Nan::FunctionCallbac
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -386,7 +506,7 @@ void VtkFixedPointRayCastImageWrap::SetImageMemorySize(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -415,7 +535,7 @@ void VtkFixedPointRayCastImageWrap::SetImageMemorySize(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +549,7 @@ void VtkFixedPointRayCastImageWrap::SetImageMemorySize(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -458,7 +578,7 @@ void VtkFixedPointRayCastImageWrap::SetImageOrigin(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +607,7 @@ void VtkFixedPointRayCastImageWrap::SetImageOrigin(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -501,7 +621,7 @@ void VtkFixedPointRayCastImageWrap::SetImageOrigin(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -530,7 +650,7 @@ void VtkFixedPointRayCastImageWrap::SetImageViewportSize(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +679,7 @@ void VtkFixedPointRayCastImageWrap::SetImageViewportSize(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +693,7 @@ void VtkFixedPointRayCastImageWrap::SetImageViewportSize(const Nan::FunctionCall
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -594,7 +714,7 @@ void VtkFixedPointRayCastImageWrap::SetUseZBuffer(const Nan::FunctionCallbackInf
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -621,7 +741,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferOrigin(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +770,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferOrigin(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +784,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferOrigin(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -693,7 +813,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferSize(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +842,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferSize(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -736,7 +856,7 @@ void VtkFixedPointRayCastImageWrap::SetZBufferSize(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -755,7 +875,7 @@ void VtkFixedPointRayCastImageWrap::UseZBufferOff(const Nan::FunctionCallbackInf
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -767,7 +887,7 @@ void VtkFixedPointRayCastImageWrap::UseZBufferOn(const Nan::FunctionCallbackInfo
 {
 	VtkFixedPointRayCastImageWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info.Holder());
 	vtkFixedPointRayCastImage *native = (vtkFixedPointRayCastImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

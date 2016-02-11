@@ -215,7 +215,7 @@ void VtkDijkstraImageGeodesicPathWrap::GetInputAsImageData(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetInputAsImageData();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkDijkstraImageGeodesicPathWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkDijkstraImageGeodesicPathWrap::InitPtpl();
+	VtkDijkstraImageGeodesicPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkDijkstraImageGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDijkstraImageGeodesicPathWrap::InitPtpl();
+		VtkDijkstraImageGeodesicPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkDijkstraImageGeodesicPathWrap::SetCurvatureWeight(const Nan::FunctionCal
 	vtkDijkstraImageGeodesicPath *native = (vtkDijkstraImageGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkDijkstraImageGeodesicPathWrap::SetEdgeLengthWeight(const Nan::FunctionCa
 	vtkDijkstraImageGeodesicPath *native = (vtkDijkstraImageGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkDijkstraImageGeodesicPathWrap::SetImageWeight(const Nan::FunctionCallbac
 	vtkDijkstraImageGeodesicPath *native = (vtkDijkstraImageGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,7 @@ void VtkDijkstraImageGeodesicPathWrap::SetInputData(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -155,7 +155,7 @@ void VtkImageMedian3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMedian3DWrap::InitPtpl();
+	VtkImageMedian3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkImageMedian3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMedian3DWrap::InitPtpl();
+		VtkImageMedian3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkImageMedian3DWrap::SetKernelSize(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

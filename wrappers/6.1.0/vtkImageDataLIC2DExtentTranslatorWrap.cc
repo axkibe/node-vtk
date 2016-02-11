@@ -57,6 +57,9 @@ void VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInputExtentTranslator", GetInputExtentTranslator);
 	Nan::SetPrototypeMethod(tpl, "getInputExtentTranslator", GetInputExtentTranslator);
 
+	Nan::SetPrototypeMethod(tpl, "GetInputWholeExtent", GetInputWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getInputWholeExtent", GetInputWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -115,7 +118,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetAlgorithm(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetAlgorithm();
-		VtkImageDataLIC2DWrap::InitPtpl();
+	VtkImageDataLIC2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -152,7 +155,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetInputExtentTranslator(const Nan::
 		return;
 	}
 	r = native->GetInputExtentTranslator();
-		VtkExtentTranslatorWrap::InitPtpl();
+	VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,6 +165,23 @@ void VtkImageDataLIC2DExtentTranslatorWrap::GetInputExtentTranslator(const Nan::
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageDataLIC2DExtentTranslatorWrap::GetInputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataLIC2DExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataLIC2DExtentTranslatorWrap>(info.Holder());
+	vtkImageDataLIC2DExtentTranslator *native = (vtkImageDataLIC2DExtentTranslator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageDataLIC2DExtentTranslatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -197,7 +217,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
+	VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +245,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
+		VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -247,7 +267,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetAlgorithm(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataLIC2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataLIC2DWrap *a0 = ObjectWrap::Unwrap<VtkImageDataLIC2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -267,7 +287,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetInputExtentTranslator(const Nan::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtentTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -294,7 +314,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetInputWholeExtent(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +343,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetInputWholeExtent(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -345,7 +365,7 @@ void VtkImageDataLIC2DExtentTranslatorWrap::SetInputWholeExtent(const Nan::Funct
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

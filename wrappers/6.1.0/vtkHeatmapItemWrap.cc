@@ -137,7 +137,7 @@ void VtkHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -166,7 +166,7 @@ void VtkHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,7 +246,7 @@ void VtkHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTable();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkHeatmapItemWrap::InitPtpl();
+	VtkHeatmapItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,7 +362,7 @@ void VtkHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHeatmapItemWrap::InitPtpl();
+		VtkHeatmapItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -383,7 +383,7 @@ void VtkHeatmapItemWrap::SetCellHeight(const Nan::FunctionCallbackInfo<v8::Value
 	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkHeatmapItemWrap::SetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkHeatmapItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkHeatmapItem *native = (vtkHeatmapItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkHeatmapItemWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

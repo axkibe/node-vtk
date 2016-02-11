@@ -184,7 +184,7 @@ void VtkPieceScalarsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkPieceScalarsWrap::InitPtpl();
+	VtkPieceScalarsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +200,7 @@ void VtkPieceScalarsWrap::RandomModeOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPieceScalarsWrap *wrapper = ObjectWrap::Unwrap<VtkPieceScalarsWrap>(info.Holder());
 	vtkPieceScalars *native = (vtkPieceScalars *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkPieceScalarsWrap::RandomModeOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPieceScalarsWrap *wrapper = ObjectWrap::Unwrap<VtkPieceScalarsWrap>(info.Holder());
 	vtkPieceScalars *native = (vtkPieceScalars *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkPieceScalarsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPieceScalarsWrap::InitPtpl();
+		VtkPieceScalarsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkPieceScalarsWrap::SetRandomMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPieceScalars *native = (vtkPieceScalars *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void VtkPieceScalarsWrap::SetScalarModeToCellData(const Nan::FunctionCallbackInf
 {
 	VtkPieceScalarsWrap *wrapper = ObjectWrap::Unwrap<VtkPieceScalarsWrap>(info.Holder());
 	vtkPieceScalars *native = (vtkPieceScalars *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -286,7 +286,7 @@ void VtkPieceScalarsWrap::SetScalarModeToPointData(const Nan::FunctionCallbackIn
 {
 	VtkPieceScalarsWrap *wrapper = ObjectWrap::Unwrap<VtkPieceScalarsWrap>(info.Holder());
 	vtkPieceScalars *native = (vtkPieceScalars *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

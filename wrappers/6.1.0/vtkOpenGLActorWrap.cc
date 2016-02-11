@@ -140,7 +140,7 @@ void VtkOpenGLActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLActorWrap::InitPtpl();
+	VtkOpenGLActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkOpenGLActorWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -193,7 +193,7 @@ void VtkOpenGLActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLActorWrap::InitPtpl();
+		VtkOpenGLActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

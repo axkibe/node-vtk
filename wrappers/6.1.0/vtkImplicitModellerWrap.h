@@ -47,6 +47,7 @@ class VtkImplicitModellerWrap : public VtkImageAlgorithmWrap
 		static void GetMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreadsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreadsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +56,7 @@ class VtkImplicitModellerWrap : public VtkImageAlgorithmWrap
 		static void GetProcessModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProcessModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleToMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

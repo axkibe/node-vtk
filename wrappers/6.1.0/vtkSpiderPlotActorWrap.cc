@@ -257,7 +257,7 @@ void VtkSpiderPlotActorWrap::GetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -287,7 +287,7 @@ void VtkSpiderPlotActorWrap::GetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -369,7 +369,7 @@ void VtkSpiderPlotActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkSpiderPlotActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +429,7 @@ void VtkSpiderPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLegendActor();
-		VtkLegendBoxActorWrap::InitPtpl();
+	VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,7 +522,7 @@ void VtkSpiderPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -588,7 +588,7 @@ void VtkSpiderPlotActorWrap::LabelVisibilityOff(const Nan::FunctionCallbackInfo<
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -600,7 +600,7 @@ void VtkSpiderPlotActorWrap::LabelVisibilityOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -612,7 +612,7 @@ void VtkSpiderPlotActorWrap::LegendVisibilityOff(const Nan::FunctionCallbackInfo
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -624,7 +624,7 @@ void VtkSpiderPlotActorWrap::LegendVisibilityOn(const Nan::FunctionCallbackInfo<
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -643,7 +643,7 @@ void VtkSpiderPlotActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpiderPlotActorWrap::InitPtpl();
+	VtkSpiderPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -662,7 +662,7 @@ void VtkSpiderPlotActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -757,7 +757,7 @@ void VtkSpiderPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpiderPlotActorWrap::InitPtpl();
+		VtkSpiderPlotActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -781,7 +781,7 @@ void VtkSpiderPlotActorWrap::SetAxisLabel(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -812,7 +812,7 @@ void VtkSpiderPlotActorWrap::SetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -842,7 +842,7 @@ void VtkSpiderPlotActorWrap::SetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -857,7 +857,7 @@ void VtkSpiderPlotActorWrap::SetAxisRange(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -880,7 +880,7 @@ void VtkSpiderPlotActorWrap::SetIndependentVariables(const Nan::FunctionCallback
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -897,7 +897,7 @@ void VtkSpiderPlotActorWrap::SetIndependentVariablesToColumns(const Nan::Functio
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -909,7 +909,7 @@ void VtkSpiderPlotActorWrap::SetIndependentVariablesToRows(const Nan::FunctionCa
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -924,7 +924,7 @@ void VtkSpiderPlotActorWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -944,7 +944,7 @@ void VtkSpiderPlotActorWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -964,7 +964,7 @@ void VtkSpiderPlotActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -983,7 +983,7 @@ void VtkSpiderPlotActorWrap::SetLabelVisibility(const Nan::FunctionCallbackInfo<
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1002,7 +1002,7 @@ void VtkSpiderPlotActorWrap::SetLegendVisibility(const Nan::FunctionCallbackInfo
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1021,7 +1021,7 @@ void VtkSpiderPlotActorWrap::SetNumberOfRings(const Nan::FunctionCallbackInfo<v8
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1050,7 +1050,7 @@ void VtkSpiderPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1080,7 +1080,7 @@ void VtkSpiderPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1097,7 +1097,7 @@ void VtkSpiderPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Va
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1123,7 +1123,7 @@ void VtkSpiderPlotActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1143,7 +1143,7 @@ void VtkSpiderPlotActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1162,7 +1162,7 @@ void VtkSpiderPlotActorWrap::SetTitleVisibility(const Nan::FunctionCallbackInfo<
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1179,7 +1179,7 @@ void VtkSpiderPlotActorWrap::TitleVisibilityOff(const Nan::FunctionCallbackInfo<
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1191,7 +1191,7 @@ void VtkSpiderPlotActorWrap::TitleVisibilityOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkSpiderPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkSpiderPlotActorWrap>(info.Holder());
 	vtkSpiderPlotActor *native = (vtkSpiderPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

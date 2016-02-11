@@ -172,7 +172,7 @@ void VtkFrustumSourceWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetPlanes();
-		VtkPlanesWrap::InitPtpl();
+	VtkPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +231,7 @@ void VtkFrustumSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkFrustumSourceWrap::InitPtpl();
+	VtkFrustumSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkFrustumSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFrustumSourceWrap::InitPtpl();
+		VtkFrustumSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkFrustumSourceWrap::SetLinesLength(const Nan::FunctionCallbackInfo<v8::Va
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkFrustumSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackI
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -319,7 +319,7 @@ void VtkFrustumSourceWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -338,7 +338,7 @@ void VtkFrustumSourceWrap::SetShowLines(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +355,7 @@ void VtkFrustumSourceWrap::ShowLinesOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +367,7 @@ void VtkFrustumSourceWrap::ShowLinesOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFrustumSourceWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumSourceWrap>(info.Holder());
 	vtkFrustumSource *native = (vtkFrustumSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

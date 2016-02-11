@@ -59,6 +59,9 @@ void VtkProgrammableGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetColorModeAsString", GetColorModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getColorModeAsString", GetColorModeAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
+	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointData", GetPointData);
 	Nan::SetPrototypeMethod(tpl, "getPointData", GetPointData);
 
@@ -160,6 +163,23 @@ void VtkProgrammableGlyphFilterWrap::GetColorModeAsString(const Nan::FunctionCal
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkProgrammableGlyphFilterWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
+	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkProgrammableGlyphFilterWrap::GetPointData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
@@ -171,7 +191,7 @@ void VtkProgrammableGlyphFilterWrap::GetPointData(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPointData();
-		VtkPointDataWrap::InitPtpl();
+	VtkPointDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +214,7 @@ void VtkProgrammableGlyphFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetSource();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +259,7 @@ void VtkProgrammableGlyphFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkProgrammableGlyphFilterWrap::InitPtpl();
+	VtkProgrammableGlyphFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +287,7 @@ void VtkProgrammableGlyphFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProgrammableGlyphFilterWrap::InitPtpl();
+		VtkProgrammableGlyphFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +308,7 @@ void VtkProgrammableGlyphFilterWrap::SetColorMode(const Nan::FunctionCallbackInf
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +325,7 @@ void VtkProgrammableGlyphFilterWrap::SetColorModeToColorByInput(const Nan::Funct
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +337,7 @@ void VtkProgrammableGlyphFilterWrap::SetColorModeToColorBySource(const Nan::Func
 {
 	VtkProgrammableGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableGlyphFilterWrap>(info.Holder());
 	vtkProgrammableGlyphFilter *native = (vtkProgrammableGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -332,7 +352,7 @@ void VtkProgrammableGlyphFilterWrap::SetSourceConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +372,7 @@ void VtkProgrammableGlyphFilterWrap::SetSourceData(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

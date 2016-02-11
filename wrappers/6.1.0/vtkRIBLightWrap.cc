@@ -165,7 +165,7 @@ void VtkRIBLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkRIBLightWrap::InitPtpl();
+	VtkRIBLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +186,7 @@ void VtkRIBLightWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -217,7 +217,7 @@ void VtkRIBLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRIBLightWrap::InitPtpl();
+		VtkRIBLightWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkRIBLightWrap::SetShadows(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkRIBLight *native = (vtkRIBLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -255,7 +255,7 @@ void VtkRIBLightWrap::ShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkRIBLightWrap *wrapper = ObjectWrap::Unwrap<VtkRIBLightWrap>(info.Holder());
 	vtkRIBLight *native = (vtkRIBLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +267,7 @@ void VtkRIBLightWrap::ShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkRIBLightWrap *wrapper = ObjectWrap::Unwrap<VtkRIBLightWrap>(info.Holder());
 	vtkRIBLight *native = (vtkRIBLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

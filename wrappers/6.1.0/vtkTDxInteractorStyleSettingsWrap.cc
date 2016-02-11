@@ -274,7 +274,7 @@ void VtkTDxInteractorStyleSettingsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkTDxInteractorStyleSettingsWrap::InitPtpl();
+	VtkTDxInteractorStyleSettingsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +302,7 @@ void VtkTDxInteractorStyleSettingsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTDxInteractorStyleSettingsWrap::InitPtpl();
+		VtkTDxInteractorStyleSettingsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -323,7 +323,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetAngleSensitivity(const Nan::FunctionC
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetTranslationXSensitivity(const Nan::Fu
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetTranslationYSensitivity(const Nan::Fu
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetTranslationZSensitivity(const Nan::Fu
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -399,7 +399,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetUseRotationX(const Nan::FunctionCallb
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +418,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetUseRotationY(const Nan::FunctionCallb
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +437,7 @@ void VtkTDxInteractorStyleSettingsWrap::SetUseRotationZ(const Nan::FunctionCallb
 	vtkTDxInteractorStyleSettings *native = (vtkTDxInteractorStyleSettings *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

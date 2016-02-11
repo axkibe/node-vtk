@@ -47,6 +47,9 @@ void VtkSphereSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkSphereSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -191,6 +194,23 @@ void VtkSphereSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkSphereSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSphereSourceWrap>(info.Holder());
+	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSphereSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -555,7 +575,7 @@ void VtkSphereSourceWrap::LatLongTessellationOff(const Nan::FunctionCallbackInfo
 {
 	VtkSphereSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSphereSourceWrap>(info.Holder());
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -567,7 +587,7 @@ void VtkSphereSourceWrap::LatLongTessellationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkSphereSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSphereSourceWrap>(info.Holder());
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,7 +606,7 @@ void VtkSphereSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSphereSourceWrap::InitPtpl();
+	VtkSphereSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -614,7 +634,7 @@ void VtkSphereSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSphereSourceWrap::InitPtpl();
+		VtkSphereSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -643,7 +663,7 @@ void VtkSphereSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -672,7 +692,7 @@ void VtkSphereSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +708,7 @@ void VtkSphereSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -711,7 +731,7 @@ void VtkSphereSourceWrap::SetEndPhi(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +750,7 @@ void VtkSphereSourceWrap::SetEndTheta(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -749,7 +769,7 @@ void VtkSphereSourceWrap::SetLatLongTessellation(const Nan::FunctionCallbackInfo
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -768,7 +788,7 @@ void VtkSphereSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackIn
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -787,7 +807,7 @@ void VtkSphereSourceWrap::SetPhiResolution(const Nan::FunctionCallbackInfo<v8::V
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -806,7 +826,7 @@ void VtkSphereSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +845,7 @@ void VtkSphereSourceWrap::SetStartPhi(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +864,7 @@ void VtkSphereSourceWrap::SetStartTheta(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +883,7 @@ void VtkSphereSourceWrap::SetThetaResolution(const Nan::FunctionCallbackInfo<v8:
 	vtkSphereSource *native = (vtkSphereSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

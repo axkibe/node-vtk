@@ -121,7 +121,7 @@ void VtkTableToSQLiteWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkTableWrap::InitPtpl();
+		VtkTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkTableToSQLiteWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkTableToSQLiteWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToSQLiteWriterWrap::InitPtpl();
+	VtkTableToSQLiteWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkTableToSQLiteWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToSQLiteWriterWrap::InitPtpl();
+		VtkTableToSQLiteWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

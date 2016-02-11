@@ -138,7 +138,7 @@ void VtkInformationVariantKeyWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationVariantKeyWrap::InitPtpl();
+	VtkInformationVariantKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +166,7 @@ void VtkInformationVariantKeyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationVariantKeyWrap::InitPtpl();
+		VtkInformationVariantKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -191,7 +191,7 @@ void VtkInformationVariantKeyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

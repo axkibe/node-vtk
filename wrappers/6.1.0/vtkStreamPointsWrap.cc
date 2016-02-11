@@ -189,7 +189,7 @@ void VtkStreamPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkStreamPointsWrap::InitPtpl();
+	VtkStreamPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkStreamPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStreamPointsWrap::InitPtpl();
+		VtkStreamPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkStreamPointsWrap::SetTimeIncrement(const Nan::FunctionCallbackInfo<v8::V
 	vtkStreamPoints *native = (vtkStreamPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

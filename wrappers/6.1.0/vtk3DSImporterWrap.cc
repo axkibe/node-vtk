@@ -110,7 +110,7 @@ void Vtk3DSImporterWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	Vtk3DSImporterWrap *wrapper = ObjectWrap::Unwrap<Vtk3DSImporterWrap>(info.Holder());
 	vtk3DSImporter *native = (vtk3DSImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -122,7 +122,7 @@ void Vtk3DSImporterWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	Vtk3DSImporterWrap *wrapper = ObjectWrap::Unwrap<Vtk3DSImporterWrap>(info.Holder());
 	vtk3DSImporter *native = (vtk3DSImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void Vtk3DSImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		Vtk3DSImporterWrap::InitPtpl();
+	Vtk3DSImporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void Vtk3DSImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			Vtk3DSImporterWrap::InitPtpl();
+		Vtk3DSImporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void Vtk3DSImporterWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8::V
 	vtk3DSImporter *native = (vtk3DSImporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void Vtk3DSImporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

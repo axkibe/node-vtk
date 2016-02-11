@@ -155,7 +155,7 @@ void VtkRectilinearWipeRepresentationWrap::BuildRepresentation(const Nan::Functi
 {
 	VtkRectilinearWipeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearWipeRepresentationWrap>(info.Holder());
 	vtkRectilinearWipeRepresentation *native = (vtkRectilinearWipeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -199,7 +199,7 @@ void VtkRectilinearWipeRepresentationWrap::GetActors2D(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +237,7 @@ void VtkRectilinearWipeRepresentationWrap::GetImageActor(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetImageActor();
-		VtkImageActorWrap::InitPtpl();
+	VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkRectilinearWipeRepresentationWrap::GetProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkRectilinearWipeRepresentationWrap::GetRectilinearWipe(const Nan::Functio
 		return;
 	}
 	r = native->GetRectilinearWipe();
-		VtkImageRectilinearWipeWrap::InitPtpl();
+	VtkImageRectilinearWipeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkRectilinearWipeRepresentationWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearWipeRepresentationWrap::InitPtpl();
+	VtkRectilinearWipeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -403,7 +403,7 @@ void VtkRectilinearWipeRepresentationWrap::ReleaseGraphicsResources(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -498,7 +498,7 @@ void VtkRectilinearWipeRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearWipeRepresentationWrap::InitPtpl();
+		VtkRectilinearWipeRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkRectilinearWipeRepresentationWrap::SetImageActor(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageActorWrap *a0 = ObjectWrap::Unwrap<VtkImageActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +540,7 @@ void VtkRectilinearWipeRepresentationWrap::SetRectilinearWipe(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageRectilinearWipeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageRectilinearWipeWrap *a0 = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +559,7 @@ void VtkRectilinearWipeRepresentationWrap::SetTolerance(const Nan::FunctionCallb
 	vtkRectilinearWipeRepresentation *native = (vtkRectilinearWipeRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkRectilinearWipeRepresentationWrap::StartWidgetInteraction(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -615,7 +615,7 @@ void VtkRectilinearWipeRepresentationWrap::StartWidgetInteraction(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +642,7 @@ void VtkRectilinearWipeRepresentationWrap::WidgetInteraction(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +671,7 @@ void VtkRectilinearWipeRepresentationWrap::WidgetInteraction(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

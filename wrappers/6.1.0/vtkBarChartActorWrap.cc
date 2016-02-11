@@ -232,7 +232,7 @@ void VtkBarChartActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkBarChartActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkBarChartActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLegendActor();
-		VtkLegendBoxActorWrap::InitPtpl();
+	VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkBarChartActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,7 +423,7 @@ void VtkBarChartActorWrap::LabelVisibilityOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -435,7 +435,7 @@ void VtkBarChartActorWrap::LabelVisibilityOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +447,7 @@ void VtkBarChartActorWrap::LegendVisibilityOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +459,7 @@ void VtkBarChartActorWrap::LegendVisibilityOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -478,7 +478,7 @@ void VtkBarChartActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkBarChartActorWrap::InitPtpl();
+	VtkBarChartActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkBarChartActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkBarChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBarChartActorWrap::InitPtpl();
+		VtkBarChartActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -623,7 +623,7 @@ void VtkBarChartActorWrap::SetBarColor(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -653,7 +653,7 @@ void VtkBarChartActorWrap::SetBarColor(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -670,7 +670,7 @@ void VtkBarChartActorWrap::SetBarColor(const Nan::FunctionCallbackInfo<v8::Value
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -698,7 +698,7 @@ void VtkBarChartActorWrap::SetBarLabel(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -720,7 +720,7 @@ void VtkBarChartActorWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +740,7 @@ void VtkBarChartActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -759,7 +759,7 @@ void VtkBarChartActorWrap::SetLabelVisibility(const Nan::FunctionCallbackInfo<v8
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -778,7 +778,7 @@ void VtkBarChartActorWrap::SetLegendVisibility(const Nan::FunctionCallbackInfo<v
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -798,7 +798,7 @@ void VtkBarChartActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -818,7 +818,7 @@ void VtkBarChartActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -837,7 +837,7 @@ void VtkBarChartActorWrap::SetTitleVisibility(const Nan::FunctionCallbackInfo<v8
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +857,7 @@ void VtkBarChartActorWrap::SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -874,7 +874,7 @@ void VtkBarChartActorWrap::TitleVisibilityOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -886,7 +886,7 @@ void VtkBarChartActorWrap::TitleVisibilityOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkBarChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkBarChartActorWrap>(info.Holder());
 	vtkBarChartActor *native = (vtkBarChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

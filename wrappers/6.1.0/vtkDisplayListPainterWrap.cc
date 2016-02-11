@@ -133,7 +133,7 @@ void VtkDisplayListPainterWrap::IMMEDIATE_MODE_RENDERING(const Nan::FunctionCall
 		return;
 	}
 	r = native->IMMEDIATE_MODE_RENDERING();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkDisplayListPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkDisplayListPainterWrap::InitPtpl();
+	VtkDisplayListPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +206,7 @@ void VtkDisplayListPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDisplayListPainterWrap::InitPtpl();
+		VtkDisplayListPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -214,7 +214,7 @@ void VtkExodusModelWrap::ExtractExodusModel(const Nan::FunctionCallbackInfo<v8::
 				(vtkIdTypeArray *) a0->native.GetPointer(),
 				(vtkUnstructuredGrid *) a1->native.GetPointer()
 			);
-				VtkExodusModelWrap::InitPtpl();
+			VtkExodusModelWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkExodusModelWrap::GetModelMetadata(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetModelMetadata();
-		VtkModelMetadataWrap::InitPtpl();
+	VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkExodusModelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkExodusModelWrap::InitPtpl();
+	VtkExodusModelWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +363,7 @@ void VtkExodusModelWrap::PackExodusModel(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -424,7 +424,7 @@ void VtkExodusModelWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusModelWrap *wrapper = ObjectWrap::Unwrap<VtkExodusModelWrap>(info.Holder());
 	vtkExodusModel *native = (vtkExodusModel *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -448,7 +448,7 @@ void VtkExodusModelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExodusModelWrap::InitPtpl();
+		VtkExodusModelWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -533,7 +533,7 @@ void VtkExodusModelWrap::SetModelMetadata(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkModelMetadataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkModelMetadataWrap *a0 = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

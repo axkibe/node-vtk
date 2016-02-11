@@ -151,7 +151,7 @@ void VtkRendererSourceWrap::DepthValuesInScalarsOff(const Nan::FunctionCallbackI
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -163,7 +163,7 @@ void VtkRendererSourceWrap::DepthValuesInScalarsOn(const Nan::FunctionCallbackIn
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -175,7 +175,7 @@ void VtkRendererSourceWrap::DepthValuesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -187,7 +187,7 @@ void VtkRendererSourceWrap::DepthValuesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkRendererSourceWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,7 +271,7 @@ void VtkRendererSourceWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetOutput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkRendererSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkRendererSourceWrap::InitPtpl();
+	VtkRendererSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,7 +360,7 @@ void VtkRendererSourceWrap::RenderFlagOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkRendererSourceWrap::RenderFlagOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkRendererSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRendererSourceWrap::InitPtpl();
+		VtkRendererSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkRendererSourceWrap::SetDepthValues(const Nan::FunctionCallbackInfo<v8::V
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +436,7 @@ void VtkRendererSourceWrap::SetDepthValuesInScalars(const Nan::FunctionCallbackI
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +456,7 @@ void VtkRendererSourceWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +475,7 @@ void VtkRendererSourceWrap::SetRenderFlag(const Nan::FunctionCallbackInfo<v8::Va
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +494,7 @@ void VtkRendererSourceWrap::SetWholeWindow(const Nan::FunctionCallbackInfo<v8::V
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkRendererSourceWrap::WholeWindowOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -523,7 +523,7 @@ void VtkRendererSourceWrap::WholeWindowOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRendererSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRendererSourceWrap>(info.Holder());
 	vtkRendererSource *native = (vtkRendererSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

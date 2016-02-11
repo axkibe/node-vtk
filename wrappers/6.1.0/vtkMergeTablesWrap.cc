@@ -220,7 +220,7 @@ void VtkMergeTablesWrap::MergeColumnsByNameOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkMergeTablesWrap::MergeColumnsByNameOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkMergeTablesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkMergeTablesWrap::InitPtpl();
+	VtkMergeTablesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkMergeTablesWrap::PrefixAllButMergedOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkMergeTablesWrap::PrefixAllButMergedOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMergeTablesWrap *wrapper = ObjectWrap::Unwrap<VtkMergeTablesWrap>(info.Holder());
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -303,7 +303,7 @@ void VtkMergeTablesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMergeTablesWrap::InitPtpl();
+		VtkMergeTablesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +325,7 @@ void VtkMergeTablesWrap::SetFirstTablePrefix(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkMergeTablesWrap::SetMergeColumnsByName(const Nan::FunctionCallbackInfo<v
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkMergeTablesWrap::SetPrefixAllButMerged(const Nan::FunctionCallbackInfo<v
 	vtkMergeTables *native = (vtkMergeTables *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkMergeTablesWrap::SetSecondTablePrefix(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

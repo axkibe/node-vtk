@@ -32,7 +32,10 @@ class VtkTransformToGridWrap : public VtkAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplacementScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplacementShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

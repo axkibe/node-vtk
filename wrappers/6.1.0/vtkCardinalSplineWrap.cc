@@ -101,7 +101,7 @@ void VtkCardinalSplineWrap::Compute(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCardinalSplineWrap *wrapper = ObjectWrap::Unwrap<VtkCardinalSplineWrap>(info.Holder());
 	vtkCardinalSpline *native = (vtkCardinalSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -116,7 +116,7 @@ void VtkCardinalSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -197,7 +197,7 @@ void VtkCardinalSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkCardinalSplineWrap::InitPtpl();
+	VtkCardinalSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkCardinalSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCardinalSplineWrap::InitPtpl();
+		VtkCardinalSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

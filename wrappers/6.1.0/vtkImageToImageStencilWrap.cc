@@ -141,7 +141,7 @@ void VtkImageToImageStencilWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkImageToImageStencilWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageToImageStencilWrap::InitPtpl();
+	VtkImageToImageStencilWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkImageToImageStencilWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageToImageStencilWrap::InitPtpl();
+		VtkImageToImageStencilWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkImageToImageStencilWrap::SetInputData(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +283,7 @@ void VtkImageToImageStencilWrap::SetLowerThreshold(const Nan::FunctionCallbackIn
 	vtkImageToImageStencil *native = (vtkImageToImageStencil *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkImageToImageStencilWrap::SetUpperThreshold(const Nan::FunctionCallbackIn
 	vtkImageToImageStencil *native = (vtkImageToImageStencil *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +323,7 @@ void VtkImageToImageStencilWrap::ThresholdBetween(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -344,7 +344,7 @@ void VtkImageToImageStencilWrap::ThresholdByLower(const Nan::FunctionCallbackInf
 	vtkImageToImageStencil *native = (vtkImageToImageStencil *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkImageToImageStencilWrap::ThresholdByUpper(const Nan::FunctionCallbackInf
 	vtkImageToImageStencil *native = (vtkImageToImageStencil *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

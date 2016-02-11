@@ -134,7 +134,7 @@ void VtkBase64UtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkBase64UtilitiesWrap::InitPtpl();
+	VtkBase64UtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkBase64UtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBase64UtilitiesWrap::InitPtpl();
+		VtkBase64UtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

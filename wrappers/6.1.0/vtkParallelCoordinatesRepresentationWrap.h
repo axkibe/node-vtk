@@ -31,11 +31,14 @@ class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentatio
 
 		static void ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleBrushThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurveResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFunctionBrushThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLineColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfAxisLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);

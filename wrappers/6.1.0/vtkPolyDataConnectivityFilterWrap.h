@@ -38,6 +38,7 @@ class VtkPolyDataConnectivityFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void FullScalarConnectivityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FullScalarConnectivityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorRegions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractionModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,6 +50,7 @@ class VtkPolyDataConnectivityFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRegionSizes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarConnectivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisitedPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeSeedList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeSpecifiedRegionList(const Nan::FunctionCallbackInfo<v8::Value>& info);

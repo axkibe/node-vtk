@@ -139,7 +139,7 @@ void VtkProcrustesAlignmentFilterWrap::GetLandmarkTransform(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLandmarkTransform();
-		VtkLandmarkTransformWrap::InitPtpl();
+	VtkLandmarkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkProcrustesAlignmentFilterWrap::GetMeanPoints(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetMeanPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkProcrustesAlignmentFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkProcrustesAlignmentFilterWrap::InitPtpl();
+	VtkProcrustesAlignmentFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkProcrustesAlignmentFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProcrustesAlignmentFilterWrap::InitPtpl();
+		VtkProcrustesAlignmentFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkProcrustesAlignmentFilterWrap::SetOutputPointsPrecision(const Nan::Funct
 	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkProcrustesAlignmentFilterWrap::SetStartFromCentroid(const Nan::FunctionC
 	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +320,7 @@ void VtkProcrustesAlignmentFilterWrap::StartFromCentroidOff(const Nan::FunctionC
 {
 	VtkProcrustesAlignmentFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProcrustesAlignmentFilterWrap>(info.Holder());
 	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -332,7 +332,7 @@ void VtkProcrustesAlignmentFilterWrap::StartFromCentroidOn(const Nan::FunctionCa
 {
 	VtkProcrustesAlignmentFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProcrustesAlignmentFilterWrap>(info.Holder());
 	vtkProcrustesAlignmentFilter *native = (vtkProcrustesAlignmentFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

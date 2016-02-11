@@ -233,7 +233,7 @@ void VtkMergeGraphsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkMergeGraphsWrap::InitPtpl();
+	VtkMergeGraphsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkMergeGraphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMergeGraphsWrap::InitPtpl();
+		VtkMergeGraphsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkMergeGraphsWrap::SetEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkMergeGraphsWrap::SetEdgeWindowArrayName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +321,7 @@ void VtkMergeGraphsWrap::SetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -338,7 +338,7 @@ void VtkMergeGraphsWrap::UseEdgeWindowOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMergeGraphsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeGraphsWrap>(info.Holder());
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -350,7 +350,7 @@ void VtkMergeGraphsWrap::UseEdgeWindowOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMergeGraphsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeGraphsWrap>(info.Holder());
 	vtkMergeGraphs *native = (vtkMergeGraphs *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

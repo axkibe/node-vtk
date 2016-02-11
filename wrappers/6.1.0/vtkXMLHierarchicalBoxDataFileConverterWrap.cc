@@ -191,7 +191,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
+	VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
+		VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SetInputFileName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,7 +261,7 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::SetOutputFileName(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -36,6 +36,9 @@ class VtkUnstructuredGridVolumeRayCastMapperWrap : public VtkUnstructuredGridVol
 		static void GetAutoAdjustSampleDistancesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistancesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntermixIntersectingGeometryMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

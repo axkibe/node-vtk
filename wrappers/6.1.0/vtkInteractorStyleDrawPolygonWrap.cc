@@ -113,7 +113,7 @@ void VtkInteractorStyleDrawPolygonWrap::DrawPolygonPixelsOff(const Nan::Function
 {
 	VtkInteractorStyleDrawPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleDrawPolygonWrap>(info.Holder());
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -125,7 +125,7 @@ void VtkInteractorStyleDrawPolygonWrap::DrawPolygonPixelsOn(const Nan::FunctionC
 {
 	VtkInteractorStyleDrawPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleDrawPolygonWrap>(info.Holder());
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkInteractorStyleDrawPolygonWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleDrawPolygonWrap::InitPtpl();
+	VtkInteractorStyleDrawPolygonWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkInteractorStyleDrawPolygonWrap::OnLeftButtonDown(const Nan::FunctionCall
 {
 	VtkInteractorStyleDrawPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleDrawPolygonWrap>(info.Holder());
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkInteractorStyleDrawPolygonWrap::OnLeftButtonUp(const Nan::FunctionCallba
 {
 	VtkInteractorStyleDrawPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleDrawPolygonWrap>(info.Holder());
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkInteractorStyleDrawPolygonWrap::OnMouseMove(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleDrawPolygonWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleDrawPolygonWrap>(info.Holder());
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -258,7 +258,7 @@ void VtkInteractorStyleDrawPolygonWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleDrawPolygonWrap::InitPtpl();
+		VtkInteractorStyleDrawPolygonWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkInteractorStyleDrawPolygonWrap::SetDrawPolygonPixels(const Nan::Function
 	vtkInteractorStyleDrawPolygon *native = (vtkInteractorStyleDrawPolygon *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -82,6 +82,7 @@ class VtkLSDynaReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickShellArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickShellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsDatabaseValid(const Nan::FunctionCallbackInfo<v8::Value>& info);

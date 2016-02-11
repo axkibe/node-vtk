@@ -127,7 +127,7 @@ void VtkColorLegendWrap::DrawBorderOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkColorLegendWrap *wrapper = ObjectWrap::Unwrap<VtkColorLegendWrap>(info.Holder());
 	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -139,7 +139,7 @@ void VtkColorLegendWrap::DrawBorderOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkColorLegendWrap *wrapper = ObjectWrap::Unwrap<VtkColorLegendWrap>(info.Holder());
 	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkColorLegendWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -190,7 +190,7 @@ void VtkColorLegendWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkColorLegendWrap::GetTransferFunction(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTransferFunction();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkColorLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkColorLegendWrap::InitPtpl();
+	VtkColorLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkColorLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkColorLegendWrap::InitPtpl();
+		VtkColorLegendWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -372,7 +372,7 @@ void VtkColorLegendWrap::SetDrawBorder(const Nan::FunctionCallbackInfo<v8::Value
 	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +391,7 @@ void VtkColorLegendWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkColorLegendWrap::SetTransferFunction(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +428,7 @@ void VtkColorLegendWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkColorLegendWrap *wrapper = ObjectWrap::Unwrap<VtkColorLegendWrap>(info.Holder());
 	vtkColorLegend *native = (vtkColorLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

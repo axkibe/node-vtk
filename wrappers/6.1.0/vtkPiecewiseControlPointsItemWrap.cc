@@ -123,7 +123,7 @@ void VtkPiecewiseControlPointsItemWrap::GetPiecewiseFunction(const Nan::Function
 		return;
 	}
 	r = native->GetPiecewiseFunction();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkPiecewiseControlPointsItemWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkPiecewiseControlPointsItemWrap::InitPtpl();
+	VtkPiecewiseControlPointsItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkPiecewiseControlPointsItemWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPiecewiseControlPointsItemWrap::InitPtpl();
+		VtkPiecewiseControlPointsItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkPiecewiseControlPointsItemWrap::SetPiecewiseFunction(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +237,7 @@ void VtkPiecewiseControlPointsItemWrap::SetStrokeMode(const Nan::FunctionCallbac
 	vtkPiecewiseControlPointsItem *native = (vtkPiecewiseControlPointsItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

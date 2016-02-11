@@ -151,7 +151,7 @@ void VtkNetCDFReaderWrap::GetAllDimensions(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetAllDimensions();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +174,7 @@ void VtkNetCDFReaderWrap::GetAllVariableArrayNames(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetAllVariableArrayNames();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkNetCDFReaderWrap::GetVariableDimensions(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetVariableDimensions();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,7 +369,7 @@ void VtkNetCDFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkNetCDFReaderWrap::InitPtpl();
+	VtkNetCDFReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,7 +385,7 @@ void VtkNetCDFReaderWrap::ReplaceFillValueWithNanOff(const Nan::FunctionCallback
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -397,7 +397,7 @@ void VtkNetCDFReaderWrap::ReplaceFillValueWithNanOn(const Nan::FunctionCallbackI
 {
 	VtkNetCDFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFReaderWrap>(info.Holder());
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -421,7 +421,7 @@ void VtkNetCDFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNetCDFReaderWrap::InitPtpl();
+		VtkNetCDFReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -443,7 +443,7 @@ void VtkNetCDFReaderWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +463,7 @@ void VtkNetCDFReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +482,7 @@ void VtkNetCDFReaderWrap::SetReplaceFillValueWithNan(const Nan::FunctionCallback
 	vtkNetCDFReader *native = (vtkNetCDFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -504,7 +504,7 @@ void VtkNetCDFReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackInfo
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

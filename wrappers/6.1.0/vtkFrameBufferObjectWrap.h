@@ -33,6 +33,7 @@ class VtkFrameBufferObjectWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthBufferNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

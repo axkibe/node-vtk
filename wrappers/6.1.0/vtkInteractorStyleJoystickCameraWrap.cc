@@ -131,7 +131,7 @@ void VtkInteractorStyleJoystickCameraWrap::Dolly(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -186,7 +186,7 @@ void VtkInteractorStyleJoystickCameraWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleJoystickCameraWrap::InitPtpl();
+	VtkInteractorStyleJoystickCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnLeftButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,7 +214,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnLeftButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -226,7 +226,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnMiddleButtonDown(const Nan::Functio
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -238,7 +238,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnMiddleButtonUp(const Nan::FunctionC
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -250,7 +250,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnMouseMove(const Nan::FunctionCallba
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -262,7 +262,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnMouseWheelBackward(const Nan::Funct
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -274,7 +274,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnMouseWheelForward(const Nan::Functi
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -286,7 +286,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnRightButtonDown(const Nan::Function
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -298,7 +298,7 @@ void VtkInteractorStyleJoystickCameraWrap::OnRightButtonUp(const Nan::FunctionCa
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -310,7 +310,7 @@ void VtkInteractorStyleJoystickCameraWrap::Pan(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -322,7 +322,7 @@ void VtkInteractorStyleJoystickCameraWrap::Rotate(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -346,7 +346,7 @@ void VtkInteractorStyleJoystickCameraWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleJoystickCameraWrap::InitPtpl();
+		VtkInteractorStyleJoystickCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -365,7 +365,7 @@ void VtkInteractorStyleJoystickCameraWrap::Spin(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleJoystickCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickCameraWrap>(info.Holder());
 	vtkInteractorStyleJoystickCamera *native = (vtkInteractorStyleJoystickCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

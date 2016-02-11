@@ -210,7 +210,7 @@ void VtkTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -239,7 +239,7 @@ void VtkTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -252,7 +252,7 @@ void VtkTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Value>& i
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLinearTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -265,7 +265,7 @@ void VtkTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8::Value>& i
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkTransformWrap::GetConcatenatedTransform(const Nan::FunctionCallbackInfo<
 		r = native->GetConcatenatedTransform(
 			info[0]->Int32Value()
 		);
-			VtkLinearTransformWrap::InitPtpl();
+		VtkLinearTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
-		VtkLinearTransformWrap::InitPtpl();
+	VtkLinearTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +352,7 @@ void VtkTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInverse();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -426,7 +426,7 @@ void VtkTransformWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -460,7 +460,7 @@ void VtkTransformWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -481,7 +481,7 @@ void VtkTransformWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkTransformWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,17 @@ void VtkTransformWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientation();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTransformWrap::GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -537,7 +547,7 @@ void VtkTransformWrap::GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -566,7 +576,7 @@ void VtkTransformWrap::GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +586,17 @@ void VtkTransformWrap::GetOrientationWXYZ(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientationWXYZ();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTransformWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -593,7 +613,7 @@ void VtkTransformWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -622,7 +642,7 @@ void VtkTransformWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +652,17 @@ void VtkTransformWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& i
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTransformWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -649,7 +679,7 @@ void VtkTransformWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -678,7 +708,7 @@ void VtkTransformWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +718,17 @@ void VtkTransformWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScale();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTransformWrap::GetTranspose(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -698,7 +738,7 @@ void VtkTransformWrap::GetTranspose(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +755,7 @@ void VtkTransformWrap::Identity(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -727,7 +767,7 @@ void VtkTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -768,7 +808,7 @@ void VtkTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -803,7 +843,7 @@ void VtkTransformWrap::MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -833,7 +873,7 @@ void VtkTransformWrap::MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -883,7 +923,7 @@ void VtkTransformWrap::MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -903,7 +943,7 @@ void VtkTransformWrap::MultiplyPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -929,7 +969,7 @@ void VtkTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransformWrap::InitPtpl();
+	VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -945,7 +985,7 @@ void VtkTransformWrap::Pop(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -957,7 +997,7 @@ void VtkTransformWrap::PostMultiply(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -969,7 +1009,7 @@ void VtkTransformWrap::PreMultiply(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -981,7 +1021,7 @@ void VtkTransformWrap::Push(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkTransformWrap>(info.Holder());
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1005,7 +1045,7 @@ void VtkTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& in
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1035,7 +1075,7 @@ void VtkTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& in
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1052,7 +1092,7 @@ void VtkTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8::Value>& in
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1077,7 +1117,7 @@ void VtkTransformWrap::RotateX(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1096,7 +1136,7 @@ void VtkTransformWrap::RotateY(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1115,7 +1155,7 @@ void VtkTransformWrap::RotateZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkTransform *native = (vtkTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1144,7 +1184,7 @@ void VtkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransformWrap::InitPtpl();
+		VtkTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1173,7 +1213,7 @@ void VtkTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1202,7 +1242,7 @@ void VtkTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1218,7 +1258,7 @@ void VtkTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1242,7 +1282,7 @@ void VtkTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLinearTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLinearTransformWrap *a0 = ObjectWrap::Unwrap<VtkLinearTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1269,7 +1309,7 @@ void VtkTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1298,7 +1338,7 @@ void VtkTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1311,7 +1351,7 @@ void VtkTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1338,7 +1378,7 @@ void VtkTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1367,7 +1407,7 @@ void VtkTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1383,7 +1423,7 @@ void VtkTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

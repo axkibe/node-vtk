@@ -137,7 +137,7 @@ void VtkPixelBufferObjectWrap::BindToPackedBuffer(const Nan::FunctionCallbackInf
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -149,7 +149,7 @@ void VtkPixelBufferObjectWrap::BindToUnPackedBuffer(const Nan::FunctionCallbackI
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +196,7 @@ void VtkPixelBufferObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkPixelBufferObjectWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkPixelBufferObjectWrap::InitPtpl();
+	VtkPixelBufferObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,7 +307,7 @@ void VtkPixelBufferObjectWrap::ReleaseMemory(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -331,7 +331,7 @@ void VtkPixelBufferObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPixelBufferObjectWrap::InitPtpl();
+		VtkPixelBufferObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -352,7 +352,7 @@ void VtkPixelBufferObjectWrap::SetComponents(const Nan::FunctionCallbackInfo<v8:
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -372,7 +372,7 @@ void VtkPixelBufferObjectWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +391,7 @@ void VtkPixelBufferObjectWrap::SetType(const Nan::FunctionCallbackInfo<v8::Value
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +410,7 @@ void VtkPixelBufferObjectWrap::SetUsage(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +427,7 @@ void VtkPixelBufferObjectWrap::UnBind(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -439,7 +439,7 @@ void VtkPixelBufferObjectWrap::UnmapPackedBuffer(const Nan::FunctionCallbackInfo
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +451,7 @@ void VtkPixelBufferObjectWrap::UnmapUnpackedBuffer(const Nan::FunctionCallbackIn
 {
 	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
 	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

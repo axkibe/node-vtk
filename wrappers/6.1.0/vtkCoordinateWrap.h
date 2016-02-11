@@ -30,9 +30,16 @@ class VtkCoordinateWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedDoubleDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedDoubleViewportValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedLocalDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedViewportValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComputedWorldValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoordinateSystem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoordinateSystemAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReferenceCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

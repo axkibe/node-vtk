@@ -83,6 +83,9 @@ void VtkScalarsToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetVectorComponent", GetVectorComponent);
 	Nan::SetPrototypeMethod(tpl, "getVectorComponent", GetVectorComponent);
 
@@ -182,7 +185,7 @@ void VtkScalarsToColorsWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +215,7 @@ void VtkScalarsToColorsWrap::ConvertUnsignedCharToRGBA(const Nan::FunctionCallba
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
-					VtkUnsignedCharArrayWrap::InitPtpl();
+				VtkUnsignedCharArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -236,7 +239,7 @@ void VtkScalarsToColorsWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +277,7 @@ void VtkScalarsToColorsWrap::GetAnnotatedValues(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetAnnotatedValues();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +300,7 @@ void VtkScalarsToColorsWrap::GetAnnotations(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnnotations();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,7 +342,7 @@ void VtkScalarsToColorsWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -369,7 +372,7 @@ void VtkScalarsToColorsWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -380,6 +383,20 @@ void VtkScalarsToColorsWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>
 			);
 			return;
 		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetColor(
+			info[0]->NumberValue()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -440,6 +457,23 @@ void VtkScalarsToColorsWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Valu
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkScalarsToColorsWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
+	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkScalarsToColorsWrap::GetVectorComponent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
@@ -486,7 +520,7 @@ void VtkScalarsToColorsWrap::IndexedLookupOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -498,7 +532,7 @@ void VtkScalarsToColorsWrap::IndexedLookupOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -564,7 +598,7 @@ void VtkScalarsToColorsWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Valu
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
-					VtkUnsignedCharArrayWrap::InitPtpl();
+				VtkUnsignedCharArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -592,7 +626,7 @@ void VtkScalarsToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,7 +642,7 @@ void VtkScalarsToColorsWrap::ResetAnnotations(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +666,7 @@ void VtkScalarsToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScalarsToColorsWrap::InitPtpl();
+		VtkScalarsToColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -653,7 +687,7 @@ void VtkScalarsToColorsWrap::SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +710,7 @@ void VtkScalarsToColorsWrap::SetAnnotations(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkStringArrayWrap *a1 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -697,7 +731,7 @@ void VtkScalarsToColorsWrap::SetIndexedLookup(const Nan::FunctionCallbackInfo<v8
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -724,7 +758,7 @@ void VtkScalarsToColorsWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -753,7 +787,7 @@ void VtkScalarsToColorsWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -767,7 +801,7 @@ void VtkScalarsToColorsWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -788,7 +822,7 @@ void VtkScalarsToColorsWrap::SetVectorComponent(const Nan::FunctionCallbackInfo<
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -807,7 +841,7 @@ void VtkScalarsToColorsWrap::SetVectorMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +858,7 @@ void VtkScalarsToColorsWrap::SetVectorModeToComponent(const Nan::FunctionCallbac
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -836,7 +870,7 @@ void VtkScalarsToColorsWrap::SetVectorModeToMagnitude(const Nan::FunctionCallbac
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -848,7 +882,7 @@ void VtkScalarsToColorsWrap::SetVectorModeToRGBColors(const Nan::FunctionCallbac
 {
 	VtkScalarsToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info.Holder());
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -862,7 +896,7 @@ void VtkScalarsToColorsWrap::SetVectorSize(const Nan::FunctionCallbackInfo<v8::V
 	vtkScalarsToColors *native = (vtkScalarsToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -267,7 +267,7 @@ void VtkStripperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkStripperWrap::InitPtpl();
+	VtkStripperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkStripperWrap::PassCellDataAsFieldDataOff(const Nan::FunctionCallbackInfo
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkStripperWrap::PassCellDataAsFieldDataOn(const Nan::FunctionCallbackInfo<
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -307,7 +307,7 @@ void VtkStripperWrap::PassThroughCellIdsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkStripperWrap::PassThroughCellIdsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -331,7 +331,7 @@ void VtkStripperWrap::PassThroughPointIdsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkStripperWrap::PassThroughPointIdsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStripperWrap *wrapper = ObjectWrap::Unwrap<VtkStripperWrap>(info.Holder());
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +367,7 @@ void VtkStripperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStripperWrap::InitPtpl();
+		VtkStripperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkStripperWrap::SetMaximumLength(const Nan::FunctionCallbackInfo<v8::Value
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkStripperWrap::SetPassCellDataAsFieldData(const Nan::FunctionCallbackInfo
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +426,7 @@ void VtkStripperWrap::SetPassThroughCellIds(const Nan::FunctionCallbackInfo<v8::
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -445,7 +445,7 @@ void VtkStripperWrap::SetPassThroughPointIds(const Nan::FunctionCallbackInfo<v8:
 	vtkStripper *native = (vtkStripper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -51,11 +51,20 @@ void VtkLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetAmbientColor", GetAmbientColor);
+	Nan::SetPrototypeMethod(tpl, "getAmbientColor", GetAmbientColor);
+
+	Nan::SetPrototypeMethod(tpl, "GetAttenuationValues", GetAttenuationValues);
+	Nan::SetPrototypeMethod(tpl, "getAttenuationValues", GetAttenuationValues);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetConeAngle", GetConeAngle);
 	Nan::SetPrototypeMethod(tpl, "getConeAngle", GetConeAngle);
+
+	Nan::SetPrototypeMethod(tpl, "GetDiffuseColor", GetDiffuseColor);
+	Nan::SetPrototypeMethod(tpl, "getDiffuseColor", GetDiffuseColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetExponent", GetExponent);
 	Nan::SetPrototypeMethod(tpl, "getExponent", GetExponent);
@@ -66,14 +75,23 @@ void VtkLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetExponentMinValue", GetExponentMinValue);
 	Nan::SetPrototypeMethod(tpl, "getExponentMinValue", GetExponentMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetFocalPoint", GetFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "getFocalPoint", GetFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetIntensity", GetIntensity);
 	Nan::SetPrototypeMethod(tpl, "getIntensity", GetIntensity);
 
 	Nan::SetPrototypeMethod(tpl, "GetLightType", GetLightType);
 	Nan::SetPrototypeMethod(tpl, "getLightType", GetLightType);
 
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetPositional", GetPositional);
 	Nan::SetPrototypeMethod(tpl, "getPositional", GetPositional);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpecularColor", GetSpecularColor);
+	Nan::SetPrototypeMethod(tpl, "getSpecularColor", GetSpecularColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetSwitch", GetSwitch);
 	Nan::SetPrototypeMethod(tpl, "getSwitch", GetSwitch);
@@ -213,7 +231,7 @@ void VtkLightWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,6 +242,40 @@ void VtkLightWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLightWrap::GetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAmbientColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkLightWrap::GetAttenuationValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAttenuationValues();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLightWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -252,6 +304,23 @@ void VtkLightWrap::GetConeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	r = native->GetConeAngle();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLightWrap::GetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDiffuseColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLightWrap::GetExponent(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -296,6 +365,23 @@ void VtkLightWrap::GetExponentMinValue(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLightWrap::GetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFocalPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkLightWrap::GetIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
@@ -324,6 +410,23 @@ void VtkLightWrap::GetLightType(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLightWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkLightWrap::GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
@@ -336,6 +439,23 @@ void VtkLightWrap::GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetPositional();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkLightWrap::GetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
+	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpecularColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLightWrap::GetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -363,7 +483,7 @@ void VtkLightWrap::GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTransformMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +509,7 @@ void VtkLightWrap::GetTransformedFocalPoint(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +538,7 @@ void VtkLightWrap::GetTransformedFocalPoint(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +548,17 @@ void VtkLightWrap::GetTransformedFocalPoint(const Nan::FunctionCallbackInfo<v8::
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTransformedFocalPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLightWrap::GetTransformedPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -445,7 +575,7 @@ void VtkLightWrap::GetTransformedPosition(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +604,7 @@ void VtkLightWrap::GetTransformedPosition(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +614,17 @@ void VtkLightWrap::GetTransformedPosition(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTransformedPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLightWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -562,7 +702,7 @@ void VtkLightWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkLightWrap::InitPtpl();
+	VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -578,7 +718,7 @@ void VtkLightWrap::PositionalOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -590,7 +730,7 @@ void VtkLightWrap::PositionalOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +747,7 @@ void VtkLightWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -638,7 +778,7 @@ void VtkLightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLightWrap::InitPtpl();
+		VtkLightWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -667,7 +807,7 @@ void VtkLightWrap::SetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +836,7 @@ void VtkLightWrap::SetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -712,7 +852,7 @@ void VtkLightWrap::SetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -743,7 +883,7 @@ void VtkLightWrap::SetAttenuationValues(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +912,7 @@ void VtkLightWrap::SetAttenuationValues(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -788,7 +928,7 @@ void VtkLightWrap::SetAttenuationValues(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -819,7 +959,7 @@ void VtkLightWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -848,7 +988,7 @@ void VtkLightWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -864,7 +1004,7 @@ void VtkLightWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -887,7 +1027,7 @@ void VtkLightWrap::SetConeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -914,7 +1054,7 @@ void VtkLightWrap::SetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -943,7 +1083,7 @@ void VtkLightWrap::SetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -959,7 +1099,7 @@ void VtkLightWrap::SetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -990,7 +1130,7 @@ void VtkLightWrap::SetDirectionAngle(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1019,7 +1159,7 @@ void VtkLightWrap::SetDirectionAngle(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1033,7 +1173,7 @@ void VtkLightWrap::SetDirectionAngle(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1054,7 +1194,7 @@ void VtkLightWrap::SetExponent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1081,7 +1221,7 @@ void VtkLightWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1110,7 +1250,7 @@ void VtkLightWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1126,7 +1266,7 @@ void VtkLightWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1149,7 +1289,7 @@ void VtkLightWrap::SetIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1168,7 +1308,7 @@ void VtkLightWrap::SetLightType(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1185,7 +1325,7 @@ void VtkLightWrap::SetLightTypeToCameraLight(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1197,7 +1337,7 @@ void VtkLightWrap::SetLightTypeToHeadlight(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1209,7 +1349,7 @@ void VtkLightWrap::SetLightTypeToSceneLight(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1231,7 +1371,7 @@ void VtkLightWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1260,7 +1400,7 @@ void VtkLightWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1276,7 +1416,7 @@ void VtkLightWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1299,7 +1439,7 @@ void VtkLightWrap::SetPositional(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1326,7 +1466,7 @@ void VtkLightWrap::SetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1355,7 +1495,7 @@ void VtkLightWrap::SetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1371,7 +1511,7 @@ void VtkLightWrap::SetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1394,7 +1534,7 @@ void VtkLightWrap::SetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1414,7 +1554,7 @@ void VtkLightWrap::SetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1438,7 +1578,7 @@ void VtkLightWrap::ShallowClone(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->ShallowClone();
-		VtkLightWrap::InitPtpl();
+	VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1454,7 +1594,7 @@ void VtkLightWrap::SwitchOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1466,7 +1606,7 @@ void VtkLightWrap::SwitchOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLightWrap *wrapper = ObjectWrap::Unwrap<VtkLightWrap>(info.Holder());
 	vtkLight *native = (vtkLight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

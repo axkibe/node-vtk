@@ -129,7 +129,7 @@ void VtkBoxWrap::AddBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -158,7 +158,7 @@ void VtkBoxWrap::AddBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -276,7 +276,7 @@ void VtkBoxWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& in
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -306,7 +306,7 @@ void VtkBoxWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& in
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -356,7 +356,7 @@ void VtkBoxWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& in
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +376,7 @@ void VtkBoxWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& in
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -405,7 +405,7 @@ void VtkBoxWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +434,7 @@ void VtkBoxWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +475,7 @@ void VtkBoxWrap::GetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -504,7 +504,7 @@ void VtkBoxWrap::GetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +531,7 @@ void VtkBoxWrap::GetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -560,7 +560,7 @@ void VtkBoxWrap::GetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -606,7 +606,7 @@ void VtkBoxWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkBoxWrap::InitPtpl();
+	VtkBoxWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -634,7 +634,7 @@ void VtkBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBoxWrap::InitPtpl();
+		VtkBoxWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -663,7 +663,7 @@ void VtkBoxWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -692,7 +692,7 @@ void VtkBoxWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -714,7 +714,7 @@ void VtkBoxWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -751,7 +751,7 @@ void VtkBoxWrap::SetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -780,7 +780,7 @@ void VtkBoxWrap::SetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +796,7 @@ void VtkBoxWrap::SetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -827,7 +827,7 @@ void VtkBoxWrap::SetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +856,7 @@ void VtkBoxWrap::SetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -872,7 +872,7 @@ void VtkBoxWrap::SetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

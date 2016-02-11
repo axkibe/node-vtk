@@ -288,7 +288,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -319,7 +319,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -370,7 +370,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -441,7 +441,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -482,7 +482,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -533,7 +533,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -594,7 +594,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -625,7 +625,7 @@ void VtkMathWrap::Add(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1222,7 +1222,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1253,7 +1253,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1304,7 +1304,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1375,7 +1375,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1416,7 +1416,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1467,7 +1467,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1528,7 +1528,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1559,7 +1559,7 @@ void VtkMathWrap::Cross(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3119,7 +3119,7 @@ void VtkMathWrap::HSVToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3149,7 +3149,7 @@ void VtkMathWrap::HSVToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3199,7 +3199,7 @@ void VtkMathWrap::HSVToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3219,7 +3219,7 @@ void VtkMathWrap::HSVToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3229,6 +3229,89 @@ void VtkMathWrap::HSVToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(double *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HSVToRGB(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HSVToRGB(
+			b0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				double const * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->HSVToRGB(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+				Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+				memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+				info.GetReturnValue().Set(at);
+				return;
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -3356,7 +3439,7 @@ void VtkMathWrap::LabToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3386,7 +3469,7 @@ void VtkMathWrap::LabToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3436,7 +3519,7 @@ void VtkMathWrap::LabToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3456,7 +3539,7 @@ void VtkMathWrap::LabToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3494,7 +3577,7 @@ void VtkMathWrap::LabToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3524,7 +3607,7 @@ void VtkMathWrap::LabToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3574,7 +3657,7 @@ void VtkMathWrap::LabToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3594,7 +3677,7 @@ void VtkMathWrap::LabToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3641,7 +3724,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3672,7 +3755,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3723,7 +3806,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3794,7 +3877,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3835,7 +3918,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3886,7 +3969,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3947,7 +4030,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3978,7 +4061,7 @@ void VtkMathWrap::MultiplyQuaternion(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -4011,7 +4094,7 @@ void VtkMathWrap::MultiplyScalar(const Nan::FunctionCallbackInfo<v8::Value>& inf
 
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4044,7 +4127,7 @@ void VtkMathWrap::MultiplyScalar(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		}
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4075,7 +4158,7 @@ void VtkMathWrap::MultiplyScalar2D(const Nan::FunctionCallbackInfo<v8::Value>& i
 
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4108,7 +4191,7 @@ void VtkMathWrap::MultiplyScalar2D(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4183,7 +4266,7 @@ void VtkMathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkMathWrap::InitPtpl();
+	VtkMathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -4469,7 +4552,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4504,7 +4587,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4559,7 +4642,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4634,7 +4717,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4679,7 +4762,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4734,7 +4817,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4799,7 +4882,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4834,7 +4917,7 @@ void VtkMathWrap::Perpendiculars(const Nan::FunctionCallbackInfo<v8::Value>& inf
 
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6096,7 +6179,7 @@ void VtkMathWrap::RGBToHSV(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6126,7 +6209,7 @@ void VtkMathWrap::RGBToHSV(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6176,7 +6259,7 @@ void VtkMathWrap::RGBToHSV(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6196,7 +6279,7 @@ void VtkMathWrap::RGBToHSV(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6206,6 +6289,89 @@ void VtkMathWrap::RGBToHSV(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(double *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RGBToHSV(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->RGBToHSV(
+			b0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				double const * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->RGBToHSV(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+				Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+				memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+				info.GetReturnValue().Set(at);
+				return;
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -6234,7 +6400,7 @@ void VtkMathWrap::RGBToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6264,7 +6430,7 @@ void VtkMathWrap::RGBToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6314,7 +6480,7 @@ void VtkMathWrap::RGBToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6334,7 +6500,7 @@ void VtkMathWrap::RGBToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6372,7 +6538,7 @@ void VtkMathWrap::RGBToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6402,7 +6568,7 @@ void VtkMathWrap::RGBToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6452,7 +6618,7 @@ void VtkMathWrap::RGBToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6472,7 +6638,7 @@ void VtkMathWrap::RGBToXYZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6546,7 +6712,7 @@ void VtkMathWrap::RandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkMath *native = (vtkMath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -6596,7 +6762,7 @@ void VtkMathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMathWrap::InitPtpl();
+		VtkMathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -7685,7 +7851,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7716,7 +7882,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7767,7 +7933,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7838,7 +8004,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7879,7 +8045,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7930,7 +8096,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -7991,7 +8157,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -8022,7 +8188,7 @@ void VtkMathWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -8053,7 +8219,7 @@ void VtkMathWrap::UninitializeBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -8082,7 +8248,7 @@ void VtkMathWrap::UninitializeBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -8118,7 +8284,7 @@ void VtkMathWrap::XYZToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8148,7 +8314,7 @@ void VtkMathWrap::XYZToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8198,7 +8364,7 @@ void VtkMathWrap::XYZToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8218,7 +8384,7 @@ void VtkMathWrap::XYZToLab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8256,7 +8422,7 @@ void VtkMathWrap::XYZToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8286,7 +8452,7 @@ void VtkMathWrap::XYZToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8336,7 +8502,7 @@ void VtkMathWrap::XYZToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -8356,7 +8522,7 @@ void VtkMathWrap::XYZToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

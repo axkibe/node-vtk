@@ -145,7 +145,7 @@ void VtkVisibilitySortWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkVisibilitySortWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkVisibilitySortWrap::GetInverseModelTransform(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetInverseModelTransform();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkVisibilitySortWrap::GetModelTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetModelTransform();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkVisibilitySortWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkVisibilitySortWrap::InitPtpl();
+	VtkVisibilitySortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -357,7 +357,7 @@ void VtkVisibilitySortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVisibilitySortWrap::InitPtpl();
+		VtkVisibilitySortWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -379,7 +379,7 @@ void VtkVisibilitySortWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -398,7 +398,7 @@ void VtkVisibilitySortWrap::SetDirection(const Nan::FunctionCallbackInfo<v8::Val
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -415,7 +415,7 @@ void VtkVisibilitySortWrap::SetDirectionToBackToFront(const Nan::FunctionCallbac
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -427,7 +427,7 @@ void VtkVisibilitySortWrap::SetDirectionToFrontToBack(const Nan::FunctionCallbac
 {
 	VtkVisibilitySortWrap *wrapper = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info.Holder());
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -442,7 +442,7 @@ void VtkVisibilitySortWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +461,7 @@ void VtkVisibilitySortWrap::SetMaxCellsReturned(const Nan::FunctionCallbackInfo<
 	vtkVisibilitySort *native = (vtkVisibilitySort *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -481,7 +481,7 @@ void VtkVisibilitySortWrap::SetModelTransform(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

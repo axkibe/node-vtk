@@ -141,7 +141,7 @@ void VtkScalarBarRepresentationWrap::BuildRepresentation(const Nan::FunctionCall
 {
 	VtkScalarBarRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarRepresentationWrap>(info.Holder());
 	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -156,7 +156,7 @@ void VtkScalarBarRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -208,7 +208,7 @@ void VtkScalarBarRepresentationWrap::GetScalarBarActor(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetScalarBarActor();
-		VtkScalarBarActorWrap::InitPtpl();
+	VtkScalarBarActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkScalarBarRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkScalarBarRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -337,7 +337,7 @@ void VtkScalarBarRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkScalarBarRepresentationWrap::InitPtpl();
+	VtkScalarBarRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +356,7 @@ void VtkScalarBarRepresentationWrap::ReleaseGraphicsResources(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkScalarBarRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScalarBarRepresentationWrap::InitPtpl();
+		VtkScalarBarRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -472,7 +472,7 @@ void VtkScalarBarRepresentationWrap::SetOrientation(const Nan::FunctionCallbackI
 	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +492,7 @@ void VtkScalarBarRepresentationWrap::SetScalarBarActor(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarBarActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarBarActorWrap *a0 = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkScalarBarRepresentationWrap::SetVisibility(const Nan::FunctionCallbackIn
 	vtkScalarBarRepresentation *native = (vtkScalarBarRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +538,7 @@ void VtkScalarBarRepresentationWrap::WidgetInteraction(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +567,7 @@ void VtkScalarBarRepresentationWrap::WidgetInteraction(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

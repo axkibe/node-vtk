@@ -34,6 +34,7 @@ class VtkTemporalPathLineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetIdChannelArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeepDeadTrails(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxStepDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

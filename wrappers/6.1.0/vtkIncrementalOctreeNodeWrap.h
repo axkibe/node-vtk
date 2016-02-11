@@ -39,6 +39,8 @@ class VtkIncrementalOctreeNodeWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistance2ToBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistance2ToInnerBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointIdSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

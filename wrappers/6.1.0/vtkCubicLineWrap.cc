@@ -265,7 +265,7 @@ void VtkCubicLineWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkCubicLineWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -481,7 +481,7 @@ void VtkCubicLineWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -511,7 +511,7 @@ void VtkCubicLineWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -561,7 +561,7 @@ void VtkCubicLineWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -581,7 +581,7 @@ void VtkCubicLineWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -619,7 +619,7 @@ void VtkCubicLineWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -649,7 +649,7 @@ void VtkCubicLineWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -699,7 +699,7 @@ void VtkCubicLineWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -719,7 +719,7 @@ void VtkCubicLineWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -757,7 +757,7 @@ void VtkCubicLineWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -787,7 +787,7 @@ void VtkCubicLineWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -837,7 +837,7 @@ void VtkCubicLineWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -857,7 +857,7 @@ void VtkCubicLineWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -895,7 +895,7 @@ void VtkCubicLineWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -925,7 +925,7 @@ void VtkCubicLineWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -975,7 +975,7 @@ void VtkCubicLineWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -995,7 +995,7 @@ void VtkCubicLineWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1043,7 +1043,7 @@ void VtkCubicLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkCubicLineWrap::InitPtpl();
+	VtkCubicLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1071,7 +1071,7 @@ void VtkCubicLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCubicLineWrap::InitPtpl();
+		VtkCubicLineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

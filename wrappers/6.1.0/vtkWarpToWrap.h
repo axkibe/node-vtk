@@ -34,6 +34,7 @@ class VtkWarpToWrap : public VtkPointSetAlgorithmWrap
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAbsolute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

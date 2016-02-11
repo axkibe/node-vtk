@@ -47,14 +47,35 @@ void VtkProjectedTextureWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkProjectedTextureWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetAspectRatio", GetAspectRatio);
+	Nan::SetPrototypeMethod(tpl, "getAspectRatio", GetAspectRatio);
+
 	Nan::SetPrototypeMethod(tpl, "GetCameraMode", GetCameraMode);
 	Nan::SetPrototypeMethod(tpl, "getCameraMode", GetCameraMode);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFocalPoint", GetFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "getFocalPoint", GetFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetMirrorSeparation", GetMirrorSeparation);
 	Nan::SetPrototypeMethod(tpl, "getMirrorSeparation", GetMirrorSeparation);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
+	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetSRange", GetSRange);
+	Nan::SetPrototypeMethod(tpl, "getSRange", GetSRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetTRange", GetTRange);
+	Nan::SetPrototypeMethod(tpl, "getTRange", GetTRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetUp", GetUp);
+	Nan::SetPrototypeMethod(tpl, "getUp", GetUp);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -124,6 +145,23 @@ void VtkProjectedTextureWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkProjectedTextureWrap::GetAspectRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAspectRatio();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkProjectedTextureWrap::GetCameraMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
@@ -152,6 +190,23 @@ void VtkProjectedTextureWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkProjectedTextureWrap::GetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFocalPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkProjectedTextureWrap::GetMirrorSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
@@ -164,6 +219,91 @@ void VtkProjectedTextureWrap::GetMirrorSeparation(const Nan::FunctionCallbackInf
 	}
 	r = native->GetMirrorSeparation();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkProjectedTextureWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientation();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkProjectedTextureWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkProjectedTextureWrap::GetSRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkProjectedTextureWrap::GetTRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkProjectedTextureWrap::GetUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
+	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUp();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkProjectedTextureWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,7 +339,7 @@ void VtkProjectedTextureWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkProjectedTextureWrap::InitPtpl();
+	VtkProjectedTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -227,7 +367,7 @@ void VtkProjectedTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProjectedTextureWrap::InitPtpl();
+		VtkProjectedTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -256,7 +396,7 @@ void VtkProjectedTextureWrap::SetAspectRatio(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -285,7 +425,7 @@ void VtkProjectedTextureWrap::SetAspectRatio(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -301,7 +441,7 @@ void VtkProjectedTextureWrap::SetAspectRatio(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -324,7 +464,7 @@ void VtkProjectedTextureWrap::SetCameraMode(const Nan::FunctionCallbackInfo<v8::
 	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +481,7 @@ void VtkProjectedTextureWrap::SetCameraModeToPinhole(const Nan::FunctionCallback
 {
 	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
 	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -353,7 +493,7 @@ void VtkProjectedTextureWrap::SetCameraModeToTwoMirror(const Nan::FunctionCallba
 {
 	VtkProjectedTextureWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTextureWrap>(info.Holder());
 	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -375,7 +515,7 @@ void VtkProjectedTextureWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +544,7 @@ void VtkProjectedTextureWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +560,7 @@ void VtkProjectedTextureWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -443,7 +583,7 @@ void VtkProjectedTextureWrap::SetMirrorSeparation(const Nan::FunctionCallbackInf
 	vtkProjectedTexture *native = (vtkProjectedTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +610,7 @@ void VtkProjectedTextureWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +639,7 @@ void VtkProjectedTextureWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +655,7 @@ void VtkProjectedTextureWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -546,7 +686,7 @@ void VtkProjectedTextureWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -575,7 +715,7 @@ void VtkProjectedTextureWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -589,7 +729,7 @@ void VtkProjectedTextureWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -618,7 +758,7 @@ void VtkProjectedTextureWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -647,7 +787,7 @@ void VtkProjectedTextureWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -661,7 +801,7 @@ void VtkProjectedTextureWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -690,7 +830,7 @@ void VtkProjectedTextureWrap::SetUp(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +859,7 @@ void VtkProjectedTextureWrap::SetUp(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +875,7 @@ void VtkProjectedTextureWrap::SetUp(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

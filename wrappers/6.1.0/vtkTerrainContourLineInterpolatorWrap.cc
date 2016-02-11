@@ -129,7 +129,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetImageData(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetImageData();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -152,7 +152,7 @@ void VtkTerrainContourLineInterpolatorWrap::GetProjector(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetProjector();
-		VtkProjectedTerrainPathWrap::InitPtpl();
+	VtkProjectedTerrainPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkTerrainContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkTerrainContourLineInterpolatorWrap::InitPtpl();
+	VtkTerrainContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkTerrainContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTerrainContourLineInterpolatorWrap::InitPtpl();
+		VtkTerrainContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkTerrainContourLineInterpolatorWrap::SetImageData(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

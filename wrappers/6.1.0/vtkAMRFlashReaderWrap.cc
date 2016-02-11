@@ -172,7 +172,7 @@ void VtkAMRFlashReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRFlashReaderWrap::InitPtpl();
+	VtkAMRFlashReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +200,7 @@ void VtkAMRFlashReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRFlashReaderWrap::InitPtpl();
+		VtkAMRFlashReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkAMRFlashReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

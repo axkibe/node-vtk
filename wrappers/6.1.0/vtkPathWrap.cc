@@ -137,7 +137,7 @@ void VtkPathWrap::GetCodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetCodes();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkPathWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkPathWrap::InitPtpl();
+			VtkPathWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkPathWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkPathWrap::InitPtpl();
+		VtkPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkPathWrap::InsertNextPoint(const Nan::FunctionCallbackInfo<v8::Value>& in
 
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -285,7 +285,7 @@ void VtkPathWrap::InsertNextPoint(const Nan::FunctionCallbackInfo<v8::Value>& in
 		}
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -305,7 +305,7 @@ void VtkPathWrap::InsertNextPoint(const Nan::FunctionCallbackInfo<v8::Value>& in
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -357,7 +357,7 @@ void VtkPathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkPathWrap::InitPtpl();
+	VtkPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +373,7 @@ void VtkPathWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPathWrap *wrapper = ObjectWrap::Unwrap<VtkPathWrap>(info.Holder());
 	vtkPath *native = (vtkPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -397,7 +397,7 @@ void VtkPathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPathWrap::InitPtpl();
+		VtkPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkPathWrap::SetCodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

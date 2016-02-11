@@ -142,7 +142,7 @@ void VtkContextClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextClipWrap::InitPtpl();
+	VtkContextClipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkContextClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextClipWrap::InitPtpl();
+		VtkContextClipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkContextClipWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkContextClipWrap *wrapper = ObjectWrap::Unwrap<VtkContextClipWrap>(info.Holder());
 	vtkContextClip *native = (vtkContextClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

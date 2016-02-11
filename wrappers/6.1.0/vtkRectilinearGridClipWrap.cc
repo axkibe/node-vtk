@@ -114,7 +114,7 @@ void VtkRectilinearGridClipWrap::ClipDataOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRectilinearGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridClipWrap>(info.Holder());
 	vtkRectilinearGridClip *native = (vtkRectilinearGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkRectilinearGridClipWrap::ClipDataOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRectilinearGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridClipWrap>(info.Holder());
 	vtkRectilinearGridClip *native = (vtkRectilinearGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkRectilinearGridClipWrap::GetOutputWholeExtent(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -205,7 +205,7 @@ void VtkRectilinearGridClipWrap::GetOutputWholeExtent(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkRectilinearGridClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearGridClipWrap::InitPtpl();
+	VtkRectilinearGridClipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkRectilinearGridClipWrap::ResetOutputWholeExtent(const Nan::FunctionCallb
 {
 	VtkRectilinearGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridClipWrap>(info.Holder());
 	vtkRectilinearGridClip *native = (vtkRectilinearGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +291,7 @@ void VtkRectilinearGridClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearGridClipWrap::InitPtpl();
+		VtkRectilinearGridClipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkRectilinearGridClipWrap::SetClipData(const Nan::FunctionCallbackInfo<v8:
 	vtkRectilinearGridClip *native = (vtkRectilinearGridClip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkRectilinearGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +376,7 @@ void VtkRectilinearGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -400,7 +400,7 @@ void VtkRectilinearGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbac
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -418,7 +418,7 @@ void VtkRectilinearGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbac
 					}
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

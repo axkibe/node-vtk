@@ -198,6 +198,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXMLFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);

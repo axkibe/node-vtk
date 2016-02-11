@@ -65,6 +65,15 @@ void VtkHyperOctreeFractalSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMinimumLevel", GetMinimumLevel);
 	Nan::SetPrototypeMethod(tpl, "getMinimumLevel", GetMinimumLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetOriginCX", GetOriginCX);
+	Nan::SetPrototypeMethod(tpl, "getOriginCX", GetOriginCX);
+
+	Nan::SetPrototypeMethod(tpl, "GetProjectionAxes", GetProjectionAxes);
+	Nan::SetPrototypeMethod(tpl, "getProjectionAxes", GetProjectionAxes);
+
+	Nan::SetPrototypeMethod(tpl, "GetSizeCX", GetSizeCX);
+	Nan::SetPrototypeMethod(tpl, "getSizeCX", GetSizeCX);
+
 	Nan::SetPrototypeMethod(tpl, "GetSpanThreshold", GetSpanThreshold);
 	Nan::SetPrototypeMethod(tpl, "getSpanThreshold", GetSpanThreshold);
 
@@ -211,6 +220,57 @@ void VtkHyperOctreeFractalSourceWrap::GetMinimumLevel(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkHyperOctreeFractalSourceWrap::GetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOriginCX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkHyperOctreeFractalSourceWrap::GetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProjectionAxes();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkHyperOctreeFractalSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSizeCX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkHyperOctreeFractalSourceWrap::GetSpanThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
@@ -258,7 +318,7 @@ void VtkHyperOctreeFractalSourceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeFractalSourceWrap::InitPtpl();
+	VtkHyperOctreeFractalSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,7 +346,7 @@ void VtkHyperOctreeFractalSourceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeFractalSourceWrap::InitPtpl();
+		VtkHyperOctreeFractalSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -307,7 +367,7 @@ void VtkHyperOctreeFractalSourceWrap::SetDimension(const Nan::FunctionCallbackIn
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +386,7 @@ void VtkHyperOctreeFractalSourceWrap::SetMaximumLevel(const Nan::FunctionCallbac
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -345,7 +405,7 @@ void VtkHyperOctreeFractalSourceWrap::SetMinimumLevel(const Nan::FunctionCallbac
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -372,7 +432,7 @@ void VtkHyperOctreeFractalSourceWrap::SetOriginCX(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +461,7 @@ void VtkHyperOctreeFractalSourceWrap::SetOriginCX(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +479,7 @@ void VtkHyperOctreeFractalSourceWrap::SetOriginCX(const Nan::FunctionCallbackInf
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -452,7 +512,7 @@ void VtkHyperOctreeFractalSourceWrap::SetProjectionAxes(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -481,7 +541,7 @@ void VtkHyperOctreeFractalSourceWrap::SetProjectionAxes(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -497,7 +557,7 @@ void VtkHyperOctreeFractalSourceWrap::SetProjectionAxes(const Nan::FunctionCallb
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -528,7 +588,7 @@ void VtkHyperOctreeFractalSourceWrap::SetSizeCX(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +617,7 @@ void VtkHyperOctreeFractalSourceWrap::SetSizeCX(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -575,7 +635,7 @@ void VtkHyperOctreeFractalSourceWrap::SetSizeCX(const Nan::FunctionCallbackInfo<
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -600,7 +660,7 @@ void VtkHyperOctreeFractalSourceWrap::SetSpanThreshold(const Nan::FunctionCallba
 	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -224,7 +224,7 @@ void VtkTextureWrap::EdgeClampOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkTextureWrap::EdgeClampOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkTextureWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +334,7 @@ void VtkTextureWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkTextureWrap::GetMappedScalars(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetMappedScalars();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -450,7 +450,7 @@ void VtkTextureWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransformWrap::InitPtpl();
+	VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -466,7 +466,7 @@ void VtkTextureWrap::InterpolateOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -478,7 +478,7 @@ void VtkTextureWrap::InterpolateOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -529,7 +529,7 @@ void VtkTextureWrap::Load(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -546,7 +546,7 @@ void VtkTextureWrap::MapColorScalarsThroughLookupTableOff(const Nan::FunctionCal
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -558,7 +558,7 @@ void VtkTextureWrap::MapColorScalarsThroughLookupTableOn(const Nan::FunctionCall
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +577,7 @@ void VtkTextureWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextureWrap::InitPtpl();
+	VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -596,7 +596,7 @@ void VtkTextureWrap::PostRender(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -613,7 +613,7 @@ void VtkTextureWrap::PremultipliedAlphaOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -625,7 +625,7 @@ void VtkTextureWrap::PremultipliedAlphaOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -640,7 +640,7 @@ void VtkTextureWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -660,7 +660,7 @@ void VtkTextureWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkTextureWrap::RepeatOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -689,7 +689,7 @@ void VtkTextureWrap::RepeatOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -701,7 +701,7 @@ void VtkTextureWrap::RestrictPowerOf2ImageSmallerOff(const Nan::FunctionCallback
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -713,7 +713,7 @@ void VtkTextureWrap::RestrictPowerOf2ImageSmallerOn(const Nan::FunctionCallbackI
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -737,7 +737,7 @@ void VtkTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextureWrap::InitPtpl();
+		VtkTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -758,7 +758,7 @@ void VtkTextureWrap::SetBlendingMode(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -777,7 +777,7 @@ void VtkTextureWrap::SetEdgeClamp(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +796,7 @@ void VtkTextureWrap::SetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -816,7 +816,7 @@ void VtkTextureWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -835,7 +835,7 @@ void VtkTextureWrap::SetMapColorScalarsThroughLookupTable(const Nan::FunctionCal
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -854,7 +854,7 @@ void VtkTextureWrap::SetPremultipliedAlpha(const Nan::FunctionCallbackInfo<v8::V
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -873,7 +873,7 @@ void VtkTextureWrap::SetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -890,7 +890,7 @@ void VtkTextureWrap::SetQualityTo16Bit(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -902,7 +902,7 @@ void VtkTextureWrap::SetQualityTo32Bit(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -914,7 +914,7 @@ void VtkTextureWrap::SetQualityToDefault(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTextureWrap *wrapper = ObjectWrap::Unwrap<VtkTextureWrap>(info.Holder());
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -928,7 +928,7 @@ void VtkTextureWrap::SetRepeat(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -947,7 +947,7 @@ void VtkTextureWrap::SetRestrictPowerOf2ImageSmaller(const Nan::FunctionCallback
 	vtkTexture *native = (vtkTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -967,7 +967,7 @@ void VtkTextureWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

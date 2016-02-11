@@ -135,7 +135,7 @@ void VtkGlyph2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkGlyph2DWrap::InitPtpl();
+	VtkGlyph2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkGlyph2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGlyph2DWrap::InitPtpl();
+		VtkGlyph2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

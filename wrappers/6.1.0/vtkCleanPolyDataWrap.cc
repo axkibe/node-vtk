@@ -214,7 +214,7 @@ void VtkCleanPolyDataWrap::ConvertLinesToPointsOff(const Nan::FunctionCallbackIn
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -226,7 +226,7 @@ void VtkCleanPolyDataWrap::ConvertLinesToPointsOn(const Nan::FunctionCallbackInf
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -238,7 +238,7 @@ void VtkCleanPolyDataWrap::ConvertPolysToLinesOff(const Nan::FunctionCallbackInf
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -250,7 +250,7 @@ void VtkCleanPolyDataWrap::ConvertPolysToLinesOn(const Nan::FunctionCallbackInfo
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -262,7 +262,7 @@ void VtkCleanPolyDataWrap::ConvertStripsToPolysOff(const Nan::FunctionCallbackIn
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -274,7 +274,7 @@ void VtkCleanPolyDataWrap::ConvertStripsToPolysOn(const Nan::FunctionCallbackInf
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -289,7 +289,7 @@ void VtkCleanPolyDataWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkCleanPolyDataWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +554,7 @@ void VtkCleanPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkCleanPolyDataWrap::InitPtpl();
+	VtkCleanPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -589,7 +589,7 @@ void VtkCleanPolyDataWrap::OperateOnBounds(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -619,7 +619,7 @@ void VtkCleanPolyDataWrap::OperateOnBounds(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -669,7 +669,7 @@ void VtkCleanPolyDataWrap::OperateOnBounds(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -689,7 +689,7 @@ void VtkCleanPolyDataWrap::OperateOnBounds(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -727,7 +727,7 @@ void VtkCleanPolyDataWrap::OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -757,7 +757,7 @@ void VtkCleanPolyDataWrap::OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -807,7 +807,7 @@ void VtkCleanPolyDataWrap::OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -827,7 +827,7 @@ void VtkCleanPolyDataWrap::OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -846,7 +846,7 @@ void VtkCleanPolyDataWrap::PieceInvariantOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -858,7 +858,7 @@ void VtkCleanPolyDataWrap::PieceInvariantOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -870,7 +870,7 @@ void VtkCleanPolyDataWrap::PointMergingOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -882,7 +882,7 @@ void VtkCleanPolyDataWrap::PointMergingOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -894,7 +894,7 @@ void VtkCleanPolyDataWrap::ReleaseLocator(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -918,7 +918,7 @@ void VtkCleanPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCleanPolyDataWrap::InitPtpl();
+		VtkCleanPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -939,7 +939,7 @@ void VtkCleanPolyDataWrap::SetAbsoluteTolerance(const Nan::FunctionCallbackInfo<
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -958,7 +958,7 @@ void VtkCleanPolyDataWrap::SetConvertLinesToPoints(const Nan::FunctionCallbackIn
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -977,7 +977,7 @@ void VtkCleanPolyDataWrap::SetConvertPolysToLines(const Nan::FunctionCallbackInf
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -996,7 +996,7 @@ void VtkCleanPolyDataWrap::SetConvertStripsToPolys(const Nan::FunctionCallbackIn
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1016,7 +1016,7 @@ void VtkCleanPolyDataWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1035,7 +1035,7 @@ void VtkCleanPolyDataWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackI
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1054,7 @@ void VtkCleanPolyDataWrap::SetPieceInvariant(const Nan::FunctionCallbackInfo<v8:
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1073,7 +1073,7 @@ void VtkCleanPolyDataWrap::SetPointMerging(const Nan::FunctionCallbackInfo<v8::V
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1092,7 +1092,7 @@ void VtkCleanPolyDataWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1111,7 +1111,7 @@ void VtkCleanPolyDataWrap::SetToleranceIsAbsolute(const Nan::FunctionCallbackInf
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1128,7 +1128,7 @@ void VtkCleanPolyDataWrap::ToleranceIsAbsoluteOff(const Nan::FunctionCallbackInf
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1140,7 +1140,7 @@ void VtkCleanPolyDataWrap::ToleranceIsAbsoluteOn(const Nan::FunctionCallbackInfo
 {
 	VtkCleanPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCleanPolyDataWrap>(info.Holder());
 	vtkCleanPolyData *native = (vtkCleanPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -164,7 +164,7 @@ void VtkStrahlerMetricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkStrahlerMetricWrap::InitPtpl();
+	VtkStrahlerMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkStrahlerMetricWrap::NormalizeOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkStrahlerMetricWrap *wrapper = ObjectWrap::Unwrap<VtkStrahlerMetricWrap>(info.Holder());
 	vtkStrahlerMetric *native = (vtkStrahlerMetric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkStrahlerMetricWrap::NormalizeOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkStrahlerMetricWrap *wrapper = ObjectWrap::Unwrap<VtkStrahlerMetricWrap>(info.Holder());
 	vtkStrahlerMetric *native = (vtkStrahlerMetric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkStrahlerMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStrahlerMetricWrap::InitPtpl();
+		VtkStrahlerMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkStrahlerMetricWrap::SetMetricArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkStrahlerMetricWrap::SetNormalize(const Nan::FunctionCallbackInfo<v8::Val
 	vtkStrahlerMetric *native = (vtkStrahlerMetric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

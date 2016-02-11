@@ -135,7 +135,7 @@ void VtkMergeCellsWrap::Finish(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +196,7 @@ void VtkMergeCellsWrap::GetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetUnstructuredGrid();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkMergeCellsWrap::MergeDuplicatePointsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkMergeCellsWrap::MergeDuplicatePointsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkMergeCellsWrap *wrapper = ObjectWrap::Unwrap<VtkMergeCellsWrap>(info.Holder());
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkMergeCellsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkMergeCellsWrap::InitPtpl();
+	VtkMergeCellsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkMergeCellsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMergeCellsWrap::InitPtpl();
+		VtkMergeCellsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkMergeCellsWrap::SetMergeDuplicatePoints(const Nan::FunctionCallbackInfo<
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkMergeCellsWrap::SetTotalNumberOfDataSets(const Nan::FunctionCallbackInfo
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkMergeCellsWrap::SetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkMergeCellsWrap::SetUseGlobalCellIds(const Nan::FunctionCallbackInfo<v8::
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkMergeCellsWrap::SetUseGlobalIds(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkMergeCells *native = (vtkMergeCells *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

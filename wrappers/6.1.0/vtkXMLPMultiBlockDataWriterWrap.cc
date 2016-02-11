@@ -123,7 +123,7 @@ void VtkXMLPMultiBlockDataWriterWrap::GetController(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkXMLPMultiBlockDataWriterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
+	VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
+		VtkXMLPMultiBlockDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SetController(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +237,7 @@ void VtkXMLPMultiBlockDataWriterWrap::SetWriteMetaFile(const Nan::FunctionCallba
 	vtkXMLPMultiBlockDataWriter *native = (vtkXMLPMultiBlockDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -102,7 +102,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDEDGEIDS(const Nan::FunctionCallba
 		return;
 	}
 	r = native->DISTRIBUTEDEDGEIDS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -125,7 +125,7 @@ void VtkDistributedGraphHelperWrap::DISTRIBUTEDVERTEXIDS(const Nan::FunctionCall
 		return;
 	}
 	r = native->DISTRIBUTEDVERTEXIDS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkDistributedGraphHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistributedGraphHelperWrap::InitPtpl();
+	VtkDistributedGraphHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkDistributedGraphHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistributedGraphHelperWrap::InitPtpl();
+		VtkDistributedGraphHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

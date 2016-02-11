@@ -36,8 +36,10 @@ class VtkGeoCameraWrap : public VtkObjectWrap
 		static void GetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeCoverage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginLatitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginLongitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVTKCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeNodeAnalysis(const Nan::FunctionCallbackInfo<v8::Value>& info);

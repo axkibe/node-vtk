@@ -29,6 +29,7 @@ class VtkImageStencilWrap : public VtkThreadedImageAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

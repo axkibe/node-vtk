@@ -117,7 +117,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::Initialize(const Nan::FunctionC
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -165,7 +165,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
+		VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

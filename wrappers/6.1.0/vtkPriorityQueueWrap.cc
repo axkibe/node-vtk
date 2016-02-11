@@ -137,7 +137,7 @@ void VtkPriorityQueueWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkPriorityQueueWrap::InitPtpl();
+	VtkPriorityQueueWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -153,7 +153,7 @@ void VtkPriorityQueueWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPriorityQueueWrap *wrapper = ObjectWrap::Unwrap<VtkPriorityQueueWrap>(info.Holder());
 	vtkPriorityQueue *native = (vtkPriorityQueue *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkPriorityQueueWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPriorityQueueWrap::InitPtpl();
+		VtkPriorityQueueWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

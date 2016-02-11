@@ -131,7 +131,7 @@ void VtkSelectionWrap::AddNode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -151,7 +151,7 @@ void VtkSelectionWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -168,7 +168,7 @@ void VtkSelectionWrap::Dump(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
 	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +209,7 @@ void VtkSelectionWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkSelectionWrap::InitPtpl();
+			VtkSelectionWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkSelectionWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkSelectionWrap::InitPtpl();
+		VtkSelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkSelectionWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
 	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectionWrap::InitPtpl();
+	VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkSelectionWrap::RemoveAllNodes(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
 	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -339,7 +339,7 @@ void VtkSelectionWrap::RemoveNode(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -368,7 +368,7 @@ void VtkSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectionWrap::InitPtpl();
+		VtkSelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -390,7 +390,7 @@ void VtkSelectionWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +410,7 @@ void VtkSelectionWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -423,7 +423,7 @@ void VtkSelectionWrap::Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -443,7 +443,7 @@ void VtkSelectionWrap::Union(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +456,7 @@ void VtkSelectionWrap::Union(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

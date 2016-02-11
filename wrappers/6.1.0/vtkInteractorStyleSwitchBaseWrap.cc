@@ -117,7 +117,7 @@ void VtkInteractorStyleSwitchBaseWrap::GetInteractor(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetInteractor();
-		VtkRenderWindowInteractorWrap::InitPtpl();
+	VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkInteractorStyleSwitchBaseWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleSwitchBaseWrap::InitPtpl();
+	VtkInteractorStyleSwitchBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,7 +190,7 @@ void VtkInteractorStyleSwitchBaseWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleSwitchBaseWrap::InitPtpl();
+		VtkInteractorStyleSwitchBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

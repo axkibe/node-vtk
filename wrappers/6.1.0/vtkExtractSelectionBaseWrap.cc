@@ -164,7 +164,7 @@ void VtkExtractSelectionBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractSelectionBaseWrap::InitPtpl();
+	VtkExtractSelectionBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkExtractSelectionBaseWrap::PreserveTopologyOff(const Nan::FunctionCallbac
 {
 	VtkExtractSelectionBaseWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionBaseWrap>(info.Holder());
 	vtkExtractSelectionBase *native = (vtkExtractSelectionBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkExtractSelectionBaseWrap::PreserveTopologyOn(const Nan::FunctionCallback
 {
 	VtkExtractSelectionBaseWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionBaseWrap>(info.Holder());
 	vtkExtractSelectionBase *native = (vtkExtractSelectionBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkExtractSelectionBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractSelectionBaseWrap::InitPtpl();
+		VtkExtractSelectionBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkExtractSelectionBaseWrap::SetPreserveTopology(const Nan::FunctionCallbac
 	vtkExtractSelectionBase *native = (vtkExtractSelectionBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkExtractSelectionBaseWrap::SetSelectionConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -32,6 +32,7 @@ class VtkImageDataLIC2DExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		static void GetAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputExtentTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

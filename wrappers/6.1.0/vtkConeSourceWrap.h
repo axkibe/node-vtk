@@ -33,7 +33,9 @@ class VtkConeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeightMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeightMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

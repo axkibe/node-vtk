@@ -167,7 +167,7 @@ void VtkExtractArraysOverTimeWrap::GetSelectionExtractor(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSelectionExtractor();
-		VtkExtractSelectionWrap::InitPtpl();
+	VtkExtractSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkExtractArraysOverTimeWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractArraysOverTimeWrap::InitPtpl();
+	VtkExtractArraysOverTimeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkExtractArraysOverTimeWrap::ReportStatisticsOnlyOff(const Nan::FunctionCa
 {
 	VtkExtractArraysOverTimeWrap *wrapper = ObjectWrap::Unwrap<VtkExtractArraysOverTimeWrap>(info.Holder());
 	vtkExtractArraysOverTime *native = (vtkExtractArraysOverTime *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkExtractArraysOverTimeWrap::ReportStatisticsOnlyOn(const Nan::FunctionCal
 {
 	VtkExtractArraysOverTimeWrap *wrapper = ObjectWrap::Unwrap<VtkExtractArraysOverTimeWrap>(info.Holder());
 	vtkExtractArraysOverTime *native = (vtkExtractArraysOverTime *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +264,7 @@ void VtkExtractArraysOverTimeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractArraysOverTimeWrap::InitPtpl();
+		VtkExtractArraysOverTimeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -285,7 +285,7 @@ void VtkExtractArraysOverTimeWrap::SetReportStatisticsOnly(const Nan::FunctionCa
 	vtkExtractArraysOverTime *native = (vtkExtractArraysOverTime *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkExtractArraysOverTimeWrap::SetSelectionConnection(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -325,7 +325,7 @@ void VtkExtractArraysOverTimeWrap::SetSelectionExtractor(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtractSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtractSelectionWrap *a0 = ObjectWrap::Unwrap<VtkExtractSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

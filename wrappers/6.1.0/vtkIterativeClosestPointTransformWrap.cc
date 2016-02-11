@@ -192,7 +192,7 @@ void VtkIterativeClosestPointTransformWrap::CheckMeanDistanceOff(const Nan::Func
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkIterativeClosestPointTransformWrap::CheckMeanDistanceOn(const Nan::Funct
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkIterativeClosestPointTransformWrap::GetLandmarkTransform(const Nan::Func
 		return;
 	}
 	r = native->GetLandmarkTransform();
-		VtkLandmarkTransformWrap::InitPtpl();
+	VtkLandmarkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkIterativeClosestPointTransformWrap::GetLocator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLocator();
-		VtkCellLocatorWrap::InitPtpl();
+	VtkCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,7 +423,7 @@ void VtkIterativeClosestPointTransformWrap::GetSource(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSource();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -460,7 +460,7 @@ void VtkIterativeClosestPointTransformWrap::GetTarget(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetTarget();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -476,7 +476,7 @@ void VtkIterativeClosestPointTransformWrap::Inverse(const Nan::FunctionCallbackI
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -517,7 +517,7 @@ void VtkIterativeClosestPointTransformWrap::MakeTransform(const Nan::FunctionCal
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -540,7 +540,7 @@ void VtkIterativeClosestPointTransformWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkIterativeClosestPointTransformWrap::InitPtpl();
+	VtkIterativeClosestPointTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -568,7 +568,7 @@ void VtkIterativeClosestPointTransformWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIterativeClosestPointTransformWrap::InitPtpl();
+		VtkIterativeClosestPointTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -589,7 +589,7 @@ void VtkIterativeClosestPointTransformWrap::SetCheckMeanDistance(const Nan::Func
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkIterativeClosestPointTransformWrap::SetLocator(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkCellLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +628,7 @@ void VtkIterativeClosestPointTransformWrap::SetMaximumMeanDistance(const Nan::Fu
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -647,7 +647,7 @@ void VtkIterativeClosestPointTransformWrap::SetMaximumNumberOfIterations(const N
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -666,7 +666,7 @@ void VtkIterativeClosestPointTransformWrap::SetMaximumNumberOfLandmarks(const Na
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -685,7 +685,7 @@ void VtkIterativeClosestPointTransformWrap::SetMeanDistanceMode(const Nan::Funct
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -702,7 +702,7 @@ void VtkIterativeClosestPointTransformWrap::SetMeanDistanceModeToAbsoluteValue(c
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -714,7 +714,7 @@ void VtkIterativeClosestPointTransformWrap::SetMeanDistanceModeToRMS(const Nan::
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -729,7 +729,7 @@ void VtkIterativeClosestPointTransformWrap::SetSource(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +748,7 @@ void VtkIterativeClosestPointTransformWrap::SetStartByMatchingCentroids(const Na
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -768,7 +768,7 @@ void VtkIterativeClosestPointTransformWrap::SetTarget(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -785,7 +785,7 @@ void VtkIterativeClosestPointTransformWrap::StartByMatchingCentroidsOff(const Na
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkIterativeClosestPointTransformWrap::StartByMatchingCentroidsOn(const Nan
 {
 	VtkIterativeClosestPointTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIterativeClosestPointTransformWrap>(info.Holder());
 	vtkIterativeClosestPointTransform *native = (vtkIterativeClosestPointTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

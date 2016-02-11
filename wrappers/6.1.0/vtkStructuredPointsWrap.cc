@@ -152,7 +152,7 @@ void VtkStructuredPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkStructuredPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredPointsWrap::InitPtpl();
+		VtkStructuredPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

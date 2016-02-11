@@ -88,6 +88,9 @@ void VtkPolyDataMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
 	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetScalarRange", GetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getScalarRange", GetScalarRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarVisibility", GetScalarVisibility);
 	Nan::SetPrototypeMethod(tpl, "getScalarVisibility", GetScalarVisibility);
 
@@ -219,7 +222,7 @@ void VtkPolyDataMapper2DWrap::ColorByArrayComponent(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -235,7 +238,7 @@ void VtkPolyDataMapper2DWrap::ColorByArrayComponent(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -254,7 +257,7 @@ void VtkPolyDataMapper2DWrap::CreateDefaultLookupTable(const Nan::FunctionCallba
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -371,7 +374,7 @@ void VtkPolyDataMapper2DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,7 +397,7 @@ void VtkPolyDataMapper2DWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -418,6 +421,23 @@ void VtkPolyDataMapper2DWrap::GetScalarMode(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetScalarMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPolyDataMapper2DWrap::GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
+	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPolyDataMapper2DWrap::GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -445,7 +465,7 @@ void VtkPolyDataMapper2DWrap::GetTransformCoordinate(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetTransformCoordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,7 +542,7 @@ void VtkPolyDataMapper2DWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->MapScalars(
 			info[0]->NumberValue()
 		);
-			VtkUnsignedCharArrayWrap::InitPtpl();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -548,7 +568,7 @@ void VtkPolyDataMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataMapper2DWrap::InitPtpl();
+	VtkPolyDataMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,7 +596,7 @@ void VtkPolyDataMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataMapper2DWrap::InitPtpl();
+		VtkPolyDataMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -595,7 +615,7 @@ void VtkPolyDataMapper2DWrap::ScalarVisibilityOff(const Nan::FunctionCallbackInf
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +627,7 @@ void VtkPolyDataMapper2DWrap::ScalarVisibilityOn(const Nan::FunctionCallbackInfo
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -621,7 +641,7 @@ void VtkPolyDataMapper2DWrap::SetColorMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +658,7 @@ void VtkPolyDataMapper2DWrap::SetColorModeToDefault(const Nan::FunctionCallbackI
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -650,7 +670,7 @@ void VtkPolyDataMapper2DWrap::SetColorModeToMapScalars(const Nan::FunctionCallba
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -665,7 +685,7 @@ void VtkPolyDataMapper2DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -685,7 +705,7 @@ void VtkPolyDataMapper2DWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +724,7 @@ void VtkPolyDataMapper2DWrap::SetScalarMode(const Nan::FunctionCallbackInfo<v8::
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -721,7 +741,7 @@ void VtkPolyDataMapper2DWrap::SetScalarModeToDefault(const Nan::FunctionCallback
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -733,7 +753,7 @@ void VtkPolyDataMapper2DWrap::SetScalarModeToUseCellData(const Nan::FunctionCall
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -745,7 +765,7 @@ void VtkPolyDataMapper2DWrap::SetScalarModeToUseCellFieldData(const Nan::Functio
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -757,7 +777,7 @@ void VtkPolyDataMapper2DWrap::SetScalarModeToUsePointData(const Nan::FunctionCal
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -769,7 +789,7 @@ void VtkPolyDataMapper2DWrap::SetScalarModeToUsePointFieldData(const Nan::Functi
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -791,7 +811,7 @@ void VtkPolyDataMapper2DWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -820,7 +840,7 @@ void VtkPolyDataMapper2DWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -834,7 +854,7 @@ void VtkPolyDataMapper2DWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -855,7 +875,7 @@ void VtkPolyDataMapper2DWrap::SetScalarVisibility(const Nan::FunctionCallbackInf
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -875,7 +895,7 @@ void VtkPolyDataMapper2DWrap::SetTransformCoordinate(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCoordinateWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCoordinateWrap *a0 = ObjectWrap::Unwrap<VtkCoordinateWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -894,7 +914,7 @@ void VtkPolyDataMapper2DWrap::SetTransformCoordinateUseDouble(const Nan::Functio
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -913,7 +933,7 @@ void VtkPolyDataMapper2DWrap::SetUseLookupTableScalarRange(const Nan::FunctionCa
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -933,7 +953,7 @@ void VtkPolyDataMapper2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -950,7 +970,7 @@ void VtkPolyDataMapper2DWrap::TransformCoordinateUseDoubleOff(const Nan::Functio
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -962,7 +982,7 @@ void VtkPolyDataMapper2DWrap::TransformCoordinateUseDoubleOn(const Nan::Function
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -974,7 +994,7 @@ void VtkPolyDataMapper2DWrap::UseLookupTableScalarRangeOff(const Nan::FunctionCa
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -986,7 +1006,7 @@ void VtkPolyDataMapper2DWrap::UseLookupTableScalarRangeOn(const Nan::FunctionCal
 {
 	VtkPolyDataMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataMapper2DWrap>(info.Holder());
 	vtkPolyDataMapper2D *native = (vtkPolyDataMapper2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

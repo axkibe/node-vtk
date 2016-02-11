@@ -130,7 +130,7 @@ void VtkHomogeneousTransformWrap::GetHomogeneousInverse(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetHomogeneousInverse();
-		VtkHomogeneousTransformWrap::InitPtpl();
+	VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -149,7 +149,7 @@ void VtkHomogeneousTransformWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -166,7 +166,7 @@ void VtkHomogeneousTransformWrap::GetMatrix(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +201,7 @@ void VtkHomogeneousTransformWrap::InternalTransformPoint(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -231,7 +231,7 @@ void VtkHomogeneousTransformWrap::InternalTransformPoint(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -281,7 +281,7 @@ void VtkHomogeneousTransformWrap::InternalTransformPoint(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -301,7 +301,7 @@ void VtkHomogeneousTransformWrap::InternalTransformPoint(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -349,7 +349,7 @@ void VtkHomogeneousTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkHomogeneousTransformWrap::InitPtpl();
+	VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkHomogeneousTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHomogeneousTransformWrap::InitPtpl();
+		VtkHomogeneousTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -402,7 +402,7 @@ void VtkHomogeneousTransformWrap::TransformPoints(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -439,7 +439,7 @@ void VtkHomogeneousTransformWrap::TransformPointsNormalsVectors(const Nan::Funct
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkDataArrayWrap *a5 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

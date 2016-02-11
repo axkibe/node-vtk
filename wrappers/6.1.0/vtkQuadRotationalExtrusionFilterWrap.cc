@@ -158,7 +158,7 @@ void VtkQuadRotationalExtrusionFilterWrap::CappingOff(const Nan::FunctionCallbac
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkQuadRotationalExtrusionFilterWrap::CappingOn(const Nan::FunctionCallback
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +365,7 @@ void VtkQuadRotationalExtrusionFilterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
+	VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +381,7 @@ void VtkQuadRotationalExtrusionFilterWrap::RemoveAllPerBlockAngles(const Nan::Fu
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -405,7 +405,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
+		VtkQuadRotationalExtrusionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -426,7 +426,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetAxis(const Nan::FunctionCallbackIn
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -443,7 +443,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetAxisToX(const Nan::FunctionCallbac
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -455,7 +455,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetAxisToY(const Nan::FunctionCallbac
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,7 +467,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetAxisToZ(const Nan::FunctionCallbac
 {
 	VtkQuadRotationalExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkQuadRotationalExtrusionFilterWrap>(info.Holder());
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -481,7 +481,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetCapping(const Nan::FunctionCallbac
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +500,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetDefaultAngle(const Nan::FunctionCa
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -519,7 +519,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetDeltaRadius(const Nan::FunctionCal
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +538,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetResolution(const Nan::FunctionCall
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +557,7 @@ void VtkQuadRotationalExtrusionFilterWrap::SetTranslation(const Nan::FunctionCal
 	vtkQuadRotationalExtrusionFilter *native = (vtkQuadRotationalExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

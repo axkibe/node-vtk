@@ -110,7 +110,7 @@ void VtkTableToSparseArrayWrap::AddCoordinateColumn(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -127,7 +127,7 @@ void VtkTableToSparseArrayWrap::ClearCoordinateColumns(const Nan::FunctionCallba
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -139,7 +139,7 @@ void VtkTableToSparseArrayWrap::ClearOutputExtents(const Nan::FunctionCallbackIn
 {
 	VtkTableToSparseArrayWrap *wrapper = ObjectWrap::Unwrap<VtkTableToSparseArrayWrap>(info.Holder());
 	vtkTableToSparseArray *native = (vtkTableToSparseArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -208,7 +208,7 @@ void VtkTableToSparseArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToSparseArrayWrap::InitPtpl();
+	VtkTableToSparseArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +236,7 @@ void VtkTableToSparseArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToSparseArrayWrap::InitPtpl();
+		VtkTableToSparseArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkTableToSparseArrayWrap::SetValueColumn(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -152,7 +152,7 @@ void VtkApplyIconsWrap::ClearAllIconTypes(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +291,7 @@ void VtkApplyIconsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkApplyIconsWrap::InitPtpl();
+	VtkApplyIconsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkApplyIconsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkApplyIconsWrap::InitPtpl();
+		VtkApplyIconsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +340,7 @@ void VtkApplyIconsWrap::SetAttributeType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +359,7 @@ void VtkApplyIconsWrap::SetDefaultIcon(const Nan::FunctionCallbackInfo<v8::Value
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -379,7 +379,7 @@ void VtkApplyIconsWrap::SetIconOutputArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkApplyIconsWrap::SetIconType(const Nan::FunctionCallbackInfo<v8::Value>& 
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -417,7 +417,7 @@ void VtkApplyIconsWrap::SetIconType(const Nan::FunctionCallbackInfo<v8::Value>& 
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -438,7 +438,7 @@ void VtkApplyIconsWrap::SetSelectedIcon(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -457,7 +457,7 @@ void VtkApplyIconsWrap::SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Val
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +474,7 @@ void VtkApplyIconsWrap::SetSelectionModeToAnnotationIcon(const Nan::FunctionCall
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -486,7 +486,7 @@ void VtkApplyIconsWrap::SetSelectionModeToIgnoreSelection(const Nan::FunctionCal
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -498,7 +498,7 @@ void VtkApplyIconsWrap::SetSelectionModeToSelectedIcon(const Nan::FunctionCallba
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -510,7 +510,7 @@ void VtkApplyIconsWrap::SetSelectionModeToSelectedOffset(const Nan::FunctionCall
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -524,7 +524,7 @@ void VtkApplyIconsWrap::SetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -541,7 +541,7 @@ void VtkApplyIconsWrap::UseLookupTableOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -553,7 +553,7 @@ void VtkApplyIconsWrap::UseLookupTableOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkApplyIconsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyIconsWrap>(info.Holder());
 	vtkApplyIcons *native = (vtkApplyIcons *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

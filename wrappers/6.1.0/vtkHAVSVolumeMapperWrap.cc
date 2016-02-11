@@ -248,7 +248,7 @@ void VtkHAVSVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkHAVSVolumeMapperWrap::InitPtpl();
+	VtkHAVSVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHAVSVolumeMapperWrap::InitPtpl();
+		VtkHAVSVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkHAVSVolumeMapperWrap::SetKBufferSize(const Nan::FunctionCallbackInfo<v8:
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkHAVSVolumeMapperWrap::SetKBufferSizeTo2(const Nan::FunctionCallbackInfo<
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkHAVSVolumeMapperWrap::SetKBufferSizeTo6(const Nan::FunctionCallbackInfo<
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkHAVSVolumeMapperWrap::SetLevelOfDetail(const Nan::FunctionCallbackInfo<v
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +359,7 @@ void VtkHAVSVolumeMapperWrap::SetLevelOfDetailMethod(const Nan::FunctionCallback
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -376,7 +376,7 @@ void VtkHAVSVolumeMapperWrap::SetLevelOfDetailMethodArea(const Nan::FunctionCall
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkHAVSVolumeMapperWrap::SetLevelOfDetailMethodField(const Nan::FunctionCal
 {
 	VtkHAVSVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkHAVSVolumeMapperWrap>(info.Holder());
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +402,7 @@ void VtkHAVSVolumeMapperWrap::SetPartiallyRemoveNonConvexities(const Nan::Functi
 	vtkHAVSVolumeMapper *native = (vtkHAVSVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

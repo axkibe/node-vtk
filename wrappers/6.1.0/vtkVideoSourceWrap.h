@@ -34,13 +34,18 @@ class VtkVideoSourceWrap : public VtkImageAlgorithmWrap
 		static void FastForward(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdvance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClipRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameTimeStamp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialized(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOutputFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaying(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRecording(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStartTimeStamp(const Nan::FunctionCallbackInfo<v8::Value>& info);

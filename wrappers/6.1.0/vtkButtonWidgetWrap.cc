@@ -102,7 +102,7 @@ void VtkButtonWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbac
 {
 	VtkButtonWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkButtonWidgetWrap>(info.Holder());
 	vtkButtonWidget *native = (vtkButtonWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -135,7 +135,7 @@ void VtkButtonWidgetWrap::GetSliderRepresentation(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetSliderRepresentation();
-		VtkButtonRepresentationWrap::InitPtpl();
+	VtkButtonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkButtonWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkButtonWidgetWrap::InitPtpl();
+	VtkButtonWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkButtonWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkButtonWidgetWrap::InitPtpl();
+		VtkButtonWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkButtonWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkButtonRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkButtonRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkButtonRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

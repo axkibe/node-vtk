@@ -128,7 +128,7 @@ void VtkSimpleScalarTreeWrap::BuildTree(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSimpleScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleScalarTreeWrap>(info.Holder());
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +254,7 @@ void VtkSimpleScalarTreeWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -271,7 +271,7 @@ void VtkSimpleScalarTreeWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSimpleScalarTreeWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleScalarTreeWrap>(info.Holder());
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +312,7 @@ void VtkSimpleScalarTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkSimpleScalarTreeWrap::InitPtpl();
+	VtkSimpleScalarTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +340,7 @@ void VtkSimpleScalarTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSimpleScalarTreeWrap::InitPtpl();
+		VtkSimpleScalarTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -361,7 +361,7 @@ void VtkSimpleScalarTreeWrap::SetBranchingFactor(const Nan::FunctionCallbackInfo
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkSimpleScalarTreeWrap::SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Va
 	vtkSimpleScalarTree *native = (vtkSimpleScalarTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

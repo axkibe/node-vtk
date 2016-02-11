@@ -109,7 +109,7 @@ void VtkCaptionWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallba
 {
 	VtkCaptionWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionWidgetWrap>(info.Holder());
 	vtkCaptionWidget *native = (vtkCaptionWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -128,7 +128,7 @@ void VtkCaptionWidgetWrap::GetCaptionActor2D(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetCaptionActor2D();
-		VtkCaptionActor2DWrap::InitPtpl();
+	VtkCaptionActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +187,7 @@ void VtkCaptionWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkCaptionWidgetWrap::InitPtpl();
+	VtkCaptionWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkCaptionWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCaptionWidgetWrap::InitPtpl();
+		VtkCaptionWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkCaptionWidgetWrap::SetCaptionActor2D(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCaptionActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCaptionActor2DWrap *a0 = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkCaptionWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCaptionWidget *native = (vtkCaptionWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -276,7 +276,7 @@ void VtkCaptionWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCaptionRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCaptionRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCaptionRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

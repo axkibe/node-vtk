@@ -129,7 +129,7 @@ void VtkGeoAssignCoordinatesWrap::CoordinatesInArraysOff(const Nan::FunctionCall
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkGeoAssignCoordinatesWrap::CoordinatesInArraysOn(const Nan::FunctionCallb
 {
 	VtkGeoAssignCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAssignCoordinatesWrap>(info.Holder());
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +230,7 @@ void VtkGeoAssignCoordinatesWrap::GetTransform(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkGeoAssignCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoAssignCoordinatesWrap::InitPtpl();
+	VtkGeoAssignCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkGeoAssignCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoAssignCoordinatesWrap::InitPtpl();
+		VtkGeoAssignCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkGeoAssignCoordinatesWrap::SetCoordinatesInArrays(const Nan::FunctionCall
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkGeoAssignCoordinatesWrap::SetGlobeRadius(const Nan::FunctionCallbackInfo
 	vtkGeoAssignCoordinates *native = (vtkGeoAssignCoordinates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkGeoAssignCoordinatesWrap::SetLatitudeArrayName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkGeoAssignCoordinatesWrap::SetLongitudeArrayName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkGeoAssignCoordinatesWrap::SetTransform(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

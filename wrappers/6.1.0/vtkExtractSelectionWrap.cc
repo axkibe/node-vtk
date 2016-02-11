@@ -187,7 +187,7 @@ void VtkExtractSelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractSelectionWrap::InitPtpl();
+	VtkExtractSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkExtractSelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractSelectionWrap::InitPtpl();
+		VtkExtractSelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -236,7 +236,7 @@ void VtkExtractSelectionWrap::SetShowBounds(const Nan::FunctionCallbackInfo<v8::
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -255,7 +255,7 @@ void VtkExtractSelectionWrap::SetUseProbeForLocations(const Nan::FunctionCallbac
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -272,7 +272,7 @@ void VtkExtractSelectionWrap::ShowBoundsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExtractSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionWrap>(info.Holder());
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkExtractSelectionWrap::ShowBoundsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExtractSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionWrap>(info.Holder());
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkExtractSelectionWrap::UseProbeForLocationsOff(const Nan::FunctionCallbac
 {
 	VtkExtractSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionWrap>(info.Holder());
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkExtractSelectionWrap::UseProbeForLocationsOn(const Nan::FunctionCallback
 {
 	VtkExtractSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectionWrap>(info.Holder());
 	vtkExtractSelection *native = (vtkExtractSelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

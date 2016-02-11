@@ -223,7 +223,7 @@ void VtkMNITransformReaderWrap::GetNthTransform(const Nan::FunctionCallbackInfo<
 		r = native->GetNthTransform(
 			info[0]->Int32Value()
 		);
-			VtkAbstractTransformWrap::InitPtpl();
+		VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkMNITransformReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkMNITransformReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkMNITransformReaderWrap::InitPtpl();
+	VtkMNITransformReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkMNITransformReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMNITransformReaderWrap::InitPtpl();
+		VtkMNITransformReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkMNITransformReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

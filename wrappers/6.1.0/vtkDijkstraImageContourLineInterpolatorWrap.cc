@@ -129,7 +129,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::GetCostImage(const Nan::Functi
 		return;
 	}
 	r = native->GetCostImage();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -152,7 +152,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::GetDijkstraImageGeodesicPath(c
 		return;
 	}
 	r = native->GetDijkstraImageGeodesicPath();
-		VtkDijkstraImageGeodesicPathWrap::InitPtpl();
+	VtkDijkstraImageGeodesicPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl();
+	VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl();
+		VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkDijkstraImageContourLineInterpolatorWrap::SetCostImage(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

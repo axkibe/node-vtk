@@ -37,6 +37,7 @@ class VtkPropWrap : public VtkObjectWrap
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConsumer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDragable(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -300,7 +300,7 @@ void VtkGL2PSExporterWrap::BestRootOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +312,7 @@ void VtkGL2PSExporterWrap::BestRootOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -324,7 +324,7 @@ void VtkGL2PSExporterWrap::CompressOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +336,7 @@ void VtkGL2PSExporterWrap::CompressOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +348,7 @@ void VtkGL2PSExporterWrap::DrawBackgroundOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -360,7 +360,7 @@ void VtkGL2PSExporterWrap::DrawBackgroundOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +547,7 @@ void VtkGL2PSExporterWrap::GetRasterExclusions(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetRasterExclusions();
-		VtkPropCollectionWrap::InitPtpl();
+	VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -725,7 +725,7 @@ void VtkGL2PSExporterWrap::LandscapeOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -737,7 +737,7 @@ void VtkGL2PSExporterWrap::LandscapeOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -756,7 +756,7 @@ void VtkGL2PSExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGL2PSExporterWrap::InitPtpl();
+	VtkGL2PSExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -772,7 +772,7 @@ void VtkGL2PSExporterWrap::OcclusionCullOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -784,7 +784,7 @@ void VtkGL2PSExporterWrap::OcclusionCullOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -796,7 +796,7 @@ void VtkGL2PSExporterWrap::PS3ShadingOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -808,7 +808,7 @@ void VtkGL2PSExporterWrap::PS3ShadingOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -832,7 +832,7 @@ void VtkGL2PSExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGL2PSExporterWrap::InitPtpl();
+		VtkGL2PSExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -853,7 +853,7 @@ void VtkGL2PSExporterWrap::SetBestRoot(const Nan::FunctionCallbackInfo<v8::Value
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -872,7 +872,7 @@ void VtkGL2PSExporterWrap::SetCompress(const Nan::FunctionCallbackInfo<v8::Value
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -891,7 +891,7 @@ void VtkGL2PSExporterWrap::SetDrawBackground(const Nan::FunctionCallbackInfo<v8:
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -910,7 +910,7 @@ void VtkGL2PSExporterWrap::SetFileFormat(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -927,7 +927,7 @@ void VtkGL2PSExporterWrap::SetFileFormatToEPS(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -939,7 +939,7 @@ void VtkGL2PSExporterWrap::SetFileFormatToPDF(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -951,7 +951,7 @@ void VtkGL2PSExporterWrap::SetFileFormatToPS(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -963,7 +963,7 @@ void VtkGL2PSExporterWrap::SetFileFormatToSVG(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -975,7 +975,7 @@ void VtkGL2PSExporterWrap::SetFileFormatToTeX(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -990,7 +990,7 @@ void VtkGL2PSExporterWrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1009,7 +1009,7 @@ void VtkGL2PSExporterWrap::SetLandscape(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1028,7 +1028,7 @@ void VtkGL2PSExporterWrap::SetOcclusionCull(const Nan::FunctionCallbackInfo<v8::
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1047,7 +1047,7 @@ void VtkGL2PSExporterWrap::SetPS3Shading(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1067,7 +1067,7 @@ void VtkGL2PSExporterWrap::SetRasterExclusions(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1086,7 +1086,7 @@ void VtkGL2PSExporterWrap::SetSilent(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1105,7 +1105,7 @@ void VtkGL2PSExporterWrap::SetSimpleLineOffset(const Nan::FunctionCallbackInfo<v
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1124,7 +1124,7 @@ void VtkGL2PSExporterWrap::SetSort(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1141,7 +1141,7 @@ void VtkGL2PSExporterWrap::SetSortToBSP(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1153,7 +1153,7 @@ void VtkGL2PSExporterWrap::SetSortToOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1165,7 +1165,7 @@ void VtkGL2PSExporterWrap::SetSortToSimple(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1179,7 +1179,7 @@ void VtkGL2PSExporterWrap::SetText(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1198,7 +1198,7 @@ void VtkGL2PSExporterWrap::SetTextAsPath(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1218,7 +1218,7 @@ void VtkGL2PSExporterWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1237,7 +1237,7 @@ void VtkGL2PSExporterWrap::SetWrite3DPropsAsRasterImage(const Nan::FunctionCallb
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1254,7 +1254,7 @@ void VtkGL2PSExporterWrap::SilentOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1266,7 +1266,7 @@ void VtkGL2PSExporterWrap::SilentOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1278,7 +1278,7 @@ void VtkGL2PSExporterWrap::SimpleLineOffsetOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1290,7 +1290,7 @@ void VtkGL2PSExporterWrap::SimpleLineOffsetOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1302,7 +1302,7 @@ void VtkGL2PSExporterWrap::TextAsPathOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1314,7 +1314,7 @@ void VtkGL2PSExporterWrap::TextAsPathOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1326,7 +1326,7 @@ void VtkGL2PSExporterWrap::TextOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1338,7 +1338,7 @@ void VtkGL2PSExporterWrap::TextOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1350,7 +1350,7 @@ void VtkGL2PSExporterWrap::UsePainterSettings(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1362,7 +1362,7 @@ void VtkGL2PSExporterWrap::Write3DPropsAsRasterImageOff(const Nan::FunctionCallb
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1374,7 +1374,7 @@ void VtkGL2PSExporterWrap::Write3DPropsAsRasterImageOn(const Nan::FunctionCallba
 {
 	VtkGL2PSExporterWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSExporterWrap>(info.Holder());
 	vtkGL2PSExporter *native = (vtkGL2PSExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

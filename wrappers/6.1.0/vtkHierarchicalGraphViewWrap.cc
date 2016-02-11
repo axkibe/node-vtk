@@ -170,7 +170,7 @@ void VtkHierarchicalGraphViewWrap::ColorGraphEdgesByArrayOff(const Nan::Function
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkHierarchicalGraphViewWrap::ColorGraphEdgesByArrayOn(const Nan::FunctionC
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkHierarchicalGraphViewWrap::GraphEdgeLabelVisibilityOff(const Nan::Functi
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkHierarchicalGraphViewWrap::GraphEdgeLabelVisibilityOn(const Nan::Functio
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkHierarchicalGraphViewWrap::GraphVisibilityOff(const Nan::FunctionCallbac
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkHierarchicalGraphViewWrap::GraphVisibilityOn(const Nan::FunctionCallback
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +383,7 @@ void VtkHierarchicalGraphViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkHierarchicalGraphViewWrap::InitPtpl();
+	VtkHierarchicalGraphViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkHierarchicalGraphViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHierarchicalGraphViewWrap::InitPtpl();
+		VtkHierarchicalGraphViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -432,7 +432,7 @@ void VtkHierarchicalGraphViewWrap::SetBundlingStrength(const Nan::FunctionCallba
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkHierarchicalGraphViewWrap::SetColorGraphEdgesByArray(const Nan::Function
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +471,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeColorArrayName(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +488,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeColorToSplineFraction(const Nan::
 {
 	VtkHierarchicalGraphViewWrap *wrapper = ObjectWrap::Unwrap<VtkHierarchicalGraphViewWrap>(info.Holder());
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -503,7 +503,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeLabelArrayName(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -522,7 +522,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeLabelFontSize(const Nan::Function
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -541,7 +541,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphEdgeLabelVisibility(const Nan::Functi
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +570,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInput(const Nan::FunctionCallback
 		r = native->SetGraphFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -601,7 +601,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphFromInputConnection(const Nan::Functi
 		r = native->SetGraphFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -622,7 +622,7 @@ void VtkHierarchicalGraphViewWrap::SetGraphVisibility(const Nan::FunctionCallbac
 	vtkHierarchicalGraphView *native = (vtkHierarchicalGraphView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +651,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInput(const Nan::FunctionCall
 		r = native->SetHierarchyFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -682,7 +682,7 @@ void VtkHierarchicalGraphViewWrap::SetHierarchyFromInputConnection(const Nan::Fu
 		r = native->SetHierarchyFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -95,6 +95,9 @@ void VtkImageHistogramWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetHistogramImageScaleMinValue", GetHistogramImageScaleMinValue);
 	Nan::SetPrototypeMethod(tpl, "getHistogramImageScaleMinValue", GetHistogramImageScaleMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetHistogramImageSize", GetHistogramImageSize);
+	Nan::SetPrototypeMethod(tpl, "getHistogramImageSize", GetHistogramImageSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfBins", GetMaximumNumberOfBins);
 	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfBins", GetMaximumNumberOfBins);
 
@@ -188,7 +191,7 @@ void VtkImageHistogramWrap::AutomaticBinningOff(const Nan::FunctionCallbackInfo<
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +203,7 @@ void VtkImageHistogramWrap::AutomaticBinningOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +215,7 @@ void VtkImageHistogramWrap::GenerateHistogramImageOff(const Nan::FunctionCallbac
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +227,7 @@ void VtkImageHistogramWrap::GenerateHistogramImageOn(const Nan::FunctionCallback
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -327,7 +330,7 @@ void VtkImageHistogramWrap::GetHistogram(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetHistogram();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,6 +398,23 @@ void VtkImageHistogramWrap::GetHistogramImageScaleMinValue(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageHistogramWrap::GetHistogramImageSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
+	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHistogramImageSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageHistogramWrap::GetMaximumNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
@@ -434,7 +454,7 @@ void VtkImageHistogramWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetStencil();
-		VtkImageStencilDataWrap::InitPtpl();
+	VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -479,7 +499,7 @@ void VtkImageHistogramWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageHistogramWrap::InitPtpl();
+	VtkImageHistogramWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -507,7 +527,7 @@ void VtkImageHistogramWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageHistogramWrap::InitPtpl();
+		VtkImageHistogramWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -528,7 +548,7 @@ void VtkImageHistogramWrap::SetActiveComponent(const Nan::FunctionCallbackInfo<v
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +567,7 @@ void VtkImageHistogramWrap::SetAutomaticBinning(const Nan::FunctionCallbackInfo<
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -566,7 +586,7 @@ void VtkImageHistogramWrap::SetBinOrigin(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +605,7 @@ void VtkImageHistogramWrap::SetBinSpacing(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -604,7 +624,7 @@ void VtkImageHistogramWrap::SetGenerateHistogramImage(const Nan::FunctionCallbac
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -623,7 +643,7 @@ void VtkImageHistogramWrap::SetHistogramImageScale(const Nan::FunctionCallbackIn
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +660,7 @@ void VtkImageHistogramWrap::SetHistogramImageScaleToLinear(const Nan::FunctionCa
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -652,7 +672,7 @@ void VtkImageHistogramWrap::SetHistogramImageScaleToLog(const Nan::FunctionCallb
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -664,7 +684,7 @@ void VtkImageHistogramWrap::SetHistogramImageScaleToSqrt(const Nan::FunctionCall
 {
 	VtkImageHistogramWrap *wrapper = ObjectWrap::Unwrap<VtkImageHistogramWrap>(info.Holder());
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -686,7 +706,7 @@ void VtkImageHistogramWrap::SetHistogramImageSize(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +735,7 @@ void VtkImageHistogramWrap::SetHistogramImageSize(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -729,7 +749,7 @@ void VtkImageHistogramWrap::SetHistogramImageSize(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -750,7 +770,7 @@ void VtkImageHistogramWrap::SetMaximumNumberOfBins(const Nan::FunctionCallbackIn
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -769,7 +789,7 @@ void VtkImageHistogramWrap::SetNumberOfBins(const Nan::FunctionCallbackInfo<v8::
 	vtkImageHistogram *native = (vtkImageHistogram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -789,7 +809,7 @@ void VtkImageHistogramWrap::SetStencilConnection(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -809,7 +829,7 @@ void VtkImageHistogramWrap::SetStencilData(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

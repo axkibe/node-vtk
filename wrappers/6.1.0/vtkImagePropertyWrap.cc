@@ -74,8 +74,17 @@ void VtkImagePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetBacking", GetBacking);
 	Nan::SetPrototypeMethod(tpl, "getBacking", GetBacking);
 
+	Nan::SetPrototypeMethod(tpl, "GetBackingColor", GetBackingColor);
+	Nan::SetPrototypeMethod(tpl, "getBackingColor", GetBackingColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetCheckerboard", GetCheckerboard);
 	Nan::SetPrototypeMethod(tpl, "getCheckerboard", GetCheckerboard);
+
+	Nan::SetPrototypeMethod(tpl, "GetCheckerboardOffset", GetCheckerboardOffset);
+	Nan::SetPrototypeMethod(tpl, "getCheckerboardOffset", GetCheckerboardOffset);
+
+	Nan::SetPrototypeMethod(tpl, "GetCheckerboardSpacing", GetCheckerboardSpacing);
+	Nan::SetPrototypeMethod(tpl, "getCheckerboardSpacing", GetCheckerboardSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
@@ -224,7 +233,7 @@ void VtkImagePropertyWrap::BackingOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +245,7 @@ void VtkImagePropertyWrap::BackingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +257,7 @@ void VtkImagePropertyWrap::CheckerboardOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +269,7 @@ void VtkImagePropertyWrap::CheckerboardOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +284,7 @@ void VtkImagePropertyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImagePropertyWrap *a0 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,6 +353,23 @@ void VtkImagePropertyWrap::GetBacking(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImagePropertyWrap::GetBackingColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
+	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackingColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImagePropertyWrap::GetCheckerboard(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
@@ -356,6 +382,40 @@ void VtkImagePropertyWrap::GetCheckerboard(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetCheckerboard();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImagePropertyWrap::GetCheckerboardOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
+	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCheckerboardOffset();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImagePropertyWrap::GetCheckerboardSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
+	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCheckerboardSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImagePropertyWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -523,7 +583,7 @@ void VtkImagePropertyWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -624,7 +684,7 @@ void VtkImagePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImagePropertyWrap::InitPtpl();
+	VtkImagePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -652,7 +712,7 @@ void VtkImagePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImagePropertyWrap::InitPtpl();
+		VtkImagePropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -673,7 +733,7 @@ void VtkImagePropertyWrap::SetAmbient(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -692,7 +752,7 @@ void VtkImagePropertyWrap::SetBacking(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +779,7 @@ void VtkImagePropertyWrap::SetBackingColor(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +808,7 @@ void VtkImagePropertyWrap::SetBackingColor(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +824,7 @@ void VtkImagePropertyWrap::SetBackingColor(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -787,7 +847,7 @@ void VtkImagePropertyWrap::SetCheckerboard(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -814,7 +874,7 @@ void VtkImagePropertyWrap::SetCheckerboardOffset(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -843,7 +903,7 @@ void VtkImagePropertyWrap::SetCheckerboardOffset(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +917,7 @@ void VtkImagePropertyWrap::SetCheckerboardOffset(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -886,7 +946,7 @@ void VtkImagePropertyWrap::SetCheckerboardSpacing(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -915,7 +975,7 @@ void VtkImagePropertyWrap::SetCheckerboardSpacing(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -929,7 +989,7 @@ void VtkImagePropertyWrap::SetCheckerboardSpacing(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -950,7 +1010,7 @@ void VtkImagePropertyWrap::SetColorLevel(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +1029,7 @@ void VtkImagePropertyWrap::SetColorWindow(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -988,7 +1048,7 @@ void VtkImagePropertyWrap::SetDiffuse(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1007,7 +1067,7 @@ void VtkImagePropertyWrap::SetInterpolationType(const Nan::FunctionCallbackInfo<
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1024,7 +1084,7 @@ void VtkImagePropertyWrap::SetInterpolationTypeToCubic(const Nan::FunctionCallba
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1036,7 +1096,7 @@ void VtkImagePropertyWrap::SetInterpolationTypeToLinear(const Nan::FunctionCallb
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1048,7 +1108,7 @@ void VtkImagePropertyWrap::SetInterpolationTypeToNearest(const Nan::FunctionCall
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1062,7 +1122,7 @@ void VtkImagePropertyWrap::SetLayerNumber(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1082,7 +1142,7 @@ void VtkImagePropertyWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1101,7 +1161,7 @@ void VtkImagePropertyWrap::SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1120,7 +1180,7 @@ void VtkImagePropertyWrap::SetUseLookupTableScalarRange(const Nan::FunctionCallb
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1137,7 +1197,7 @@ void VtkImagePropertyWrap::UseLookupTableScalarRangeOff(const Nan::FunctionCallb
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1149,7 +1209,7 @@ void VtkImagePropertyWrap::UseLookupTableScalarRangeOn(const Nan::FunctionCallba
 {
 	VtkImagePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info.Holder());
 	vtkImageProperty *native = (vtkImageProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

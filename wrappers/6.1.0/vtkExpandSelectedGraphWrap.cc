@@ -232,7 +232,7 @@ void VtkExpandSelectedGraphWrap::IncludeShortestPathsOff(const Nan::FunctionCall
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkExpandSelectedGraphWrap::IncludeShortestPathsOn(const Nan::FunctionCallb
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkExpandSelectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkExpandSelectedGraphWrap::InitPtpl();
+	VtkExpandSelectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkExpandSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExpandSelectedGraphWrap::InitPtpl();
+		VtkExpandSelectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -334,7 +334,7 @@ void VtkExpandSelectedGraphWrap::SetBFSDistance(const Nan::FunctionCallbackInfo<
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +354,7 @@ void VtkExpandSelectedGraphWrap::SetDomain(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -374,7 +374,7 @@ void VtkExpandSelectedGraphWrap::SetGraphConnection(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -393,7 +393,7 @@ void VtkExpandSelectedGraphWrap::SetIncludeShortestPaths(const Nan::FunctionCall
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +412,7 @@ void VtkExpandSelectedGraphWrap::SetUseDomain(const Nan::FunctionCallbackInfo<v8
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +429,7 @@ void VtkExpandSelectedGraphWrap::UseDomainOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -441,7 +441,7 @@ void VtkExpandSelectedGraphWrap::UseDomainOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkExpandSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExpandSelectedGraphWrap>(info.Holder());
 	vtkExpandSelectedGraph *native = (vtkExpandSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

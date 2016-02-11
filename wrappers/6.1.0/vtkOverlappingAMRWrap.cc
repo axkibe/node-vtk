@@ -129,7 +129,7 @@ void VtkOverlappingAMRWrap::Audit(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkOverlappingAMRWrap::GenerateParentChildInformation(const Nan::FunctionCa
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
 	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -160,7 +160,7 @@ void VtkOverlappingAMRWrap::GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetAMRInfo();
-		VtkAMRInformationWrap::InitPtpl();
+	VtkAMRInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +186,7 @@ void VtkOverlappingAMRWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -215,7 +215,7 @@ void VtkOverlappingAMRWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,7 +261,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkOverlappingAMRWrap::InitPtpl();
+			VtkOverlappingAMRWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkOverlappingAMRWrap::InitPtpl();
+		VtkOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkOverlappingAMRWrap::NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NUMBER_OF_BLANKED_POINTS();
-		VtkInformationIdTypeKeyWrap::InitPtpl();
+	VtkInformationIdTypeKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -407,7 +407,7 @@ void VtkOverlappingAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkOverlappingAMRWrap::InitPtpl();
+	VtkOverlappingAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -430,7 +430,7 @@ void VtkOverlappingAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewIterator();
-		VtkCompositeDataIteratorWrap::InitPtpl();
+	VtkCompositeDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +458,7 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOverlappingAMRWrap::InitPtpl();
+		VtkOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -480,7 +480,7 @@ void VtkOverlappingAMRWrap::SetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAMRInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAMRInformationWrap *a0 = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

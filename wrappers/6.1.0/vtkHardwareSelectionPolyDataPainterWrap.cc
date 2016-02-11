@@ -128,7 +128,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::EnableSelectionOff(const Nan::Func
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -140,7 +140,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::EnableSelectionOn(const Nan::Funct
 {
 	VtkHardwareSelectionPolyDataPainterWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectionPolyDataPainterWrap>(info.Holder());
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -265,7 +265,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
-		VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
+	VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,7 +293,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
+		VtkHardwareSelectionPolyDataPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetCellIdArrayName(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +335,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetCompositeIdArrayName(const Nan:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +354,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetEnableSelection(const Nan::Func
 	vtkHardwareSelectionPolyDataPainter *native = (vtkHardwareSelectionPolyDataPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -374,7 +374,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetPointIdArrayName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -394,7 +394,7 @@ void VtkHardwareSelectionPolyDataPainterWrap::SetProcessIdArrayName(const Nan::F
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

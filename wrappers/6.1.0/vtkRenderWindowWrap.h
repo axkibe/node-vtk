@@ -44,6 +44,7 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void GetAAFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAbortRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAlphaBitPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapturingGL2PSSpecialProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);

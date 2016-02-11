@@ -280,7 +280,7 @@ void VtkNetCDFCAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkNetCDFCAMReaderWrap::InitPtpl();
+	VtkNetCDFCAMReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkNetCDFCAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNetCDFCAMReaderWrap::InitPtpl();
+		VtkNetCDFCAMReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkNetCDFCAMReaderWrap::SetCellLayerRight(const Nan::FunctionCallbackInfo<v
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +349,7 @@ void VtkNetCDFCAMReaderWrap::SetConnectivityFileName(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkNetCDFCAMReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +388,7 @@ void VtkNetCDFCAMReaderWrap::SetSingleLevel(const Nan::FunctionCallbackInfo<v8::
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +405,7 @@ void VtkNetCDFCAMReaderWrap::SingleLevelOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -417,7 +417,7 @@ void VtkNetCDFCAMReaderWrap::SingleLevelOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkNetCDFCAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCAMReaderWrap>(info.Holder());
 	vtkNetCDFCAMReader *native = (vtkNetCDFCAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -187,7 +187,7 @@ void VtkParametricSplineWrap::ClosedOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -199,7 +199,7 @@ void VtkParametricSplineWrap::ClosedOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -270,7 +270,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -321,7 +321,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -392,7 +392,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -433,7 +433,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -484,7 +484,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -545,7 +545,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -576,7 +576,7 @@ void VtkParametricSplineWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1118,7 +1118,7 @@ void VtkParametricSplineWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1197,7 +1197,7 @@ void VtkParametricSplineWrap::GetXSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXSpline();
-		VtkSplineWrap::InitPtpl();
+	VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1220,7 +1220,7 @@ void VtkParametricSplineWrap::GetYSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetYSpline();
-		VtkSplineWrap::InitPtpl();
+	VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1243,7 +1243,7 @@ void VtkParametricSplineWrap::GetZSpline(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetZSpline();
-		VtkSplineWrap::InitPtpl();
+	VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1288,7 +1288,7 @@ void VtkParametricSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricSplineWrap::InitPtpl();
+	VtkParametricSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1304,7 +1304,7 @@ void VtkParametricSplineWrap::ParameterizeByLengthOff(const Nan::FunctionCallbac
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1316,7 +1316,7 @@ void VtkParametricSplineWrap::ParameterizeByLengthOn(const Nan::FunctionCallback
 {
 	VtkParametricSplineWrap *wrapper = ObjectWrap::Unwrap<VtkParametricSplineWrap>(info.Holder());
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1340,7 +1340,7 @@ void VtkParametricSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricSplineWrap::InitPtpl();
+		VtkParametricSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1361,7 +1361,7 @@ void VtkParametricSplineWrap::SetClosed(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1380,7 +1380,7 @@ void VtkParametricSplineWrap::SetLeftConstraint(const Nan::FunctionCallbackInfo<
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1399,7 +1399,7 @@ void VtkParametricSplineWrap::SetLeftValue(const Nan::FunctionCallbackInfo<v8::V
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1418,7 +1418,7 @@ void VtkParametricSplineWrap::SetParameterizeByLength(const Nan::FunctionCallbac
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1438,7 +1438,7 @@ void VtkParametricSplineWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1457,7 +1457,7 @@ void VtkParametricSplineWrap::SetRightConstraint(const Nan::FunctionCallbackInfo
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1476,7 +1476,7 @@ void VtkParametricSplineWrap::SetRightValue(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricSpline *native = (vtkParametricSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1496,7 +1496,7 @@ void VtkParametricSplineWrap::SetXSpline(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1516,7 +1516,7 @@ void VtkParametricSplineWrap::SetYSpline(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1536,7 +1536,7 @@ void VtkParametricSplineWrap::SetZSpline(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

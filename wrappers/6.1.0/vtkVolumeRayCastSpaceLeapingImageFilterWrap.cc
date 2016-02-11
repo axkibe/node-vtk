@@ -82,6 +82,9 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfIndependentComponents", GetNumberOfIndependentComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfIndependentComponents", GetNumberOfIndependentComponents);
 
+	Nan::SetPrototypeMethod(tpl, "GetTableSize", GetTableSize);
+	Nan::SetPrototypeMethod(tpl, "getTableSize", GetTableSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetUpdateGradientOpacityFlags", GetUpdateGradientOpacityFlags);
 	Nan::SetPrototypeMethod(tpl, "getUpdateGradientOpacityFlags", GetUpdateGradientOpacityFlags);
 
@@ -154,7 +157,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeGradientOpacityOff(cons
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -166,7 +169,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeGradientOpacityOn(const
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +212,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -245,7 +248,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -301,7 +304,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -377,7 +380,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -423,7 +426,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -479,7 +482,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -545,7 +548,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -581,7 +584,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeInputExtentsForOutput(c
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkImageDataWrap *a3 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -604,7 +607,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeMinMaxOff(const Nan::Fu
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -616,7 +619,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::ComputeMinMaxOn(const Nan::Fun
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -677,7 +680,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetCurrentScalars(const Nan::F
 		return;
 	}
 	r = native->GetCurrentScalars();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -715,6 +718,23 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetNumberOfIndependentComponen
 	}
 	r = native->GetNumberOfIndependentComponents();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
+	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeRayCastSpaceLeapingImageFilterWrap::GetUpdateGradientOpacityFlags(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -764,7 +784,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
+	VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -792,7 +812,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
+		VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -814,7 +834,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetCache(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -833,7 +853,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetComputeGradientOpacity(cons
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -852,7 +872,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetComputeMinMax(const Nan::Fu
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -872,7 +892,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetCurrentScalars(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -891,7 +911,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetIndependentComponents(const
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -918,7 +938,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableSize(const Nan::Functi
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -947,7 +967,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableSize(const Nan::Functi
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -965,7 +985,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetTableSize(const Nan::Functi
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -990,7 +1010,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::SetUpdateGradientOpacityFlags(
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1007,7 +1027,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::UpdateGradientOpacityFlagsOff(
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1019,7 +1039,7 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::UpdateGradientOpacityFlagsOn(c
 {
 	VtkVolumeRayCastSpaceLeapingImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastSpaceLeapingImageFilterWrap>(info.Holder());
 	vtkVolumeRayCastSpaceLeapingImageFilter *native = (vtkVolumeRayCastSpaceLeapingImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

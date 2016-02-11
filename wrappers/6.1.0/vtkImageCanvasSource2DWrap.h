@@ -40,7 +40,9 @@ class VtkImageCanvasSource2DWrap : public VtkImageAlgorithmWrap
 		static void FillTube(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDrawColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

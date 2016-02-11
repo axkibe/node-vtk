@@ -95,7 +95,7 @@ void VtkExtractDataSetsWrap::ClearDataSetList(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExtractDataSetsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractDataSetsWrap>(info.Holder());
 	vtkExtractDataSets *native = (vtkExtractDataSets *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -150,7 +150,7 @@ void VtkExtractDataSetsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractDataSetsWrap::InitPtpl();
+	VtkExtractDataSetsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkExtractDataSetsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractDataSetsWrap::InitPtpl();
+		VtkExtractDataSetsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -50,6 +50,12 @@ void VtkExtractVOIWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetSampleRate", GetSampleRate);
+	Nan::SetPrototypeMethod(tpl, "getSampleRate", GetSampleRate);
+
+	Nan::SetPrototypeMethod(tpl, "GetVOI", GetVOI);
+	Nan::SetPrototypeMethod(tpl, "getVOI", GetVOI);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -108,6 +114,40 @@ void VtkExtractVOIWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkExtractVOIWrap::GetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractVOIWrap *wrapper = ObjectWrap::Unwrap<VtkExtractVOIWrap>(info.Holder());
+	vtkExtractVOI *native = (vtkExtractVOI *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleRate();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkExtractVOIWrap::GetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractVOIWrap *wrapper = ObjectWrap::Unwrap<VtkExtractVOIWrap>(info.Holder());
+	vtkExtractVOI *native = (vtkExtractVOI *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVOI();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtractVOIWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractVOIWrap *wrapper = ObjectWrap::Unwrap<VtkExtractVOIWrap>(info.Holder());
@@ -141,7 +181,7 @@ void VtkExtractVOIWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractVOIWrap::InitPtpl();
+	VtkExtractVOIWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +209,7 @@ void VtkExtractVOIWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractVOIWrap::InitPtpl();
+		VtkExtractVOIWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -198,7 +238,7 @@ void VtkExtractVOIWrap::SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +267,7 @@ void VtkExtractVOIWrap::SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +283,7 @@ void VtkExtractVOIWrap::SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -274,7 +314,7 @@ void VtkExtractVOIWrap::SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +343,7 @@ void VtkExtractVOIWrap::SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -325,7 +365,7 @@ void VtkExtractVOIWrap::SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

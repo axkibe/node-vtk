@@ -46,6 +46,9 @@ class VtkAxisActorWrap : public VtkActorWrap
 		static void DrawGridpolysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawInnerGridlinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawInnerGridlinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisOnOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -90,6 +93,7 @@ class VtkAxisActorWrap : public VtkActorWrap
 		static void GetNumberOfLabelsBuilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSaveTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTickLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);

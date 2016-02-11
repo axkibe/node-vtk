@@ -206,7 +206,7 @@ void VtkMinimalStandardRandomSequenceWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkMinimalStandardRandomSequenceWrap::InitPtpl();
+	VtkMinimalStandardRandomSequenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkMinimalStandardRandomSequenceWrap::Next(const Nan::FunctionCallbackInfo<
 {
 	VtkMinimalStandardRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkMinimalStandardRandomSequenceWrap>(info.Holder());
 	vtkMinimalStandardRandomSequence *native = (vtkMinimalStandardRandomSequence *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkMinimalStandardRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMinimalStandardRandomSequenceWrap::InitPtpl();
+		VtkMinimalStandardRandomSequenceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkMinimalStandardRandomSequenceWrap::SetSeed(const Nan::FunctionCallbackIn
 	vtkMinimalStandardRandomSequence *native = (vtkMinimalStandardRandomSequence *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -286,7 +286,7 @@ void VtkMinimalStandardRandomSequenceWrap::SetSeedOnly(const Nan::FunctionCallba
 	vtkMinimalStandardRandomSequence *native = (vtkMinimalStandardRandomSequence *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

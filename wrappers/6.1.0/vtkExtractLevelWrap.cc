@@ -138,7 +138,7 @@ void VtkExtractLevelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractLevelWrap::InitPtpl();
+	VtkExtractLevelWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -154,7 +154,7 @@ void VtkExtractLevelWrap::RemoveAllLevels(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExtractLevelWrap *wrapper = ObjectWrap::Unwrap<VtkExtractLevelWrap>(info.Holder());
 	vtkExtractLevel *native = (vtkExtractLevel *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkExtractLevelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractLevelWrap::InitPtpl();
+		VtkExtractLevelWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

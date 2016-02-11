@@ -135,7 +135,7 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::Func
 		return;
 	}
 	r = native->NewInstance();
-		VtkOrientedPolygonalHandleRepresentation3DWrap::InitPtpl();
+	VtkOrientedPolygonalHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkOrientedPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::Fun
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOrientedPolygonalHandleRepresentation3DWrap::InitPtpl();
+		VtkOrientedPolygonalHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

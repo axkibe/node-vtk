@@ -125,7 +125,7 @@ void VtkGeoAlignedImageRepresentationWrap::GetBestImageForBounds(const Nan::Func
 		r = native->GetBestImageForBounds(
 			(double *)(a0->Buffer()->GetContents().Data())
 		);
-			VtkGeoImageNodeWrap::InitPtpl();
+		VtkGeoImageNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkGeoAlignedImageRepresentationWrap::GetBestImageForBounds(const Nan::Func
 		r = native->GetBestImageForBounds(
 			b0
 		);
-			VtkGeoImageNodeWrap::InitPtpl();
+		VtkGeoImageNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkGeoAlignedImageRepresentationWrap::GetSource(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSource();
-		VtkGeoSourceWrap::InitPtpl();
+	VtkGeoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkGeoAlignedImageRepresentationWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoAlignedImageRepresentationWrap::InitPtpl();
+	VtkGeoAlignedImageRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkGeoAlignedImageRepresentationWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoAlignedImageRepresentationWrap::InitPtpl();
+		VtkGeoAlignedImageRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -300,7 +300,7 @@ void VtkGeoAlignedImageRepresentationWrap::SaveDatabase(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +320,7 @@ void VtkGeoAlignedImageRepresentationWrap::SetSource(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoSourceWrap *a0 = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -138,7 +138,7 @@ void VtkImageRFFTWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageRFFTWrap::InitPtpl();
+	VtkImageRFFTWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +166,7 @@ void VtkImageRFFTWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageRFFTWrap::InitPtpl();
+		VtkImageRFFTWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

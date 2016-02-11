@@ -103,7 +103,7 @@ void VtkGenericEdgeTableWrap::DumpTable(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGenericEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEdgeTableWrap>(info.Holder());
 	vtkGenericEdgeTable *native = (vtkGenericEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkGenericEdgeTableWrap::LoadFactor(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGenericEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEdgeTableWrap>(info.Holder());
 	vtkGenericEdgeTable *native = (vtkGenericEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkGenericEdgeTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericEdgeTableWrap::InitPtpl();
+	VtkGenericEdgeTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkGenericEdgeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericEdgeTableWrap::InitPtpl();
+		VtkGenericEdgeTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkGenericEdgeTableWrap::SetNumberOfComponents(const Nan::FunctionCallbackI
 	vtkGenericEdgeTable *native = (vtkGenericEdgeTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

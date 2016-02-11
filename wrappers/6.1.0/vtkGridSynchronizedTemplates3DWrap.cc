@@ -86,6 +86,9 @@ void VtkGridSynchronizedTemplates3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComputeScalars", GetComputeScalars);
 	Nan::SetPrototypeMethod(tpl, "getComputeScalars", GetComputeScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetExecuteExtent", GetExecuteExtent);
+	Nan::SetPrototypeMethod(tpl, "getExecuteExtent", GetExecuteExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTriangles", GetGenerateTriangles);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTriangles", GetGenerateTriangles);
 
@@ -167,7 +170,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeGradientsOff(const Nan::Function
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -179,7 +182,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeGradientsOn(const Nan::FunctionC
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +194,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeNormalsOff(const Nan::FunctionCa
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +206,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeNormalsOn(const Nan::FunctionCal
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +218,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeScalarsOff(const Nan::FunctionCa
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +230,7 @@ void VtkGridSynchronizedTemplates3DWrap::ComputeScalarsOn(const Nan::FunctionCal
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +242,7 @@ void VtkGridSynchronizedTemplates3DWrap::GenerateTrianglesOff(const Nan::Functio
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +254,7 @@ void VtkGridSynchronizedTemplates3DWrap::GenerateTrianglesOn(const Nan::Function
 {
 	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +278,7 @@ void VtkGridSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionCallb
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -305,7 +308,7 @@ void VtkGridSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionCallb
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -320,7 +323,7 @@ void VtkGridSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionCallb
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -391,6 +394,23 @@ void VtkGridSynchronizedTemplates3DWrap::GetComputeScalars(const Nan::FunctionCa
 	}
 	r = native->GetComputeScalars();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGridSynchronizedTemplates3DWrap::GetExecuteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGridSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkGridSynchronizedTemplates3DWrap>(info.Holder());
+	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExecuteExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGridSynchronizedTemplates3DWrap::GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -517,7 +537,7 @@ void VtkGridSynchronizedTemplates3DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkGridSynchronizedTemplates3DWrap::InitPtpl();
+	VtkGridSynchronizedTemplates3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -545,7 +565,7 @@ void VtkGridSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGridSynchronizedTemplates3DWrap::InitPtpl();
+		VtkGridSynchronizedTemplates3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -566,7 +586,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetComputeGradients(const Nan::Function
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +605,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetComputeNormals(const Nan::FunctionCa
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -604,7 +624,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetComputeScalars(const Nan::FunctionCa
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -623,7 +643,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetGenerateTriangles(const Nan::Functio
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +662,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetNumberOfContours(const Nan::Function
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -661,7 +681,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetOutputPointsPrecision(const Nan::Fun
 	vtkGridSynchronizedTemplates3D *native = (vtkGridSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -682,7 +702,7 @@ void VtkGridSynchronizedTemplates3DWrap::SetValue(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

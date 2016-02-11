@@ -91,6 +91,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolationMode", GetInterpolationMode);
 	Nan::SetPrototypeMethod(tpl, "getInterpolationMode", GetInterpolationMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfSamples", GetNumberOfSamples);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfSamples", GetNumberOfSamples);
+
 	Nan::SetPrototypeMethod(tpl, "GetRequestedRenderMode", GetRequestedRenderMode);
 	Nan::SetPrototypeMethod(tpl, "getRequestedRenderMode", GetRequestedRenderMode);
 
@@ -460,7 +463,7 @@ void VtkAMRVolumeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -489,7 +492,7 @@ void VtkAMRVolumeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,6 +587,23 @@ void VtkAMRVolumeMapperWrap::GetInterpolationMode(const Nan::FunctionCallbackInf
 	}
 	r = native->GetInterpolationMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRVolumeMapperWrap::GetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
+	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfSamples();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAMRVolumeMapperWrap::GetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -689,7 +709,7 @@ void VtkAMRVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRVolumeMapperWrap::InitPtpl();
+	VtkAMRVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -708,7 +728,7 @@ void VtkAMRVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -731,7 +751,7 @@ void VtkAMRVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -762,7 +782,7 @@ void VtkAMRVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRVolumeMapperWrap::InitPtpl();
+		VtkAMRVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -784,7 +804,7 @@ void VtkAMRVolumeMapperWrap::SelectScalarArray(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +816,7 @@ void VtkAMRVolumeMapperWrap::SelectScalarArray(const Nan::FunctionCallbackInfo<v
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -815,7 +835,7 @@ void VtkAMRVolumeMapperWrap::SetBlendMode(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -834,7 +854,7 @@ void VtkAMRVolumeMapperWrap::SetCropping(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -853,7 +873,7 @@ void VtkAMRVolumeMapperWrap::SetCroppingRegionFlags(const Nan::FunctionCallbackI
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +902,7 @@ void VtkAMRVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallback
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -911,7 +931,7 @@ void VtkAMRVolumeMapperWrap::SetFreezeFocalPoint(const Nan::FunctionCallbackInfo
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -931,7 +951,7 @@ void VtkAMRVolumeMapperWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -946,7 +966,7 @@ void VtkAMRVolumeMapperWrap::SetInputConnection(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -968,7 +988,7 @@ void VtkAMRVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOverlappingAMRWrap *a0 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -981,7 +1001,7 @@ void VtkAMRVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -994,7 +1014,7 @@ void VtkAMRVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1013,7 +1033,7 @@ void VtkAMRVolumeMapperWrap::SetInteractiveUpdateRate(const Nan::FunctionCallbac
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1032,7 +1052,7 @@ void VtkAMRVolumeMapperWrap::SetInterpolationMode(const Nan::FunctionCallbackInf
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1049,7 +1069,7 @@ void VtkAMRVolumeMapperWrap::SetInterpolationModeToCubic(const Nan::FunctionCall
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1061,7 +1081,7 @@ void VtkAMRVolumeMapperWrap::SetInterpolationModeToLinear(const Nan::FunctionCal
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1073,7 +1093,7 @@ void VtkAMRVolumeMapperWrap::SetInterpolationModeToNearestNeighbor(const Nan::Fu
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1095,7 +1115,7 @@ void VtkAMRVolumeMapperWrap::SetNumberOfSamples(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1124,7 +1144,7 @@ void VtkAMRVolumeMapperWrap::SetNumberOfSamples(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1140,7 +1160,7 @@ void VtkAMRVolumeMapperWrap::SetNumberOfSamples(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1163,7 +1183,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderMode(const Nan::FunctionCallbackI
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1180,7 +1200,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderModeToDefault(const Nan::Function
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1192,7 +1212,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderModeToGPU(const Nan::FunctionCall
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1204,7 +1224,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderModeToRayCast(const Nan::Function
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1216,7 +1236,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderModeToRayCastAndTexture(const Nan
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1228,7 +1248,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedRenderModeToTexture(const Nan::Function
 {
 	VtkAMRVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkAMRVolumeMapperWrap>(info.Holder());
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1242,7 +1262,7 @@ void VtkAMRVolumeMapperWrap::SetRequestedResamplingMode(const Nan::FunctionCallb
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1261,7 +1281,7 @@ void VtkAMRVolumeMapperWrap::SetResamplerUpdateTolerance(const Nan::FunctionCall
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1280,7 +1300,7 @@ void VtkAMRVolumeMapperWrap::SetScalarMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1299,7 +1319,7 @@ void VtkAMRVolumeMapperWrap::SetUseDefaultThreading(const Nan::FunctionCallbackI
 	vtkAMRVolumeMapper *native = (vtkAMRVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1322,7 +1342,7 @@ void VtkAMRVolumeMapperWrap::UpdateResampler(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverlappingAMRWrap *a1 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1347,7 +1367,7 @@ void VtkAMRVolumeMapperWrap::UpdateResamplerFrustrumMethod(const Nan::FunctionCa
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverlappingAMRWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverlappingAMRWrap *a1 = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -32,6 +32,7 @@ class VtkMarchingSquaresWrap : public VtkPolyDataAlgorithmWrap
 		static void CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

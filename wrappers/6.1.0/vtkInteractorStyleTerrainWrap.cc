@@ -137,7 +137,7 @@ void VtkInteractorStyleTerrainWrap::Dolly(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -199,7 +199,7 @@ void VtkInteractorStyleTerrainWrap::LatLongLinesOff(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -211,7 +211,7 @@ void VtkInteractorStyleTerrainWrap::LatLongLinesOn(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +230,7 @@ void VtkInteractorStyleTerrainWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleTerrainWrap::InitPtpl();
+	VtkInteractorStyleTerrainWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkInteractorStyleTerrainWrap::OnChar(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -258,7 +258,7 @@ void VtkInteractorStyleTerrainWrap::OnLeftButtonDown(const Nan::FunctionCallback
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkInteractorStyleTerrainWrap::OnLeftButtonUp(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -282,7 +282,7 @@ void VtkInteractorStyleTerrainWrap::OnMiddleButtonDown(const Nan::FunctionCallba
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +294,7 @@ void VtkInteractorStyleTerrainWrap::OnMiddleButtonUp(const Nan::FunctionCallback
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkInteractorStyleTerrainWrap::OnMouseMove(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkInteractorStyleTerrainWrap::OnRightButtonDown(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkInteractorStyleTerrainWrap::OnRightButtonUp(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkInteractorStyleTerrainWrap::Pan(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -354,7 +354,7 @@ void VtkInteractorStyleTerrainWrap::Rotate(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTerrainWrap>(info.Holder());
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -378,7 +378,7 @@ void VtkInteractorStyleTerrainWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleTerrainWrap::InitPtpl();
+		VtkInteractorStyleTerrainWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -399,7 +399,7 @@ void VtkInteractorStyleTerrainWrap::SetLatLongLines(const Nan::FunctionCallbackI
 	vtkInteractorStyleTerrain *native = (vtkInteractorStyleTerrain *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

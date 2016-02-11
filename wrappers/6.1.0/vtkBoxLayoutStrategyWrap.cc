@@ -142,7 +142,7 @@ void VtkBoxLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -170,7 +170,7 @@ void VtkBoxLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkBoxLayoutStrategyWrap::InitPtpl();
+	VtkBoxLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkBoxLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBoxLayoutStrategyWrap::InitPtpl();
+		VtkBoxLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

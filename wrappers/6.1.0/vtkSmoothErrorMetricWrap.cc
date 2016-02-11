@@ -155,7 +155,7 @@ void VtkSmoothErrorMetricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkSmoothErrorMetricWrap::InitPtpl();
+	VtkSmoothErrorMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkSmoothErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSmoothErrorMetricWrap::InitPtpl();
+		VtkSmoothErrorMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkSmoothErrorMetricWrap::SetAngleTolerance(const Nan::FunctionCallbackInfo
 	vtkSmoothErrorMetric *native = (vtkSmoothErrorMetric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

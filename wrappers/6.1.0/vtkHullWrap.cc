@@ -124,7 +124,7 @@ void VtkHullWrap::AddCubeEdgePlanes(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -136,7 +136,7 @@ void VtkHullWrap::AddCubeFacePlanes(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -148,7 +148,7 @@ void VtkHullWrap::AddCubeVertexPlanes(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -321,7 +321,7 @@ void VtkHullWrap::AddRecursiveSpherePlanes(const Nan::FunctionCallbackInfo<v8::V
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -353,7 +353,7 @@ void VtkHullWrap::GenerateHull(const Nan::FunctionCallbackInfo<v8::Value>& info)
 						{
 							if(info.Length() > 6 && info[6]->IsNumber())
 							{
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -439,7 +439,7 @@ void VtkHullWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkHullWrap::InitPtpl();
+	VtkHullWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -455,7 +455,7 @@ void VtkHullWrap::RemoveAllPlanes(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkHullWrap *wrapper = ObjectWrap::Unwrap<VtkHullWrap>(info.Holder());
 	vtkHull *native = (vtkHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -479,7 +479,7 @@ void VtkHullWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHullWrap::InitPtpl();
+		VtkHullWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -512,7 +512,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -546,7 +546,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -568,7 +568,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -598,7 +598,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -617,7 +617,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				{
 					if(info.Length() > 4 && info[4]->IsNumber())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -631,7 +631,7 @@ void VtkHullWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info)
 						);
 						return;
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -657,7 +657,7 @@ void VtkHullWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

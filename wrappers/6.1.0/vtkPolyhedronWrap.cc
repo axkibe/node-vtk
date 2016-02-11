@@ -252,7 +252,7 @@ void VtkPolyhedronWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkPolyhedronWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkPolyhedronWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkPolyhedronWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkPolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkPolyhedronWrap>(info.Holder());
 	vtkPolyhedron *native = (vtkPolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -535,7 +535,7 @@ void VtkPolyhedronWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyhedronWrap::InitPtpl();
+	VtkPolyhedronWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -591,7 +591,7 @@ void VtkPolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyhedronWrap::InitPtpl();
+		VtkPolyhedronWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

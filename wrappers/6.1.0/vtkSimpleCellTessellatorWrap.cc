@@ -166,7 +166,7 @@ void VtkSimpleCellTessellatorWrap::GetGenericCell(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetGenericCell();
-		VtkGenericAdaptorCellWrap::InitPtpl();
+	VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkSimpleCellTessellatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +259,7 @@ void VtkSimpleCellTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkSimpleCellTessellatorWrap::InitPtpl();
+	VtkSimpleCellTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkSimpleCellTessellatorWrap::Reset(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSimpleCellTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkSimpleCellTessellatorWrap>(info.Holder());
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +299,7 @@ void VtkSimpleCellTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSimpleCellTessellatorWrap::InitPtpl();
+		VtkSimpleCellTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -320,7 +320,7 @@ void VtkSimpleCellTessellatorWrap::SetFixedSubdivisions(const Nan::FunctionCallb
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -339,7 +339,7 @@ void VtkSimpleCellTessellatorWrap::SetMaxSubdivisionLevel(const Nan::FunctionCal
 	vtkSimpleCellTessellator *native = (vtkSimpleCellTessellator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -360,7 +360,7 @@ void VtkSimpleCellTessellatorWrap::SetSubdivisionLevels(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -394,7 +394,7 @@ void VtkSimpleCellTessellatorWrap::Tessellate(const Nan::FunctionCallbackInfo<v8
 					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -434,7 +434,7 @@ void VtkSimpleCellTessellatorWrap::Triangulate(const Nan::FunctionCallbackInfo<v
 					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPointDataWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkPointDataWrap *a4 = ObjectWrap::Unwrap<VtkPointDataWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;

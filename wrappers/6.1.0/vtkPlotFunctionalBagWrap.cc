@@ -115,7 +115,7 @@ void VtkPlotFunctionalBagWrap::CreateDefaultLookupTable(const Nan::FunctionCallb
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
 	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -137,7 +137,7 @@ void VtkPlotFunctionalBagWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -166,7 +166,7 @@ void VtkPlotFunctionalBagWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -204,7 +204,7 @@ void VtkPlotFunctionalBagWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkPlotFunctionalBagWrap::GetUnscaledInputBounds(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +259,7 @@ void VtkPlotFunctionalBagWrap::GetUnscaledInputBounds(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkPlotFunctionalBagWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotFunctionalBagWrap::InitPtpl();
+	VtkPlotFunctionalBagWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -355,7 +355,7 @@ void VtkPlotFunctionalBagWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotFunctionalBagWrap::InitPtpl();
+		VtkPlotFunctionalBagWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkPlotFunctionalBagWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -394,7 +394,7 @@ void VtkPlotFunctionalBagWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPlotFunctionalBagWrap *wrapper = ObjectWrap::Unwrap<VtkPlotFunctionalBagWrap>(info.Holder());
 	vtkPlotFunctionalBag *native = (vtkPlotFunctionalBag *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

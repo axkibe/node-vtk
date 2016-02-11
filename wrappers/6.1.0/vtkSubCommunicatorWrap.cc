@@ -120,7 +120,7 @@ void VtkSubCommunicatorWrap::GetGroup(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetGroup();
-		VtkProcessGroupWrap::InitPtpl();
+	VtkProcessGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkSubCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkSubCommunicatorWrap::InitPtpl();
+	VtkSubCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkSubCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSubCommunicatorWrap::InitPtpl();
+		VtkSubCommunicatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkSubCommunicatorWrap::SetGroup(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessGroupWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessGroupWrap *a0 = ObjectWrap::Unwrap<VtkProcessGroupWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

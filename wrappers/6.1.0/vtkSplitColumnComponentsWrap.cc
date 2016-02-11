@@ -221,7 +221,7 @@ void VtkSplitColumnComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkSplitColumnComponentsWrap::InitPtpl();
+	VtkSplitColumnComponentsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkSplitColumnComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSplitColumnComponentsWrap::InitPtpl();
+		VtkSplitColumnComponentsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkSplitColumnComponentsWrap::SetCalculateMagnitudes(const Nan::FunctionCal
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkSplitColumnComponentsWrap::SetNamingMode(const Nan::FunctionCallbackInfo
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +306,7 @@ void VtkSplitColumnComponentsWrap::SetNamingModeToNamesWithParens(const Nan::Fun
 {
 	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkSplitColumnComponentsWrap::SetNamingModeToNamesWithUnderscores(const Nan
 {
 	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkSplitColumnComponentsWrap::SetNamingModeToNumberWithParens(const Nan::Fu
 {
 	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkSplitColumnComponentsWrap::SetNamingModeToNumberWithUnderscores(const Na
 {
 	VtkSplitColumnComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkSplitColumnComponentsWrap>(info.Holder());
 	vtkSplitColumnComponents *native = (vtkSplitColumnComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

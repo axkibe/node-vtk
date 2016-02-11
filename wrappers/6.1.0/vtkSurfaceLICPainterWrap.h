@@ -49,6 +49,7 @@ class VtkSurfaceLICPainterWrap : public VtkPainterWrap
 		static void GetLowColorContrastEnhancementFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLowLICContrastEnhancementFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapModeBias(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaskColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskOnSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);

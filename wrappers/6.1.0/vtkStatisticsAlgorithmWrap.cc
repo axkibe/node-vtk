@@ -157,7 +157,7 @@ void VtkStatisticsAlgorithmWrap::AddColumn(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -180,7 +180,7 @@ void VtkStatisticsAlgorithmWrap::AddColumnPair(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -206,7 +206,7 @@ void VtkStatisticsAlgorithmWrap::GetAssessNames(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetAssessNames();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkStatisticsAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkStatisticsAlgorithmWrap::InitPtpl();
+	VtkStatisticsAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkStatisticsAlgorithmWrap::ResetAllColumnStates(const Nan::FunctionCallbac
 {
 	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -363,7 +363,7 @@ void VtkStatisticsAlgorithmWrap::ResetRequests(const Nan::FunctionCallbackInfo<v
 {
 	VtkStatisticsAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkStatisticsAlgorithmWrap>(info.Holder());
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -387,7 +387,7 @@ void VtkStatisticsAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStatisticsAlgorithmWrap::InitPtpl();
+		VtkStatisticsAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -409,7 +409,7 @@ void VtkStatisticsAlgorithmWrap::SetAssessNames(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +428,7 @@ void VtkStatisticsAlgorithmWrap::SetAssessOption(const Nan::FunctionCallbackInfo
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +450,7 @@ void VtkStatisticsAlgorithmWrap::SetColumnStatus(const Nan::FunctionCallbackInfo
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -471,7 +471,7 @@ void VtkStatisticsAlgorithmWrap::SetDeriveOption(const Nan::FunctionCallbackInfo
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +491,7 @@ void VtkStatisticsAlgorithmWrap::SetInputModel(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkStatisticsAlgorithmWrap::SetInputModelConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkStatisticsAlgorithmWrap::SetLearnOption(const Nan::FunctionCallbackInfo<
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkStatisticsAlgorithmWrap::SetLearnOptionParameterConnection(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +570,7 @@ void VtkStatisticsAlgorithmWrap::SetLearnOptionParameters(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -589,7 +589,7 @@ void VtkStatisticsAlgorithmWrap::SetTestOption(const Nan::FunctionCallbackInfo<v
 	vtkStatisticsAlgorithm *native = (vtkStatisticsAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

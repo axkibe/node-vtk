@@ -141,7 +141,7 @@ void VtkWeightedTransformFilterWrap::AddInputValuesOff(const Nan::FunctionCallba
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkWeightedTransformFilterWrap::AddInputValuesOn(const Nan::FunctionCallbac
 {
 	VtkWeightedTransformFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWeightedTransformFilterWrap>(info.Holder());
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkWeightedTransformFilterWrap::GetTransform(const Nan::FunctionCallbackInf
 		r = native->GetTransform(
 			info[0]->Int32Value()
 		);
-			VtkAbstractTransformWrap::InitPtpl();
+		VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,7 +322,7 @@ void VtkWeightedTransformFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkWeightedTransformFilterWrap::InitPtpl();
+	VtkWeightedTransformFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,7 +350,7 @@ void VtkWeightedTransformFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWeightedTransformFilterWrap::InitPtpl();
+		VtkWeightedTransformFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkWeightedTransformFilterWrap::SetAddInputValues(const Nan::FunctionCallba
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +391,7 @@ void VtkWeightedTransformFilterWrap::SetCellDataTransformIndexArray(const Nan::F
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkWeightedTransformFilterWrap::SetCellDataWeightArray(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +430,7 @@ void VtkWeightedTransformFilterWrap::SetNumberOfTransforms(const Nan::FunctionCa
 	vtkWeightedTransformFilter *native = (vtkWeightedTransformFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -452,7 +452,7 @@ void VtkWeightedTransformFilterWrap::SetTransform(const Nan::FunctionCallbackInf
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -474,7 +474,7 @@ void VtkWeightedTransformFilterWrap::SetTransformIndexArray(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +494,7 @@ void VtkWeightedTransformFilterWrap::SetWeightArray(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

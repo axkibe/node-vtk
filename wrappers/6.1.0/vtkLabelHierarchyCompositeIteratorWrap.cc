@@ -124,7 +124,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::AddIterator(const Nan::FunctionCall
 		VtkLabelHierarchyIteratorWrap *a0 = ObjectWrap::Unwrap<VtkLabelHierarchyIteratorWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -135,7 +135,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::AddIterator(const Nan::FunctionCall
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -155,7 +155,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::Begin(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -175,7 +175,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::BoxAllNodes(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -192,7 +192,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::BoxNode(const Nan::FunctionCallback
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::ClearIterators(const Nan::FunctionC
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::GetHierarchy(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetHierarchy();
-		VtkLabelHierarchyWrap::InitPtpl();
+	VtkLabelHierarchyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
+	VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::Next(const Nan::FunctionCallbackInf
 {
 	VtkLabelHierarchyCompositeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkLabelHierarchyCompositeIteratorWrap>(info.Holder());
 	vtkLabelHierarchyCompositeIterator *native = (vtkLabelHierarchyCompositeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +336,7 @@ void VtkLabelHierarchyCompositeIteratorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
+		VtkLabelHierarchyCompositeIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

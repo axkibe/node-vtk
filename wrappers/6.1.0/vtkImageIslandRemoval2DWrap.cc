@@ -221,7 +221,7 @@ void VtkImageIslandRemoval2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageIslandRemoval2DWrap::InitPtpl();
+	VtkImageIslandRemoval2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkImageIslandRemoval2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageIslandRemoval2DWrap::InitPtpl();
+		VtkImageIslandRemoval2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkImageIslandRemoval2DWrap::SetAreaThreshold(const Nan::FunctionCallbackIn
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkImageIslandRemoval2DWrap::SetIslandValue(const Nan::FunctionCallbackInfo
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -308,7 +308,7 @@ void VtkImageIslandRemoval2DWrap::SetReplaceValue(const Nan::FunctionCallbackInf
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -327,7 +327,7 @@ void VtkImageIslandRemoval2DWrap::SetSquareNeighborhood(const Nan::FunctionCallb
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkImageIslandRemoval2DWrap::SquareNeighborhoodOff(const Nan::FunctionCallb
 {
 	VtkImageIslandRemoval2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageIslandRemoval2DWrap>(info.Holder());
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkImageIslandRemoval2DWrap::SquareNeighborhoodOn(const Nan::FunctionCallba
 {
 	VtkImageIslandRemoval2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageIslandRemoval2DWrap>(info.Holder());
 	vtkImageIslandRemoval2D *native = (vtkImageIslandRemoval2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

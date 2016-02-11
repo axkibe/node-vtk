@@ -173,7 +173,7 @@ void VtkGeoInteractorStyleWrap::Dolly(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkGeoInteractorStyleWrap::GetGeoCamera(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGeoCamera();
-		VtkGeoCameraWrap::InitPtpl();
+	VtkGeoCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -660,7 +660,7 @@ void VtkGeoInteractorStyleWrap::LockHeadingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -672,7 +672,7 @@ void VtkGeoInteractorStyleWrap::LockHeadingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -691,7 +691,7 @@ void VtkGeoInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoInteractorStyleWrap::InitPtpl();
+	VtkGeoInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -707,7 +707,7 @@ void VtkGeoInteractorStyleWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -719,7 +719,7 @@ void VtkGeoInteractorStyleWrap::OnEnter(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -731,7 +731,7 @@ void VtkGeoInteractorStyleWrap::OnLeave(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -743,7 +743,7 @@ void VtkGeoInteractorStyleWrap::OnLeftButtonDown(const Nan::FunctionCallbackInfo
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -755,7 +755,7 @@ void VtkGeoInteractorStyleWrap::OnLeftButtonUp(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -767,7 +767,7 @@ void VtkGeoInteractorStyleWrap::OnMiddleButtonDown(const Nan::FunctionCallbackIn
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -779,7 +779,7 @@ void VtkGeoInteractorStyleWrap::OnMiddleButtonUp(const Nan::FunctionCallbackInfo
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -791,7 +791,7 @@ void VtkGeoInteractorStyleWrap::OnMouseMove(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -803,7 +803,7 @@ void VtkGeoInteractorStyleWrap::OnRightButtonDown(const Nan::FunctionCallbackInf
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -815,7 +815,7 @@ void VtkGeoInteractorStyleWrap::OnRightButtonUp(const Nan::FunctionCallbackInfo<
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -827,7 +827,7 @@ void VtkGeoInteractorStyleWrap::Pan(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -839,7 +839,7 @@ void VtkGeoInteractorStyleWrap::RedrawRectangle(const Nan::FunctionCallbackInfo<
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -851,7 +851,7 @@ void VtkGeoInteractorStyleWrap::ResetCamera(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -863,7 +863,7 @@ void VtkGeoInteractorStyleWrap::ResetCameraClippingRange(const Nan::FunctionCall
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -875,7 +875,7 @@ void VtkGeoInteractorStyleWrap::RubberBandZoom(const Nan::FunctionCallbackInfo<v
 {
 	VtkGeoInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoInteractorStyleWrap>(info.Holder());
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -899,7 +899,7 @@ void VtkGeoInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoInteractorStyleWrap::InitPtpl();
+		VtkGeoInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -921,7 +921,7 @@ void VtkGeoInteractorStyleWrap::SetCurrentRenderer(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -941,7 +941,7 @@ void VtkGeoInteractorStyleWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -960,7 +960,7 @@ void VtkGeoInteractorStyleWrap::SetLockHeading(const Nan::FunctionCallbackInfo<v
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -979,7 +979,7 @@ void VtkGeoInteractorStyleWrap::StartState(const Nan::FunctionCallbackInfo<v8::V
 	vtkGeoInteractorStyle *native = (vtkGeoInteractorStyle *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -999,7 +999,7 @@ void VtkGeoInteractorStyleWrap::WidgetInteraction(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

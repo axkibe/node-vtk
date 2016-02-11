@@ -102,7 +102,7 @@ void VtkRectilinearWipeWidgetWrap::CreateDefaultRepresentation(const Nan::Functi
 {
 	VtkRectilinearWipeWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearWipeWidgetWrap>(info.Holder());
 	vtkRectilinearWipeWidget *native = (vtkRectilinearWipeWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -135,7 +135,7 @@ void VtkRectilinearWipeWidgetWrap::GetRectilinearWipeRepresentation(const Nan::F
 		return;
 	}
 	r = native->GetRectilinearWipeRepresentation();
-		VtkRectilinearWipeRepresentationWrap::InitPtpl();
+	VtkRectilinearWipeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkRectilinearWipeWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearWipeWidgetWrap::InitPtpl();
+	VtkRectilinearWipeWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkRectilinearWipeWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearWipeWidgetWrap::InitPtpl();
+		VtkRectilinearWipeWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkRectilinearWipeWidgetWrap::SetRepresentation(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRectilinearWipeRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRectilinearWipeRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkRectilinearWipeRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

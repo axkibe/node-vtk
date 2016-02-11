@@ -43,6 +43,8 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		static void GetShowLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStrokeMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwitchPointsMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetValidBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);

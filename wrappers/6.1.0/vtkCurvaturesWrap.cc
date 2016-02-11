@@ -164,7 +164,7 @@ void VtkCurvaturesWrap::InvertMeanCurvatureOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkCurvaturesWrap::InvertMeanCurvatureOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkCurvaturesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkCurvaturesWrap::InitPtpl();
+	VtkCurvaturesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +245,7 @@ void VtkCurvaturesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCurvaturesWrap::InitPtpl();
+		VtkCurvaturesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkCurvaturesWrap::SetCurvatureType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +283,7 @@ void VtkCurvaturesWrap::SetCurvatureTypeToGaussian(const Nan::FunctionCallbackIn
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkCurvaturesWrap::SetCurvatureTypeToMaximum(const Nan::FunctionCallbackInf
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -307,7 +307,7 @@ void VtkCurvaturesWrap::SetCurvatureTypeToMean(const Nan::FunctionCallbackInfo<v
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkCurvaturesWrap::SetCurvatureTypeToMinimum(const Nan::FunctionCallbackInf
 {
 	VtkCurvaturesWrap *wrapper = ObjectWrap::Unwrap<VtkCurvaturesWrap>(info.Holder());
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkCurvaturesWrap::SetInvertMeanCurvature(const Nan::FunctionCallbackInfo<v
 	vtkCurvatures *native = (vtkCurvatures *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

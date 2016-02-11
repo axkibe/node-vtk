@@ -195,7 +195,7 @@ void VtkMoleculeToAtomBallFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkMoleculeToAtomBallFilterWrap::InitPtpl();
+	VtkMoleculeToAtomBallFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkMoleculeToAtomBallFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMoleculeToAtomBallFilterWrap::InitPtpl();
+		VtkMoleculeToAtomBallFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkMoleculeToAtomBallFilterWrap::SetRadiusScale(const Nan::FunctionCallback
 	vtkMoleculeToAtomBallFilter *native = (vtkMoleculeToAtomBallFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkMoleculeToAtomBallFilterWrap::SetRadiusSource(const Nan::FunctionCallbac
 	vtkMoleculeToAtomBallFilter *native = (vtkMoleculeToAtomBallFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -282,7 +282,7 @@ void VtkMoleculeToAtomBallFilterWrap::SetResolution(const Nan::FunctionCallbackI
 	vtkMoleculeToAtomBallFilter *native = (vtkMoleculeToAtomBallFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

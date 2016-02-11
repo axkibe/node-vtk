@@ -174,7 +174,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
+	VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::PrintError(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -213,7 +213,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -242,7 +242,7 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
+		VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

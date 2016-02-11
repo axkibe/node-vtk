@@ -92,6 +92,9 @@ void VtkDEMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPolygonSize", GetPolygonSize);
 	Nan::SetPrototypeMethod(tpl, "getPolygonSize", GetPolygonSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetProfileDimension", GetProfileDimension);
+	Nan::SetPrototypeMethod(tpl, "getProfileDimension", GetProfileDimension);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -352,6 +355,23 @@ void VtkDEMReaderWrap::GetPolygonSize(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDEMReaderWrap::GetProfileDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
+	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProfileDimension();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDEMReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
@@ -385,7 +405,7 @@ void VtkDEMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkDEMReaderWrap::InitPtpl();
+	VtkDEMReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,7 +433,7 @@ void VtkDEMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDEMReaderWrap::InitPtpl();
+		VtkDEMReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +454,7 @@ void VtkDEMReaderWrap::SetElevationReference(const Nan::FunctionCallbackInfo<v8:
 	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +471,7 @@ void VtkDEMReaderWrap::SetElevationReferenceToElevationBounds(const Nan::Functio
 {
 	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
 	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -463,7 +483,7 @@ void VtkDEMReaderWrap::SetElevationReferenceToSeaLevel(const Nan::FunctionCallba
 {
 	VtkDEMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDEMReaderWrap>(info.Holder());
 	vtkDEMReader *native = (vtkDEMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -478,7 +498,7 @@ void VtkDEMReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

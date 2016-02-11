@@ -143,7 +143,7 @@ void VtkColorMaterialHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkColorMaterialHelperWrap::InitPtpl();
+	VtkColorMaterialHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -159,7 +159,7 @@ void VtkColorMaterialHelperWrap::PrepareForRendering(const Nan::FunctionCallback
 {
 	VtkColorMaterialHelperWrap *wrapper = ObjectWrap::Unwrap<VtkColorMaterialHelperWrap>(info.Holder());
 	vtkColorMaterialHelper *native = (vtkColorMaterialHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkColorMaterialHelperWrap::Render(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkColorMaterialHelperWrap *wrapper = ObjectWrap::Unwrap<VtkColorMaterialHelperWrap>(info.Holder());
 	vtkColorMaterialHelper *native = (vtkColorMaterialHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkColorMaterialHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkColorMaterialHelperWrap::InitPtpl();
+		VtkColorMaterialHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkColorMaterialHelperWrap::SetUniformVariables(const Nan::FunctionCallback
 {
 	VtkColorMaterialHelperWrap *wrapper = ObjectWrap::Unwrap<VtkColorMaterialHelperWrap>(info.Holder());
 	vtkColorMaterialHelper *native = (vtkColorMaterialHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -106,7 +106,7 @@ void VtkBlankStructuredGridWithImageWrap::GetBlankingInput(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetBlankingInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkBlankStructuredGridWithImageWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkBlankStructuredGridWithImageWrap::InitPtpl();
+	VtkBlankStructuredGridWithImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkBlankStructuredGridWithImageWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBlankStructuredGridWithImageWrap::InitPtpl();
+		VtkBlankStructuredGridWithImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkBlankStructuredGridWithImageWrap::SetBlankingInputData(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -128,7 +128,7 @@ void VtkGenericCellTessellatorWrap::GetErrorMetrics(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetErrorMetrics();
-		VtkCollectionWrap::InitPtpl();
+	VtkCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkGenericCellTessellatorWrap::InitErrorMetrics(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -207,7 +207,7 @@ void VtkGenericCellTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericCellTessellatorWrap::InitPtpl();
+	VtkGenericCellTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkGenericCellTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericCellTessellatorWrap::InitPtpl();
+		VtkGenericCellTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkGenericCellTessellatorWrap::SetErrorMetrics(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -276,7 +276,7 @@ void VtkGenericCellTessellatorWrap::SetMeasurement(const Nan::FunctionCallbackIn
 	vtkGenericCellTessellator *native = (vtkGenericCellTessellator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

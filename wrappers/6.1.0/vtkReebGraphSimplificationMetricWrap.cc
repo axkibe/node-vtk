@@ -174,7 +174,7 @@ void VtkReebGraphSimplificationMetricWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkReebGraphSimplificationMetricWrap::InitPtpl();
+	VtkReebGraphSimplificationMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkReebGraphSimplificationMetricWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkReebGraphSimplificationMetricWrap::InitPtpl();
+		VtkReebGraphSimplificationMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkReebGraphSimplificationMetricWrap::SetLowerBound(const Nan::FunctionCall
 	vtkReebGraphSimplificationMetric *native = (vtkReebGraphSimplificationMetric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -242,7 +242,7 @@ void VtkReebGraphSimplificationMetricWrap::SetUpperBound(const Nan::FunctionCall
 	vtkReebGraphSimplificationMetric *native = (vtkReebGraphSimplificationMetric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

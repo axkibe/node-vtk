@@ -175,7 +175,7 @@ void VtkUniformGridPartitionerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkUniformGridPartitionerWrap::InitPtpl();
+	VtkUniformGridPartitionerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkUniformGridPartitionerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUniformGridPartitionerWrap::InitPtpl();
+		VtkUniformGridPartitionerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkUniformGridPartitionerWrap::SetNumberOfGhostLayers(const Nan::FunctionCa
 	vtkUniformGridPartitioner *native = (vtkUniformGridPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkUniformGridPartitionerWrap::SetNumberOfPartitions(const Nan::FunctionCal
 	vtkUniformGridPartitioner *native = (vtkUniformGridPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

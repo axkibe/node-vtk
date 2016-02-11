@@ -135,7 +135,7 @@ void VtkOnePieceExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkOnePieceExtentTranslatorWrap::InitPtpl();
+	VtkOnePieceExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkOnePieceExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOnePieceExtentTranslatorWrap::InitPtpl();
+		VtkOnePieceExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

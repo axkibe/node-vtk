@@ -113,8 +113,14 @@ void VtkColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetHSVWrap", GetHSVWrap);
 	Nan::SetPrototypeMethod(tpl, "getHSVWrap", GetHSVWrap);
 
+	Nan::SetPrototypeMethod(tpl, "GetNanColor", GetNanColor);
+	Nan::SetPrototypeMethod(tpl, "getNanColor", GetNanColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetNodeValue", GetNodeValue);
 	Nan::SetPrototypeMethod(tpl, "getNodeValue", GetNodeValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetRedValue", GetRedValue);
 	Nan::SetPrototypeMethod(tpl, "getRedValue", GetRedValue);
@@ -292,7 +298,7 @@ void VtkColorTransferFunctionWrap::AddHSVSegment(const Nan::FunctionCallbackInfo
 							{
 								if(info.Length() > 7 && info[7]->IsNumber())
 								{
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -394,7 +400,7 @@ void VtkColorTransferFunctionWrap::AddRGBSegment(const Nan::FunctionCallbackInfo
 							{
 								if(info.Length() > 7 && info[7]->IsNumber())
 								{
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -485,7 +491,7 @@ void VtkColorTransferFunctionWrap::AllowDuplicateScalarsOff(const Nan::FunctionC
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -497,7 +503,7 @@ void VtkColorTransferFunctionWrap::AllowDuplicateScalarsOn(const Nan::FunctionCa
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +515,7 @@ void VtkColorTransferFunctionWrap::ClampingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +527,7 @@ void VtkColorTransferFunctionWrap::ClampingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -536,7 +542,7 @@ void VtkColorTransferFunctionWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -656,7 +662,7 @@ void VtkColorTransferFunctionWrap::GetColor(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -686,7 +692,7 @@ void VtkColorTransferFunctionWrap::GetColor(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -697,6 +703,20 @@ void VtkColorTransferFunctionWrap::GetColor(const Nan::FunctionCallbackInfo<v8::
 			);
 			return;
 		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetColor(
+			info[0]->NumberValue()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -778,6 +798,23 @@ void VtkColorTransferFunctionWrap::GetHSVWrap(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkColorTransferFunctionWrap::GetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNanColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkColorTransferFunctionWrap::GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
@@ -843,6 +880,23 @@ void VtkColorTransferFunctionWrap::GetNodeValue(const Nan::FunctionCallbackInfo<
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkColorTransferFunctionWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
+	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkColorTransferFunctionWrap::GetRedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
@@ -896,7 +950,7 @@ void VtkColorTransferFunctionWrap::HSVWrapOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -908,7 +962,7 @@ void VtkColorTransferFunctionWrap::HSVWrapOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -949,7 +1003,7 @@ void VtkColorTransferFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkColorTransferFunctionWrap::InitPtpl();
+	VtkColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -965,7 +1019,7 @@ void VtkColorTransferFunctionWrap::RemoveAllPoints(const Nan::FunctionCallbackIn
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1010,7 +1064,7 @@ void VtkColorTransferFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkColorTransferFunctionWrap::InitPtpl();
+		VtkColorTransferFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1031,7 +1085,7 @@ void VtkColorTransferFunctionWrap::SetAllowDuplicateScalars(const Nan::FunctionC
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1050,7 +1104,7 @@ void VtkColorTransferFunctionWrap::SetClamping(const Nan::FunctionCallbackInfo<v
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1069,7 +1123,7 @@ void VtkColorTransferFunctionWrap::SetColorSpace(const Nan::FunctionCallbackInfo
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1086,7 +1140,7 @@ void VtkColorTransferFunctionWrap::SetColorSpaceToDiverging(const Nan::FunctionC
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1098,7 +1152,7 @@ void VtkColorTransferFunctionWrap::SetColorSpaceToHSV(const Nan::FunctionCallbac
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1110,7 +1164,7 @@ void VtkColorTransferFunctionWrap::SetColorSpaceToLab(const Nan::FunctionCallbac
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1122,7 +1176,7 @@ void VtkColorTransferFunctionWrap::SetColorSpaceToRGB(const Nan::FunctionCallbac
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1136,7 +1190,7 @@ void VtkColorTransferFunctionWrap::SetHSVWrap(const Nan::FunctionCallbackInfo<v8
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1163,7 +1217,7 @@ void VtkColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1192,7 +1246,7 @@ void VtkColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1208,7 +1262,7 @@ void VtkColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1296,7 +1350,7 @@ void VtkColorTransferFunctionWrap::SetScale(const Nan::FunctionCallbackInfo<v8::
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1313,7 +1367,7 @@ void VtkColorTransferFunctionWrap::SetScaleToLinear(const Nan::FunctionCallbackI
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1325,7 +1379,7 @@ void VtkColorTransferFunctionWrap::SetScaleToLog10(const Nan::FunctionCallbackIn
 {
 	VtkColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info.Holder());
 	vtkColorTransferFunction *native = (vtkColorTransferFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1340,7 +1394,7 @@ void VtkColorTransferFunctionWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

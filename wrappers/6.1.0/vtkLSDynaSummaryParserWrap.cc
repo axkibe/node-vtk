@@ -135,7 +135,7 @@ void VtkLSDynaSummaryParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkLSDynaSummaryParserWrap::InitPtpl();
+	VtkLSDynaSummaryParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkLSDynaSummaryParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLSDynaSummaryParserWrap::InitPtpl();
+		VtkLSDynaSummaryParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

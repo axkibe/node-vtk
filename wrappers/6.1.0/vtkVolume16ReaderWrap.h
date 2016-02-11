@@ -32,6 +32,7 @@ class VtkVolume16ReaderWrap : public VtkVolumeReaderWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataByteOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataByteOrderAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);

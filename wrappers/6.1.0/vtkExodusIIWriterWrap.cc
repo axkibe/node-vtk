@@ -234,7 +234,7 @@ void VtkExodusIIWriterWrap::GetModelMetadata(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetModelMetadata();
-		VtkModelMetadataWrap::InitPtpl();
+	VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +349,7 @@ void VtkExodusIIWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkExodusIIWriterWrap::InitPtpl();
+	VtkExodusIIWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkExodusIIWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExodusIIWriterWrap::InitPtpl();
+		VtkExodusIIWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -399,7 +399,7 @@ void VtkExodusIIWriterWrap::SetBlockIdArrayName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +419,7 @@ void VtkExodusIIWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +438,7 @@ void VtkExodusIIWriterWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Va
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +458,7 @@ void VtkExodusIIWriterWrap::SetModelMetadata(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkModelMetadataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkModelMetadataWrap *a0 = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -477,7 +477,7 @@ void VtkExodusIIWriterWrap::SetStoreDoubles(const Nan::FunctionCallbackInfo<v8::
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -496,7 +496,7 @@ void VtkExodusIIWriterWrap::SetWriteAllTimeSteps(const Nan::FunctionCallbackInfo
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +515,7 @@ void VtkExodusIIWriterWrap::SetWriteOutBlockIdArray(const Nan::FunctionCallbackI
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkExodusIIWriterWrap::SetWriteOutGlobalElementIdArray(const Nan::FunctionC
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkExodusIIWriterWrap::SetWriteOutGlobalNodeIdArray(const Nan::FunctionCall
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +570,7 @@ void VtkExodusIIWriterWrap::WriteAllTimeStepsOff(const Nan::FunctionCallbackInfo
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -582,7 +582,7 @@ void VtkExodusIIWriterWrap::WriteAllTimeStepsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -594,7 +594,7 @@ void VtkExodusIIWriterWrap::WriteOutBlockIdArrayOff(const Nan::FunctionCallbackI
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -606,7 +606,7 @@ void VtkExodusIIWriterWrap::WriteOutBlockIdArrayOn(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -618,7 +618,7 @@ void VtkExodusIIWriterWrap::WriteOutGlobalElementIdArrayOff(const Nan::FunctionC
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +630,7 @@ void VtkExodusIIWriterWrap::WriteOutGlobalElementIdArrayOn(const Nan::FunctionCa
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +642,7 @@ void VtkExodusIIWriterWrap::WriteOutGlobalNodeIdArrayOff(const Nan::FunctionCall
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -654,7 +654,7 @@ void VtkExodusIIWriterWrap::WriteOutGlobalNodeIdArrayOn(const Nan::FunctionCallb
 {
 	VtkExodusIIWriterWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIWriterWrap>(info.Holder());
 	vtkExodusIIWriter *native = (vtkExodusIIWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

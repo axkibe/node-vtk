@@ -70,6 +70,9 @@ void VtkLineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -259,7 +262,7 @@ void VtkLineRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackI
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +303,7 @@ void VtkLineRepresentationWrap::DistanceAnnotationVisibilityOff(const Nan::Funct
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +315,7 @@ void VtkLineRepresentationWrap::DistanceAnnotationVisibilityOn(const Nan::Functi
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -327,7 +330,7 @@ void VtkLineRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -338,6 +341,23 @@ void VtkLineRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLineRepresentationWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
+	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLineRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -393,7 +413,7 @@ void VtkLineRepresentationWrap::GetDistanceAnnotationProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetDistanceAnnotationProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -430,7 +450,7 @@ void VtkLineRepresentationWrap::GetEndPoint2Property(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetEndPoint2Property();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,7 +473,7 @@ void VtkLineRepresentationWrap::GetEndPointProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetEndPointProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -504,7 +524,7 @@ void VtkLineRepresentationWrap::GetLineHandleRepresentation(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLineHandleRepresentation();
-		VtkPointHandleRepresentation3DWrap::InitPtpl();
+	VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -527,7 +547,7 @@ void VtkLineRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -553,7 +573,7 @@ void VtkLineRepresentationWrap::GetPoint1DisplayPosition(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -582,7 +602,7 @@ void VtkLineRepresentationWrap::GetPoint1DisplayPosition(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +612,17 @@ void VtkLineRepresentationWrap::GetPoint1DisplayPosition(const Nan::FunctionCall
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1DisplayPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLineRepresentationWrap::GetPoint1Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -606,7 +636,7 @@ void VtkLineRepresentationWrap::GetPoint1Representation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint1Representation();
-		VtkPointHandleRepresentation3DWrap::InitPtpl();
+	VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -632,7 +662,7 @@ void VtkLineRepresentationWrap::GetPoint1WorldPosition(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -661,7 +691,7 @@ void VtkLineRepresentationWrap::GetPoint1WorldPosition(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +701,17 @@ void VtkLineRepresentationWrap::GetPoint1WorldPosition(const Nan::FunctionCallba
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1WorldPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLineRepresentationWrap::GetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -688,7 +728,7 @@ void VtkLineRepresentationWrap::GetPoint2DisplayPosition(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +757,7 @@ void VtkLineRepresentationWrap::GetPoint2DisplayPosition(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +767,17 @@ void VtkLineRepresentationWrap::GetPoint2DisplayPosition(const Nan::FunctionCall
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2DisplayPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLineRepresentationWrap::GetPoint2Representation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -741,7 +791,7 @@ void VtkLineRepresentationWrap::GetPoint2Representation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint2Representation();
-		VtkPointHandleRepresentation3DWrap::InitPtpl();
+	VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -767,7 +817,7 @@ void VtkLineRepresentationWrap::GetPoint2WorldPosition(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +846,7 @@ void VtkLineRepresentationWrap::GetPoint2WorldPosition(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -806,7 +856,17 @@ void VtkLineRepresentationWrap::GetPoint2WorldPosition(const Nan::FunctionCallba
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2WorldPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLineRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -816,7 +876,7 @@ void VtkLineRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -868,7 +928,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPoint2Property(const Nan::Function
 		return;
 	}
 	r = native->GetSelectedEndPoint2Property();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -891,7 +951,7 @@ void VtkLineRepresentationWrap::GetSelectedEndPointProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedEndPointProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -914,7 +974,7 @@ void VtkLineRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -937,7 +997,7 @@ void VtkLineRepresentationWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTextActor();
-		VtkFollowerWrap::InitPtpl();
+	VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1009,7 +1069,7 @@ void VtkLineRepresentationWrap::InstantiateHandleRepresentation(const Nan::Funct
 {
 	VtkLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkLineRepresentationWrap>(info.Holder());
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1050,7 +1110,7 @@ void VtkLineRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkLineRepresentationWrap::InitPtpl();
+	VtkLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1076,7 +1136,7 @@ void VtkLineRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1105,7 +1165,7 @@ void VtkLineRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1125,7 +1185,7 @@ void VtkLineRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1198,7 +1258,7 @@ void VtkLineRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLineRepresentationWrap::InitPtpl();
+		VtkLineRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1220,7 +1280,7 @@ void VtkLineRepresentationWrap::SetDistanceAnnotationFormat(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1247,7 +1307,7 @@ void VtkLineRepresentationWrap::SetDistanceAnnotationScale(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1276,7 +1336,7 @@ void VtkLineRepresentationWrap::SetDistanceAnnotationScale(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1292,7 +1352,7 @@ void VtkLineRepresentationWrap::SetDistanceAnnotationScale(const Nan::FunctionCa
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1315,7 +1375,7 @@ void VtkLineRepresentationWrap::SetDistanceAnnotationVisibility(const Nan::Funct
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1335,7 +1395,7 @@ void VtkLineRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointHandleRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointHandleRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1354,7 +1414,7 @@ void VtkLineRepresentationWrap::SetInteractionState(const Nan::FunctionCallbackI
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1377,7 +1437,7 @@ void VtkLineRepresentationWrap::SetLineColor(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1408,7 +1468,7 @@ void VtkLineRepresentationWrap::SetPoint1DisplayPosition(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1437,7 +1497,7 @@ void VtkLineRepresentationWrap::SetPoint1DisplayPosition(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1464,7 +1524,7 @@ void VtkLineRepresentationWrap::SetPoint1WorldPosition(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1493,7 +1553,7 @@ void VtkLineRepresentationWrap::SetPoint1WorldPosition(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1520,7 +1580,7 @@ void VtkLineRepresentationWrap::SetPoint2DisplayPosition(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1549,7 +1609,7 @@ void VtkLineRepresentationWrap::SetPoint2DisplayPosition(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1576,7 +1636,7 @@ void VtkLineRepresentationWrap::SetPoint2WorldPosition(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1605,7 +1665,7 @@ void VtkLineRepresentationWrap::SetPoint2WorldPosition(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1625,7 +1685,7 @@ void VtkLineRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1644,7 +1704,7 @@ void VtkLineRepresentationWrap::SetRepresentationState(const Nan::FunctionCallba
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1663,7 +1723,7 @@ void VtkLineRepresentationWrap::SetResolution(const Nan::FunctionCallbackInfo<v8
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1682,7 +1742,7 @@ void VtkLineRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8:
 	vtkLineRepresentation *native = (vtkLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1709,7 +1769,7 @@ void VtkLineRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1738,7 +1798,7 @@ void VtkLineRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1765,7 +1825,7 @@ void VtkLineRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1794,7 +1854,7 @@ void VtkLineRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

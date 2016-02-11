@@ -55,6 +55,9 @@ void VtkPlotPieWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetColorSeries", GetColorSeries);
 	Nan::SetPrototypeMethod(tpl, "getColorSeries", GetColorSeries);
 
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -127,7 +130,7 @@ void VtkPlotPieWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetColorSeries();
-		VtkColorSeriesWrap::InitPtpl();
+	VtkColorSeriesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -137,6 +140,23 @@ void VtkPlotPieWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPlotPieWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlotPieWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPieWrap>(info.Holder());
+	vtkPlotPie *native = (vtkPlotPie *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPlotPieWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -172,7 +192,7 @@ void VtkPlotPieWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotPieWrap::InitPtpl();
+	VtkPlotPieWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +242,7 @@ void VtkPlotPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotPieWrap::InitPtpl();
+		VtkPlotPieWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +264,7 @@ void VtkPlotPieWrap::SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorSeriesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorSeriesWrap *a0 = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -271,7 +291,7 @@ void VtkPlotPieWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +320,7 @@ void VtkPlotPieWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +338,7 @@ void VtkPlotPieWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& i
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

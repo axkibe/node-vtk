@@ -135,7 +135,7 @@ void VtkGenericDataSetWrap::GetAttributes(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetAttributes(
 			info[0]->Int32Value()
 		);
-			VtkDataSetAttributesWrap::InitPtpl();
+		VtkDataSetAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -154,7 +154,7 @@ void VtkGenericDataSetWrap::GetAttributes(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetAttributes();
-		VtkGenericAttributeCollectionWrap::InitPtpl();
+	VtkGenericAttributeCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkGenericDataSetWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -209,7 +209,7 @@ void VtkGenericDataSetWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -229,7 +229,7 @@ void VtkGenericDataSetWrap::GetCellTypes(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellTypesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellTypesWrap *a0 = ObjectWrap::Unwrap<VtkCellTypesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkGenericDataSetWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -285,7 +285,7 @@ void VtkGenericDataSetWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -331,7 +331,7 @@ void VtkGenericDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkGenericDataSetWrap::InitPtpl();
+			VtkGenericDataSetWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -356,7 +356,7 @@ void VtkGenericDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkGenericDataSetWrap::InitPtpl();
+		VtkGenericDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +410,7 @@ void VtkGenericDataSetWrap::GetTessellator(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTessellator();
-		VtkGenericCellTessellatorWrap::InitPtpl();
+	VtkGenericCellTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -455,7 +455,7 @@ void VtkGenericDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericDataSetWrap::InitPtpl();
+	VtkGenericDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -483,7 +483,7 @@ void VtkGenericDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericDataSetWrap::InitPtpl();
+		VtkGenericDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -505,7 +505,7 @@ void VtkGenericDataSetWrap::SetTessellator(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericCellTessellatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericCellTessellatorWrap *a0 = ObjectWrap::Unwrap<VtkGenericCellTessellatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

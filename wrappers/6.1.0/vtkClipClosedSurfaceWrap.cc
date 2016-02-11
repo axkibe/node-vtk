@@ -60,11 +60,20 @@ void VtkClipClosedSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateOutlineOn", GenerateOutlineOn);
 	Nan::SetPrototypeMethod(tpl, "generateOutlineOn", GenerateOutlineOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetActivePlaneColor", GetActivePlaneColor);
+	Nan::SetPrototypeMethod(tpl, "getActivePlaneColor", GetActivePlaneColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetActivePlaneId", GetActivePlaneId);
 	Nan::SetPrototypeMethod(tpl, "getActivePlaneId", GetActivePlaneId);
 
+	Nan::SetPrototypeMethod(tpl, "GetBaseColor", GetBaseColor);
+	Nan::SetPrototypeMethod(tpl, "getBaseColor", GetBaseColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetClipColor", GetClipColor);
+	Nan::SetPrototypeMethod(tpl, "getClipColor", GetClipColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetClippingPlanes", GetClippingPlanes);
 	Nan::SetPrototypeMethod(tpl, "getClippingPlanes", GetClippingPlanes);
@@ -192,7 +201,7 @@ void VtkClipClosedSurfaceWrap::GenerateFacesOff(const Nan::FunctionCallbackInfo<
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +213,7 @@ void VtkClipClosedSurfaceWrap::GenerateFacesOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +225,7 @@ void VtkClipClosedSurfaceWrap::GenerateOutlineOff(const Nan::FunctionCallbackInf
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,12 +237,29 @@ void VtkClipClosedSurfaceWrap::GenerateOutlineOn(const Nan::FunctionCallbackInfo
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->GenerateOutlineOn();
+}
+
+void VtkClipClosedSurfaceWrap::GetActivePlaneColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
+	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActivePlaneColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkClipClosedSurfaceWrap::GetActivePlaneId(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -250,6 +276,23 @@ void VtkClipClosedSurfaceWrap::GetActivePlaneId(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkClipClosedSurfaceWrap::GetBaseColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
+	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBaseColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkClipClosedSurfaceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
@@ -264,6 +307,23 @@ void VtkClipClosedSurfaceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkClipClosedSurfaceWrap::GetClipColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
+	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClipColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkClipClosedSurfaceWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
@@ -275,7 +335,7 @@ void VtkClipClosedSurfaceWrap::GetClippingPlanes(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetClippingPlanes();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,7 +506,7 @@ void VtkClipClosedSurfaceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipClosedSurfaceWrap::InitPtpl();
+	VtkClipClosedSurfaceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -462,7 +522,7 @@ void VtkClipClosedSurfaceWrap::PassPointDataOff(const Nan::FunctionCallbackInfo<
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -474,7 +534,7 @@ void VtkClipClosedSurfaceWrap::PassPointDataOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -498,7 +558,7 @@ void VtkClipClosedSurfaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipClosedSurfaceWrap::InitPtpl();
+		VtkClipClosedSurfaceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -527,7 +587,7 @@ void VtkClipClosedSurfaceWrap::SetActivePlaneColor(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -556,7 +616,7 @@ void VtkClipClosedSurfaceWrap::SetActivePlaneColor(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +632,7 @@ void VtkClipClosedSurfaceWrap::SetActivePlaneColor(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -595,7 +655,7 @@ void VtkClipClosedSurfaceWrap::SetActivePlaneId(const Nan::FunctionCallbackInfo<
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -622,7 +682,7 @@ void VtkClipClosedSurfaceWrap::SetBaseColor(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +711,7 @@ void VtkClipClosedSurfaceWrap::SetBaseColor(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -667,7 +727,7 @@ void VtkClipClosedSurfaceWrap::SetBaseColor(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -698,7 +758,7 @@ void VtkClipClosedSurfaceWrap::SetClipColor(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +787,7 @@ void VtkClipClosedSurfaceWrap::SetClipColor(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -743,7 +803,7 @@ void VtkClipClosedSurfaceWrap::SetClipColor(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -767,7 +827,7 @@ void VtkClipClosedSurfaceWrap::SetClippingPlanes(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -786,7 +846,7 @@ void VtkClipClosedSurfaceWrap::SetGenerateFaces(const Nan::FunctionCallbackInfo<
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -805,7 +865,7 @@ void VtkClipClosedSurfaceWrap::SetGenerateOutline(const Nan::FunctionCallbackInf
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +884,7 @@ void VtkClipClosedSurfaceWrap::SetPassPointData(const Nan::FunctionCallbackInfo<
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -843,7 +903,7 @@ void VtkClipClosedSurfaceWrap::SetScalarMode(const Nan::FunctionCallbackInfo<v8:
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -860,7 +920,7 @@ void VtkClipClosedSurfaceWrap::SetScalarModeToColors(const Nan::FunctionCallback
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -872,7 +932,7 @@ void VtkClipClosedSurfaceWrap::SetScalarModeToLabels(const Nan::FunctionCallback
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -884,7 +944,7 @@ void VtkClipClosedSurfaceWrap::SetScalarModeToNone(const Nan::FunctionCallbackIn
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -898,7 +958,7 @@ void VtkClipClosedSurfaceWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -917,7 +977,7 @@ void VtkClipClosedSurfaceWrap::SetTriangulationErrorDisplay(const Nan::FunctionC
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -934,7 +994,7 @@ void VtkClipClosedSurfaceWrap::TriangulationErrorDisplayOff(const Nan::FunctionC
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -946,7 +1006,7 @@ void VtkClipClosedSurfaceWrap::TriangulationErrorDisplayOn(const Nan::FunctionCa
 {
 	VtkClipClosedSurfaceWrap *wrapper = ObjectWrap::Unwrap<VtkClipClosedSurfaceWrap>(info.Holder());
 	vtkClipClosedSurface *native = (vtkClipClosedSurface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

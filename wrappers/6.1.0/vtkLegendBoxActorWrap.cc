@@ -66,6 +66,9 @@ void VtkLegendBoxActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BoxOn", BoxOn);
 	Nan::SetPrototypeMethod(tpl, "boxOn", BoxOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBackgroundColor", GetBackgroundColor);
+	Nan::SetPrototypeMethod(tpl, "getBackgroundColor", GetBackgroundColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetBackgroundOpacity", GetBackgroundOpacity);
 	Nan::SetPrototypeMethod(tpl, "getBackgroundOpacity", GetBackgroundOpacity);
 
@@ -86,6 +89,9 @@ void VtkLegendBoxActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetEntryColor", GetEntryColor);
+	Nan::SetPrototypeMethod(tpl, "getEntryColor", GetEntryColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetEntryIcon", GetEntryIcon);
 	Nan::SetPrototypeMethod(tpl, "getEntryIcon", GetEntryIcon);
@@ -243,7 +249,7 @@ void VtkLegendBoxActorWrap::BorderOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +261,7 @@ void VtkLegendBoxActorWrap::BorderOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +273,7 @@ void VtkLegendBoxActorWrap::BoxOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,12 +285,29 @@ void VtkLegendBoxActorWrap::BoxOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->BoxOn();
+}
+
+void VtkLegendBoxActorWrap::GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
+	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackgroundColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLegendBoxActorWrap::GetBackgroundOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -368,7 +391,7 @@ void VtkLegendBoxActorWrap::GetBoxProperty(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetBoxProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,6 +417,30 @@ void VtkLegendBoxActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkLegendBoxActorWrap::GetEntryColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
+	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEntryColor(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkLegendBoxActorWrap::GetEntryIcon(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
@@ -409,7 +456,7 @@ void VtkLegendBoxActorWrap::GetEntryIcon(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetEntryIcon(
 			info[0]->Int32Value()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -460,7 +507,7 @@ void VtkLegendBoxActorWrap::GetEntrySymbol(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetEntrySymbol(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -486,7 +533,7 @@ void VtkLegendBoxActorWrap::GetEntryTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetEntryTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -636,7 +683,7 @@ void VtkLegendBoxActorWrap::LockBorderOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -648,7 +695,7 @@ void VtkLegendBoxActorWrap::LockBorderOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -667,7 +714,7 @@ void VtkLegendBoxActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkLegendBoxActorWrap::InitPtpl();
+	VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -686,7 +733,7 @@ void VtkLegendBoxActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -781,7 +828,7 @@ void VtkLegendBoxActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLegendBoxActorWrap::InitPtpl();
+		VtkLegendBoxActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -800,7 +847,7 @@ void VtkLegendBoxActorWrap::ScalarVisibilityOff(const Nan::FunctionCallbackInfo<
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -812,7 +859,7 @@ void VtkLegendBoxActorWrap::ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -834,7 +881,7 @@ void VtkLegendBoxActorWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +910,7 @@ void VtkLegendBoxActorWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -879,7 +926,7 @@ void VtkLegendBoxActorWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -902,7 +949,7 @@ void VtkLegendBoxActorWrap::SetBackgroundOpacity(const Nan::FunctionCallbackInfo
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -921,7 +968,7 @@ void VtkLegendBoxActorWrap::SetBorder(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +987,7 @@ void VtkLegendBoxActorWrap::SetBox(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -975,7 +1022,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1007,7 +1054,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1037,7 +1084,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1069,7 +1116,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1098,7 +1145,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1131,7 +1178,7 @@ void VtkLegendBoxActorWrap::SetEntry(const Nan::FunctionCallbackInfo<v8::Value>&
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1168,7 +1215,7 @@ void VtkLegendBoxActorWrap::SetEntryColor(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1198,7 +1245,7 @@ void VtkLegendBoxActorWrap::SetEntryColor(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1215,7 +1262,7 @@ void VtkLegendBoxActorWrap::SetEntryColor(const Nan::FunctionCallbackInfo<v8::Va
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1243,7 +1290,7 @@ void VtkLegendBoxActorWrap::SetEntryIcon(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1267,7 +1314,7 @@ void VtkLegendBoxActorWrap::SetEntryString(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1291,7 +1338,7 @@ void VtkLegendBoxActorWrap::SetEntrySymbol(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1313,7 +1360,7 @@ void VtkLegendBoxActorWrap::SetEntryTextProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1332,7 +1379,7 @@ void VtkLegendBoxActorWrap::SetLockBorder(const Nan::FunctionCallbackInfo<v8::Va
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1351,7 +1398,7 @@ void VtkLegendBoxActorWrap::SetNumberOfEntries(const Nan::FunctionCallbackInfo<v
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1370,7 +1417,7 @@ void VtkLegendBoxActorWrap::SetPadding(const Nan::FunctionCallbackInfo<v8::Value
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1389,7 +1436,7 @@ void VtkLegendBoxActorWrap::SetScalarVisibility(const Nan::FunctionCallbackInfo<
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1408,7 +1455,7 @@ void VtkLegendBoxActorWrap::SetUseBackground(const Nan::FunctionCallbackInfo<v8:
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1428,7 +1475,7 @@ void VtkLegendBoxActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1445,7 +1492,7 @@ void VtkLegendBoxActorWrap::UseBackgroundOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1457,7 +1504,7 @@ void VtkLegendBoxActorWrap::UseBackgroundOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkLegendBoxActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendBoxActorWrap>(info.Holder());
 	vtkLegendBoxActor *native = (vtkLegendBoxActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -130,7 +130,7 @@ void VtkLabelSizeCalculatorWrap::GetFontProperty(const Nan::FunctionCallbackInfo
 		r = native->GetFontProperty(
 			info[0]->Int32Value()
 		);
-			VtkTextPropertyWrap::InitPtpl();
+		VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkLabelSizeCalculatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkLabelSizeCalculatorWrap::InitPtpl();
+	VtkLabelSizeCalculatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +220,7 @@ void VtkLabelSizeCalculatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLabelSizeCalculatorWrap::InitPtpl();
+		VtkLabelSizeCalculatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkLabelSizeCalculatorWrap::SetFontProperty(const Nan::FunctionCallbackInfo
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -266,7 +266,7 @@ void VtkLabelSizeCalculatorWrap::SetLabelSizeArrayName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

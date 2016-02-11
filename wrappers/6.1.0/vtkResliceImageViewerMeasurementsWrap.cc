@@ -141,7 +141,7 @@ void VtkResliceImageViewerMeasurementsWrap::AddItem(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractWidgetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractWidgetWrap *a0 = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -221,7 +221,7 @@ void VtkResliceImageViewerMeasurementsWrap::GetResliceImageViewer(const Nan::Fun
 		return;
 	}
 	r = native->GetResliceImageViewer();
-		VtkResliceImageViewerWrap::InitPtpl();
+	VtkResliceImageViewerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkResliceImageViewerMeasurementsWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceImageViewerMeasurementsWrap::InitPtpl();
+	VtkResliceImageViewerMeasurementsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkResliceImageViewerMeasurementsWrap::ProcessEventsOff(const Nan::Function
 {
 	VtkResliceImageViewerMeasurementsWrap *wrapper = ObjectWrap::Unwrap<VtkResliceImageViewerMeasurementsWrap>(info.Holder());
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkResliceImageViewerMeasurementsWrap::ProcessEventsOn(const Nan::FunctionC
 {
 	VtkResliceImageViewerMeasurementsWrap *wrapper = ObjectWrap::Unwrap<VtkResliceImageViewerMeasurementsWrap>(info.Holder());
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -320,7 +320,7 @@ void VtkResliceImageViewerMeasurementsWrap::RemoveAllItems(const Nan::FunctionCa
 {
 	VtkResliceImageViewerMeasurementsWrap *wrapper = ObjectWrap::Unwrap<VtkResliceImageViewerMeasurementsWrap>(info.Holder());
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -335,7 +335,7 @@ void VtkResliceImageViewerMeasurementsWrap::RemoveItem(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractWidgetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractWidgetWrap *a0 = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +352,7 @@ void VtkResliceImageViewerMeasurementsWrap::Render(const Nan::FunctionCallbackIn
 {
 	VtkResliceImageViewerMeasurementsWrap *wrapper = ObjectWrap::Unwrap<VtkResliceImageViewerMeasurementsWrap>(info.Holder());
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkResliceImageViewerMeasurementsWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceImageViewerMeasurementsWrap::InitPtpl();
+		VtkResliceImageViewerMeasurementsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkResliceImageViewerMeasurementsWrap::SetProcessEvents(const Nan::Function
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -417,7 +417,7 @@ void VtkResliceImageViewerMeasurementsWrap::SetResliceImageViewer(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceImageViewerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceImageViewerWrap *a0 = ObjectWrap::Unwrap<VtkResliceImageViewerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +436,7 @@ void VtkResliceImageViewerMeasurementsWrap::SetTolerance(const Nan::FunctionCall
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -453,7 +453,7 @@ void VtkResliceImageViewerMeasurementsWrap::Update(const Nan::FunctionCallbackIn
 {
 	VtkResliceImageViewerMeasurementsWrap *wrapper = ObjectWrap::Unwrap<VtkResliceImageViewerMeasurementsWrap>(info.Holder());
 	vtkResliceImageViewerMeasurements *native = (vtkResliceImageViewerMeasurements *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -183,7 +183,7 @@ void VtkExtractBlockWrap::MaintainStructureOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkExtractBlockWrap::MaintainStructureOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,7 +214,7 @@ void VtkExtractBlockWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractBlockWrap::InitPtpl();
+	VtkExtractBlockWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkExtractBlockWrap::PruneOutputOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +242,7 @@ void VtkExtractBlockWrap::PruneOutputOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +254,7 @@ void VtkExtractBlockWrap::RemoveAllIndices(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +278,7 @@ void VtkExtractBlockWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractBlockWrap::InitPtpl();
+		VtkExtractBlockWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -299,7 +299,7 @@ void VtkExtractBlockWrap::SetMaintainStructure(const Nan::FunctionCallbackInfo<v
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkExtractBlockWrap::SetPruneOutput(const Nan::FunctionCallbackInfo<v8::Val
 	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

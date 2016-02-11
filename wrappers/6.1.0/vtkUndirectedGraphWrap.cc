@@ -132,7 +132,7 @@ void VtkUndirectedGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>&
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkUndirectedGraphWrap::InitPtpl();
+			VtkUndirectedGraphWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -157,7 +157,7 @@ void VtkUndirectedGraphWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkUndirectedGraphWrap::InitPtpl();
+		VtkUndirectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkUndirectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkUndirectedGraphWrap::InitPtpl();
+	VtkUndirectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkUndirectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUndirectedGraphWrap::InitPtpl();
+		VtkUndirectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

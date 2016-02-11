@@ -44,6 +44,7 @@ class VtkRuledSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetOnRatioMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientLoops(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRuledMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRuledModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRuledModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

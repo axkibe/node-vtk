@@ -52,6 +52,9 @@ void VtkCenterOfMassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ComputeCenterOfMass", ComputeCenterOfMass);
 	Nan::SetPrototypeMethod(tpl, "computeCenterOfMass", ComputeCenterOfMass);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -122,7 +125,7 @@ void VtkCenterOfMassWrap::ComputeCenterOfMass(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -153,7 +156,7 @@ void VtkCenterOfMassWrap::ComputeCenterOfMass(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -168,6 +171,23 @@ void VtkCenterOfMassWrap::ComputeCenterOfMass(const Nan::FunctionCallbackInfo<v8
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCenterOfMassWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCenterOfMassWrap *wrapper = ObjectWrap::Unwrap<VtkCenterOfMassWrap>(info.Holder());
+	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCenterOfMassWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -231,7 +251,7 @@ void VtkCenterOfMassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkCenterOfMassWrap::InitPtpl();
+	VtkCenterOfMassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +279,7 @@ void VtkCenterOfMassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCenterOfMassWrap::InitPtpl();
+		VtkCenterOfMassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +308,7 @@ void VtkCenterOfMassWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +337,7 @@ void VtkCenterOfMassWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +353,7 @@ void VtkCenterOfMassWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -356,7 +376,7 @@ void VtkCenterOfMassWrap::SetUseScalarsAsWeights(const Nan::FunctionCallbackInfo
 	vtkCenterOfMass *native = (vtkCenterOfMass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

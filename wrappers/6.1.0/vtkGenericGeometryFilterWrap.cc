@@ -165,7 +165,7 @@ void VtkGenericGeometryFilterWrap::CellClippingOff(const Nan::FunctionCallbackIn
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkGenericGeometryFilterWrap::CellClippingOn(const Nan::FunctionCallbackInf
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkGenericGeometryFilterWrap::CreateDefaultLocator(const Nan::FunctionCallb
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkGenericGeometryFilterWrap::ExtentClippingOff(const Nan::FunctionCallback
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkGenericGeometryFilterWrap::ExtentClippingOn(const Nan::FunctionCallbackI
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -274,7 +274,7 @@ void VtkGenericGeometryFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkGenericGeometryFilterWrap::MergingOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -366,7 +366,7 @@ void VtkGenericGeometryFilterWrap::MergingOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -385,7 +385,7 @@ void VtkGenericGeometryFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericGeometryFilterWrap::InitPtpl();
+	VtkGenericGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkGenericGeometryFilterWrap::PassThroughCellIdsOff(const Nan::FunctionCall
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -413,7 +413,7 @@ void VtkGenericGeometryFilterWrap::PassThroughCellIdsOn(const Nan::FunctionCallb
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -425,7 +425,7 @@ void VtkGenericGeometryFilterWrap::PointClippingOff(const Nan::FunctionCallbackI
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -437,7 +437,7 @@ void VtkGenericGeometryFilterWrap::PointClippingOn(const Nan::FunctionCallbackIn
 {
 	VtkGenericGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGeometryFilterWrap>(info.Holder());
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -461,7 +461,7 @@ void VtkGenericGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericGeometryFilterWrap::InitPtpl();
+		VtkGenericGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -482,7 +482,7 @@ void VtkGenericGeometryFilterWrap::SetCellClipping(const Nan::FunctionCallbackIn
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +509,7 @@ void VtkGenericGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +538,7 @@ void VtkGenericGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -560,7 +560,7 @@ void VtkGenericGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -589,7 +589,7 @@ void VtkGenericGeometryFilterWrap::SetExtentClipping(const Nan::FunctionCallback
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkGenericGeometryFilterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +628,7 @@ void VtkGenericGeometryFilterWrap::SetMerging(const Nan::FunctionCallbackInfo<v8
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -647,7 +647,7 @@ void VtkGenericGeometryFilterWrap::SetPassThroughCellIds(const Nan::FunctionCall
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -666,7 +666,7 @@ void VtkGenericGeometryFilterWrap::SetPointClipping(const Nan::FunctionCallbackI
 	vtkGenericGeometryFilter *native = (vtkGenericGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

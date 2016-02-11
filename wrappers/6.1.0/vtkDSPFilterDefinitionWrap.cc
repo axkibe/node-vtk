@@ -139,7 +139,7 @@ void VtkDSPFilterDefinitionWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkDSPFilterDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info.Holder());
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -154,7 +154,7 @@ void VtkDSPFilterDefinitionWrap::Copy(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDSPFilterDefinitionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDSPFilterDefinitionWrap *a0 = ObjectWrap::Unwrap<VtkDSPFilterDefinitionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -372,7 +372,7 @@ void VtkDSPFilterDefinitionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkDSPFilterDefinitionWrap::InitPtpl();
+	VtkDSPFilterDefinitionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -390,7 +390,7 @@ void VtkDSPFilterDefinitionWrap::PushBackDenominatorWeight(const Nan::FunctionCa
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -409,7 +409,7 @@ void VtkDSPFilterDefinitionWrap::PushBackForwardNumeratorWeight(const Nan::Funct
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +428,7 @@ void VtkDSPFilterDefinitionWrap::PushBackNumeratorWeight(const Nan::FunctionCall
 	vtkDSPFilterDefinition *native = (vtkDSPFilterDefinition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -457,7 +457,7 @@ void VtkDSPFilterDefinitionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDSPFilterDefinitionWrap::InitPtpl();
+		VtkDSPFilterDefinitionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -479,7 +479,7 @@ void VtkDSPFilterDefinitionWrap::SetInputVariableName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +499,7 @@ void VtkDSPFilterDefinitionWrap::SetOutputVariableName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

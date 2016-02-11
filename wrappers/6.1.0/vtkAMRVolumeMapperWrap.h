@@ -41,6 +41,7 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void GetFreezeFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractiveUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestedRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRequestedResamplingMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResamplerUpdateTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);

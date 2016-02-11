@@ -130,7 +130,7 @@ void VtkRenderLargeImageWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInput();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -167,7 +167,7 @@ void VtkRenderLargeImageWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetOutput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkRenderLargeImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderLargeImageWrap::InitPtpl();
+	VtkRenderLargeImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkRenderLargeImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderLargeImageWrap::InitPtpl();
+		VtkRenderLargeImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkRenderLargeImageWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -281,7 +281,7 @@ void VtkRenderLargeImageWrap::SetMagnification(const Nan::FunctionCallbackInfo<v
 	vtkRenderLargeImage *native = (vtkRenderLargeImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

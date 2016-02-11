@@ -36,6 +36,7 @@ class VtkForceDirectedLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void GetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoolDownRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoolDownRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationsPerLayoutMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

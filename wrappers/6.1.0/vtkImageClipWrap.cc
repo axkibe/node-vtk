@@ -114,7 +114,7 @@ void VtkImageClipWrap::ClipDataOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkImageClipWrap *wrapper = ObjectWrap::Unwrap<VtkImageClipWrap>(info.Holder());
 	vtkImageClip *native = (vtkImageClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkImageClipWrap::ClipDataOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageClipWrap *wrapper = ObjectWrap::Unwrap<VtkImageClipWrap>(info.Holder());
 	vtkImageClip *native = (vtkImageClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkImageClipWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -205,7 +205,7 @@ void VtkImageClipWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -215,7 +215,17 @@ void VtkImageClipWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageClipWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -251,7 +261,7 @@ void VtkImageClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageClipWrap::InitPtpl();
+	VtkImageClipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +277,7 @@ void VtkImageClipWrap::ResetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageClipWrap *wrapper = ObjectWrap::Unwrap<VtkImageClipWrap>(info.Holder());
 	vtkImageClip *native = (vtkImageClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +301,7 @@ void VtkImageClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageClipWrap::InitPtpl();
+		VtkImageClipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +322,7 @@ void VtkImageClipWrap::SetClipData(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkImageClip *native = (vtkImageClip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +352,7 @@ void VtkImageClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +386,7 @@ void VtkImageClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -400,7 +410,7 @@ void VtkImageClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -418,7 +428,7 @@ void VtkImageClipWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::
 					}
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

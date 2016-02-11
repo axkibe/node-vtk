@@ -142,7 +142,7 @@ void VtkHardwareSelectorWrap::BeginRenderProp(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -168,7 +168,7 @@ void VtkHardwareSelectorWrap::ClearBuffers(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,7 +180,7 @@ void VtkHardwareSelectorWrap::EndRenderProp(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -199,7 +199,7 @@ void VtkHardwareSelectorWrap::GenerateSelection(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GenerateSelection();
-		VtkSelectionWrap::InitPtpl();
+	VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkHardwareSelectorWrap::GetPropFromID(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetPropFromID(
 			info[0]->Int32Value()
 		);
-			VtkPropWrap::InitPtpl();
+		VtkPropWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkHardwareSelectorWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,7 +367,7 @@ void VtkHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkHardwareSelectorWrap::InitPtpl();
+	VtkHardwareSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +395,7 @@ void VtkHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHardwareSelectorWrap::InitPtpl();
+		VtkHardwareSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -421,7 +421,7 @@ void VtkHardwareSelectorWrap::Select(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->Select();
-		VtkSelectionWrap::InitPtpl();
+	VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -439,7 +439,7 @@ void VtkHardwareSelectorWrap::SetFieldAssociation(const Nan::FunctionCallbackInf
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +458,7 @@ void VtkHardwareSelectorWrap::SetProcessID(const Nan::FunctionCallbackInfo<v8::V
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +478,7 @@ void VtkHardwareSelectorWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -497,7 +497,7 @@ void VtkHardwareSelectorWrap::SetUseProcessIdFromData(const Nan::FunctionCallbac
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

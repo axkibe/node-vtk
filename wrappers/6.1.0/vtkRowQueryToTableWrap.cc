@@ -120,7 +120,7 @@ void VtkRowQueryToTableWrap::GetQuery(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetQuery();
-		VtkRowQueryWrap::InitPtpl();
+	VtkRowQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkRowQueryToTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkRowQueryToTableWrap::InitPtpl();
+	VtkRowQueryToTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkRowQueryToTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRowQueryToTableWrap::InitPtpl();
+		VtkRowQueryToTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkRowQueryToTableWrap::SetQuery(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRowQueryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRowQueryWrap *a0 = ObjectWrap::Unwrap<VtkRowQueryWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -126,7 +126,7 @@ void VtkEdgeListIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetGraph();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkEdgeListIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkEdgeListIteratorWrap::InitPtpl();
+	VtkEdgeListIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkEdgeListIteratorWrap::NextGraphEdge(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NextGraphEdge();
-		VtkGraphEdgeWrap::InitPtpl();
+	VtkGraphEdgeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +236,7 @@ void VtkEdgeListIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEdgeListIteratorWrap::InitPtpl();
+		VtkEdgeListIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkEdgeListIteratorWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

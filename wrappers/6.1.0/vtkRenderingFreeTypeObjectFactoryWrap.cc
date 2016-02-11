@@ -169,7 +169,7 @@ void VtkRenderingFreeTypeObjectFactoryWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderingFreeTypeObjectFactoryWrap::InitPtpl();
+	VtkRenderingFreeTypeObjectFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +197,7 @@ void VtkRenderingFreeTypeObjectFactoryWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderingFreeTypeObjectFactoryWrap::InitPtpl();
+		VtkRenderingFreeTypeObjectFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

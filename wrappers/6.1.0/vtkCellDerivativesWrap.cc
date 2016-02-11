@@ -227,7 +227,7 @@ void VtkCellDerivativesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellDerivativesWrap::InitPtpl();
+	VtkCellDerivativesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkCellDerivativesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellDerivativesWrap::InitPtpl();
+		VtkCellDerivativesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkCellDerivativesWrap::SetTensorMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkCellDerivativesWrap::SetTensorModeToComputeGradient(const Nan::FunctionC
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -305,7 +305,7 @@ void VtkCellDerivativesWrap::SetTensorModeToComputeStrain(const Nan::FunctionCal
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +317,7 @@ void VtkCellDerivativesWrap::SetTensorModeToPassTensors(const Nan::FunctionCallb
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -331,7 +331,7 @@ void VtkCellDerivativesWrap::SetVectorMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -348,7 +348,7 @@ void VtkCellDerivativesWrap::SetVectorModeToComputeGradient(const Nan::FunctionC
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -360,7 +360,7 @@ void VtkCellDerivativesWrap::SetVectorModeToComputeVorticity(const Nan::Function
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkCellDerivativesWrap::SetVectorModeToPassVectors(const Nan::FunctionCallb
 {
 	VtkCellDerivativesWrap *wrapper = ObjectWrap::Unwrap<VtkCellDerivativesWrap>(info.Holder());
 	vtkCellDerivatives *native = (vtkCellDerivatives *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -50,6 +50,12 @@ void VtkImageSpatialAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetKernelMiddle", GetKernelMiddle);
+	Nan::SetPrototypeMethod(tpl, "getKernelMiddle", GetKernelMiddle);
+
+	Nan::SetPrototypeMethod(tpl, "GetKernelSize", GetKernelSize);
+	Nan::SetPrototypeMethod(tpl, "getKernelSize", GetKernelSize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -102,6 +108,40 @@ void VtkImageSpatialAlgorithmWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImageSpatialAlgorithmWrap::GetKernelMiddle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSpatialAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkImageSpatialAlgorithmWrap>(info.Holder());
+	vtkImageSpatialAlgorithm *native = (vtkImageSpatialAlgorithm *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetKernelMiddle();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageSpatialAlgorithmWrap::GetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSpatialAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkImageSpatialAlgorithmWrap>(info.Holder());
+	vtkImageSpatialAlgorithm *native = (vtkImageSpatialAlgorithm *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetKernelSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageSpatialAlgorithmWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSpatialAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkImageSpatialAlgorithmWrap>(info.Holder());
@@ -135,7 +175,7 @@ void VtkImageSpatialAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSpatialAlgorithmWrap::InitPtpl();
+	VtkImageSpatialAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +203,7 @@ void VtkImageSpatialAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSpatialAlgorithmWrap::InitPtpl();
+		VtkImageSpatialAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

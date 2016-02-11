@@ -92,6 +92,9 @@ void VtkGaussianSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetExponentFactor", GetExponentFactor);
 	Nan::SetPrototypeMethod(tpl, "getExponentFactor", GetExponentFactor);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalWarping", GetNormalWarping);
 	Nan::SetPrototypeMethod(tpl, "getNormalWarping", GetNormalWarping);
 
@@ -106,6 +109,9 @@ void VtkGaussianSplatterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRadiusMinValue", GetRadiusMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRadiusMinValue", GetRadiusMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarWarping", GetScalarWarping);
 	Nan::SetPrototypeMethod(tpl, "getScalarWarping", GetScalarWarping);
@@ -218,7 +224,7 @@ void VtkGaussianSplatterWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +236,7 @@ void VtkGaussianSplatterWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +257,7 @@ void VtkGaussianSplatterWrap::ComputeModelBounds(const Nan::FunctionCallbackInfo
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkInformationWrap *a2 = ObjectWrap::Unwrap<VtkInformationWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -422,6 +428,23 @@ void VtkGaussianSplatterWrap::GetExponentFactor(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGaussianSplatterWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
+	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGaussianSplatterWrap::GetNormalWarping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
@@ -490,6 +513,23 @@ void VtkGaussianSplatterWrap::GetRadiusMinValue(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetRadiusMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGaussianSplatterWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
+	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGaussianSplatterWrap::GetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -581,7 +621,7 @@ void VtkGaussianSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkGaussianSplatterWrap::InitPtpl();
+	VtkGaussianSplatterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -597,7 +637,7 @@ void VtkGaussianSplatterWrap::NormalWarpingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -609,7 +649,7 @@ void VtkGaussianSplatterWrap::NormalWarpingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -633,7 +673,7 @@ void VtkGaussianSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGaussianSplatterWrap::InitPtpl();
+		VtkGaussianSplatterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -652,7 +692,7 @@ void VtkGaussianSplatterWrap::ScalarWarpingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -664,7 +704,7 @@ void VtkGaussianSplatterWrap::ScalarWarpingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -678,7 +718,7 @@ void VtkGaussianSplatterWrap::SetAccumulationMode(const Nan::FunctionCallbackInf
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +735,7 @@ void VtkGaussianSplatterWrap::SetAccumulationModeToMax(const Nan::FunctionCallba
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -707,7 +747,7 @@ void VtkGaussianSplatterWrap::SetAccumulationModeToMin(const Nan::FunctionCallba
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -719,7 +759,7 @@ void VtkGaussianSplatterWrap::SetAccumulationModeToSum(const Nan::FunctionCallba
 {
 	VtkGaussianSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkGaussianSplatterWrap>(info.Holder());
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -733,7 +773,7 @@ void VtkGaussianSplatterWrap::SetCapValue(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +792,7 @@ void VtkGaussianSplatterWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -771,7 +811,7 @@ void VtkGaussianSplatterWrap::SetEccentricity(const Nan::FunctionCallbackInfo<v8
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -790,7 +830,7 @@ void VtkGaussianSplatterWrap::SetExponentFactor(const Nan::FunctionCallbackInfo<
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -817,7 +857,7 @@ void VtkGaussianSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -846,7 +886,7 @@ void VtkGaussianSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -868,7 +908,7 @@ void VtkGaussianSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -897,7 +937,7 @@ void VtkGaussianSplatterWrap::SetNormalWarping(const Nan::FunctionCallbackInfo<v
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -916,7 +956,7 @@ void VtkGaussianSplatterWrap::SetNullValue(const Nan::FunctionCallbackInfo<v8::V
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +975,7 @@ void VtkGaussianSplatterWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -962,7 +1002,7 @@ void VtkGaussianSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -991,7 +1031,7 @@ void VtkGaussianSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1007,7 +1047,7 @@ void VtkGaussianSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1030,7 +1070,7 @@ void VtkGaussianSplatterWrap::SetScalarWarping(const Nan::FunctionCallbackInfo<v
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1049,7 +1089,7 @@ void VtkGaussianSplatterWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8:
 	vtkGaussianSplatter *native = (vtkGaussianSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

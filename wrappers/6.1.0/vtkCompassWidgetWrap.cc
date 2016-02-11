@@ -117,7 +117,7 @@ void VtkCompassWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallba
 {
 	VtkCompassWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCompassWidgetWrap>(info.Holder());
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,7 +214,7 @@ void VtkCompassWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompassWidgetWrap::InitPtpl();
+	VtkCompassWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkCompassWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompassWidgetWrap::InitPtpl();
+		VtkCompassWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkCompassWidgetWrap::SetDistance(const Nan::FunctionCallbackInfo<v8::Value
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -282,7 +282,7 @@ void VtkCompassWidgetWrap::SetHeading(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkCompassWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompassRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompassRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +321,7 @@ void VtkCompassWidgetWrap::SetTilt(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkCompassWidget *native = (vtkCompassWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

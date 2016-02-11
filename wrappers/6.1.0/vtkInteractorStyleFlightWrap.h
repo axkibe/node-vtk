@@ -37,6 +37,7 @@ class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 		static void GetAngleAccelerationFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDefaultUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisableMotion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMotionAccelerationFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMotionStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

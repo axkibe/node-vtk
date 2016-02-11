@@ -161,7 +161,7 @@ void VtkX3DExporterWrap::BinaryOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkX3DExporterWrap::BinaryOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkX3DExporterWrap::FastestOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -197,7 +197,7 @@ void VtkX3DExporterWrap::FastestOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -406,7 +406,7 @@ void VtkX3DExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkX3DExporterWrap::InitPtpl();
+	VtkX3DExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -448,7 +448,7 @@ void VtkX3DExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkX3DExporterWrap::InitPtpl();
+		VtkX3DExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -469,7 +469,7 @@ void VtkX3DExporterWrap::SetBinary(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +488,7 @@ void VtkX3DExporterWrap::SetFastest(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +508,7 @@ void VtkX3DExporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +527,7 @@ void VtkX3DExporterWrap::SetSpeed(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -546,7 +546,7 @@ void VtkX3DExporterWrap::SetWriteToOutputString(const Nan::FunctionCallbackInfo<
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -563,7 +563,7 @@ void VtkX3DExporterWrap::WriteToOutputStringOff(const Nan::FunctionCallbackInfo<
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -575,7 +575,7 @@ void VtkX3DExporterWrap::WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkX3DExporterWrap *wrapper = ObjectWrap::Unwrap<VtkX3DExporterWrap>(info.Holder());
 	vtkX3DExporter *native = (vtkX3DExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

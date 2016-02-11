@@ -130,7 +130,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetPolygon(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPolygon();
-		VtkPolygonWrap::InitPtpl();
+	VtkPolygonWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -153,7 +153,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::GetTriangulator(const Nan::Function
 		return;
 	}
 	r = native->GetTriangulator();
-		VtkOrderedTriangulatorWrap::InitPtpl();
+	VtkOrderedTriangulatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InitPointInsertion(const Nan::Funct
 {
 	VtkHyperOctreeClipCutPointsGrabberWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeClipCutPointsGrabberWrap>(info.Holder());
 	vtkHyperOctreeClipCutPointsGrabber *native = (vtkHyperOctreeClipCutPointsGrabber *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InsertPoint2D(const Nan::FunctionCa
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -230,7 +230,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InsertPoint2D(const Nan::FunctionCa
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -280,7 +280,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InsertPoint2D(const Nan::FunctionCa
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -300,7 +300,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InsertPoint2D(const Nan::FunctionCa
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -348,7 +348,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
+	VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,7 +376,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
+		VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::SetDimension(const Nan::FunctionCal
 	vtkHyperOctreeClipCutPointsGrabber *native = (vtkHyperOctreeClipCutPointsGrabber *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

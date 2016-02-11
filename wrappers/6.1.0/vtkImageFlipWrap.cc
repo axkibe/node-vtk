@@ -128,7 +128,7 @@ void VtkImageFlipWrap::FlipAboutOriginOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageFlipWrap *wrapper = ObjectWrap::Unwrap<VtkImageFlipWrap>(info.Holder());
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -140,7 +140,7 @@ void VtkImageFlipWrap::FlipAboutOriginOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageFlipWrap *wrapper = ObjectWrap::Unwrap<VtkImageFlipWrap>(info.Holder());
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkImageFlipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageFlipWrap::InitPtpl();
+	VtkImageFlipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkImageFlipWrap::PreserveImageExtentOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageFlipWrap *wrapper = ObjectWrap::Unwrap<VtkImageFlipWrap>(info.Holder());
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkImageFlipWrap::PreserveImageExtentOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageFlipWrap *wrapper = ObjectWrap::Unwrap<VtkImageFlipWrap>(info.Holder());
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -303,7 +303,7 @@ void VtkImageFlipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageFlipWrap::InitPtpl();
+		VtkImageFlipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkImageFlipWrap::SetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Value
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkImageFlipWrap::SetFilteredAxis(const Nan::FunctionCallbackInfo<v8::Value
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +362,7 @@ void VtkImageFlipWrap::SetFlipAboutOrigin(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -381,7 +381,7 @@ void VtkImageFlipWrap::SetPreserveImageExtent(const Nan::FunctionCallbackInfo<v8
 	vtkImageFlip *native = (vtkImageFlip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -134,7 +134,7 @@ void VtkMeanValueCoordinatesInterpolatorWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
-		VtkMeanValueCoordinatesInterpolatorWrap::InitPtpl();
+	VtkMeanValueCoordinatesInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkMeanValueCoordinatesInterpolatorWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMeanValueCoordinatesInterpolatorWrap::InitPtpl();
+		VtkMeanValueCoordinatesInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

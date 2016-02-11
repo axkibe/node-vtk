@@ -54,6 +54,12 @@ void VtkImageAccumulateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComponentExtent", GetComponentExtent);
 	Nan::SetPrototypeMethod(tpl, "getComponentExtent", GetComponentExtent);
 
+	Nan::SetPrototypeMethod(tpl, "GetComponentOrigin", GetComponentOrigin);
+	Nan::SetPrototypeMethod(tpl, "getComponentOrigin", GetComponentOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetComponentSpacing", GetComponentSpacing);
+	Nan::SetPrototypeMethod(tpl, "getComponentSpacing", GetComponentSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "GetIgnoreZero", GetIgnoreZero);
 	Nan::SetPrototypeMethod(tpl, "getIgnoreZero", GetIgnoreZero);
 
@@ -63,6 +69,15 @@ void VtkImageAccumulateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetIgnoreZeroMinValue", GetIgnoreZeroMinValue);
 	Nan::SetPrototypeMethod(tpl, "getIgnoreZeroMinValue", GetIgnoreZeroMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetMax", GetMax);
+	Nan::SetPrototypeMethod(tpl, "getMax", GetMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetMean", GetMean);
+	Nan::SetPrototypeMethod(tpl, "getMean", GetMean);
+
+	Nan::SetPrototypeMethod(tpl, "GetMin", GetMin);
+	Nan::SetPrototypeMethod(tpl, "getMin", GetMin);
+
 	Nan::SetPrototypeMethod(tpl, "GetReverseStencil", GetReverseStencil);
 	Nan::SetPrototypeMethod(tpl, "getReverseStencil", GetReverseStencil);
 
@@ -71,6 +86,9 @@ void VtkImageAccumulateWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetReverseStencilMinValue", GetReverseStencilMinValue);
 	Nan::SetPrototypeMethod(tpl, "getReverseStencilMinValue", GetReverseStencilMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetStandardDeviation", GetStandardDeviation);
+	Nan::SetPrototypeMethod(tpl, "getStandardDeviation", GetStandardDeviation);
 
 	Nan::SetPrototypeMethod(tpl, "GetStencil", GetStencil);
 	Nan::SetPrototypeMethod(tpl, "getStencil", GetStencil);
@@ -171,7 +189,7 @@ void VtkImageAccumulateWrap::GetComponentExtent(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -200,7 +218,7 @@ void VtkImageAccumulateWrap::GetComponentExtent(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -210,7 +228,51 @@ void VtkImageAccumulateWrap::GetComponentExtent(const Nan::FunctionCallbackInfo<
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComponentExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageAccumulateWrap::GetComponentOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComponentOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageAccumulateWrap::GetComponentSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComponentSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageAccumulateWrap::GetIgnoreZero(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -255,6 +317,57 @@ void VtkImageAccumulateWrap::GetIgnoreZeroMinValue(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageAccumulateWrap::GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMax();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageAccumulateWrap::GetMean(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMean();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageAccumulateWrap::GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageAccumulateWrap::GetReverseStencil(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
@@ -297,6 +410,23 @@ void VtkImageAccumulateWrap::GetReverseStencilMinValue(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageAccumulateWrap::GetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
+	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStandardDeviation();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageAccumulateWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
@@ -308,7 +438,7 @@ void VtkImageAccumulateWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetStencil();
-		VtkImageStencilDataWrap::InitPtpl();
+	VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +454,7 @@ void VtkImageAccumulateWrap::IgnoreZeroOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +466,7 @@ void VtkImageAccumulateWrap::IgnoreZeroOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -377,7 +507,7 @@ void VtkImageAccumulateWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageAccumulateWrap::InitPtpl();
+	VtkImageAccumulateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -393,7 +523,7 @@ void VtkImageAccumulateWrap::ReverseStencilOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -405,7 +535,7 @@ void VtkImageAccumulateWrap::ReverseStencilOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageAccumulateWrap *wrapper = ObjectWrap::Unwrap<VtkImageAccumulateWrap>(info.Holder());
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -429,7 +559,7 @@ void VtkImageAccumulateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageAccumulateWrap::InitPtpl();
+		VtkImageAccumulateWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -458,7 +588,7 @@ void VtkImageAccumulateWrap::SetComponentExtent(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +617,7 @@ void VtkImageAccumulateWrap::SetComponentExtent(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +639,7 @@ void VtkImageAccumulateWrap::SetComponentExtent(const Nan::FunctionCallbackInfo<
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -546,7 +676,7 @@ void VtkImageAccumulateWrap::SetComponentOrigin(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -575,7 +705,7 @@ void VtkImageAccumulateWrap::SetComponentOrigin(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +721,7 @@ void VtkImageAccumulateWrap::SetComponentOrigin(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -622,7 +752,7 @@ void VtkImageAccumulateWrap::SetComponentSpacing(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +781,7 @@ void VtkImageAccumulateWrap::SetComponentSpacing(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -667,7 +797,7 @@ void VtkImageAccumulateWrap::SetComponentSpacing(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -690,7 +820,7 @@ void VtkImageAccumulateWrap::SetIgnoreZero(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -709,7 +839,7 @@ void VtkImageAccumulateWrap::SetReverseStencil(const Nan::FunctionCallbackInfo<v
 	vtkImageAccumulate *native = (vtkImageAccumulate *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -729,7 +859,7 @@ void VtkImageAccumulateWrap::SetStencilData(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -172,7 +172,7 @@ void VtkImageSliceWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -201,7 +201,7 @@ void VtkImageSliceWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -235,7 +235,7 @@ void VtkImageSliceWrap::GetImages(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +259,7 @@ void VtkImageSliceWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetMapper();
-		VtkImageMapper3DWrap::InitPtpl();
+	VtkImageMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkImageSliceWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetProperty();
-		VtkImagePropertyWrap::InitPtpl();
+	VtkImagePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -425,7 +425,7 @@ void VtkImageSliceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSliceWrap::InitPtpl();
+	VtkImageSliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -444,7 +444,7 @@ void VtkImageSliceWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -464,7 +464,7 @@ void VtkImageSliceWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +559,7 @@ void VtkImageSliceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSliceWrap::InitPtpl();
+		VtkImageSliceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -581,7 +581,7 @@ void VtkImageSliceWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapper3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMapper3DWrap *a0 = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -601,7 +601,7 @@ void VtkImageSliceWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImagePropertyWrap *a0 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +620,7 @@ void VtkImageSliceWrap::SetStackedImagePass(const Nan::FunctionCallbackInfo<v8::
 	vtkImageSlice *native = (vtkImageSlice *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +640,7 @@ void VtkImageSliceWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkImageSliceWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSliceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceWrap>(info.Holder());
 	vtkImageSlice *native = (vtkImageSlice *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

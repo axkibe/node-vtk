@@ -211,7 +211,7 @@ void VtkTreeMapToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeMapToPolyDataWrap::InitPtpl();
+	VtkTreeMapToPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkTreeMapToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeMapToPolyDataWrap::InitPtpl();
+		VtkTreeMapToPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkTreeMapToPolyDataWrap::SetAddNormals(const Nan::FunctionCallbackInfo<v8:
 	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkTreeMapToPolyDataWrap::SetLevelArrayName(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkTreeMapToPolyDataWrap::SetLevelDeltaZ(const Nan::FunctionCallbackInfo<v8
 	vtkTreeMapToPolyData *native = (vtkTreeMapToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -319,7 +319,7 @@ void VtkTreeMapToPolyDataWrap::SetRectanglesArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

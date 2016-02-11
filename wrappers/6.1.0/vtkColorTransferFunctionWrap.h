@@ -51,7 +51,9 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void GetColorSpaceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGreenValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHSVWrap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

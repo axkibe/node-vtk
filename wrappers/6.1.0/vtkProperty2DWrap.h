@@ -31,6 +31,7 @@ class VtkProperty2DWrap : public VtkObjectWrap
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayLocationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayLocationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

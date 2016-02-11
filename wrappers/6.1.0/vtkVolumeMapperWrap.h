@@ -39,7 +39,9 @@ class VtkVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 		static void GetCroppingRegionFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegionFlagsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCroppingRegionFlagsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVoxelCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);

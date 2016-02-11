@@ -206,7 +206,7 @@ void VtkPolyPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -236,7 +236,7 @@ void VtkPolyPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -286,7 +286,7 @@ void VtkPolyPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -306,7 +306,7 @@ void VtkPolyPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -346,7 +346,7 @@ void VtkPolyPlaneWrap::GetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetPolyLine();
-		VtkPolyLineWrap::InitPtpl();
+	VtkPolyLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,7 +391,7 @@ void VtkPolyPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyPlaneWrap::InitPtpl();
+	VtkPolyPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkPolyPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyPlaneWrap::InitPtpl();
+		VtkPolyPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -441,7 +441,7 @@ void VtkPolyPlaneWrap::SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyLineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyLineWrap *a0 = ObjectWrap::Unwrap<VtkPolyLineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

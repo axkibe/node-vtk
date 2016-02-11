@@ -32,6 +32,7 @@ class VtkTextureMapToSphereWrap : public VtkDataSetAlgorithmWrap
 		static void AutomaticSphereGenerationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutomaticSphereGenerationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticSphereGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreventSeam(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

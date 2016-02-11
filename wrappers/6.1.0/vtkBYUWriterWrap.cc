@@ -209,7 +209,7 @@ void VtkBYUWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkBYUWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkBYUWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkBYUWriterWrap::InitPtpl();
+	VtkBYUWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkBYUWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBYUWriterWrap::InitPtpl();
+		VtkBYUWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -393,7 +393,7 @@ void VtkBYUWriterWrap::SetDisplacementFileName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -413,7 +413,7 @@ void VtkBYUWriterWrap::SetGeometryFileName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkBYUWriterWrap::SetScalarFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -453,7 +453,7 @@ void VtkBYUWriterWrap::SetTextureFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkBYUWriterWrap::SetWriteDisplacement(const Nan::FunctionCallbackInfo<v8::
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +491,7 @@ void VtkBYUWriterWrap::SetWriteScalar(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkBYUWriterWrap::SetWriteTexture(const Nan::FunctionCallbackInfo<v8::Value
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +527,7 @@ void VtkBYUWriterWrap::WriteDisplacementOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -539,7 +539,7 @@ void VtkBYUWriterWrap::WriteDisplacementOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -551,7 +551,7 @@ void VtkBYUWriterWrap::WriteScalarOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -563,7 +563,7 @@ void VtkBYUWriterWrap::WriteScalarOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -575,7 +575,7 @@ void VtkBYUWriterWrap::WriteTextureOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -587,7 +587,7 @@ void VtkBYUWriterWrap::WriteTextureOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBYUWriterWrap *wrapper = ObjectWrap::Unwrap<VtkBYUWriterWrap>(info.Holder());
 	vtkBYUWriter *native = (vtkBYUWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

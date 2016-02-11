@@ -534,7 +534,7 @@ void VtkRenderedGraphRepresentationWrap::AddEdgeIconType(const Nan::FunctionCall
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -558,7 +558,7 @@ void VtkRenderedGraphRepresentationWrap::AddVertexIconType(const Nan::FunctionCa
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -580,7 +580,7 @@ void VtkRenderedGraphRepresentationWrap::ApplyViewTheme(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -597,7 +597,7 @@ void VtkRenderedGraphRepresentationWrap::ClearEdgeIconTypes(const Nan::FunctionC
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -609,7 +609,7 @@ void VtkRenderedGraphRepresentationWrap::ClearVertexIconTypes(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -621,7 +621,7 @@ void VtkRenderedGraphRepresentationWrap::ColorEdgesByArrayOff(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -633,7 +633,7 @@ void VtkRenderedGraphRepresentationWrap::ColorEdgesByArrayOn(const Nan::Function
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -645,7 +645,7 @@ void VtkRenderedGraphRepresentationWrap::ColorVerticesByArrayOff(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -657,7 +657,7 @@ void VtkRenderedGraphRepresentationWrap::ColorVerticesByArrayOn(const Nan::Funct
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -679,7 +679,7 @@ void VtkRenderedGraphRepresentationWrap::ComputeSelectedGraphBounds(const Nan::F
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkRenderedGraphRepresentationWrap::ComputeSelectedGraphBounds(const Nan::F
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +725,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeIconVisibilityOff(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -737,7 +737,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeIconVisibilityOn(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -749,7 +749,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeLabelVisibilityOff(const Nan::Funct
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +761,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeLabelVisibilityOn(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +773,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeVisibilityOff(const Nan::FunctionCa
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -785,7 +785,7 @@ void VtkRenderedGraphRepresentationWrap::EdgeVisibilityOn(const Nan::FunctionCal
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkRenderedGraphRepresentationWrap::EnableEdgesByArrayOff(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -809,7 +809,7 @@ void VtkRenderedGraphRepresentationWrap::EnableEdgesByArrayOn(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -821,7 +821,7 @@ void VtkRenderedGraphRepresentationWrap::EnableVerticesByArrayOff(const Nan::Fun
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -833,7 +833,7 @@ void VtkRenderedGraphRepresentationWrap::EnableVerticesByArrayOn(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1006,7 +1006,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLabelTextProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetEdgeLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1043,7 +1043,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeLayoutStrategy(const Nan::Functi
 		return;
 	}
 	r = native->GetEdgeLayoutStrategy();
-		VtkEdgeLayoutStrategyWrap::InitPtpl();
+	VtkEdgeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1080,7 +1080,7 @@ void VtkRenderedGraphRepresentationWrap::GetEdgeScalarBar(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetEdgeScalarBar();
-		VtkScalarBarWidgetWrap::InitPtpl();
+	VtkScalarBarWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1243,7 +1243,7 @@ void VtkRenderedGraphRepresentationWrap::GetLayoutStrategy(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkGraphLayoutStrategyWrap::InitPtpl();
+	VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1476,7 +1476,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexLabelTextProperty(const Nan::F
 		return;
 	}
 	r = native->GetVertexLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1513,7 +1513,7 @@ void VtkRenderedGraphRepresentationWrap::GetVertexScalarBar(const Nan::FunctionC
 		return;
 	}
 	r = native->GetVertexScalarBar();
-		VtkScalarBarWidgetWrap::InitPtpl();
+	VtkScalarBarWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1557,7 +1557,7 @@ void VtkRenderedGraphRepresentationWrap::HideEdgeLabelsOnInteractionOff(const Na
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1569,7 +1569,7 @@ void VtkRenderedGraphRepresentationWrap::HideEdgeLabelsOnInteractionOn(const Nan
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1581,7 +1581,7 @@ void VtkRenderedGraphRepresentationWrap::HideVertexLabelsOnInteractionOff(const 
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1593,7 +1593,7 @@ void VtkRenderedGraphRepresentationWrap::HideVertexLabelsOnInteractionOn(const N
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1648,7 +1648,7 @@ void VtkRenderedGraphRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderedGraphRepresentationWrap::InitPtpl();
+	VtkRenderedGraphRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1676,7 +1676,7 @@ void VtkRenderedGraphRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderedGraphRepresentationWrap::InitPtpl();
+		VtkRenderedGraphRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1695,7 +1695,7 @@ void VtkRenderedGraphRepresentationWrap::ScalingOff(const Nan::FunctionCallbackI
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1707,7 +1707,7 @@ void VtkRenderedGraphRepresentationWrap::ScalingOn(const Nan::FunctionCallbackIn
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1721,7 +1721,7 @@ void VtkRenderedGraphRepresentationWrap::SetColorEdgesByArray(const Nan::Functio
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1740,7 +1740,7 @@ void VtkRenderedGraphRepresentationWrap::SetColorVerticesByArray(const Nan::Func
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1760,7 +1760,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeColorArrayName(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1780,7 +1780,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeHoverArrayName(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1799,7 +1799,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconAlignment(const Nan::Functio
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1819,7 +1819,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconArrayName(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1839,7 +1839,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconPriorityArrayName(const Nan:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1858,7 +1858,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeIconVisibility(const Nan::Functi
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1878,7 +1878,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelArrayName(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1898,7 +1898,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelPriorityArrayName(const Nan
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1918,7 +1918,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelTextProperty(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1937,7 +1937,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLabelVisibility(const Nan::Funct
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1957,7 +1957,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategy(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1970,7 +1970,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategy(const Nan::Functi
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkEdgeLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1987,7 +1987,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategyToArcParallel(cons
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2001,7 +2001,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategyToGeo(const Nan::F
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2018,7 +2018,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeLayoutStrategyToPassThrough(cons
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2032,7 +2032,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeScalarBarVisibility(const Nan::F
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2051,7 +2051,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeSelection(const Nan::FunctionCal
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2070,7 +2070,7 @@ void VtkRenderedGraphRepresentationWrap::SetEdgeVisibility(const Nan::FunctionCa
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2089,7 +2089,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnableEdgesByArray(const Nan::Functi
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2108,7 +2108,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnableVerticesByArray(const Nan::Fun
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2128,7 +2128,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnabledEdgesArrayName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2148,7 +2148,7 @@ void VtkRenderedGraphRepresentationWrap::SetEnabledVerticesArrayName(const Nan::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2167,7 +2167,7 @@ void VtkRenderedGraphRepresentationWrap::SetGlyphType(const Nan::FunctionCallbac
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2186,7 +2186,7 @@ void VtkRenderedGraphRepresentationWrap::SetHideEdgeLabelsOnInteraction(const Na
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2205,7 +2205,7 @@ void VtkRenderedGraphRepresentationWrap::SetHideVertexLabelsOnInteraction(const 
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2225,7 +2225,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategy(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2238,7 +2238,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategy(const Nan::FunctionCa
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2264,7 +2264,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToAssignCoordinates(co
 			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2285,7 +2285,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToCircular(const Nan::
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2297,7 +2297,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToClustering2D(const N
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2309,7 +2309,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToCommunity2D(const Na
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2321,7 +2321,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToCone(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2333,7 +2333,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToCosmicTree(const Nan
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2345,7 +2345,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToFast2D(const Nan::Fu
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2357,7 +2357,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToForceDirected(const 
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2369,7 +2369,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToPassThrough(const Na
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2381,7 +2381,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToRandom(const Nan::Fu
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2393,7 +2393,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToSimple2D(const Nan::
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2405,7 +2405,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToSpanTree(const Nan::
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2425,7 +2425,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToTree(const Nan::Func
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2441,7 +2441,7 @@ void VtkRenderedGraphRepresentationWrap::SetLayoutStrategyToTree(const Nan::Func
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2455,7 +2455,7 @@ void VtkRenderedGraphRepresentationWrap::SetScaling(const Nan::FunctionCallbackI
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2475,7 +2475,7 @@ void VtkRenderedGraphRepresentationWrap::SetScalingArrayName(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2494,7 +2494,7 @@ void VtkRenderedGraphRepresentationWrap::SetUseEdgeIconTypeMap(const Nan::Functi
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2513,7 +2513,7 @@ void VtkRenderedGraphRepresentationWrap::SetUseVertexIconTypeMap(const Nan::Func
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2533,7 +2533,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexColorArrayName(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2552,7 +2552,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexDefaultIcon(const Nan::Functio
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2572,7 +2572,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexHoverArrayName(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2591,7 +2591,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconAlignment(const Nan::Funct
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2611,7 +2611,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconArrayName(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2631,7 +2631,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconPriorityArrayName(const Na
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2650,7 +2650,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionMode(const Nan::F
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2667,7 +2667,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionModeToAnnotationI
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2679,7 +2679,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionModeToIgnoreSelec
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2691,7 +2691,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionModeToSelectedIco
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2703,7 +2703,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconSelectionModeToSelectedOff
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2717,7 +2717,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexIconVisibility(const Nan::Func
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2737,7 +2737,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelArrayName(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2757,7 +2757,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelPriorityArrayName(const N
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2777,7 +2777,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelTextProperty(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2796,7 +2796,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexLabelVisibility(const Nan::Fun
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2815,7 +2815,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexScalarBarVisibility(const Nan:
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2834,7 +2834,7 @@ void VtkRenderedGraphRepresentationWrap::SetVertexSelectedIcon(const Nan::Functi
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2851,7 +2851,7 @@ void VtkRenderedGraphRepresentationWrap::UpdateLayout(const Nan::FunctionCallbac
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2863,7 +2863,7 @@ void VtkRenderedGraphRepresentationWrap::UseEdgeIconTypeMapOff(const Nan::Functi
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2875,7 +2875,7 @@ void VtkRenderedGraphRepresentationWrap::UseEdgeIconTypeMapOn(const Nan::Functio
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2887,7 +2887,7 @@ void VtkRenderedGraphRepresentationWrap::UseVertexIconTypeMapOff(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2899,7 +2899,7 @@ void VtkRenderedGraphRepresentationWrap::UseVertexIconTypeMapOn(const Nan::Funct
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2911,7 +2911,7 @@ void VtkRenderedGraphRepresentationWrap::VertexIconVisibilityOff(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2923,7 +2923,7 @@ void VtkRenderedGraphRepresentationWrap::VertexIconVisibilityOn(const Nan::Funct
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2935,7 +2935,7 @@ void VtkRenderedGraphRepresentationWrap::VertexLabelVisibilityOff(const Nan::Fun
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2947,7 +2947,7 @@ void VtkRenderedGraphRepresentationWrap::VertexLabelVisibilityOn(const Nan::Func
 {
 	VtkRenderedGraphRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedGraphRepresentationWrap>(info.Holder());
 	vtkRenderedGraphRepresentation *native = (vtkRenderedGraphRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

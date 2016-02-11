@@ -47,6 +47,9 @@ class VtkAxesActorWrap : public VtkProp3DWrap
 		static void GetCylinderResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCylinderResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCylinderResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormalizedLabelPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormalizedShaftLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormalizedTipLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaftType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSphereRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSphereRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +58,7 @@ class VtkAxesActorWrap : public VtkProp3DWrap
 		static void GetSphereResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSphereResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTipType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTotalLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserDefinedShaft(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserDefinedTip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisCaptionActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);

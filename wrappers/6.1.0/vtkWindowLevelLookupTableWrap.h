@@ -33,6 +33,8 @@ class VtkWindowLevelLookupTableWrap : public VtkLookupTableWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInverseVideo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseVideoOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseVideoOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

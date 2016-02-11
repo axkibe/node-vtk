@@ -32,6 +32,7 @@ class VtkLabelPlacementMapperWrap : public VtkMapper2DWrap
 		static void GeneratePerturbedLabelSpokesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePerturbedLabelSpokesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAnchorTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

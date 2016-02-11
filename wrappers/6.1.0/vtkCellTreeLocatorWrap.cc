@@ -116,7 +116,7 @@ void VtkCellTreeLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -128,7 +128,7 @@ void VtkCellTreeLocatorWrap::BuildLocatorIfNeeded(const Nan::FunctionCallbackInf
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -140,7 +140,7 @@ void VtkCellTreeLocatorWrap::BuildLocatorInternal(const Nan::FunctionCallbackInf
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkCellTreeLocatorWrap::ForceBuildLocator(const Nan::FunctionCallbackInfo<v
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkCellTreeLocatorWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo
 {
 	VtkCellTreeLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkCellTreeLocatorWrap>(info.Holder());
 	vtkCellTreeLocator *native = (vtkCellTreeLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkCellTreeLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -429,7 +429,7 @@ void VtkCellTreeLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellTreeLocatorWrap::InitPtpl();
+	VtkCellTreeLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -457,7 +457,7 @@ void VtkCellTreeLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellTreeLocatorWrap::InitPtpl();
+		VtkCellTreeLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

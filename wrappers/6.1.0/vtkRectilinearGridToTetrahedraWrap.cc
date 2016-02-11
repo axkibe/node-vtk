@@ -196,7 +196,7 @@ void VtkRectilinearGridToTetrahedraWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearGridToTetrahedraWrap::InitPtpl();
+	VtkRectilinearGridToTetrahedraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkRectilinearGridToTetrahedraWrap::RememberVoxelIdOff(const Nan::FunctionC
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkRectilinearGridToTetrahedraWrap::RememberVoxelIdOn(const Nan::FunctionCa
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkRectilinearGridToTetrahedraWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearGridToTetrahedraWrap::InitPtpl();
+		VtkRectilinearGridToTetrahedraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetInput(const Nan::FunctionCallbackInf
 
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -322,7 +322,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetInput(const Nan::FunctionCallbackInf
 			}
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -376,7 +376,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetInput(const Nan::FunctionCallbackInf
 			}
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -400,7 +400,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetInput(const Nan::FunctionCallbackInf
 
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -428,7 +428,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetInput(const Nan::FunctionCallbackInf
 						{
 							if(info.Length() > 6 && info[6]->IsNumber())
 							{
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -459,7 +459,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetRememberVoxelId(const Nan::FunctionC
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +478,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetTetraPerCell(const Nan::FunctionCall
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -495,7 +495,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetTetraPerCellTo12(const Nan::Function
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -507,7 +507,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetTetraPerCellTo5(const Nan::FunctionC
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +519,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetTetraPerCellTo5And12(const Nan::Func
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -531,7 +531,7 @@ void VtkRectilinearGridToTetrahedraWrap::SetTetraPerCellTo6(const Nan::FunctionC
 {
 	VtkRectilinearGridToTetrahedraWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridToTetrahedraWrap>(info.Holder());
 	vtkRectilinearGridToTetrahedra *native = (vtkRectilinearGridToTetrahedra *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

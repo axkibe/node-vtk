@@ -211,7 +211,7 @@ void VtkBSplineTransformWrap::GetCoefficientData(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetCoefficientData();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkBSplineTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkBSplineTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkBSplineTransformWrap::InitPtpl();
+	VtkBSplineTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,7 +307,7 @@ void VtkBSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBSplineTransformWrap::InitPtpl();
+		VtkBSplineTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -328,7 +328,7 @@ void VtkBSplineTransformWrap::SetBorderMode(const Nan::FunctionCallbackInfo<v8::
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -345,7 +345,7 @@ void VtkBSplineTransformWrap::SetBorderModeToEdge(const Nan::FunctionCallbackInf
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +357,7 @@ void VtkBSplineTransformWrap::SetBorderModeToZero(const Nan::FunctionCallbackInf
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -369,7 +369,7 @@ void VtkBSplineTransformWrap::SetBorderModeToZeroAtBorder(const Nan::FunctionCal
 {
 	VtkBSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkBSplineTransformWrap>(info.Holder());
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -384,7 +384,7 @@ void VtkBSplineTransformWrap::SetCoefficientConnection(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +404,7 @@ void VtkBSplineTransformWrap::SetCoefficientData(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -423,7 +423,7 @@ void VtkBSplineTransformWrap::SetDisplacementScale(const Nan::FunctionCallbackIn
 	vtkBSplineTransform *native = (vtkBSplineTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

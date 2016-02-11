@@ -3913,7 +3913,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3945,7 +3945,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3997,7 +3997,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4069,7 +4069,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4161,7 +4161,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4223,7 +4223,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4295,7 +4295,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4377,7 +4377,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4429,7 +4429,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4491,7 +4491,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4553,7 +4553,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4635,7 +4635,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4687,7 +4687,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4749,7 +4749,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4821,7 +4821,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4863,7 +4863,7 @@ void VtkTriangleWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& 
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4923,7 +4923,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4955,7 +4955,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5007,7 +5007,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5079,7 +5079,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5171,7 +5171,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5233,7 +5233,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5305,7 +5305,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5387,7 +5387,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5439,7 +5439,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5501,7 +5501,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5563,7 +5563,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5645,7 +5645,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5697,7 +5697,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5759,7 +5759,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5831,7 +5831,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5873,7 +5873,7 @@ void VtkTriangleWrap::ComputeNormalDirection(const Nan::FunctionCallbackInfo<v8:
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5927,7 +5927,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5963,7 +5963,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6019,7 +6019,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6095,7 +6095,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6141,7 +6141,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6197,7 +6197,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6263,7 +6263,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6299,7 +6299,7 @@ void VtkTriangleWrap::ComputeQuadric(const Nan::FunctionCallbackInfo<v8::Value>&
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkQuadricWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkQuadricWrap *a3 = ObjectWrap::Unwrap<VtkQuadricWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -6375,7 +6375,7 @@ void VtkTriangleWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -6405,7 +6405,7 @@ void VtkTriangleWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -6591,7 +6591,7 @@ void VtkTriangleWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6621,7 +6621,7 @@ void VtkTriangleWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6671,7 +6671,7 @@ void VtkTriangleWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6691,7 +6691,7 @@ void VtkTriangleWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6729,7 +6729,7 @@ void VtkTriangleWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6759,7 +6759,7 @@ void VtkTriangleWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6809,7 +6809,7 @@ void VtkTriangleWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6829,7 +6829,7 @@ void VtkTriangleWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6867,7 +6867,7 @@ void VtkTriangleWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6897,7 +6897,7 @@ void VtkTriangleWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6947,7 +6947,7 @@ void VtkTriangleWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -6967,7 +6967,7 @@ void VtkTriangleWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -7005,7 +7005,7 @@ void VtkTriangleWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -7035,7 +7035,7 @@ void VtkTriangleWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -7085,7 +7085,7 @@ void VtkTriangleWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -7105,7 +7105,7 @@ void VtkTriangleWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -7153,7 +7153,7 @@ void VtkTriangleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkTriangleWrap::InitPtpl();
+	VtkTriangleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -14449,7 +14449,7 @@ void VtkTriangleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTriangleWrap::InitPtpl();
+		VtkTriangleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -14907,7 +14907,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -14939,7 +14939,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -14991,7 +14991,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15063,7 +15063,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15155,7 +15155,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15217,7 +15217,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15289,7 +15289,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15371,7 +15371,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15423,7 +15423,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15485,7 +15485,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15547,7 +15547,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15629,7 +15629,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15681,7 +15681,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15743,7 +15743,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15815,7 +15815,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -15857,7 +15857,7 @@ void VtkTriangleWrap::TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

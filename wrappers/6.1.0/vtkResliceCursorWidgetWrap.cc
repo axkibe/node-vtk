@@ -120,7 +120,7 @@ void VtkResliceCursorWidgetWrap::CreateDefaultRepresentation(const Nan::Function
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -167,7 +167,7 @@ void VtkResliceCursorWidgetWrap::GetResliceCursorRepresentation(const Nan::Funct
 		return;
 	}
 	r = native->GetResliceCursorRepresentation();
-		VtkResliceCursorRepresentationWrap::InitPtpl();
+	VtkResliceCursorRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkResliceCursorWidgetWrap::ManageWindowLevelOff(const Nan::FunctionCallbac
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkResliceCursorWidgetWrap::ManageWindowLevelOn(const Nan::FunctionCallback
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkResliceCursorWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorWidgetWrap::InitPtpl();
+	VtkResliceCursorWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkResliceCursorWidgetWrap::ResetResliceCursor(const Nan::FunctionCallbackI
 {
 	VtkResliceCursorWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWidgetWrap>(info.Holder());
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +276,7 @@ void VtkResliceCursorWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorWidgetWrap::InitPtpl();
+		VtkResliceCursorWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkResliceCursorWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,7 @@ void VtkResliceCursorWidgetWrap::SetManageWindowLevel(const Nan::FunctionCallbac
 	vtkResliceCursorWidget *native = (vtkResliceCursorWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkResliceCursorWidgetWrap::SetRepresentation(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

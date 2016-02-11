@@ -105,7 +105,7 @@ void VtkClipPlanesPainterWrap::CLIPPING_PLANES(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->CLIPPING_PLANES();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +164,7 @@ void VtkClipPlanesPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipPlanesPainterWrap::InitPtpl();
+	VtkClipPlanesPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkClipPlanesPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipPlanesPainterWrap::InitPtpl();
+		VtkClipPlanesPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkClipPlanesPainterWrap::UpdateBounds(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -250,7 +250,7 @@ void VtkClipPlanesPainterWrap::UpdateBounds(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

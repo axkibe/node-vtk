@@ -192,7 +192,7 @@ void VtkPolyDataWrap::BuildCells(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkPolyDataWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -223,7 +223,7 @@ void VtkPolyDataWrap::ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkPolyDataWrap::CopyCells(const Nan::FunctionCallbackInfo<v8::Value>& info
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointLocatorWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointLocatorWrap *a2 = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -268,7 +268,7 @@ void VtkPolyDataWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -288,7 +288,7 @@ void VtkPolyDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkPolyDataWrap::DeleteCells(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +317,7 @@ void VtkPolyDataWrap::DeleteLinks(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -358,7 +358,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkPolyDataWrap::InitPtpl();
+			VtkPolyDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -383,7 +383,7 @@ void VtkPolyDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -437,7 +437,7 @@ void VtkPolyDataWrap::GetLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLines();
-		VtkCellArrayWrap::InitPtpl();
+	VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -502,7 +502,7 @@ void VtkPolyDataWrap::GetPolys(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPolys();
-		VtkCellArrayWrap::InitPtpl();
+	VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -525,7 +525,7 @@ void VtkPolyDataWrap::GetStrips(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetStrips();
-		VtkCellArrayWrap::InitPtpl();
+	VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -548,7 +548,7 @@ void VtkPolyDataWrap::GetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetVerts();
-		VtkCellArrayWrap::InitPtpl();
+	VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -564,7 +564,7 @@ void VtkPolyDataWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -742,7 +742,7 @@ void VtkPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -758,7 +758,7 @@ void VtkPolyDataWrap::RemoveDeletedCells(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -772,7 +772,7 @@ void VtkPolyDataWrap::RemoveGhostCells(const Nan::FunctionCallbackInfo<v8::Value
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -789,7 +789,7 @@ void VtkPolyDataWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -813,7 +813,7 @@ void VtkPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -835,7 +835,7 @@ void VtkPolyDataWrap::SetLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -855,7 +855,7 @@ void VtkPolyDataWrap::SetPolys(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -875,7 +875,7 @@ void VtkPolyDataWrap::SetStrips(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -895,7 +895,7 @@ void VtkPolyDataWrap::SetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellArrayWrap *a0 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -915,7 +915,7 @@ void VtkPolyDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -932,7 +932,7 @@ void VtkPolyDataWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataWrap>(info.Holder());
 	vtkPolyData *native = (vtkPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

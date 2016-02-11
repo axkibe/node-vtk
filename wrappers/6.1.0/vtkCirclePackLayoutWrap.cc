@@ -143,7 +143,7 @@ void VtkCirclePackLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkCirclePackLayoutStrategyWrap::InitPtpl();
+	VtkCirclePackLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +188,7 @@ void VtkCirclePackLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkCirclePackLayoutWrap::InitPtpl();
+	VtkCirclePackLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkCirclePackLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCirclePackLayoutWrap::InitPtpl();
+		VtkCirclePackLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkCirclePackLayoutWrap::SetCirclesFieldName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -258,7 +258,7 @@ void VtkCirclePackLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCirclePackLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCirclePackLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkCirclePackLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkCirclePackLayoutWrap::SetSizeArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

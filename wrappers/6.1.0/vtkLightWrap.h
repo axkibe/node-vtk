@@ -30,14 +30,20 @@ class VtkLightWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAttenuationValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConeAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExponentMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExponentMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLightType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPositional(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwitch(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransformedFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);

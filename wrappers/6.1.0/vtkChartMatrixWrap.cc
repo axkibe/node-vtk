@@ -108,7 +108,7 @@ void VtkChartMatrixWrap::Allocate(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
 	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -130,7 +130,7 @@ void VtkChartMatrixWrap::GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -159,7 +159,7 @@ void VtkChartMatrixWrap::GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -219,7 +219,7 @@ void VtkChartMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartMatrixWrap::InitPtpl();
+	VtkChartMatrixWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkChartMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartMatrixWrap::InitPtpl();
+		VtkChartMatrixWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkChartMatrixWrap::SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& 
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -319,7 +319,7 @@ void VtkChartMatrixWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkChartMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkChartMatrixWrap>(info.Holder());
 	vtkChartMatrix *native = (vtkChartMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

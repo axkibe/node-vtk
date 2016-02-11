@@ -124,7 +124,7 @@ void VtkSequencePassWrap::GetPasses(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPasses();
-		VtkRenderPassCollectionWrap::InitPtpl();
+	VtkRenderPassCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkSequencePassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSequencePassWrap::InitPtpl();
+	VtkSequencePassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +188,7 @@ void VtkSequencePassWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -217,7 +217,7 @@ void VtkSequencePassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSequencePassWrap::InitPtpl();
+		VtkSequencePassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkSequencePassWrap::SetPasses(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassCollectionWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

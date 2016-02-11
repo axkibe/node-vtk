@@ -145,7 +145,7 @@ void VtkScalarsToColorsPainterWrap::ARRAY_ACCESS_MODE(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->ARRAY_ACCESS_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkScalarsToColorsPainterWrap::ARRAY_COMPONENT(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->ARRAY_COMPONENT();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +191,7 @@ void VtkScalarsToColorsPainterWrap::ARRAY_ID(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->ARRAY_ID();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkScalarsToColorsPainterWrap::ARRAY_NAME(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->ARRAY_NAME();
-		VtkInformationStringKeyWrap::InitPtpl();
+	VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkScalarsToColorsPainterWrap::COLOR_MODE(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->COLOR_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkScalarsToColorsPainterWrap::CreateDefaultLookupTable(const Nan::Function
 {
 	VtkScalarsToColorsPainterWrap *wrapper = ObjectWrap::Unwrap<VtkScalarsToColorsPainterWrap>(info.Holder());
 	vtkScalarsToColorsPainter *native = (vtkScalarsToColorsPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -286,7 +286,7 @@ void VtkScalarsToColorsPainterWrap::GetLookupTable(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkScalarsToColorsPainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkScalarsToColorsPainterWrap::INTERPOLATE_SCALARS_BEFORE_MAPPING(const Nan
 		return;
 	}
 	r = native->INTERPOLATE_SCALARS_BEFORE_MAPPING();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -399,7 +399,7 @@ void VtkScalarsToColorsPainterWrap::LOOKUP_TABLE(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->LOOKUP_TABLE();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,7 +422,7 @@ void VtkScalarsToColorsPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkScalarsToColorsPainterWrap::InitPtpl();
+	VtkScalarsToColorsPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +445,7 @@ void VtkScalarsToColorsPainterWrap::SCALAR_MATERIAL_MODE(const Nan::FunctionCall
 		return;
 	}
 	r = native->SCALAR_MATERIAL_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -468,7 +468,7 @@ void VtkScalarsToColorsPainterWrap::SCALAR_MODE(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->SCALAR_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,7 +491,7 @@ void VtkScalarsToColorsPainterWrap::SCALAR_RANGE(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->SCALAR_RANGE();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkScalarsToColorsPainterWrap::SCALAR_VISIBILITY(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->SCALAR_VISIBILITY();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -542,7 +542,7 @@ void VtkScalarsToColorsPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScalarsToColorsPainterWrap::InitPtpl();
+		VtkScalarsToColorsPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -564,7 +564,7 @@ void VtkScalarsToColorsPainterWrap::SetLookupTable(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +588,7 @@ void VtkScalarsToColorsPainterWrap::USE_LOOKUP_TABLE_SCALAR_RANGE(const Nan::Fun
 		return;
 	}
 	r = native->USE_LOOKUP_TABLE_SCALAR_RANGE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

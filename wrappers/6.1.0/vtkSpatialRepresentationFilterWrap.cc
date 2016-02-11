@@ -122,7 +122,7 @@ void VtkSpatialRepresentationFilterWrap::AddLevel(const Nan::FunctionCallbackInf
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -139,7 +139,7 @@ void VtkSpatialRepresentationFilterWrap::GenerateLeavesOff(const Nan::FunctionCa
 {
 	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -151,7 +151,7 @@ void VtkSpatialRepresentationFilterWrap::GenerateLeavesOn(const Nan::FunctionCal
 {
 	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkSpatialRepresentationFilterWrap::GetSpatialRepresentation(const Nan::Fun
 		return;
 	}
 	r = native->GetSpatialRepresentation();
-		VtkLocatorWrap::InitPtpl();
+	VtkLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkSpatialRepresentationFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpatialRepresentationFilterWrap::InitPtpl();
+	VtkSpatialRepresentationFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkSpatialRepresentationFilterWrap::ResetLevels(const Nan::FunctionCallback
 {
 	VtkSpatialRepresentationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSpatialRepresentationFilterWrap>(info.Holder());
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkSpatialRepresentationFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpatialRepresentationFilterWrap::InitPtpl();
+		VtkSpatialRepresentationFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -318,7 +318,7 @@ void VtkSpatialRepresentationFilterWrap::SetGenerateLeaves(const Nan::FunctionCa
 	vtkSpatialRepresentationFilter *native = (vtkSpatialRepresentationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -338,7 +338,7 @@ void VtkSpatialRepresentationFilterWrap::SetSpatialRepresentation(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLocatorWrap *a0 = ObjectWrap::Unwrap<VtkLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -102,7 +102,7 @@ void VtkLightCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightWrap *a0 = ObjectWrap::Unwrap<VtkLightWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -140,7 +140,7 @@ void VtkLightCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetNextItem();
-		VtkLightWrap::InitPtpl();
+	VtkLightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkLightCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkLightCollectionWrap::InitPtpl();
+	VtkLightCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkLightCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLightCollectionWrap::InitPtpl();
+		VtkLightCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

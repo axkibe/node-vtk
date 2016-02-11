@@ -120,7 +120,7 @@ void VtkClipConvexPolyDataWrap::GetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPlanes();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkClipConvexPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipConvexPolyDataWrap::InitPtpl();
+	VtkClipConvexPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkClipConvexPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipConvexPolyDataWrap::InitPtpl();
+		VtkClipConvexPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkClipConvexPolyDataWrap::SetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

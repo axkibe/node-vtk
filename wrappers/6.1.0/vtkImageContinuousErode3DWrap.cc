@@ -138,7 +138,7 @@ void VtkImageContinuousErode3DWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageContinuousErode3DWrap::InitPtpl();
+	VtkImageContinuousErode3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +166,7 @@ void VtkImageContinuousErode3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageContinuousErode3DWrap::InitPtpl();
+		VtkImageContinuousErode3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -191,7 +191,7 @@ void VtkImageContinuousErode3DWrap::SetKernelSize(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

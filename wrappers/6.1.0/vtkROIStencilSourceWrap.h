@@ -29,6 +29,7 @@ class VtkROIStencilSourceWrap : public VtkImageStencilSourceWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShape(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShapeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

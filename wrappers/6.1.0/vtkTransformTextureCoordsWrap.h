@@ -40,6 +40,9 @@ class VtkTransformTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		static void GetFlipR(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFlipS(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFlipT(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

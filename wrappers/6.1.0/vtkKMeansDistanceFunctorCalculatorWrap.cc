@@ -140,7 +140,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::GetFunctionParser(const Nan::Functi
 		return;
 	}
 	r = native->GetFunctionParser();
-		VtkFunctionParserWrap::InitPtpl();
+	VtkFunctionParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
+	VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
+		VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SetDistanceExpression(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -255,7 +255,7 @@ void VtkKMeansDistanceFunctorCalculatorWrap::SetFunctionParser(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFunctionParserWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFunctionParserWrap *a0 = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

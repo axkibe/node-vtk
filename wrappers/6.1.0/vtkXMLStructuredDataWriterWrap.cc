@@ -57,6 +57,9 @@ void VtkXMLStructuredDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPieces", GetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPieces", GetNumberOfPieces);
 
+	Nan::SetPrototypeMethod(tpl, "GetWriteExtent", GetWriteExtent);
+	Nan::SetPrototypeMethod(tpl, "getWriteExtent", GetWriteExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -128,7 +131,7 @@ void VtkXMLStructuredDataWriterWrap::GetExtentTranslator(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetExtentTranslator();
-		VtkExtentTranslatorWrap::InitPtpl();
+	VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -152,6 +155,23 @@ void VtkXMLStructuredDataWriterWrap::GetNumberOfPieces(const Nan::FunctionCallba
 	}
 	r = native->GetNumberOfPieces();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLStructuredDataWriterWrap::GetWriteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLStructuredDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLStructuredDataWriterWrap>(info.Holder());
+	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWriteExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXMLStructuredDataWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -187,7 +207,7 @@ void VtkXMLStructuredDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLStructuredDataWriterWrap::InitPtpl();
+	VtkXMLStructuredDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +235,7 @@ void VtkXMLStructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLStructuredDataWriterWrap::InitPtpl();
+		VtkXMLStructuredDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +257,7 @@ void VtkXMLStructuredDataWriterWrap::SetExtentTranslator(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtentTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +276,7 @@ void VtkXMLStructuredDataWriterWrap::SetNumberOfPieces(const Nan::FunctionCallba
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +303,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -312,7 +332,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +354,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

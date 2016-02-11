@@ -53,6 +53,9 @@ void VtkImageSinusoidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirection", GetDirection);
+	Nan::SetPrototypeMethod(tpl, "getDirection", GetDirection);
+
 	Nan::SetPrototypeMethod(tpl, "GetPeriod", GetPeriod);
 	Nan::SetPrototypeMethod(tpl, "getPeriod", GetPeriod);
 
@@ -140,6 +143,23 @@ void VtkImageSinusoidSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImageSinusoidSourceWrap::GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSinusoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSinusoidSourceWrap>(info.Holder());
+	vtkImageSinusoidSource *native = (vtkImageSinusoidSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirection();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageSinusoidSourceWrap::GetPeriod(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSinusoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageSinusoidSourceWrap>(info.Holder());
@@ -201,7 +221,7 @@ void VtkImageSinusoidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSinusoidSourceWrap::InitPtpl();
+	VtkImageSinusoidSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +249,7 @@ void VtkImageSinusoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSinusoidSourceWrap::InitPtpl();
+		VtkImageSinusoidSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -250,7 +270,7 @@ void VtkImageSinusoidSourceWrap::SetAmplitude(const Nan::FunctionCallbackInfo<v8
 	vtkImageSinusoidSource *native = (vtkImageSinusoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -277,7 +297,7 @@ void VtkImageSinusoidSourceWrap::SetDirection(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +326,7 @@ void VtkImageSinusoidSourceWrap::SetDirection(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +342,7 @@ void VtkImageSinusoidSourceWrap::SetDirection(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -345,7 +365,7 @@ void VtkImageSinusoidSourceWrap::SetPeriod(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageSinusoidSource *native = (vtkImageSinusoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -364,7 +384,7 @@ void VtkImageSinusoidSourceWrap::SetPhase(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageSinusoidSource *native = (vtkImageSinusoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -393,7 +413,7 @@ void VtkImageSinusoidSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

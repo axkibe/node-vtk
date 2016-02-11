@@ -122,7 +122,7 @@ void VtkXRenderWindowInteractorWrap::BreakLoopFlagOff(const Nan::FunctionCallbac
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +134,7 @@ void VtkXRenderWindowInteractorWrap::BreakLoopFlagOn(const Nan::FunctionCallback
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -146,7 +146,7 @@ void VtkXRenderWindowInteractorWrap::Disable(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -158,7 +158,7 @@ void VtkXRenderWindowInteractorWrap::Enable(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -198,7 +198,7 @@ void VtkXRenderWindowInteractorWrap::Initialize(const Nan::FunctionCallbackInfo<
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkXRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkXRenderWindowInteractorWrap::InitPtpl();
+	VtkXRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkXRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXRenderWindowInteractorWrap::InitPtpl();
+		VtkXRenderWindowInteractorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkXRenderWindowInteractorWrap::SetBreakLoopFlag(const Nan::FunctionCallbac
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkXRenderWindowInteractorWrap::Start(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +317,7 @@ void VtkXRenderWindowInteractorWrap::TerminateApp(const Nan::FunctionCallbackInf
 {
 	VtkXRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkXRenderWindowInteractorWrap>(info.Holder());
 	vtkXRenderWindowInteractor *native = (vtkXRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkXRenderWindowInteractorWrap::UpdateSize(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

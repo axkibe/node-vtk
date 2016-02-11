@@ -29,8 +29,13 @@ class VtkPlaneSourceWrap : public VtkPolyDataAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

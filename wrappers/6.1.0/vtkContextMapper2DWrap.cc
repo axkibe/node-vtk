@@ -129,7 +129,7 @@ void VtkContextMapper2DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,7 +160,7 @@ void VtkContextMapper2DWrap::GetInputAbstractArrayToProcess(const Nan::FunctionC
 				info[0]->Int32Value(),
 				(vtkDataObject *) a1->native.GetPointer()
 			);
-				VtkAbstractArrayWrap::InitPtpl();
+			VtkAbstractArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkContextMapper2DWrap::GetInputArrayToProcess(const Nan::FunctionCallbackI
 				info[0]->Int32Value(),
 				(vtkDataObject *) a1->native.GetPointer()
 			);
-				VtkDataArrayWrap::InitPtpl();
+			VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkContextMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextMapper2DWrap::InitPtpl();
+	VtkContextMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +272,7 @@ void VtkContextMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextMapper2DWrap::InitPtpl();
+		VtkContextMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkContextMapper2DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

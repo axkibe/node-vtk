@@ -47,8 +47,17 @@ void VtkButtonSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkButtonSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetShoulderTextureCoordinate", GetShoulderTextureCoordinate);
+	Nan::SetPrototypeMethod(tpl, "getShoulderTextureCoordinate", GetShoulderTextureCoordinate);
+
+	Nan::SetPrototypeMethod(tpl, "GetTextureDimensions", GetTextureDimensions);
+	Nan::SetPrototypeMethod(tpl, "getTextureDimensions", GetTextureDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "GetTextureStyle", GetTextureStyle);
 	Nan::SetPrototypeMethod(tpl, "getTextureStyle", GetTextureStyle);
@@ -126,6 +135,23 @@ void VtkButtonSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkButtonSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
+	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkButtonSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
@@ -138,6 +164,40 @@ void VtkButtonSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkButtonSourceWrap::GetShoulderTextureCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
+	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShoulderTextureCoordinate();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkButtonSourceWrap::GetTextureDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
+	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTextureDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkButtonSourceWrap::GetTextureStyle(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -229,7 +289,7 @@ void VtkButtonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkButtonSourceWrap::InitPtpl();
+	VtkButtonSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +317,7 @@ void VtkButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkButtonSourceWrap::InitPtpl();
+		VtkButtonSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -286,7 +346,7 @@ void VtkButtonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -315,7 +375,7 @@ void VtkButtonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -331,7 +391,7 @@ void VtkButtonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -362,7 +422,7 @@ void VtkButtonSourceWrap::SetShoulderTextureCoordinate(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +451,7 @@ void VtkButtonSourceWrap::SetShoulderTextureCoordinate(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +465,7 @@ void VtkButtonSourceWrap::SetShoulderTextureCoordinate(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -434,7 +494,7 @@ void VtkButtonSourceWrap::SetTextureDimensions(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +523,7 @@ void VtkButtonSourceWrap::SetTextureDimensions(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -477,7 +537,7 @@ void VtkButtonSourceWrap::SetTextureDimensions(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -498,7 +558,7 @@ void VtkButtonSourceWrap::SetTextureStyle(const Nan::FunctionCallbackInfo<v8::Va
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +575,7 @@ void VtkButtonSourceWrap::SetTextureStyleToFitImage(const Nan::FunctionCallbackI
 {
 	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -527,7 +587,7 @@ void VtkButtonSourceWrap::SetTextureStyleToProportional(const Nan::FunctionCallb
 {
 	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -541,7 +601,7 @@ void VtkButtonSourceWrap::SetTwoSided(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +618,7 @@ void VtkButtonSourceWrap::TwoSidedOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -570,7 +630,7 @@ void VtkButtonSourceWrap::TwoSidedOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkButtonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkButtonSourceWrap>(info.Holder());
 	vtkButtonSource *native = (vtkButtonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

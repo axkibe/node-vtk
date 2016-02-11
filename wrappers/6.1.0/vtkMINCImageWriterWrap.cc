@@ -183,7 +183,7 @@ void VtkMINCImageWriterWrap::GetDirectionCosines(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDirectionCosines();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkMINCImageWriterWrap::GetImageAttributes(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetImageAttributes();
-		VtkMINCImageAttributesWrap::InitPtpl();
+	VtkMINCImageAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkMINCImageWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkMINCImageWriterWrap::InitPtpl();
+	VtkMINCImageWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +349,7 @@ void VtkMINCImageWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMINCImageWriterWrap::InitPtpl();
+		VtkMINCImageWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkMINCImageWriterWrap::SetDirectionCosines(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +391,7 @@ void VtkMINCImageWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkMINCImageWriterWrap::SetHistoryAddition(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -431,7 +431,7 @@ void VtkMINCImageWriterWrap::SetImageAttributes(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMINCImageAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMINCImageAttributesWrap *a0 = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +450,7 @@ void VtkMINCImageWriterWrap::SetRescaleIntercept(const Nan::FunctionCallbackInfo
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +469,7 @@ void VtkMINCImageWriterWrap::SetRescaleSlope(const Nan::FunctionCallbackInfo<v8:
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +488,7 @@ void VtkMINCImageWriterWrap::SetStrictValidation(const Nan::FunctionCallbackInfo
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -505,7 +505,7 @@ void VtkMINCImageWriterWrap::StrictValidationOff(const Nan::FunctionCallbackInfo
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -517,7 +517,7 @@ void VtkMINCImageWriterWrap::StrictValidationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -529,7 +529,7 @@ void VtkMINCImageWriterWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMINCImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageWriterWrap>(info.Holder());
 	vtkMINCImageWriter *native = (vtkMINCImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

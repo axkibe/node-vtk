@@ -57,6 +57,9 @@ void VtkImplicitPolyDataDistanceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNoGradient", GetNoGradient);
+	Nan::SetPrototypeMethod(tpl, "getNoGradient", GetNoGradient);
+
 	Nan::SetPrototypeMethod(tpl, "GetNoValue", GetNoValue);
 	Nan::SetPrototypeMethod(tpl, "getNoValue", GetNoValue);
 
@@ -196,7 +199,7 @@ void VtkImplicitPolyDataDistanceWrap::EvaluateGradient(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -226,7 +229,7 @@ void VtkImplicitPolyDataDistanceWrap::EvaluateGradient(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -276,7 +279,7 @@ void VtkImplicitPolyDataDistanceWrap::EvaluateGradient(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -296,7 +299,7 @@ void VtkImplicitPolyDataDistanceWrap::EvaluateGradient(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -323,6 +326,23 @@ void VtkImplicitPolyDataDistanceWrap::GetClassName(const Nan::FunctionCallbackIn
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImplicitPolyDataDistanceWrap::GetNoGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitPolyDataDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPolyDataDistanceWrap>(info.Holder());
+	vtkImplicitPolyDataDistance *native = (vtkImplicitPolyDataDistance *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNoGradient();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitPolyDataDistanceWrap::GetNoValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -386,7 +406,7 @@ void VtkImplicitPolyDataDistanceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitPolyDataDistanceWrap::InitPtpl();
+	VtkImplicitPolyDataDistanceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -414,7 +434,7 @@ void VtkImplicitPolyDataDistanceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitPolyDataDistanceWrap::InitPtpl();
+		VtkImplicitPolyDataDistanceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -436,7 +456,7 @@ void VtkImplicitPolyDataDistanceWrap::SetInput(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +483,7 @@ void VtkImplicitPolyDataDistanceWrap::SetNoGradient(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +512,7 @@ void VtkImplicitPolyDataDistanceWrap::SetNoGradient(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +528,7 @@ void VtkImplicitPolyDataDistanceWrap::SetNoGradient(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -531,7 +551,7 @@ void VtkImplicitPolyDataDistanceWrap::SetNoValue(const Nan::FunctionCallbackInfo
 	vtkImplicitPolyDataDistance *native = (vtkImplicitPolyDataDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +570,7 @@ void VtkImplicitPolyDataDistanceWrap::SetTolerance(const Nan::FunctionCallbackIn
 	vtkImplicitPolyDataDistance *native = (vtkImplicitPolyDataDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

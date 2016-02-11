@@ -33,6 +33,7 @@ class VtkTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoordsAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoordsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

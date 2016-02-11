@@ -101,7 +101,7 @@ void VtkContextBufferIdWrap::Allocate(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkContextBufferIdWrap *wrapper = ObjectWrap::Unwrap<VtkContextBufferIdWrap>(info.Holder());
 	vtkContextBufferId *native = (vtkContextBufferId *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkContextBufferIdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextBufferIdWrap::InitPtpl();
+	VtkContextBufferIdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkContextBufferIdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextBufferIdWrap::InitPtpl();
+		VtkContextBufferIdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkContextBufferIdWrap::SetValues(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

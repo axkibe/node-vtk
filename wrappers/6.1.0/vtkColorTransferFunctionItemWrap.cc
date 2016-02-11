@@ -120,7 +120,7 @@ void VtkColorTransferFunctionItemWrap::GetColorTransferFunction(const Nan::Funct
 		return;
 	}
 	r = native->GetColorTransferFunction();
-		VtkColorTransferFunctionWrap::InitPtpl();
+	VtkColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkColorTransferFunctionItemWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkColorTransferFunctionItemWrap::InitPtpl();
+	VtkColorTransferFunctionItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkColorTransferFunctionItemWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkColorTransferFunctionItemWrap::InitPtpl();
+		VtkColorTransferFunctionItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkColorTransferFunctionItemWrap::SetColorTransferFunction(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

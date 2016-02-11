@@ -73,6 +73,15 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageInUseSize", GetImageInUseSize);
+	Nan::SetPrototypeMethod(tpl, "getImageInUseSize", GetImageInUseSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
+	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
+	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
 	Nan::SetPrototypeMethod(tpl, "getIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
 
@@ -160,7 +169,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOff(co
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -172,7 +181,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOn(con
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +197,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::CastRays(const Nan::FunctionCal
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -259,6 +268,57 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetClassName(const Nan::Functio
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageInUseSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkUnstructuredGridVolumeRayCastMapperWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageViewportSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkUnstructuredGridVolumeRayCastMapperWrap::GetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
@@ -326,7 +386,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetRayCastFunction(const Nan::F
 		return;
 	}
 	r = native->GetRayCastFunction();
-		VtkUnstructuredGridVolumeRayCastFunctionWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayCastFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +409,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::GetRayIntegrator(const Nan::Fun
 		return;
 	}
 	r = native->GetRayIntegrator();
-		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,7 +425,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::IntermixIntersectingGeometryOff
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -377,7 +437,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::IntermixIntersectingGeometryOn(
 {
 	VtkUnstructuredGridVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +478,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -437,7 +497,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::ReleaseGraphicsResources(const 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -460,7 +520,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::Render(const Nan::FunctionCallb
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -491,7 +551,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl();
+		VtkUnstructuredGridVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -512,7 +572,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(co
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +591,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +610,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetNumberOfThreads(const Nan::F
 	vtkUnstructuredGridVolumeRayCastMapper *native = (vtkUnstructuredGridVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +630,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetRayCastFunction(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridVolumeRayCastFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridVolumeRayCastFunctionWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -590,7 +650,7 @@ void VtkUnstructuredGridVolumeRayCastMapperWrap::SetRayIntegrator(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridVolumeRayIntegratorWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

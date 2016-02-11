@@ -29,6 +29,7 @@ class VtkPointSourceWrap : public VtkPolyDataAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistribution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -49,6 +49,9 @@ void VtkExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtent", GetExtent);
+	Nan::SetPrototypeMethod(tpl, "getExtent", GetExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetGhostLevel", GetGhostLevel);
 	Nan::SetPrototypeMethod(tpl, "getGhostLevel", GetGhostLevel);
 
@@ -60,6 +63,9 @@ void VtkExtentTranslatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSplitMode", GetSplitMode);
 	Nan::SetPrototypeMethod(tpl, "getSplitMode", GetSplitMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -146,6 +152,23 @@ void VtkExtentTranslatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkExtentTranslatorWrap::GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
+	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtentTranslatorWrap::GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
@@ -202,6 +225,23 @@ void VtkExtentTranslatorWrap::GetSplitMode(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExtentTranslatorWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
+	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtentTranslatorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
@@ -235,7 +275,7 @@ void VtkExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtentTranslatorWrap::InitPtpl();
+	VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +331,7 @@ void VtkExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtentTranslatorWrap::InitPtpl();
+		VtkExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -320,7 +360,7 @@ void VtkExtentTranslatorWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +389,7 @@ void VtkExtentTranslatorWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +411,7 @@ void VtkExtentTranslatorWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Valu
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -400,7 +440,7 @@ void VtkExtentTranslatorWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +459,7 @@ void VtkExtentTranslatorWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +478,7 @@ void VtkExtentTranslatorWrap::SetPiece(const Nan::FunctionCallbackInfo<v8::Value
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -455,7 +495,7 @@ void VtkExtentTranslatorWrap::SetSplitModeToBlock(const Nan::FunctionCallbackInf
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,7 +507,7 @@ void VtkExtentTranslatorWrap::SetSplitModeToXSlab(const Nan::FunctionCallbackInf
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -479,7 +519,7 @@ void VtkExtentTranslatorWrap::SetSplitModeToYSlab(const Nan::FunctionCallbackInf
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -491,7 +531,7 @@ void VtkExtentTranslatorWrap::SetSplitModeToZSlab(const Nan::FunctionCallbackInf
 {
 	VtkExtentTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info.Holder());
 	vtkExtentTranslator *native = (vtkExtentTranslator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -513,7 +553,7 @@ void VtkExtentTranslatorWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -542,7 +582,7 @@ void VtkExtentTranslatorWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -564,7 +604,7 @@ void VtkExtentTranslatorWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

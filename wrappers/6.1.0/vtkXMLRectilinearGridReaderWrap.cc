@@ -121,7 +121,7 @@ void VtkXMLRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkRectilinearGridWrap::InitPtpl();
+		VtkRectilinearGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkXMLRectilinearGridReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetOutput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkXMLRectilinearGridReaderWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLRectilinearGridReaderWrap::InitPtpl();
+	VtkXMLRectilinearGridReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkXMLRectilinearGridReaderWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLRectilinearGridReaderWrap::InitPtpl();
+		VtkXMLRectilinearGridReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

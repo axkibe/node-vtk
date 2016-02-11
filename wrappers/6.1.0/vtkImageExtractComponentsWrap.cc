@@ -50,6 +50,9 @@ void VtkImageExtractComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetComponents", GetComponents);
+	Nan::SetPrototypeMethod(tpl, "getComponents", GetComponents);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfComponents", GetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfComponents", GetNumberOfComponents);
 
@@ -108,6 +111,23 @@ void VtkImageExtractComponentsWrap::GetClassName(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImageExtractComponentsWrap::GetComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageExtractComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkImageExtractComponentsWrap>(info.Holder());
+	vtkImageExtractComponents *native = (vtkImageExtractComponents *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetComponents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageExtractComponentsWrap::GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageExtractComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkImageExtractComponentsWrap>(info.Holder());
@@ -155,7 +175,7 @@ void VtkImageExtractComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageExtractComponentsWrap::InitPtpl();
+	VtkImageExtractComponentsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +203,7 @@ void VtkImageExtractComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageExtractComponentsWrap::InitPtpl();
+		VtkImageExtractComponentsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +228,7 @@ void VtkImageExtractComponentsWrap::SetComponents(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -220,7 +240,7 @@ void VtkImageExtractComponentsWrap::SetComponents(const Nan::FunctionCallbackInf
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -231,7 +251,7 @@ void VtkImageExtractComponentsWrap::SetComponents(const Nan::FunctionCallbackInf
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

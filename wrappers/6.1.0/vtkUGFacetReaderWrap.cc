@@ -129,7 +129,7 @@ void VtkUGFacetReaderWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<
 {
 	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkUGFacetReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkUGFacetReaderWrap::MergingOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkUGFacetReaderWrap::MergingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -287,7 +287,7 @@ void VtkUGFacetReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkUGFacetReaderWrap::InitPtpl();
+	VtkUGFacetReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkUGFacetReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUGFacetReaderWrap::InitPtpl();
+		VtkUGFacetReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -337,7 +337,7 @@ void VtkUGFacetReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +357,7 @@ void VtkUGFacetReaderWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -376,7 +376,7 @@ void VtkUGFacetReaderWrap::SetMerging(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -395,7 +395,7 @@ void VtkUGFacetReaderWrap::SetPartNumber(const Nan::FunctionCallbackInfo<v8::Val
 	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

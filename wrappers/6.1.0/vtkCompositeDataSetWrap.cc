@@ -114,7 +114,7 @@ void VtkCompositeDataSetWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -160,7 +160,7 @@ void VtkCompositeDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkCompositeDataSetWrap::InitPtpl();
+			VtkCompositeDataSetWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkCompositeDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkCompositeDataSetWrap::InitPtpl();
+		VtkCompositeDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkCompositeDataSetWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCompositeDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataSetWrap>(info.Holder());
 	vtkCompositeDataSet *native = (vtkCompositeDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkCompositeDataSetWrap::NAME(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NAME();
-		VtkInformationStringKeyWrap::InitPtpl();
+	VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkCompositeDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompositeDataSetWrap::InitPtpl();
+	VtkCompositeDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkCompositeDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompositeDataSetWrap::InitPtpl();
+		VtkCompositeDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -332,7 +332,7 @@ void VtkCompositeDataSetWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

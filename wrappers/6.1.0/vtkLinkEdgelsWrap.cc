@@ -195,7 +195,7 @@ void VtkLinkEdgelsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkLinkEdgelsWrap::InitPtpl();
+	VtkLinkEdgelsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkLinkEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLinkEdgelsWrap::InitPtpl();
+		VtkLinkEdgelsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkLinkEdgelsWrap::SetGradientThreshold(const Nan::FunctionCallbackInfo<v8:
 	vtkLinkEdgels *native = (vtkLinkEdgels *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkLinkEdgelsWrap::SetLinkThreshold(const Nan::FunctionCallbackInfo<v8::Val
 	vtkLinkEdgels *native = (vtkLinkEdgels *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -282,7 +282,7 @@ void VtkLinkEdgelsWrap::SetPhiThreshold(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkLinkEdgels *native = (vtkLinkEdgels *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

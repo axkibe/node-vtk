@@ -194,7 +194,7 @@ void VtkCompositeDataDisplayAttributesWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompositeDataDisplayAttributesWrap::InitPtpl();
+	VtkCompositeDataDisplayAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkCompositeDataDisplayAttributesWrap::RemoveBlockColors(const Nan::Functio
 {
 	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
 	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkCompositeDataDisplayAttributesWrap::RemoveBlockOpacities(const Nan::Func
 {
 	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
 	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkCompositeDataDisplayAttributesWrap::RemoveBlockVisibilites(const Nan::Fu
 {
 	VtkCompositeDataDisplayAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info.Holder());
 	vtkCompositeDataDisplayAttributes *native = (vtkCompositeDataDisplayAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -258,7 +258,7 @@ void VtkCompositeDataDisplayAttributesWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompositeDataDisplayAttributesWrap::InitPtpl();
+		VtkCompositeDataDisplayAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

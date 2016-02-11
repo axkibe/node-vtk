@@ -109,7 +109,7 @@ void VtkKdTreePointLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkKdTreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreePointLocatorWrap>(info.Holder());
 	vtkKdTreePointLocator *native = (vtkKdTreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -136,7 +136,7 @@ void VtkKdTreePointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackIn
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -171,7 +171,7 @@ void VtkKdTreePointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackIn
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -207,7 +207,7 @@ void VtkKdTreePointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallba
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -242,7 +242,7 @@ void VtkKdTreePointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallba
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -263,7 +263,7 @@ void VtkKdTreePointLocatorWrap::FreeSearchStructure(const Nan::FunctionCallbackI
 {
 	VtkKdTreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreePointLocatorWrap>(info.Holder());
 	vtkKdTreePointLocator *native = (vtkKdTreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkKdTreePointLocatorWrap::GenerateRepresentation(const Nan::FunctionCallba
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -342,7 +342,7 @@ void VtkKdTreePointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkKdTreePointLocatorWrap::InitPtpl();
+	VtkKdTreePointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,7 +370,7 @@ void VtkKdTreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKdTreePointLocatorWrap::InitPtpl();
+		VtkKdTreePointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

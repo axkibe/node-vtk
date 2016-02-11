@@ -200,7 +200,7 @@ void VtkAddMembershipArrayWrap::GetInputValues(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInputValues();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkAddMembershipArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkAddMembershipArrayWrap::InitPtpl();
+	VtkAddMembershipArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,7 +287,7 @@ void VtkAddMembershipArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAddMembershipArrayWrap::InitPtpl();
+		VtkAddMembershipArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkAddMembershipArrayWrap::SetFieldType(const Nan::FunctionCallbackInfo<v8:
 	vtkAddMembershipArray *native = (vtkAddMembershipArray *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkAddMembershipArrayWrap::SetInputArrayName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -348,7 +348,7 @@ void VtkAddMembershipArrayWrap::SetInputValues(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -368,7 +368,7 @@ void VtkAddMembershipArrayWrap::SetOutputArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

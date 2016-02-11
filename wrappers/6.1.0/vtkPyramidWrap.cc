@@ -65,8 +65,14 @@ void VtkPyramidWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdge", GetEdge);
 	Nan::SetPrototypeMethod(tpl, "getEdge", GetEdge);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeArray", GetEdgeArray);
+	Nan::SetPrototypeMethod(tpl, "getEdgeArray", GetEdgeArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetFace", GetFace);
 	Nan::SetPrototypeMethod(tpl, "getFace", GetFace);
+
+	Nan::SetPrototypeMethod(tpl, "GetFaceArray", GetFaceArray);
+	Nan::SetPrototypeMethod(tpl, "getFaceArray", GetFaceArray);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfEdges", GetNumberOfEdges);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfEdges", GetNumberOfEdges);
@@ -262,7 +268,7 @@ void VtkPyramidWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -272,6 +278,30 @@ void VtkPyramidWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPyramidWrap::GetEdgeArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPyramidWrap *wrapper = ObjectWrap::Unwrap<VtkPyramidWrap>(info.Holder());
+	vtkPyramid *native = (vtkPyramid *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEdgeArray(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+		info.GetReturnValue().Set(at);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -292,7 +322,7 @@ void VtkPyramidWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -302,6 +332,30 @@ void VtkPyramidWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPyramidWrap::GetFaceArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPyramidWrap *wrapper = ObjectWrap::Unwrap<VtkPyramidWrap>(info.Holder());
+	vtkPyramid *native = (vtkPyramid *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetFaceArray(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 4);
+		memcpy(ab->GetContents().Data(), r, 4 * sizeof(int));
+		info.GetReturnValue().Set(at);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -418,7 +472,7 @@ void VtkPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -448,7 +502,7 @@ void VtkPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -498,7 +552,7 @@ void VtkPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -518,7 +572,7 @@ void VtkPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -556,7 +610,7 @@ void VtkPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -586,7 +640,7 @@ void VtkPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -636,7 +690,7 @@ void VtkPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -656,7 +710,7 @@ void VtkPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -694,7 +748,7 @@ void VtkPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -724,7 +778,7 @@ void VtkPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -774,7 +828,7 @@ void VtkPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -794,7 +848,7 @@ void VtkPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -832,7 +886,7 @@ void VtkPyramidWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -862,7 +916,7 @@ void VtkPyramidWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -912,7 +966,7 @@ void VtkPyramidWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -932,7 +986,7 @@ void VtkPyramidWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -980,7 +1034,7 @@ void VtkPyramidWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkPyramidWrap::InitPtpl();
+	VtkPyramidWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1008,7 +1062,7 @@ void VtkPyramidWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPyramidWrap::InitPtpl();
+		VtkPyramidWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

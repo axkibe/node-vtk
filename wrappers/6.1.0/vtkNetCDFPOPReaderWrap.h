@@ -32,6 +32,7 @@ class VtkNetCDFPOPReaderWrap : public VtkRectilinearGridAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfVariableArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStride(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

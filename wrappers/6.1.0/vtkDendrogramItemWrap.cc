@@ -175,7 +175,7 @@ void VtkDendrogramItemWrap::ComputeLabelWidth(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -192,7 +192,7 @@ void VtkDendrogramItemWrap::DisplayNumberOfCollapsedLeafNodesOff(const Nan::Func
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkDendrogramItemWrap::DisplayNumberOfCollapsedLeafNodesOn(const Nan::Funct
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkDendrogramItemWrap::DrawLabelsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +228,7 @@ void VtkDendrogramItemWrap::DrawLabelsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkDendrogramItemWrap::ExtendLeafNodesOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +252,7 @@ void VtkDendrogramItemWrap::ExtendLeafNodesOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkDendrogramItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -324,7 +324,7 @@ void VtkDendrogramItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -432,7 +432,7 @@ void VtkDendrogramItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPrunedTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -476,7 +476,7 @@ void VtkDendrogramItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -521,7 +521,7 @@ void VtkDendrogramItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkDendrogramItemWrap::InitPtpl();
+	VtkDendrogramItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -562,7 +562,7 @@ void VtkDendrogramItemWrap::PrepareToPaint(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContext2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContext2DWrap *a0 = ObjectWrap::Unwrap<VtkContext2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkDendrogramItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDendrogramItemWrap::InitPtpl();
+		VtkDendrogramItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -613,7 +613,7 @@ void VtkDendrogramItemWrap::SetColorArray(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +632,7 @@ void VtkDendrogramItemWrap::SetDisplayNumberOfCollapsedLeafNodes(const Nan::Func
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +651,7 @@ void VtkDendrogramItemWrap::SetDrawLabels(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkDendrogramItemWrap::SetExtendLeafNodes(const Nan::FunctionCallbackInfo<v
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +689,7 @@ void VtkDendrogramItemWrap::SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::V
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkDendrogramItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::V
 	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -728,7 +728,7 @@ void VtkDendrogramItemWrap::SetTree(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

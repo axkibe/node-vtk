@@ -87,6 +87,9 @@ void VtkHyperOctreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointsOnEdge", GetPointsOnEdge);
 	Nan::SetPrototypeMethod(tpl, "getPointsOnEdge", GetPointsOnEdge);
 
@@ -104,6 +107,9 @@ void VtkHyperOctreeWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPointsOnParentFaces", GetPointsOnParentFaces);
 	Nan::SetPrototypeMethod(tpl, "getPointsOnParentFaces", GetPointsOnParentFaces);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
@@ -178,7 +184,7 @@ void VtkHyperOctreeWrap::CollapseTerminalNode(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -198,7 +204,7 @@ void VtkHyperOctreeWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -222,7 +228,7 @@ void VtkHyperOctreeWrap::DIMENSION(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->DIMENSION();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +247,7 @@ void VtkHyperOctreeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -287,7 +293,7 @@ void VtkHyperOctreeWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkHyperOctreeWrap::InitPtpl();
+			VtkHyperOctreeWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -312,7 +318,7 @@ void VtkHyperOctreeWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeWrap::InitPtpl();
+		VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -380,7 +386,7 @@ void VtkHyperOctreeWrap::GetLeafData(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLeafData();
-		VtkDataSetAttributesWrap::InitPtpl();
+	VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -406,6 +412,23 @@ void VtkHyperOctreeWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkHyperOctreeWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
+	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkHyperOctreeWrap::GetPointsOnEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
@@ -424,7 +447,7 @@ void VtkHyperOctreeWrap::GetPointsOnEdge(const Nan::FunctionCallbackInfo<v8::Val
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkHyperOctreePointsGrabberWrap *a5 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -461,7 +484,7 @@ void VtkHyperOctreeWrap::GetPointsOnEdge2D(const Nan::FunctionCallbackInfo<v8::V
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -494,7 +517,7 @@ void VtkHyperOctreeWrap::GetPointsOnFace(const Nan::FunctionCallbackInfo<v8::Val
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -531,7 +554,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge(const Nan::FunctionCallbackInfo<v
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkHyperOctreePointsGrabberWrap *a5 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -568,7 +591,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentEdge2D(const Nan::FunctionCallbackInfo
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -609,7 +632,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -652,7 +675,7 @@ void VtkHyperOctreeWrap::GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkHyperOctreePointsGrabberWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkHyperOctreePointsGrabberWrap *a3 = ObjectWrap::Unwrap<VtkHyperOctreePointsGrabberWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -671,11 +694,28 @@ void VtkHyperOctreeWrap::GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkHyperOctreeWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
+	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkHyperOctreeWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeWrap>(info.Holder());
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -716,7 +756,7 @@ void VtkHyperOctreeWrap::LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->LEVELS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -739,7 +779,7 @@ void VtkHyperOctreeWrap::NewCellCursor(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewCellCursor();
-		VtkHyperOctreeCursorWrap::InitPtpl();
+	VtkHyperOctreeCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -762,7 +802,7 @@ void VtkHyperOctreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeWrap::InitPtpl();
+	VtkHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -785,7 +825,7 @@ void VtkHyperOctreeWrap::SIZES(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->SIZES();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -813,7 +853,7 @@ void VtkHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeWrap::InitPtpl();
+		VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -834,7 +874,7 @@ void VtkHyperOctreeWrap::SetDimension(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -853,7 +893,7 @@ void VtkHyperOctreeWrap::SetDualGridFlag(const Nan::FunctionCallbackInfo<v8::Val
 	vtkHyperOctree *native = (vtkHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -880,7 +920,7 @@ void VtkHyperOctreeWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +949,7 @@ void VtkHyperOctreeWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -925,7 +965,7 @@ void VtkHyperOctreeWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -956,7 +996,7 @@ void VtkHyperOctreeWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -985,7 +1025,7 @@ void VtkHyperOctreeWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1001,7 +1041,7 @@ void VtkHyperOctreeWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1025,7 +1065,7 @@ void VtkHyperOctreeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1045,7 +1085,7 @@ void VtkHyperOctreeWrap::SubdivideLeaf(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHyperOctreeCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHyperOctreeCursorWrap *a0 = ObjectWrap::Unwrap<VtkHyperOctreeCursorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

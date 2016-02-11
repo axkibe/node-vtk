@@ -144,7 +144,7 @@ void VtkInteractorStyleRubberBandZoomWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
+	VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -160,7 +160,7 @@ void VtkInteractorStyleRubberBandZoomWrap::OnLeftButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleRubberBandZoomWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandZoomWrap>(info.Holder());
 	vtkInteractorStyleRubberBandZoom *native = (vtkInteractorStyleRubberBandZoom *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -172,7 +172,7 @@ void VtkInteractorStyleRubberBandZoomWrap::OnLeftButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleRubberBandZoomWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandZoomWrap>(info.Holder());
 	vtkInteractorStyleRubberBandZoom *native = (vtkInteractorStyleRubberBandZoom *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkInteractorStyleRubberBandZoomWrap::OnMouseMove(const Nan::FunctionCallba
 {
 	VtkInteractorStyleRubberBandZoomWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandZoomWrap>(info.Holder());
 	vtkInteractorStyleRubberBandZoom *native = (vtkInteractorStyleRubberBandZoom *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -208,7 +208,7 @@ void VtkInteractorStyleRubberBandZoomWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
+		VtkInteractorStyleRubberBandZoomWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

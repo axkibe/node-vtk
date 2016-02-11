@@ -183,7 +183,7 @@ void VtkPNGWriterWrap::GetResult(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetResult();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkPNGWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkPNGWriterWrap::InitPtpl();
+	VtkPNGWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkPNGWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPNGWriterWrap::InitPtpl();
+		VtkPNGWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +277,7 @@ void VtkPNGWriterWrap::SetCompressionLevel(const Nan::FunctionCallbackInfo<v8::V
 	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -297,7 +297,7 @@ void VtkPNGWriterWrap::SetResult(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkPNGWriterWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPNGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPNGWriterWrap>(info.Holder());
 	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkPNGWriterWrap::WriteToMemoryOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPNGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPNGWriterWrap>(info.Holder());
 	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -338,7 +338,7 @@ void VtkPNGWriterWrap::WriteToMemoryOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPNGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPNGWriterWrap>(info.Holder());
 	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

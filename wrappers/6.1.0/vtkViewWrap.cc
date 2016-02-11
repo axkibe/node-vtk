@@ -147,7 +147,7 @@ void VtkViewWrap::AddRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -176,7 +176,7 @@ void VtkViewWrap::AddRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 		r = native->AddRepresentationFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkViewWrap::AddRepresentationFromInputConnection(const Nan::FunctionCallba
 		r = native->AddRepresentationFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -229,7 +229,7 @@ void VtkViewWrap::ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -281,7 +281,7 @@ void VtkViewWrap::GetObserver(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetObserver();
-		VtkCommandWrap::InitPtpl();
+	VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkViewWrap::GetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetRepresentation(
 			info[0]->Int32Value()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -378,7 +378,7 @@ void VtkViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkViewWrap::InitPtpl();
+	VtkViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +400,7 @@ void VtkViewWrap::RegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>& i
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -419,7 +419,7 @@ void VtkViewWrap::RemoveAllRepresentations(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -434,7 +434,7 @@ void VtkViewWrap::RemoveRepresentation(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +447,7 @@ void VtkViewWrap::RemoveRepresentation(const Nan::FunctionCallbackInfo<v8::Value
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkViewWrap::InitPtpl();
+		VtkViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -498,7 +498,7 @@ void VtkViewWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDataRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +527,7 @@ void VtkViewWrap::SetRepresentationFromInput(const Nan::FunctionCallbackInfo<v8:
 		r = native->SetRepresentationFromInput(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -558,7 +558,7 @@ void VtkViewWrap::SetRepresentationFromInputConnection(const Nan::FunctionCallba
 		r = native->SetRepresentationFromInputConnection(
 			(vtkAlgorithmOutput *) a0->native.GetPointer()
 		);
-			VtkDataRepresentationWrap::InitPtpl();
+		VtkDataRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -580,7 +580,7 @@ void VtkViewWrap::UnRegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -597,7 +597,7 @@ void VtkViewWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewWrap *wrapper = ObjectWrap::Unwrap<VtkViewWrap>(info.Holder());
 	vtkView *native = (vtkView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -137,7 +137,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::Initialize(const Nan::Func
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -185,7 +185,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::NewInstance(const Nan::Fun
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::SafeDownCast(const Nan::Fu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
+		VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::SetTransferFunctionTableSi
 	vtkUnstructuredGridHomogeneousRayIntegrator *native = (vtkUnstructuredGridHomogeneousRayIntegrator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

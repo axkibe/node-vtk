@@ -176,7 +176,7 @@ void VtkProbePolyhedronWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetSource();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkProbePolyhedronWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkProbePolyhedronWrap::InitPtpl();
+	VtkProbePolyhedronWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkProbePolyhedronWrap::ProbeCellDataOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -249,7 +249,7 @@ void VtkProbePolyhedronWrap::ProbeCellDataOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -261,7 +261,7 @@ void VtkProbePolyhedronWrap::ProbePointDataOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -273,7 +273,7 @@ void VtkProbePolyhedronWrap::ProbePointDataOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProbePolyhedronWrap *wrapper = ObjectWrap::Unwrap<VtkProbePolyhedronWrap>(info.Holder());
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkProbePolyhedronWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProbePolyhedronWrap::InitPtpl();
+		VtkProbePolyhedronWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -318,7 +318,7 @@ void VtkProbePolyhedronWrap::SetProbeCellData(const Nan::FunctionCallbackInfo<v8
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -337,7 +337,7 @@ void VtkProbePolyhedronWrap::SetProbePointData(const Nan::FunctionCallbackInfo<v
 	vtkProbePolyhedron *native = (vtkProbePolyhedron *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +357,7 @@ void VtkProbePolyhedronWrap::SetSourceConnection(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkProbePolyhedronWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

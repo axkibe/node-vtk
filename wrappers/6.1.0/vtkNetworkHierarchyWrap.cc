@@ -155,7 +155,7 @@ void VtkNetworkHierarchyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkNetworkHierarchyWrap::InitPtpl();
+	VtkNetworkHierarchyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkNetworkHierarchyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNetworkHierarchyWrap::InitPtpl();
+		VtkNetworkHierarchyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkNetworkHierarchyWrap::SetIPArrayName(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

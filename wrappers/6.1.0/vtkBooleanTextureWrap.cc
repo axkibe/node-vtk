@@ -195,7 +195,7 @@ void VtkBooleanTextureWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkBooleanTextureWrap::InitPtpl();
+	VtkBooleanTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkBooleanTextureWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBooleanTextureWrap::InitPtpl();
+		VtkBooleanTextureWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkBooleanTextureWrap::SetThickness(const Nan::FunctionCallbackInfo<v8::Val
 	vtkBooleanTexture *native = (vtkBooleanTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkBooleanTextureWrap::SetXSize(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkBooleanTexture *native = (vtkBooleanTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -282,7 +282,7 @@ void VtkBooleanTextureWrap::SetYSize(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkBooleanTexture *native = (vtkBooleanTexture *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

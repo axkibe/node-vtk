@@ -173,7 +173,7 @@ void VtkHyperTreeGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -197,7 +197,7 @@ void VtkHyperTreeGridWrap::DIMENSION(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->DIMENSION();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkHyperTreeGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -233,7 +233,7 @@ void VtkHyperTreeGridWrap::GenerateSuperCursorTraversalTable(const Nan::Function
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +245,7 @@ void VtkHyperTreeGridWrap::GenerateTrees(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkHyperTreeGridWrap::GetMaterialMask(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetMaterialMask();
-		VtkBitArrayWrap::InitPtpl();
+	VtkBitArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkHyperTreeGridWrap::GetMaterialMaskIndex(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetMaterialMaskIndex();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkHyperTreeGridWrap::GetXCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetXCoordinates();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +389,7 @@ void VtkHyperTreeGridWrap::GetYCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetYCoordinates();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkHyperTreeGridWrap::GetZCoordinates(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetZCoordinates();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -428,7 +428,7 @@ void VtkHyperTreeGridWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -469,7 +469,7 @@ void VtkHyperTreeGridWrap::LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->LEVELS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -492,7 +492,7 @@ void VtkHyperTreeGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperTreeGridWrap::InitPtpl();
+	VtkHyperTreeGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkHyperTreeGridWrap::SIZES(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->SIZES();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -543,7 +543,7 @@ void VtkHyperTreeGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperTreeGridWrap::InitPtpl();
+		VtkHyperTreeGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -562,7 +562,7 @@ void VtkHyperTreeGridWrap::SetIndexingModeToIJK(const Nan::FunctionCallbackInfo<
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +574,7 @@ void VtkHyperTreeGridWrap::SetIndexingModeToKJI(const Nan::FunctionCallbackInfo<
 {
 	VtkHyperTreeGridWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeGridWrap>(info.Holder());
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -589,7 +589,7 @@ void VtkHyperTreeGridWrap::SetMaterialMask(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBitArrayWrap *a0 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkHyperTreeGridWrap::SetMaterialMaskIndex(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +628,7 @@ void VtkHyperTreeGridWrap::SetTransposedRootIndexing(const Nan::FunctionCallback
 	vtkHyperTreeGrid *native = (vtkHyperTreeGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkHyperTreeGridWrap::SetXCoordinates(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +668,7 @@ void VtkHyperTreeGridWrap::SetYCoordinates(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +688,7 @@ void VtkHyperTreeGridWrap::SetZCoordinates(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkHyperTreeGridWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

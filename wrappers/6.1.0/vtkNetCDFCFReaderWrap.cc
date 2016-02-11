@@ -261,7 +261,7 @@ void VtkNetCDFCFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkNetCDFCFReaderWrap::InitPtpl();
+	VtkNetCDFCFReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkNetCDFCFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNetCDFCFReaderWrap::InitPtpl();
+		VtkNetCDFCFReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkNetCDFCFReaderWrap::SetOutputType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -327,7 +327,7 @@ void VtkNetCDFCFReaderWrap::SetOutputTypeToAutomatic(const Nan::FunctionCallback
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -339,7 +339,7 @@ void VtkNetCDFCFReaderWrap::SetOutputTypeToImage(const Nan::FunctionCallbackInfo
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -351,7 +351,7 @@ void VtkNetCDFCFReaderWrap::SetOutputTypeToRectilinear(const Nan::FunctionCallba
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -363,7 +363,7 @@ void VtkNetCDFCFReaderWrap::SetOutputTypeToStructured(const Nan::FunctionCallbac
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -375,7 +375,7 @@ void VtkNetCDFCFReaderWrap::SetOutputTypeToUnstructured(const Nan::FunctionCallb
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -389,7 +389,7 @@ void VtkNetCDFCFReaderWrap::SetSphericalCoordinates(const Nan::FunctionCallbackI
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -408,7 +408,7 @@ void VtkNetCDFCFReaderWrap::SetVerticalBias(const Nan::FunctionCallbackInfo<v8::
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +427,7 @@ void VtkNetCDFCFReaderWrap::SetVerticalScale(const Nan::FunctionCallbackInfo<v8:
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -444,7 +444,7 @@ void VtkNetCDFCFReaderWrap::SphericalCoordinatesOff(const Nan::FunctionCallbackI
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +456,7 @@ void VtkNetCDFCFReaderWrap::SphericalCoordinatesOn(const Nan::FunctionCallbackIn
 {
 	VtkNetCDFCFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFCFReaderWrap>(info.Holder());
 	vtkNetCDFCFReader *native = (vtkNetCDFCFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

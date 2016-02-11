@@ -121,7 +121,7 @@ void VtkXMLPolyDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkXMLPolyDataReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkXMLPolyDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPolyDataReaderWrap::InitPtpl();
+	VtkXMLPolyDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkXMLPolyDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPolyDataReaderWrap::InitPtpl();
+		VtkXMLPolyDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

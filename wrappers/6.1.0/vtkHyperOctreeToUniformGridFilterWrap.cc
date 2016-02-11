@@ -135,7 +135,7 @@ void VtkHyperOctreeToUniformGridFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeToUniformGridFilterWrap::InitPtpl();
+	VtkHyperOctreeToUniformGridFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkHyperOctreeToUniformGridFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeToUniformGridFilterWrap::InitPtpl();
+		VtkHyperOctreeToUniformGridFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

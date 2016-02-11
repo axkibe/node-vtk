@@ -124,7 +124,7 @@ void VtkTableReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkTableWrap::InitPtpl();
+		VtkTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -143,7 +143,7 @@ void VtkTableReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetOutput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +188,7 @@ void VtkTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableReaderWrap::InitPtpl();
+	VtkTableReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableReaderWrap::InitPtpl();
+		VtkTableReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkTableReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

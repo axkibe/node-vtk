@@ -65,6 +65,9 @@ void VtkImageMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetColorWindow", GetColorWindow);
 	Nan::SetPrototypeMethod(tpl, "getColorWindow", GetColorWindow);
 
+	Nan::SetPrototypeMethod(tpl, "GetCustomDisplayExtents", GetCustomDisplayExtents);
+	Nan::SetPrototypeMethod(tpl, "getCustomDisplayExtents", GetCustomDisplayExtents);
+
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
@@ -227,6 +230,23 @@ void VtkImageMapperWrap::GetColorWindow(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageMapperWrap::GetCustomDisplayExtents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
+	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCustomDisplayExtents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
@@ -238,7 +258,7 @@ void VtkImageMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,7 +373,7 @@ void VtkImageMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMapperWrap::InitPtpl();
+	VtkImageMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -375,7 +395,7 @@ void VtkImageMapperWrap::RenderStart(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -394,7 +414,7 @@ void VtkImageMapperWrap::RenderToRectangleOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -406,7 +426,7 @@ void VtkImageMapperWrap::RenderToRectangleOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -430,7 +450,7 @@ void VtkImageMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMapperWrap::InitPtpl();
+		VtkImageMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -451,7 +471,7 @@ void VtkImageMapperWrap::SetColorLevel(const Nan::FunctionCallbackInfo<v8::Value
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +490,7 @@ void VtkImageMapperWrap::SetColorWindow(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -497,7 +517,7 @@ void VtkImageMapperWrap::SetCustomDisplayExtents(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +546,7 @@ void VtkImageMapperWrap::SetCustomDisplayExtents(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -546,7 +566,7 @@ void VtkImageMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +585,7 @@ void VtkImageMapperWrap::SetRenderToRectangle(const Nan::FunctionCallbackInfo<v8
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +604,7 @@ void VtkImageMapperWrap::SetUseCustomExtents(const Nan::FunctionCallbackInfo<v8:
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -603,7 +623,7 @@ void VtkImageMapperWrap::SetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +640,7 @@ void VtkImageMapperWrap::UseCustomExtentsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +652,7 @@ void VtkImageMapperWrap::UseCustomExtentsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapperWrap>(info.Holder());
 	vtkImageMapper *native = (vtkImageMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -139,7 +139,7 @@ void VtkCollectPolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -176,7 +176,7 @@ void VtkCollectPolyDataWrap::GetSocketController(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetSocketController();
-		VtkSocketControllerWrap::InitPtpl();
+	VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkCollectPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkCollectPolyDataWrap::InitPtpl();
+	VtkCollectPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkCollectPolyDataWrap::PassThroughOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCollectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCollectPolyDataWrap>(info.Holder());
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -249,7 +249,7 @@ void VtkCollectPolyDataWrap::PassThroughOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCollectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCollectPolyDataWrap>(info.Holder());
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -273,7 +273,7 @@ void VtkCollectPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCollectPolyDataWrap::InitPtpl();
+		VtkCollectPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkCollectPolyDataWrap::SetController(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkCollectPolyDataWrap::SetPassThrough(const Nan::FunctionCallbackInfo<v8::
 	vtkCollectPolyData *native = (vtkCollectPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkCollectPolyDataWrap::SetSocketController(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

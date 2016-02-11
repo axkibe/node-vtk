@@ -30,10 +30,15 @@ class VtkCellPickerWrap : public VtkPickerWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellIJK(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClippingPlaneId(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMapperNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickTextureData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointIJK(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseVolumeGradientOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -134,7 +134,7 @@ void VtkKMeansStatisticsWrap::Aggregate(const Nan::FunctionCallbackInfo<v8::Valu
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -188,7 +188,7 @@ void VtkKMeansStatisticsWrap::GetDistanceFunctor(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDistanceFunctor();
-		VtkKMeansDistanceFunctorWrap::InitPtpl();
+	VtkKMeansDistanceFunctorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkKMeansStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkKMeansStatisticsWrap::InitPtpl();
+	VtkKMeansStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkKMeansStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKMeansStatisticsWrap::InitPtpl();
+		VtkKMeansStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkKMeansStatisticsWrap::SetDefaultNumberOfClusters(const Nan::FunctionCall
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkKMeansStatisticsWrap::SetDistanceFunctor(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKMeansDistanceFunctorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKMeansDistanceFunctorWrap *a0 = ObjectWrap::Unwrap<VtkKMeansDistanceFunctorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -364,7 +364,7 @@ void VtkKMeansStatisticsWrap::SetKValuesArrayName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkKMeansStatisticsWrap::SetMaxNumIterations(const Nan::FunctionCallbackInf
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkKMeansStatisticsWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::V
 	vtkKMeansStatistics *native = (vtkKMeansStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

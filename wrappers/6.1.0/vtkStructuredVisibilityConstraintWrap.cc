@@ -56,6 +56,9 @@ void VtkStructuredVisibilityConstraintWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "GetVisibilityById", GetVisibilityById);
 	Nan::SetPrototypeMethod(tpl, "getVisibilityById", GetVisibilityById);
 
@@ -110,7 +113,7 @@ void VtkStructuredVisibilityConstraintWrap::Allocate(const Nan::FunctionCallback
 {
 	VtkStructuredVisibilityConstraintWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info.Holder());
 	vtkStructuredVisibilityConstraint *native = (vtkStructuredVisibilityConstraint *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -125,7 +128,7 @@ void VtkStructuredVisibilityConstraintWrap::DeepCopy(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredVisibilityConstraintWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredVisibilityConstraintWrap *a0 = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -152,6 +155,23 @@ void VtkStructuredVisibilityConstraintWrap::GetClassName(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkStructuredVisibilityConstraintWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredVisibilityConstraintWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info.Holder());
+	vtkStructuredVisibilityConstraint *native = (vtkStructuredVisibilityConstraint *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkStructuredVisibilityConstraintWrap::GetVisibilityById(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredVisibilityConstraintWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info.Holder());
@@ -163,7 +183,7 @@ void VtkStructuredVisibilityConstraintWrap::GetVisibilityById(const Nan::Functio
 		return;
 	}
 	r = native->GetVisibilityById();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +209,7 @@ void VtkStructuredVisibilityConstraintWrap::Initialize(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -218,7 +238,7 @@ void VtkStructuredVisibilityConstraintWrap::Initialize(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +284,7 @@ void VtkStructuredVisibilityConstraintWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredVisibilityConstraintWrap::InitPtpl();
+	VtkStructuredVisibilityConstraintWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +312,7 @@ void VtkStructuredVisibilityConstraintWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredVisibilityConstraintWrap::InitPtpl();
+		VtkStructuredVisibilityConstraintWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,7 +334,7 @@ void VtkStructuredVisibilityConstraintWrap::SetVisibilityById(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +354,7 @@ void VtkStructuredVisibilityConstraintWrap::ShallowCopy(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredVisibilityConstraintWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredVisibilityConstraintWrap *a0 = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

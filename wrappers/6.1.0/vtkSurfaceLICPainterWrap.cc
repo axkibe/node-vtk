@@ -111,6 +111,9 @@ void VtkSurfaceLICPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMapModeBias", GetMapModeBias);
 	Nan::SetPrototypeMethod(tpl, "getMapModeBias", GetMapModeBias);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaskColor", GetMaskColor);
+	Nan::SetPrototypeMethod(tpl, "getMaskColor", GetMaskColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaskIntensity", GetMaskIntensity);
 	Nan::SetPrototypeMethod(tpl, "getMaskIntensity", GetMaskIntensity);
 
@@ -318,7 +321,7 @@ void VtkSurfaceLICPainterWrap::AntiAliasOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +333,7 @@ void VtkSurfaceLICPainterWrap::AntiAliasOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +345,7 @@ void VtkSurfaceLICPainterWrap::EnhancedLICOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -354,7 +357,7 @@ void VtkSurfaceLICPainterWrap::EnhancedLICOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,6 +589,23 @@ void VtkSurfaceLICPainterWrap::GetMapModeBias(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkSurfaceLICPainterWrap::GetMaskColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
+	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaskColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkSurfaceLICPainterWrap::GetMaskIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
@@ -667,7 +687,7 @@ void VtkSurfaceLICPainterWrap::GetNoiseDataSet(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetNoiseDataSet();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -788,7 +808,7 @@ void VtkSurfaceLICPainterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -862,7 +882,7 @@ void VtkSurfaceLICPainterWrap::MaskOnSurfaceOff(const Nan::FunctionCallbackInfo<
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -874,7 +894,7 @@ void VtkSurfaceLICPainterWrap::MaskOnSurfaceOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -893,7 +913,7 @@ void VtkSurfaceLICPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkSurfaceLICPainterWrap::InitPtpl();
+	VtkSurfaceLICPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -909,7 +929,7 @@ void VtkSurfaceLICPainterWrap::NormalizeVectorsOff(const Nan::FunctionCallbackIn
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -921,7 +941,7 @@ void VtkSurfaceLICPainterWrap::NormalizeVectorsOn(const Nan::FunctionCallbackInf
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -936,7 +956,7 @@ void VtkSurfaceLICPainterWrap::ReleaseGraphicsResources(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -965,7 +985,7 @@ void VtkSurfaceLICPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSurfaceLICPainterWrap::InitPtpl();
+		VtkSurfaceLICPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -986,7 +1006,7 @@ void VtkSurfaceLICPainterWrap::SetAntiAlias(const Nan::FunctionCallbackInfo<v8::
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1005,7 +1025,7 @@ void VtkSurfaceLICPainterWrap::SetColorMode(const Nan::FunctionCallbackInfo<v8::
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1024,7 +1044,7 @@ void VtkSurfaceLICPainterWrap::SetCompositeStrategy(const Nan::FunctionCallbackI
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1043,7 +1063,7 @@ void VtkSurfaceLICPainterWrap::SetEnable(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1060,7 +1080,7 @@ void VtkSurfaceLICPainterWrap::SetEnableOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1072,7 +1092,7 @@ void VtkSurfaceLICPainterWrap::SetEnableOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSurfaceLICPainterWrap *wrapper = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info.Holder());
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1086,7 +1106,7 @@ void VtkSurfaceLICPainterWrap::SetEnhanceContrast(const Nan::FunctionCallbackInf
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1105,7 +1125,7 @@ void VtkSurfaceLICPainterWrap::SetEnhancedLIC(const Nan::FunctionCallbackInfo<v8
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1124,7 +1144,7 @@ void VtkSurfaceLICPainterWrap::SetGenerateNoiseTexture(const Nan::FunctionCallba
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1143,7 +1163,7 @@ void VtkSurfaceLICPainterWrap::SetHighColorContrastEnhancementFactor(const Nan::
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1162,7 +1182,7 @@ void VtkSurfaceLICPainterWrap::SetHighLICContrastEnhancementFactor(const Nan::Fu
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1181,7 +1201,7 @@ void VtkSurfaceLICPainterWrap::SetImpulseNoiseBackgroundValue(const Nan::Functio
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1200,7 +1220,7 @@ void VtkSurfaceLICPainterWrap::SetImpulseNoiseProbability(const Nan::FunctionCal
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1222,7 +1242,7 @@ void VtkSurfaceLICPainterWrap::SetInputArrayToProcess(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1235,7 +1255,7 @@ void VtkSurfaceLICPainterWrap::SetInputArrayToProcess(const Nan::FunctionCallbac
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1256,7 +1276,7 @@ void VtkSurfaceLICPainterWrap::SetLICIntensity(const Nan::FunctionCallbackInfo<v
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1275,7 +1295,7 @@ void VtkSurfaceLICPainterWrap::SetLowColorContrastEnhancementFactor(const Nan::F
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1294,7 +1314,7 @@ void VtkSurfaceLICPainterWrap::SetLowLICContrastEnhancementFactor(const Nan::Fun
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1313,7 +1333,7 @@ void VtkSurfaceLICPainterWrap::SetMapModeBias(const Nan::FunctionCallbackInfo<v8
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1336,7 +1356,7 @@ void VtkSurfaceLICPainterWrap::SetMaskColor(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1359,7 +1379,7 @@ void VtkSurfaceLICPainterWrap::SetMaskIntensity(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1378,7 +1398,7 @@ void VtkSurfaceLICPainterWrap::SetMaskOnSurface(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1397,7 +1417,7 @@ void VtkSurfaceLICPainterWrap::SetMaskThreshold(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1416,7 +1436,7 @@ void VtkSurfaceLICPainterWrap::SetMaxNoiseValue(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1435,7 +1455,7 @@ void VtkSurfaceLICPainterWrap::SetMinNoiseValue(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1455,7 +1475,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseDataSet(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1474,7 +1494,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseGeneratorSeed(const Nan::FunctionCallback
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1493,7 +1513,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseGrainSize(const Nan::FunctionCallbackInfo
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1512,7 +1532,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseTextureSize(const Nan::FunctionCallbackIn
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1531,7 +1551,7 @@ void VtkSurfaceLICPainterWrap::SetNoiseType(const Nan::FunctionCallbackInfo<v8::
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1550,7 +1570,7 @@ void VtkSurfaceLICPainterWrap::SetNormalizeVectors(const Nan::FunctionCallbackIn
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1569,7 +1589,7 @@ void VtkSurfaceLICPainterWrap::SetNumberOfNoiseLevels(const Nan::FunctionCallbac
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1588,7 +1608,7 @@ void VtkSurfaceLICPainterWrap::SetNumberOfSteps(const Nan::FunctionCallbackInfo<
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1607,7 +1627,7 @@ void VtkSurfaceLICPainterWrap::SetStepSize(const Nan::FunctionCallbackInfo<v8::V
 	vtkSurfaceLICPainter *native = (vtkSurfaceLICPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1627,7 +1647,7 @@ void VtkSurfaceLICPainterWrap::WriteTimerLog(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

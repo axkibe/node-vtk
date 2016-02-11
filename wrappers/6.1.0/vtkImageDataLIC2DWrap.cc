@@ -141,7 +141,7 @@ void VtkImageDataLIC2DWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkImageDataLIC2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDataLIC2DWrap::InitPtpl();
+	VtkImageDataLIC2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkImageDataLIC2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDataLIC2DWrap::InitPtpl();
+		VtkImageDataLIC2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkImageDataLIC2DWrap::SetMagnification(const Nan::FunctionCallbackInfo<v8:
 	vtkImageDataLIC2D *native = (vtkImageDataLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -332,7 +332,7 @@ void VtkImageDataLIC2DWrap::SetStepSize(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageDataLIC2D *native = (vtkImageDataLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -351,7 +351,7 @@ void VtkImageDataLIC2DWrap::SetSteps(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageDataLIC2D *native = (vtkImageDataLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

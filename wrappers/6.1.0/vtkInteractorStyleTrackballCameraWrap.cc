@@ -137,7 +137,7 @@ void VtkInteractorStyleTrackballCameraWrap::Dolly(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkInteractorStyleTrackballCameraWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleTrackballCameraWrap::InitPtpl();
+	VtkInteractorStyleTrackballCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnLeftButtonDown(const Nan::Function
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnLeftButtonUp(const Nan::FunctionCa
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnMiddleButtonDown(const Nan::Functi
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -258,7 +258,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnMiddleButtonUp(const Nan::Function
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnMouseMove(const Nan::FunctionCallb
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -282,7 +282,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnMouseWheelBackward(const Nan::Func
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +294,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnMouseWheelForward(const Nan::Funct
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnRightButtonDown(const Nan::Functio
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkInteractorStyleTrackballCameraWrap::OnRightButtonUp(const Nan::FunctionC
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkInteractorStyleTrackballCameraWrap::Pan(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkInteractorStyleTrackballCameraWrap::Rotate(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -366,7 +366,7 @@ void VtkInteractorStyleTrackballCameraWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleTrackballCameraWrap::InitPtpl();
+		VtkInteractorStyleTrackballCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -387,7 +387,7 @@ void VtkInteractorStyleTrackballCameraWrap::SetMotionFactor(const Nan::FunctionC
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +404,7 @@ void VtkInteractorStyleTrackballCameraWrap::Spin(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleTrackballCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballCameraWrap>(info.Holder());
 	vtkInteractorStyleTrackballCamera *native = (vtkInteractorStyleTrackballCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

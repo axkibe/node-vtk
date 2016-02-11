@@ -89,6 +89,9 @@ void VtkGraphMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "EnableVerticesByArrayOn", EnableVerticesByArrayOn);
 	Nan::SetPrototypeMethod(tpl, "enableVerticesByArrayOn", EnableVerticesByArrayOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -256,7 +259,7 @@ void VtkGraphMapperWrap::AddIconType(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -275,7 +278,7 @@ void VtkGraphMapperWrap::ClearIconTypes(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -287,7 +290,7 @@ void VtkGraphMapperWrap::ColorEdgesOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +302,7 @@ void VtkGraphMapperWrap::ColorEdgesOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -311,7 +314,7 @@ void VtkGraphMapperWrap::ColorVerticesOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -323,7 +326,7 @@ void VtkGraphMapperWrap::ColorVerticesOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -335,7 +338,7 @@ void VtkGraphMapperWrap::EdgeVisibilityOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -347,7 +350,7 @@ void VtkGraphMapperWrap::EdgeVisibilityOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -359,7 +362,7 @@ void VtkGraphMapperWrap::EnableEdgesByArrayOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -371,7 +374,7 @@ void VtkGraphMapperWrap::EnableEdgesByArrayOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +386,7 @@ void VtkGraphMapperWrap::EnableVerticesByArrayOff(const Nan::FunctionCallbackInf
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,12 +398,29 @@ void VtkGraphMapperWrap::EnableVerticesByArrayOn(const Nan::FunctionCallbackInfo
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->EnableVerticesByArrayOn();
+}
+
+void VtkGraphMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
+	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGraphMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -470,7 +490,7 @@ void VtkGraphMapperWrap::GetEdgeLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetEdgeLookupTable();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -577,7 +597,7 @@ void VtkGraphMapperWrap::GetIconTexture(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetIconTexture();
-		VtkTextureWrap::InitPtpl();
+	VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -614,7 +634,7 @@ void VtkGraphMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInput();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -679,7 +699,7 @@ void VtkGraphMapperWrap::GetVertexLookupTable(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetVertexLookupTable();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -695,7 +715,7 @@ void VtkGraphMapperWrap::IconVisibilityOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -707,7 +727,7 @@ void VtkGraphMapperWrap::IconVisibilityOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +768,7 @@ void VtkGraphMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphMapperWrap::InitPtpl();
+	VtkGraphMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -767,7 +787,7 @@ void VtkGraphMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -790,7 +810,7 @@ void VtkGraphMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -821,7 +841,7 @@ void VtkGraphMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphMapperWrap::InitPtpl();
+		VtkGraphMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -840,7 +860,7 @@ void VtkGraphMapperWrap::ScaledGlyphsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -852,7 +872,7 @@ void VtkGraphMapperWrap::ScaledGlyphsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGraphMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGraphMapperWrap>(info.Holder());
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -866,7 +886,7 @@ void VtkGraphMapperWrap::SetColorEdges(const Nan::FunctionCallbackInfo<v8::Value
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -885,7 +905,7 @@ void VtkGraphMapperWrap::SetColorVertices(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -905,7 +925,7 @@ void VtkGraphMapperWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -924,7 +944,7 @@ void VtkGraphMapperWrap::SetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::V
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -943,7 +963,7 @@ void VtkGraphMapperWrap::SetEnableEdgesByArray(const Nan::FunctionCallbackInfo<v
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -962,7 +982,7 @@ void VtkGraphMapperWrap::SetEnableVerticesByArray(const Nan::FunctionCallbackInf
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -982,7 +1002,7 @@ void VtkGraphMapperWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1002,7 +1022,7 @@ void VtkGraphMapperWrap::SetEnabledVerticesArrayName(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1021,7 +1041,7 @@ void VtkGraphMapperWrap::SetIconAlignment(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1041,7 +1061,7 @@ void VtkGraphMapperWrap::SetIconArrayName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1061,7 +1081,7 @@ void VtkGraphMapperWrap::SetIconTexture(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextureWrap *a0 = ObjectWrap::Unwrap<VtkTextureWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1080,7 +1100,7 @@ void VtkGraphMapperWrap::SetIconVisibility(const Nan::FunctionCallbackInfo<v8::V
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1100,7 +1120,7 @@ void VtkGraphMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1119,7 +1139,7 @@ void VtkGraphMapperWrap::SetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGraphMapper *native = (vtkGraphMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1139,7 +1159,7 @@ void VtkGraphMapperWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1159,7 +1179,7 @@ void VtkGraphMapperWrap::SetVertexColorArrayName(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

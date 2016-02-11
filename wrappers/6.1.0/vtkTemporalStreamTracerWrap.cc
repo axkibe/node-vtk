@@ -193,7 +193,7 @@ void VtkTemporalStreamTracerWrap::AddSourceConnection(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -210,7 +210,7 @@ void VtkTemporalStreamTracerWrap::EnableParticleWritingOff(const Nan::FunctionCa
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkTemporalStreamTracerWrap::EnableParticleWritingOn(const Nan::FunctionCal
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -311,7 +311,7 @@ void VtkTemporalStreamTracerWrap::GetParticleWriter(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetParticleWriter();
-		VtkAbstractParticleWriterWrap::InitPtpl();
+	VtkAbstractParticleWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkTemporalStreamTracerWrap::IgnorePipelineTimeOff(const Nan::FunctionCallb
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -409,7 +409,7 @@ void VtkTemporalStreamTracerWrap::IgnorePipelineTimeOn(const Nan::FunctionCallba
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +450,7 @@ void VtkTemporalStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalStreamTracerWrap::InitPtpl();
+	VtkTemporalStreamTracerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -466,7 +466,7 @@ void VtkTemporalStreamTracerWrap::RemoveAllSources(const Nan::FunctionCallbackIn
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +490,7 @@ void VtkTemporalStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalStreamTracerWrap::InitPtpl();
+		VtkTemporalStreamTracerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -511,7 +511,7 @@ void VtkTemporalStreamTracerWrap::SetEnableParticleWriting(const Nan::FunctionCa
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkTemporalStreamTracerWrap::SetForceReinjectionEveryNSteps(const Nan::Func
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +549,7 @@ void VtkTemporalStreamTracerWrap::SetIgnorePipelineTime(const Nan::FunctionCallb
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +569,7 @@ void VtkTemporalStreamTracerWrap::SetParticleFileName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -589,7 +589,7 @@ void VtkTemporalStreamTracerWrap::SetParticleWriter(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractParticleWriterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractParticleWriterWrap *a0 = ObjectWrap::Unwrap<VtkAbstractParticleWriterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -608,7 +608,7 @@ void VtkTemporalStreamTracerWrap::SetStaticMesh(const Nan::FunctionCallbackInfo<
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -627,7 +627,7 @@ void VtkTemporalStreamTracerWrap::SetStaticSeeds(const Nan::FunctionCallbackInfo
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -646,7 +646,7 @@ void VtkTemporalStreamTracerWrap::SetTerminationTime(const Nan::FunctionCallback
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -665,7 +665,7 @@ void VtkTemporalStreamTracerWrap::SetTerminationTimeUnit(const Nan::FunctionCall
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -682,7 +682,7 @@ void VtkTemporalStreamTracerWrap::SetTerminationTimeUnitToStepUnit(const Nan::Fu
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +694,7 @@ void VtkTemporalStreamTracerWrap::SetTerminationTimeUnitToTimeUnit(const Nan::Fu
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -708,7 +708,7 @@ void VtkTemporalStreamTracerWrap::SetTimeStepResolution(const Nan::FunctionCallb
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +725,7 @@ void VtkTemporalStreamTracerWrap::StaticMeshOff(const Nan::FunctionCallbackInfo<
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -737,7 +737,7 @@ void VtkTemporalStreamTracerWrap::StaticMeshOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -749,7 +749,7 @@ void VtkTemporalStreamTracerWrap::StaticSeedsOff(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +761,7 @@ void VtkTemporalStreamTracerWrap::StaticSeedsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
 	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

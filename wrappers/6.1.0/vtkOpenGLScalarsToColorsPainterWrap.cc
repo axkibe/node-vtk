@@ -165,7 +165,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
+	VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -213,7 +213,7 @@ void VtkOpenGLScalarsToColorsPainterWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
+		VtkOpenGLScalarsToColorsPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

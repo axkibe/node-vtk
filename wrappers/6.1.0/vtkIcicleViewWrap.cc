@@ -227,7 +227,7 @@ void VtkIcicleViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkIcicleViewWrap::InitPtpl();
+	VtkIcicleViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkIcicleViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIcicleViewWrap::InitPtpl();
+		VtkIcicleViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkIcicleViewWrap::SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Va
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -295,7 +295,7 @@ void VtkIcicleViewWrap::SetRootWidth(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkIcicleViewWrap::SetTopToBottom(const Nan::FunctionCallbackInfo<v8::Value
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +333,7 @@ void VtkIcicleViewWrap::SetUseGradientColoring(const Nan::FunctionCallbackInfo<v
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkIcicleViewWrap::TopToBottomOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -362,7 +362,7 @@ void VtkIcicleViewWrap::TopToBottomOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -374,7 +374,7 @@ void VtkIcicleViewWrap::UseGradientColoringOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -386,7 +386,7 @@ void VtkIcicleViewWrap::UseGradientColoringOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkIcicleViewWrap *wrapper = ObjectWrap::Unwrap<VtkIcicleViewWrap>(info.Holder());
 	vtkIcicleView *native = (vtkIcicleView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

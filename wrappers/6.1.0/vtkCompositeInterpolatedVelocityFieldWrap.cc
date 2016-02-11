@@ -119,7 +119,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Functi
 		return;
 	}
 	r = native->GetLastDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl();
+	VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +206,7 @@ void VtkCompositeInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl();
+		VtkCompositeInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

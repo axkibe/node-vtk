@@ -62,6 +62,9 @@ void VtkConnectivityFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetClosestPoint", GetClosestPoint);
+	Nan::SetPrototypeMethod(tpl, "getClosestPoint", GetClosestPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetColorRegions", GetColorRegions);
 	Nan::SetPrototypeMethod(tpl, "getColorRegions", GetColorRegions);
 
@@ -85,6 +88,9 @@ void VtkConnectivityFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarConnectivity", GetScalarConnectivity);
 	Nan::SetPrototypeMethod(tpl, "getScalarConnectivity", GetScalarConnectivity);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarRange", GetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getScalarRange", GetScalarRange);
 
 	Nan::SetPrototypeMethod(tpl, "InitializeSeedList", InitializeSeedList);
 	Nan::SetPrototypeMethod(tpl, "initializeSeedList", InitializeSeedList);
@@ -178,7 +184,7 @@ void VtkConnectivityFilterWrap::AddSpecifiedRegion(const Nan::FunctionCallbackIn
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -195,7 +201,7 @@ void VtkConnectivityFilterWrap::ColorRegionsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +213,7 @@ void VtkConnectivityFilterWrap::ColorRegionsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -221,7 +227,7 @@ void VtkConnectivityFilterWrap::DeleteSpecifiedRegion(const Nan::FunctionCallbac
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,6 +252,23 @@ void VtkConnectivityFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkConnectivityFilterWrap::GetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
+	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClosestPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkConnectivityFilterWrap::GetColorRegions(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -360,11 +383,28 @@ void VtkConnectivityFilterWrap::GetScalarConnectivity(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkConnectivityFilterWrap::GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
+	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkConnectivityFilterWrap::InitializeSeedList(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +416,7 @@ void VtkConnectivityFilterWrap::InitializeSpecifiedRegionList(const Nan::Functio
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -417,7 +457,7 @@ void VtkConnectivityFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkConnectivityFilterWrap::InitPtpl();
+	VtkConnectivityFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +485,7 @@ void VtkConnectivityFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConnectivityFilterWrap::InitPtpl();
+		VtkConnectivityFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -464,7 +504,7 @@ void VtkConnectivityFilterWrap::ScalarConnectivityOff(const Nan::FunctionCallbac
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -476,7 +516,7 @@ void VtkConnectivityFilterWrap::ScalarConnectivityOn(const Nan::FunctionCallback
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -498,7 +538,7 @@ void VtkConnectivityFilterWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +567,7 @@ void VtkConnectivityFilterWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -543,7 +583,7 @@ void VtkConnectivityFilterWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -566,7 +606,7 @@ void VtkConnectivityFilterWrap::SetColorRegions(const Nan::FunctionCallbackInfo<
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +625,7 @@ void VtkConnectivityFilterWrap::SetExtractionMode(const Nan::FunctionCallbackInf
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +642,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToAllRegions(const Nan::Functio
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -614,7 +654,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToCellSeededRegions(const Nan::
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -626,7 +666,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToClosestPointRegion(const Nan:
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -638,7 +678,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToLargestRegion(const Nan::Func
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -650,7 +690,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToPointSeededRegions(const Nan:
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -662,7 +702,7 @@ void VtkConnectivityFilterWrap::SetExtractionModeToSpecifiedRegions(const Nan::F
 {
 	VtkConnectivityFilterWrap *wrapper = ObjectWrap::Unwrap<VtkConnectivityFilterWrap>(info.Holder());
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -676,7 +716,7 @@ void VtkConnectivityFilterWrap::SetOutputPointsPrecision(const Nan::FunctionCall
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +735,7 @@ void VtkConnectivityFilterWrap::SetScalarConnectivity(const Nan::FunctionCallbac
 	vtkConnectivityFilter *native = (vtkConnectivityFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +762,7 @@ void VtkConnectivityFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -751,7 +791,7 @@ void VtkConnectivityFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -765,7 +805,7 @@ void VtkConnectivityFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

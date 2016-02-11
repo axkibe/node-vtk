@@ -189,7 +189,7 @@ void VtkOutlineCornerFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkOutlineCornerFilterWrap::InitPtpl();
+	VtkOutlineCornerFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkOutlineCornerFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOutlineCornerFilterWrap::InitPtpl();
+		VtkOutlineCornerFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkOutlineCornerFilterWrap::SetCornerFactor(const Nan::FunctionCallbackInfo
 	vtkOutlineCornerFilter *native = (vtkOutlineCornerFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

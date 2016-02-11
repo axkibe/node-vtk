@@ -44,6 +44,7 @@ class VtkXMLReaderWrap : public VtkAlgorithmWrap
 		static void GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointDataArraySelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXMLParser(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

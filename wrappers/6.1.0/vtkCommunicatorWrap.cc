@@ -238,7 +238,7 @@ void VtkCommunicatorWrap::Barrier(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCommunicatorWrap *wrapper = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info.Holder());
 	vtkCommunicator *native = (vtkCommunicator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -497,7 +497,7 @@ void VtkCommunicatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkCommunicatorWrap::InitPtpl();
+	VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -580,7 +580,7 @@ void VtkCommunicatorWrap::ReceiveDataObject(const Nan::FunctionCallbackInfo<v8::
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkDataObjectWrap::InitPtpl();
+			VtkDataObjectWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -647,7 +647,7 @@ void VtkCommunicatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCommunicatorWrap::InitPtpl();
+		VtkCommunicatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -752,7 +752,7 @@ void VtkCommunicatorWrap::SetNumberOfProcesses(const Nan::FunctionCallbackInfo<v
 	vtkCommunicator *native = (vtkCommunicator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -771,7 +771,7 @@ void VtkCommunicatorWrap::SetUseCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkCommunicator *native = (vtkCommunicator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

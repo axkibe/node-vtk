@@ -190,7 +190,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -209,7 +209,7 @@ void VtkPieceRequestFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkPieceRequestFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkPieceRequestFilterWrap::InitPtpl();
+	VtkPieceRequestFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkPieceRequestFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPieceRequestFilterWrap::InitPtpl();
+		VtkPieceRequestFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkPieceRequestFilterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkPieceRequestFilterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -382,7 +382,7 @@ void VtkPieceRequestFilterWrap::SetNumberOfPieces(const Nan::FunctionCallbackInf
 	vtkPieceRequestFilter *native = (vtkPieceRequestFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkPieceRequestFilterWrap::SetPiece(const Nan::FunctionCallbackInfo<v8::Val
 	vtkPieceRequestFilter *native = (vtkPieceRequestFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -40,12 +40,14 @@ class VtkHyperOctreeWrap : public VtkDataSetWrap
 		static void GetDualGridFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeafData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnEdge2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnParentEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnParentEdge2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointsOnParentFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LEVELS(const Nan::FunctionCallbackInfo<v8::Value>& info);

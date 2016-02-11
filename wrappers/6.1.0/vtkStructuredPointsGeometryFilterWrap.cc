@@ -135,7 +135,7 @@ void VtkStructuredPointsGeometryFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredPointsGeometryFilterWrap::InitPtpl();
+	VtkStructuredPointsGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkStructuredPointsGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredPointsGeometryFilterWrap::InitPtpl();
+		VtkStructuredPointsGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

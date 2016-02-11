@@ -38,6 +38,7 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void GetLabelsVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogScaleActive(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMargins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);

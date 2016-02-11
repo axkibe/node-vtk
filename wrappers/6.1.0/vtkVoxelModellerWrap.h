@@ -36,6 +36,8 @@ class VtkVoxelModellerWrap : public VtkImageAlgorithmWrap
 		static void GetMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

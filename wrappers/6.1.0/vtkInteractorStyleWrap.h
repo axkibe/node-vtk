@@ -46,6 +46,7 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMouseWheelMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTDxStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseTimers(const Nan::FunctionCallbackInfo<v8::Value>& info);

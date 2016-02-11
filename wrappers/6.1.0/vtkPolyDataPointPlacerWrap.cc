@@ -125,7 +125,7 @@ void VtkPolyDataPointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1641,7 +1641,7 @@ void VtkPolyDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetPropPicker();
-		VtkPropPickerWrap::InitPtpl();
+	VtkPropPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1708,7 +1708,7 @@ void VtkPolyDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataPointPlacerWrap::InitPtpl();
+	VtkPolyDataPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1724,7 +1724,7 @@ void VtkPolyDataPointPlacerWrap::RemoveAllProps(const Nan::FunctionCallbackInfo<
 {
 	VtkPolyDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointPlacerWrap>(info.Holder());
 	vtkPolyDataPointPlacer *native = (vtkPolyDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1739,7 +1739,7 @@ void VtkPolyDataPointPlacerWrap::RemoveViewProp(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1768,7 +1768,7 @@ void VtkPolyDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataPointPlacerWrap::InitPtpl();
+		VtkPolyDataPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

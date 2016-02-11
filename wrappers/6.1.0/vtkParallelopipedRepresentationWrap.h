@@ -33,6 +33,7 @@ class VtkParallelopipedRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFaceProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

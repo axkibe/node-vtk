@@ -134,7 +134,7 @@ void VtkXMLImageDataWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkXMLImageDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLImageDataWriterWrap::InitPtpl();
+	VtkXMLImageDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkXMLImageDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLImageDataWriterWrap::InitPtpl();
+		VtkXMLImageDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

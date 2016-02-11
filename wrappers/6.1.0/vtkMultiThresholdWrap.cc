@@ -393,7 +393,7 @@ void VtkMultiThresholdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiThresholdWrap::InitPtpl();
+	VtkMultiThresholdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -430,7 +430,7 @@ void VtkMultiThresholdWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMultiThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkMultiThresholdWrap>(info.Holder());
 	vtkMultiThreshold *native = (vtkMultiThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -454,7 +454,7 @@ void VtkMultiThresholdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiThresholdWrap::InitPtpl();
+		VtkMultiThresholdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

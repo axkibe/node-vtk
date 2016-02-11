@@ -140,7 +140,7 @@ void VtkDemandDrivenPipelineWrap::DATA_NOT_GENERATED(const Nan::FunctionCallback
 		return;
 	}
 	r = native->DATA_NOT_GENERATED();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkDemandDrivenPipelineWrap::NewDataObject(const Nan::FunctionCallbackInfo<
 		r = native->NewDataObject(
 			*a0
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkDemandDrivenPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkDemandDrivenPipelineWrap::InitPtpl();
+	VtkDemandDrivenPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkDemandDrivenPipelineWrap::RELEASE_DATA(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->RELEASE_DATA();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->REQUEST_DATA();
-		VtkInformationRequestKeyWrap::InitPtpl();
+	VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -320,7 +320,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_NOT_GENERATED(const Nan::Function
 		return;
 	}
 	r = native->REQUEST_DATA_NOT_GENERATED();
-		VtkInformationRequestKeyWrap::InitPtpl();
+	VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_DATA_OBJECT(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->REQUEST_DATA_OBJECT();
-		VtkInformationRequestKeyWrap::InitPtpl();
+	VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_INFORMATION(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->REQUEST_INFORMATION();
-		VtkInformationRequestKeyWrap::InitPtpl();
+	VtkInformationRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +389,7 @@ void VtkDemandDrivenPipelineWrap::REQUEST_REGENERATE_INFORMATION(const Nan::Func
 		return;
 	}
 	r = native->REQUEST_REGENERATE_INFORMATION();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkDemandDrivenPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDemandDrivenPipelineWrap::InitPtpl();
+		VtkDemandDrivenPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

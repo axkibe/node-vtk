@@ -74,11 +74,17 @@ void VtkImageViewerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOffScreenRendering", GetOffScreenRendering);
 	Nan::SetPrototypeMethod(tpl, "getOffScreenRendering", GetOffScreenRendering);
 
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderWindow", GetRenderWindow);
 	Nan::SetPrototypeMethod(tpl, "getRenderWindow", GetRenderWindow);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetWholeZMax", GetWholeZMax);
 	Nan::SetPrototypeMethod(tpl, "getWholeZMax", GetWholeZMax);
@@ -177,7 +183,7 @@ void VtkImageViewerWrap::GetActor2D(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetActor2D();
-		VtkActor2DWrap::InitPtpl();
+	VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +248,7 @@ void VtkImageViewerWrap::GetImageMapper(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetImageMapper();
-		VtkImageMapperWrap::InitPtpl();
+	VtkImageMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -265,7 +271,7 @@ void VtkImageViewerWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,6 +297,23 @@ void VtkImageViewerWrap::GetOffScreenRendering(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageViewerWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
+	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageViewerWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
@@ -302,7 +325,7 @@ void VtkImageViewerWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetRenderWindow();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +348,7 @@ void VtkImageViewerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -335,6 +358,23 @@ void VtkImageViewerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageViewerWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
+	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageViewerWrap::GetWholeZMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -426,7 +466,7 @@ void VtkImageViewerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageViewerWrap::InitPtpl();
+	VtkImageViewerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,7 +482,7 @@ void VtkImageViewerWrap::OffScreenRenderingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -454,7 +494,7 @@ void VtkImageViewerWrap::OffScreenRenderingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -466,7 +506,7 @@ void VtkImageViewerWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkImageViewerWrap *wrapper = ObjectWrap::Unwrap<VtkImageViewerWrap>(info.Holder());
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +530,7 @@ void VtkImageViewerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageViewerWrap::InitPtpl();
+		VtkImageViewerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -511,7 +551,7 @@ void VtkImageViewerWrap::SetColorLevel(const Nan::FunctionCallbackInfo<v8::Value
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +570,7 @@ void VtkImageViewerWrap::SetColorWindow(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +590,7 @@ void VtkImageViewerWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +610,7 @@ void VtkImageViewerWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -589,7 +629,7 @@ void VtkImageViewerWrap::SetOffScreenRendering(const Nan::FunctionCallbackInfo<v
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -616,7 +656,7 @@ void VtkImageViewerWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +685,7 @@ void VtkImageViewerWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -659,7 +699,7 @@ void VtkImageViewerWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -688,7 +728,7 @@ void VtkImageViewerWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +757,7 @@ void VtkImageViewerWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -731,7 +771,7 @@ void VtkImageViewerWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -752,7 +792,7 @@ void VtkImageViewerWrap::SetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkImageViewer *native = (vtkImageViewer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +812,7 @@ void VtkImageViewerWrap::SetupInteractor(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

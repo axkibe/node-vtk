@@ -167,7 +167,7 @@ void VtkOrientationMarkerWidgetWrap::GetOrientationMarker(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetOrientationMarker();
-		VtkPropWrap::InitPtpl();
+	VtkPropWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkOrientationMarkerWidgetWrap::InteractiveOff(const Nan::FunctionCallbackI
 {
 	VtkOrientationMarkerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkOrientationMarkerWidgetWrap>(info.Holder());
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkOrientationMarkerWidgetWrap::InteractiveOn(const Nan::FunctionCallbackIn
 {
 	VtkOrientationMarkerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkOrientationMarkerWidgetWrap>(info.Holder());
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +278,7 @@ void VtkOrientationMarkerWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkOrientationMarkerWidgetWrap::InitPtpl();
+	VtkOrientationMarkerWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkOrientationMarkerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOrientationMarkerWidgetWrap::InitPtpl();
+		VtkOrientationMarkerWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -327,7 +327,7 @@ void VtkOrientationMarkerWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -346,7 +346,7 @@ void VtkOrientationMarkerWidgetWrap::SetInteractive(const Nan::FunctionCallbackI
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +366,7 @@ void VtkOrientationMarkerWidgetWrap::SetOrientationMarker(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -389,7 +389,7 @@ void VtkOrientationMarkerWidgetWrap::SetOutlineColor(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -412,7 +412,7 @@ void VtkOrientationMarkerWidgetWrap::SetTolerance(const Nan::FunctionCallbackInf
 	vtkOrientationMarkerWidget *native = (vtkOrientationMarkerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +437,7 @@ void VtkOrientationMarkerWidgetWrap::SetViewport(const Nan::FunctionCallbackInfo
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

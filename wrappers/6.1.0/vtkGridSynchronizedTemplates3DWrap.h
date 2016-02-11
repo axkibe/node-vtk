@@ -42,6 +42,7 @@ class VtkGridSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetComputeGradients(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExecuteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);

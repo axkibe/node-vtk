@@ -118,7 +118,7 @@ void VtkCellIteratorWrap::GetCell(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericCellWrap *a0 = ObjectWrap::Unwrap<VtkGenericCellWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -156,7 +156,7 @@ void VtkCellIteratorWrap::GetFaces(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetFaces();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkCellIteratorWrap::GetPointIds(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetPointIds();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkCellIteratorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkCellIteratorWrap::GoToNextCell(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCellIteratorWrap>(info.Holder());
 	vtkCellIterator *native = (vtkCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +230,7 @@ void VtkCellIteratorWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCellIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCellIteratorWrap>(info.Holder());
 	vtkCellIterator *native = (vtkCellIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +293,7 @@ void VtkCellIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellIteratorWrap::InitPtpl();
+	VtkCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkCellIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObjectBase *) a0->native.GetPointer()
 		);
-			VtkCellIteratorWrap::InitPtpl();
+		VtkCellIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

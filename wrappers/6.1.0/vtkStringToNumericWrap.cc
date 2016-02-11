@@ -200,7 +200,7 @@ void VtkStringToNumericWrap::ConvertCellDataOff(const Nan::FunctionCallbackInfo<
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkStringToNumericWrap::ConvertCellDataOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkStringToNumericWrap::ConvertEdgeDataOff(const Nan::FunctionCallbackInfo<
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkStringToNumericWrap::ConvertEdgeDataOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkStringToNumericWrap::ConvertFieldDataOff(const Nan::FunctionCallbackInfo
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkStringToNumericWrap::ConvertFieldDataOn(const Nan::FunctionCallbackInfo<
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkStringToNumericWrap::ConvertPointDataOff(const Nan::FunctionCallbackInfo
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkStringToNumericWrap::ConvertPointDataOn(const Nan::FunctionCallbackInfo<
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkStringToNumericWrap::ConvertRowDataOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkStringToNumericWrap::ConvertRowDataOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -320,7 +320,7 @@ void VtkStringToNumericWrap::ConvertVertexDataOff(const Nan::FunctionCallbackInf
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -332,7 +332,7 @@ void VtkStringToNumericWrap::ConvertVertexDataOn(const Nan::FunctionCallbackInfo
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -344,7 +344,7 @@ void VtkStringToNumericWrap::ForceDoubleOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkStringToNumericWrap::ForceDoubleOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -551,7 +551,7 @@ void VtkStringToNumericWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkStringToNumericWrap::InitPtpl();
+	VtkStringToNumericWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -579,7 +579,7 @@ void VtkStringToNumericWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStringToNumericWrap::InitPtpl();
+		VtkStringToNumericWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -600,7 +600,7 @@ void VtkStringToNumericWrap::SetConvertCellData(const Nan::FunctionCallbackInfo<
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +619,7 @@ void VtkStringToNumericWrap::SetConvertEdgeData(const Nan::FunctionCallbackInfo<
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +638,7 @@ void VtkStringToNumericWrap::SetConvertFieldData(const Nan::FunctionCallbackInfo
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkStringToNumericWrap::SetConvertPointData(const Nan::FunctionCallbackInfo
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkStringToNumericWrap::SetConvertRowData(const Nan::FunctionCallbackInfo<v
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +695,7 @@ void VtkStringToNumericWrap::SetConvertVertexData(const Nan::FunctionCallbackInf
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -714,7 +714,7 @@ void VtkStringToNumericWrap::SetDefaultDoubleValue(const Nan::FunctionCallbackIn
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -733,7 +733,7 @@ void VtkStringToNumericWrap::SetDefaultIntegerValue(const Nan::FunctionCallbackI
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +752,7 @@ void VtkStringToNumericWrap::SetForceDouble(const Nan::FunctionCallbackInfo<v8::
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -771,7 +771,7 @@ void VtkStringToNumericWrap::SetTrimWhitespacePriorToNumericConversion(const Nan
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -788,7 +788,7 @@ void VtkStringToNumericWrap::TrimWhitespacePriorToNumericConversionOff(const Nan
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -800,7 +800,7 @@ void VtkStringToNumericWrap::TrimWhitespacePriorToNumericConversionOn(const Nan:
 {
 	VtkStringToNumericWrap *wrapper = ObjectWrap::Unwrap<VtkStringToNumericWrap>(info.Holder());
 	vtkStringToNumeric *native = (vtkStringToNumeric *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

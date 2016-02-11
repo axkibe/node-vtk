@@ -150,7 +150,7 @@ void VtkInteractorStyleRubberBandPickWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleRubberBandPickWrap::InitPtpl();
+	VtkInteractorStyleRubberBandPickWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +166,7 @@ void VtkInteractorStyleRubberBandPickWrap::OnChar(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkInteractorStyleRubberBandPickWrap::OnLeftButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -190,7 +190,7 @@ void VtkInteractorStyleRubberBandPickWrap::OnLeftButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -202,7 +202,7 @@ void VtkInteractorStyleRubberBandPickWrap::OnMouseMove(const Nan::FunctionCallba
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -226,7 +226,7 @@ void VtkInteractorStyleRubberBandPickWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleRubberBandPickWrap::InitPtpl();
+		VtkInteractorStyleRubberBandPickWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -245,7 +245,7 @@ void VtkInteractorStyleRubberBandPickWrap::StartSelect(const Nan::FunctionCallba
 {
 	VtkInteractorStyleRubberBandPickWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBandPickWrap>(info.Holder());
 	vtkInteractorStyleRubberBandPick *native = (vtkInteractorStyleRubberBandPick *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

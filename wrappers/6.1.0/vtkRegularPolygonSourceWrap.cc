@@ -59,6 +59,9 @@ void VtkRegularPolygonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GeneratePolylineOn", GeneratePolylineOn);
 	Nan::SetPrototypeMethod(tpl, "generatePolylineOn", GeneratePolylineOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -67,6 +70,9 @@ void VtkRegularPolygonSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetGeneratePolyline", GetGeneratePolyline);
 	Nan::SetPrototypeMethod(tpl, "getGeneratePolyline", GetGeneratePolyline);
+
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfSides", GetNumberOfSides);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfSides", GetNumberOfSides);
@@ -146,7 +152,7 @@ void VtkRegularPolygonSourceWrap::GeneratePolygonOff(const Nan::FunctionCallback
 {
 	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -158,7 +164,7 @@ void VtkRegularPolygonSourceWrap::GeneratePolygonOn(const Nan::FunctionCallbackI
 {
 	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +176,7 @@ void VtkRegularPolygonSourceWrap::GeneratePolylineOff(const Nan::FunctionCallbac
 {
 	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,12 +188,29 @@ void VtkRegularPolygonSourceWrap::GeneratePolylineOn(const Nan::FunctionCallback
 {
 	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->GeneratePolylineOn();
+}
+
+void VtkRegularPolygonSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
+	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRegularPolygonSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -230,6 +253,23 @@ void VtkRegularPolygonSourceWrap::GetGeneratePolyline(const Nan::FunctionCallbac
 	}
 	r = native->GetGeneratePolyline();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRegularPolygonSourceWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRegularPolygonSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRegularPolygonSourceWrap>(info.Holder());
+	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRegularPolygonSourceWrap::GetNumberOfSides(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -335,7 +375,7 @@ void VtkRegularPolygonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkRegularPolygonSourceWrap::InitPtpl();
+	VtkRegularPolygonSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +403,7 @@ void VtkRegularPolygonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRegularPolygonSourceWrap::InitPtpl();
+		VtkRegularPolygonSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -392,7 +432,7 @@ void VtkRegularPolygonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +461,7 @@ void VtkRegularPolygonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +477,7 @@ void VtkRegularPolygonSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -460,7 +500,7 @@ void VtkRegularPolygonSourceWrap::SetGeneratePolygon(const Nan::FunctionCallback
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -479,7 +519,7 @@ void VtkRegularPolygonSourceWrap::SetGeneratePolyline(const Nan::FunctionCallbac
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +546,7 @@ void VtkRegularPolygonSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -535,7 +575,7 @@ void VtkRegularPolygonSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -551,7 +591,7 @@ void VtkRegularPolygonSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -574,7 +614,7 @@ void VtkRegularPolygonSourceWrap::SetNumberOfSides(const Nan::FunctionCallbackIn
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -593,7 +633,7 @@ void VtkRegularPolygonSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCa
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -612,7 +652,7 @@ void VtkRegularPolygonSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkRegularPolygonSource *native = (vtkRegularPolygonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

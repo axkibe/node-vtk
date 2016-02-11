@@ -128,7 +128,7 @@ void VtkStructuredExtentWrap::Clamp(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -158,7 +158,7 @@ void VtkStructuredExtentWrap::Clamp(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -208,7 +208,7 @@ void VtkStructuredExtentWrap::Clamp(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -228,7 +228,7 @@ void VtkStructuredExtentWrap::Clamp(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -280,7 +280,7 @@ void VtkStructuredExtentWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -310,7 +310,7 @@ void VtkStructuredExtentWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -360,7 +360,7 @@ void VtkStructuredExtentWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -380,7 +380,7 @@ void VtkStructuredExtentWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -411,7 +411,7 @@ void VtkStructuredExtentWrap::Grow(const Nan::FunctionCallbackInfo<v8::Value>& i
 
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -444,7 +444,7 @@ void VtkStructuredExtentWrap::Grow(const Nan::FunctionCallbackInfo<v8::Value>& i
 		}
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -492,7 +492,7 @@ void VtkStructuredExtentWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredExtentWrap::InitPtpl();
+	VtkStructuredExtentWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkStructuredExtentWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredExtentWrap::InitPtpl();
+		VtkStructuredExtentWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -850,7 +850,7 @@ void VtkStructuredExtentWrap::Transform(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -880,7 +880,7 @@ void VtkStructuredExtentWrap::Transform(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -930,7 +930,7 @@ void VtkStructuredExtentWrap::Transform(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -950,7 +950,7 @@ void VtkStructuredExtentWrap::Transform(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

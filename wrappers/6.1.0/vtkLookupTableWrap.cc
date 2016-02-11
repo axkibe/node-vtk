@@ -63,14 +63,23 @@ void VtkLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ForceBuild", ForceBuild);
 	Nan::SetPrototypeMethod(tpl, "forceBuild", ForceBuild);
 
+	Nan::SetPrototypeMethod(tpl, "GetAlphaRange", GetAlphaRange);
+	Nan::SetPrototypeMethod(tpl, "getAlphaRange", GetAlphaRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
 	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
 
+	Nan::SetPrototypeMethod(tpl, "GetHueRange", GetHueRange);
+	Nan::SetPrototypeMethod(tpl, "getHueRange", GetHueRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetLogRange", GetLogRange);
 	Nan::SetPrototypeMethod(tpl, "getLogRange", GetLogRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetNanColor", GetNanColor);
+	Nan::SetPrototypeMethod(tpl, "getNanColor", GetNanColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
@@ -78,11 +87,23 @@ void VtkLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRamp", GetRamp);
 	Nan::SetPrototypeMethod(tpl, "getRamp", GetRamp);
 
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetSaturationRange", GetSaturationRange);
+	Nan::SetPrototypeMethod(tpl, "getSaturationRange", GetSaturationRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetScale", GetScale);
 	Nan::SetPrototypeMethod(tpl, "getScale", GetScale);
 
 	Nan::SetPrototypeMethod(tpl, "GetTable", GetTable);
 	Nan::SetPrototypeMethod(tpl, "getTable", GetTable);
+
+	Nan::SetPrototypeMethod(tpl, "GetTableRange", GetTableRange);
+	Nan::SetPrototypeMethod(tpl, "getTableRange", GetTableRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetValueRange", GetValueRange);
+	Nan::SetPrototypeMethod(tpl, "getValueRange", GetValueRange);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -355,7 +376,7 @@ void VtkLookupTableWrap::Build(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -370,7 +391,7 @@ void VtkLookupTableWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -387,12 +408,29 @@ void VtkLookupTableWrap::ForceBuild(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->ForceBuild();
+}
+
+void VtkLookupTableWrap::GetAlphaRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAlphaRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLookupTableWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -425,7 +463,7 @@ void VtkLookupTableWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& in
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -455,7 +493,7 @@ void VtkLookupTableWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& in
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -468,6 +506,23 @@ void VtkLookupTableWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& in
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLookupTableWrap::GetHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -493,7 +548,7 @@ void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -523,7 +578,7 @@ void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -573,7 +628,7 @@ void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -593,7 +648,7 @@ void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -606,6 +661,23 @@ void VtkLookupTableWrap::GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLookupTableWrap::GetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNanColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLookupTableWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -643,6 +715,40 @@ void VtkLookupTableWrap::GetRamp(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLookupTableWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkLookupTableWrap::GetSaturationRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSaturationRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkLookupTableWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
@@ -668,7 +774,7 @@ void VtkLookupTableWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetTable();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -678,6 +784,40 @@ void VtkLookupTableWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkLookupTableWrap::GetTableRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTableRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkLookupTableWrap::GetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLookupTableWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -727,7 +867,7 @@ void VtkLookupTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -755,7 +895,7 @@ void VtkLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLookupTableWrap::InitPtpl();
+		VtkLookupTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -784,7 +924,7 @@ void VtkLookupTableWrap::SetAlphaRange(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -813,7 +953,7 @@ void VtkLookupTableWrap::SetAlphaRange(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -827,7 +967,7 @@ void VtkLookupTableWrap::SetAlphaRange(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -856,7 +996,7 @@ void VtkLookupTableWrap::SetHueRange(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -885,7 +1025,7 @@ void VtkLookupTableWrap::SetHueRange(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -899,7 +1039,7 @@ void VtkLookupTableWrap::SetHueRange(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -928,7 +1068,7 @@ void VtkLookupTableWrap::SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -957,7 +1097,7 @@ void VtkLookupTableWrap::SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -975,7 +1115,7 @@ void VtkLookupTableWrap::SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>&
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1000,7 +1140,7 @@ void VtkLookupTableWrap::SetRamp(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1017,7 +1157,7 @@ void VtkLookupTableWrap::SetRampToLinear(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1029,7 +1169,7 @@ void VtkLookupTableWrap::SetRampToSCurve(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1041,7 +1181,7 @@ void VtkLookupTableWrap::SetRampToSQRT(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1063,7 +1203,7 @@ void VtkLookupTableWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1092,7 +1232,7 @@ void VtkLookupTableWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1106,7 +1246,7 @@ void VtkLookupTableWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& in
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1135,7 +1275,7 @@ void VtkLookupTableWrap::SetSaturationRange(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1164,7 +1304,7 @@ void VtkLookupTableWrap::SetSaturationRange(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1178,7 +1318,7 @@ void VtkLookupTableWrap::SetSaturationRange(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1199,7 +1339,7 @@ void VtkLookupTableWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1216,7 +1356,7 @@ void VtkLookupTableWrap::SetScaleToLinear(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1228,7 +1368,7 @@ void VtkLookupTableWrap::SetScaleToLog10(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
 	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1243,7 +1383,7 @@ void VtkLookupTableWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1270,7 +1410,7 @@ void VtkLookupTableWrap::SetTableRange(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1299,7 +1439,7 @@ void VtkLookupTableWrap::SetTableRange(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1313,7 +1453,7 @@ void VtkLookupTableWrap::SetTableRange(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1342,7 +1482,7 @@ void VtkLookupTableWrap::SetValueRange(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1371,7 +1511,7 @@ void VtkLookupTableWrap::SetValueRange(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1385,7 +1525,7 @@ void VtkLookupTableWrap::SetValueRange(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

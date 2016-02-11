@@ -121,7 +121,7 @@ void VtkDIMACSGraphWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkGraphWrap::InitPtpl();
+		VtkGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkDIMACSGraphWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetInput();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkDIMACSGraphWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkDIMACSGraphWriterWrap::InitPtpl();
+	VtkDIMACSGraphWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkDIMACSGraphWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDIMACSGraphWriterWrap::InitPtpl();
+		VtkDIMACSGraphWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

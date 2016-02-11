@@ -108,7 +108,7 @@ void VtkImageSliceCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageSliceWrap *a0 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -146,7 +146,7 @@ void VtkImageSliceCollectionWrap::GetNextImage(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetNextImage();
-		VtkImageSliceWrap::InitPtpl();
+	VtkImageSliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkImageSliceCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextItem();
-		VtkImageSliceWrap::InitPtpl();
+	VtkImageSliceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkImageSliceCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSliceCollectionWrap::InitPtpl();
+	VtkImageSliceCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkImageSliceCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSliceCollectionWrap::InitPtpl();
+		VtkImageSliceCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkImageSliceCollectionWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageSliceCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceCollectionWrap>(info.Holder());
 	vtkImageSliceCollection *native = (vtkImageSliceCollection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

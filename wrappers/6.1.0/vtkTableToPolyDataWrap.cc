@@ -206,7 +206,7 @@ void VtkTableToPolyDataWrap::Create2DPointsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -218,7 +218,7 @@ void VtkTableToPolyDataWrap::Create2DPointsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +595,7 @@ void VtkTableToPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToPolyDataWrap::InitPtpl();
+	VtkTableToPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -611,7 +611,7 @@ void VtkTableToPolyDataWrap::PreserveCoordinateColumnsAsDataArraysOff(const Nan:
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -623,7 +623,7 @@ void VtkTableToPolyDataWrap::PreserveCoordinateColumnsAsDataArraysOn(const Nan::
 {
 	VtkTableToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkTableToPolyDataWrap>(info.Holder());
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -647,7 +647,7 @@ void VtkTableToPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToPolyDataWrap::InitPtpl();
+		VtkTableToPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -668,7 +668,7 @@ void VtkTableToPolyDataWrap::SetCreate2DPoints(const Nan::FunctionCallbackInfo<v
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkTableToPolyDataWrap::SetPreserveCoordinateColumnsAsDataArrays(const Nan:
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -707,7 +707,7 @@ void VtkTableToPolyDataWrap::SetXColumn(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -726,7 +726,7 @@ void VtkTableToPolyDataWrap::SetXColumnIndex(const Nan::FunctionCallbackInfo<v8:
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -745,7 +745,7 @@ void VtkTableToPolyDataWrap::SetXComponent(const Nan::FunctionCallbackInfo<v8::V
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -765,7 +765,7 @@ void VtkTableToPolyDataWrap::SetYColumn(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -784,7 +784,7 @@ void VtkTableToPolyDataWrap::SetYColumnIndex(const Nan::FunctionCallbackInfo<v8:
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -803,7 +803,7 @@ void VtkTableToPolyDataWrap::SetYComponent(const Nan::FunctionCallbackInfo<v8::V
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -823,7 +823,7 @@ void VtkTableToPolyDataWrap::SetZColumn(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -842,7 +842,7 @@ void VtkTableToPolyDataWrap::SetZColumnIndex(const Nan::FunctionCallbackInfo<v8:
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +861,7 @@ void VtkTableToPolyDataWrap::SetZComponent(const Nan::FunctionCallbackInfo<v8::V
 	vtkTableToPolyData *native = (vtkTableToPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

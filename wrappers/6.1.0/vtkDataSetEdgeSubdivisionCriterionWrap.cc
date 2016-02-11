@@ -142,7 +142,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetCell(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetCell();
-		VtkCellWrap::InitPtpl();
+	VtkCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::GetMesh(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetMesh();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
+	VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::ResetFieldError2(const Nan::Functio
 {
 	VtkDataSetEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkDataSetEdgeSubdivisionCriterion *native = (vtkDataSetEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +299,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
+		VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -320,7 +320,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SetChordError2(const Nan::FunctionC
 	vtkDataSetEdgeSubdivisionCriterion *native = (vtkDataSetEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +341,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SetFieldError2(const Nan::FunctionC
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -363,7 +363,7 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::SetMesh(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -38,6 +38,7 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 		static void GetDataDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);

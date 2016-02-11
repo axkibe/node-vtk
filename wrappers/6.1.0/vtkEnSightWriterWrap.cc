@@ -216,7 +216,7 @@ void VtkEnSightWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,7 +331,7 @@ void VtkEnSightWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkEnSightWriterWrap::InitPtpl();
+	VtkEnSightWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkEnSightWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEnSightWriterWrap::InitPtpl();
+		VtkEnSightWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -381,7 +381,7 @@ void VtkEnSightWriterWrap::SetBaseName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkEnSightWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +420,7 @@ void VtkEnSightWriterWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Val
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +440,7 @@ void VtkEnSightWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +459,7 @@ void VtkEnSightWriterWrap::SetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8:
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -479,7 +479,7 @@ void VtkEnSightWriterWrap::SetPath(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -498,7 +498,7 @@ void VtkEnSightWriterWrap::SetProcessNumber(const Nan::FunctionCallbackInfo<v8::
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -517,7 +517,7 @@ void VtkEnSightWriterWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -536,7 +536,7 @@ void VtkEnSightWriterWrap::SetTransientGeometry(const Nan::FunctionCallbackInfo<
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +555,7 @@ void VtkEnSightWriterWrap::WriteCaseFile(const Nan::FunctionCallbackInfo<v8::Val
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +574,7 @@ void VtkEnSightWriterWrap::WriteSOSCaseFile(const Nan::FunctionCallbackInfo<v8::
 	vtkEnSightWriter *native = (vtkEnSightWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

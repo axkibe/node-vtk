@@ -59,6 +59,9 @@ void VtkLinearExtrusionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtrusionPoint", GetExtrusionPoint);
+	Nan::SetPrototypeMethod(tpl, "getExtrusionPoint", GetExtrusionPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetExtrusionType", GetExtrusionType);
 	Nan::SetPrototypeMethod(tpl, "getExtrusionType", GetExtrusionType);
 
@@ -70,6 +73,9 @@ void VtkLinearExtrusionFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScaleFactor", GetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "getScaleFactor", GetScaleFactor);
+
+	Nan::SetPrototypeMethod(tpl, "GetVector", GetVector);
+	Nan::SetPrototypeMethod(tpl, "getVector", GetVector);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -137,7 +143,7 @@ void VtkLinearExtrusionFilterWrap::CappingOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -149,7 +155,7 @@ void VtkLinearExtrusionFilterWrap::CappingOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,6 +189,23 @@ void VtkLinearExtrusionFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkLinearExtrusionFilterWrap::GetExtrusionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
+	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtrusionPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLinearExtrusionFilterWrap::GetExtrusionType(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -241,6 +264,23 @@ void VtkLinearExtrusionFilterWrap::GetScaleFactor(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkLinearExtrusionFilterWrap::GetVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
+	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkLinearExtrusionFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
@@ -274,7 +314,7 @@ void VtkLinearExtrusionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkLinearExtrusionFilterWrap::InitPtpl();
+	VtkLinearExtrusionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +342,7 @@ void VtkLinearExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLinearExtrusionFilterWrap::InitPtpl();
+		VtkLinearExtrusionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -323,7 +363,7 @@ void VtkLinearExtrusionFilterWrap::SetCapping(const Nan::FunctionCallbackInfo<v8
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +390,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionPoint(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -379,7 +419,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionPoint(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -395,7 +435,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionPoint(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -418,7 +458,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionType(const Nan::FunctionCallbackI
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -435,7 +475,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionTypeToNormalExtrusion(const Nan::
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +487,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionTypeToPointExtrusion(const Nan::F
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +499,7 @@ void VtkLinearExtrusionFilterWrap::SetExtrusionTypeToVectorExtrusion(const Nan::
 {
 	VtkLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkLinearExtrusionFilterWrap>(info.Holder());
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -473,7 +513,7 @@ void VtkLinearExtrusionFilterWrap::SetScaleFactor(const Nan::FunctionCallbackInf
 	vtkLinearExtrusionFilter *native = (vtkLinearExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +540,7 @@ void VtkLinearExtrusionFilterWrap::SetVector(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +569,7 @@ void VtkLinearExtrusionFilterWrap::SetVector(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +585,7 @@ void VtkLinearExtrusionFilterWrap::SetVector(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

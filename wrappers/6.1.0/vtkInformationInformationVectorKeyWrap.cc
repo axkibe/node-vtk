@@ -115,7 +115,7 @@ void VtkInformationInformationVectorKeyWrap::DeepCopy(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -146,7 +146,7 @@ void VtkInformationInformationVectorKeyWrap::Get(const Nan::FunctionCallbackInfo
 		r = native->Get(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkInformationVectorWrap::InitPtpl();
+		VtkInformationVectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkInformationInformationVectorKeyWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationInformationVectorKeyWrap::InitPtpl();
+	VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkInformationInformationVectorKeyWrap::Report(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGarbageCollectorWrap *a1 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -261,7 +261,7 @@ void VtkInformationInformationVectorKeyWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationInformationVectorKeyWrap::InitPtpl();
+		VtkInformationInformationVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkInformationInformationVectorKeyWrap::Set(const Nan::FunctionCallbackInfo
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationVectorWrap *a1 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +311,7 @@ void VtkInformationInformationVectorKeyWrap::ShallowCopy(const Nan::FunctionCall
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

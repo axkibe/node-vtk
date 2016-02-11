@@ -30,6 +30,7 @@ class VtkInteractorStyleUnicamWrap : public VtkInteractorStyleWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWorldUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);

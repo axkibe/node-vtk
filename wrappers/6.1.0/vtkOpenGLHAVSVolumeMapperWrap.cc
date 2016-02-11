@@ -150,7 +150,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
+	VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::ReleaseGraphicsResources(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -192,7 +192,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -223,7 +223,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
+		VtkOpenGLHAVSVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkOpenGLHAVSVolumeMapperWrap::SetGPUDataStructures(const Nan::FunctionCall
 	vtkOpenGLHAVSVolumeMapper *native = (vtkOpenGLHAVSVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

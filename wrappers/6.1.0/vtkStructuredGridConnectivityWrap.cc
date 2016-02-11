@@ -75,6 +75,9 @@ void VtkStructuredGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfNeighbors", GetNumberOfNeighbors);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfNeighbors", GetNumberOfNeighbors);
 
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -126,7 +129,7 @@ void VtkStructuredGridConnectivityWrap::ComputeNeighbors(const Nan::FunctionCall
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
 	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -140,7 +143,7 @@ void VtkStructuredGridConnectivityWrap::CreateGhostLayers(const Nan::FunctionCal
 	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -165,7 +168,7 @@ void VtkStructuredGridConnectivityWrap::FillGhostArrays(const Nan::FunctionCallb
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkUnsignedCharArrayWrap *a2 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -226,7 +229,7 @@ void VtkStructuredGridConnectivityWrap::GetGhostedGridExtent(const Nan::Function
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -256,7 +259,7 @@ void VtkStructuredGridConnectivityWrap::GetGhostedGridExtent(const Nan::Function
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -287,7 +290,7 @@ void VtkStructuredGridConnectivityWrap::GetGridExtent(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -317,7 +320,7 @@ void VtkStructuredGridConnectivityWrap::GetGridExtent(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -353,6 +356,23 @@ void VtkStructuredGridConnectivityWrap::GetNumberOfNeighbors(const Nan::Function
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkStructuredGridConnectivityWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkStructuredGridConnectivityWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
@@ -386,7 +406,7 @@ void VtkStructuredGridConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredGridConnectivityWrap::InitPtpl();
+	VtkStructuredGridConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +449,7 @@ void VtkStructuredGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallback
 							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkPointsWrap *a6 = ObjectWrap::Unwrap<VtkPointsWrap>(info[6]->ToObject());
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -484,7 +504,7 @@ void VtkStructuredGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallback
 							if(info.Length() > 6 && info[6]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[6]))
 							{
 								VtkPointsWrap *a6 = ObjectWrap::Unwrap<VtkPointsWrap>(info[6]->ToObject());
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -525,7 +545,7 @@ void VtkStructuredGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredGridConnectivityWrap::InitPtpl();
+		VtkStructuredGridConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -556,7 +576,7 @@ void VtkStructuredGridConnectivityWrap::SetGhostedGridExtent(const Nan::Function
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -586,7 +606,7 @@ void VtkStructuredGridConnectivityWrap::SetGhostedGridExtent(const Nan::Function
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -615,7 +635,7 @@ void VtkStructuredGridConnectivityWrap::SetWholeExtent(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -644,7 +664,7 @@ void VtkStructuredGridConnectivityWrap::SetWholeExtent(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -666,7 +686,7 @@ void VtkStructuredGridConnectivityWrap::SetWholeExtent(const Nan::FunctionCallba
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

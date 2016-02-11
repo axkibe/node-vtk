@@ -187,7 +187,7 @@ void VtkSelectionNodeWrap::COMPONENT_NUMBER(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->COMPONENT_NUMBER();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkSelectionNodeWrap::COMPOSITE_INDEX(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->COMPOSITE_INDEX();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkSelectionNodeWrap::CONTAINING_CELLS(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->CONTAINING_CELLS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkSelectionNodeWrap::CONTENT_TYPE(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->CONTENT_TYPE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkSelectionNodeWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkSelectionNodeWrap::EPSILON(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->EPSILON();
-		VtkInformationDoubleKeyWrap::InitPtpl();
+	VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -348,7 +348,7 @@ void VtkSelectionNodeWrap::FIELD_TYPE(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->FIELD_TYPE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,7 +413,7 @@ void VtkSelectionNodeWrap::GetProperties(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProperties();
-		VtkInformationWrap::InitPtpl();
+	VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -450,7 +450,7 @@ void VtkSelectionNodeWrap::GetSelectionData(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSelectionData();
-		VtkDataSetAttributesWrap::InitPtpl();
+	VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -473,7 +473,7 @@ void VtkSelectionNodeWrap::GetSelectionList(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSelectionList();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -496,7 +496,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_INDEX(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->HIERARCHICAL_INDEX();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -519,7 +519,7 @@ void VtkSelectionNodeWrap::HIERARCHICAL_LEVEL(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->HIERARCHICAL_LEVEL();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -542,7 +542,7 @@ void VtkSelectionNodeWrap::INDEXED_VERTICES(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->INDEXED_VERTICES();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -565,7 +565,7 @@ void VtkSelectionNodeWrap::INVERSE(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->INVERSE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -581,7 +581,7 @@ void VtkSelectionNodeWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSelectionNodeWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info.Holder());
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -622,7 +622,7 @@ void VtkSelectionNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectionNodeWrap::InitPtpl();
+	VtkSelectionNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -645,7 +645,7 @@ void VtkSelectionNodeWrap::PIXEL_COUNT(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->PIXEL_COUNT();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -668,7 +668,7 @@ void VtkSelectionNodeWrap::PROCESS_ID(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->PROCESS_ID();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -691,7 +691,7 @@ void VtkSelectionNodeWrap::PROP(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->PROP();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -714,7 +714,7 @@ void VtkSelectionNodeWrap::PROP_ID(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->PROP_ID();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -737,7 +737,7 @@ void VtkSelectionNodeWrap::SOURCE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->SOURCE();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -760,7 +760,7 @@ void VtkSelectionNodeWrap::SOURCE_ID(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->SOURCE_ID();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -788,7 +788,7 @@ void VtkSelectionNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectionNodeWrap::InitPtpl();
+		VtkSelectionNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -809,7 +809,7 @@ void VtkSelectionNodeWrap::SetContentType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -828,7 +828,7 @@ void VtkSelectionNodeWrap::SetFieldType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSelectionNode *native = (vtkSelectionNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -848,7 +848,7 @@ void VtkSelectionNodeWrap::SetQueryString(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -868,7 +868,7 @@ void VtkSelectionNodeWrap::SetSelectionData(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetAttributesWrap *a0 = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -888,7 +888,7 @@ void VtkSelectionNodeWrap::SetSelectionList(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -908,7 +908,7 @@ void VtkSelectionNodeWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -928,7 +928,7 @@ void VtkSelectionNodeWrap::SubtractSelectionList(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -948,7 +948,7 @@ void VtkSelectionNodeWrap::UnionSelectionList(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionNodeWrap *a0 = ObjectWrap::Unwrap<VtkSelectionNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

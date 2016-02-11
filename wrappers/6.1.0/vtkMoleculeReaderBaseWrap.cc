@@ -211,7 +211,7 @@ void VtkMoleculeReaderBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkMoleculeReaderBaseWrap::InitPtpl();
+	VtkMoleculeReaderBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkMoleculeReaderBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMoleculeReaderBaseWrap::InitPtpl();
+		VtkMoleculeReaderBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkMoleculeReaderBaseWrap::SetBScale(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMoleculeReaderBase *native = (vtkMoleculeReaderBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkMoleculeReaderBaseWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkMoleculeReaderBaseWrap::SetHBScale(const Nan::FunctionCallbackInfo<v8::V
 	vtkMoleculeReaderBase *native = (vtkMoleculeReaderBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

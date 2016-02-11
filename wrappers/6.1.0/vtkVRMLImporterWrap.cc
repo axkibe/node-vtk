@@ -156,7 +156,7 @@ void VtkVRMLImporterWrap::GetVRMLDEFObject(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetVRMLDEFObject(
 			*a0
 		);
-			VtkObjectWrap::InitPtpl();
+		VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkVRMLImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkVRMLImporterWrap::InitPtpl();
+	VtkVRMLImporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkVRMLImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVRMLImporterWrap::InitPtpl();
+		VtkVRMLImporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void VtkVRMLImporterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void VtkVRMLImporterWrap::enterField(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -294,7 +294,7 @@ void VtkVRMLImporterWrap::enterNode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -311,7 +311,7 @@ void VtkVRMLImporterWrap::exitField(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -323,7 +323,7 @@ void VtkVRMLImporterWrap::exitNode(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkVRMLImporterWrap *wrapper = ObjectWrap::Unwrap<VtkVRMLImporterWrap>(info.Holder());
 	vtkVRMLImporter *native = (vtkVRMLImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -338,7 +338,7 @@ void VtkVRMLImporterWrap::useNode(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -171,7 +171,7 @@ void VtkSliceCubesWrap::GetReader(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetReader();
-		VtkVolumeReaderWrap::InitPtpl();
+	VtkVolumeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkSliceCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkSliceCubesWrap::InitPtpl();
+	VtkSliceCubesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkSliceCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSliceCubesWrap::InitPtpl();
+		VtkSliceCubesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkSliceCubesWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +300,7 @@ void VtkSliceCubesWrap::SetLimitsFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +320,7 @@ void VtkSliceCubesWrap::SetReader(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeReaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeReaderWrap *a0 = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -339,7 +339,7 @@ void VtkSliceCubesWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkSliceCubes *native = (vtkSliceCubes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -356,7 +356,7 @@ void VtkSliceCubesWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSliceCubesWrap *wrapper = ObjectWrap::Unwrap<VtkSliceCubesWrap>(info.Holder());
 	vtkSliceCubes *native = (vtkSliceCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkSliceCubesWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSliceCubesWrap *wrapper = ObjectWrap::Unwrap<VtkSliceCubesWrap>(info.Holder());
 	vtkSliceCubes *native = (vtkSliceCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

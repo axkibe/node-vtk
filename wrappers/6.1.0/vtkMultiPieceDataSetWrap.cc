@@ -136,7 +136,7 @@ void VtkMultiPieceDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkMultiPieceDataSetWrap::InitPtpl();
+			VtkMultiPieceDataSetWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkMultiPieceDataSetWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkMultiPieceDataSetWrap::InitPtpl();
+		VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -206,7 +206,7 @@ void VtkMultiPieceDataSetWrap::GetMetaData(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetMetaData(
 			(vtkCompositeDataIterator *) a0->native.GetPointer()
 		);
-			VtkInformationWrap::InitPtpl();
+		VtkInformationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkMultiPieceDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiPieceDataSetWrap::InitPtpl();
+	VtkMultiPieceDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkMultiPieceDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiPieceDataSetWrap::InitPtpl();
+		VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

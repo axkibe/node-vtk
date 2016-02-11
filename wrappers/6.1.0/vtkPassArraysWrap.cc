@@ -163,7 +163,7 @@ void VtkPassArraysWrap::AddArray(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -185,7 +185,7 @@ void VtkPassArraysWrap::AddCellDataArray(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -205,7 +205,7 @@ void VtkPassArraysWrap::AddFieldDataArray(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,7 +224,7 @@ void VtkPassArraysWrap::AddFieldType(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -244,7 +244,7 @@ void VtkPassArraysWrap::AddPointDataArray(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,7 +261,7 @@ void VtkPassArraysWrap::ClearArrays(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -273,7 +273,7 @@ void VtkPassArraysWrap::ClearCellDataArrays(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkPassArraysWrap::ClearFieldDataArrays(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkPassArraysWrap::ClearFieldTypes(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -309,7 +309,7 @@ void VtkPassArraysWrap::ClearPointDataArrays(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkPassArraysWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkPassArraysWrap::InitPtpl();
+	VtkPassArraysWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,7 +413,7 @@ void VtkPassArraysWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -432,7 +432,7 @@ void VtkPassArraysWrap::RemoveArraysOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +444,7 @@ void VtkPassArraysWrap::RemoveArraysOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +459,7 @@ void VtkPassArraysWrap::RemoveCellDataArray(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -479,7 +479,7 @@ void VtkPassArraysWrap::RemoveFieldDataArray(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +499,7 @@ void VtkPassArraysWrap::RemovePointDataArray(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -528,7 +528,7 @@ void VtkPassArraysWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPassArraysWrap::InitPtpl();
+		VtkPassArraysWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -549,7 +549,7 @@ void VtkPassArraysWrap::SetRemoveArrays(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -568,7 +568,7 @@ void VtkPassArraysWrap::SetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Val
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +585,7 @@ void VtkPassArraysWrap::UseFieldTypesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -597,7 +597,7 @@ void VtkPassArraysWrap::UseFieldTypesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPassArraysWrap *wrapper = ObjectWrap::Unwrap<VtkPassArraysWrap>(info.Holder());
 	vtkPassArrays *native = (vtkPassArrays *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

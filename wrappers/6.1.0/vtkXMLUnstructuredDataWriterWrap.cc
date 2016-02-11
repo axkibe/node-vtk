@@ -194,7 +194,7 @@ void VtkXMLUnstructuredDataWriterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLUnstructuredDataWriterWrap::InitPtpl();
+	VtkXMLUnstructuredDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkXMLUnstructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLUnstructuredDataWriterWrap::InitPtpl();
+		VtkXMLUnstructuredDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkXMLUnstructuredDataWriterWrap::SetGhostLevel(const Nan::FunctionCallback
 	vtkXMLUnstructuredDataWriter *native = (vtkXMLUnstructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -262,7 +262,7 @@ void VtkXMLUnstructuredDataWriterWrap::SetNumberOfPieces(const Nan::FunctionCall
 	vtkXMLUnstructuredDataWriter *native = (vtkXMLUnstructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -281,7 +281,7 @@ void VtkXMLUnstructuredDataWriterWrap::SetWritePiece(const Nan::FunctionCallback
 	vtkXMLUnstructuredDataWriter *native = (vtkXMLUnstructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

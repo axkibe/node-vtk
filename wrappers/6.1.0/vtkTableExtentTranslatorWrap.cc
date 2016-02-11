@@ -211,7 +211,7 @@ void VtkTableExtentTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableExtentTranslatorWrap::InitPtpl();
+	VtkTableExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkTableExtentTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableExtentTranslatorWrap::InitPtpl();
+		VtkTableExtentTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkTableExtentTranslatorWrap::SetMaximumGhostLevel(const Nan::FunctionCallb
 	vtkTableExtentTranslator *native = (vtkTableExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkTableExtentTranslatorWrap::SetNumberOfPieces(const Nan::FunctionCallback
 	vtkTableExtentTranslator *native = (vtkTableExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +326,7 @@ void VtkTableExtentTranslatorWrap::SetNumberOfPiecesInTable(const Nan::FunctionC
 	vtkTableExtentTranslator *native = (vtkTableExtentTranslator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkTableExtentTranslatorWrap::SetPieceAvailable(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

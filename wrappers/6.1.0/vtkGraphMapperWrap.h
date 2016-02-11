@@ -41,6 +41,7 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void EnableEdgesByArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnableVerticesByArrayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnableVerticesByArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);

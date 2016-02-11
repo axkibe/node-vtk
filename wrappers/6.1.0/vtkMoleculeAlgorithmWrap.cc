@@ -115,7 +115,7 @@ void VtkMoleculeAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -130,7 +130,7 @@ void VtkMoleculeAlgorithmWrap::AddInputData(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -174,7 +174,7 @@ void VtkMoleculeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkMoleculeAlgorithmWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +220,7 @@ void VtkMoleculeAlgorithmWrap::GetMoleculeInput(const Nan::FunctionCallbackInfo<
 		r = native->GetMoleculeInput(
 			info[0]->Int32Value()
 		);
-			VtkMoleculeWrap::InitPtpl();
+		VtkMoleculeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkMoleculeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkMoleculeWrap::InitPtpl();
+		VtkMoleculeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkMoleculeAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetOutput();
-		VtkMoleculeWrap::InitPtpl();
+	VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkMoleculeAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkMoleculeAlgorithmWrap::InitPtpl();
+	VtkMoleculeAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,7 +342,7 @@ void VtkMoleculeAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMoleculeAlgorithmWrap::InitPtpl();
+		VtkMoleculeAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkMoleculeAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -379,7 +379,7 @@ void VtkMoleculeAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -401,7 +401,7 @@ void VtkMoleculeAlgorithmWrap::SetOutput(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

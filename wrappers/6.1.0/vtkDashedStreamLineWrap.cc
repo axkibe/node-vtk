@@ -189,7 +189,7 @@ void VtkDashedStreamLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDashedStreamLineWrap::InitPtpl();
+	VtkDashedStreamLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkDashedStreamLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDashedStreamLineWrap::InitPtpl();
+		VtkDashedStreamLineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkDashedStreamLineWrap::SetDashFactor(const Nan::FunctionCallbackInfo<v8::
 	vtkDashedStreamLine *native = (vtkDashedStreamLine *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

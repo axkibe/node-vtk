@@ -34,6 +34,7 @@ class VtkVolumeTextureMapper2DWrap : public VtkVolumeTextureMapperWrap
 		static void GetMaximumNumberOfPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumStorageSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSaveTextures(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTargetTextureSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);

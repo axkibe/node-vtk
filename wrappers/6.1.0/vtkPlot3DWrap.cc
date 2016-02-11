@@ -127,7 +127,7 @@ void VtkPlot3DWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetChart();
-		VtkChartXYZWrap::InitPtpl();
+	VtkChartXYZWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +164,7 @@ void VtkPlot3DWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetPen();
-		VtkPenWrap::InitPtpl();
+	VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +187,7 @@ void VtkPlot3DWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetSelection();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkPlot3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlot3DWrap::InitPtpl();
+	VtkPlot3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkPlot3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlot3DWrap::InitPtpl();
+		VtkPlot3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkPlot3DWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkChartXYZWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkChartXYZWrap *a0 = ObjectWrap::Unwrap<VtkChartXYZWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkPlot3DWrap::SetColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +322,7 @@ void VtkPlot3DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkPlot3DWrap::SetPen(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPenWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPenWrap *a0 = ObjectWrap::Unwrap<VtkPenWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +362,7 @@ void VtkPlot3DWrap::SetSelection(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

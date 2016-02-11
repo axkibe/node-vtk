@@ -131,7 +131,7 @@ void VtkPlotParallelCoordinatesWrap::CreateDefaultLookupTable(const Nan::Functio
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkPlotParallelCoordinatesWrap::GetBounds(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -182,7 +182,7 @@ void VtkPlotParallelCoordinatesWrap::GetBounds(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -220,7 +220,7 @@ void VtkPlotParallelCoordinatesWrap::GetLookupTable(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkPlotParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotParallelCoordinatesWrap::InitPtpl();
+	VtkPlotParallelCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkPlotParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotParallelCoordinatesWrap::InitPtpl();
+		VtkPlotParallelCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +362,7 @@ void VtkPlotParallelCoordinatesWrap::ScalarVisibilityOff(const Nan::FunctionCall
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -374,7 +374,7 @@ void VtkPlotParallelCoordinatesWrap::ScalarVisibilityOn(const Nan::FunctionCallb
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -389,7 +389,7 @@ void VtkPlotParallelCoordinatesWrap::SetInputData(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -409,7 +409,7 @@ void VtkPlotParallelCoordinatesWrap::SetLookupTable(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +428,7 @@ void VtkPlotParallelCoordinatesWrap::SetScalarVisibility(const Nan::FunctionCall
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -445,7 +445,7 @@ void VtkPlotParallelCoordinatesWrap::Update(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPlotParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info.Holder());
 	vtkPlotParallelCoordinates *native = (vtkPlotParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -32,6 +32,7 @@ class VtkImplicitVolumeWrap : public VtkImplicitFunctionWrap
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

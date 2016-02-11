@@ -159,7 +159,7 @@ void VtkDelaunay3DWrap::BoundingTriangulationOff(const Nan::FunctionCallbackInfo
 {
 	VtkDelaunay3DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay3DWrap>(info.Holder());
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkDelaunay3DWrap::BoundingTriangulationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkDelaunay3DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay3DWrap>(info.Holder());
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkDelaunay3DWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDelaunay3DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay3DWrap>(info.Holder());
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkDelaunay3DWrap::EndPointInsertion(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDelaunay3DWrap *wrapper = ObjectWrap::Unwrap<VtkDelaunay3DWrap>(info.Holder());
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkDelaunay3DWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,7 +427,7 @@ void VtkDelaunay3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkDelaunay3DWrap::InitPtpl();
+	VtkDelaunay3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -455,7 +455,7 @@ void VtkDelaunay3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDelaunay3DWrap::InitPtpl();
+		VtkDelaunay3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -476,7 +476,7 @@ void VtkDelaunay3DWrap::SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -495,7 +495,7 @@ void VtkDelaunay3DWrap::SetBoundingTriangulation(const Nan::FunctionCallbackInfo
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +515,7 @@ void VtkDelaunay3DWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkDelaunay3DWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkDelaunay3DWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +572,7 @@ void VtkDelaunay3DWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkDelaunay3D *native = (vtkDelaunay3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

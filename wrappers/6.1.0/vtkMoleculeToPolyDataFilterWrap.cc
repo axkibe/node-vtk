@@ -116,7 +116,7 @@ void VtkMoleculeToPolyDataFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetInput();
-		VtkMoleculeWrap::InitPtpl();
+	VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkMoleculeToPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkMoleculeToPolyDataFilterWrap::InitPtpl();
+	VtkMoleculeToPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkMoleculeToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMoleculeToPolyDataFilterWrap::InitPtpl();
+		VtkMoleculeToPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

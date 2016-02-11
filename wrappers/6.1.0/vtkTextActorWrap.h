@@ -34,6 +34,7 @@ class VtkTextActorWrap : public VtkActor2DWrap
 		static void GetBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

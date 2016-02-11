@@ -65,6 +65,9 @@ void VtkGeoTerrainWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaxLevelMinValue", GetMaxLevelMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaxLevelMinValue", GetMaxLevelMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetSource", GetSource);
 	Nan::SetPrototypeMethod(tpl, "getSource", GetSource);
 
@@ -131,7 +134,7 @@ void VtkGeoTerrainWrap::AddActors(const Nan::FunctionCallbackInfo<v8::Value>& in
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkCollectionWrap *a2 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -204,6 +207,23 @@ void VtkGeoTerrainWrap::GetMaxLevelMinValue(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGeoTerrainWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainWrap>(info.Holder());
+	vtkGeoTerrain *native = (vtkGeoTerrain *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGeoTerrainWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoTerrainWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTerrainWrap>(info.Holder());
@@ -215,7 +235,7 @@ void VtkGeoTerrainWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSource();
-		VtkGeoSourceWrap::InitPtpl();
+	VtkGeoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +280,7 @@ void VtkGeoTerrainWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoTerrainWrap::InitPtpl();
+	VtkGeoTerrainWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +308,7 @@ void VtkGeoTerrainWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoTerrainWrap::InitPtpl();
+		VtkGeoTerrainWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +332,7 @@ void VtkGeoTerrainWrap::SaveDatabase(const Nan::FunctionCallbackInfo<v8::Value>&
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -333,7 +353,7 @@ void VtkGeoTerrainWrap::SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkGeoTerrain *native = (vtkGeoTerrain *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -360,7 +380,7 @@ void VtkGeoTerrainWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -389,7 +409,7 @@ void VtkGeoTerrainWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +425,7 @@ void VtkGeoTerrainWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& in
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -429,7 +449,7 @@ void VtkGeoTerrainWrap::SetSource(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoSourceWrap *a0 = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

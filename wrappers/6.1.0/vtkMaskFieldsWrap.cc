@@ -122,7 +122,7 @@ void VtkMaskFieldsWrap::CopyAllOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +134,7 @@ void VtkMaskFieldsWrap::CopyAllOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkMaskFieldsWrap::CopyAttributeOff(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -168,7 +168,7 @@ void VtkMaskFieldsWrap::CopyAttributeOff(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -193,7 +193,7 @@ void VtkMaskFieldsWrap::CopyAttributeOn(const Nan::FunctionCallbackInfo<v8::Valu
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -209,7 +209,7 @@ void VtkMaskFieldsWrap::CopyAttributeOn(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -228,7 +228,7 @@ void VtkMaskFieldsWrap::CopyAttributesOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkMaskFieldsWrap::CopyAttributesOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -258,7 +258,7 @@ void VtkMaskFieldsWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -275,7 +275,7 @@ void VtkMaskFieldsWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -300,7 +300,7 @@ void VtkMaskFieldsWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -317,7 +317,7 @@ void VtkMaskFieldsWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -336,7 +336,7 @@ void VtkMaskFieldsWrap::CopyFieldsOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +348,7 @@ void VtkMaskFieldsWrap::CopyFieldsOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMaskFieldsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskFieldsWrap>(info.Holder());
 	vtkMaskFields *native = (vtkMaskFields *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -403,7 +403,7 @@ void VtkMaskFieldsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkMaskFieldsWrap::InitPtpl();
+	VtkMaskFieldsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,7 +431,7 @@ void VtkMaskFieldsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMaskFieldsWrap::InitPtpl();
+		VtkMaskFieldsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

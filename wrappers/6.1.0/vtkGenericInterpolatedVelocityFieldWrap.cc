@@ -139,7 +139,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::AddDataSet(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -156,7 +156,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::CachingOff(const Nan::FunctionCall
 {
 	VtkGenericInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkGenericInterpolatedVelocityField *native = (vtkGenericInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -168,7 +168,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::CachingOn(const Nan::FunctionCallb
 {
 	VtkGenericInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkGenericInterpolatedVelocityField *native = (vtkGenericInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,7 +180,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::ClearLastCell(const Nan::FunctionC
 {
 	VtkGenericInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkGenericInterpolatedVelocityField *native = (vtkGenericInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::CopyParameters(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericInterpolatedVelocityFieldWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericInterpolatedVelocityFieldWrap *a0 = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -275,7 +275,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastCell(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetLastCell();
-		VtkGenericAdaptorCellWrap::InitPtpl();
+	VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::GetLastDataSet(const Nan::Function
 		return;
 	}
 	r = native->GetLastDataSet();
-		VtkGenericDataSetWrap::InitPtpl();
+	VtkGenericDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericInterpolatedVelocityFieldWrap::InitPtpl();
+	VtkGenericInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +445,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericInterpolatedVelocityFieldWrap::InitPtpl();
+		VtkGenericInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -467,7 +467,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::SelectVectors(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -486,7 +486,7 @@ void VtkGenericInterpolatedVelocityFieldWrap::SetCaching(const Nan::FunctionCall
 	vtkGenericInterpolatedVelocityField *native = (vtkGenericInterpolatedVelocityField *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

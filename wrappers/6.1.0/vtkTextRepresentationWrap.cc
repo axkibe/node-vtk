@@ -141,7 +141,7 @@ void VtkTextRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackI
 {
 	VtkTextRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTextRepresentationWrap>(info.Holder());
 	vtkTextRepresentation *native = (vtkTextRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -156,7 +156,7 @@ void VtkTextRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -197,7 +197,7 @@ void VtkTextRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -226,7 +226,7 @@ void VtkTextRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +264,7 @@ void VtkTextRepresentationWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetTextActor();
-		VtkTextActorWrap::InitPtpl();
+	VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,7 +337,7 @@ void VtkTextRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextRepresentationWrap::InitPtpl();
+	VtkTextRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +356,7 @@ void VtkTextRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkTextRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextRepresentationWrap::InitPtpl();
+		VtkTextRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -480,7 +480,7 @@ void VtkTextRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +509,7 @@ void VtkTextRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -523,7 +523,7 @@ void VtkTextRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -545,7 +545,7 @@ void VtkTextRepresentationWrap::SetText(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +565,7 @@ void VtkTextRepresentationWrap::SetTextActor(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextActorWrap *a0 = ObjectWrap::Unwrap<VtkTextActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +584,7 @@ void VtkTextRepresentationWrap::SetWindowLocation(const Nan::FunctionCallbackInf
 	vtkTextRepresentation *native = (vtkTextRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

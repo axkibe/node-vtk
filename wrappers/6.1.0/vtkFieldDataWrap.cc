@@ -181,7 +181,7 @@ void VtkFieldDataWrap::AllocateArrays(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -200,7 +200,7 @@ void VtkFieldDataWrap::CopyAllOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -219,7 +219,7 @@ void VtkFieldDataWrap::CopyAllOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -239,7 +239,7 @@ void VtkFieldDataWrap::CopyFieldOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +259,7 @@ void VtkFieldDataWrap::CopyFieldOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +279,7 @@ void VtkFieldDataWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkFieldDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkFieldDataWrap::GetAbstractArray(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->GetAbstractArray(
 			*a0
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkFieldDataWrap::GetAbstractArray(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->GetAbstractArray(
 			info[0]->Int32Value()
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -382,7 +382,7 @@ void VtkFieldDataWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetArray(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -405,7 +405,7 @@ void VtkFieldDataWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetArray(
 			info[0]->Int32Value()
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -465,7 +465,7 @@ void VtkFieldDataWrap::GetField(const Nan::FunctionCallbackInfo<v8::Value>& info
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkFieldDataWrap *a1 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -534,7 +534,7 @@ void VtkFieldDataWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -575,7 +575,7 @@ void VtkFieldDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkFieldDataWrap::InitPtpl();
+	VtkFieldDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -594,7 +594,7 @@ void VtkFieldDataWrap::PassData(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +614,7 @@ void VtkFieldDataWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +631,7 @@ void VtkFieldDataWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -655,7 +655,7 @@ void VtkFieldDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFieldDataWrap::InitPtpl();
+		VtkFieldDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -677,7 +677,7 @@ void VtkFieldDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkFieldDataWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFieldDataWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataWrap>(info.Holder());
 	vtkFieldData *native = (vtkFieldData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

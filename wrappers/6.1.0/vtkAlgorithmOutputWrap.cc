@@ -139,7 +139,7 @@ void VtkAlgorithmOutputWrap::GetProducer(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProducer();
-		VtkAlgorithmWrap::InitPtpl();
+	VtkAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkAlgorithmOutputWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkAlgorithmOutputWrap::InitPtpl();
+	VtkAlgorithmOutputWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkAlgorithmOutputWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAlgorithmOutputWrap::InitPtpl();
+		VtkAlgorithmOutputWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkAlgorithmOutputWrap::SetIndex(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkAlgorithmOutput *native = (vtkAlgorithmOutput *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -253,7 +253,7 @@ void VtkAlgorithmOutputWrap::SetProducer(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

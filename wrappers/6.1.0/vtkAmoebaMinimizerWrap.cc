@@ -175,7 +175,7 @@ void VtkAmoebaMinimizerWrap::EvaluateFunction(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -476,7 +476,7 @@ void VtkAmoebaMinimizerWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -524,7 +524,7 @@ void VtkAmoebaMinimizerWrap::Minimize(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAmoebaMinimizerWrap *wrapper = ObjectWrap::Unwrap<VtkAmoebaMinimizerWrap>(info.Holder());
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -543,7 +543,7 @@ void VtkAmoebaMinimizerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkAmoebaMinimizerWrap::InitPtpl();
+	VtkAmoebaMinimizerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -571,7 +571,7 @@ void VtkAmoebaMinimizerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAmoebaMinimizerWrap::InitPtpl();
+		VtkAmoebaMinimizerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -592,7 +592,7 @@ void VtkAmoebaMinimizerWrap::SetContractionRatio(const Nan::FunctionCallbackInfo
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkAmoebaMinimizerWrap::SetExpansionRatio(const Nan::FunctionCallbackInfo<v
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkAmoebaMinimizerWrap::SetFunctionValue(const Nan::FunctionCallbackInfo<v8
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +649,7 @@ void VtkAmoebaMinimizerWrap::SetMaxIterations(const Nan::FunctionCallbackInfo<v8
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +671,7 @@ void VtkAmoebaMinimizerWrap::SetParameterScale(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -687,7 +687,7 @@ void VtkAmoebaMinimizerWrap::SetParameterScale(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -708,7 +708,7 @@ void VtkAmoebaMinimizerWrap::SetParameterTolerance(const Nan::FunctionCallbackIn
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +730,7 @@ void VtkAmoebaMinimizerWrap::SetParameterValue(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -746,7 +746,7 @@ void VtkAmoebaMinimizerWrap::SetParameterValue(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -767,7 +767,7 @@ void VtkAmoebaMinimizerWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAmoebaMinimizer *native = (vtkAmoebaMinimizer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

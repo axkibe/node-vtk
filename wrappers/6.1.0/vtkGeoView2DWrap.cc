@@ -113,7 +113,7 @@ void VtkGeoView2DWrap::ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -151,7 +151,7 @@ void VtkGeoView2DWrap::GetSurface(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetSurface();
-		VtkGeoTerrain2DWrap::InitPtpl();
+	VtkGeoTerrain2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -174,7 +174,7 @@ void VtkGeoView2DWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkGeoView2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoView2DWrap::InitPtpl();
+	VtkGeoView2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkGeoView2DWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoView2DWrap *wrapper = ObjectWrap::Unwrap<VtkGeoView2DWrap>(info.Holder());
 	vtkGeoView2D *native = (vtkGeoView2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkGeoView2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoView2DWrap::InitPtpl();
+		VtkGeoView2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -281,7 +281,7 @@ void VtkGeoView2DWrap::SetSurface(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTerrain2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTerrain2DWrap *a0 = ObjectWrap::Unwrap<VtkGeoTerrain2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

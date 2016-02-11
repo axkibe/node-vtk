@@ -47,6 +47,9 @@ void VtkImageEllipsoidSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkImageEllipsoidSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -58,6 +61,9 @@ void VtkImageEllipsoidSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetOutputScalarType", GetOutputScalarType);
 	Nan::SetPrototypeMethod(tpl, "getOutputScalarType", GetOutputScalarType);
+
+	Nan::SetPrototypeMethod(tpl, "GetRadius", GetRadius);
+	Nan::SetPrototypeMethod(tpl, "getRadius", GetRadius);
 
 	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
@@ -148,6 +154,23 @@ void VtkImageEllipsoidSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkImageEllipsoidSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
+	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageEllipsoidSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
@@ -204,6 +227,23 @@ void VtkImageEllipsoidSourceWrap::GetOutputScalarType(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageEllipsoidSourceWrap::GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
+	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadius();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageEllipsoidSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
@@ -218,7 +258,7 @@ void VtkImageEllipsoidSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -247,7 +287,7 @@ void VtkImageEllipsoidSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +297,17 @@ void VtkImageEllipsoidSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageEllipsoidSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -293,7 +343,7 @@ void VtkImageEllipsoidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageEllipsoidSourceWrap::InitPtpl();
+	VtkImageEllipsoidSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +371,7 @@ void VtkImageEllipsoidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageEllipsoidSourceWrap::InitPtpl();
+		VtkImageEllipsoidSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -350,7 +400,7 @@ void VtkImageEllipsoidSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -379,7 +429,7 @@ void VtkImageEllipsoidSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -395,7 +445,7 @@ void VtkImageEllipsoidSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -418,7 +468,7 @@ void VtkImageEllipsoidSourceWrap::SetInValue(const Nan::FunctionCallbackInfo<v8:
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +487,7 @@ void VtkImageEllipsoidSourceWrap::SetOutValue(const Nan::FunctionCallbackInfo<v8
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +506,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarType(const Nan::FunctionCallbac
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +523,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToChar(const Nan::FunctionC
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -485,7 +535,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToDouble(const Nan::Functio
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -497,7 +547,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToFloat(const Nan::Function
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +559,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToInt(const Nan::FunctionCa
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +571,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToLong(const Nan::FunctionC
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +583,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToShort(const Nan::Function
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +595,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToUnsignedChar(const Nan::F
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -557,7 +607,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToUnsignedInt(const Nan::Fu
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -569,7 +619,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToUnsignedLong(const Nan::F
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -581,7 +631,7 @@ void VtkImageEllipsoidSourceWrap::SetOutputScalarTypeToUnsignedShort(const Nan::
 {
 	VtkImageEllipsoidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEllipsoidSourceWrap>(info.Holder());
 	vtkImageEllipsoidSource *native = (vtkImageEllipsoidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -603,7 +653,7 @@ void VtkImageEllipsoidSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +682,7 @@ void VtkImageEllipsoidSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +698,7 @@ void VtkImageEllipsoidSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -679,7 +729,7 @@ void VtkImageEllipsoidSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +758,7 @@ void VtkImageEllipsoidSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +780,7 @@ void VtkImageEllipsoidSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

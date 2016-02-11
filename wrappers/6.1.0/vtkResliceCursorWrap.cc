@@ -49,6 +49,9 @@ void VtkResliceCursorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkResliceCursorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetCenterlineAxisPolyData", GetCenterlineAxisPolyData);
 	Nan::SetPrototypeMethod(tpl, "getCenterlineAxisPolyData", GetCenterlineAxisPolyData);
 
@@ -75,6 +78,18 @@ void VtkResliceCursorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetThickMode", GetThickMode);
 	Nan::SetPrototypeMethod(tpl, "getThickMode", GetThickMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetThickness", GetThickness);
+	Nan::SetPrototypeMethod(tpl, "getThickness", GetThickness);
+
+	Nan::SetPrototypeMethod(tpl, "GetXAxis", GetXAxis);
+	Nan::SetPrototypeMethod(tpl, "getXAxis", GetXAxis);
+
+	Nan::SetPrototypeMethod(tpl, "GetYAxis", GetYAxis);
+	Nan::SetPrototypeMethod(tpl, "getYAxis", GetYAxis);
+
+	Nan::SetPrototypeMethod(tpl, "GetZAxis", GetZAxis);
+	Nan::SetPrototypeMethod(tpl, "getZAxis", GetZAxis);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -156,6 +171,23 @@ void VtkResliceCursorWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkResliceCursorWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkResliceCursorWrap::GetCenterlineAxisPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
@@ -171,7 +203,7 @@ void VtkResliceCursorWrap::GetCenterlineAxisPolyData(const Nan::FunctionCallback
 		r = native->GetCenterlineAxisPolyData(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +285,7 @@ void VtkResliceCursorWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetImage();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +312,7 @@ void VtkResliceCursorWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetPlane(
 			info[0]->Int32Value()
 		);
-			VtkPlaneWrap::InitPtpl();
+		VtkPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -306,7 +338,7 @@ void VtkResliceCursorWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -330,6 +362,74 @@ void VtkResliceCursorWrap::GetThickMode(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetThickMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkResliceCursorWrap::GetThickness(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetThickness();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkResliceCursorWrap::GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXAxis();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkResliceCursorWrap::GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYAxis();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkResliceCursorWrap::GetZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
+	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZAxis();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkResliceCursorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -365,7 +465,7 @@ void VtkResliceCursorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorWrap::InitPtpl();
+	VtkResliceCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +481,7 @@ void VtkResliceCursorWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -405,7 +505,7 @@ void VtkResliceCursorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorWrap::InitPtpl();
+		VtkResliceCursorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +534,7 @@ void VtkResliceCursorWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +563,7 @@ void VtkResliceCursorWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -479,7 +579,7 @@ void VtkResliceCursorWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -502,7 +602,7 @@ void VtkResliceCursorWrap::SetHole(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -521,7 +621,7 @@ void VtkResliceCursorWrap::SetHoleWidth(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +640,7 @@ void VtkResliceCursorWrap::SetHoleWidthInPixels(const Nan::FunctionCallbackInfo<
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -560,7 +660,7 @@ void VtkResliceCursorWrap::SetImage(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -579,7 +679,7 @@ void VtkResliceCursorWrap::SetThickMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -606,7 +706,7 @@ void VtkResliceCursorWrap::SetThickness(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -635,7 +735,7 @@ void VtkResliceCursorWrap::SetThickness(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +751,7 @@ void VtkResliceCursorWrap::SetThickness(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -682,7 +782,7 @@ void VtkResliceCursorWrap::SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -711,7 +811,7 @@ void VtkResliceCursorWrap::SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +827,7 @@ void VtkResliceCursorWrap::SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -758,7 +858,7 @@ void VtkResliceCursorWrap::SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -787,7 +887,7 @@ void VtkResliceCursorWrap::SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -803,7 +903,7 @@ void VtkResliceCursorWrap::SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -834,7 +934,7 @@ void VtkResliceCursorWrap::SetZAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +963,7 @@ void VtkResliceCursorWrap::SetZAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -879,7 +979,7 @@ void VtkResliceCursorWrap::SetZAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -900,7 +1000,7 @@ void VtkResliceCursorWrap::ThickModeOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -912,7 +1012,7 @@ void VtkResliceCursorWrap::ThickModeOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -924,7 +1024,7 @@ void VtkResliceCursorWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkResliceCursorWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info.Holder());
 	vtkResliceCursor *native = (vtkResliceCursor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

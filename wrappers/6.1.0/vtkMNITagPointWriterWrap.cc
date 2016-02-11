@@ -224,7 +224,7 @@ void VtkMNITagPointWriterWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelText();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +247,7 @@ void VtkMNITagPointWriterWrap::GetPatientIds(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPatientIds();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkMNITagPointWriterWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetPoints(
 			info[0]->Int32Value()
 		);
-			VtkPointsWrap::InitPtpl();
+		VtkPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -293,7 +293,7 @@ void VtkMNITagPointWriterWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkMNITagPointWriterWrap::GetStructureIds(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetStructureIds();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,7 +339,7 @@ void VtkMNITagPointWriterWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetWeights();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkMNITagPointWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkMNITagPointWriterWrap::InitPtpl();
+	VtkMNITagPointWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkMNITagPointWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMNITagPointWriterWrap::InitPtpl();
+		VtkMNITagPointWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkMNITagPointWriterWrap::SetComments(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -454,7 +454,7 @@ void VtkMNITagPointWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +474,7 @@ void VtkMNITagPointWriterWrap::SetLabelText(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +494,7 @@ void VtkMNITagPointWriterWrap::SetPatientIds(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -514,7 +514,7 @@ void VtkMNITagPointWriterWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +529,7 @@ void VtkMNITagPointWriterWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -551,7 +551,7 @@ void VtkMNITagPointWriterWrap::SetStructureIds(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -571,7 +571,7 @@ void VtkMNITagPointWriterWrap::SetWeights(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

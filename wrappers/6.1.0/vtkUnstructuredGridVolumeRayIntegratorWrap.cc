@@ -133,7 +133,7 @@ void VtkUnstructuredGridVolumeRayIntegratorWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkUnstructuredGridVolumeRayIntegratorWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
+		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

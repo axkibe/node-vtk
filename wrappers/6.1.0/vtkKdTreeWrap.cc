@@ -291,7 +291,7 @@ void VtkKdTreeWrap::AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -308,7 +308,7 @@ void VtkKdTreeWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -323,7 +323,7 @@ void VtkKdTreeWrap::BuildLocatorFromPoints(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkKdTreeWrap::BuildLocatorFromPoints(const Nan::FunctionCallbackInfo<v8::V
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointSetWrap *a0 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkKdTreeWrap::CopyTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->CopyTree(
 			(vtkKdNode *) a0->native.GetPointer()
 		);
-			VtkKdNodeWrap::InitPtpl();
+		VtkKdNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkKdTreeWrap::CreateCellLists(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkKdTreeWrap::DeleteCellLists(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -423,7 +423,7 @@ void VtkKdTreeWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -458,7 +458,7 @@ void VtkKdTreeWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8::Value
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -494,7 +494,7 @@ void VtkKdTreeWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::V
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -529,7 +529,7 @@ void VtkKdTreeWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo<v8::V
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -550,7 +550,7 @@ void VtkKdTreeWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -567,7 +567,7 @@ void VtkKdTreeWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -586,7 +586,7 @@ void VtkKdTreeWrap::GenerateRepresentationUsingDataBoundsOff(const Nan::Function
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +598,7 @@ void VtkKdTreeWrap::GenerateRepresentationUsingDataBoundsOn(const Nan::FunctionC
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -621,7 +621,7 @@ void VtkKdTreeWrap::GetBoundaryCellList(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->GetBoundaryCellList(
 			info[0]->Int32Value()
 		);
-			VtkIdListWrap::InitPtpl();
+		VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -651,7 +651,7 @@ void VtkKdTreeWrap::GetCellList(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetCellList(
 			info[0]->Int32Value()
 		);
-			VtkIdListWrap::InitPtpl();
+		VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -691,7 +691,7 @@ void VtkKdTreeWrap::GetCuts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetCuts();
-		VtkBSPCutsWrap::InitPtpl();
+	VtkBSPCutsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -718,7 +718,7 @@ void VtkKdTreeWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetDataSet(
 			info[0]->Int32Value()
 		);
-			VtkDataSetWrap::InitPtpl();
+		VtkDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -737,7 +737,7 @@ void VtkKdTreeWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -782,7 +782,7 @@ void VtkKdTreeWrap::GetDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetDataSets();
-		VtkDataSetCollectionWrap::InitPtpl();
+	VtkDataSetCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -921,7 +921,7 @@ void VtkKdTreeWrap::GetPointsInRegion(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetPointsInRegion(
 			info[0]->Int32Value()
 		);
-			VtkIdTypeArrayWrap::InitPtpl();
+		VtkIdTypeArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -952,7 +952,7 @@ void VtkKdTreeWrap::GetRegionBounds(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -982,7 +982,7 @@ void VtkKdTreeWrap::GetRegionBounds(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1042,7 +1042,7 @@ void VtkKdTreeWrap::GetRegionDataBounds(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1072,7 +1072,7 @@ void VtkKdTreeWrap::GetRegionDataBounds(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1105,7 +1105,7 @@ void VtkKdTreeWrap::IncludeRegionBoundaryCellsOff(const Nan::FunctionCallbackInf
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1117,7 +1117,7 @@ void VtkKdTreeWrap::IncludeRegionBoundaryCellsOn(const Nan::FunctionCallbackInfo
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1129,7 +1129,7 @@ void VtkKdTreeWrap::InvalidateGeometry(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1184,7 +1184,7 @@ void VtkKdTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkKdTreeWrap::InitPtpl();
+	VtkKdTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1200,7 +1200,7 @@ void VtkKdTreeWrap::OmitNoPartitioning(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1212,7 +1212,7 @@ void VtkKdTreeWrap::OmitXPartitioning(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1224,7 +1224,7 @@ void VtkKdTreeWrap::OmitXYPartitioning(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1236,7 +1236,7 @@ void VtkKdTreeWrap::OmitYPartitioning(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1248,7 +1248,7 @@ void VtkKdTreeWrap::OmitYZPartitioning(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1260,7 +1260,7 @@ void VtkKdTreeWrap::OmitZPartitioning(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1272,7 +1272,7 @@ void VtkKdTreeWrap::OmitZXPartitioning(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1286,7 +1286,7 @@ void VtkKdTreeWrap::PrintRegion(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1303,7 +1303,7 @@ void VtkKdTreeWrap::PrintTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1315,7 +1315,7 @@ void VtkKdTreeWrap::PrintVerboseTree(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1327,7 +1327,7 @@ void VtkKdTreeWrap::RemoveAllDataSets(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1342,7 +1342,7 @@ void VtkKdTreeWrap::RemoveDataSet(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1354,7 +1354,7 @@ void VtkKdTreeWrap::RemoveDataSet(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1383,7 +1383,7 @@ void VtkKdTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKdTreeWrap::InitPtpl();
+		VtkKdTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1405,7 +1405,7 @@ void VtkKdTreeWrap::SetCuts(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBSPCutsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBSPCutsWrap *a0 = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1425,7 +1425,7 @@ void VtkKdTreeWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1444,7 +1444,7 @@ void VtkKdTreeWrap::SetFudgeFactor(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1463,7 +1463,7 @@ void VtkKdTreeWrap::SetGenerateRepresentationUsingDataBounds(const Nan::Function
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1482,7 +1482,7 @@ void VtkKdTreeWrap::SetIncludeRegionBoundaryCells(const Nan::FunctionCallbackInf
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1501,7 +1501,7 @@ void VtkKdTreeWrap::SetMinCells(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1520,7 +1520,7 @@ void VtkKdTreeWrap::SetNumberOfRegionsOrLess(const Nan::FunctionCallbackInfo<v8:
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1539,7 +1539,7 @@ void VtkKdTreeWrap::SetNumberOfRegionsOrMore(const Nan::FunctionCallbackInfo<v8:
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1558,7 +1558,7 @@ void VtkKdTreeWrap::SetTiming(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1575,7 +1575,7 @@ void VtkKdTreeWrap::TimingOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1587,7 +1587,7 @@ void VtkKdTreeWrap::TimingOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkKdTreeWrap *wrapper = ObjectWrap::Unwrap<VtkKdTreeWrap>(info.Holder());
 	vtkKdTree *native = (vtkKdTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

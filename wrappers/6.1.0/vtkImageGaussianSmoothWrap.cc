@@ -53,6 +53,12 @@ void VtkImageGaussianSmoothWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimensionality", GetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "getDimensionality", GetDimensionality);
 
+	Nan::SetPrototypeMethod(tpl, "GetRadiusFactors", GetRadiusFactors);
+	Nan::SetPrototypeMethod(tpl, "getRadiusFactors", GetRadiusFactors);
+
+	Nan::SetPrototypeMethod(tpl, "GetStandardDeviations", GetStandardDeviations);
+	Nan::SetPrototypeMethod(tpl, "getStandardDeviations", GetStandardDeviations);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -134,6 +140,40 @@ void VtkImageGaussianSmoothWrap::GetDimensionality(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageGaussianSmoothWrap::GetRadiusFactors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageGaussianSmoothWrap *wrapper = ObjectWrap::Unwrap<VtkImageGaussianSmoothWrap>(info.Holder());
+	vtkImageGaussianSmooth *native = (vtkImageGaussianSmooth *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRadiusFactors();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageGaussianSmoothWrap::GetStandardDeviations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageGaussianSmoothWrap *wrapper = ObjectWrap::Unwrap<VtkImageGaussianSmoothWrap>(info.Holder());
+	vtkImageGaussianSmooth *native = (vtkImageGaussianSmooth *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStandardDeviations();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageGaussianSmoothWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageGaussianSmoothWrap *wrapper = ObjectWrap::Unwrap<VtkImageGaussianSmoothWrap>(info.Holder());
@@ -167,7 +207,7 @@ void VtkImageGaussianSmoothWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageGaussianSmoothWrap::InitPtpl();
+	VtkImageGaussianSmoothWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +235,7 @@ void VtkImageGaussianSmoothWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageGaussianSmoothWrap::InitPtpl();
+		VtkImageGaussianSmoothWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -216,7 +256,7 @@ void VtkImageGaussianSmoothWrap::SetDimensionality(const Nan::FunctionCallbackIn
 	vtkImageGaussianSmooth *native = (vtkImageGaussianSmooth *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -235,7 +275,7 @@ void VtkImageGaussianSmoothWrap::SetRadiusFactor(const Nan::FunctionCallbackInfo
 	vtkImageGaussianSmooth *native = (vtkImageGaussianSmooth *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -262,7 +302,7 @@ void VtkImageGaussianSmoothWrap::SetRadiusFactors(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -291,7 +331,7 @@ void VtkImageGaussianSmoothWrap::SetRadiusFactors(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +347,7 @@ void VtkImageGaussianSmoothWrap::SetRadiusFactors(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -319,7 +359,7 @@ void VtkImageGaussianSmoothWrap::SetRadiusFactors(const Nan::FunctionCallbackInf
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -344,7 +384,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviation(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -356,7 +396,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviation(const Nan::FunctionCallbac
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -367,7 +407,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviation(const Nan::FunctionCallbac
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -394,7 +434,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviations(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -423,7 +463,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviations(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -439,7 +479,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviations(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -451,7 +491,7 @@ void VtkImageGaussianSmoothWrap::SetStandardDeviations(const Nan::FunctionCallba
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -56,6 +56,9 @@ void VtkQuadricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCoefficients", GetCoefficients);
+	Nan::SetPrototypeMethod(tpl, "getCoefficients", GetCoefficients);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -202,7 +205,7 @@ void VtkQuadricWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -232,7 +235,7 @@ void VtkQuadricWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -282,7 +285,7 @@ void VtkQuadricWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -302,7 +305,7 @@ void VtkQuadricWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -329,6 +332,23 @@ void VtkQuadricWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkQuadricWrap::GetCoefficients(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadricWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricWrap>(info.Holder());
+	vtkQuadric *native = (vtkQuadric *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCoefficients();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 10 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 10);
+	memcpy(ab->GetContents().Data(), r, 10 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkQuadricWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -364,7 +384,7 @@ void VtkQuadricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadricWrap::InitPtpl();
+	VtkQuadricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +412,7 @@ void VtkQuadricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadricWrap::InitPtpl();
+		VtkQuadricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -421,7 +441,7 @@ void VtkQuadricWrap::SetCoefficients(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +470,7 @@ void VtkQuadricWrap::SetCoefficients(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -480,7 +500,7 @@ void VtkQuadricWrap::SetCoefficients(const Nan::FunctionCallbackInfo<v8::Value>&
 									{
 										if(info.Length() > 9 && info[9]->IsNumber())
 										{
-											if(info.Length() != 10)
+																						if(info.Length() != 10)
 											{
 												Nan::ThrowError("Too many parameters.");
 												return;

@@ -115,7 +115,7 @@ void VtkCommandWrap::AbortFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -127,7 +127,7 @@ void VtkCommandWrap::AbortFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -210,7 +210,7 @@ void VtkCommandWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkCommandWrap::InitPtpl();
+	VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +226,7 @@ void VtkCommandWrap::PassiveObserverOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -238,7 +238,7 @@ void VtkCommandWrap::PassiveObserverOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCommandWrap *wrapper = ObjectWrap::Unwrap<VtkCommandWrap>(info.Holder());
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -262,7 +262,7 @@ void VtkCommandWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCommandWrap::InitPtpl();
+		VtkCommandWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkCommandWrap::SetAbortFlag(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkCommandWrap::SetPassiveObserver(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkCommand *native = (vtkCommand *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

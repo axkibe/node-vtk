@@ -71,6 +71,12 @@ void VtkImageShrink3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMinimum", GetMinimum);
 	Nan::SetPrototypeMethod(tpl, "getMinimum", GetMinimum);
 
+	Nan::SetPrototypeMethod(tpl, "GetShift", GetShift);
+	Nan::SetPrototypeMethod(tpl, "getShift", GetShift);
+
+	Nan::SetPrototypeMethod(tpl, "GetShrinkFactors", GetShrinkFactors);
+	Nan::SetPrototypeMethod(tpl, "getShrinkFactors", GetShrinkFactors);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -158,7 +164,7 @@ void VtkImageShrink3DWrap::AveragingOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +176,7 @@ void VtkImageShrink3DWrap::AveragingOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -262,6 +268,40 @@ void VtkImageShrink3DWrap::GetMinimum(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageShrink3DWrap::GetShift(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
+	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShift();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageShrink3DWrap::GetShrinkFactors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
+	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetShrinkFactors();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageShrink3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
@@ -288,7 +328,7 @@ void VtkImageShrink3DWrap::MaximumOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +340,7 @@ void VtkImageShrink3DWrap::MaximumOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +352,7 @@ void VtkImageShrink3DWrap::MeanOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -324,7 +364,7 @@ void VtkImageShrink3DWrap::MeanOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +376,7 @@ void VtkImageShrink3DWrap::MedianOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +388,7 @@ void VtkImageShrink3DWrap::MedianOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -360,7 +400,7 @@ void VtkImageShrink3DWrap::MinimumOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +412,7 @@ void VtkImageShrink3DWrap::MinimumOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageShrink3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageShrink3DWrap>(info.Holder());
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +431,7 @@ void VtkImageShrink3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageShrink3DWrap::InitPtpl();
+	VtkImageShrink3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +459,7 @@ void VtkImageShrink3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageShrink3DWrap::InitPtpl();
+		VtkImageShrink3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -440,7 +480,7 @@ void VtkImageShrink3DWrap::SetAveraging(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +499,7 @@ void VtkImageShrink3DWrap::SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +518,7 @@ void VtkImageShrink3DWrap::SetMean(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -497,7 +537,7 @@ void VtkImageShrink3DWrap::SetMedian(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -516,7 +556,7 @@ void VtkImageShrink3DWrap::SetMinimum(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageShrink3D *native = (vtkImageShrink3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -543,7 +583,7 @@ void VtkImageShrink3DWrap::SetShift(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +612,7 @@ void VtkImageShrink3DWrap::SetShift(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +628,7 @@ void VtkImageShrink3DWrap::SetShift(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -619,7 +659,7 @@ void VtkImageShrink3DWrap::SetShrinkFactors(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +688,7 @@ void VtkImageShrink3DWrap::SetShrinkFactors(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +704,7 @@ void VtkImageShrink3DWrap::SetShrinkFactors(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

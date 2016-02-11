@@ -64,6 +64,9 @@ void VtkSelectPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetClosestPoint", GetClosestPoint);
+	Nan::SetPrototypeMethod(tpl, "getClosestPoint", GetClosestPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetGenerateSelectionScalars", GetGenerateSelectionScalars);
 	Nan::SetPrototypeMethod(tpl, "getGenerateSelectionScalars", GetGenerateSelectionScalars);
 
@@ -169,7 +172,7 @@ void VtkSelectPolyDataWrap::GenerateSelectionScalarsOff(const Nan::FunctionCallb
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +184,7 @@ void VtkSelectPolyDataWrap::GenerateSelectionScalarsOn(const Nan::FunctionCallba
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -193,7 +196,7 @@ void VtkSelectPolyDataWrap::GenerateUnselectedOutputOff(const Nan::FunctionCallb
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +208,7 @@ void VtkSelectPolyDataWrap::GenerateUnselectedOutputOn(const Nan::FunctionCallba
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,6 +228,23 @@ void VtkSelectPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSelectPolyDataWrap::GetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
+	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClosestPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSelectPolyDataWrap::GetGenerateSelectionScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -280,7 +300,7 @@ void VtkSelectPolyDataWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLoop();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +323,7 @@ void VtkSelectPolyDataWrap::GetSelectionEdges(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSelectionEdges();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +402,7 @@ void VtkSelectPolyDataWrap::GetUnselectedOutput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetUnselectedOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +418,7 @@ void VtkSelectPolyDataWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -410,7 +430,7 @@ void VtkSelectPolyDataWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +471,7 @@ void VtkSelectPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectPolyDataWrap::InitPtpl();
+	VtkSelectPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -479,7 +499,7 @@ void VtkSelectPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectPolyDataWrap::InitPtpl();
+		VtkSelectPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -508,7 +528,7 @@ void VtkSelectPolyDataWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -537,7 +557,7 @@ void VtkSelectPolyDataWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +573,7 @@ void VtkSelectPolyDataWrap::SetClosestPoint(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -576,7 +596,7 @@ void VtkSelectPolyDataWrap::SetGenerateSelectionScalars(const Nan::FunctionCallb
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +615,7 @@ void VtkSelectPolyDataWrap::SetGenerateUnselectedOutput(const Nan::FunctionCallb
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +634,7 @@ void VtkSelectPolyDataWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -634,7 +654,7 @@ void VtkSelectPolyDataWrap::SetLoop(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -653,7 +673,7 @@ void VtkSelectPolyDataWrap::SetSelectionMode(const Nan::FunctionCallbackInfo<v8:
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +690,7 @@ void VtkSelectPolyDataWrap::SetSelectionModeToClosestPointRegion(const Nan::Func
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -682,7 +702,7 @@ void VtkSelectPolyDataWrap::SetSelectionModeToLargestRegion(const Nan::FunctionC
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +714,7 @@ void VtkSelectPolyDataWrap::SetSelectionModeToSmallestRegion(const Nan::Function
 {
 	VtkSelectPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkSelectPolyDataWrap>(info.Holder());
 	vtkSelectPolyData *native = (vtkSelectPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

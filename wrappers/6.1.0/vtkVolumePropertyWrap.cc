@@ -228,7 +228,7 @@ void VtkVolumePropertyWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumePropertyWrap *a0 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -247,7 +247,7 @@ void VtkVolumePropertyWrap::DisableGradientOpacityOff(const Nan::FunctionCallbac
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkVolumePropertyWrap::DisableGradientOpacityOff(const Nan::FunctionCallbac
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkVolumePropertyWrap::DisableGradientOpacityOn(const Nan::FunctionCallback
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -281,7 +281,7 @@ void VtkVolumePropertyWrap::DisableGradientOpacityOn(const Nan::FunctionCallback
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +451,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		r = native->GetGradientOpacity(
 			info[0]->Int32Value()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -470,7 +470,7 @@ void VtkVolumePropertyWrap::GetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetGradientOpacity();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		r = native->GetGrayTransferFunction(
 			info[0]->Int32Value()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -516,7 +516,7 @@ void VtkVolumePropertyWrap::GetGrayTransferFunction(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetGrayTransferFunction();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -641,7 +641,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		r = native->GetRGBTransferFunction(
 			info[0]->Int32Value()
 		);
-			VtkColorTransferFunctionWrap::InitPtpl();
+		VtkColorTransferFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -660,7 +660,7 @@ void VtkVolumePropertyWrap::GetRGBTransferFunction(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetRGBTransferFunction();
-		VtkColorTransferFunctionWrap::InitPtpl();
+	VtkColorTransferFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -687,7 +687,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetScalarOpacity(
 			info[0]->Int32Value()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -706,7 +706,7 @@ void VtkVolumePropertyWrap::GetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScalarOpacity();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -845,7 +845,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		r = native->GetStoredGradientOpacity(
 			info[0]->Int32Value()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -864,7 +864,7 @@ void VtkVolumePropertyWrap::GetStoredGradientOpacity(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetStoredGradientOpacity();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -880,7 +880,7 @@ void VtkVolumePropertyWrap::IndependentComponentsOff(const Nan::FunctionCallback
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -892,7 +892,7 @@ void VtkVolumePropertyWrap::IndependentComponentsOn(const Nan::FunctionCallbackI
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -933,7 +933,7 @@ void VtkVolumePropertyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumePropertyWrap::InitPtpl();
+	VtkVolumePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -961,7 +961,7 @@ void VtkVolumePropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumePropertyWrap::InitPtpl();
+		VtkVolumePropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -982,7 +982,7 @@ void VtkVolumePropertyWrap::SetAmbient(const Nan::FunctionCallbackInfo<v8::Value
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -996,7 +996,7 @@ void VtkVolumePropertyWrap::SetAmbient(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1018,7 +1018,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorTransferFunctionWrap *a0 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1031,7 +1031,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1046,7 +1046,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkColorTransferFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkColorTransferFunctionWrap *a1 = ObjectWrap::Unwrap<VtkColorTransferFunctionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1060,7 +1060,7 @@ void VtkVolumePropertyWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>&
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1083,7 +1083,7 @@ void VtkVolumePropertyWrap::SetComponentWeight(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1104,7 +1104,7 @@ void VtkVolumePropertyWrap::SetDiffuse(const Nan::FunctionCallbackInfo<v8::Value
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1118,7 +1118,7 @@ void VtkVolumePropertyWrap::SetDiffuse(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1141,7 +1141,7 @@ void VtkVolumePropertyWrap::SetDisableGradientOpacity(const Nan::FunctionCallbac
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1152,7 +1152,7 @@ void VtkVolumePropertyWrap::SetDisableGradientOpacity(const Nan::FunctionCallbac
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1172,7 +1172,7 @@ void VtkVolumePropertyWrap::SetGradientOpacity(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1187,7 +1187,7 @@ void VtkVolumePropertyWrap::SetGradientOpacity(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1208,7 +1208,7 @@ void VtkVolumePropertyWrap::SetIndependentComponents(const Nan::FunctionCallback
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1227,7 +1227,7 @@ void VtkVolumePropertyWrap::SetInterpolationType(const Nan::FunctionCallbackInfo
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1244,7 +1244,7 @@ void VtkVolumePropertyWrap::SetInterpolationTypeToLinear(const Nan::FunctionCall
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1256,7 +1256,7 @@ void VtkVolumePropertyWrap::SetInterpolationTypeToNearest(const Nan::FunctionCal
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1271,7 +1271,7 @@ void VtkVolumePropertyWrap::SetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1286,7 +1286,7 @@ void VtkVolumePropertyWrap::SetScalarOpacity(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPiecewiseFunctionWrap *a1 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1307,7 +1307,7 @@ void VtkVolumePropertyWrap::SetScalarOpacityUnitDistance(const Nan::FunctionCall
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1321,7 +1321,7 @@ void VtkVolumePropertyWrap::SetScalarOpacityUnitDistance(const Nan::FunctionCall
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1344,7 +1344,7 @@ void VtkVolumePropertyWrap::SetShade(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1355,7 +1355,7 @@ void VtkVolumePropertyWrap::SetShade(const Nan::FunctionCallbackInfo<v8::Value>&
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1374,7 +1374,7 @@ void VtkVolumePropertyWrap::SetSpecular(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1388,7 +1388,7 @@ void VtkVolumePropertyWrap::SetSpecular(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1409,7 +1409,7 @@ void VtkVolumePropertyWrap::SetSpecularPower(const Nan::FunctionCallbackInfo<v8:
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1423,7 +1423,7 @@ void VtkVolumePropertyWrap::SetSpecularPower(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1444,7 +1444,7 @@ void VtkVolumePropertyWrap::ShadeOff(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1454,7 +1454,7 @@ void VtkVolumePropertyWrap::ShadeOff(const Nan::FunctionCallbackInfo<v8::Value>&
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1468,7 +1468,7 @@ void VtkVolumePropertyWrap::ShadeOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1478,7 +1478,7 @@ void VtkVolumePropertyWrap::ShadeOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1490,7 +1490,7 @@ void VtkVolumePropertyWrap::UpdateMTimes(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolumePropertyWrap *wrapper = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info.Holder());
 	vtkVolumeProperty *native = (vtkVolumeProperty *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

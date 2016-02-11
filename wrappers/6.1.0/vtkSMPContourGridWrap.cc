@@ -154,7 +154,7 @@ void VtkSMPContourGridWrap::MergePiecesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSMPContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkSMPContourGridWrap>(info.Holder());
 	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -166,7 +166,7 @@ void VtkSMPContourGridWrap::MergePiecesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSMPContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkSMPContourGridWrap>(info.Holder());
 	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkSMPContourGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkSMPContourGridWrap::InitPtpl();
+	VtkSMPContourGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkSMPContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSMPContourGridWrap::InitPtpl();
+		VtkSMPContourGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkSMPContourGridWrap::SetMergePieces(const Nan::FunctionCallbackInfo<v8::V
 	vtkSMPContourGrid *native = (vtkSMPContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

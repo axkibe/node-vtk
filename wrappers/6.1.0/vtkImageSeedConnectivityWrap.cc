@@ -132,7 +132,7 @@ void VtkImageSeedConnectivityWrap::AddSeed(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -144,7 +144,7 @@ void VtkImageSeedConnectivityWrap::AddSeed(const Nan::FunctionCallbackInfo<v8::V
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -184,7 +184,7 @@ void VtkImageSeedConnectivityWrap::GetConnector(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetConnector();
-		VtkImageConnectorWrap::InitPtpl();
+	VtkImageConnectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +285,7 @@ void VtkImageSeedConnectivityWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSeedConnectivityWrap::InitPtpl();
+	VtkImageSeedConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkImageSeedConnectivityWrap::RemoveAllSeeds(const Nan::FunctionCallbackInf
 {
 	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -325,7 +325,7 @@ void VtkImageSeedConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSeedConnectivityWrap::InitPtpl();
+		VtkImageSeedConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkImageSeedConnectivityWrap::SetDimensionality(const Nan::FunctionCallback
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkImageSeedConnectivityWrap::SetInputConnectValue(const Nan::FunctionCallb
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +384,7 @@ void VtkImageSeedConnectivityWrap::SetOutputConnectedValue(const Nan::FunctionCa
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkImageSeedConnectivityWrap::SetOutputUnconnectedValue(const Nan::Function
 	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

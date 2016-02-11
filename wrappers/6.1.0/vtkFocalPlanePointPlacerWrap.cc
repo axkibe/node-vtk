@@ -57,6 +57,9 @@ void VtkFocalPlanePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
 	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
 
+	Nan::SetPrototypeMethod(tpl, "GetPointBounds", GetPointBounds);
+	Nan::SetPrototypeMethod(tpl, "getPointBounds", GetPointBounds);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -1596,6 +1599,23 @@ void VtkFocalPlanePointPlacerWrap::GetOffset(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkFocalPlanePointPlacerWrap::GetPointBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFocalPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlanePointPlacerWrap>(info.Holder());
+	vtkFocalPlanePointPlacer *native = (vtkFocalPlanePointPlacer *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkFocalPlanePointPlacerWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFocalPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlanePointPlacerWrap>(info.Holder());
@@ -1629,7 +1649,7 @@ void VtkFocalPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkFocalPlanePointPlacerWrap::InitPtpl();
+	VtkFocalPlanePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1657,7 +1677,7 @@ void VtkFocalPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFocalPlanePointPlacerWrap::InitPtpl();
+		VtkFocalPlanePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1678,7 +1698,7 @@ void VtkFocalPlanePointPlacerWrap::SetOffset(const Nan::FunctionCallbackInfo<v8:
 	vtkFocalPlanePointPlacer *native = (vtkFocalPlanePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1705,7 +1725,7 @@ void VtkFocalPlanePointPlacerWrap::SetPointBounds(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1734,7 +1754,7 @@ void VtkFocalPlanePointPlacerWrap::SetPointBounds(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1756,7 +1776,7 @@ void VtkFocalPlanePointPlacerWrap::SetPointBounds(const Nan::FunctionCallbackInf
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

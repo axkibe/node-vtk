@@ -276,7 +276,7 @@ void VtkMultiProcessControllerWrap::Barrier(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -345,7 +345,7 @@ void VtkMultiProcessControllerWrap::CreateSubController(const Nan::FunctionCallb
 		r = native->CreateSubController(
 			(vtkProcessGroup *) a0->native.GetPointer()
 		);
-			VtkMultiProcessControllerWrap::InitPtpl();
+		VtkMultiProcessControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -475,7 +475,7 @@ void VtkMultiProcessControllerWrap::GetCommunicator(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetCommunicator();
-		VtkCommunicatorWrap::InitPtpl();
+	VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +498,7 @@ void VtkMultiProcessControllerWrap::GetGlobalController(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetGlobalController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -599,7 +599,7 @@ void VtkMultiProcessControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -629,7 +629,7 @@ void VtkMultiProcessControllerWrap::PartitionController(const Nan::FunctionCallb
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkMultiProcessControllerWrap::InitPtpl();
+			VtkMultiProcessControllerWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -748,7 +748,7 @@ void VtkMultiProcessControllerWrap::ReceiveDataObject(const Nan::FunctionCallbac
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkDataObjectWrap::InitPtpl();
+			VtkDataObjectWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -805,7 +805,7 @@ void VtkMultiProcessControllerWrap::RemoveAllRMICallbacks(const Nan::FunctionCal
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -855,7 +855,7 @@ void VtkMultiProcessControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiProcessControllerWrap::InitPtpl();
+		VtkMultiProcessControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -960,7 +960,7 @@ void VtkMultiProcessControllerWrap::SetBreakFlag(const Nan::FunctionCallbackInfo
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -980,7 +980,7 @@ void VtkMultiProcessControllerWrap::SetGlobalController(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -999,7 +999,7 @@ void VtkMultiProcessControllerWrap::SetNumberOfProcesses(const Nan::FunctionCall
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1019,7 +1019,7 @@ void VtkMultiProcessControllerWrap::SetSingleProcessObject(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProcessWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProcessWrap *a0 = ObjectWrap::Unwrap<VtkProcessWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1036,7 +1036,7 @@ void VtkMultiProcessControllerWrap::TriggerBreakRMIs(const Nan::FunctionCallback
 {
 	VtkMultiProcessControllerWrap *wrapper = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info.Holder());
 	vtkMultiProcessController *native = (vtkMultiProcessController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1055,7 +1055,7 @@ void VtkMultiProcessControllerWrap::TriggerRMI(const Nan::FunctionCallbackInfo<v
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1070,7 +1070,7 @@ void VtkMultiProcessControllerWrap::TriggerRMI(const Nan::FunctionCallbackInfo<v
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1094,7 +1094,7 @@ void VtkMultiProcessControllerWrap::TriggerRMIOnAllChildren(const Nan::FunctionC
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1108,7 +1108,7 @@ void VtkMultiProcessControllerWrap::TriggerRMIOnAllChildren(const Nan::FunctionC
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

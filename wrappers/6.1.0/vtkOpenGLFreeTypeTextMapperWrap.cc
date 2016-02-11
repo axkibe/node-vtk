@@ -134,7 +134,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::GetSize(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -164,7 +164,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::GetSize(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -212,7 +212,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
+	VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +231,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::ReleaseGraphicsResources(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +254,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::RenderOverlay(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -285,7 +285,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
+		VtkOpenGLFreeTypeTextMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -307,7 +307,7 @@ void VtkOpenGLFreeTypeTextMapperWrap::SetInput(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

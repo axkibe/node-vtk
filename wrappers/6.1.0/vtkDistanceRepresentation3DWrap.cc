@@ -175,7 +175,7 @@ void VtkDistanceRepresentation3DWrap::BuildRepresentation(const Nan::FunctionCal
 {
 	VtkDistanceRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentation3DWrap>(info.Holder());
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkDistanceRepresentation3DWrap::GetGlyphActor(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetGlyphActor();
-		VtkActorWrap::InitPtpl();
+	VtkActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelActor(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLabelActor();
-		VtkFollowerWrap::InitPtpl();
+	VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkDistanceRepresentation3DWrap::GetLabelProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLabelProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkDistanceRepresentation3DWrap::GetLineProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -387,7 +387,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint1DisplayPosition(const Nan::Functi
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -416,7 +416,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint1DisplayPosition(const Nan::Functi
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -443,7 +443,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint1WorldPosition(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint1WorldPosition(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +499,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint2DisplayPosition(const Nan::Functi
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -528,7 +528,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint2DisplayPosition(const Nan::Functi
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +555,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint2WorldPosition(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +584,7 @@ void VtkDistanceRepresentation3DWrap::GetPoint2WorldPosition(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkDistanceRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistanceRepresentation3DWrap::InitPtpl();
+	VtkDistanceRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -649,7 +649,7 @@ void VtkDistanceRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +722,7 @@ void VtkDistanceRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistanceRepresentation3DWrap::InitPtpl();
+		VtkDistanceRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -743,7 +743,7 @@ void VtkDistanceRepresentation3DWrap::SetGlyphScale(const Nan::FunctionCallbackI
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +762,7 @@ void VtkDistanceRepresentation3DWrap::SetLabelPosition(const Nan::FunctionCallba
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -789,7 +789,7 @@ void VtkDistanceRepresentation3DWrap::SetLabelScale(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -818,7 +818,7 @@ void VtkDistanceRepresentation3DWrap::SetLabelScale(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -834,7 +834,7 @@ void VtkDistanceRepresentation3DWrap::SetLabelScale(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -857,7 +857,7 @@ void VtkDistanceRepresentation3DWrap::SetMaximumNumberOfRulerTicks(const Nan::Fu
 	vtkDistanceRepresentation3D *native = (vtkDistanceRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -884,7 +884,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint1DisplayPosition(const Nan::Functi
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -913,7 +913,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint1DisplayPosition(const Nan::Functi
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +940,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint1WorldPosition(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +969,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint1WorldPosition(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -996,7 +996,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint2DisplayPosition(const Nan::Functi
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1025,7 +1025,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint2DisplayPosition(const Nan::Functi
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1052,7 +1052,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint2WorldPosition(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1081,7 +1081,7 @@ void VtkDistanceRepresentation3DWrap::SetPoint2WorldPosition(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

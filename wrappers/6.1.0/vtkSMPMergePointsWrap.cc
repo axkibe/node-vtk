@@ -98,7 +98,7 @@ void VtkSMPMergePointsWrap::FixSizeOfPointArray(const Nan::FunctionCallbackInfo<
 {
 	VtkSMPMergePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSMPMergePointsWrap>(info.Holder());
 	vtkSMPMergePoints *native = (vtkSMPMergePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -124,7 +124,7 @@ void VtkSMPMergePointsWrap::InitializeMerge(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSMPMergePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSMPMergePointsWrap>(info.Holder());
 	vtkSMPMergePoints *native = (vtkSMPMergePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkSMPMergePointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkSMPMergePointsWrap::InitPtpl();
+	VtkSMPMergePointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkSMPMergePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSMPMergePointsWrap::InitPtpl();
+		VtkSMPMergePointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

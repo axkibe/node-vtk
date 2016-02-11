@@ -94,6 +94,9 @@ void VtkPiecewiseFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNodeValue", GetNodeValue);
 	Nan::SetPrototypeMethod(tpl, "getNodeValue", GetNodeValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
 	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
@@ -219,7 +222,7 @@ void VtkPiecewiseFunctionWrap::AddSegment(const Nan::FunctionCallbackInfo<v8::Va
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -302,7 +305,7 @@ void VtkPiecewiseFunctionWrap::AllowDuplicateScalarsOff(const Nan::FunctionCallb
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -314,7 +317,7 @@ void VtkPiecewiseFunctionWrap::AllowDuplicateScalarsOn(const Nan::FunctionCallba
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +329,7 @@ void VtkPiecewiseFunctionWrap::ClampingOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -338,7 +341,7 @@ void VtkPiecewiseFunctionWrap::ClampingOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -353,7 +356,7 @@ void VtkPiecewiseFunctionWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +430,7 @@ void VtkPiecewiseFunctionWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkPiecewiseFunctionWrap::InitPtpl();
+			VtkPiecewiseFunctionWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -452,7 +455,7 @@ void VtkPiecewiseFunctionWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -560,6 +563,23 @@ void VtkPiecewiseFunctionWrap::GetNodeValue(const Nan::FunctionCallbackInfo<v8::
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkPiecewiseFunctionWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
+	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPiecewiseFunctionWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
@@ -613,7 +633,7 @@ void VtkPiecewiseFunctionWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -654,7 +674,7 @@ void VtkPiecewiseFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -670,7 +690,7 @@ void VtkPiecewiseFunctionWrap::RemoveAllPoints(const Nan::FunctionCallbackInfo<v
 {
 	VtkPiecewiseFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info.Holder());
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -715,7 +735,7 @@ void VtkPiecewiseFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPiecewiseFunctionWrap::InitPtpl();
+		VtkPiecewiseFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -736,7 +756,7 @@ void VtkPiecewiseFunctionWrap::SetAllowDuplicateScalars(const Nan::FunctionCallb
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -755,7 +775,7 @@ void VtkPiecewiseFunctionWrap::SetClamping(const Nan::FunctionCallbackInfo<v8::V
 	vtkPiecewiseFunction *native = (vtkPiecewiseFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -840,7 +860,7 @@ void VtkPiecewiseFunctionWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

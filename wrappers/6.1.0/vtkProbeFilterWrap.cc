@@ -186,7 +186,7 @@ void VtkProbeFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetSource();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkProbeFilterWrap::GetValidPoints(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetValidPoints();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkProbeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkProbeFilterWrap::InitPtpl();
+	VtkProbeFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkProbeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProbeFilterWrap::InitPtpl();
+		VtkProbeFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -331,7 +331,7 @@ void VtkProbeFilterWrap::SetPassCellArrays(const Nan::FunctionCallbackInfo<v8::V
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkProbeFilterWrap::SetPassPointArrays(const Nan::FunctionCallbackInfo<v8::
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -370,7 +370,7 @@ void VtkProbeFilterWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -390,7 +390,7 @@ void VtkProbeFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -409,7 +409,7 @@ void VtkProbeFilterWrap::SetSpatialMatch(const Nan::FunctionCallbackInfo<v8::Val
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +429,7 @@ void VtkProbeFilterWrap::SetValidPointMaskArrayName(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +446,7 @@ void VtkProbeFilterWrap::SpatialMatchOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkProbeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProbeFilterWrap>(info.Holder());
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -458,7 +458,7 @@ void VtkProbeFilterWrap::SpatialMatchOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkProbeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProbeFilterWrap>(info.Holder());
 	vtkProbeFilter *native = (vtkProbeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
