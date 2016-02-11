@@ -135,7 +135,7 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::NewInstance(const Nan::Fu
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
+	VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkOpenGLCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::F
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
+		VtkOpenGLCoincidentTopologyResolutionPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

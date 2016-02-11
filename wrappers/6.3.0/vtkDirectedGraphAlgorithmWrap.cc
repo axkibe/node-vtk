@@ -125,7 +125,7 @@ void VtkDirectedGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkDirectedGraphWrap::InitPtpl();
+		VtkDirectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -144,7 +144,7 @@ void VtkDirectedGraphAlgorithmWrap::GetOutput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetOutput();
-		VtkDirectedGraphWrap::InitPtpl();
+	VtkDirectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkDirectedGraphAlgorithmWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkDirectedGraphAlgorithmWrap::InitPtpl();
+	VtkDirectedGraphAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkDirectedGraphAlgorithmWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDirectedGraphAlgorithmWrap::InitPtpl();
+		VtkDirectedGraphAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkDirectedGraphAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +254,7 @@ void VtkDirectedGraphAlgorithmWrap::SetInputData(const Nan::FunctionCallbackInfo
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

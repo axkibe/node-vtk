@@ -154,7 +154,7 @@ void VtkImplicitFunctionWrap::FunctionGradient(const Nan::FunctionCallbackInfo<v
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -184,7 +184,7 @@ void VtkImplicitFunctionWrap::FunctionGradient(const Nan::FunctionCallbackInfo<v
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -234,7 +234,7 @@ void VtkImplicitFunctionWrap::FunctionGradient(const Nan::FunctionCallbackInfo<v
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -254,7 +254,7 @@ void VtkImplicitFunctionWrap::FunctionGradient(const Nan::FunctionCallbackInfo<v
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -264,6 +264,89 @@ void VtkImplicitFunctionWrap::FunctionGradient(const Nan::FunctionCallbackInfo<v
 				(double *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->FunctionGradient(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->FunctionGradient(
+			b0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				double const * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->FunctionGradient(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+				Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+				memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+				info.GetReturnValue().Set(at);
+				return;
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -376,7 +459,7 @@ void VtkImplicitFunctionWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -421,7 +504,7 @@ void VtkImplicitFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,7 +532,7 @@ void VtkImplicitFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitFunctionWrap::InitPtpl();
+		VtkImplicitFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -478,7 +561,7 @@ void VtkImplicitFunctionWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -507,7 +590,7 @@ void VtkImplicitFunctionWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +603,7 @@ void VtkImplicitFunctionWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::V
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

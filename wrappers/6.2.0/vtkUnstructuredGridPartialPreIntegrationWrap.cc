@@ -100,7 +100,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::BuildPsiTable(const Nan::Func
 {
 	VtkUnstructuredGridPartialPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPartialPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPartialPreIntegration *native = (vtkUnstructuredGridPartialPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +132,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::Initialize(const Nan::Functio
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -180,7 +180,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::NewInstance(const Nan::Functi
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
+	VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkUnstructuredGridPartialPreIntegrationWrap::SafeDownCast(const Nan::Funct
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
+		VtkUnstructuredGridPartialPreIntegrationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

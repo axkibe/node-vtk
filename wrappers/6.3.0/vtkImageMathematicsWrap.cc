@@ -192,7 +192,7 @@ void VtkImageMathematicsWrap::DivideByZeroToCOff(const Nan::FunctionCallbackInfo
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkImageMathematicsWrap::DivideByZeroToCOn(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkImageMathematicsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMathematicsWrap::InitPtpl();
+	VtkImageMathematicsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkImageMathematicsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMathematicsWrap::InitPtpl();
+		VtkImageMathematicsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkImageMathematicsWrap::SetConstantC(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkImageMathematicsWrap::SetConstantK(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkImageMathematicsWrap::SetDivideByZeroToC(const Nan::FunctionCallbackInfo
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkImageMathematicsWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -442,7 +442,7 @@ void VtkImageMathematicsWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +461,7 @@ void VtkImageMathematicsWrap::SetOperation(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +478,7 @@ void VtkImageMathematicsWrap::SetOperationToATAN(const Nan::FunctionCallbackInfo
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +490,7 @@ void VtkImageMathematicsWrap::SetOperationToATAN2(const Nan::FunctionCallbackInf
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -502,7 +502,7 @@ void VtkImageMathematicsWrap::SetOperationToAbsoluteValue(const Nan::FunctionCal
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -514,7 +514,7 @@ void VtkImageMathematicsWrap::SetOperationToAdd(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -526,7 +526,7 @@ void VtkImageMathematicsWrap::SetOperationToAddConstant(const Nan::FunctionCallb
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -538,7 +538,7 @@ void VtkImageMathematicsWrap::SetOperationToComplexMultiply(const Nan::FunctionC
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -550,7 +550,7 @@ void VtkImageMathematicsWrap::SetOperationToConjugate(const Nan::FunctionCallbac
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +562,7 @@ void VtkImageMathematicsWrap::SetOperationToCos(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +574,7 @@ void VtkImageMathematicsWrap::SetOperationToDivide(const Nan::FunctionCallbackIn
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,7 +586,7 @@ void VtkImageMathematicsWrap::SetOperationToExp(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +598,7 @@ void VtkImageMathematicsWrap::SetOperationToInvert(const Nan::FunctionCallbackIn
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -610,7 +610,7 @@ void VtkImageMathematicsWrap::SetOperationToLog(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -622,7 +622,7 @@ void VtkImageMathematicsWrap::SetOperationToMax(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -634,7 +634,7 @@ void VtkImageMathematicsWrap::SetOperationToMin(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -646,7 +646,7 @@ void VtkImageMathematicsWrap::SetOperationToMultiply(const Nan::FunctionCallback
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -658,7 +658,7 @@ void VtkImageMathematicsWrap::SetOperationToMultiplyByK(const Nan::FunctionCallb
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -670,7 +670,7 @@ void VtkImageMathematicsWrap::SetOperationToReplaceCByK(const Nan::FunctionCallb
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -682,7 +682,7 @@ void VtkImageMathematicsWrap::SetOperationToSin(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +694,7 @@ void VtkImageMathematicsWrap::SetOperationToSquare(const Nan::FunctionCallbackIn
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -706,7 +706,7 @@ void VtkImageMathematicsWrap::SetOperationToSquareRoot(const Nan::FunctionCallba
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -718,7 +718,7 @@ void VtkImageMathematicsWrap::SetOperationToSubtract(const Nan::FunctionCallback
 {
 	VtkImageMathematicsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMathematicsWrap>(info.Holder());
 	vtkImageMathematics *native = (vtkImageMathematics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -29,6 +29,9 @@ class VtkImageHistogramStatisticsWrap : public VtkImageHistogramWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetAutoRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoRangeExpansionFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAutoRangePercentiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMean(const Nan::FunctionCallbackInfo<v8::Value>& info);

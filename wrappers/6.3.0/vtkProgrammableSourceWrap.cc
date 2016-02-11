@@ -133,7 +133,7 @@ void VtkProgrammableSourceWrap::GetPolyDataOutput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPolyDataOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,7 +156,7 @@ void VtkProgrammableSourceWrap::GetRectilinearGridOutput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetRectilinearGridOutput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkProgrammableSourceWrap::GetStructuredGridOutput(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetStructuredGridOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkProgrammableSourceWrap::GetStructuredPointsOutput(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetStructuredPointsOutput();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkProgrammableSourceWrap::GetUnstructuredGridOutput(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetUnstructuredGridOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkProgrammableSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkProgrammableSourceWrap::InitPtpl();
+	VtkProgrammableSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkProgrammableSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProgrammableSourceWrap::InitPtpl();
+		VtkProgrammableSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

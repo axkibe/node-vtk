@@ -161,7 +161,7 @@ void VtkDataSetTriangleFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataSetTriangleFilterWrap::InitPtpl();
+	VtkDataSetTriangleFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkDataSetTriangleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataSetTriangleFilterWrap::InitPtpl();
+		VtkDataSetTriangleFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkDataSetTriangleFilterWrap::SetTetrahedraOnly(const Nan::FunctionCallback
 	vtkDataSetTriangleFilter *native = (vtkDataSetTriangleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,7 @@ void VtkDataSetTriangleFilterWrap::TetrahedraOnlyOff(const Nan::FunctionCallback
 {
 	VtkDataSetTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetTriangleFilterWrap>(info.Holder());
 	vtkDataSetTriangleFilter *native = (vtkDataSetTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkDataSetTriangleFilterWrap::TetrahedraOnlyOn(const Nan::FunctionCallbackI
 {
 	VtkDataSetTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetTriangleFilterWrap>(info.Holder());
 	vtkDataSetTriangleFilter *native = (vtkDataSetTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

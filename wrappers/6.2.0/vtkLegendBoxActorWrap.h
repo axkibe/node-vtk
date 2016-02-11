@@ -33,6 +33,7 @@ class VtkLegendBoxActorWrap : public VtkActor2DWrap
 		static void BorderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BoxOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BoxOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,6 +41,7 @@ class VtkLegendBoxActorWrap : public VtkActor2DWrap
 		static void GetBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoxProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEntryColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEntryIcon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEntryString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEntrySymbol(const Nan::FunctionCallbackInfo<v8::Value>& info);

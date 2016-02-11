@@ -115,7 +115,7 @@ void VtkCompositeDataPipelineWrap::BLOCK_AMOUNT_OF_DETAIL(const Nan::FunctionCal
 		return;
 	}
 	r = native->BLOCK_AMOUNT_OF_DETAIL();
-		VtkInformationDoubleKeyWrap::InitPtpl();
+	VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -138,7 +138,7 @@ void VtkCompositeDataPipelineWrap::COMPOSITE_DATA_META_DATA(const Nan::FunctionC
 		return;
 	}
 	r = native->COMPOSITE_DATA_META_DATA();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkCompositeDataPipelineWrap::GetCompositeOutputData(const Nan::FunctionCal
 		r = native->GetCompositeOutputData(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +227,7 @@ void VtkCompositeDataPipelineWrap::LOAD_REQUESTED_BLOCKS(const Nan::FunctionCall
 		return;
 	}
 	r = native->LOAD_REQUESTED_BLOCKS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkCompositeDataPipelineWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompositeDataPipelineWrap::InitPtpl();
+	VtkCompositeDataPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompositeDataPipelineWrap::InitPtpl();
+		VtkCompositeDataPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkCompositeDataPipelineWrap::UPDATE_COMPOSITE_INDICES(const Nan::FunctionC
 		return;
 	}
 	r = native->UPDATE_COMPOSITE_INDICES();
-		VtkInformationIntegerVectorKeyWrap::InitPtpl();
+	VtkInformationIntegerVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

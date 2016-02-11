@@ -83,6 +83,9 @@ void VtkMFIXReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -137,7 +140,7 @@ void VtkMFIXReaderWrap::DisableAllCellArrays(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -149,7 +152,7 @@ void VtkMFIXReaderWrap::EnableAllCellArrays(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,6 +315,23 @@ void VtkMFIXReaderWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkMFIXReaderWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
+	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkMFIXReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMFIXReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMFIXReaderWrap>(info.Holder());
@@ -345,7 +365,7 @@ void VtkMFIXReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkMFIXReaderWrap::InitPtpl();
+	VtkMFIXReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +393,7 @@ void VtkMFIXReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMFIXReaderWrap::InitPtpl();
+		VtkMFIXReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,7 +417,7 @@ void VtkMFIXReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -419,7 +439,7 @@ void VtkMFIXReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +458,7 @@ void VtkMFIXReaderWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkMFIXReader *native = (vtkMFIXReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -465,7 +485,7 @@ void VtkMFIXReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +514,7 @@ void VtkMFIXReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +528,7 @@ void VtkMFIXReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -149,7 +149,7 @@ void VtkIncrementalOctreePointLocatorWrap::BuildCubicOctreeOff(const Nan::Functi
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkIncrementalOctreePointLocatorWrap::BuildCubicOctreeOn(const Nan::Functio
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkIncrementalOctreePointLocatorWrap::BuildLocator(const Nan::FunctionCallb
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindClosestNPoints(const Nan::Functio
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -235,7 +235,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindClosestNPoints(const Nan::Functio
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -271,7 +271,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindPointsWithinRadius(const Nan::Fun
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -306,7 +306,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindPointsWithinRadius(const Nan::Fun
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -342,7 +342,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindPointsWithinSquaredRadius(const N
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -377,7 +377,7 @@ void VtkIncrementalOctreePointLocatorWrap::FindPointsWithinSquaredRadius(const N
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -398,7 +398,7 @@ void VtkIncrementalOctreePointLocatorWrap::FreeSearchStructure(const Nan::Functi
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -415,7 +415,7 @@ void VtkIncrementalOctreePointLocatorWrap::GenerateRepresentation(const Nan::Fun
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -469,7 +469,7 @@ void VtkIncrementalOctreePointLocatorWrap::GetLocatorPoints(const Nan::FunctionC
 		return;
 	}
 	r = native->GetLocatorPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -607,7 +607,7 @@ void VtkIncrementalOctreePointLocatorWrap::Initialize(const Nan::FunctionCallbac
 {
 	VtkIncrementalOctreePointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreePointLocatorWrap>(info.Holder());
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -648,7 +648,7 @@ void VtkIncrementalOctreePointLocatorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkIncrementalOctreePointLocatorWrap::InitPtpl();
+	VtkIncrementalOctreePointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -676,7 +676,7 @@ void VtkIncrementalOctreePointLocatorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIncrementalOctreePointLocatorWrap::InitPtpl();
+		VtkIncrementalOctreePointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -697,7 +697,7 @@ void VtkIncrementalOctreePointLocatorWrap::SetBuildCubicOctree(const Nan::Functi
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -716,7 +716,7 @@ void VtkIncrementalOctreePointLocatorWrap::SetMaxPointsPerLeaf(const Nan::Functi
 	vtkIncrementalOctreePointLocator *native = (vtkIncrementalOctreePointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

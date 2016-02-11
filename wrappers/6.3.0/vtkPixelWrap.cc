@@ -261,7 +261,7 @@ void VtkPixelWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkPixelWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkPixelWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -447,7 +447,7 @@ void VtkPixelWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -497,7 +497,7 @@ void VtkPixelWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -517,7 +517,7 @@ void VtkPixelWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -555,7 +555,7 @@ void VtkPixelWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -585,7 +585,7 @@ void VtkPixelWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -635,7 +635,7 @@ void VtkPixelWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -655,7 +655,7 @@ void VtkPixelWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -693,7 +693,7 @@ void VtkPixelWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -723,7 +723,7 @@ void VtkPixelWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -773,7 +773,7 @@ void VtkPixelWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -793,7 +793,7 @@ void VtkPixelWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -831,7 +831,7 @@ void VtkPixelWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -861,7 +861,7 @@ void VtkPixelWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -911,7 +911,7 @@ void VtkPixelWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -931,7 +931,7 @@ void VtkPixelWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -979,7 +979,7 @@ void VtkPixelWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkPixelWrap::InitPtpl();
+	VtkPixelWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1007,7 +1007,7 @@ void VtkPixelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPixelWrap::InitPtpl();
+		VtkPixelWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

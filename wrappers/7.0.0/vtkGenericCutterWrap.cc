@@ -136,7 +136,7 @@ void VtkGenericCutterWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericCutterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCutterWrap>(info.Holder());
 	vtkGenericCutter *native = (vtkGenericCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -148,7 +148,7 @@ void VtkGenericCutterWrap::GenerateCutScalarsOff(const Nan::FunctionCallbackInfo
 {
 	VtkGenericCutterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCutterWrap>(info.Holder());
 	vtkGenericCutter *native = (vtkGenericCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -160,7 +160,7 @@ void VtkGenericCutterWrap::GenerateCutScalarsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericCutterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCutterWrap>(info.Holder());
 	vtkGenericCutter *native = (vtkGenericCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkGenericCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -214,7 +214,7 @@ void VtkGenericCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -229,7 +229,7 @@ void VtkGenericCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -271,7 +271,7 @@ void VtkGenericCutterWrap::GetCutFunction(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetCutFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkGenericCutterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkGenericCutterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericCutterWrap::InitPtpl();
+	VtkGenericCutterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -416,7 +416,7 @@ void VtkGenericCutterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericCutterWrap::InitPtpl();
+		VtkGenericCutterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -438,7 +438,7 @@ void VtkGenericCutterWrap::SetCutFunction(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -457,7 +457,7 @@ void VtkGenericCutterWrap::SetGenerateCutScalars(const Nan::FunctionCallbackInfo
 	vtkGenericCutter *native = (vtkGenericCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -477,7 +477,7 @@ void VtkGenericCutterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -496,7 +496,7 @@ void VtkGenericCutterWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo<v
 	vtkGenericCutter *native = (vtkGenericCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -517,7 +517,7 @@ void VtkGenericCutterWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& 
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

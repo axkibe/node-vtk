@@ -135,7 +135,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
-		VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
+	VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkHierarchicalDataSetGeometryFilterWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
+		VtkHierarchicalDataSetGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

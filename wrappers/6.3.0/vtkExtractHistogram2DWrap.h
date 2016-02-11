@@ -32,7 +32,10 @@ class VtkExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 		static void Aggregate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBinWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComponentsToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCustomHistogramExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumBinCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputHistogramImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRowMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);

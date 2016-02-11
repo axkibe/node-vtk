@@ -125,7 +125,7 @@ void VtkContinuousValueWidgetWrap::GetContinuousValueWidgetRepresentation(const 
 		return;
 	}
 	r = native->GetContinuousValueWidgetRepresentation();
-		VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
+	VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkContinuousValueWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkContinuousValueWidgetWrap::InitPtpl();
+	VtkContinuousValueWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkContinuousValueWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContinuousValueWidgetWrap::InitPtpl();
+		VtkContinuousValueWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkContinuousValueWidgetWrap::SetRepresentation(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContinuousValueWidgetRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContinuousValueWidgetRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkContinuousValueWidgetRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -253,7 +253,7 @@ void VtkContinuousValueWidgetWrap::SetValue(const Nan::FunctionCallbackInfo<v8::
 	vtkContinuousValueWidget *native = (vtkContinuousValueWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

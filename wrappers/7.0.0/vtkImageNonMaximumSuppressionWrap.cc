@@ -193,7 +193,7 @@ void VtkImageNonMaximumSuppressionWrap::HandleBoundariesOff(const Nan::FunctionC
 {
 	VtkImageNonMaximumSuppressionWrap *wrapper = ObjectWrap::Unwrap<VtkImageNonMaximumSuppressionWrap>(info.Holder());
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkImageNonMaximumSuppressionWrap::HandleBoundariesOn(const Nan::FunctionCa
 {
 	VtkImageNonMaximumSuppressionWrap *wrapper = ObjectWrap::Unwrap<VtkImageNonMaximumSuppressionWrap>(info.Holder());
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkImageNonMaximumSuppressionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageNonMaximumSuppressionWrap::InitPtpl();
+	VtkImageNonMaximumSuppressionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkImageNonMaximumSuppressionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageNonMaximumSuppressionWrap::InitPtpl();
+		VtkImageNonMaximumSuppressionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkImageNonMaximumSuppressionWrap::SetDimensionality(const Nan::FunctionCal
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkImageNonMaximumSuppressionWrap::SetHandleBoundaries(const Nan::FunctionC
 	vtkImageNonMaximumSuppression *native = (vtkImageNonMaximumSuppression *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkImageNonMaximumSuppressionWrap::SetMagnitudeInputData(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +354,7 @@ void VtkImageNonMaximumSuppressionWrap::SetVectorInputData(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

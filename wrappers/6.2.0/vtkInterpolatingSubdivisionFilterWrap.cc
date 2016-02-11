@@ -154,7 +154,7 @@ void VtkInterpolatingSubdivisionFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkInterpolatingSubdivisionFilterWrap::InitPtpl();
+	VtkInterpolatingSubdivisionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkInterpolatingSubdivisionFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInterpolatingSubdivisionFilterWrap::InitPtpl();
+		VtkInterpolatingSubdivisionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkInterpolatingSubdivisionFilterWrap::SetNumberOfSubdivisions(const Nan::F
 	vtkInterpolatingSubdivisionFilter *native = (vtkInterpolatingSubdivisionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

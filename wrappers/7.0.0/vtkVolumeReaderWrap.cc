@@ -50,11 +50,20 @@ void VtkVolumeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataOrigin", GetDataOrigin);
+	Nan::SetPrototypeMethod(tpl, "getDataOrigin", GetDataOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataSpacing", GetDataSpacing);
+	Nan::SetPrototypeMethod(tpl, "getDataSpacing", GetDataSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "GetFilePattern", GetFilePattern);
 	Nan::SetPrototypeMethod(tpl, "getFilePattern", GetFilePattern);
 
 	Nan::SetPrototypeMethod(tpl, "GetFilePrefix", GetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "getFilePrefix", GetFilePrefix);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageRange", GetImageRange);
+	Nan::SetPrototypeMethod(tpl, "getImageRange", GetImageRange);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -122,6 +131,40 @@ void VtkVolumeReaderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkVolumeReaderWrap::GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
+	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkVolumeReaderWrap::GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
+	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVolumeReaderWrap::GetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
@@ -148,6 +191,23 @@ void VtkVolumeReaderWrap::GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetFilePrefix();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkVolumeReaderWrap::GetImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeReaderWrap>(info.Holder());
+	vtkVolumeReader *native = (vtkVolumeReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,7 +243,7 @@ void VtkVolumeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeReaderWrap::InitPtpl();
+	VtkVolumeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +271,7 @@ void VtkVolumeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeReaderWrap::InitPtpl();
+		VtkVolumeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -240,7 +300,7 @@ void VtkVolumeReaderWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -269,7 +329,7 @@ void VtkVolumeReaderWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -285,7 +345,7 @@ void VtkVolumeReaderWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -316,7 +376,7 @@ void VtkVolumeReaderWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -345,7 +405,7 @@ void VtkVolumeReaderWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +421,7 @@ void VtkVolumeReaderWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -385,7 +445,7 @@ void VtkVolumeReaderWrap::SetFilePattern(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +465,7 @@ void VtkVolumeReaderWrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -432,7 +492,7 @@ void VtkVolumeReaderWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +521,7 @@ void VtkVolumeReaderWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +535,7 @@ void VtkVolumeReaderWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

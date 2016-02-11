@@ -137,7 +137,7 @@ void VtkOggTheoraWriterWrap::End(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,7 +290,7 @@ void VtkOggTheoraWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkOggTheoraWriterWrap::InitPtpl();
+	VtkOggTheoraWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -318,7 +318,7 @@ void VtkOggTheoraWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOggTheoraWriterWrap::InitPtpl();
+		VtkOggTheoraWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +339,7 @@ void VtkOggTheoraWriterWrap::SetQuality(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -358,7 +358,7 @@ void VtkOggTheoraWriterWrap::SetRate(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkOggTheoraWriterWrap::SetSubsampling(const Nan::FunctionCallbackInfo<v8::
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -394,7 +394,7 @@ void VtkOggTheoraWriterWrap::Start(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -406,7 +406,7 @@ void VtkOggTheoraWriterWrap::SubsamplingOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkOggTheoraWriterWrap::SubsamplingOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -430,7 +430,7 @@ void VtkOggTheoraWriterWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkOggTheoraWriterWrap *wrapper = ObjectWrap::Unwrap<VtkOggTheoraWriterWrap>(info.Holder());
 	vtkOggTheoraWriter *native = (vtkOggTheoraWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

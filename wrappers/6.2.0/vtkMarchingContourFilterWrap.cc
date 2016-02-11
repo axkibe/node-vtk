@@ -165,7 +165,7 @@ void VtkMarchingContourFilterWrap::ComputeGradientsOff(const Nan::FunctionCallba
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkMarchingContourFilterWrap::ComputeGradientsOn(const Nan::FunctionCallbac
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkMarchingContourFilterWrap::ComputeNormalsOff(const Nan::FunctionCallback
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkMarchingContourFilterWrap::ComputeNormalsOn(const Nan::FunctionCallbackI
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkMarchingContourFilterWrap::ComputeScalarsOff(const Nan::FunctionCallback
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkMarchingContourFilterWrap::ComputeScalarsOn(const Nan::FunctionCallbackI
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkMarchingContourFilterWrap::CreateDefaultLocator(const Nan::FunctionCallb
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -261,7 +261,7 @@ void VtkMarchingContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -291,7 +291,7 @@ void VtkMarchingContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -306,7 +306,7 @@ void VtkMarchingContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -390,7 +390,7 @@ void VtkMarchingContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -484,7 +484,7 @@ void VtkMarchingContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkMarchingContourFilterWrap::InitPtpl();
+	VtkMarchingContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -512,7 +512,7 @@ void VtkMarchingContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMarchingContourFilterWrap::InitPtpl();
+		VtkMarchingContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -533,7 +533,7 @@ void VtkMarchingContourFilterWrap::SetComputeGradients(const Nan::FunctionCallba
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +552,7 @@ void VtkMarchingContourFilterWrap::SetComputeNormals(const Nan::FunctionCallback
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -571,7 +571,7 @@ void VtkMarchingContourFilterWrap::SetComputeScalars(const Nan::FunctionCallback
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkMarchingContourFilterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkMarchingContourFilterWrap::SetNumberOfContours(const Nan::FunctionCallba
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +629,7 @@ void VtkMarchingContourFilterWrap::SetUseScalarTree(const Nan::FunctionCallbackI
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkMarchingContourFilterWrap::SetValue(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -669,7 +669,7 @@ void VtkMarchingContourFilterWrap::UseScalarTreeOff(const Nan::FunctionCallbackI
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -681,7 +681,7 @@ void VtkMarchingContourFilterWrap::UseScalarTreeOn(const Nan::FunctionCallbackIn
 {
 	VtkMarchingContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingContourFilterWrap>(info.Holder());
 	vtkMarchingContourFilter *native = (vtkMarchingContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

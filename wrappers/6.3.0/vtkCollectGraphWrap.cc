@@ -145,7 +145,7 @@ void VtkCollectGraphWrap::GetController(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkCollectGraphWrap::GetSocketController(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSocketController();
-		VtkSocketControllerWrap::InitPtpl();
+	VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkCollectGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkCollectGraphWrap::InitPtpl();
+	VtkCollectGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkCollectGraphWrap::PassThroughOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCollectGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollectGraphWrap>(info.Holder());
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkCollectGraphWrap::PassThroughOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCollectGraphWrap *wrapper = ObjectWrap::Unwrap<VtkCollectGraphWrap>(info.Holder());
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +293,7 @@ void VtkCollectGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCollectGraphWrap::InitPtpl();
+		VtkCollectGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkCollectGraphWrap::SetController(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkCollectGraphWrap::SetOutputType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -353,7 +353,7 @@ void VtkCollectGraphWrap::SetPassThrough(const Nan::FunctionCallbackInfo<v8::Val
 	vtkCollectGraph *native = (vtkCollectGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -373,7 +373,7 @@ void VtkCollectGraphWrap::SetSocketController(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

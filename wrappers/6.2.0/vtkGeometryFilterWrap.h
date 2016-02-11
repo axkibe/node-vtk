@@ -36,6 +36,7 @@ class VtkGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void ExtentClippingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);

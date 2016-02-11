@@ -102,7 +102,7 @@ void VtkStructuredPointsCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredPointsWrap *a0 = ObjectWrap::Unwrap<VtkStructuredPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -140,7 +140,7 @@ void VtkStructuredPointsCollectionWrap::GetNextItem(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetNextItem();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkStructuredPointsCollectionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredPointsCollectionWrap::InitPtpl();
+	VtkStructuredPointsCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkStructuredPointsCollectionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredPointsCollectionWrap::InitPtpl();
+		VtkStructuredPointsCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -192,7 +192,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetLayout(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetLayout();
-		VtkTreeMapLayoutWrap::InitPtpl();
+	VtkTreeMapLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +229,7 @@ void VtkInteractorStyleTreeMapHoverWrap::GetTreeMapToPolyData(const Nan::Functio
 		return;
 	}
 	r = native->GetTreeMapToPolyData();
-		VtkTreeMapToPolyDataWrap::InitPtpl();
+	VtkTreeMapToPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +245,7 @@ void VtkInteractorStyleTreeMapHoverWrap::HighLightCurrentSelectedItem(const Nan:
 {
 	VtkInteractorStyleTreeMapHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTreeMapHoverWrap>(info.Holder());
 	vtkInteractorStyleTreeMapHover *native = (vtkInteractorStyleTreeMapHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -286,7 +286,7 @@ void VtkInteractorStyleTreeMapHoverWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleTreeMapHoverWrap::InitPtpl();
+	VtkInteractorStyleTreeMapHoverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +302,7 @@ void VtkInteractorStyleTreeMapHoverWrap::OnLeftButtonUp(const Nan::FunctionCallb
 {
 	VtkInteractorStyleTreeMapHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTreeMapHoverWrap>(info.Holder());
 	vtkInteractorStyleTreeMapHover *native = (vtkInteractorStyleTreeMapHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -314,7 +314,7 @@ void VtkInteractorStyleTreeMapHoverWrap::OnMouseMove(const Nan::FunctionCallback
 {
 	VtkInteractorStyleTreeMapHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTreeMapHoverWrap>(info.Holder());
 	vtkInteractorStyleTreeMapHover *native = (vtkInteractorStyleTreeMapHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -338,7 +338,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleTreeMapHoverWrap::InitPtpl();
+		VtkInteractorStyleTreeMapHoverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -363,7 +363,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetHighLightColor(const Nan::FunctionCa
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -386,7 +386,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetHighLightWidth(const Nan::FunctionCa
 	vtkInteractorStyleTreeMapHover *native = (vtkInteractorStyleTreeMapHover *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -406,7 +406,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetInteractor(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +426,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetLabelField(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +446,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetLayout(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeMapLayoutWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeMapLayoutWrap *a0 = ObjectWrap::Unwrap<VtkTreeMapLayoutWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +469,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetSelectionLightColor(const Nan::Funct
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -492,7 +492,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetSelectionWidth(const Nan::FunctionCa
 	vtkInteractorStyleTreeMapHover *native = (vtkInteractorStyleTreeMapHover *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -512,7 +512,7 @@ void VtkInteractorStyleTreeMapHoverWrap::SetTreeMapToPolyData(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeMapToPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeMapToPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkTreeMapToPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

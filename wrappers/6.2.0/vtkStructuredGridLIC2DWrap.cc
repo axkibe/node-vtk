@@ -153,7 +153,7 @@ void VtkStructuredGridLIC2DWrap::GetContext(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkStructuredGridLIC2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredGridLIC2DWrap::InitPtpl();
+	VtkStructuredGridLIC2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkStructuredGridLIC2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredGridLIC2DWrap::InitPtpl();
+		VtkStructuredGridLIC2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -381,7 +381,7 @@ void VtkStructuredGridLIC2DWrap::SetMagnification(const Nan::FunctionCallbackInf
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -400,7 +400,7 @@ void VtkStructuredGridLIC2DWrap::SetStepSize(const Nan::FunctionCallbackInfo<v8:
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +419,7 @@ void VtkStructuredGridLIC2DWrap::SetSteps(const Nan::FunctionCallbackInfo<v8::Va
 	vtkStructuredGridLIC2D *native = (vtkStructuredGridLIC2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

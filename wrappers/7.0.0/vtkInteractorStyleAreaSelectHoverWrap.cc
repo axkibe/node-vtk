@@ -182,7 +182,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::GetLayout(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetLayout();
-		VtkAreaLayoutWrap::InitPtpl();
+	VtkAreaLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
+	VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::OnMouseMove(const Nan::FunctionCallb
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +281,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
+		VtkInteractorStyleAreaSelectHoverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetHighLightColor(const Nan::Functio
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -329,7 +329,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetHighLightWidth(const Nan::Functio
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +349,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetInteractor(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetLabelField(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -389,7 +389,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetLayout(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -408,7 +408,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::SetUseRectangularCoordinates(const N
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +425,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::UseRectangularCoordinatesOff(const N
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -437,7 +437,7 @@ void VtkInteractorStyleAreaSelectHoverWrap::UseRectangularCoordinatesOn(const Na
 {
 	VtkInteractorStyleAreaSelectHoverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleAreaSelectHoverWrap>(info.Holder());
 	vtkInteractorStyleAreaSelectHover *native = (vtkInteractorStyleAreaSelectHover *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

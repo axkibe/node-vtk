@@ -220,7 +220,7 @@ void VtkInteractorEventRecorderWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorEventRecorderWrap::InitPtpl();
+	VtkInteractorEventRecorderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -236,7 +236,7 @@ void VtkInteractorEventRecorderWrap::Play(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkInteractorEventRecorderWrap::ReadFromInputStringOff(const Nan::FunctionC
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkInteractorEventRecorderWrap::ReadFromInputStringOn(const Nan::FunctionCa
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkInteractorEventRecorderWrap::Record(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkInteractorEventRecorderWrap::Rewind(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkInteractorEventRecorderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorEventRecorderWrap::InitPtpl();
+		VtkInteractorEventRecorderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkInteractorEventRecorderWrap::SetEnabled(const Nan::FunctionCallbackInfo<
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +349,7 @@ void VtkInteractorEventRecorderWrap::SetFileName(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkInteractorEventRecorderWrap::SetInputString(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -389,7 +389,7 @@ void VtkInteractorEventRecorderWrap::SetInteractor(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -408,7 +408,7 @@ void VtkInteractorEventRecorderWrap::SetReadFromInputString(const Nan::FunctionC
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +425,7 @@ void VtkInteractorEventRecorderWrap::Stop(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorEventRecorderWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorEventRecorderWrap>(info.Holder());
 	vtkInteractorEventRecorder *native = (vtkInteractorEventRecorder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

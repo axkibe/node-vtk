@@ -145,7 +145,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
+	VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +164,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::ReleaseGraphicsResources(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -193,7 +193,7 @@ void VtkFreeTypeLabelRenderStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
+		VtkFreeTypeLabelRenderStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

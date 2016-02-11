@@ -167,7 +167,7 @@ void VtkPainterPolyDataMapperWrap::GetPainter(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPainter();
-		VtkPainterWrap::InitPtpl();
+	VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,7 +190,7 @@ void VtkPainterPolyDataMapperWrap::GetSelectionPainter(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectionPainter();
-		VtkPainterWrap::InitPtpl();
+	VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkPainterPolyDataMapperWrap::MapDataArrayToMultiTextureAttribute(const Nan
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -284,7 +284,7 @@ void VtkPainterPolyDataMapperWrap::MapDataArrayToVertexAttribute(const Nan::Func
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -314,7 +314,7 @@ void VtkPainterPolyDataMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkPainterPolyDataMapperWrap::InitPtpl();
+	VtkPainterPolyDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkPainterPolyDataMapperWrap::ReleaseGraphicsResources(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkPainterPolyDataMapperWrap::RemoveAllVertexAttributeMappings(const Nan::F
 {
 	VtkPainterPolyDataMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPainterPolyDataMapperWrap>(info.Holder());
 	vtkPainterPolyDataMapper *native = (vtkPainterPolyDataMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +365,7 @@ void VtkPainterPolyDataMapperWrap::RemoveVertexAttributeMapping(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +388,7 @@ void VtkPainterPolyDataMapperWrap::RenderPiece(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -419,7 +419,7 @@ void VtkPainterPolyDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPainterPolyDataMapperWrap::InitPtpl();
+		VtkPainterPolyDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -441,7 +441,7 @@ void VtkPainterPolyDataMapperWrap::SetPainter(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +461,7 @@ void VtkPainterPolyDataMapperWrap::SetSelectionPainter(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

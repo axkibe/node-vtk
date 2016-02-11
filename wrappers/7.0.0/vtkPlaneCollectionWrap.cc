@@ -105,7 +105,7 @@ void VtkPlaneCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -147,7 +147,7 @@ void VtkPlaneCollectionWrap::GetItem(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetItem(
 			info[0]->Int32Value()
 		);
-			VtkPlaneWrap::InitPtpl();
+		VtkPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -173,7 +173,7 @@ void VtkPlaneCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetNextItem();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkPlaneCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkPlaneCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlaneCollectionWrap::InitPtpl();
+		VtkPlaneCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

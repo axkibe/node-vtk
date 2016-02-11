@@ -54,6 +54,9 @@ void VtkImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataVOI", GetDataVOI);
+	Nan::SetPrototypeMethod(tpl, "getDataVOI", GetDataVOI);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarArrayName", GetScalarArrayName);
 	Nan::SetPrototypeMethod(tpl, "getScalarArrayName", GetScalarArrayName);
 
@@ -133,7 +136,7 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -163,7 +166,7 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -213,7 +216,7 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -233,7 +236,7 @@ void VtkImageReaderWrap::ComputeInverseTransformedExtent(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -262,6 +265,23 @@ void VtkImageReaderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImageReaderWrap::GetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
+	vtkImageReader *native = (vtkImageReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataVOI();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageReaderWrap::GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkImageReaderWrap>(info.Holder());
@@ -287,7 +307,7 @@ void VtkImageReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransformWrap::InitPtpl();
+	VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +352,7 @@ void VtkImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageReaderWrap::InitPtpl();
+	VtkImageReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -428,7 +448,7 @@ void VtkImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageReaderWrap::InitPtpl();
+		VtkImageReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -457,7 +477,7 @@ void VtkImageReaderWrap::SetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -486,7 +506,7 @@ void VtkImageReaderWrap::SetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +528,7 @@ void VtkImageReaderWrap::SetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& 
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -538,7 +558,7 @@ void VtkImageReaderWrap::SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +578,7 @@ void VtkImageReaderWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

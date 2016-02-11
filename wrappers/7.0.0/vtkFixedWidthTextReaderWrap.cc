@@ -212,7 +212,7 @@ void VtkFixedWidthTextReaderWrap::GetTableErrorObserver(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetTableErrorObserver();
-		VtkCommandWrap::InitPtpl();
+	VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkFixedWidthTextReaderWrap::HaveHeadersOff(const Nan::FunctionCallbackInfo
 {
 	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkFixedWidthTextReaderWrap::HaveHeadersOn(const Nan::FunctionCallbackInfo<
 {
 	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +281,7 @@ void VtkFixedWidthTextReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkFixedWidthTextReaderWrap::InitPtpl();
+	VtkFixedWidthTextReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkFixedWidthTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFixedWidthTextReaderWrap::InitPtpl();
+		VtkFixedWidthTextReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -330,7 +330,7 @@ void VtkFixedWidthTextReaderWrap::SetFieldWidth(const Nan::FunctionCallbackInfo<
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkFixedWidthTextReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkFixedWidthTextReaderWrap::SetHaveHeaders(const Nan::FunctionCallbackInfo
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +388,7 @@ void VtkFixedWidthTextReaderWrap::SetStripWhiteSpace(const Nan::FunctionCallback
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -408,7 +408,7 @@ void VtkFixedWidthTextReaderWrap::SetTableErrorObserver(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +425,7 @@ void VtkFixedWidthTextReaderWrap::StripWhiteSpaceOff(const Nan::FunctionCallback
 {
 	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -437,7 +437,7 @@ void VtkFixedWidthTextReaderWrap::StripWhiteSpaceOn(const Nan::FunctionCallbackI
 {
 	VtkFixedWidthTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFixedWidthTextReaderWrap>(info.Holder());
 	vtkFixedWidthTextReader *native = (vtkFixedWidthTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

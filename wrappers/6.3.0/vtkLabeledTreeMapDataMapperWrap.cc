@@ -207,7 +207,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetFontSizeRange(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -236,7 +236,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetFontSizeRange(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -260,7 +260,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetInputTree(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInputTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetLevelRange(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -315,7 +315,7 @@ void VtkLabeledTreeMapDataMapperWrap::GetLevelRange(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkLabeledTreeMapDataMapperWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkLabeledTreeMapDataMapperWrap::InitPtpl();
+	VtkLabeledTreeMapDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,7 +380,7 @@ void VtkLabeledTreeMapDataMapperWrap::ReleaseGraphicsResources(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkLabeledTreeMapDataMapperWrap::RenderOpaqueGeometry(const Nan::FunctionCa
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -428,7 +428,7 @@ void VtkLabeledTreeMapDataMapperWrap::RenderOverlay(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -459,7 +459,7 @@ void VtkLabeledTreeMapDataMapperWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLabeledTreeMapDataMapperWrap::InitPtpl();
+		VtkLabeledTreeMapDataMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -480,7 +480,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetChildMotion(const Nan::FunctionCallback
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +499,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetClipTextMode(const Nan::FunctionCallbac
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -518,7 +518,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetDynamicLevel(const Nan::FunctionCallbac
 	vtkLabeledTreeMapDataMapper *native = (vtkLabeledTreeMapDataMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -541,7 +541,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetFontSizeRange(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -566,7 +566,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetLevelRange(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -588,7 +588,7 @@ void VtkLabeledTreeMapDataMapperWrap::SetRectanglesArrayName(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

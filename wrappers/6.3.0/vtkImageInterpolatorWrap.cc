@@ -135,7 +135,7 @@ void VtkImageInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -165,7 +165,7 @@ void VtkImageInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -215,7 +215,7 @@ void VtkImageInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -235,7 +235,7 @@ void VtkImageInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -339,7 +339,7 @@ void VtkImageInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageInterpolatorWrap::InitPtpl();
+	VtkImageInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -367,7 +367,7 @@ void VtkImageInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageInterpolatorWrap::InitPtpl();
+		VtkImageInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkImageInterpolatorWrap::SetInterpolationMode(const Nan::FunctionCallbackI
 	vtkImageInterpolator *native = (vtkImageInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +405,7 @@ void VtkImageInterpolatorWrap::SetInterpolationModeToCubic(const Nan::FunctionCa
 {
 	VtkImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageInterpolatorWrap>(info.Holder());
 	vtkImageInterpolator *native = (vtkImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -417,7 +417,7 @@ void VtkImageInterpolatorWrap::SetInterpolationModeToLinear(const Nan::FunctionC
 {
 	VtkImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageInterpolatorWrap>(info.Holder());
 	vtkImageInterpolator *native = (vtkImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -429,7 +429,7 @@ void VtkImageInterpolatorWrap::SetInterpolationModeToNearest(const Nan::Function
 {
 	VtkImageInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageInterpolatorWrap>(info.Holder());
 	vtkImageInterpolator *native = (vtkImageInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

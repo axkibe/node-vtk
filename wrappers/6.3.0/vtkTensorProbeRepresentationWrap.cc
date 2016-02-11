@@ -60,6 +60,9 @@ void VtkTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetProbePosition", GetProbePosition);
+	Nan::SetPrototypeMethod(tpl, "getProbePosition", GetProbePosition);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -119,7 +122,7 @@ void VtkTensorProbeRepresentationWrap::BuildRepresentation(const Nan::FunctionCa
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +137,7 @@ void VtkTensorProbeRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -161,11 +164,28 @@ void VtkTensorProbeRepresentationWrap::GetClassName(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTensorProbeRepresentationWrap::GetProbePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
+	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProbePosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTensorProbeRepresentationWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info.Holder());
 	vtkTensorProbeRepresentation *native = (vtkTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -266,7 +286,7 @@ void VtkTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkTensorProbeRepresentationWrap::InitPtpl();
+	VtkTensorProbeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +305,7 @@ void VtkTensorProbeRepresentationWrap::ReleaseGraphicsResources(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +356,7 @@ void VtkTensorProbeRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTensorProbeRepresentationWrap::InitPtpl();
+		VtkTensorProbeRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -365,7 +385,7 @@ void VtkTensorProbeRepresentationWrap::SetProbePosition(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -394,7 +414,7 @@ void VtkTensorProbeRepresentationWrap::SetProbePosition(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +430,7 @@ void VtkTensorProbeRepresentationWrap::SetProbePosition(const Nan::FunctionCallb
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -434,7 +454,7 @@ void VtkTensorProbeRepresentationWrap::SetTrajectory(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

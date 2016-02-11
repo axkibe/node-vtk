@@ -77,6 +77,12 @@ void VtkIncrementalOctreeNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDistance2ToInnerBoundary", GetDistance2ToInnerBoundary);
 	Nan::SetPrototypeMethod(tpl, "getDistance2ToInnerBoundary", GetDistance2ToInnerBoundary);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxBounds", GetMaxBounds);
+	Nan::SetPrototypeMethod(tpl, "getMaxBounds", GetMaxBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinBounds", GetMinBounds);
+	Nan::SetPrototypeMethod(tpl, "getMinBounds", GetMinBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPoints", GetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPoints", GetNumberOfPoints);
 
@@ -251,7 +257,7 @@ void VtkIncrementalOctreeNodeWrap::DeleteChildNodes(const Nan::FunctionCallbackI
 {
 	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
 	vtkIncrementalOctreeNode *native = (vtkIncrementalOctreeNode *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -266,7 +272,7 @@ void VtkIncrementalOctreeNodeWrap::ExportAllPointIdsByInsertion(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +299,7 @@ void VtkIncrementalOctreeNodeWrap::GetBounds(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +328,7 @@ void VtkIncrementalOctreeNodeWrap::GetBounds(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +356,7 @@ void VtkIncrementalOctreeNodeWrap::GetChild(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetChild(
 			info[0]->Int32Value()
 		);
-			VtkIncrementalOctreeNodeWrap::InitPtpl();
+		VtkIncrementalOctreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -761,6 +767,40 @@ void VtkIncrementalOctreeNodeWrap::GetDistance2ToInnerBoundary(const Nan::Functi
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkIncrementalOctreeNodeWrap::GetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
+	vtkIncrementalOctreeNode *native = (vtkIncrementalOctreeNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkIncrementalOctreeNodeWrap::GetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
+	vtkIncrementalOctreeNode *native = (vtkIncrementalOctreeNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkIncrementalOctreeNodeWrap::GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkIncrementalOctreeNodeWrap *wrapper = ObjectWrap::Unwrap<VtkIncrementalOctreeNodeWrap>(info.Holder());
@@ -786,7 +826,7 @@ void VtkIncrementalOctreeNodeWrap::GetPointIdSet(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPointIdSet();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -845,7 +885,7 @@ void VtkIncrementalOctreeNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkIncrementalOctreeNodeWrap::InitPtpl();
+	VtkIncrementalOctreeNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -873,7 +913,7 @@ void VtkIncrementalOctreeNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIncrementalOctreeNodeWrap::InitPtpl();
+		VtkIncrementalOctreeNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -904,7 +944,7 @@ void VtkIncrementalOctreeNodeWrap::SetBounds(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

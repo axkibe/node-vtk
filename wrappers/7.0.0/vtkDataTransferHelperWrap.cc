@@ -60,6 +60,9 @@ void VtkDataTransferHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetArray", GetArray);
 	Nan::SetPrototypeMethod(tpl, "getArray", GetArray);
 
+	Nan::SetPrototypeMethod(tpl, "GetCPUExtent", GetCPUExtent);
+	Nan::SetPrototypeMethod(tpl, "getCPUExtent", GetCPUExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetCPUExtentIsValid", GetCPUExtentIsValid);
 	Nan::SetPrototypeMethod(tpl, "getCPUExtentIsValid", GetCPUExtentIsValid);
 
@@ -69,6 +72,9 @@ void VtkDataTransferHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetContext", GetContext);
 	Nan::SetPrototypeMethod(tpl, "getContext", GetContext);
 
+	Nan::SetPrototypeMethod(tpl, "GetGPUExtent", GetGPUExtent);
+	Nan::SetPrototypeMethod(tpl, "getGPUExtent", GetGPUExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetGPUExtentIsValid", GetGPUExtentIsValid);
 	Nan::SetPrototypeMethod(tpl, "getGPUExtentIsValid", GetGPUExtentIsValid);
 
@@ -77,6 +83,9 @@ void VtkDataTransferHelperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetShaderSupportsTextureInt", GetShaderSupportsTextureInt);
 	Nan::SetPrototypeMethod(tpl, "getShaderSupportsTextureInt", GetShaderSupportsTextureInt);
+
+	Nan::SetPrototypeMethod(tpl, "GetTextureExtent", GetTextureExtent);
+	Nan::SetPrototypeMethod(tpl, "getTextureExtent", GetTextureExtent);
 
 	Nan::SetPrototypeMethod(tpl, "GetTextureExtentIsValid", GetTextureExtentIsValid);
 	Nan::SetPrototypeMethod(tpl, "getTextureExtentIsValid", GetTextureExtentIsValid);
@@ -196,7 +205,7 @@ void VtkDataTransferHelperWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetArray();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,6 +215,23 @@ void VtkDataTransferHelperWrap::GetArray(const Nan::FunctionCallbackInfo<v8::Val
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataTransferHelperWrap::GetCPUExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
+	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCPUExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDataTransferHelperWrap::GetCPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -247,7 +273,7 @@ void VtkDataTransferHelperWrap::GetContext(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,6 +283,23 @@ void VtkDataTransferHelperWrap::GetContext(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataTransferHelperWrap::GetGPUExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
+	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGPUExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDataTransferHelperWrap::GetGPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -299,6 +342,23 @@ void VtkDataTransferHelperWrap::GetShaderSupportsTextureInt(const Nan::FunctionC
 	}
 	r = native->GetShaderSupportsTextureInt();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDataTransferHelperWrap::GetTextureExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataTransferHelperWrap *wrapper = ObjectWrap::Unwrap<VtkDataTransferHelperWrap>(info.Holder());
+	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTextureExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDataTransferHelperWrap::GetTextureExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -370,7 +430,7 @@ void VtkDataTransferHelperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataTransferHelperWrap::InitPtpl();
+	VtkDataTransferHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +458,7 @@ void VtkDataTransferHelperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataTransferHelperWrap::InitPtpl();
+		VtkDataTransferHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -420,7 +480,7 @@ void VtkDataTransferHelperWrap::SetArray(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +507,7 @@ void VtkDataTransferHelperWrap::SetCPUExtent(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +536,7 @@ void VtkDataTransferHelperWrap::SetCPUExtent(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -498,7 +558,7 @@ void VtkDataTransferHelperWrap::SetCPUExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -528,7 +588,7 @@ void VtkDataTransferHelperWrap::SetContext(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +615,7 @@ void VtkDataTransferHelperWrap::SetGPUExtent(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +644,7 @@ void VtkDataTransferHelperWrap::SetGPUExtent(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -606,7 +666,7 @@ void VtkDataTransferHelperWrap::SetGPUExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -635,7 +695,7 @@ void VtkDataTransferHelperWrap::SetMinTextureDimension(const Nan::FunctionCallba
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -654,7 +714,7 @@ void VtkDataTransferHelperWrap::SetShaderSupportsTextureInt(const Nan::FunctionC
 	vtkDataTransferHelper *native = (vtkDataTransferHelper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -681,7 +741,7 @@ void VtkDataTransferHelperWrap::SetTextureExtent(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -710,7 +770,7 @@ void VtkDataTransferHelperWrap::SetTextureExtent(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -732,7 +792,7 @@ void VtkDataTransferHelperWrap::SetTextureExtent(const Nan::FunctionCallbackInfo
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

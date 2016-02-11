@@ -179,7 +179,7 @@ void VtkSelectionSourceWrap::AddLocation(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -204,7 +204,7 @@ void VtkSelectionSourceWrap::AddThreshold(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -406,7 +406,7 @@ void VtkSelectionSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectionSourceWrap::InitPtpl();
+	VtkSelectionSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,7 +422,7 @@ void VtkSelectionSourceWrap::RemoveAllBlocks(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -434,7 +434,7 @@ void VtkSelectionSourceWrap::RemoveAllIDs(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -446,7 +446,7 @@ void VtkSelectionSourceWrap::RemoveAllLocations(const Nan::FunctionCallbackInfo<
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -458,7 +458,7 @@ void VtkSelectionSourceWrap::RemoveAllStringIDs(const Nan::FunctionCallbackInfo<
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -470,7 +470,7 @@ void VtkSelectionSourceWrap::RemoveAllThresholds(const Nan::FunctionCallbackInfo
 {
 	VtkSelectionSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionSourceWrap>(info.Holder());
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -494,7 +494,7 @@ void VtkSelectionSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectionSourceWrap::InitPtpl();
+		VtkSelectionSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkSelectionSourceWrap::SetArrayComponent(const Nan::FunctionCallbackInfo<v
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -535,7 +535,7 @@ void VtkSelectionSourceWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +554,7 @@ void VtkSelectionSourceWrap::SetCompositeIndex(const Nan::FunctionCallbackInfo<v
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +573,7 @@ void VtkSelectionSourceWrap::SetContainingCells(const Nan::FunctionCallbackInfo<
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkSelectionSourceWrap::SetContentType(const Nan::FunctionCallbackInfo<v8::
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkSelectionSourceWrap::SetFieldType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkSelectionSourceWrap::SetHierarchicalIndex(const Nan::FunctionCallbackInf
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +649,7 @@ void VtkSelectionSourceWrap::SetHierarchicalLevel(const Nan::FunctionCallbackInf
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +668,7 @@ void VtkSelectionSourceWrap::SetInverse(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSelectionSource *native = (vtkSelectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +688,7 @@ void VtkSelectionSourceWrap::SetQueryString(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

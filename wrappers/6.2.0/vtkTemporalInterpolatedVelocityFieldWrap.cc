@@ -60,6 +60,9 @@ void VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCurrentWeight", GetCurrentWeight);
 	Nan::SetPrototypeMethod(tpl, "getCurrentWeight", GetCurrentWeight);
 
+	Nan::SetPrototypeMethod(tpl, "GetLastGoodVelocity", GetLastGoodVelocity);
+	Nan::SetPrototypeMethod(tpl, "getLastGoodVelocity", GetLastGoodVelocity);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -114,7 +117,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::AdvanceOneTimeStep(const Nan::Fun
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +129,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::ClearCache(const Nan::FunctionCal
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -160,6 +163,23 @@ void VtkTemporalInterpolatedVelocityFieldWrap::GetCurrentWeight(const Nan::Funct
 	}
 	r = native->GetCurrentWeight();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTemporalInterpolatedVelocityFieldWrap::GetLastGoodVelocity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
+	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastGoodVelocity();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTemporalInterpolatedVelocityFieldWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -216,7 +236,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl();
+	VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +264,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl();
+		VtkTemporalInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -266,7 +286,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::SelectVectors(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -294,7 +314,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::SetDataSetAtTime(const Nan::Funct
 					VtkDataSetWrap *a3 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[3]->ToObject());
 					if(info.Length() > 4 && info[4]->IsBoolean())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -319,7 +339,7 @@ void VtkTemporalInterpolatedVelocityFieldWrap::ShowCacheResults(const Nan::Funct
 {
 	VtkTemporalInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkTemporalInterpolatedVelocityField *native = (vtkTemporalInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

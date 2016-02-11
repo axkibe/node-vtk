@@ -47,6 +47,9 @@ void VtkImageGaussianSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkImageGaussianSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -104,6 +107,23 @@ void VtkImageGaussianSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkImageGaussianSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageGaussianSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageGaussianSourceWrap>(info.Holder());
+	vtkImageGaussianSource *native = (vtkImageGaussianSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageGaussianSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -181,7 +201,7 @@ void VtkImageGaussianSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageGaussianSourceWrap::InitPtpl();
+	VtkImageGaussianSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,7 +229,7 @@ void VtkImageGaussianSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageGaussianSourceWrap::InitPtpl();
+		VtkImageGaussianSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +258,7 @@ void VtkImageGaussianSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -267,7 +287,7 @@ void VtkImageGaussianSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +303,7 @@ void VtkImageGaussianSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -306,7 +326,7 @@ void VtkImageGaussianSourceWrap::SetMaximum(const Nan::FunctionCallbackInfo<v8::
 	vtkImageGaussianSource *native = (vtkImageGaussianSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -325,7 +345,7 @@ void VtkImageGaussianSourceWrap::SetStandardDeviation(const Nan::FunctionCallbac
 	vtkImageGaussianSource *native = (vtkImageGaussianSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +374,7 @@ void VtkImageGaussianSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

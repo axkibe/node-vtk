@@ -57,6 +57,9 @@ void VtkMarchingSquaresWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageRange", GetImageRange);
+	Nan::SetPrototypeMethod(tpl, "getImageRange", GetImageRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetLocator", GetLocator);
 	Nan::SetPrototypeMethod(tpl, "getLocator", GetLocator);
 
@@ -120,7 +123,7 @@ void VtkMarchingSquaresWrap::CreateDefaultLocator(const Nan::FunctionCallbackInf
 {
 	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
 	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +147,7 @@ void VtkMarchingSquaresWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -174,7 +177,7 @@ void VtkMarchingSquaresWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -189,7 +192,7 @@ void VtkMarchingSquaresWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -220,6 +223,23 @@ void VtkMarchingSquaresWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkMarchingSquaresWrap::GetImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
+	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkMarchingSquaresWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMarchingSquaresWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingSquaresWrap>(info.Holder());
@@ -231,7 +251,7 @@ void VtkMarchingSquaresWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +331,7 @@ void VtkMarchingSquaresWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkMarchingSquaresWrap::InitPtpl();
+	VtkMarchingSquaresWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -339,7 +359,7 @@ void VtkMarchingSquaresWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMarchingSquaresWrap::InitPtpl();
+		VtkMarchingSquaresWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -368,7 +388,7 @@ void VtkMarchingSquaresWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -397,7 +417,7 @@ void VtkMarchingSquaresWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +439,7 @@ void VtkMarchingSquaresWrap::SetImageRange(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -449,7 +469,7 @@ void VtkMarchingSquaresWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +488,7 @@ void VtkMarchingSquaresWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo
 	vtkMarchingSquares *native = (vtkMarchingSquares *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -489,7 +509,7 @@ void VtkMarchingSquaresWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

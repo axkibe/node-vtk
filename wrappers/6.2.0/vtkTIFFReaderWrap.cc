@@ -263,7 +263,7 @@ void VtkTIFFReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkTIFFReaderWrap::InitPtpl();
+	VtkTIFFReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkTIFFReaderWrap::OriginSpecifiedFlagOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +291,7 @@ void VtkTIFFReaderWrap::OriginSpecifiedFlagOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkTIFFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTIFFReaderWrap::InitPtpl();
+		VtkTIFFReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkTIFFReaderWrap::SetOriginSpecifiedFlag(const Nan::FunctionCallbackInfo<v
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +355,7 @@ void VtkTIFFReaderWrap::SetSpacingSpecifiedFlag(const Nan::FunctionCallbackInfo<
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -372,7 +372,7 @@ void VtkTIFFReaderWrap::SpacingSpecifiedFlagOff(const Nan::FunctionCallbackInfo<
 {
 	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -384,7 +384,7 @@ void VtkTIFFReaderWrap::SpacingSpecifiedFlagOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
 	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

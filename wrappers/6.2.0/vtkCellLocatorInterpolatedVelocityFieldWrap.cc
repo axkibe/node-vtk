@@ -113,7 +113,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::AddDataSet(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -133,7 +133,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::CopyParameters(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractInterpolatedVelocityFieldWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractInterpolatedVelocityFieldWrap *a0 = ObjectWrap::Unwrap<VtkAbstractInterpolatedVelocityFieldWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -157,7 +157,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetCellLocatorPrototype(const 
 		return;
 	}
 	r = native->GetCellLocatorPrototype();
-		VtkAbstractCellLocatorWrap::InitPtpl();
+	VtkAbstractCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::GetLastCellLocator(const Nan::
 		return;
 	}
 	r = native->GetLastCellLocator();
-		VtkAbstractCellLocatorWrap::InitPtpl();
+	VtkAbstractCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
+	VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
+		VtkCellLocatorInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkCellLocatorInterpolatedVelocityFieldWrap::SetCellLocatorPrototype(const 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

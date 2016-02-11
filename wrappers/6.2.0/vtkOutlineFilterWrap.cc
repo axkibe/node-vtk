@@ -104,7 +104,7 @@ void VtkOutlineFilterWrap::GenerateFacesOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkOutlineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineFilterWrap>(info.Holder());
 	vtkOutlineFilter *native = (vtkOutlineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -116,7 +116,7 @@ void VtkOutlineFilterWrap::GenerateFacesOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOutlineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkOutlineFilterWrap>(info.Holder());
 	vtkOutlineFilter *native = (vtkOutlineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkOutlineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkOutlineFilterWrap::InitPtpl();
+	VtkOutlineFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkOutlineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOutlineFilterWrap::InitPtpl();
+		VtkOutlineFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkOutlineFilterWrap::SetGenerateFaces(const Nan::FunctionCallbackInfo<v8::
 	vtkOutlineFilter *native = (vtkOutlineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

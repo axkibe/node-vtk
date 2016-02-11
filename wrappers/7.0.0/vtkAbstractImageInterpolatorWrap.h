@@ -37,9 +37,13 @@ class VtkAbstractImageInterpolatorWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponentCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponentOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Interpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

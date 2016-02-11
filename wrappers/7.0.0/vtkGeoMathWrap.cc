@@ -315,7 +315,7 @@ void VtkGeoMathWrap::LongLatAltToRect(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -345,7 +345,7 @@ void VtkGeoMathWrap::LongLatAltToRect(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -395,7 +395,7 @@ void VtkGeoMathWrap::LongLatAltToRect(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -415,7 +415,7 @@ void VtkGeoMathWrap::LongLatAltToRect(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -441,7 +441,7 @@ void VtkGeoMathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoMathWrap::InitPtpl();
+	VtkGeoMathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -469,7 +469,7 @@ void VtkGeoMathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoMathWrap::InitPtpl();
+		VtkGeoMathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

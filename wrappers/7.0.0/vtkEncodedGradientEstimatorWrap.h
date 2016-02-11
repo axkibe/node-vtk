@@ -35,6 +35,7 @@ class VtkEncodedGradientEstimatorWrap : public VtkObjectWrap
 		static void ComputeGradientMagnitudesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CylinderClipOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CylinderClipOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundsClip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundsClipMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoundsClipMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +45,7 @@ class VtkEncodedGradientEstimatorWrap : public VtkObjectWrap
 		static void GetDirectionEncoder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEncodedNormalIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreadsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfThreadsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

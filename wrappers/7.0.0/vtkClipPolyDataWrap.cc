@@ -165,7 +165,7 @@ void VtkClipPolyDataWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkClipPolyDataWrap::GenerateClipScalarsOff(const Nan::FunctionCallbackInfo
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkClipPolyDataWrap::GenerateClipScalarsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkClipPolyDataWrap::GenerateClippedOutputOff(const Nan::FunctionCallbackIn
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkClipPolyDataWrap::GenerateClippedOutputOn(const Nan::FunctionCallbackInf
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkClipPolyDataWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetClipFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkClipPolyDataWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetClippedOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkClipPolyDataWrap::GetClippedOutputPort(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetClippedOutputPort();
-		VtkAlgorithmOutputWrap::InitPtpl();
+	VtkAlgorithmOutputWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -357,7 +357,7 @@ void VtkClipPolyDataWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkClipPolyDataWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -413,7 +413,7 @@ void VtkClipPolyDataWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkClipPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkClipPolyDataWrap>(info.Holder());
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -454,7 +454,7 @@ void VtkClipPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipPolyDataWrap::InitPtpl();
+	VtkClipPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,7 +482,7 @@ void VtkClipPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipPolyDataWrap::InitPtpl();
+		VtkClipPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -504,7 +504,7 @@ void VtkClipPolyDataWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -523,7 +523,7 @@ void VtkClipPolyDataWrap::SetGenerateClipScalars(const Nan::FunctionCallbackInfo
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -542,7 +542,7 @@ void VtkClipPolyDataWrap::SetGenerateClippedOutput(const Nan::FunctionCallbackIn
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -561,7 +561,7 @@ void VtkClipPolyDataWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v8::Value
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -581,7 +581,7 @@ void VtkClipPolyDataWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -600,7 +600,7 @@ void VtkClipPolyDataWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackIn
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +619,7 @@ void VtkClipPolyDataWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkClipPolyData *native = (vtkClipPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

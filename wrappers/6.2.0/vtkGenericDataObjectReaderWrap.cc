@@ -152,7 +152,7 @@ void VtkGenericDataObjectReaderWrap::GetGraphOutput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetGraphOutput();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkGenericDataObjectReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkGenericDataObjectReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkGenericDataObjectReaderWrap::GetPolyDataOutput(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPolyDataOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkGenericDataObjectReaderWrap::GetRectilinearGridOutput(const Nan::Functio
 		return;
 	}
 	r = native->GetRectilinearGridOutput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkGenericDataObjectReaderWrap::GetStructuredGridOutput(const Nan::Function
 		return;
 	}
 	r = native->GetStructuredGridOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkGenericDataObjectReaderWrap::GetStructuredPointsOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetStructuredPointsOutput();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkGenericDataObjectReaderWrap::GetTableOutput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetTableOutput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkGenericDataObjectReaderWrap::GetTreeOutput(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetTreeOutput();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkGenericDataObjectReaderWrap::GetUnstructuredGridOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetUnstructuredGridOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -404,7 +404,7 @@ void VtkGenericDataObjectReaderWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericDataObjectReaderWrap::InitPtpl();
+	VtkGenericDataObjectReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,7 +446,7 @@ void VtkGenericDataObjectReaderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericDataObjectReaderWrap::InitPtpl();
+		VtkGenericDataObjectReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

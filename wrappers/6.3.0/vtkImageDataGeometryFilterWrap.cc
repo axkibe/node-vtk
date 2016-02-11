@@ -216,7 +216,7 @@ void VtkImageDataGeometryFilterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDataGeometryFilterWrap::InitPtpl();
+	VtkImageDataGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkImageDataGeometryFilterWrap::OutputTrianglesOff(const Nan::FunctionCallb
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkImageDataGeometryFilterWrap::OutputTrianglesOn(const Nan::FunctionCallba
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkImageDataGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDataGeometryFilterWrap::InitPtpl();
+		VtkImageDataGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkImageDataGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +326,7 @@ void VtkImageDataGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -348,7 +348,7 @@ void VtkImageDataGeometryFilterWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -377,7 +377,7 @@ void VtkImageDataGeometryFilterWrap::SetOutputTriangles(const Nan::FunctionCallb
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +396,7 @@ void VtkImageDataGeometryFilterWrap::SetThresholdCells(const Nan::FunctionCallba
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -415,7 +415,7 @@ void VtkImageDataGeometryFilterWrap::SetThresholdValue(const Nan::FunctionCallba
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -432,7 +432,7 @@ void VtkImageDataGeometryFilterWrap::ThresholdCellsOff(const Nan::FunctionCallba
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +444,7 @@ void VtkImageDataGeometryFilterWrap::ThresholdCellsOn(const Nan::FunctionCallbac
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +456,7 @@ void VtkImageDataGeometryFilterWrap::ThresholdValueOff(const Nan::FunctionCallba
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -468,7 +468,7 @@ void VtkImageDataGeometryFilterWrap::ThresholdValueOn(const Nan::FunctionCallbac
 {
 	VtkImageDataGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataGeometryFilterWrap>(info.Holder());
 	vtkImageDataGeometryFilter *native = (vtkImageDataGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

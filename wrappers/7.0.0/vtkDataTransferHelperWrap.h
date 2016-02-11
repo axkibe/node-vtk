@@ -33,12 +33,15 @@ class VtkDataTransferHelperWrap : public VtkObjectWrap
 		static void DownloadAsync1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DownloadAsync2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCPUExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGPUExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGPUExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinTextureDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShaderSupportsTextureInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTextureExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureExtentIsValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);

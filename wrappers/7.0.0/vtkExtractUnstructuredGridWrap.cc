@@ -69,6 +69,9 @@ void VtkExtractUnstructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtent", GetExtent);
+	Nan::SetPrototypeMethod(tpl, "getExtent", GetExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetExtentClipping", GetExtentClipping);
 	Nan::SetPrototypeMethod(tpl, "getExtentClipping", GetExtentClipping);
 
@@ -153,7 +156,7 @@ void VtkExtractUnstructuredGridWrap::CellClippingOff(const Nan::FunctionCallback
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +168,7 @@ void VtkExtractUnstructuredGridWrap::CellClippingOn(const Nan::FunctionCallbackI
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +180,7 @@ void VtkExtractUnstructuredGridWrap::CreateDefaultLocator(const Nan::FunctionCal
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +192,7 @@ void VtkExtractUnstructuredGridWrap::ExtentClippingOff(const Nan::FunctionCallba
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +204,7 @@ void VtkExtractUnstructuredGridWrap::ExtentClippingOn(const Nan::FunctionCallbac
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,6 +240,23 @@ void VtkExtractUnstructuredGridWrap::GetClassName(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkExtractUnstructuredGridWrap::GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
+	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtractUnstructuredGridWrap::GetExtentClipping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
@@ -262,7 +282,7 @@ void VtkExtractUnstructuredGridWrap::GetLocator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -328,7 +348,7 @@ void VtkExtractUnstructuredGridWrap::MergingOff(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +360,7 @@ void VtkExtractUnstructuredGridWrap::MergingOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -359,7 +379,7 @@ void VtkExtractUnstructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractUnstructuredGridWrap::InitPtpl();
+	VtkExtractUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -375,7 +395,7 @@ void VtkExtractUnstructuredGridWrap::PointClippingOff(const Nan::FunctionCallbac
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -387,7 +407,7 @@ void VtkExtractUnstructuredGridWrap::PointClippingOn(const Nan::FunctionCallback
 {
 	VtkExtractUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridWrap>(info.Holder());
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -411,7 +431,7 @@ void VtkExtractUnstructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractUnstructuredGridWrap::InitPtpl();
+		VtkExtractUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -432,7 +452,7 @@ void VtkExtractUnstructuredGridWrap::SetCellClipping(const Nan::FunctionCallback
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +479,7 @@ void VtkExtractUnstructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +508,7 @@ void VtkExtractUnstructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +530,7 @@ void VtkExtractUnstructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -539,7 +559,7 @@ void VtkExtractUnstructuredGridWrap::SetExtentClipping(const Nan::FunctionCallba
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +579,7 @@ void VtkExtractUnstructuredGridWrap::SetLocator(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -578,7 +598,7 @@ void VtkExtractUnstructuredGridWrap::SetMerging(const Nan::FunctionCallbackInfo<
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -597,7 +617,7 @@ void VtkExtractUnstructuredGridWrap::SetPointClipping(const Nan::FunctionCallbac
 	vtkExtractUnstructuredGrid *native = (vtkExtractUnstructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

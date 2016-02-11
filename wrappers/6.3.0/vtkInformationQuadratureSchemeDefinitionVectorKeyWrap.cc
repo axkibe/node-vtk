@@ -133,7 +133,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Append(const Nan::Fu
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkQuadratureSchemeDefinitionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkQuadratureSchemeDefinitionWrap *a1 = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -155,7 +155,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Clear(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -178,7 +178,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::DeepCopy(const Nan::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -212,7 +212,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Get(const Nan::Funct
 				(vtkInformation *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkQuadratureSchemeDefinitionWrap::InitPtpl();
+			VtkQuadratureSchemeDefinitionWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::NewInstance(const Na
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
+	VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -318,7 +318,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Resize(const Nan::Fu
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +376,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::SafeDownCast(const N
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
+		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -430,7 +430,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::Set(const Nan::Funct
 			VtkQuadratureSchemeDefinitionWrap *a1 = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -457,7 +457,7 @@ void VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::ShallowCopy(const Na
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

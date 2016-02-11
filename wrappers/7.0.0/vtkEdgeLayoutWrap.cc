@@ -120,7 +120,7 @@ void VtkEdgeLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkEdgeLayoutStrategyWrap::InitPtpl();
+	VtkEdgeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkEdgeLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkEdgeLayoutWrap::InitPtpl();
+	VtkEdgeLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkEdgeLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEdgeLayoutWrap::InitPtpl();
+		VtkEdgeLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkEdgeLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkEdgeLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

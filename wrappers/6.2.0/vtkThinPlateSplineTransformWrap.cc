@@ -193,7 +193,7 @@ void VtkThinPlateSplineTransformWrap::GetSourceLandmarks(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSourceLandmarks();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkThinPlateSplineTransformWrap::GetTargetLandmarks(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetTargetLandmarks();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkThinPlateSplineTransformWrap::MakeTransform(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkThinPlateSplineTransformWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkThinPlateSplineTransformWrap::InitPtpl();
+	VtkThinPlateSplineTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkThinPlateSplineTransformWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThinPlateSplineTransformWrap::InitPtpl();
+		VtkThinPlateSplineTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkThinPlateSplineTransformWrap::SetBasis(const Nan::FunctionCallbackInfo<v
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkThinPlateSplineTransformWrap::SetBasisToR(const Nan::FunctionCallbackInf
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -362,7 +362,7 @@ void VtkThinPlateSplineTransformWrap::SetBasisToR2LogR(const Nan::FunctionCallba
 {
 	VtkThinPlateSplineTransformWrap *wrapper = ObjectWrap::Unwrap<VtkThinPlateSplineTransformWrap>(info.Holder());
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkThinPlateSplineTransformWrap::SetSigma(const Nan::FunctionCallbackInfo<v
 	vtkThinPlateSplineTransform *native = (vtkThinPlateSplineTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +396,7 @@ void VtkThinPlateSplineTransformWrap::SetSourceLandmarks(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -416,7 +416,7 @@ void VtkThinPlateSplineTransformWrap::SetTargetLandmarks(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

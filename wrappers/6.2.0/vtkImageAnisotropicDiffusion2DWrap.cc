@@ -158,7 +158,7 @@ void VtkImageAnisotropicDiffusion2DWrap::CornersOff(const Nan::FunctionCallbackI
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkImageAnisotropicDiffusion2DWrap::CornersOn(const Nan::FunctionCallbackIn
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkImageAnisotropicDiffusion2DWrap::EdgesOff(const Nan::FunctionCallbackInf
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkImageAnisotropicDiffusion2DWrap::EdgesOn(const Nan::FunctionCallbackInfo
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkImageAnisotropicDiffusion2DWrap::FacesOff(const Nan::FunctionCallbackInf
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -218,7 +218,7 @@ void VtkImageAnisotropicDiffusion2DWrap::FacesOn(const Nan::FunctionCallbackInfo
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkImageAnisotropicDiffusion2DWrap::GradientMagnitudeThresholdOff(const Nan
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -354,7 +354,7 @@ void VtkImageAnisotropicDiffusion2DWrap::GradientMagnitudeThresholdOn(const Nan:
 {
 	VtkImageAnisotropicDiffusion2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageAnisotropicDiffusion2DWrap>(info.Holder());
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,7 +395,7 @@ void VtkImageAnisotropicDiffusion2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
+	VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,7 +423,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
+		VtkImageAnisotropicDiffusion2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -444,7 +444,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetCorners(const Nan::FunctionCallbackI
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +463,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetDiffusionFactor(const Nan::FunctionC
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +482,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetDiffusionThreshold(const Nan::Functi
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -501,7 +501,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetEdges(const Nan::FunctionCallbackInf
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetFaces(const Nan::FunctionCallbackInf
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -539,7 +539,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetGradientMagnitudeThreshold(const Nan
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +558,7 @@ void VtkImageAnisotropicDiffusion2DWrap::SetNumberOfIterations(const Nan::Functi
 	vtkImageAnisotropicDiffusion2D *native = (vtkImageAnisotropicDiffusion2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -194,7 +194,7 @@ void VtkEncodedGradientShaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkEncodedGradientShaderWrap::InitPtpl();
+	VtkEncodedGradientShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkEncodedGradientShaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEncodedGradientShaderWrap::InitPtpl();
+		VtkEncodedGradientShaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkEncodedGradientShaderWrap::SetActiveComponent(const Nan::FunctionCallbac
 	vtkEncodedGradientShader *native = (vtkEncodedGradientShader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -269,7 +269,7 @@ void VtkEncodedGradientShaderWrap::UpdateShadingTable(const Nan::FunctionCallbac
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkEncodedGradientEstimatorWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkEncodedGradientEstimatorWrap *a2 = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

@@ -392,7 +392,7 @@ void VtkBYUReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkBYUReaderWrap::InitPtpl();
+	VtkBYUReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -408,7 +408,7 @@ void VtkBYUReaderWrap::ReadDisplacementOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -420,7 +420,7 @@ void VtkBYUReaderWrap::ReadDisplacementOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +432,7 @@ void VtkBYUReaderWrap::ReadScalarOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +444,7 @@ void VtkBYUReaderWrap::ReadScalarOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +456,7 @@ void VtkBYUReaderWrap::ReadTextureOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -468,7 +468,7 @@ void VtkBYUReaderWrap::ReadTextureOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkBYUReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBYUReaderWrap>(info.Holder());
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -492,7 +492,7 @@ void VtkBYUReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBYUReaderWrap::InitPtpl();
+		VtkBYUReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkBYUReaderWrap::SetDisplacementFileName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkBYUReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +554,7 @@ void VtkBYUReaderWrap::SetGeometryFileName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +573,7 @@ void VtkBYUReaderWrap::SetPartNumber(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkBYUReaderWrap::SetReadDisplacement(const Nan::FunctionCallbackInfo<v8::V
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkBYUReaderWrap::SetReadScalar(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkBYUReaderWrap::SetReadTexture(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkBYUReader *native = (vtkBYUReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkBYUReaderWrap::SetScalarFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkBYUReaderWrap::SetTextureFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

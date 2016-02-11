@@ -113,7 +113,7 @@ void VtkPolyLineRepresentationWrap::BuildRepresentation(const Nan::FunctionCallb
 {
 	VtkPolyLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineRepresentationWrap>(info.Holder());
 	vtkPolyLineRepresentation *native = (vtkPolyLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -146,7 +146,7 @@ void VtkPolyLineRepresentationWrap::GetHandlePositions(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetHandlePositions();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkPolyLineRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -199,7 +199,7 @@ void VtkPolyLineRepresentationWrap::InitializeHandles(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -245,7 +245,7 @@ void VtkPolyLineRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyLineRepresentationWrap::InitPtpl();
+	VtkPolyLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkPolyLineRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyLineRepresentationWrap::InitPtpl();
+		VtkPolyLineRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkPolyLineRepresentationWrap::SetNumberOfHandles(const Nan::FunctionCallba
 	vtkPolyLineRepresentation *native = (vtkPolyLineRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

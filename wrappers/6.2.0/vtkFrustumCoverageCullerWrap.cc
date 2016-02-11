@@ -255,7 +255,7 @@ void VtkFrustumCoverageCullerWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkFrustumCoverageCullerWrap::InitPtpl();
+	VtkFrustumCoverageCullerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkFrustumCoverageCullerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFrustumCoverageCullerWrap::InitPtpl();
+		VtkFrustumCoverageCullerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkFrustumCoverageCullerWrap::SetMaximumCoverage(const Nan::FunctionCallbac
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +323,7 @@ void VtkFrustumCoverageCullerWrap::SetMinimumCoverage(const Nan::FunctionCallbac
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkFrustumCoverageCullerWrap::SetSortingStyle(const Nan::FunctionCallbackIn
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +359,7 @@ void VtkFrustumCoverageCullerWrap::SetSortingStyleToBackToFront(const Nan::Funct
 {
 	VtkFrustumCoverageCullerWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumCoverageCullerWrap>(info.Holder());
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -371,7 +371,7 @@ void VtkFrustumCoverageCullerWrap::SetSortingStyleToFrontToBack(const Nan::Funct
 {
 	VtkFrustumCoverageCullerWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumCoverageCullerWrap>(info.Holder());
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +383,7 @@ void VtkFrustumCoverageCullerWrap::SetSortingStyleToNone(const Nan::FunctionCall
 {
 	VtkFrustumCoverageCullerWrap *wrapper = ObjectWrap::Unwrap<VtkFrustumCoverageCullerWrap>(info.Holder());
 	vtkFrustumCoverageCuller *native = (vtkFrustumCoverageCuller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

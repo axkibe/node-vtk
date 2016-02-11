@@ -37,6 +37,9 @@ class VtkAbstractTransformWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformDoubleNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformDoublePoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformDoubleVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -226,7 +226,7 @@ void VtkFieldDataToAttributeDataFilterWrap::DefaultNormalizeOff(const Nan::Funct
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -238,7 +238,7 @@ void VtkFieldDataToAttributeDataFilterWrap::DefaultNormalizeOn(const Nan::Functi
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkFieldDataToAttributeDataFilterWrap::GetFieldArray(const Nan::FunctionCal
 					*a1,
 					info[2]->Int32Value()
 				);
-					VtkDataArrayWrap::InitPtpl();
+				VtkDataArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -900,7 +900,7 @@ void VtkFieldDataToAttributeDataFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
+	VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -928,7 +928,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
+		VtkFieldDataToAttributeDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -949,7 +949,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetDefaultNormalize(const Nan::Funct
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -968,7 +968,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetInputField(const Nan::FunctionCal
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -985,7 +985,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetInputFieldToCellDataField(const N
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -997,7 +997,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetInputFieldToDataObjectField(const
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1009,7 +1009,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetInputFieldToPointDataField(const 
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1034,7 +1034,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetNormalComponent(const Nan::Functi
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1051,7 +1051,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetNormalComponent(const Nan::Functi
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1074,7 +1074,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetOutputAttributeData(const Nan::Fu
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1091,7 +1091,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetOutputAttributeDataToCellData(con
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1103,7 +1103,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetOutputAttributeDataToPointData(co
 {
 	VtkFieldDataToAttributeDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkFieldDataToAttributeDataFilterWrap>(info.Holder());
 	vtkFieldDataToAttributeDataFilter *native = (vtkFieldDataToAttributeDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1128,7 +1128,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetScalarComponent(const Nan::Functi
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1145,7 +1145,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetScalarComponent(const Nan::Functi
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1179,7 +1179,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTCoordComponent(const Nan::Functi
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1196,7 +1196,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTCoordComponent(const Nan::Functi
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1230,7 +1230,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTensorComponent(const Nan::Functi
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1247,7 +1247,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetTensorComponent(const Nan::Functi
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1281,7 +1281,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetVectorComponent(const Nan::Functi
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1298,7 +1298,7 @@ void VtkFieldDataToAttributeDataFilterWrap::SetVectorComponent(const Nan::Functi
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

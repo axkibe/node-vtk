@@ -75,11 +75,17 @@ void VtkSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitFunction", GetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "getImplicitFunction", GetImplicitFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalArrayName", GetNormalArrayName);
 	Nan::SetPrototypeMethod(tpl, "getNormalArrayName", GetNormalArrayName);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutputScalarType", GetOutputScalarType);
 	Nan::SetPrototypeMethod(tpl, "getOutputScalarType", GetOutputScalarType);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarArrayName", GetScalarArrayName);
 	Nan::SetPrototypeMethod(tpl, "getScalarArrayName", GetScalarArrayName);
@@ -183,7 +189,7 @@ void VtkSampleFunctionWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +201,7 @@ void VtkSampleFunctionWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +213,7 @@ void VtkSampleFunctionWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +225,7 @@ void VtkSampleFunctionWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +300,7 @@ void VtkSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetImplicitFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,6 +310,23 @@ void VtkSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo<
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkSampleFunctionWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
+	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSampleFunctionWrap::GetNormalArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -332,6 +355,23 @@ void VtkSampleFunctionWrap::GetOutputScalarType(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetOutputScalarType();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSampleFunctionWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
+	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSampleFunctionWrap::GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -381,7 +421,7 @@ void VtkSampleFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkSampleFunctionWrap::InitPtpl();
+	VtkSampleFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,7 +449,7 @@ void VtkSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSampleFunctionWrap::InitPtpl();
+		VtkSampleFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -430,7 +470,7 @@ void VtkSampleFunctionWrap::SetCapValue(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -449,7 +489,7 @@ void VtkSampleFunctionWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +508,7 @@ void VtkSampleFunctionWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +528,7 @@ void VtkSampleFunctionWrap::SetImplicitFunction(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +555,7 @@ void VtkSampleFunctionWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -544,7 +584,7 @@ void VtkSampleFunctionWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -566,7 +606,7 @@ void VtkSampleFunctionWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -596,7 +636,7 @@ void VtkSampleFunctionWrap::SetNormalArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -615,7 +655,7 @@ void VtkSampleFunctionWrap::SetOutputScalarType(const Nan::FunctionCallbackInfo<
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +672,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToChar(const Nan::FunctionCallbac
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -644,7 +684,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToDouble(const Nan::FunctionCallb
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -656,7 +696,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToFloat(const Nan::FunctionCallba
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -668,7 +708,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToInt(const Nan::FunctionCallback
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -680,7 +720,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToLong(const Nan::FunctionCallbac
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -692,7 +732,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToShort(const Nan::FunctionCallba
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -704,7 +744,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToUnsignedChar(const Nan::Functio
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -716,7 +756,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToUnsignedInt(const Nan::Function
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -728,7 +768,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToUnsignedLong(const Nan::Functio
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -740,7 +780,7 @@ void VtkSampleFunctionWrap::SetOutputScalarTypeToUnsignedShort(const Nan::Functi
 {
 	VtkSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkSampleFunctionWrap>(info.Holder());
 	vtkSampleFunction *native = (vtkSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -762,7 +802,7 @@ void VtkSampleFunctionWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -791,7 +831,7 @@ void VtkSampleFunctionWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -807,7 +847,7 @@ void VtkSampleFunctionWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -831,7 +871,7 @@ void VtkSampleFunctionWrap::SetScalarArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -110,6 +110,9 @@ void VtkCheckerboardSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumDimensionMinValue", GetMaximumDimensionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumDimensionMinValue", GetMaximumDimensionMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalWarping", GetNormalWarping);
 	Nan::SetPrototypeMethod(tpl, "getNormalWarping", GetNormalWarping);
 
@@ -136,6 +139,9 @@ void VtkCheckerboardSplatterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRadiusMinValue", GetRadiusMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRadiusMinValue", GetRadiusMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarWarping", GetScalarWarping);
 	Nan::SetPrototypeMethod(tpl, "getScalarWarping", GetScalarWarping);
@@ -266,7 +272,7 @@ void VtkCheckerboardSplatterWrap::CappingOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +284,7 @@ void VtkCheckerboardSplatterWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +305,7 @@ void VtkCheckerboardSplatterWrap::ComputeModelBounds(const Nan::FunctionCallback
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkInformationWrap *a2 = ObjectWrap::Unwrap<VtkInformationWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -554,6 +560,23 @@ void VtkCheckerboardSplatterWrap::GetMaximumDimensionMinValue(const Nan::Functio
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCheckerboardSplatterWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
+	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCheckerboardSplatterWrap::GetNormalWarping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
@@ -680,6 +703,23 @@ void VtkCheckerboardSplatterWrap::GetRadiusMinValue(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCheckerboardSplatterWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
+	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCheckerboardSplatterWrap::GetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
@@ -769,7 +809,7 @@ void VtkCheckerboardSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkCheckerboardSplatterWrap::InitPtpl();
+	VtkCheckerboardSplatterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -785,7 +825,7 @@ void VtkCheckerboardSplatterWrap::NormalWarpingOff(const Nan::FunctionCallbackIn
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +837,7 @@ void VtkCheckerboardSplatterWrap::NormalWarpingOn(const Nan::FunctionCallbackInf
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -821,7 +861,7 @@ void VtkCheckerboardSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCheckerboardSplatterWrap::InitPtpl();
+		VtkCheckerboardSplatterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -840,7 +880,7 @@ void VtkCheckerboardSplatterWrap::ScalarWarpingOff(const Nan::FunctionCallbackIn
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -852,7 +892,7 @@ void VtkCheckerboardSplatterWrap::ScalarWarpingOn(const Nan::FunctionCallbackInf
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -866,7 +906,7 @@ void VtkCheckerboardSplatterWrap::SetAccumulationMode(const Nan::FunctionCallbac
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -883,7 +923,7 @@ void VtkCheckerboardSplatterWrap::SetAccumulationModeToMax(const Nan::FunctionCa
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -895,7 +935,7 @@ void VtkCheckerboardSplatterWrap::SetAccumulationModeToMin(const Nan::FunctionCa
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -907,7 +947,7 @@ void VtkCheckerboardSplatterWrap::SetAccumulationModeToSum(const Nan::FunctionCa
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -921,7 +961,7 @@ void VtkCheckerboardSplatterWrap::SetCapValue(const Nan::FunctionCallbackInfo<v8
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +980,7 @@ void VtkCheckerboardSplatterWrap::SetCapping(const Nan::FunctionCallbackInfo<v8:
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -959,7 +999,7 @@ void VtkCheckerboardSplatterWrap::SetEccentricity(const Nan::FunctionCallbackInf
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +1018,7 @@ void VtkCheckerboardSplatterWrap::SetExponentFactor(const Nan::FunctionCallbackI
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -997,7 +1037,7 @@ void VtkCheckerboardSplatterWrap::SetFootprint(const Nan::FunctionCallbackInfo<v
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1016,7 +1056,7 @@ void VtkCheckerboardSplatterWrap::SetMaximumDimension(const Nan::FunctionCallbac
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1043,7 +1083,7 @@ void VtkCheckerboardSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1072,7 +1112,7 @@ void VtkCheckerboardSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1094,7 +1134,7 @@ void VtkCheckerboardSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1123,7 +1163,7 @@ void VtkCheckerboardSplatterWrap::SetNormalWarping(const Nan::FunctionCallbackIn
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1142,7 +1182,7 @@ void VtkCheckerboardSplatterWrap::SetNullValue(const Nan::FunctionCallbackInfo<v
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1161,7 +1201,7 @@ void VtkCheckerboardSplatterWrap::SetOutputScalarType(const Nan::FunctionCallbac
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1178,7 +1218,7 @@ void VtkCheckerboardSplatterWrap::SetOutputScalarTypeToDouble(const Nan::Functio
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1190,7 +1230,7 @@ void VtkCheckerboardSplatterWrap::SetOutputScalarTypeToFloat(const Nan::Function
 {
 	VtkCheckerboardSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardSplatterWrap>(info.Holder());
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1204,7 +1244,7 @@ void VtkCheckerboardSplatterWrap::SetParallelSplatCrossover(const Nan::FunctionC
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1223,7 +1263,7 @@ void VtkCheckerboardSplatterWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1250,7 +1290,7 @@ void VtkCheckerboardSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1279,7 +1319,7 @@ void VtkCheckerboardSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1295,7 +1335,7 @@ void VtkCheckerboardSplatterWrap::SetSampleDimensions(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1318,7 +1358,7 @@ void VtkCheckerboardSplatterWrap::SetScalarWarping(const Nan::FunctionCallbackIn
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1337,7 +1377,7 @@ void VtkCheckerboardSplatterWrap::SetScaleFactor(const Nan::FunctionCallbackInfo
 	vtkCheckerboardSplatter *native = (vtkCheckerboardSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -136,7 +136,7 @@ void VtkDeformPointSetWrap::GetControlMeshData(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetControlMeshData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +166,7 @@ void VtkDeformPointSetWrap::InitializeWeightsOff(const Nan::FunctionCallbackInfo
 {
 	VtkDeformPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkDeformPointSetWrap>(info.Holder());
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkDeformPointSetWrap::InitializeWeightsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkDeformPointSetWrap *wrapper = ObjectWrap::Unwrap<VtkDeformPointSetWrap>(info.Holder());
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkDeformPointSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkDeformPointSetWrap::InitPtpl();
+	VtkDeformPointSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +247,7 @@ void VtkDeformPointSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDeformPointSetWrap::InitPtpl();
+		VtkDeformPointSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkDeformPointSetWrap::SetControlMeshConnection(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkDeformPointSetWrap::SetControlMeshData(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -308,7 +308,7 @@ void VtkDeformPointSetWrap::SetInitializeWeights(const Nan::FunctionCallbackInfo
 	vtkDeformPointSet *native = (vtkDeformPointSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

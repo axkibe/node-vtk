@@ -179,7 +179,7 @@ void VtkClipVolumeWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkClipVolumeWrap::GenerateClipScalarsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkClipVolumeWrap::GenerateClipScalarsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkClipVolumeWrap::GenerateClippedOutputOff(const Nan::FunctionCallbackInfo
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkClipVolumeWrap::GenerateClippedOutputOn(const Nan::FunctionCallbackInfo<
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkClipVolumeWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetClipFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkClipVolumeWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetClippedOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -348,7 +348,7 @@ void VtkClipVolumeWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkClipVolumeWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -446,7 +446,7 @@ void VtkClipVolumeWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -480,7 +480,7 @@ void VtkClipVolumeWrap::Mixed3DCellGenerationOff(const Nan::FunctionCallbackInfo
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -492,7 +492,7 @@ void VtkClipVolumeWrap::Mixed3DCellGenerationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkClipVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkClipVolumeWrap>(info.Holder());
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -511,7 +511,7 @@ void VtkClipVolumeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipVolumeWrap::InitPtpl();
+	VtkClipVolumeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -539,7 +539,7 @@ void VtkClipVolumeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipVolumeWrap::InitPtpl();
+		VtkClipVolumeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -561,7 +561,7 @@ void VtkClipVolumeWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,7 +580,7 @@ void VtkClipVolumeWrap::SetGenerateClipScalars(const Nan::FunctionCallbackInfo<v
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -599,7 +599,7 @@ void VtkClipVolumeWrap::SetGenerateClippedOutput(const Nan::FunctionCallbackInfo
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkClipVolumeWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +638,7 @@ void VtkClipVolumeWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkClipVolumeWrap::SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Va
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkClipVolumeWrap::SetMixed3DCellGeneration(const Nan::FunctionCallbackInfo
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +695,7 @@ void VtkClipVolumeWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkClipVolume *native = (vtkClipVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

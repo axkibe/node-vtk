@@ -29,6 +29,7 @@ class VtkResliceCursorWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenterlineAxisPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHole(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +39,10 @@ class VtkResliceCursorWrap : public VtkObjectWrap
 		static void GetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);

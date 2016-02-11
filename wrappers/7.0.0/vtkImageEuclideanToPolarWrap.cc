@@ -155,7 +155,7 @@ void VtkImageEuclideanToPolarWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageEuclideanToPolarWrap::InitPtpl();
+	VtkImageEuclideanToPolarWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkImageEuclideanToPolarWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageEuclideanToPolarWrap::InitPtpl();
+		VtkImageEuclideanToPolarWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkImageEuclideanToPolarWrap::SetThetaMaximum(const Nan::FunctionCallbackIn
 	vtkImageEuclideanToPolar *native = (vtkImageEuclideanToPolar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

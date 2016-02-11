@@ -114,7 +114,7 @@ void VtkOBBTreeWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkOBBTreeWrap *wrapper = ObjectWrap::Unwrap<VtkOBBTreeWrap>(info.Holder());
 	vtkOBBTree *native = (vtkOBBTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -175,7 +175,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -209,7 +209,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -263,7 +263,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -337,7 +337,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -431,7 +431,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -545,7 +545,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -629,7 +629,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -723,7 +723,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -827,7 +827,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -901,7 +901,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -985,7 +985,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1069,7 +1069,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1173,7 +1173,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1247,7 +1247,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1331,7 +1331,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1425,7 +1425,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1489,7 +1489,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1563,7 +1563,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1627,7 +1627,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1711,7 +1711,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1815,7 +1815,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1889,7 +1889,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1973,7 +1973,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2067,7 +2067,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2131,7 +2131,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2205,7 +2205,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2279,7 +2279,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2373,7 +2373,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2437,7 +2437,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2511,7 +2511,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2595,7 +2595,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2649,7 +2649,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2717,7 +2717,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2751,7 +2751,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2805,7 +2805,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2879,7 +2879,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2973,7 +2973,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3087,7 +3087,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3171,7 +3171,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3265,7 +3265,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3369,7 +3369,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3443,7 +3443,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3527,7 +3527,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3611,7 +3611,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3715,7 +3715,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3789,7 +3789,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3873,7 +3873,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3967,7 +3967,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4031,7 +4031,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4105,7 +4105,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4169,7 +4169,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4253,7 +4253,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4357,7 +4357,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4431,7 +4431,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4515,7 +4515,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4609,7 +4609,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4673,7 +4673,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4747,7 +4747,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4821,7 +4821,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4915,7 +4915,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4979,7 +4979,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -5053,7 +5053,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -5137,7 +5137,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -5191,7 +5191,7 @@ void VtkOBBTreeWrap::ComputeOBB(const Nan::FunctionCallbackInfo<v8::Value>& info
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -5218,7 +5218,7 @@ void VtkOBBTreeWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOBBTreeWrap *wrapper = ObjectWrap::Unwrap<VtkOBBTreeWrap>(info.Holder());
 	vtkOBBTree *native = (vtkOBBTree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -5235,7 +5235,7 @@ void VtkOBBTreeWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5543,7 +5543,7 @@ void VtkOBBTreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkOBBTreeWrap::InitPtpl();
+	VtkOBBTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -5571,7 +5571,7 @@ void VtkOBBTreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOBBTreeWrap::InitPtpl();
+		VtkOBBTreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

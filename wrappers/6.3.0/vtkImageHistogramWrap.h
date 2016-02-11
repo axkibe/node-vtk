@@ -44,6 +44,7 @@ class VtkImageHistogramWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetHistogramImageScaleAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHistogramImageScaleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHistogramImageScaleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHistogramImageSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);

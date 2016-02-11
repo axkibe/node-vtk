@@ -110,7 +110,7 @@ void VtkSQLDatabaseTableSourceWrap::GeneratePedigreeIdsOff(const Nan::FunctionCa
 {
 	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
 	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -122,7 +122,7 @@ void VtkSQLDatabaseTableSourceWrap::GeneratePedigreeIdsOn(const Nan::FunctionCal
 {
 	VtkSQLDatabaseTableSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseTableSourceWrap>(info.Holder());
 	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkSQLDatabaseTableSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkSQLDatabaseTableSourceWrap::InitPtpl();
+	VtkSQLDatabaseTableSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkSQLDatabaseTableSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSQLDatabaseTableSourceWrap::InitPtpl();
+		VtkSQLDatabaseTableSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void VtkSQLDatabaseTableSourceWrap::SetGeneratePedigreeIds(const Nan::FunctionCa
 	vtkSQLDatabaseTableSource *native = (vtkSQLDatabaseTableSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void VtkSQLDatabaseTableSourceWrap::SetPedigreeIdArrayName(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

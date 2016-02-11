@@ -200,7 +200,7 @@ void VtkImageLogicWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageLogicWrap::InitPtpl();
+	VtkImageLogicWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkImageLogicWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageLogicWrap::InitPtpl();
+		VtkImageLogicWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkImageLogicWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -270,7 +270,7 @@ void VtkImageLogicWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkImageLogicWrap::SetOperation(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +306,7 @@ void VtkImageLogicWrap::SetOperationToAnd(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkImageLogicWrap::SetOperationToNand(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkImageLogicWrap::SetOperationToNor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkImageLogicWrap::SetOperationToNot(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -354,7 +354,7 @@ void VtkImageLogicWrap::SetOperationToOr(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -366,7 +366,7 @@ void VtkImageLogicWrap::SetOperationToXor(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageLogicWrap *wrapper = ObjectWrap::Unwrap<VtkImageLogicWrap>(info.Holder());
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkImageLogicWrap::SetOutputTrueValue(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageLogic *native = (vtkImageLogic *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

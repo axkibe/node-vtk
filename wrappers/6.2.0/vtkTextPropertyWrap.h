@@ -31,9 +31,11 @@ class VtkTextPropertyWrap : public VtkObjectWrap
 
 		static void BoldOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BoldOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFamily(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFamilyAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFontFamilyFromString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,6 +55,7 @@ class VtkTextPropertyWrap : public VtkObjectWrap
 		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShadow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShadowColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShadowOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustification(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustificationAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVerticalJustificationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

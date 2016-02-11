@@ -51,6 +51,9 @@ void VtkImageCheckerboardWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfDivisions", GetNumberOfDivisions);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfDivisions", GetNumberOfDivisions);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -112,6 +115,23 @@ void VtkImageCheckerboardWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImageCheckerboardWrap::GetNumberOfDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCheckerboardWrap *wrapper = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info.Holder());
+	vtkImageCheckerboard *native = (vtkImageCheckerboard *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfDivisions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageCheckerboardWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageCheckerboardWrap *wrapper = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info.Holder());
@@ -145,7 +165,7 @@ void VtkImageCheckerboardWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageCheckerboardWrap::InitPtpl();
+	VtkImageCheckerboardWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -173,7 +193,7 @@ void VtkImageCheckerboardWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageCheckerboardWrap::InitPtpl();
+		VtkImageCheckerboardWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,7 +215,7 @@ void VtkImageCheckerboardWrap::SetInput1Data(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -215,7 +235,7 @@ void VtkImageCheckerboardWrap::SetInput2Data(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -242,7 +262,7 @@ void VtkImageCheckerboardWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -271,7 +291,7 @@ void VtkImageCheckerboardWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -287,7 +307,7 @@ void VtkImageCheckerboardWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

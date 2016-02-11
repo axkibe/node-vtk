@@ -86,6 +86,9 @@ void VtkExtractTensorComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetExtractVectors", GetExtractVectors);
 	Nan::SetPrototypeMethod(tpl, "getExtractVectors", GetExtractVectors);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormalComponents", GetNormalComponents);
+	Nan::SetPrototypeMethod(tpl, "getNormalComponents", GetNormalComponents);
+
 	Nan::SetPrototypeMethod(tpl, "GetNormalizeNormals", GetNormalizeNormals);
 	Nan::SetPrototypeMethod(tpl, "getNormalizeNormals", GetNormalizeNormals);
 
@@ -101,8 +104,17 @@ void VtkExtractTensorComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPassTensorsToOutput", GetPassTensorsToOutput);
 	Nan::SetPrototypeMethod(tpl, "getPassTensorsToOutput", GetPassTensorsToOutput);
 
+	Nan::SetPrototypeMethod(tpl, "GetScalarComponents", GetScalarComponents);
+	Nan::SetPrototypeMethod(tpl, "getScalarComponents", GetScalarComponents);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarMode", GetScalarMode);
 	Nan::SetPrototypeMethod(tpl, "getScalarMode", GetScalarMode);
+
+	Nan::SetPrototypeMethod(tpl, "GetTCoordComponents", GetTCoordComponents);
+	Nan::SetPrototypeMethod(tpl, "getTCoordComponents", GetTCoordComponents);
+
+	Nan::SetPrototypeMethod(tpl, "GetVectorComponents", GetVectorComponents);
+	Nan::SetPrototypeMethod(tpl, "getVectorComponents", GetVectorComponents);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -212,7 +224,7 @@ void VtkExtractTensorComponentsWrap::ExtractNormalsOff(const Nan::FunctionCallba
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +236,7 @@ void VtkExtractTensorComponentsWrap::ExtractNormalsOn(const Nan::FunctionCallbac
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +248,7 @@ void VtkExtractTensorComponentsWrap::ExtractScalarsOff(const Nan::FunctionCallba
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +260,7 @@ void VtkExtractTensorComponentsWrap::ExtractScalarsOn(const Nan::FunctionCallbac
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +272,7 @@ void VtkExtractTensorComponentsWrap::ExtractTCoordsOff(const Nan::FunctionCallba
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +284,7 @@ void VtkExtractTensorComponentsWrap::ExtractTCoordsOn(const Nan::FunctionCallbac
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +296,7 @@ void VtkExtractTensorComponentsWrap::ExtractVectorsOff(const Nan::FunctionCallba
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +308,7 @@ void VtkExtractTensorComponentsWrap::ExtractVectorsOn(const Nan::FunctionCallbac
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -374,6 +386,23 @@ void VtkExtractTensorComponentsWrap::GetExtractVectors(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExtractTensorComponentsWrap::GetNormalComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
+	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormalComponents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtractTensorComponentsWrap::GetNormalizeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
@@ -444,6 +473,23 @@ void VtkExtractTensorComponentsWrap::GetPassTensorsToOutput(const Nan::FunctionC
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExtractTensorComponentsWrap::GetScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
+	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarComponents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtractTensorComponentsWrap::GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
@@ -456,6 +502,40 @@ void VtkExtractTensorComponentsWrap::GetScalarMode(const Nan::FunctionCallbackIn
 	}
 	r = native->GetScalarMode();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkExtractTensorComponentsWrap::GetTCoordComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
+	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTCoordComponents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkExtractTensorComponentsWrap::GetVectorComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
+	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVectorComponents();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkExtractTensorComponentsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -491,7 +571,7 @@ void VtkExtractTensorComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractTensorComponentsWrap::InitPtpl();
+	VtkExtractTensorComponentsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -507,7 +587,7 @@ void VtkExtractTensorComponentsWrap::NormalizeNormalsOff(const Nan::FunctionCall
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +599,7 @@ void VtkExtractTensorComponentsWrap::NormalizeNormalsOn(const Nan::FunctionCallb
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -531,7 +611,7 @@ void VtkExtractTensorComponentsWrap::PassTensorsToOutputOff(const Nan::FunctionC
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -543,7 +623,7 @@ void VtkExtractTensorComponentsWrap::PassTensorsToOutputOn(const Nan::FunctionCa
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -567,7 +647,7 @@ void VtkExtractTensorComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractTensorComponentsWrap::InitPtpl();
+		VtkExtractTensorComponentsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -586,7 +666,7 @@ void VtkExtractTensorComponentsWrap::ScalarIsComponent(const Nan::FunctionCallba
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +678,7 @@ void VtkExtractTensorComponentsWrap::ScalarIsDeterminant(const Nan::FunctionCall
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -610,7 +690,7 @@ void VtkExtractTensorComponentsWrap::ScalarIsEffectiveStress(const Nan::Function
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -624,7 +704,7 @@ void VtkExtractTensorComponentsWrap::SetExtractNormals(const Nan::FunctionCallba
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -643,7 +723,7 @@ void VtkExtractTensorComponentsWrap::SetExtractScalars(const Nan::FunctionCallba
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -662,7 +742,7 @@ void VtkExtractTensorComponentsWrap::SetExtractTCoords(const Nan::FunctionCallba
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -681,7 +761,7 @@ void VtkExtractTensorComponentsWrap::SetExtractVectors(const Nan::FunctionCallba
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +788,7 @@ void VtkExtractTensorComponentsWrap::SetNormalComponents(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +817,7 @@ void VtkExtractTensorComponentsWrap::SetNormalComponents(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -759,7 +839,7 @@ void VtkExtractTensorComponentsWrap::SetNormalComponents(const Nan::FunctionCall
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -788,7 +868,7 @@ void VtkExtractTensorComponentsWrap::SetNormalizeNormals(const Nan::FunctionCall
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -807,7 +887,7 @@ void VtkExtractTensorComponentsWrap::SetNumberOfTCoords(const Nan::FunctionCallb
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -826,7 +906,7 @@ void VtkExtractTensorComponentsWrap::SetPassTensorsToOutput(const Nan::FunctionC
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -853,7 +933,7 @@ void VtkExtractTensorComponentsWrap::SetScalarComponents(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +962,7 @@ void VtkExtractTensorComponentsWrap::SetScalarComponents(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -896,7 +976,7 @@ void VtkExtractTensorComponentsWrap::SetScalarComponents(const Nan::FunctionCall
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -917,7 +997,7 @@ void VtkExtractTensorComponentsWrap::SetScalarMode(const Nan::FunctionCallbackIn
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -934,7 +1014,7 @@ void VtkExtractTensorComponentsWrap::SetScalarModeToComponent(const Nan::Functio
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -946,7 +1026,7 @@ void VtkExtractTensorComponentsWrap::SetScalarModeToDeterminant(const Nan::Funct
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -958,7 +1038,7 @@ void VtkExtractTensorComponentsWrap::SetScalarModeToEffectiveStress(const Nan::F
 {
 	VtkExtractTensorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractTensorComponentsWrap>(info.Holder());
 	vtkExtractTensorComponents *native = (vtkExtractTensorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -980,7 +1060,7 @@ void VtkExtractTensorComponentsWrap::SetTCoordComponents(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1009,7 +1089,7 @@ void VtkExtractTensorComponentsWrap::SetTCoordComponents(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1031,7 +1111,7 @@ void VtkExtractTensorComponentsWrap::SetTCoordComponents(const Nan::FunctionCall
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1068,7 +1148,7 @@ void VtkExtractTensorComponentsWrap::SetVectorComponents(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1097,7 +1177,7 @@ void VtkExtractTensorComponentsWrap::SetVectorComponents(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1119,7 +1199,7 @@ void VtkExtractTensorComponentsWrap::SetVectorComponents(const Nan::FunctionCall
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

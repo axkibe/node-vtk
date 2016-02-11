@@ -132,7 +132,7 @@ void VtkXMLDataParserWrap::CharacterDataHandler(const Nan::FunctionCallbackInfo<
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -228,7 +228,7 @@ void VtkXMLDataParserWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetCompressor();
-		VtkDataCompressorWrap::InitPtpl();
+	VtkDataCompressorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkXMLDataParserWrap::GetRootElement(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRootElement();
-		VtkXMLDataElementWrap::InitPtpl();
+	VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkXMLDataParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLDataParserWrap::InitPtpl();
+	VtkXMLDataParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkXMLDataParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLDataParserWrap::InitPtpl();
+		VtkXMLDataParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkXMLDataParserWrap::SetAbort(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -378,7 +378,7 @@ void VtkXMLDataParserWrap::SetAttributesEncoding(const Nan::FunctionCallbackInfo
 	vtkXMLDataParser *native = (vtkXMLDataParser *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -398,7 +398,7 @@ void VtkXMLDataParserWrap::SetCompressor(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataCompressorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataCompressorWrap *a0 = ObjectWrap::Unwrap<VtkDataCompressorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

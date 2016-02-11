@@ -112,7 +112,7 @@ void VtkTensorWrap::AddComponent(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -136,7 +136,7 @@ void VtkTensorWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTensorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTensorWrap *a0 = ObjectWrap::Unwrap<VtkTensorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -192,7 +192,7 @@ void VtkTensorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTensorWrap *wrapper = ObjectWrap::Unwrap<VtkTensorWrap>(info.Holder());
 	vtkTensor *native = (vtkTensor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -233,7 +233,7 @@ void VtkTensorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkTensorWrap::InitPtpl();
+	VtkTensorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkTensorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTensorWrap::InitPtpl();
+		VtkTensorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkTensorWrap::SetComponent(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

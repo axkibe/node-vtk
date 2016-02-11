@@ -33,6 +33,7 @@ class VtkRibbonFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoordsAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateTCoordsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

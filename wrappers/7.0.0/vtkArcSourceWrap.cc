@@ -56,14 +56,29 @@ void VtkArcSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAngleMinValue", GetAngleMinValue);
 	Nan::SetPrototypeMethod(tpl, "getAngleMinValue", GetAngleMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetNegative", GetNegative);
 	Nan::SetPrototypeMethod(tpl, "getNegative", GetNegative);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
+
+	Nan::SetPrototypeMethod(tpl, "GetPolarVector", GetPolarVector);
+	Nan::SetPrototypeMethod(tpl, "getPolarVector", GetPolarVector);
 
 	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
 	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
@@ -199,6 +214,23 @@ void VtkArcSourceWrap::GetAngleMinValue(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkArcSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkArcSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
@@ -227,6 +259,23 @@ void VtkArcSourceWrap::GetNegative(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkArcSourceWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkArcSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
@@ -239,6 +288,57 @@ void VtkArcSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetOutputPointsPrecision();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkArcSourceWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkArcSourceWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkArcSourceWrap::GetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
+	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPolarVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkArcSourceWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -323,7 +423,7 @@ void VtkArcSourceWrap::NegativeOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -335,7 +435,7 @@ void VtkArcSourceWrap::NegativeOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -354,7 +454,7 @@ void VtkArcSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkArcSourceWrap::InitPtpl();
+	VtkArcSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +482,7 @@ void VtkArcSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArcSourceWrap::InitPtpl();
+		VtkArcSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -403,7 +503,7 @@ void VtkArcSourceWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +530,7 @@ void VtkArcSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +559,7 @@ void VtkArcSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +575,7 @@ void VtkArcSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -498,7 +598,7 @@ void VtkArcSourceWrap::SetNegative(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +625,7 @@ void VtkArcSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +654,7 @@ void VtkArcSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +670,7 @@ void VtkArcSourceWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -593,7 +693,7 @@ void VtkArcSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +720,7 @@ void VtkArcSourceWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +749,7 @@ void VtkArcSourceWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -665,7 +765,7 @@ void VtkArcSourceWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -696,7 +796,7 @@ void VtkArcSourceWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +825,7 @@ void VtkArcSourceWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -741,7 +841,7 @@ void VtkArcSourceWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -772,7 +872,7 @@ void VtkArcSourceWrap::SetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -801,7 +901,7 @@ void VtkArcSourceWrap::SetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -817,7 +917,7 @@ void VtkArcSourceWrap::SetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -840,7 +940,7 @@ void VtkArcSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +959,7 @@ void VtkArcSourceWrap::SetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -876,7 +976,7 @@ void VtkArcSourceWrap::UseNormalAndAngleOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -888,7 +988,7 @@ void VtkArcSourceWrap::UseNormalAndAngleOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkArcSourceWrap *wrapper = ObjectWrap::Unwrap<VtkArcSourceWrap>(info.Holder());
 	vtkArcSource *native = (vtkArcSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

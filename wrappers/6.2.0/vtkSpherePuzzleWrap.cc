@@ -149,7 +149,7 @@ void VtkSpherePuzzleWrap::MoveHorizontal(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -172,7 +172,7 @@ void VtkSpherePuzzleWrap::MovePoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkSpherePuzzle *native = (vtkSpherePuzzle *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -195,7 +195,7 @@ void VtkSpherePuzzleWrap::MoveVertical(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -223,7 +223,7 @@ void VtkSpherePuzzleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpherePuzzleWrap::InitPtpl();
+	VtkSpherePuzzleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkSpherePuzzleWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkSpherePuzzleWrap *wrapper = ObjectWrap::Unwrap<VtkSpherePuzzleWrap>(info.Holder());
 	vtkSpherePuzzle *native = (vtkSpherePuzzle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -263,7 +263,7 @@ void VtkSpherePuzzleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpherePuzzleWrap::InitPtpl();
+		VtkSpherePuzzleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

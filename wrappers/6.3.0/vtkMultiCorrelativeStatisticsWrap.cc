@@ -115,7 +115,7 @@ void VtkMultiCorrelativeStatisticsWrap::Aggregate(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -184,7 +184,7 @@ void VtkMultiCorrelativeStatisticsWrap::MedianAbsoluteDeviationOff(const Nan::Fu
 {
 	VtkMultiCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkMultiCorrelativeStatisticsWrap>(info.Holder());
 	vtkMultiCorrelativeStatistics *native = (vtkMultiCorrelativeStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +196,7 @@ void VtkMultiCorrelativeStatisticsWrap::MedianAbsoluteDeviationOn(const Nan::Fun
 {
 	VtkMultiCorrelativeStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkMultiCorrelativeStatisticsWrap>(info.Holder());
 	vtkMultiCorrelativeStatistics *native = (vtkMultiCorrelativeStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkMultiCorrelativeStatisticsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiCorrelativeStatisticsWrap::InitPtpl();
+	VtkMultiCorrelativeStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkMultiCorrelativeStatisticsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiCorrelativeStatisticsWrap::InitPtpl();
+		VtkMultiCorrelativeStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkMultiCorrelativeStatisticsWrap::SetMedianAbsoluteDeviation(const Nan::Fu
 	vtkMultiCorrelativeStatistics *native = (vtkMultiCorrelativeStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

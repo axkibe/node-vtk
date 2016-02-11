@@ -100,7 +100,7 @@ void VtkShaderWrap::Cleanup(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkShaderWrap *wrapper = ObjectWrap::Unwrap<VtkShaderWrap>(info.Holder());
 	vtkShader *native = (vtkShader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkShaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkShaderWrap::InitPtpl();
+	VtkShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkShaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkShaderWrap::InitPtpl();
+		VtkShaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

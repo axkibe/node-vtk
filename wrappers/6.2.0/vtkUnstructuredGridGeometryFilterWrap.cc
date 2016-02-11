@@ -189,7 +189,7 @@ void VtkUnstructuredGridGeometryFilterWrap::CellClippingOff(const Nan::FunctionC
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkUnstructuredGridGeometryFilterWrap::CellClippingOn(const Nan::FunctionCa
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkUnstructuredGridGeometryFilterWrap::CreateDefaultLocator(const Nan::Func
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkUnstructuredGridGeometryFilterWrap::ExtentClippingOff(const Nan::Functio
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkUnstructuredGridGeometryFilterWrap::ExtentClippingOn(const Nan::Function
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -298,7 +298,7 @@ void VtkUnstructuredGridGeometryFilterWrap::GetLocator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -420,7 +420,7 @@ void VtkUnstructuredGridGeometryFilterWrap::MergingOff(const Nan::FunctionCallba
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +432,7 @@ void VtkUnstructuredGridGeometryFilterWrap::MergingOn(const Nan::FunctionCallbac
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +451,7 @@ void VtkUnstructuredGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
+	VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -467,7 +467,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PassThroughCellIdsOff(const Nan::Fun
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -479,7 +479,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PassThroughCellIdsOn(const Nan::Func
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -491,7 +491,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PassThroughPointIdsOff(const Nan::Fu
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -503,7 +503,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PassThroughPointIdsOn(const Nan::Fun
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -515,7 +515,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PointClippingOff(const Nan::Function
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -527,7 +527,7 @@ void VtkUnstructuredGridGeometryFilterWrap::PointClippingOn(const Nan::FunctionC
 {
 	VtkUnstructuredGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridGeometryFilterWrap>(info.Holder());
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -551,7 +551,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
+		VtkUnstructuredGridGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -572,7 +572,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetCellClipping(const Nan::FunctionC
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -599,7 +599,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +628,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallbac
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -679,7 +679,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetExtentClipping(const Nan::Functio
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -699,7 +699,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetLocator(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -718,7 +718,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetMerging(const Nan::FunctionCallba
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -738,7 +738,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetOriginalCellIdsName(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -758,7 +758,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetOriginalPointIdsName(const Nan::F
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -777,7 +777,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetPassThroughCellIds(const Nan::Fun
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +796,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetPassThroughPointIds(const Nan::Fu
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -815,7 +815,7 @@ void VtkUnstructuredGridGeometryFilterWrap::SetPointClipping(const Nan::Function
 	vtkUnstructuredGridGeometryFilter *native = (vtkUnstructuredGridGeometryFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

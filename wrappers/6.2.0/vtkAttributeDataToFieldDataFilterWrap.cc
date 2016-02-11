@@ -161,7 +161,7 @@ void VtkAttributeDataToFieldDataFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkAttributeDataToFieldDataFilterWrap::InitPtpl();
+	VtkAttributeDataToFieldDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +177,7 @@ void VtkAttributeDataToFieldDataFilterWrap::PassAttributeDataOff(const Nan::Func
 {
 	VtkAttributeDataToFieldDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeDataToFieldDataFilterWrap>(info.Holder());
 	vtkAttributeDataToFieldDataFilter *native = (vtkAttributeDataToFieldDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkAttributeDataToFieldDataFilterWrap::PassAttributeDataOn(const Nan::Funct
 {
 	VtkAttributeDataToFieldDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAttributeDataToFieldDataFilterWrap>(info.Holder());
 	vtkAttributeDataToFieldDataFilter *native = (vtkAttributeDataToFieldDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkAttributeDataToFieldDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAttributeDataToFieldDataFilterWrap::InitPtpl();
+		VtkAttributeDataToFieldDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkAttributeDataToFieldDataFilterWrap::SetPassAttributeData(const Nan::Func
 	vtkAttributeDataToFieldDataFilter *native = (vtkAttributeDataToFieldDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -228,7 +228,7 @@ void VtkConstrainedPointHandleRepresentationWrap::AddBoundingPlane(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -245,7 +245,7 @@ void VtkConstrainedPointHandleRepresentationWrap::BuildRepresentation(const Nan:
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -359,7 +359,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveCursorShape(const Nan
 		return;
 	}
 	r = native->GetActiveCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +382,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActiveProperty(const Nan::F
 		return;
 	}
 	r = native->GetActiveProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetActors(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +425,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetBoundingPlanes(const Nan::F
 		return;
 	}
 	r = native->GetBoundingPlanes();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -462,7 +462,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetCursorShape(const Nan::Func
 		return;
 	}
 	r = native->GetCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -485,7 +485,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetObliquePlane(const Nan::Fun
 		return;
 	}
 	r = native->GetObliquePlane();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -511,7 +511,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetPosition(const Nan::Functio
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +540,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetPosition(const Nan::Functio
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +620,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -643,7 +643,7 @@ void VtkConstrainedPointHandleRepresentationWrap::GetSelectedProperty(const Nan:
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -675,7 +675,7 @@ void VtkConstrainedPointHandleRepresentationWrap::Highlight(const Nan::FunctionC
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -721,7 +721,7 @@ void VtkConstrainedPointHandleRepresentationWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
+	VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -740,7 +740,7 @@ void VtkConstrainedPointHandleRepresentationWrap::ReleaseGraphicsResources(const
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -757,7 +757,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RemoveAllBoundingPlanes(const 
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -772,7 +772,7 @@ void VtkConstrainedPointHandleRepresentationWrap::RemoveBoundingPlane(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -867,7 +867,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
+		VtkConstrainedPointHandleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -889,7 +889,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetActiveCursorShape(const Nan
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +909,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetBoundingPlanes(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -922,7 +922,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetBoundingPlanes(const Nan::F
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -942,7 +942,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetCursorShape(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +969,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetDisplayPosition(const Nan::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -998,7 +998,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetDisplayPosition(const Nan::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1018,7 +1018,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetObliquePlane(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1045,7 +1045,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetPosition(const Nan::Functio
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1074,7 +1074,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetPosition(const Nan::Functio
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1090,7 +1090,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetPosition(const Nan::Functio
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1113,7 +1113,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionNormal(const Nan:
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1130,7 +1130,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionNormalToOblique(c
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1142,7 +1142,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionNormalToXAxis(con
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1154,7 +1154,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionNormalToYAxis(con
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1166,7 +1166,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionNormalToZAxis(con
 {
 	VtkConstrainedPointHandleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkConstrainedPointHandleRepresentationWrap>(info.Holder());
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1180,7 +1180,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetProjectionPosition(const Na
 	vtkConstrainedPointHandleRepresentation *native = (vtkConstrainedPointHandleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1200,7 +1200,7 @@ void VtkConstrainedPointHandleRepresentationWrap::SetRenderer(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1220,7 +1220,7 @@ void VtkConstrainedPointHandleRepresentationWrap::ShallowCopy(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1247,7 +1247,7 @@ void VtkConstrainedPointHandleRepresentationWrap::StartWidgetInteraction(const N
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1276,7 +1276,7 @@ void VtkConstrainedPointHandleRepresentationWrap::StartWidgetInteraction(const N
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1303,7 +1303,7 @@ void VtkConstrainedPointHandleRepresentationWrap::WidgetInteraction(const Nan::F
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1332,7 +1332,7 @@ void VtkConstrainedPointHandleRepresentationWrap::WidgetInteraction(const Nan::F
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

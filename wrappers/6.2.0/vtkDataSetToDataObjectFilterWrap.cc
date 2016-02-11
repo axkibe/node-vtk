@@ -152,7 +152,7 @@ void VtkDataSetToDataObjectFilterWrap::CellDataOff(const Nan::FunctionCallbackIn
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkDataSetToDataObjectFilterWrap::CellDataOn(const Nan::FunctionCallbackInf
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkDataSetToDataObjectFilterWrap::FieldDataOff(const Nan::FunctionCallbackI
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkDataSetToDataObjectFilterWrap::FieldDataOn(const Nan::FunctionCallbackIn
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkDataSetToDataObjectFilterWrap::GeometryOff(const Nan::FunctionCallbackIn
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkDataSetToDataObjectFilterWrap::GeometryOn(const Nan::FunctionCallbackInf
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -337,7 +337,7 @@ void VtkDataSetToDataObjectFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataSetToDataObjectFilterWrap::InitPtpl();
+	VtkDataSetToDataObjectFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,7 +353,7 @@ void VtkDataSetToDataObjectFilterWrap::PointDataOff(const Nan::FunctionCallbackI
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +365,7 @@ void VtkDataSetToDataObjectFilterWrap::PointDataOn(const Nan::FunctionCallbackIn
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -389,7 +389,7 @@ void VtkDataSetToDataObjectFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataSetToDataObjectFilterWrap::InitPtpl();
+		VtkDataSetToDataObjectFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +410,7 @@ void VtkDataSetToDataObjectFilterWrap::SetCellData(const Nan::FunctionCallbackIn
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +429,7 @@ void VtkDataSetToDataObjectFilterWrap::SetFieldData(const Nan::FunctionCallbackI
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +448,7 @@ void VtkDataSetToDataObjectFilterWrap::SetGeometry(const Nan::FunctionCallbackIn
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -467,7 +467,7 @@ void VtkDataSetToDataObjectFilterWrap::SetPointData(const Nan::FunctionCallbackI
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -486,7 +486,7 @@ void VtkDataSetToDataObjectFilterWrap::SetTopology(const Nan::FunctionCallbackIn
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -503,7 +503,7 @@ void VtkDataSetToDataObjectFilterWrap::TopologyOff(const Nan::FunctionCallbackIn
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -515,7 +515,7 @@ void VtkDataSetToDataObjectFilterWrap::TopologyOn(const Nan::FunctionCallbackInf
 {
 	VtkDataSetToDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetToDataObjectFilterWrap>(info.Holder());
 	vtkDataSetToDataObjectFilter *native = (vtkDataSetToDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -148,7 +148,7 @@ void VtkPointsProjectedHullWrap::Initialize(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkPointsProjectedHullWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkPointsProjectedHullWrap::Update(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPointsProjectedHullWrap *wrapper = ObjectWrap::Unwrap<VtkPointsProjectedHullWrap>(info.Holder());
 	vtkPointsProjectedHull *native = (vtkPointsProjectedHull *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

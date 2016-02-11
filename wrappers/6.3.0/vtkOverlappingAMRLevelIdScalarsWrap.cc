@@ -135,7 +135,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
+	VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkOverlappingAMRLevelIdScalarsWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
+		VtkOverlappingAMRLevelIdScalarsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

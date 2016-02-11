@@ -53,17 +53,32 @@ void VtkCellPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddLocator", AddLocator);
 	Nan::SetPrototypeMethod(tpl, "addLocator", AddLocator);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellIJK", GetCellIJK);
+	Nan::SetPrototypeMethod(tpl, "getCellIJK", GetCellIJK);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetClippingPlaneId", GetClippingPlaneId);
 	Nan::SetPrototypeMethod(tpl, "getClippingPlaneId", GetClippingPlaneId);
 
+	Nan::SetPrototypeMethod(tpl, "GetMapperNormal", GetMapperNormal);
+	Nan::SetPrototypeMethod(tpl, "getMapperNormal", GetMapperNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetPCoords", GetPCoords);
+	Nan::SetPrototypeMethod(tpl, "getPCoords", GetPCoords);
+
 	Nan::SetPrototypeMethod(tpl, "GetPickClippingPlanes", GetPickClippingPlanes);
 	Nan::SetPrototypeMethod(tpl, "getPickClippingPlanes", GetPickClippingPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "GetPickNormal", GetPickNormal);
+	Nan::SetPrototypeMethod(tpl, "getPickNormal", GetPickNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetPickTextureData", GetPickTextureData);
 	Nan::SetPrototypeMethod(tpl, "getPickTextureData", GetPickTextureData);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointIJK", GetPointIJK);
+	Nan::SetPrototypeMethod(tpl, "getPointIJK", GetPointIJK);
 
 	Nan::SetPrototypeMethod(tpl, "GetSubId", GetSubId);
 	Nan::SetPrototypeMethod(tpl, "getSubId", GetSubId);
@@ -161,7 +176,7 @@ void VtkCellPickerWrap::AddLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -172,6 +187,23 @@ void VtkCellPickerWrap::AddLocator(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellPickerWrap::GetCellIJK(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
+	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCellIJK();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCellPickerWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -202,6 +234,40 @@ void VtkCellPickerWrap::GetClippingPlaneId(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCellPickerWrap::GetMapperNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
+	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMapperNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkCellPickerWrap::GetPCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
+	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPCoords();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCellPickerWrap::GetPickClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
@@ -216,6 +282,23 @@ void VtkCellPickerWrap::GetPickClippingPlanes(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCellPickerWrap::GetPickNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
+	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCellPickerWrap::GetPickTextureData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
@@ -228,6 +311,23 @@ void VtkCellPickerWrap::GetPickTextureData(const Nan::FunctionCallbackInfo<v8::V
 	}
 	r = native->GetPickTextureData();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCellPickerWrap::GetPointIJK(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
+	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointIJK();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCellPickerWrap::GetSubId(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -255,7 +355,7 @@ void VtkCellPickerWrap::GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetTexture();
-		VtkTextureWrap::InitPtpl();
+	VtkTextureWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -328,7 +428,7 @@ void VtkCellPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellPickerWrap::InitPtpl();
+	VtkCellPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -378,7 +478,7 @@ void VtkCellPickerWrap::PickClippingPlanesOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -390,7 +490,7 @@ void VtkCellPickerWrap::PickClippingPlanesOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +502,7 @@ void VtkCellPickerWrap::PickTextureDataOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +514,7 @@ void VtkCellPickerWrap::PickTextureDataOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +526,7 @@ void VtkCellPickerWrap::RemoveAllLocators(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -441,7 +541,7 @@ void VtkCellPickerWrap::RemoveLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractCellLocatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +570,7 @@ void VtkCellPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellPickerWrap::InitPtpl();
+		VtkCellPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -491,7 +591,7 @@ void VtkCellPickerWrap::SetPickClippingPlanes(const Nan::FunctionCallbackInfo<v8
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +610,7 @@ void VtkCellPickerWrap::SetPickTextureData(const Nan::FunctionCallbackInfo<v8::V
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +629,7 @@ void VtkCellPickerWrap::SetUseVolumeGradientOpacity(const Nan::FunctionCallbackI
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -548,7 +648,7 @@ void VtkCellPickerWrap::SetVolumeOpacityIsovalue(const Nan::FunctionCallbackInfo
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +665,7 @@ void VtkCellPickerWrap::UseVolumeGradientOpacityOff(const Nan::FunctionCallbackI
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +677,7 @@ void VtkCellPickerWrap::UseVolumeGradientOpacityOn(const Nan::FunctionCallbackIn
 {
 	VtkCellPickerWrap *wrapper = ObjectWrap::Unwrap<VtkCellPickerWrap>(info.Holder());
 	vtkCellPicker *native = (vtkCellPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

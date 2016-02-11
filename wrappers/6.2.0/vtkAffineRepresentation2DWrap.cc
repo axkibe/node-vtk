@@ -105,6 +105,9 @@ void VtkAffineRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDisplayText", GetDisplayText);
 	Nan::SetPrototypeMethod(tpl, "getDisplayText", GetDisplayText);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetProperty", GetProperty);
 	Nan::SetPrototypeMethod(tpl, "getProperty", GetProperty);
 
@@ -201,7 +204,7 @@ void VtkAffineRepresentation2DWrap::BuildRepresentation(const Nan::FunctionCallb
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +245,7 @@ void VtkAffineRepresentation2DWrap::DisplayTextOff(const Nan::FunctionCallbackIn
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +257,7 @@ void VtkAffineRepresentation2DWrap::DisplayTextOn(const Nan::FunctionCallbackInf
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +279,7 @@ void VtkAffineRepresentation2DWrap::EndWidgetInteraction(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +308,7 @@ void VtkAffineRepresentation2DWrap::EndWidgetInteraction(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -325,7 +328,7 @@ void VtkAffineRepresentation2DWrap::GetActors2D(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,6 +495,23 @@ void VtkAffineRepresentation2DWrap::GetDisplayText(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAffineRepresentation2DWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
+	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkAffineRepresentation2DWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAffineRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAffineRepresentation2DWrap>(info.Holder());
@@ -503,7 +523,7 @@ void VtkAffineRepresentation2DWrap::GetProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -526,7 +546,7 @@ void VtkAffineRepresentation2DWrap::GetSelectedProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -549,7 +569,7 @@ void VtkAffineRepresentation2DWrap::GetTextProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -568,7 +588,7 @@ void VtkAffineRepresentation2DWrap::GetTransform(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +634,7 @@ void VtkAffineRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkAffineRepresentation2DWrap::InitPtpl();
+	VtkAffineRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -640,7 +660,7 @@ void VtkAffineRepresentation2DWrap::PlaceWidget(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -669,7 +689,7 @@ void VtkAffineRepresentation2DWrap::PlaceWidget(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +709,7 @@ void VtkAffineRepresentation2DWrap::ReleaseGraphicsResources(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +760,7 @@ void VtkAffineRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAffineRepresentation2DWrap::InitPtpl();
+		VtkAffineRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -761,7 +781,7 @@ void VtkAffineRepresentation2DWrap::SetAxesWidth(const Nan::FunctionCallbackInfo
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -780,7 +800,7 @@ void VtkAffineRepresentation2DWrap::SetBoxWidth(const Nan::FunctionCallbackInfo<
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -799,7 +819,7 @@ void VtkAffineRepresentation2DWrap::SetCircleWidth(const Nan::FunctionCallbackIn
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -818,7 +838,7 @@ void VtkAffineRepresentation2DWrap::SetDisplayText(const Nan::FunctionCallbackIn
 	vtkAffineRepresentation2D *native = (vtkAffineRepresentation2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -845,7 +865,7 @@ void VtkAffineRepresentation2DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -874,7 +894,7 @@ void VtkAffineRepresentation2DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -890,7 +910,7 @@ void VtkAffineRepresentation2DWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -914,7 +934,7 @@ void VtkAffineRepresentation2DWrap::SetProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -934,7 +954,7 @@ void VtkAffineRepresentation2DWrap::SetSelectedProperty(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -954,7 +974,7 @@ void VtkAffineRepresentation2DWrap::SetTextProperty(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -974,7 +994,7 @@ void VtkAffineRepresentation2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1001,7 +1021,7 @@ void VtkAffineRepresentation2DWrap::StartWidgetInteraction(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1030,7 +1050,7 @@ void VtkAffineRepresentation2DWrap::StartWidgetInteraction(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1057,7 +1077,7 @@ void VtkAffineRepresentation2DWrap::WidgetInteraction(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1086,7 +1106,7 @@ void VtkAffineRepresentation2DWrap::WidgetInteraction(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -30,6 +30,7 @@ class VtkImageCursor3DWrap : public VtkImageInPlaceFilterWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCursorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

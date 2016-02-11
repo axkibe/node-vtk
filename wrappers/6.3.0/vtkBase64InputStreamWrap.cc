@@ -98,7 +98,7 @@ void VtkBase64InputStreamWrap::EndReading(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkBase64InputStreamWrap *wrapper = ObjectWrap::Unwrap<VtkBase64InputStreamWrap>(info.Holder());
 	vtkBase64InputStream *native = (vtkBase64InputStream *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkBase64InputStreamWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkBase64InputStreamWrap::InitPtpl();
+	VtkBase64InputStreamWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +181,7 @@ void VtkBase64InputStreamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBase64InputStreamWrap::InitPtpl();
+		VtkBase64InputStreamWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -200,7 +200,7 @@ void VtkBase64InputStreamWrap::StartReading(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkBase64InputStreamWrap *wrapper = ObjectWrap::Unwrap<VtkBase64InputStreamWrap>(info.Holder());
 	vtkBase64InputStream *native = (vtkBase64InputStream *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

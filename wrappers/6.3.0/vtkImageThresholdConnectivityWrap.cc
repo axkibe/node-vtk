@@ -70,6 +70,9 @@ void VtkImageThresholdConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNeighborhoodFractionMinValue", GetNeighborhoodFractionMinValue);
 	Nan::SetPrototypeMethod(tpl, "getNeighborhoodFractionMinValue", GetNeighborhoodFractionMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetNeighborhoodRadius", GetNeighborhoodRadius);
+	Nan::SetPrototypeMethod(tpl, "getNeighborhoodRadius", GetNeighborhoodRadius);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfInVoxels", GetNumberOfInVoxels);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfInVoxels", GetNumberOfInVoxels);
 
@@ -84,6 +87,15 @@ void VtkImageThresholdConnectivityWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSeedPoints", GetSeedPoints);
 	Nan::SetPrototypeMethod(tpl, "getSeedPoints", GetSeedPoints);
+
+	Nan::SetPrototypeMethod(tpl, "GetSliceRangeX", GetSliceRangeX);
+	Nan::SetPrototypeMethod(tpl, "getSliceRangeX", GetSliceRangeX);
+
+	Nan::SetPrototypeMethod(tpl, "GetSliceRangeY", GetSliceRangeY);
+	Nan::SetPrototypeMethod(tpl, "getSliceRangeY", GetSliceRangeY);
+
+	Nan::SetPrototypeMethod(tpl, "GetSliceRangeZ", GetSliceRangeZ);
+	Nan::SetPrototypeMethod(tpl, "getSliceRangeZ", GetSliceRangeZ);
 
 	Nan::SetPrototypeMethod(tpl, "GetStencil", GetStencil);
 	Nan::SetPrototypeMethod(tpl, "getStencil", GetStencil);
@@ -284,6 +296,23 @@ void VtkImageThresholdConnectivityWrap::GetNeighborhoodFractionMinValue(const Na
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageThresholdConnectivityWrap::GetNeighborhoodRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
+	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNeighborhoodRadius();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageThresholdConnectivityWrap::GetNumberOfInVoxels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
@@ -351,7 +380,7 @@ void VtkImageThresholdConnectivityWrap::GetSeedPoints(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSeedPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,6 +390,57 @@ void VtkImageThresholdConnectivityWrap::GetSeedPoints(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageThresholdConnectivityWrap::GetSliceRangeX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
+	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSliceRangeX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageThresholdConnectivityWrap::GetSliceRangeY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
+	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSliceRangeY();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageThresholdConnectivityWrap::GetSliceRangeZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
+	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSliceRangeZ();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageThresholdConnectivityWrap::GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -374,7 +454,7 @@ void VtkImageThresholdConnectivityWrap::GetStencil(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetStencil();
-		VtkImageStencilDataWrap::InitPtpl();
+	VtkImageStencilDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -433,7 +513,7 @@ void VtkImageThresholdConnectivityWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageThresholdConnectivityWrap::InitPtpl();
+	VtkImageThresholdConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,7 +529,7 @@ void VtkImageThresholdConnectivityWrap::ReplaceInOff(const Nan::FunctionCallback
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -461,7 +541,7 @@ void VtkImageThresholdConnectivityWrap::ReplaceInOn(const Nan::FunctionCallbackI
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -473,7 +553,7 @@ void VtkImageThresholdConnectivityWrap::ReplaceOutOff(const Nan::FunctionCallbac
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -485,7 +565,7 @@ void VtkImageThresholdConnectivityWrap::ReplaceOutOn(const Nan::FunctionCallback
 {
 	VtkImageThresholdConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageThresholdConnectivityWrap>(info.Holder());
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +589,7 @@ void VtkImageThresholdConnectivityWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageThresholdConnectivityWrap::InitPtpl();
+		VtkImageThresholdConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -530,7 +610,7 @@ void VtkImageThresholdConnectivityWrap::SetActiveComponent(const Nan::FunctionCa
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +629,7 @@ void VtkImageThresholdConnectivityWrap::SetInValue(const Nan::FunctionCallbackIn
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -568,7 +648,7 @@ void VtkImageThresholdConnectivityWrap::SetNeighborhoodFraction(const Nan::Funct
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +675,7 @@ void VtkImageThresholdConnectivityWrap::SetNeighborhoodRadius(const Nan::Functio
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +704,7 @@ void VtkImageThresholdConnectivityWrap::SetNeighborhoodRadius(const Nan::Functio
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +720,7 @@ void VtkImageThresholdConnectivityWrap::SetNeighborhoodRadius(const Nan::Functio
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -663,7 +743,7 @@ void VtkImageThresholdConnectivityWrap::SetOutValue(const Nan::FunctionCallbackI
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -682,7 +762,7 @@ void VtkImageThresholdConnectivityWrap::SetReplaceIn(const Nan::FunctionCallback
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -701,7 +781,7 @@ void VtkImageThresholdConnectivityWrap::SetReplaceOut(const Nan::FunctionCallbac
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -721,7 +801,7 @@ void VtkImageThresholdConnectivityWrap::SetSeedPoints(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +828,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeX(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -777,7 +857,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeX(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -791,7 +871,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeX(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -820,7 +900,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeY(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -849,7 +929,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeY(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +943,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeY(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -892,7 +972,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeZ(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -921,7 +1001,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeZ(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +1015,7 @@ void VtkImageThresholdConnectivityWrap::SetSliceRangeZ(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -957,7 +1037,7 @@ void VtkImageThresholdConnectivityWrap::SetStencilData(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageStencilDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageStencilDataWrap *a0 = ObjectWrap::Unwrap<VtkImageStencilDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +1058,7 @@ void VtkImageThresholdConnectivityWrap::ThresholdBetween(const Nan::FunctionCall
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -999,7 +1079,7 @@ void VtkImageThresholdConnectivityWrap::ThresholdByLower(const Nan::FunctionCall
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1018,7 +1098,7 @@ void VtkImageThresholdConnectivityWrap::ThresholdByUpper(const Nan::FunctionCall
 	vtkImageThresholdConnectivity *native = (vtkImageThresholdConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

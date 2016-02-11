@@ -198,7 +198,7 @@ void VtkExtractSelectedGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractSelectedGraphWrap::InitPtpl();
+	VtkExtractSelectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkExtractSelectedGraphWrap::RemoveIsolatedVerticesOff(const Nan::FunctionC
 {
 	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -226,7 +226,7 @@ void VtkExtractSelectedGraphWrap::RemoveIsolatedVerticesOn(const Nan::FunctionCa
 {
 	VtkExtractSelectedGraphWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedGraphWrap>(info.Holder());
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -250,7 +250,7 @@ void VtkExtractSelectedGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractSelectedGraphWrap::InitPtpl();
+		VtkExtractSelectedGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -272,7 +272,7 @@ void VtkExtractSelectedGraphWrap::SetAnnotationLayersConnection(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -291,7 +291,7 @@ void VtkExtractSelectedGraphWrap::SetRemoveIsolatedVertices(const Nan::FunctionC
 	vtkExtractSelectedGraph *native = (vtkExtractSelectedGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -311,7 +311,7 @@ void VtkExtractSelectedGraphWrap::SetSelectionConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -133,7 +133,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentDataObject(const Nan::Function
 		return;
 	}
 	r = native->GetCurrentDataObject();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,7 +156,7 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetCurrentMetaData();
-		VtkInformationWrap::InitPtpl();
+	VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +172,7 @@ void VtkUniformGridAMRDataIteratorWrap::GoToFirstItem(const Nan::FunctionCallbac
 {
 	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
 	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkUniformGridAMRDataIteratorWrap::GoToNextItem(const Nan::FunctionCallback
 {
 	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
 	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -253,7 +253,7 @@ void VtkUniformGridAMRDataIteratorWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkUniformGridAMRDataIteratorWrap::InitPtpl();
+	VtkUniformGridAMRDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,7 +281,7 @@ void VtkUniformGridAMRDataIteratorWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUniformGridAMRDataIteratorWrap::InitPtpl();
+		VtkUniformGridAMRDataIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

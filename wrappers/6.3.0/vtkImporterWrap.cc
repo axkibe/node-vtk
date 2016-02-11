@@ -128,7 +128,7 @@ void VtkImporterWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetRenderWindow();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -151,7 +151,7 @@ void VtkImporterWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkImporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkImporterWrap::InitPtpl();
+	VtkImporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkImporterWrap::Read(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImporterWrap *wrapper = ObjectWrap::Unwrap<VtkImporterWrap>(info.Holder());
 	vtkImporter *native = (vtkImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkImporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImporterWrap::InitPtpl();
+		VtkImporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkImporterWrap::SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -275,7 +275,7 @@ void VtkImporterWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImporterWrap *wrapper = ObjectWrap::Unwrap<VtkImporterWrap>(info.Holder());
 	vtkImporter *native = (vtkImporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

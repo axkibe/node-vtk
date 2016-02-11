@@ -134,7 +134,7 @@ void VtkXMLPRectilinearGridWriterWrap::GetInput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkXMLPRectilinearGridWriterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPRectilinearGridWriterWrap::InitPtpl();
+	VtkXMLPRectilinearGridWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkXMLPRectilinearGridWriterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPRectilinearGridWriterWrap::InitPtpl();
+		VtkXMLPRectilinearGridWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

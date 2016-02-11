@@ -108,7 +108,7 @@ void VtkRendererCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -146,7 +146,7 @@ void VtkRendererCollectionWrap::GetFirstRenderer(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetFirstRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkRendererCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetNextItem();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkRendererCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkRendererCollectionWrap::InitPtpl();
+	VtkRendererCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkRendererCollectionWrap::Render(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRendererCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkRendererCollectionWrap>(info.Holder());
 	vtkRendererCollection *native = (vtkRendererCollection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +254,7 @@ void VtkRendererCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRendererCollectionWrap::InitPtpl();
+		VtkRendererCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

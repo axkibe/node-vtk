@@ -102,7 +102,7 @@ void VtkStaticCellLinksWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -133,7 +133,7 @@ void VtkStaticCellLinksWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkStaticCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkStaticCellLinksWrap>(info.Holder());
 	vtkStaticCellLinks *native = (vtkStaticCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -174,7 +174,7 @@ void VtkStaticCellLinksWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkStaticCellLinksWrap::InitPtpl();
+	VtkStaticCellLinksWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkStaticCellLinksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStaticCellLinksWrap::InitPtpl();
+		VtkStaticCellLinksWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

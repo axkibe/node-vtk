@@ -114,7 +114,7 @@ void VtkOpenGLRendererWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkOpenGLRendererWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRendererWrap>(info.Holder());
 	vtkOpenGLRenderer *native = (vtkOpenGLRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkOpenGLRendererWrap::DeviceRender(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOpenGLRendererWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRendererWrap>(info.Holder());
 	vtkOpenGLRenderer *native = (vtkOpenGLRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -138,7 +138,7 @@ void VtkOpenGLRendererWrap::DeviceRenderTranslucentPolygonalGeometry(const Nan::
 {
 	VtkOpenGLRendererWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRendererWrap>(info.Holder());
 	vtkOpenGLRenderer *native = (vtkOpenGLRenderer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkOpenGLRendererWrap::GetPass(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPass();
-		VtkRenderPassWrap::InitPtpl();
+	VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkOpenGLRendererWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLRendererWrap::InitPtpl();
+	VtkOpenGLRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkOpenGLRendererWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLRendererWrap::InitPtpl();
+		VtkOpenGLRendererWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkOpenGLRendererWrap::SetPass(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -50,11 +50,17 @@ void VtkInteractorStyleRubberBand2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetEndPosition", GetEndPosition);
+	Nan::SetPrototypeMethod(tpl, "getEndPosition", GetEndPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetInteraction", GetInteraction);
 	Nan::SetPrototypeMethod(tpl, "getInteraction", GetInteraction);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderOnMouseMove", GetRenderOnMouseMove);
 	Nan::SetPrototypeMethod(tpl, "getRenderOnMouseMove", GetRenderOnMouseMove);
+
+	Nan::SetPrototypeMethod(tpl, "GetStartPosition", GetStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getStartPosition", GetStartPosition);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -144,6 +150,23 @@ void VtkInteractorStyleRubberBand2DWrap::GetClassName(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkInteractorStyleRubberBand2DWrap::GetEndPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
+	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetEndPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkInteractorStyleRubberBand2DWrap::GetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
@@ -170,6 +193,23 @@ void VtkInteractorStyleRubberBand2DWrap::GetRenderOnMouseMove(const Nan::Functio
 	}
 	r = native->GetRenderOnMouseMove();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkInteractorStyleRubberBand2DWrap::GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
+	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkInteractorStyleRubberBand2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,7 +245,7 @@ void VtkInteractorStyleRubberBand2DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleRubberBand2DWrap::InitPtpl();
+	VtkInteractorStyleRubberBand2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +261,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnLeftButtonDown(const Nan::FunctionCal
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -233,7 +273,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnLeftButtonUp(const Nan::FunctionCallb
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +285,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnMiddleButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +297,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnMiddleButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +309,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnMouseMove(const Nan::FunctionCallback
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +321,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnMouseWheelBackward(const Nan::Functio
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +333,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnMouseWheelForward(const Nan::Function
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -305,7 +345,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnRightButtonDown(const Nan::FunctionCa
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +357,7 @@ void VtkInteractorStyleRubberBand2DWrap::OnRightButtonUp(const Nan::FunctionCall
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -329,7 +369,7 @@ void VtkInteractorStyleRubberBand2DWrap::RenderOnMouseMoveOff(const Nan::Functio
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -341,7 +381,7 @@ void VtkInteractorStyleRubberBand2DWrap::RenderOnMouseMoveOn(const Nan::Function
 {
 	VtkInteractorStyleRubberBand2DWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleRubberBand2DWrap>(info.Holder());
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +405,7 @@ void VtkInteractorStyleRubberBand2DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleRubberBand2DWrap::InitPtpl();
+		VtkInteractorStyleRubberBand2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -386,7 +426,7 @@ void VtkInteractorStyleRubberBand2DWrap::SetRenderOnMouseMove(const Nan::Functio
 	vtkInteractorStyleRubberBand2D *native = (vtkInteractorStyleRubberBand2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

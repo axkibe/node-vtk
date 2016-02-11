@@ -125,7 +125,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkHierarchicalBoxDataSetWrap::InitPtpl();
+		VtkHierarchicalBoxDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -144,7 +144,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::GetOutput(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetOutput();
-		VtkHierarchicalBoxDataSetWrap::InitPtpl();
+	VtkHierarchicalBoxDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
+	VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
+		VtkHierarchicalBoxDataSetAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +254,7 @@ void VtkHierarchicalBoxDataSetAlgorithmWrap::SetInputData(const Nan::FunctionCal
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -64,8 +64,14 @@ void VtkAbstractPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPickList", GetPickList);
 	Nan::SetPrototypeMethod(tpl, "getPickList", GetPickList);
 
+	Nan::SetPrototypeMethod(tpl, "GetPickPosition", GetPickPosition);
+	Nan::SetPrototypeMethod(tpl, "getPickPosition", GetPickPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetRenderer", GetRenderer);
 	Nan::SetPrototypeMethod(tpl, "getRenderer", GetRenderer);
+
+	Nan::SetPrototypeMethod(tpl, "GetSelectionPoint", GetSelectionPoint);
+	Nan::SetPrototypeMethod(tpl, "getSelectionPoint", GetSelectionPoint);
 
 	Nan::SetPrototypeMethod(tpl, "InitializePickList", InitializePickList);
 	Nan::SetPrototypeMethod(tpl, "initializePickList", InitializePickList);
@@ -126,7 +132,7 @@ void VtkAbstractPickerWrap::AddPickList(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -146,7 +152,7 @@ void VtkAbstractPickerWrap::DeletePickList(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -198,7 +204,7 @@ void VtkAbstractPickerWrap::GetPickList(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetPickList();
-		VtkPropCollectionWrap::InitPtpl();
+	VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,6 +214,23 @@ void VtkAbstractPickerWrap::GetPickList(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAbstractPickerWrap::GetPickPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
+	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPickPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAbstractPickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -221,7 +244,7 @@ void VtkAbstractPickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,11 +256,28 @@ void VtkAbstractPickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAbstractPickerWrap::GetSelectionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
+	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectionPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkAbstractPickerWrap::InitializePickList(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +318,7 @@ void VtkAbstractPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractPickerWrap::InitPtpl();
+	VtkAbstractPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +404,7 @@ void VtkAbstractPickerWrap::PickFromListOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +416,7 @@ void VtkAbstractPickerWrap::PickFromListOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAbstractPickerWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPickerWrap>(info.Holder());
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +440,7 @@ void VtkAbstractPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractPickerWrap::InitPtpl();
+		VtkAbstractPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -421,7 +461,7 @@ void VtkAbstractPickerWrap::SetPickFromList(const Nan::FunctionCallbackInfo<v8::
 	vtkAbstractPicker *native = (vtkAbstractPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

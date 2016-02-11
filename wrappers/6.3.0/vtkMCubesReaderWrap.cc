@@ -177,7 +177,7 @@ void VtkMCubesReaderWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkMCubesReaderWrap::FlipNormalsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkMCubesReaderWrap::FlipNormalsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -346,7 +346,7 @@ void VtkMCubesReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkMCubesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkMCubesReaderWrap::InitPtpl();
+	VtkMCubesReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,7 +435,7 @@ void VtkMCubesReaderWrap::NormalsOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +447,7 @@ void VtkMCubesReaderWrap::NormalsOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -471,7 +471,7 @@ void VtkMCubesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMCubesReaderWrap::InitPtpl();
+		VtkMCubesReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -492,7 +492,7 @@ void VtkMCubesReaderWrap::SetDataByteOrder(const Nan::FunctionCallbackInfo<v8::V
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +509,7 @@ void VtkMCubesReaderWrap::SetDataByteOrderToBigEndian(const Nan::FunctionCallbac
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +521,7 @@ void VtkMCubesReaderWrap::SetDataByteOrderToLittleEndian(const Nan::FunctionCall
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -536,7 +536,7 @@ void VtkMCubesReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +555,7 @@ void VtkMCubesReaderWrap::SetFlipNormals(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +574,7 @@ void VtkMCubesReaderWrap::SetHeaderSize(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -594,7 +594,7 @@ void VtkMCubesReaderWrap::SetLimitsFileName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +614,7 @@ void VtkMCubesReaderWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -633,7 +633,7 @@ void VtkMCubesReaderWrap::SetNormals(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -652,7 +652,7 @@ void VtkMCubesReaderWrap::SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -669,7 +669,7 @@ void VtkMCubesReaderWrap::SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -681,7 +681,7 @@ void VtkMCubesReaderWrap::SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMCubesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMCubesReaderWrap>(info.Holder());
 	vtkMCubesReader *native = (vtkMCubesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

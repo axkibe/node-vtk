@@ -116,7 +116,7 @@ void VtkFrameBufferObject2Wrap::DeactivateDrawBuffers(const Nan::FunctionCallbac
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -128,7 +128,7 @@ void VtkFrameBufferObject2Wrap::DeactivateReadBuffer(const Nan::FunctionCallback
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkFrameBufferObject2Wrap::GetContext(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetContext();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +181,7 @@ void VtkFrameBufferObject2Wrap::InitializeViewport(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -251,7 +251,7 @@ void VtkFrameBufferObject2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkFrameBufferObject2Wrap::InitPtpl();
+	VtkFrameBufferObject2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkFrameBufferObject2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFrameBufferObject2Wrap::InitPtpl();
+		VtkFrameBufferObject2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkFrameBufferObject2Wrap::SaveCurrentBindings(const Nan::FunctionCallbackI
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -310,7 +310,7 @@ void VtkFrameBufferObject2Wrap::SaveCurrentBuffers(const Nan::FunctionCallbackIn
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
 	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -325,7 +325,7 @@ void VtkFrameBufferObject2Wrap::SetContext(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

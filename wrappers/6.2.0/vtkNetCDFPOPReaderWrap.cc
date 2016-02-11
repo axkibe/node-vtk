@@ -56,6 +56,9 @@ void VtkNetCDFPOPReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfVariableArrays", GetNumberOfVariableArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfVariableArrays", GetNumberOfVariableArrays);
 
+	Nan::SetPrototypeMethod(tpl, "GetStride", GetStride);
+	Nan::SetPrototypeMethod(tpl, "getStride", GetStride);
+
 	Nan::SetPrototypeMethod(tpl, "GetVariableArrayName", GetVariableArrayName);
 	Nan::SetPrototypeMethod(tpl, "getVariableArrayName", GetVariableArrayName);
 
@@ -151,6 +154,23 @@ void VtkNetCDFPOPReaderWrap::GetNumberOfVariableArrays(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkNetCDFPOPReaderWrap::GetStride(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
+	vtkNetCDFPOPReader *native = (vtkNetCDFPOPReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStride();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkNetCDFPOPReaderWrap::GetVariableArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkNetCDFPOPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNetCDFPOPReaderWrap>(info.Holder());
@@ -227,7 +247,7 @@ void VtkNetCDFPOPReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkNetCDFPOPReaderWrap::InitPtpl();
+	VtkNetCDFPOPReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +275,7 @@ void VtkNetCDFPOPReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNetCDFPOPReaderWrap::InitPtpl();
+		VtkNetCDFPOPReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +297,7 @@ void VtkNetCDFPOPReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +324,7 @@ void VtkNetCDFPOPReaderWrap::SetStride(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +353,7 @@ void VtkNetCDFPOPReaderWrap::SetStride(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +369,7 @@ void VtkNetCDFPOPReaderWrap::SetStride(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -375,7 +395,7 @@ void VtkNetCDFPOPReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

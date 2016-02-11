@@ -156,7 +156,7 @@ void VtkGenericContourFilterWrap::ComputeGradientsOff(const Nan::FunctionCallbac
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -168,7 +168,7 @@ void VtkGenericContourFilterWrap::ComputeGradientsOn(const Nan::FunctionCallback
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,7 +180,7 @@ void VtkGenericContourFilterWrap::ComputeNormalsOff(const Nan::FunctionCallbackI
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkGenericContourFilterWrap::ComputeNormalsOn(const Nan::FunctionCallbackIn
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkGenericContourFilterWrap::ComputeScalarsOff(const Nan::FunctionCallbackI
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkGenericContourFilterWrap::ComputeScalarsOn(const Nan::FunctionCallbackIn
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +228,7 @@ void VtkGenericContourFilterWrap::CreateDefaultLocator(const Nan::FunctionCallba
 {
 	VtkGenericContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericContourFilterWrap>(info.Holder());
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +252,7 @@ void VtkGenericContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -282,7 +282,7 @@ void VtkGenericContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -297,7 +297,7 @@ void VtkGenericContourFilterWrap::GenerateValues(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -395,7 +395,7 @@ void VtkGenericContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -475,7 +475,7 @@ void VtkGenericContourFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericContourFilterWrap::InitPtpl();
+	VtkGenericContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -503,7 +503,7 @@ void VtkGenericContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericContourFilterWrap::InitPtpl();
+		VtkGenericContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -525,7 +525,7 @@ void VtkGenericContourFilterWrap::SelectInputScalars(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -544,7 +544,7 @@ void VtkGenericContourFilterWrap::SetComputeGradients(const Nan::FunctionCallbac
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -563,7 +563,7 @@ void VtkGenericContourFilterWrap::SetComputeNormals(const Nan::FunctionCallbackI
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -582,7 +582,7 @@ void VtkGenericContourFilterWrap::SetComputeScalars(const Nan::FunctionCallbackI
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +602,7 @@ void VtkGenericContourFilterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -621,7 +621,7 @@ void VtkGenericContourFilterWrap::SetNumberOfContours(const Nan::FunctionCallbac
 	vtkGenericContourFilter *native = (vtkGenericContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

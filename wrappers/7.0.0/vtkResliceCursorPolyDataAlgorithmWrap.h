@@ -39,6 +39,7 @@ class VtkResliceCursorPolyDataAlgorithmWrap : public VtkPolyDataAlgorithmWrap
 		static void GetPlaneAxis2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReslicePlaneNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickSlabAxis1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickSlabAxis2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

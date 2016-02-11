@@ -129,7 +129,7 @@ void VtkAnnotationLayersWrap::AddAnnotation(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -149,7 +149,7 @@ void VtkAnnotationLayersWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -187,7 +187,7 @@ void VtkAnnotationLayersWrap::GetCurrentAnnotation(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentAnnotation();
-		VtkAnnotationWrap::InitPtpl();
+	VtkAnnotationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkAnnotationLayersWrap::GetCurrentSelection(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCurrentSelection();
-		VtkSelectionWrap::InitPtpl();
+	VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkAnnotationLayersWrap::InitPtpl();
+			VtkAnnotationLayersWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkAnnotationLayersWrap::InitPtpl();
+		VtkAnnotationLayersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -285,7 +285,7 @@ void VtkAnnotationLayersWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
 	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkAnnotationLayersWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkAnnotationLayersWrap::InitPtpl();
+	VtkAnnotationLayersWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,7 +345,7 @@ void VtkAnnotationLayersWrap::RemoveAnnotation(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -374,7 +374,7 @@ void VtkAnnotationLayersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAnnotationLayersWrap::InitPtpl();
+		VtkAnnotationLayersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkAnnotationLayersWrap::SetCurrentAnnotation(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -416,7 +416,7 @@ void VtkAnnotationLayersWrap::SetCurrentSelection(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +436,7 @@ void VtkAnnotationLayersWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -103,7 +103,7 @@ void VtkExodusIICacheWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkExodusIICacheWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIICacheWrap>(info.Holder());
 	vtkExodusIICache *native = (vtkExodusIICache *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -172,7 +172,7 @@ void VtkExodusIICacheWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkExodusIICacheWrap::InitPtpl();
+	VtkExodusIICacheWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkExodusIICacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExodusIICacheWrap::InitPtpl();
+		VtkExodusIICacheWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkExodusIICacheWrap::SetCacheCapacity(const Nan::FunctionCallbackInfo<v8::
 	vtkExodusIICache *native = (vtkExodusIICache *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -39,6 +39,7 @@ class VtkImageSlabWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetOrientationMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTrapezoidIntegration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MultiSliceOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

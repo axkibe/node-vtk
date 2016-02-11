@@ -172,7 +172,7 @@ void VtkChartLegendWrap::CacheBoundsOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkChartLegendWrap::CacheBoundsOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkChartLegendWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetBrush();
-		VtkBrushWrap::InitPtpl();
+	VtkBrushWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkChartLegendWrap::GetChart(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetChart();
-		VtkChartWrap::InitPtpl();
+	VtkChartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkChartLegendWrap::GetLabelProperties(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelProperties();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -370,7 +370,7 @@ void VtkChartLegendWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetPen();
-		VtkPenWrap::InitPtpl();
+	VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +443,7 @@ void VtkChartLegendWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartLegendWrap::InitPtpl();
+	VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,7 +493,7 @@ void VtkChartLegendWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartLegendWrap::InitPtpl();
+		VtkChartLegendWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkChartLegendWrap::SetCacheBounds(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkChartLegendWrap::SetChart(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkChartWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkChartWrap *a0 = ObjectWrap::Unwrap<VtkChartWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkChartLegendWrap::SetDragEnabled(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +572,7 @@ void VtkChartLegendWrap::SetHorizontalAlignment(const Nan::FunctionCallbackInfo<
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkChartLegendWrap::SetInline(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkChartLegendWrap::SetLabelSize(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +629,7 @@ void VtkChartLegendWrap::SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkChartLegendWrap::SetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -667,7 +667,7 @@ void VtkChartLegendWrap::SetVerticalAlignment(const Nan::FunctionCallbackInfo<v8
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -684,7 +684,7 @@ void VtkChartLegendWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkChartLegendWrap *wrapper = ObjectWrap::Unwrap<VtkChartLegendWrap>(info.Holder());
 	vtkChartLegend *native = (vtkChartLegend *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

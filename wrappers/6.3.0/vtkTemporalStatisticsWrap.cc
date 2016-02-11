@@ -140,7 +140,7 @@ void VtkTemporalStatisticsWrap::ComputeAverageOff(const Nan::FunctionCallbackInf
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkTemporalStatisticsWrap::ComputeAverageOn(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkTemporalStatisticsWrap::ComputeMaximumOff(const Nan::FunctionCallbackInf
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkTemporalStatisticsWrap::ComputeMaximumOn(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkTemporalStatisticsWrap::ComputeMinimumOff(const Nan::FunctionCallbackInf
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkTemporalStatisticsWrap::ComputeMinimumOn(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkTemporalStatisticsWrap::ComputeStandardDeviationOff(const Nan::FunctionC
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkTemporalStatisticsWrap::ComputeStandardDeviationOn(const Nan::FunctionCa
 {
 	VtkTemporalStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStatisticsWrap>(info.Holder());
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -335,7 +335,7 @@ void VtkTemporalStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalStatisticsWrap::InitPtpl();
+	VtkTemporalStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +363,7 @@ void VtkTemporalStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalStatisticsWrap::InitPtpl();
+		VtkTemporalStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkTemporalStatisticsWrap::SetComputeAverage(const Nan::FunctionCallbackInf
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkTemporalStatisticsWrap::SetComputeMaximum(const Nan::FunctionCallbackInf
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkTemporalStatisticsWrap::SetComputeMinimum(const Nan::FunctionCallbackInf
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkTemporalStatisticsWrap::SetComputeStandardDeviation(const Nan::FunctionC
 	vtkTemporalStatistics *native = (vtkTemporalStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

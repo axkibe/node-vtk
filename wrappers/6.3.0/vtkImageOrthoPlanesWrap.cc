@@ -133,7 +133,7 @@ void VtkImageOrthoPlanesWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetPlane(
 			info[0]->Int32Value()
 		);
-			VtkImagePlaneWidgetWrap::InitPtpl();
+		VtkImagePlaneWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -159,7 +159,7 @@ void VtkImageOrthoPlanesWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransformWrap::InitPtpl();
+	VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkImageOrthoPlanesWrap::HandlePlaneEvent(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImagePlaneWidgetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImagePlaneWidgetWrap *a0 = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,7 +224,7 @@ void VtkImageOrthoPlanesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageOrthoPlanesWrap::InitPtpl();
+	VtkImageOrthoPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkImageOrthoPlanesWrap::ResetPlanes(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageOrthoPlanesWrap *wrapper = ObjectWrap::Unwrap<VtkImageOrthoPlanesWrap>(info.Holder());
 	vtkImageOrthoPlanes *native = (vtkImageOrthoPlanes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +264,7 @@ void VtkImageOrthoPlanesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageOrthoPlanesWrap::InitPtpl();
+		VtkImageOrthoPlanesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkImageOrthoPlanesWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImagePlaneWidgetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImagePlaneWidgetWrap *a1 = ObjectWrap::Unwrap<VtkImagePlaneWidgetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

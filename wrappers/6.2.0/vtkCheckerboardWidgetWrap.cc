@@ -105,7 +105,7 @@ void VtkCheckerboardWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionC
 {
 	VtkCheckerboardWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardWidgetWrap>(info.Holder());
 	vtkCheckerboardWidget *native = (vtkCheckerboardWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -124,7 +124,7 @@ void VtkCheckerboardWidgetWrap::GetCheckerboardRepresentation(const Nan::Functio
 		return;
 	}
 	r = native->GetCheckerboardRepresentation();
-		VtkCheckerboardRepresentationWrap::InitPtpl();
+	VtkCheckerboardRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkCheckerboardWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkCheckerboardWidgetWrap::InitPtpl();
+	VtkCheckerboardWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkCheckerboardWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCheckerboardWidgetWrap::InitPtpl();
+		VtkCheckerboardWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkCheckerboardWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::V
 	vtkCheckerboardWidget *native = (vtkCheckerboardWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -252,7 +252,7 @@ void VtkCheckerboardWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCheckerboardRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCheckerboardRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkCheckerboardRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

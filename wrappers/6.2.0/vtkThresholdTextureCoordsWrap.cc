@@ -50,8 +50,14 @@ void VtkThresholdTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetInTextureCoord", GetInTextureCoord);
+	Nan::SetPrototypeMethod(tpl, "getInTextureCoord", GetInTextureCoord);
+
 	Nan::SetPrototypeMethod(tpl, "GetLowerThreshold", GetLowerThreshold);
 	Nan::SetPrototypeMethod(tpl, "getLowerThreshold", GetLowerThreshold);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutTextureCoord", GetOutTextureCoord);
+	Nan::SetPrototypeMethod(tpl, "getOutTextureCoord", GetOutTextureCoord);
 
 	Nan::SetPrototypeMethod(tpl, "GetTextureDimension", GetTextureDimension);
 	Nan::SetPrototypeMethod(tpl, "getTextureDimension", GetTextureDimension);
@@ -135,6 +141,23 @@ void VtkThresholdTextureCoordsWrap::GetClassName(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkThresholdTextureCoordsWrap::GetInTextureCoord(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkThresholdTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdTextureCoordsWrap>(info.Holder());
+	vtkThresholdTextureCoords *native = (vtkThresholdTextureCoords *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInTextureCoord();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkThresholdTextureCoordsWrap::GetLowerThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkThresholdTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdTextureCoordsWrap>(info.Holder());
@@ -147,6 +170,23 @@ void VtkThresholdTextureCoordsWrap::GetLowerThreshold(const Nan::FunctionCallbac
 	}
 	r = native->GetLowerThreshold();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkThresholdTextureCoordsWrap::GetOutTextureCoord(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkThresholdTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdTextureCoordsWrap>(info.Holder());
+	vtkThresholdTextureCoords *native = (vtkThresholdTextureCoords *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutTextureCoord();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkThresholdTextureCoordsWrap::GetTextureDimension(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -238,7 +278,7 @@ void VtkThresholdTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkThresholdTextureCoordsWrap::InitPtpl();
+	VtkThresholdTextureCoordsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +306,7 @@ void VtkThresholdTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThresholdTextureCoordsWrap::InitPtpl();
+		VtkThresholdTextureCoordsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,7 +335,7 @@ void VtkThresholdTextureCoordsWrap::SetInTextureCoord(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -324,7 +364,7 @@ void VtkThresholdTextureCoordsWrap::SetInTextureCoord(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -340,7 +380,7 @@ void VtkThresholdTextureCoordsWrap::SetInTextureCoord(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -371,7 +411,7 @@ void VtkThresholdTextureCoordsWrap::SetOutTextureCoord(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -400,7 +440,7 @@ void VtkThresholdTextureCoordsWrap::SetOutTextureCoord(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -416,7 +456,7 @@ void VtkThresholdTextureCoordsWrap::SetOutTextureCoord(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -439,7 +479,7 @@ void VtkThresholdTextureCoordsWrap::SetTextureDimension(const Nan::FunctionCallb
 	vtkThresholdTextureCoords *native = (vtkThresholdTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -460,7 +500,7 @@ void VtkThresholdTextureCoordsWrap::ThresholdBetween(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -481,7 +521,7 @@ void VtkThresholdTextureCoordsWrap::ThresholdByLower(const Nan::FunctionCallback
 	vtkThresholdTextureCoords *native = (vtkThresholdTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +540,7 @@ void VtkThresholdTextureCoordsWrap::ThresholdByUpper(const Nan::FunctionCallback
 	vtkThresholdTextureCoords *native = (vtkThresholdTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

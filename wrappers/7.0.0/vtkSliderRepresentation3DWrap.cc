@@ -58,6 +58,9 @@ void VtkSliderRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetCapProperty", GetCapProperty);
 	Nan::SetPrototypeMethod(tpl, "getCapProperty", GetCapProperty);
 
@@ -181,7 +184,7 @@ void VtkSliderRepresentation3DWrap::BuildRepresentation(const Nan::FunctionCallb
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +199,7 @@ void VtkSliderRepresentation3DWrap::GetActors(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -207,6 +210,23 @@ void VtkSliderRepresentation3DWrap::GetActors(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSliderRepresentation3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
+	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSliderRepresentation3DWrap::GetCapProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -220,7 +240,7 @@ void VtkSliderRepresentation3DWrap::GetCapProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCapProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +277,7 @@ void VtkSliderRepresentation3DWrap::GetPoint1Coordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint1Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +300,7 @@ void VtkSliderRepresentation3DWrap::GetPoint2Coordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPoint2Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +337,7 @@ void VtkSliderRepresentation3DWrap::GetSelectedProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +360,7 @@ void VtkSliderRepresentation3DWrap::GetSliderProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSliderProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +439,7 @@ void VtkSliderRepresentation3DWrap::GetTubeProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetTubeProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -451,7 +471,7 @@ void VtkSliderRepresentation3DWrap::Highlight(const Nan::FunctionCallbackInfo<v8
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -497,7 +517,7 @@ void VtkSliderRepresentation3DWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkSliderRepresentation3DWrap::InitPtpl();
+	VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -523,7 +543,7 @@ void VtkSliderRepresentation3DWrap::PlaceWidget(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +572,7 @@ void VtkSliderRepresentation3DWrap::PlaceWidget(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +592,7 @@ void VtkSliderRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +665,7 @@ void VtkSliderRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSliderRepresentation3DWrap::InitPtpl();
+		VtkSliderRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -670,7 +690,7 @@ void VtkSliderRepresentation3DWrap::SetPoint1InWorldCoordinates(const Nan::Funct
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -697,7 +717,7 @@ void VtkSliderRepresentation3DWrap::SetPoint2InWorldCoordinates(const Nan::Funct
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -720,7 +740,7 @@ void VtkSliderRepresentation3DWrap::SetRotation(const Nan::FunctionCallbackInfo<
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -739,7 +759,7 @@ void VtkSliderRepresentation3DWrap::SetSliderShape(const Nan::FunctionCallbackIn
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -756,7 +776,7 @@ void VtkSliderRepresentation3DWrap::SetSliderShapeToCylinder(const Nan::Function
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -768,7 +788,7 @@ void VtkSliderRepresentation3DWrap::SetSliderShapeToSphere(const Nan::FunctionCa
 {
 	VtkSliderRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info.Holder());
 	vtkSliderRepresentation3D *native = (vtkSliderRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -783,7 +803,7 @@ void VtkSliderRepresentation3DWrap::SetTitleText(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +830,7 @@ void VtkSliderRepresentation3DWrap::StartWidgetInteraction(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -839,7 +859,7 @@ void VtkSliderRepresentation3DWrap::StartWidgetInteraction(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -866,7 +886,7 @@ void VtkSliderRepresentation3DWrap::WidgetInteraction(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -895,7 +915,7 @@ void VtkSliderRepresentation3DWrap::WidgetInteraction(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -79,6 +79,12 @@ void VtkWindBladeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointArrayStatus", GetPointArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "getPointArrayStatus", GetPointArrayStatus);
 
+	Nan::SetPrototypeMethod(tpl, "GetSubExtent", GetSubExtent);
+	Nan::SetPrototypeMethod(tpl, "getSubExtent", GetSubExtent);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -133,7 +139,7 @@ void VtkWindBladeReaderWrap::DisableAllPointArrays(const Nan::FunctionCallbackIn
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -145,7 +151,7 @@ void VtkWindBladeReaderWrap::EnableAllPointArrays(const Nan::FunctionCallbackInf
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
 	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +170,7 @@ void VtkWindBladeReaderWrap::GetBladeOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetBladeOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +207,7 @@ void VtkWindBladeReaderWrap::GetFieldOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetFieldOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +244,7 @@ void VtkWindBladeReaderWrap::GetGroundOutput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGroundOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,6 +313,40 @@ void VtkWindBladeReaderWrap::GetPointArrayStatus(const Nan::FunctionCallbackInfo
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkWindBladeReaderWrap::GetSubExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
+	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSubExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkWindBladeReaderWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
+	vtkWindBladeReader *native = (vtkWindBladeReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkWindBladeReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWindBladeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkWindBladeReaderWrap>(info.Holder());
@@ -340,7 +380,7 @@ void VtkWindBladeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkWindBladeReaderWrap::InitPtpl();
+	VtkWindBladeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -368,7 +408,7 @@ void VtkWindBladeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWindBladeReaderWrap::InitPtpl();
+		VtkWindBladeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -390,7 +430,7 @@ void VtkWindBladeReaderWrap::SetFilename(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +452,7 @@ void VtkWindBladeReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -441,7 +481,7 @@ void VtkWindBladeReaderWrap::SetSubExtent(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +510,7 @@ void VtkWindBladeReaderWrap::SetSubExtent(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +532,7 @@ void VtkWindBladeReaderWrap::SetSubExtent(const Nan::FunctionCallbackInfo<v8::Va
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -529,7 +569,7 @@ void VtkWindBladeReaderWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +598,7 @@ void VtkWindBladeReaderWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,7 +620,7 @@ void VtkWindBladeReaderWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8::
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

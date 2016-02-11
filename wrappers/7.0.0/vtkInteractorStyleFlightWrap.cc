@@ -71,6 +71,9 @@ void VtkInteractorStyleFlightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDefaultUpVector", GetDefaultUpVector);
+	Nan::SetPrototypeMethod(tpl, "getDefaultUpVector", GetDefaultUpVector);
+
 	Nan::SetPrototypeMethod(tpl, "GetDisableMotion", GetDisableMotion);
 	Nan::SetPrototypeMethod(tpl, "getDisableMotion", GetDisableMotion);
 
@@ -197,7 +200,7 @@ void VtkInteractorStyleFlightWrap::DisableMotionOff(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +212,7 @@ void VtkInteractorStyleFlightWrap::DisableMotionOn(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -221,7 +224,7 @@ void VtkInteractorStyleFlightWrap::EndForwardFly(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -233,7 +236,7 @@ void VtkInteractorStyleFlightWrap::EndReverseFly(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +248,7 @@ void VtkInteractorStyleFlightWrap::ForwardFly(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,6 +296,23 @@ void VtkInteractorStyleFlightWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkInteractorStyleFlightWrap::GetDefaultUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
+	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDefaultUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkInteractorStyleFlightWrap::GetDisableMotion(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -396,7 +416,7 @@ void VtkInteractorStyleFlightWrap::JumpTo(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -426,7 +446,7 @@ void VtkInteractorStyleFlightWrap::JumpTo(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -476,7 +496,7 @@ void VtkInteractorStyleFlightWrap::JumpTo(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -496,7 +516,7 @@ void VtkInteractorStyleFlightWrap::JumpTo(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -522,7 +542,7 @@ void VtkInteractorStyleFlightWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleFlightWrap::InitPtpl();
+	VtkInteractorStyleFlightWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -538,7 +558,7 @@ void VtkInteractorStyleFlightWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -550,7 +570,7 @@ void VtkInteractorStyleFlightWrap::OnKeyDown(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +582,7 @@ void VtkInteractorStyleFlightWrap::OnKeyUp(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +594,7 @@ void VtkInteractorStyleFlightWrap::OnLeftButtonDown(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,7 +606,7 @@ void VtkInteractorStyleFlightWrap::OnLeftButtonUp(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +618,7 @@ void VtkInteractorStyleFlightWrap::OnMiddleButtonDown(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -610,7 +630,7 @@ void VtkInteractorStyleFlightWrap::OnMiddleButtonUp(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -622,7 +642,7 @@ void VtkInteractorStyleFlightWrap::OnMouseMove(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -634,7 +654,7 @@ void VtkInteractorStyleFlightWrap::OnRightButtonDown(const Nan::FunctionCallback
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -646,7 +666,7 @@ void VtkInteractorStyleFlightWrap::OnRightButtonUp(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -658,7 +678,7 @@ void VtkInteractorStyleFlightWrap::OnTimer(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -670,7 +690,7 @@ void VtkInteractorStyleFlightWrap::RestoreUpVectorOff(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -682,7 +702,7 @@ void VtkInteractorStyleFlightWrap::RestoreUpVectorOn(const Nan::FunctionCallback
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +714,7 @@ void VtkInteractorStyleFlightWrap::ReverseFly(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -718,7 +738,7 @@ void VtkInteractorStyleFlightWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleFlightWrap::InitPtpl();
+		VtkInteractorStyleFlightWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -739,7 +759,7 @@ void VtkInteractorStyleFlightWrap::SetAngleAccelerationFactor(const Nan::Functio
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -758,7 +778,7 @@ void VtkInteractorStyleFlightWrap::SetAngleStepSize(const Nan::FunctionCallbackI
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -785,7 +805,7 @@ void VtkInteractorStyleFlightWrap::SetDefaultUpVector(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -814,7 +834,7 @@ void VtkInteractorStyleFlightWrap::SetDefaultUpVector(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -833,7 +853,7 @@ void VtkInteractorStyleFlightWrap::SetDisableMotion(const Nan::FunctionCallbackI
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -852,7 +872,7 @@ void VtkInteractorStyleFlightWrap::SetMotionAccelerationFactor(const Nan::Functi
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -871,7 +891,7 @@ void VtkInteractorStyleFlightWrap::SetMotionStepSize(const Nan::FunctionCallback
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -890,7 +910,7 @@ void VtkInteractorStyleFlightWrap::SetRestoreUpVector(const Nan::FunctionCallbac
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -907,7 +927,7 @@ void VtkInteractorStyleFlightWrap::StartForwardFly(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -919,7 +939,7 @@ void VtkInteractorStyleFlightWrap::StartReverseFly(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleFlightWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleFlightWrap>(info.Holder());
 	vtkInteractorStyleFlight *native = (vtkInteractorStyleFlight *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

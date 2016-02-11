@@ -44,6 +44,7 @@ class VtkYoungsMaterialInterfaceWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetReverseMaterialOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseAllBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseFractionAsDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVolumeFractionRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseNormalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InverseNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

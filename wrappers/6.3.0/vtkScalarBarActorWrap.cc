@@ -399,7 +399,7 @@ void VtkScalarBarActorWrap::DrawAnnotationsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -411,7 +411,7 @@ void VtkScalarBarActorWrap::DrawAnnotationsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -423,7 +423,7 @@ void VtkScalarBarActorWrap::DrawBackgroundOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -435,7 +435,7 @@ void VtkScalarBarActorWrap::DrawBackgroundOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +447,7 @@ void VtkScalarBarActorWrap::DrawColorBarOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +459,7 @@ void VtkScalarBarActorWrap::DrawColorBarOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -471,7 +471,7 @@ void VtkScalarBarActorWrap::DrawFrameOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -483,7 +483,7 @@ void VtkScalarBarActorWrap::DrawFrameOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -495,7 +495,7 @@ void VtkScalarBarActorWrap::DrawNanAnnotationOff(const Nan::FunctionCallbackInfo
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -507,7 +507,7 @@ void VtkScalarBarActorWrap::DrawNanAnnotationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +519,7 @@ void VtkScalarBarActorWrap::DrawTickLabelsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -531,7 +531,7 @@ void VtkScalarBarActorWrap::DrawTickLabelsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -543,7 +543,7 @@ void VtkScalarBarActorWrap::FixedAnnotationLeaderLineColorOff(const Nan::Functio
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -555,7 +555,7 @@ void VtkScalarBarActorWrap::FixedAnnotationLeaderLineColorOn(const Nan::Function
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -602,7 +602,7 @@ void VtkScalarBarActorWrap::GetBackgroundProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetBackgroundProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -793,7 +793,7 @@ void VtkScalarBarActorWrap::GetFrameProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetFrameProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -830,7 +830,7 @@ void VtkScalarBarActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -853,7 +853,7 @@ void VtkScalarBarActorWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1050,7 +1050,7 @@ void VtkScalarBarActorWrap::GetScalarBarRect(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1084,7 +1084,7 @@ void VtkScalarBarActorWrap::GetScalarBarRect(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1166,7 +1166,7 @@ void VtkScalarBarActorWrap::GetTextureActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetTextureActor();
-		VtkTexturedActor2DWrap::InitPtpl();
+	VtkTexturedActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1259,7 +1259,7 @@ void VtkScalarBarActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1346,7 +1346,7 @@ void VtkScalarBarActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkScalarBarActorWrap::InitPtpl();
+	VtkScalarBarActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1365,7 +1365,7 @@ void VtkScalarBarActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1460,7 +1460,7 @@ void VtkScalarBarActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScalarBarActorWrap::InitPtpl();
+		VtkScalarBarActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1481,7 +1481,7 @@ void VtkScalarBarActorWrap::SetAnnotationLeaderPadding(const Nan::FunctionCallba
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1500,7 +1500,7 @@ void VtkScalarBarActorWrap::SetAnnotationTextScaling(const Nan::FunctionCallback
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1520,7 +1520,7 @@ void VtkScalarBarActorWrap::SetBackgroundProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1539,7 +1539,7 @@ void VtkScalarBarActorWrap::SetBarRatio(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1559,7 +1559,7 @@ void VtkScalarBarActorWrap::SetComponentTitle(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1578,7 +1578,7 @@ void VtkScalarBarActorWrap::SetDrawAnnotations(const Nan::FunctionCallbackInfo<v
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1597,7 +1597,7 @@ void VtkScalarBarActorWrap::SetDrawBackground(const Nan::FunctionCallbackInfo<v8
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1616,7 +1616,7 @@ void VtkScalarBarActorWrap::SetDrawColorBar(const Nan::FunctionCallbackInfo<v8::
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1635,7 +1635,7 @@ void VtkScalarBarActorWrap::SetDrawFrame(const Nan::FunctionCallbackInfo<v8::Val
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1654,7 +1654,7 @@ void VtkScalarBarActorWrap::SetDrawNanAnnotation(const Nan::FunctionCallbackInfo
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1673,7 +1673,7 @@ void VtkScalarBarActorWrap::SetDrawTickLabels(const Nan::FunctionCallbackInfo<v8
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1692,7 +1692,7 @@ void VtkScalarBarActorWrap::SetFixedAnnotationLeaderLineColor(const Nan::Functio
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1712,7 +1712,7 @@ void VtkScalarBarActorWrap::SetFrameProperty(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1732,7 +1732,7 @@ void VtkScalarBarActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1752,7 +1752,7 @@ void VtkScalarBarActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1772,7 +1772,7 @@ void VtkScalarBarActorWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1791,7 +1791,7 @@ void VtkScalarBarActorWrap::SetMaximumHeightInPixels(const Nan::FunctionCallback
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1810,7 +1810,7 @@ void VtkScalarBarActorWrap::SetMaximumNumberOfColors(const Nan::FunctionCallback
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1829,7 +1829,7 @@ void VtkScalarBarActorWrap::SetMaximumWidthInPixels(const Nan::FunctionCallbackI
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1849,7 +1849,7 @@ void VtkScalarBarActorWrap::SetNanAnnotation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1868,7 +1868,7 @@ void VtkScalarBarActorWrap::SetNumberOfLabels(const Nan::FunctionCallbackInfo<v8
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1887,7 +1887,7 @@ void VtkScalarBarActorWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::V
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1904,7 +1904,7 @@ void VtkScalarBarActorWrap::SetOrientationToHorizontal(const Nan::FunctionCallba
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1916,7 +1916,7 @@ void VtkScalarBarActorWrap::SetOrientationToVertical(const Nan::FunctionCallback
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1930,7 +1930,7 @@ void VtkScalarBarActorWrap::SetTextPad(const Nan::FunctionCallbackInfo<v8::Value
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1949,7 +1949,7 @@ void VtkScalarBarActorWrap::SetTextPosition(const Nan::FunctionCallbackInfo<v8::
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1966,7 +1966,7 @@ void VtkScalarBarActorWrap::SetTextPositionToPrecedeScalarBar(const Nan::Functio
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1978,7 +1978,7 @@ void VtkScalarBarActorWrap::SetTextPositionToSucceedScalarBar(const Nan::Functio
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1992,7 +1992,7 @@ void VtkScalarBarActorWrap::SetTextureGridWidth(const Nan::FunctionCallbackInfo<
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2012,7 +2012,7 @@ void VtkScalarBarActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2031,7 +2031,7 @@ void VtkScalarBarActorWrap::SetTitleRatio(const Nan::FunctionCallbackInfo<v8::Va
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2051,7 +2051,7 @@ void VtkScalarBarActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2070,7 +2070,7 @@ void VtkScalarBarActorWrap::SetUseOpacity(const Nan::FunctionCallbackInfo<v8::Va
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2089,7 +2089,7 @@ void VtkScalarBarActorWrap::SetVerticalTitleSeparation(const Nan::FunctionCallba
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2109,7 +2109,7 @@ void VtkScalarBarActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2126,7 +2126,7 @@ void VtkScalarBarActorWrap::UseOpacityOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2138,7 +2138,7 @@ void VtkScalarBarActorWrap::UseOpacityOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkScalarBarActorWrap *wrapper = ObjectWrap::Unwrap<VtkScalarBarActorWrap>(info.Holder());
 	vtkScalarBarActor *native = (vtkScalarBarActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

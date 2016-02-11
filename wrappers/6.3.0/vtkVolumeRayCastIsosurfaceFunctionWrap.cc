@@ -155,7 +155,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl();
+	VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl();
+		VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::SetIsoValue(const Nan::FunctionCall
 	vtkVolumeRayCastIsosurfaceFunction *native = (vtkVolumeRayCastIsosurfaceFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

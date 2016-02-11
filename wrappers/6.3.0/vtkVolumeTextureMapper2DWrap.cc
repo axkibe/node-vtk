@@ -64,6 +64,9 @@ void VtkVolumeTextureMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSaveTextures", GetSaveTextures);
 	Nan::SetPrototypeMethod(tpl, "getSaveTextures", GetSaveTextures);
 
+	Nan::SetPrototypeMethod(tpl, "GetTargetTextureSize", GetTargetTextureSize);
+	Nan::SetPrototypeMethod(tpl, "getTargetTextureSize", GetTargetTextureSize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -184,6 +187,23 @@ void VtkVolumeTextureMapper2DWrap::GetSaveTextures(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVolumeTextureMapper2DWrap::GetTargetTextureSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper2DWrap>(info.Holder());
+	vtkVolumeTextureMapper2D *native = (vtkVolumeTextureMapper2D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTargetTextureSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVolumeTextureMapper2DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeTextureMapper2DWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeTextureMapper2DWrap>(info.Holder());
@@ -217,7 +237,7 @@ void VtkVolumeTextureMapper2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeTextureMapper2DWrap::InitPtpl();
+	VtkVolumeTextureMapper2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +259,7 @@ void VtkVolumeTextureMapper2DWrap::Render(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -270,7 +290,7 @@ void VtkVolumeTextureMapper2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeTextureMapper2DWrap::InitPtpl();
+		VtkVolumeTextureMapper2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -291,7 +311,7 @@ void VtkVolumeTextureMapper2DWrap::SetMaximumNumberOfPlanes(const Nan::FunctionC
 	vtkVolumeTextureMapper2D *native = (vtkVolumeTextureMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -310,7 +330,7 @@ void VtkVolumeTextureMapper2DWrap::SetMaximumStorageSize(const Nan::FunctionCall
 	vtkVolumeTextureMapper2D *native = (vtkVolumeTextureMapper2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -337,7 +357,7 @@ void VtkVolumeTextureMapper2DWrap::SetTargetTextureSize(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +386,7 @@ void VtkVolumeTextureMapper2DWrap::SetTargetTextureSize(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +400,7 @@ void VtkVolumeTextureMapper2DWrap::SetTargetTextureSize(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

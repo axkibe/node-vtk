@@ -129,7 +129,7 @@ void VtkProjectedTetrahedraMapperWrap::GetVisibilitySort(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetVisibilitySort();
-		VtkVisibilitySortWrap::InitPtpl();
+	VtkVisibilitySortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkProjectedTetrahedraMapperWrap::MapScalarsToColors(const Nan::FunctionCal
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -226,7 +226,7 @@ void VtkProjectedTetrahedraMapperWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkProjectedTetrahedraMapperWrap::InitPtpl();
+	VtkProjectedTetrahedraMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void VtkProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProjectedTetrahedraMapperWrap::InitPtpl();
+		VtkProjectedTetrahedraMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkProjectedTetrahedraMapperWrap::SetVisibilitySort(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVisibilitySortWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVisibilitySortWrap *a0 = ObjectWrap::Unwrap<VtkVisibilitySortWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

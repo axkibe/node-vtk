@@ -297,7 +297,7 @@ void VtkImageToAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageToAMRWrap::InitPtpl();
+	VtkImageToAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +325,7 @@ void VtkImageToAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageToAMRWrap::InitPtpl();
+		VtkImageToAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkImageToAMRWrap::SetMaximumNumberOfBlocks(const Nan::FunctionCallbackInfo
 	vtkImageToAMR *native = (vtkImageToAMR *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkImageToAMRWrap::SetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageToAMR *native = (vtkImageToAMR *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +384,7 @@ void VtkImageToAMRWrap::SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageToAMR *native = (vtkImageToAMR *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

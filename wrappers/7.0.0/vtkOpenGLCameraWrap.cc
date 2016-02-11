@@ -51,6 +51,9 @@ void VtkOpenGLCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetKeyMatrices", GetKeyMatrices);
+	Nan::SetPrototypeMethod(tpl, "getKeyMatrices", GetKeyMatrices);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -109,6 +112,46 @@ void VtkOpenGLCameraWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkOpenGLCameraWrap::GetKeyMatrices(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLCameraWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLCameraWrap>(info.Holder());
+	vtkOpenGLCamera *native = (vtkOpenGLCamera *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkMatrix3x3Wrap *a2 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[2]->ToObject());
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkMatrix4x4Wrap *a3 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkMatrix4x4Wrap *a4 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[4]->ToObject());
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->GetKeyMatrices(
+							(vtkRenderer *) a0->native.GetPointer(),
+							(vtkMatrix4x4 *) a1->native.GetPointer(),
+							(vtkMatrix3x3 *) a2->native.GetPointer(),
+							(vtkMatrix4x4 *) a3->native.GetPointer(),
+							(vtkMatrix4x4 *) a4->native.GetPointer()
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkOpenGLCameraWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOpenGLCameraWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLCameraWrap>(info.Holder());
@@ -142,7 +185,7 @@ void VtkOpenGLCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLCameraWrap::InitPtpl();
+	VtkOpenGLCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +204,7 @@ void VtkOpenGLCameraWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -190,7 +233,7 @@ void VtkOpenGLCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLCameraWrap::InitPtpl();
+		VtkOpenGLCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -212,7 +255,7 @@ void VtkOpenGLCameraWrap::UpdateViewport(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

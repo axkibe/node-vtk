@@ -180,7 +180,7 @@ void VtkGeoSphereTransformWrap::InternalTransformPoint(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -210,7 +210,7 @@ void VtkGeoSphereTransformWrap::InternalTransformPoint(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -260,7 +260,7 @@ void VtkGeoSphereTransformWrap::InternalTransformPoint(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -280,7 +280,7 @@ void VtkGeoSphereTransformWrap::InternalTransformPoint(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -299,7 +299,7 @@ void VtkGeoSphereTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkGeoSphereTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +363,7 @@ void VtkGeoSphereTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoSphereTransformWrap::InitPtpl();
+	VtkGeoSphereTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,7 +391,7 @@ void VtkGeoSphereTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoSphereTransformWrap::InitPtpl();
+		VtkGeoSphereTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkGeoSphereTransformWrap::SetBaseAltitude(const Nan::FunctionCallbackInfo<
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -431,7 +431,7 @@ void VtkGeoSphereTransformWrap::SetToRectangular(const Nan::FunctionCallbackInfo
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +448,7 @@ void VtkGeoSphereTransformWrap::ToRectangularOff(const Nan::FunctionCallbackInfo
 {
 	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -460,7 +460,7 @@ void VtkGeoSphereTransformWrap::ToRectangularOn(const Nan::FunctionCallbackInfo<
 {
 	VtkGeoSphereTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSphereTransformWrap>(info.Holder());
 	vtkGeoSphereTransform *native = (vtkGeoSphereTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

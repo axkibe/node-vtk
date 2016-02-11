@@ -107,6 +107,9 @@ void VtkHyperStreamlineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetRadiusMinValue", GetRadiusMinValue);
 	Nan::SetPrototypeMethod(tpl, "getRadiusMinValue", GetRadiusMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetStartPosition", GetStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getStartPosition", GetStartPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetStepLength", GetStepLength);
 	Nan::SetPrototypeMethod(tpl, "getStepLength", GetStepLength);
 
@@ -506,6 +509,23 @@ void VtkHyperStreamlineWrap::GetRadiusMinValue(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkHyperStreamlineWrap::GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
+	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkHyperStreamlineWrap::GetStepLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
@@ -594,7 +614,7 @@ void VtkHyperStreamlineWrap::IntegrateMajorEigenvector(const Nan::FunctionCallba
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -606,7 +626,7 @@ void VtkHyperStreamlineWrap::IntegrateMediumEigenvector(const Nan::FunctionCallb
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -618,7 +638,7 @@ void VtkHyperStreamlineWrap::IntegrateMinorEigenvector(const Nan::FunctionCallba
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -652,7 +672,7 @@ void VtkHyperStreamlineWrap::LogScalingOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -664,7 +684,7 @@ void VtkHyperStreamlineWrap::LogScalingOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -683,7 +703,7 @@ void VtkHyperStreamlineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperStreamlineWrap::InitPtpl();
+	VtkHyperStreamlineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -711,7 +731,7 @@ void VtkHyperStreamlineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperStreamlineWrap::InitPtpl();
+		VtkHyperStreamlineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -732,7 +752,7 @@ void VtkHyperStreamlineWrap::SetIntegrationDirection(const Nan::FunctionCallback
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -749,7 +769,7 @@ void VtkHyperStreamlineWrap::SetIntegrationDirectionToBackward(const Nan::Functi
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +781,7 @@ void VtkHyperStreamlineWrap::SetIntegrationDirectionToForward(const Nan::Functio
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +793,7 @@ void VtkHyperStreamlineWrap::SetIntegrationDirectionToIntegrateBothDirections(co
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -787,7 +807,7 @@ void VtkHyperStreamlineWrap::SetIntegrationEigenvector(const Nan::FunctionCallba
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -804,7 +824,7 @@ void VtkHyperStreamlineWrap::SetIntegrationEigenvectorToMajor(const Nan::Functio
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -816,7 +836,7 @@ void VtkHyperStreamlineWrap::SetIntegrationEigenvectorToMedium(const Nan::Functi
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -828,7 +848,7 @@ void VtkHyperStreamlineWrap::SetIntegrationEigenvectorToMinor(const Nan::Functio
 {
 	VtkHyperStreamlineWrap *wrapper = ObjectWrap::Unwrap<VtkHyperStreamlineWrap>(info.Holder());
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -842,7 +862,7 @@ void VtkHyperStreamlineWrap::SetIntegrationStepLength(const Nan::FunctionCallbac
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +881,7 @@ void VtkHyperStreamlineWrap::SetLogScaling(const Nan::FunctionCallbackInfo<v8::V
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -880,7 +900,7 @@ void VtkHyperStreamlineWrap::SetMaximumPropagationDistance(const Nan::FunctionCa
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -899,7 +919,7 @@ void VtkHyperStreamlineWrap::SetNumberOfSides(const Nan::FunctionCallbackInfo<v8
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -918,7 +938,7 @@ void VtkHyperStreamlineWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -945,7 +965,7 @@ void VtkHyperStreamlineWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -974,7 +994,7 @@ void VtkHyperStreamlineWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -990,7 +1010,7 @@ void VtkHyperStreamlineWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1013,7 +1033,7 @@ void VtkHyperStreamlineWrap::SetStepLength(const Nan::FunctionCallbackInfo<v8::V
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1032,7 +1052,7 @@ void VtkHyperStreamlineWrap::SetTerminalEigenvalue(const Nan::FunctionCallbackIn
 	vtkHyperStreamline *native = (vtkHyperStreamline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

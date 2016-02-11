@@ -55,6 +55,12 @@ void VtkHighestDensityRegionsStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetSmoothHC1", GetSmoothHC1);
+	Nan::SetPrototypeMethod(tpl, "getSmoothHC1", GetSmoothHC1);
+
+	Nan::SetPrototypeMethod(tpl, "GetSmoothHC2", GetSmoothHC2);
+	Nan::SetPrototypeMethod(tpl, "getSmoothHC2", GetSmoothHC2);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -112,7 +118,7 @@ void VtkHighestDensityRegionsStatisticsWrap::Aggregate(const Nan::FunctionCallba
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -139,6 +145,40 @@ void VtkHighestDensityRegionsStatisticsWrap::GetClassName(const Nan::FunctionCal
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkHighestDensityRegionsStatisticsWrap::GetSmoothHC1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
+	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSmoothHC1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkHighestDensityRegionsStatisticsWrap::GetSmoothHC2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHighestDensityRegionsStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkHighestDensityRegionsStatisticsWrap>(info.Holder());
+	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSmoothHC2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkHighestDensityRegionsStatisticsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -174,7 +214,7 @@ void VtkHighestDensityRegionsStatisticsWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
+	VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +242,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
+		VtkHighestDensityRegionsStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +263,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSigma(const Nan::FunctionCallbac
 	vtkHighestDensityRegionsStatistics *native = (vtkHighestDensityRegionsStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -250,7 +290,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC1(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +319,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC1(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +346,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC2(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +375,7 @@ void VtkHighestDensityRegionsStatisticsWrap::SetSmoothHC2(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

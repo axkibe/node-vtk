@@ -173,7 +173,7 @@ void VtkOrientedGlyphContourRepresentationWrap::AlwaysOnTopOff(const Nan::Functi
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkOrientedGlyphContourRepresentationWrap::AlwaysOnTopOn(const Nan::Functio
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -197,7 +197,7 @@ void VtkOrientedGlyphContourRepresentationWrap::BuildRepresentation(const Nan::F
 {
 	VtkOrientedGlyphContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +245,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveCursorShape(const Nan::
 		return;
 	}
 	r = native->GetActiveCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +268,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActiveProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetActiveProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,7 +287,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetActors(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -339,7 +339,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetContourRepresentationAsPolyDa
 		return;
 	}
 	r = native->GetContourRepresentationAsPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,7 +362,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetCursorShape(const Nan::Functi
 		return;
 	}
 	r = native->GetCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,7 +385,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetLinesProperty(const Nan::Func
 		return;
 	}
 	r = native->GetLinesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -408,7 +408,7 @@ void VtkOrientedGlyphContourRepresentationWrap::GetProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -467,7 +467,7 @@ void VtkOrientedGlyphContourRepresentationWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
+	VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -486,7 +486,7 @@ void VtkOrientedGlyphContourRepresentationWrap::ReleaseGraphicsResources(const N
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -581,7 +581,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
+		VtkOrientedGlyphContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -603,7 +603,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetActiveCursorShape(const Nan::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -622,7 +622,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetAlwaysOnTop(const Nan::Functi
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +642,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetCursorShape(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -665,7 +665,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetLineColor(const Nan::Function
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -689,7 +689,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetRenderer(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkOrientedGlyphContourRepresentationWrap::SetShowSelectedNodes(const Nan::
 	vtkOrientedGlyphContourRepresentation *native = (vtkOrientedGlyphContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +735,7 @@ void VtkOrientedGlyphContourRepresentationWrap::StartWidgetInteraction(const Nan
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +764,7 @@ void VtkOrientedGlyphContourRepresentationWrap::StartWidgetInteraction(const Nan
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -791,7 +791,7 @@ void VtkOrientedGlyphContourRepresentationWrap::WidgetInteraction(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -820,7 +820,7 @@ void VtkOrientedGlyphContourRepresentationWrap::WidgetInteraction(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

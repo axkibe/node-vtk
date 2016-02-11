@@ -101,7 +101,7 @@ void VtkSpanSpaceWrap::BuildTree(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkSpanSpaceWrap *wrapper = ObjectWrap::Unwrap<VtkSpanSpaceWrap>(info.Holder());
 	vtkSpanSpace *native = (vtkSpanSpace *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -129,7 +129,7 @@ void VtkSpanSpaceWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkSpanSpace *native = (vtkSpanSpace *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -146,7 +146,7 @@ void VtkSpanSpaceWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSpanSpaceWrap *wrapper = ObjectWrap::Unwrap<VtkSpanSpaceWrap>(info.Holder());
 	vtkSpanSpace *native = (vtkSpanSpace *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -187,7 +187,7 @@ void VtkSpanSpaceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpanSpaceWrap::InitPtpl();
+	VtkSpanSpaceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkSpanSpaceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpanSpaceWrap::InitPtpl();
+		VtkSpanSpaceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

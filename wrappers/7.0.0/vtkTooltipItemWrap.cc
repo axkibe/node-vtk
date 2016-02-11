@@ -118,7 +118,7 @@ void VtkTooltipItemWrap::GetBrush(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetBrush();
-		VtkBrushWrap::InitPtpl();
+	VtkBrushWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,7 +155,7 @@ void VtkTooltipItemWrap::GetPen(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetPen();
-		VtkPenWrap::InitPtpl();
+	VtkPenWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkTooltipItemWrap::GetTextProperties(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTextProperties();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkTooltipItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkTooltipItemWrap::InitPtpl();
+	VtkTooltipItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkTooltipItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTooltipItemWrap::InitPtpl();
+		VtkTooltipItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkTooltipItemWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTooltipItemWrap *wrapper = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info.Holder());
 	vtkTooltipItem *native = (vtkTooltipItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -169,7 +169,7 @@ void VtkExtractCTHPartWrap::AddVolumeArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -186,7 +186,7 @@ void VtkExtractCTHPartWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -198,7 +198,7 @@ void VtkExtractCTHPartWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -210,7 +210,7 @@ void VtkExtractCTHPartWrap::GenerateTrianglesOff(const Nan::FunctionCallbackInfo
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkExtractCTHPartWrap::GenerateTrianglesOn(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkExtractCTHPartWrap::GetClipPlane(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetClipPlane();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkExtractCTHPartWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,7 +442,7 @@ void VtkExtractCTHPartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractCTHPartWrap::InitPtpl();
+	VtkExtractCTHPartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +458,7 @@ void VtkExtractCTHPartWrap::RemoveGhostCellsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -470,7 +470,7 @@ void VtkExtractCTHPartWrap::RemoveGhostCellsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -482,7 +482,7 @@ void VtkExtractCTHPartWrap::RemoveVolumeArrayNames(const Nan::FunctionCallbackIn
 {
 	VtkExtractCTHPartWrap *wrapper = ObjectWrap::Unwrap<VtkExtractCTHPartWrap>(info.Holder());
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -506,7 +506,7 @@ void VtkExtractCTHPartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractCTHPartWrap::InitPtpl();
+		VtkExtractCTHPartWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -527,7 +527,7 @@ void VtkExtractCTHPartWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +547,7 @@ void VtkExtractCTHPartWrap::SetClipPlane(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +567,7 @@ void VtkExtractCTHPartWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkExtractCTHPartWrap::SetGenerateTriangles(const Nan::FunctionCallbackInfo
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -605,7 +605,7 @@ void VtkExtractCTHPartWrap::SetRemoveGhostCells(const Nan::FunctionCallbackInfo<
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +624,7 @@ void VtkExtractCTHPartWrap::SetVolumeFractionSurfaceValue(const Nan::FunctionCal
 	vtkExtractCTHPart *native = (vtkExtractCTHPart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

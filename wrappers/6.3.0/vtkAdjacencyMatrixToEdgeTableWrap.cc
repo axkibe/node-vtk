@@ -175,7 +175,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
+	VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
+		VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SetMinimumThreshold(const Nan::FunctionC
 	vtkAdjacencyMatrixToEdgeTable *native = (vtkAdjacencyMatrixToEdgeTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -244,7 +244,7 @@ void VtkAdjacencyMatrixToEdgeTableWrap::SetValueArrayName(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

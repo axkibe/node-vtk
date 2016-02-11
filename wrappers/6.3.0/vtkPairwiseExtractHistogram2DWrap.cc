@@ -66,6 +66,9 @@ void VtkPairwiseExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumBinCount", GetMaximumBinCount);
 	Nan::SetPrototypeMethod(tpl, "getMaximumBinCount", GetMaximumBinCount);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfBins", GetNumberOfBins);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfBins", GetNumberOfBins);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputHistogramImage", GetOutputHistogramImage);
 	Nan::SetPrototypeMethod(tpl, "getOutputHistogramImage", GetOutputHistogramImage);
 
@@ -147,7 +150,7 @@ void VtkPairwiseExtractHistogram2DWrap::Aggregate(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -178,7 +181,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetBinWidth(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -208,7 +211,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetBinWidth(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -252,7 +255,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetHistogramFilter(const Nan::FunctionCa
 		r = native->GetHistogramFilter(
 			info[0]->Int32Value()
 		);
-			VtkExtractHistogram2DWrap::InitPtpl();
+		VtkExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,6 +298,23 @@ void VtkPairwiseExtractHistogram2DWrap::GetMaximumBinCount(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPairwiseExtractHistogram2DWrap::GetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
+	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfBins();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPairwiseExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
@@ -310,7 +330,7 @@ void VtkPairwiseExtractHistogram2DWrap::GetOutputHistogramImage(const Nan::Funct
 		r = native->GetOutputHistogramImage(
 			info[0]->Int32Value()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -372,7 +392,7 @@ void VtkPairwiseExtractHistogram2DWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkPairwiseExtractHistogram2DWrap::InitPtpl();
+	VtkPairwiseExtractHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +420,7 @@ void VtkPairwiseExtractHistogram2DWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPairwiseExtractHistogram2DWrap::InitPtpl();
+		VtkPairwiseExtractHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -431,7 +451,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRange(const Nan::Function
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -461,7 +481,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRange(const Nan::Function
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -476,7 +496,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRange(const Nan::Function
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -501,7 +521,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRangeByIndex(const Nan::F
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -522,7 +542,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetCustomColumnRangeIndex(const Nan::Fun
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +569,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetNumberOfBins(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -578,7 +598,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetNumberOfBins(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +612,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetNumberOfBins(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -613,7 +633,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetScalarType(const Nan::FunctionCallbac
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +650,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetScalarTypeToUnsignedChar(const Nan::F
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +662,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetScalarTypeToUnsignedInt(const Nan::Fu
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -654,7 +674,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetScalarTypeToUnsignedLong(const Nan::F
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -666,7 +686,7 @@ void VtkPairwiseExtractHistogram2DWrap::SetScalarTypeToUnsignedShort(const Nan::
 {
 	VtkPairwiseExtractHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkPairwiseExtractHistogram2DWrap>(info.Holder());
 	vtkPairwiseExtractHistogram2D *native = (vtkPairwiseExtractHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -212,7 +212,7 @@ void VtkVolumeRayCastMIPFunctionWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
+	VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
+		VtkVolumeRayCastMIPFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SetMaximizeMethod(const Nan::FunctionCallb
 	vtkVolumeRayCastMIPFunction *native = (vtkVolumeRayCastMIPFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SetMaximizeMethodToOpacity(const Nan::Func
 {
 	VtkVolumeRayCastMIPFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMIPFunctionWrap>(info.Holder());
 	vtkVolumeRayCastMIPFunction *native = (vtkVolumeRayCastMIPFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,7 +290,7 @@ void VtkVolumeRayCastMIPFunctionWrap::SetMaximizeMethodToScalarValue(const Nan::
 {
 	VtkVolumeRayCastMIPFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMIPFunctionWrap>(info.Holder());
 	vtkVolumeRayCastMIPFunction *native = (vtkVolumeRayCastMIPFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

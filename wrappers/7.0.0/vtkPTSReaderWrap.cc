@@ -62,6 +62,9 @@ void VtkPTSReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOutputDataTypeIsDouble", GetOutputDataTypeIsDouble);
 	Nan::SetPrototypeMethod(tpl, "getOutputDataTypeIsDouble", GetOutputDataTypeIsDouble);
 
+	Nan::SetPrototypeMethod(tpl, "GetReadBounds", GetReadBounds);
+	Nan::SetPrototypeMethod(tpl, "getReadBounds", GetReadBounds);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -203,6 +206,23 @@ void VtkPTSReaderWrap::GetOutputDataTypeIsDouble(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPTSReaderWrap::GetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
+	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReadBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPTSReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
@@ -229,7 +249,7 @@ void VtkPTSReaderWrap::LimitReadToBoundsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +261,7 @@ void VtkPTSReaderWrap::LimitReadToBoundsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -253,7 +273,7 @@ void VtkPTSReaderWrap::LimitToMaxNumberOfPointsOff(const Nan::FunctionCallbackIn
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -265,7 +285,7 @@ void VtkPTSReaderWrap::LimitToMaxNumberOfPointsOn(const Nan::FunctionCallbackInf
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +304,7 @@ void VtkPTSReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkPTSReaderWrap::InitPtpl();
+	VtkPTSReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,7 +320,7 @@ void VtkPTSReaderWrap::OutputDataTypeIsDoubleOff(const Nan::FunctionCallbackInfo
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +332,7 @@ void VtkPTSReaderWrap::OutputDataTypeIsDoubleOn(const Nan::FunctionCallbackInfo<
 {
 	VtkPTSReaderWrap *wrapper = ObjectWrap::Unwrap<VtkPTSReaderWrap>(info.Holder());
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +356,7 @@ void VtkPTSReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPTSReaderWrap::InitPtpl();
+		VtkPTSReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +378,7 @@ void VtkPTSReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +397,7 @@ void VtkPTSReaderWrap::SetLimitReadToBounds(const Nan::FunctionCallbackInfo<v8::
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +416,7 @@ void VtkPTSReaderWrap::SetLimitToMaxNumberOfPoints(const Nan::FunctionCallbackIn
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -415,7 +435,7 @@ void VtkPTSReaderWrap::SetOutputDataTypeIsDouble(const Nan::FunctionCallbackInfo
 	vtkPTSReader *native = (vtkPTSReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -442,7 +462,7 @@ void VtkPTSReaderWrap::SetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +491,7 @@ void VtkPTSReaderWrap::SetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -493,7 +513,7 @@ void VtkPTSReaderWrap::SetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

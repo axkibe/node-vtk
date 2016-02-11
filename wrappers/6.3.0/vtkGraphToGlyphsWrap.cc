@@ -129,7 +129,7 @@ void VtkGraphToGlyphsWrap::FilledOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkGraphToGlyphsWrap::FilledOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGraphToGlyphsWrap *wrapper = ObjectWrap::Unwrap<VtkGraphToGlyphsWrap>(info.Holder());
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -202,7 +202,7 @@ void VtkGraphToGlyphsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkGraphToGlyphsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphToGlyphsWrap::InitPtpl();
+	VtkGraphToGlyphsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkGraphToGlyphsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphToGlyphsWrap::InitPtpl();
+		VtkGraphToGlyphsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkGraphToGlyphsWrap::SetFilled(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkGraphToGlyphsWrap::SetGlyphType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkGraphToGlyphsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +382,7 @@ void VtkGraphToGlyphsWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkGraphToGlyphsWrap::SetScreenSize(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGraphToGlyphs *native = (vtkGraphToGlyphs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

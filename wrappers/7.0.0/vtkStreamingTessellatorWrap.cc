@@ -196,7 +196,7 @@ void VtkStreamingTessellatorWrap::GetSubdivisionAlgorithm(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetSubdivisionAlgorithm();
-		VtkEdgeSubdivisionCriterionWrap::InitPtpl();
+	VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkStreamingTessellatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkStreamingTessellatorWrap::InitPtpl();
+	VtkStreamingTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkStreamingTessellatorWrap::ResetCounts(const Nan::FunctionCallbackInfo<v8
 {
 	VtkStreamingTessellatorWrap *wrapper = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info.Holder());
 	vtkStreamingTessellator *native = (vtkStreamingTessellator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +281,7 @@ void VtkStreamingTessellatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStreamingTessellatorWrap::InitPtpl();
+		VtkStreamingTessellatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkStreamingTessellatorWrap::SetEmbeddingDimension(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -327,7 +327,7 @@ void VtkStreamingTessellatorWrap::SetFieldSize(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -348,7 +348,7 @@ void VtkStreamingTessellatorWrap::SetMaximumNumberOfSubdivisions(const Nan::Func
 	vtkStreamingTessellator *native = (vtkStreamingTessellator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -368,7 +368,7 @@ void VtkStreamingTessellatorWrap::SetSubdivisionAlgorithm(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeSubdivisionCriterionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeSubdivisionCriterionWrap *a0 = ObjectWrap::Unwrap<VtkEdgeSubdivisionCriterionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

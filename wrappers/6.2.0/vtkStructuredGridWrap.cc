@@ -79,6 +79,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
 	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtent", GetExtent);
+	Nan::SetPrototypeMethod(tpl, "getExtent", GetExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetExtentType", GetExtentType);
 	Nan::SetPrototypeMethod(tpl, "getExtentType", GetExtentType);
 
@@ -154,7 +157,7 @@ void VtkStructuredGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -174,7 +177,7 @@ void VtkStructuredGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -201,7 +204,7 @@ void VtkStructuredGridWrap::GetCellDims(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +233,7 @@ void VtkStructuredGridWrap::GetCellDims(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +257,7 @@ void VtkStructuredGridWrap::GetCellVisibilityArray(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCellVisibilityArray();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,7 +302,7 @@ void VtkStructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkStructuredGridWrap::InitPtpl();
+			VtkStructuredGridWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -324,7 +327,7 @@ void VtkStructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkStructuredGridWrap::InitPtpl();
+		VtkStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -381,7 +384,7 @@ void VtkStructuredGridWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +413,7 @@ void VtkStructuredGridWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +423,34 @@ void VtkStructuredGridWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkStructuredGridWrap::GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkStructuredGridWrap::GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -473,7 +503,7 @@ void VtkStructuredGridWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 
 					if(info.Length() > 4 && info[4]->IsBoolean())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -509,7 +539,7 @@ void VtkStructuredGridWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					if(info.Length() > 4 && info[4]->IsBoolean())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -541,7 +571,7 @@ void VtkStructuredGridWrap::GetPointVisibilityArray(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetPointVisibilityArray();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -557,7 +587,7 @@ void VtkStructuredGridWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
 	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +628,7 @@ void VtkStructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -626,7 +656,7 @@ void VtkStructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredGridWrap::InitPtpl();
+		VtkStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -648,7 +678,7 @@ void VtkStructuredGridWrap::SetCellVisibilityArray(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -675,7 +705,7 @@ void VtkStructuredGridWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +734,7 @@ void VtkStructuredGridWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -720,7 +750,7 @@ void VtkStructuredGridWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -751,7 +781,7 @@ void VtkStructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -780,7 +810,7 @@ void VtkStructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -802,7 +832,7 @@ void VtkStructuredGridWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -832,7 +862,7 @@ void VtkStructuredGridWrap::SetPointVisibilityArray(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnsignedCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -852,7 +882,7 @@ void VtkStructuredGridWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

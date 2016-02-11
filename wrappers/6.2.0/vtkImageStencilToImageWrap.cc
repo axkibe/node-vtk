@@ -225,7 +225,7 @@ void VtkImageStencilToImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageStencilToImageWrap::InitPtpl();
+	VtkImageStencilToImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkImageStencilToImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageStencilToImageWrap::InitPtpl();
+		VtkImageStencilToImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkImageStencilToImageWrap::SetInsideValue(const Nan::FunctionCallbackInfo<
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarType(const Nan::FunctionCallback
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -310,7 +310,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToChar(const Nan::FunctionCa
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -322,7 +322,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToDouble(const Nan::Function
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -334,7 +334,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToFloat(const Nan::FunctionC
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -346,7 +346,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToInt(const Nan::FunctionCal
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -358,7 +358,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToLong(const Nan::FunctionCa
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -370,7 +370,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToShort(const Nan::FunctionC
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -382,7 +382,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToUnsignedChar(const Nan::Fu
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -394,7 +394,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToUnsignedInt(const Nan::Fun
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -406,7 +406,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToUnsignedLong(const Nan::Fu
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkImageStencilToImageWrap::SetOutputScalarTypeToUnsignedShort(const Nan::F
 {
 	VtkImageStencilToImageWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilToImageWrap>(info.Holder());
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +432,7 @@ void VtkImageStencilToImageWrap::SetOutsideValue(const Nan::FunctionCallbackInfo
 	vtkImageStencilToImage *native = (vtkImageStencilToImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

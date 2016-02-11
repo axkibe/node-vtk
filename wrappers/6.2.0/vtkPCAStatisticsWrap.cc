@@ -242,7 +242,7 @@ void VtkPCAStatisticsWrap::GetEigenvalues(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkPCAStatisticsWrap::GetEigenvalues(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -281,7 +281,7 @@ void VtkPCAStatisticsWrap::GetEigenvector(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -297,7 +297,7 @@ void VtkPCAStatisticsWrap::GetEigenvector(const Nan::FunctionCallbackInfo<v8::Va
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDoubleArrayWrap *a2 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -321,7 +321,7 @@ void VtkPCAStatisticsWrap::GetEigenvectors(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkPCAStatisticsWrap::GetEigenvectors(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDoubleArrayWrap *a1 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -453,7 +453,7 @@ void VtkPCAStatisticsWrap::GetSpecifiedNormalization(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSpecifiedNormalization();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +498,7 @@ void VtkPCAStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkPCAStatisticsWrap::InitPtpl();
+	VtkPCAStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -526,7 +526,7 @@ void VtkPCAStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPCAStatisticsWrap::InitPtpl();
+		VtkPCAStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -547,7 +547,7 @@ void VtkPCAStatisticsWrap::SetBasisScheme(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +567,7 @@ void VtkPCAStatisticsWrap::SetBasisSchemeByName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkPCAStatisticsWrap::SetFixedBasisEnergy(const Nan::FunctionCallbackInfo<v
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -605,7 +605,7 @@ void VtkPCAStatisticsWrap::SetFixedBasisSize(const Nan::FunctionCallbackInfo<v8:
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +624,7 @@ void VtkPCAStatisticsWrap::SetNormalizationScheme(const Nan::FunctionCallbackInf
 	vtkPCAStatistics *native = (vtkPCAStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -644,7 +644,7 @@ void VtkPCAStatisticsWrap::SetNormalizationSchemeByName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +664,7 @@ void VtkPCAStatisticsWrap::SetSpecifiedNormalization(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

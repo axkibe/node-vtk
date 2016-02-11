@@ -31,6 +31,8 @@ class VtkPResampleFilterWrap : public VtkImageAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCustomSamplingBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSamplingDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

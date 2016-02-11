@@ -159,7 +159,7 @@ void VtkRendererDelegateWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkRendererDelegateWrap::InitPtpl();
+	VtkRendererDelegateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +187,7 @@ void VtkRendererDelegateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRendererDelegateWrap::InitPtpl();
+		VtkRendererDelegateWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkRendererDelegateWrap::SetUsed(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -225,7 +225,7 @@ void VtkRendererDelegateWrap::UsedOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRendererDelegateWrap *wrapper = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info.Holder());
 	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkRendererDelegateWrap::UsedOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRendererDelegateWrap *wrapper = ObjectWrap::Unwrap<VtkRendererDelegateWrap>(info.Holder());
 	vtkRendererDelegate *native = (vtkRendererDelegate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

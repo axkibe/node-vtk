@@ -172,7 +172,7 @@ void VtkAMREnzoParticlesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMREnzoParticlesReaderWrap::InitPtpl();
+	VtkAMREnzoParticlesReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -200,7 +200,7 @@ void VtkAMREnzoParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMREnzoParticlesReaderWrap::InitPtpl();
+		VtkAMREnzoParticlesReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkAMREnzoParticlesReaderWrap::SetParticleType(const Nan::FunctionCallbackI
 	vtkAMREnzoParticlesReader *native = (vtkAMREnzoParticlesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

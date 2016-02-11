@@ -161,7 +161,7 @@ void VtkPPolyDataNormalsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkPPolyDataNormalsWrap::InitPtpl();
+	VtkPPolyDataNormalsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +177,7 @@ void VtkPPolyDataNormalsWrap::PieceInvariantOff(const Nan::FunctionCallbackInfo<
 {
 	VtkPPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPPolyDataNormalsWrap>(info.Holder());
 	vtkPPolyDataNormals *native = (vtkPPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkPPolyDataNormalsWrap::PieceInvariantOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkPPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPPolyDataNormalsWrap>(info.Holder());
 	vtkPPolyDataNormals *native = (vtkPPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkPPolyDataNormalsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPPolyDataNormalsWrap::InitPtpl();
+		VtkPPolyDataNormalsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkPPolyDataNormalsWrap::SetPieceInvariant(const Nan::FunctionCallbackInfo<
 	vtkPPolyDataNormals *native = (vtkPPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

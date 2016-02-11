@@ -127,7 +127,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::GetContourPointIds(const Na
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -224,7 +224,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::NewInstance(const Nan::Func
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl();
+	VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::SafeDownCast(const Nan::Fun
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl();
+		VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::SetDistanceOffset(const Nan
 	vtkPolygonalSurfaceContourLineInterpolator *native = (vtkPolygonalSurfaceContourLineInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

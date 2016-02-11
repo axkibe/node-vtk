@@ -47,6 +47,7 @@ class VtkStreamerWrap : public VtkPolyDataAlgorithmWrap
 		static void GetSavePointInterval(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpeedScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminalSpeedMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminalSpeedMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

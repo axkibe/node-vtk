@@ -225,7 +225,7 @@ void VtkQuadricLODActorWrap::DeferLODConstructionOff(const Nan::FunctionCallback
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkQuadricLODActorWrap::DeferLODConstructionOn(const Nan::FunctionCallbackI
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkQuadricLODActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,7 +391,7 @@ void VtkQuadricLODActorWrap::GetLODFilter(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLODFilter();
-		VtkQuadricClusteringWrap::InitPtpl();
+	VtkQuadricClusteringWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -534,7 +534,7 @@ void VtkQuadricLODActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadricLODActorWrap::InitPtpl();
+	VtkQuadricLODActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -553,7 +553,7 @@ void VtkQuadricLODActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +576,7 @@ void VtkQuadricLODActorWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -629,7 +629,7 @@ void VtkQuadricLODActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadricLODActorWrap::InitPtpl();
+		VtkQuadricLODActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -651,7 +651,7 @@ void VtkQuadricLODActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkQuadricLODActorWrap::SetCollapseDimensionRatio(const Nan::FunctionCallba
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +689,7 @@ void VtkQuadricLODActorWrap::SetDataConfiguration(const Nan::FunctionCallbackInf
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +706,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToUnknown(const Nan::FunctionCa
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -718,7 +718,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToXLine(const Nan::FunctionCall
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -730,7 +730,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToXYPlane(const Nan::FunctionCa
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -742,7 +742,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToXYZVolume(const Nan::Function
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -754,7 +754,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToXZPlane(const Nan::FunctionCa
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -766,7 +766,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToYLine(const Nan::FunctionCall
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -778,7 +778,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToYZPlane(const Nan::FunctionCa
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -790,7 +790,7 @@ void VtkQuadricLODActorWrap::SetDataConfigurationToZLine(const Nan::FunctionCall
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -804,7 +804,7 @@ void VtkQuadricLODActorWrap::SetDeferLODConstruction(const Nan::FunctionCallback
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +824,7 @@ void VtkQuadricLODActorWrap::SetLODFilter(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkQuadricClusteringWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkQuadricClusteringWrap *a0 = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -843,7 +843,7 @@ void VtkQuadricLODActorWrap::SetMaximumDisplayListSize(const Nan::FunctionCallba
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -862,7 +862,7 @@ void VtkQuadricLODActorWrap::SetPropType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -879,7 +879,7 @@ void VtkQuadricLODActorWrap::SetPropTypeToActor(const Nan::FunctionCallbackInfo<
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -891,7 +891,7 @@ void VtkQuadricLODActorWrap::SetPropTypeToFollower(const Nan::FunctionCallbackIn
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -905,7 +905,7 @@ void VtkQuadricLODActorWrap::SetStatic(const Nan::FunctionCallbackInfo<v8::Value
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -925,7 +925,7 @@ void VtkQuadricLODActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -942,7 +942,7 @@ void VtkQuadricLODActorWrap::StaticOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -954,7 +954,7 @@ void VtkQuadricLODActorWrap::StaticOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkQuadricLODActorWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricLODActorWrap>(info.Holder());
 	vtkQuadricLODActor *native = (vtkQuadricLODActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

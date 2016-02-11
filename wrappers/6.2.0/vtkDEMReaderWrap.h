@@ -44,6 +44,7 @@ class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 		static void GetMapLabel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlaneUnitOfMeasure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolygonSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProfileDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

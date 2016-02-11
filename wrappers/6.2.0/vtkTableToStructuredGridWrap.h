@@ -30,6 +30,7 @@ class VtkTableToStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXComponentMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

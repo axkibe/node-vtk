@@ -111,7 +111,7 @@ void VtkPlanesIntersectionWrap::Convert3DCell(const Nan::FunctionCallbackInfo<v8
 		r = native->Convert3DCell(
 			(vtkCell *) a0->native.GetPointer()
 		);
-			VtkPlanesIntersectionWrap::InitPtpl();
+		VtkPlanesIntersectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkPlanesIntersectionWrap::SetRegionVertices(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

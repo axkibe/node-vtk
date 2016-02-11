@@ -134,7 +134,7 @@ void VtkXMLPUnstructuredGridWriterWrap::GetInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetInput();
-		VtkUnstructuredGridBaseWrap::InitPtpl();
+	VtkUnstructuredGridBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkXMLPUnstructuredGridWriterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPUnstructuredGridWriterWrap::InitPtpl();
+	VtkXMLPUnstructuredGridWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkXMLPUnstructuredGridWriterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPUnstructuredGridWriterWrap::InitPtpl();
+		VtkXMLPUnstructuredGridWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

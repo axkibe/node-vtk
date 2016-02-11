@@ -110,7 +110,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::BuildRepresentation(const Nan::F
 {
 	VtkEllipsoidTensorProbeRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkEllipsoidTensorProbeRepresentationWrap>(info.Holder());
 	vtkEllipsoidTensorProbeRepresentation *native = (vtkEllipsoidTensorProbeRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -125,7 +125,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::GetActors(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -185,7 +185,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
+	VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::ReleaseGraphicsResources(const N
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -255,7 +255,7 @@ void VtkEllipsoidTensorProbeRepresentationWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
+		VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

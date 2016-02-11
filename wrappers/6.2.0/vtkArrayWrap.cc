@@ -107,7 +107,7 @@ void VtkArrayWrap::CreateArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkArrayWrap::InitPtpl();
+			VtkArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -170,7 +170,7 @@ void VtkArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkArrayWrap::InitPtpl();
+	VtkArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArrayWrap::InitPtpl();
+		VtkArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

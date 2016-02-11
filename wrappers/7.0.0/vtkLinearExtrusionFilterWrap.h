@@ -33,10 +33,12 @@ class VtkLinearExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtrusionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtrusionType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtrusionTypeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtrusionTypeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

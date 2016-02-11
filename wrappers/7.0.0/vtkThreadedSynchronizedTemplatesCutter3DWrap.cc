@@ -137,7 +137,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::GetCutFunction(const Nan::Fun
 		return;
 	}
 	r = native->GetCutFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::NewInstance(const Nan::Functi
 		return;
 	}
 	r = native->NewInstance();
-		VtkThreadedSynchronizedTemplatesCutter3DWrap::InitPtpl();
+	VtkThreadedSynchronizedTemplatesCutter3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::SafeDownCast(const Nan::Funct
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThreadedSynchronizedTemplatesCutter3DWrap::InitPtpl();
+		VtkThreadedSynchronizedTemplatesCutter3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::SetCutFunction(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::SetOutputPointsPrecision(cons
 	vtkThreadedSynchronizedTemplatesCutter3D *native = (vtkThreadedSynchronizedTemplatesCutter3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkThreadedSynchronizedTemplatesCutter3DWrap::ThreadedExecute(const Nan::Fu
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

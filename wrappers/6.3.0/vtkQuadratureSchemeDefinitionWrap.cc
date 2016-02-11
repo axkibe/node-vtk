@@ -122,7 +122,7 @@ void VtkQuadratureSchemeDefinitionWrap::Clear(const Nan::FunctionCallbackInfo<v8
 {
 	VtkQuadratureSchemeDefinitionWrap *wrapper = ObjectWrap::Unwrap<VtkQuadratureSchemeDefinitionWrap>(info.Holder());
 	vtkQuadratureSchemeDefinition *native = (vtkQuadratureSchemeDefinition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkQuadratureSchemeDefinitionWrap::DICTIONARY(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->DICTIONARY();
-		VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
+	VtkInformationQuadratureSchemeDefinitionVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkQuadratureSchemeDefinitionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadratureSchemeDefinitionWrap::InitPtpl();
+	VtkQuadratureSchemeDefinitionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkQuadratureSchemeDefinitionWrap::QUADRATURE_OFFSET_ARRAY_NAME(const Nan::
 		return;
 	}
 	r = native->QUADRATURE_OFFSET_ARRAY_NAME();
-		VtkInformationStringKeyWrap::InitPtpl();
+	VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkQuadratureSchemeDefinitionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadratureSchemeDefinitionWrap::InitPtpl();
+		VtkQuadratureSchemeDefinitionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

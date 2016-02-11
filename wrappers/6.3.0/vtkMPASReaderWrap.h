@@ -36,10 +36,12 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void EnableAllPointArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterLonRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsAtmosphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsZeroCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLayerThicknessRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCellArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +53,7 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectLatLon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowMultilayerView(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVerticalLevelRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -256,7 +256,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkMNIObjectWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkMNIObjectWriterWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkMNIObjectWriterWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetMapper();
-		VtkMapperWrap::InitPtpl();
+	VtkMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkMNIObjectWriterWrap::GetProperty(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +389,7 @@ void VtkMNIObjectWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkMNIObjectWriterWrap::InitPtpl();
+	VtkMNIObjectWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkMNIObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMNIObjectWriterWrap::InitPtpl();
+		VtkMNIObjectWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -439,7 +439,7 @@ void VtkMNIObjectWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +458,7 @@ void VtkMNIObjectWriterWrap::SetFileType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +475,7 @@ void VtkMNIObjectWriterWrap::SetFileTypeToASCII(const Nan::FunctionCallbackInfo<
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -487,7 +487,7 @@ void VtkMNIObjectWriterWrap::SetFileTypeToBinary(const Nan::FunctionCallbackInfo
 {
 	VtkMNIObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkMNIObjectWriterWrap>(info.Holder());
 	vtkMNIObjectWriter *native = (vtkMNIObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -502,7 +502,7 @@ void VtkMNIObjectWriterWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -522,7 +522,7 @@ void VtkMNIObjectWriterWrap::SetMapper(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMapperWrap *a0 = ObjectWrap::Unwrap<VtkMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -542,7 +542,7 @@ void VtkMNIObjectWriterWrap::SetProperty(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

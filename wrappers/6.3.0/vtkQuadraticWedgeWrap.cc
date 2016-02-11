@@ -262,7 +262,7 @@ void VtkQuadraticWedgeWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkQuadraticWedgeWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -418,7 +418,7 @@ void VtkQuadraticWedgeWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -448,7 +448,7 @@ void VtkQuadraticWedgeWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -498,7 +498,7 @@ void VtkQuadraticWedgeWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -518,7 +518,7 @@ void VtkQuadraticWedgeWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -556,7 +556,7 @@ void VtkQuadraticWedgeWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -586,7 +586,7 @@ void VtkQuadraticWedgeWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -636,7 +636,7 @@ void VtkQuadraticWedgeWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -656,7 +656,7 @@ void VtkQuadraticWedgeWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -694,7 +694,7 @@ void VtkQuadraticWedgeWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -724,7 +724,7 @@ void VtkQuadraticWedgeWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -774,7 +774,7 @@ void VtkQuadraticWedgeWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -794,7 +794,7 @@ void VtkQuadraticWedgeWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -832,7 +832,7 @@ void VtkQuadraticWedgeWrap::InterpolationFunctions(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -862,7 +862,7 @@ void VtkQuadraticWedgeWrap::InterpolationFunctions(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -912,7 +912,7 @@ void VtkQuadraticWedgeWrap::InterpolationFunctions(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -932,7 +932,7 @@ void VtkQuadraticWedgeWrap::InterpolationFunctions(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -980,7 +980,7 @@ void VtkQuadraticWedgeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadraticWedgeWrap::InitPtpl();
+	VtkQuadraticWedgeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1008,7 +1008,7 @@ void VtkQuadraticWedgeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadraticWedgeWrap::InitPtpl();
+		VtkQuadraticWedgeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -129,7 +129,7 @@ void VtkInterpolateDataSetAttributesWrap::GetInputList(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetInputList();
-		VtkDataSetCollectionWrap::InitPtpl();
+	VtkDataSetCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkInterpolateDataSetAttributesWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkInterpolateDataSetAttributesWrap::InitPtpl();
+	VtkInterpolateDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkInterpolateDataSetAttributesWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInterpolateDataSetAttributesWrap::InitPtpl();
+		VtkInterpolateDataSetAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -265,7 +265,7 @@ void VtkInterpolateDataSetAttributesWrap::SetT(const Nan::FunctionCallbackInfo<v
 	vtkInterpolateDataSetAttributes *native = (vtkInterpolateDataSetAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

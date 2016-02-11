@@ -71,8 +71,14 @@ void VtkTetraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEdge", GetEdge);
 	Nan::SetPrototypeMethod(tpl, "getEdge", GetEdge);
 
+	Nan::SetPrototypeMethod(tpl, "GetEdgeArray", GetEdgeArray);
+	Nan::SetPrototypeMethod(tpl, "getEdgeArray", GetEdgeArray);
+
 	Nan::SetPrototypeMethod(tpl, "GetFace", GetFace);
 	Nan::SetPrototypeMethod(tpl, "getFace", GetFace);
+
+	Nan::SetPrototypeMethod(tpl, "GetFaceArray", GetFaceArray);
+	Nan::SetPrototypeMethod(tpl, "getFaceArray", GetFaceArray);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfEdges", GetNumberOfEdges);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfEdges", GetNumberOfEdges);
@@ -10045,7 +10051,7 @@ void VtkTetraWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -10055,6 +10061,30 @@ void VtkTetraWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTetraWrap::GetEdgeArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTetraWrap *wrapper = ObjectWrap::Unwrap<VtkTetraWrap>(info.Holder());
+	vtkTetra *native = (vtkTetra *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetEdgeArray(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+		info.GetReturnValue().Set(at);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -10075,7 +10105,7 @@ void VtkTetraWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -10085,6 +10115,30 @@ void VtkTetraWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTetraWrap::GetFaceArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTetraWrap *wrapper = ObjectWrap::Unwrap<VtkTetraWrap>(info.Holder());
+	vtkTetra *native = (vtkTetra *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetFaceArray(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+		info.GetReturnValue().Set(at);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -12839,7 +12893,7 @@ void VtkTetraWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -12869,7 +12923,7 @@ void VtkTetraWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -12919,7 +12973,7 @@ void VtkTetraWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -12939,7 +12993,7 @@ void VtkTetraWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -12977,7 +13031,7 @@ void VtkTetraWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13007,7 +13061,7 @@ void VtkTetraWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13057,7 +13111,7 @@ void VtkTetraWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13077,7 +13131,7 @@ void VtkTetraWrap::InterpolateFunctions(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13115,7 +13169,7 @@ void VtkTetraWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13145,7 +13199,7 @@ void VtkTetraWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13195,7 +13249,7 @@ void VtkTetraWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13215,7 +13269,7 @@ void VtkTetraWrap::InterpolationDerivs(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13253,7 +13307,7 @@ void VtkTetraWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13283,7 +13337,7 @@ void VtkTetraWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13333,7 +13387,7 @@ void VtkTetraWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13353,7 +13407,7 @@ void VtkTetraWrap::InterpolationFunctions(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -13401,7 +13455,7 @@ void VtkTetraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkTetraWrap::InitPtpl();
+	VtkTetraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -13429,7 +13483,7 @@ void VtkTetraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTetraWrap::InitPtpl();
+		VtkTetraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -13494,7 +13548,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13527,7 +13581,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13580,7 +13634,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13653,7 +13707,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13746,7 +13800,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13859,7 +13913,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -13942,7 +13996,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14035,7 +14089,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14138,7 +14192,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14211,7 +14265,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14294,7 +14348,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14377,7 +14431,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14480,7 +14534,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14553,7 +14607,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14636,7 +14690,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14729,7 +14783,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14792,7 +14846,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14865,7 +14919,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -14928,7 +14982,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15011,7 +15065,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15114,7 +15168,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15187,7 +15241,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15270,7 +15324,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15363,7 +15417,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15426,7 +15480,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15499,7 +15553,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15572,7 +15626,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15665,7 +15719,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15728,7 +15782,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15801,7 +15855,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15884,7 +15938,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -15937,7 +15991,7 @@ void VtkTetraWrap::TetraCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;

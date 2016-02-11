@@ -208,7 +208,7 @@ void VtkXMLDataElementWrap::AddNestedElement(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -228,7 +228,7 @@ void VtkXMLDataElementWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkXMLDataElementWrap::FindNestedElement(const Nan::FunctionCallbackInfo<v8
 		r = native->FindNestedElement(
 			*a0
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithName(const Nan::FunctionCallbac
 		r = native->FindNestedElementWithName(
 			*a0
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -327,7 +327,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndAttribute(const Nan::Fun
 					*a1,
 					*a2
 				);
-					VtkXMLDataElementWrap::InitPtpl();
+				VtkXMLDataElementWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkXMLDataElementWrap::FindNestedElementWithNameAndId(const Nan::FunctionCa
 				*a0,
 				*a1
 			);
-				VtkXMLDataElementWrap::InitPtpl();
+			VtkXMLDataElementWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -571,7 +571,7 @@ void VtkXMLDataElementWrap::GetNestedElement(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetNestedElement(
 			info[0]->Int32Value()
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -625,7 +625,7 @@ void VtkXMLDataElementWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetParent();
-		VtkXMLDataElementWrap::InitPtpl();
+	VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -648,7 +648,7 @@ void VtkXMLDataElementWrap::GetRoot(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetRoot();
-		VtkXMLDataElementWrap::InitPtpl();
+	VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -720,7 +720,7 @@ void VtkXMLDataElementWrap::LookupElement(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->LookupElement(
 			*a0
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -751,7 +751,7 @@ void VtkXMLDataElementWrap::LookupElementWithName(const Nan::FunctionCallbackInf
 		r = native->LookupElementWithName(
 			*a0
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -777,7 +777,7 @@ void VtkXMLDataElementWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLDataElementWrap::InitPtpl();
+	VtkXMLDataElementWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -796,7 +796,7 @@ void VtkXMLDataElementWrap::PrintXML(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -813,7 +813,7 @@ void VtkXMLDataElementWrap::RemoveAllAttributes(const Nan::FunctionCallbackInfo<
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -825,7 +825,7 @@ void VtkXMLDataElementWrap::RemoveAllNestedElements(const Nan::FunctionCallbackI
 {
 	VtkXMLDataElementWrap *wrapper = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info.Holder());
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -840,7 +840,7 @@ void VtkXMLDataElementWrap::RemoveAttribute(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -860,7 +860,7 @@ void VtkXMLDataElementWrap::RemoveNestedElement(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -889,7 +889,7 @@ void VtkXMLDataElementWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLDataElementWrap::InitPtpl();
+		VtkXMLDataElementWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -914,7 +914,7 @@ void VtkXMLDataElementWrap::SetAttribute(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -935,7 +935,7 @@ void VtkXMLDataElementWrap::SetAttributeEncoding(const Nan::FunctionCallbackInfo
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -957,7 +957,7 @@ void VtkXMLDataElementWrap::SetCharacterData(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -978,7 +978,7 @@ void VtkXMLDataElementWrap::SetCharacterDataWidth(const Nan::FunctionCallbackInf
 	vtkXMLDataElement *native = (vtkXMLDataElement *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1000,7 +1000,7 @@ void VtkXMLDataElementWrap::SetDoubleAttribute(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1022,7 +1022,7 @@ void VtkXMLDataElementWrap::SetId(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1044,7 +1044,7 @@ void VtkXMLDataElementWrap::SetIntAttribute(const Nan::FunctionCallbackInfo<v8::
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1066,7 +1066,7 @@ void VtkXMLDataElementWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1086,7 +1086,7 @@ void VtkXMLDataElementWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXMLDataElementWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXMLDataElementWrap *a0 = ObjectWrap::Unwrap<VtkXMLDataElementWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -129,7 +129,7 @@ void VtkNonOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkNonOverlappingAMRWrap::InitPtpl();
+			VtkNonOverlappingAMRWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -154,7 +154,7 @@ void VtkNonOverlappingAMRWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkNonOverlappingAMRWrap::InitPtpl();
+		VtkNonOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkNonOverlappingAMRWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkNonOverlappingAMRWrap::InitPtpl();
+	VtkNonOverlappingAMRWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkNonOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNonOverlappingAMRWrap::InitPtpl();
+		VtkNonOverlappingAMRWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

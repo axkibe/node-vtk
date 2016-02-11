@@ -36,6 +36,7 @@ class VtkImageResliceWrap : public VtkThreadedImageAlgorithmWrap
 		static void GenerateStencilOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateStencilOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoCropOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,7 +51,10 @@ class VtkImageResliceWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetMirror(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOptimization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceAxesDirectionCosines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResliceAxesOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);

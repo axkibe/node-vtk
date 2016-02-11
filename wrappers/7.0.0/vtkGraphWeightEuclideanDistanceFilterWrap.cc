@@ -135,7 +135,7 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
+	VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkGraphWeightEuclideanDistanceFilterWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
+		VtkGraphWeightEuclideanDistanceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

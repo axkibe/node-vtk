@@ -125,7 +125,7 @@ void VtkChartPieWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->AddPlot(
 			info[0]->Int32Value()
 		);
-			VtkPlotWrap::InitPtpl();
+		VtkPlotWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkChartPieWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetLegend();
-		VtkChartLegendWrap::InitPtpl();
+	VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkChartPieWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartPieWrap::InitPtpl();
+	VtkChartPieWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkChartPieWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartPieWrap::InitPtpl();
+		VtkChartPieWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkChartPieWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -301,7 +301,7 @@ void VtkChartPieWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkChartPieWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartPieWrap *wrapper = ObjectWrap::Unwrap<VtkChartPieWrap>(info.Holder());
 	vtkChartPie *native = (vtkChartPie *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

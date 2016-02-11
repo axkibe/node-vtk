@@ -155,7 +155,7 @@ void VtkFastNumericConversionWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkFastNumericConversionWrap::InitPtpl();
+	VtkFastNumericConversionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +197,7 @@ void VtkFastNumericConversionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFastNumericConversionWrap::InitPtpl();
+		VtkFastNumericConversionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkFastNumericConversionWrap::SetReservedFracBits(const Nan::FunctionCallba
 	vtkFastNumericConversion *native = (vtkFastNumericConversion *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -59,6 +59,12 @@ void VtkWindowLevelLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLevel", GetLevel);
 	Nan::SetPrototypeMethod(tpl, "getLevel", GetLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumTableValue", GetMaximumTableValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumTableValue", GetMaximumTableValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumTableValue", GetMinimumTableValue);
+	Nan::SetPrototypeMethod(tpl, "getMinimumTableValue", GetMinimumTableValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetWindow", GetWindow);
 	Nan::SetPrototypeMethod(tpl, "getWindow", GetWindow);
 
@@ -125,7 +131,7 @@ void VtkWindowLevelLookupTableWrap::Build(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -175,6 +181,40 @@ void VtkWindowLevelLookupTableWrap::GetLevel(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkWindowLevelLookupTableWrap::GetMaximumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
+	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumTableValue();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkWindowLevelLookupTableWrap::GetMinimumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
+	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumTableValue();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkWindowLevelLookupTableWrap::GetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
@@ -193,7 +233,7 @@ void VtkWindowLevelLookupTableWrap::InverseVideoOff(const Nan::FunctionCallbackI
 {
 	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +245,7 @@ void VtkWindowLevelLookupTableWrap::InverseVideoOn(const Nan::FunctionCallbackIn
 {
 	VtkWindowLevelLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkWindowLevelLookupTableWrap>(info.Holder());
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +286,7 @@ void VtkWindowLevelLookupTableWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkWindowLevelLookupTableWrap::InitPtpl();
+	VtkWindowLevelLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -274,7 +314,7 @@ void VtkWindowLevelLookupTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWindowLevelLookupTableWrap::InitPtpl();
+		VtkWindowLevelLookupTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -295,7 +335,7 @@ void VtkWindowLevelLookupTableWrap::SetInverseVideo(const Nan::FunctionCallbackI
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +354,7 @@ void VtkWindowLevelLookupTableWrap::SetLevel(const Nan::FunctionCallbackInfo<v8:
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +381,7 @@ void VtkWindowLevelLookupTableWrap::SetMaximumTableValue(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -370,7 +410,7 @@ void VtkWindowLevelLookupTableWrap::SetMaximumTableValue(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +428,7 @@ void VtkWindowLevelLookupTableWrap::SetMaximumTableValue(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -421,7 +461,7 @@ void VtkWindowLevelLookupTableWrap::SetMinimumTableValue(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +490,7 @@ void VtkWindowLevelLookupTableWrap::SetMinimumTableValue(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +508,7 @@ void VtkWindowLevelLookupTableWrap::SetMinimumTableValue(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -493,7 +533,7 @@ void VtkWindowLevelLookupTableWrap::SetWindow(const Nan::FunctionCallbackInfo<v8
 	vtkWindowLevelLookupTable *native = (vtkWindowLevelLookupTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -39,6 +39,7 @@ class VtkScalarsToColorsWrap : public VtkObjectWrap
 		static void GetIndexedLookup(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLuminance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVectorSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

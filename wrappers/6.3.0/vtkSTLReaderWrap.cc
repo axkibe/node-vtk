@@ -144,7 +144,7 @@ void VtkSTLReaderWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkSTLReaderWrap::MergingOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSTLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSTLReaderWrap>(info.Holder());
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkSTLReaderWrap::MergingOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkSTLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSTLReaderWrap>(info.Holder());
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +241,7 @@ void VtkSTLReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkSTLReaderWrap::InitPtpl();
+	VtkSTLReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkSTLReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSTLReaderWrap::InitPtpl();
+		VtkSTLReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkSTLReaderWrap::ScalarTagsOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkSTLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSTLReaderWrap>(info.Holder());
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +300,7 @@ void VtkSTLReaderWrap::ScalarTagsOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSTLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSTLReaderWrap>(info.Holder());
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkSTLReaderWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkSTLReaderWrap::SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -353,7 +353,7 @@ void VtkSTLReaderWrap::SetScalarTags(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkSTLReader *native = (vtkSTLReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

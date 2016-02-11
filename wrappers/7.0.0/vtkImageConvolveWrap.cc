@@ -68,6 +68,9 @@ void VtkImageConvolveWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetKernel7x7x7", GetKernel7x7x7);
 	Nan::SetPrototypeMethod(tpl, "getKernel7x7x7", GetKernel7x7x7);
 
+	Nan::SetPrototypeMethod(tpl, "GetKernelSize", GetKernelSize);
+	Nan::SetPrototypeMethod(tpl, "getKernelSize", GetKernelSize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -152,7 +155,7 @@ void VtkImageConvolveWrap::GetKernel3x3(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -181,7 +184,7 @@ void VtkImageConvolveWrap::GetKernel3x3(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -208,7 +211,7 @@ void VtkImageConvolveWrap::GetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +240,7 @@ void VtkImageConvolveWrap::GetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +267,7 @@ void VtkImageConvolveWrap::GetKernel5x5(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +296,7 @@ void VtkImageConvolveWrap::GetKernel5x5(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +323,7 @@ void VtkImageConvolveWrap::GetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +352,7 @@ void VtkImageConvolveWrap::GetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -376,7 +379,7 @@ void VtkImageConvolveWrap::GetKernel7x7(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +408,7 @@ void VtkImageConvolveWrap::GetKernel7x7(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -432,7 +435,7 @@ void VtkImageConvolveWrap::GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +464,7 @@ void VtkImageConvolveWrap::GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,6 +475,23 @@ void VtkImageConvolveWrap::GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConvolveWrap::GetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConvolveWrap *wrapper = ObjectWrap::Unwrap<VtkImageConvolveWrap>(info.Holder());
+	vtkImageConvolve *native = (vtkImageConvolve *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetKernelSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageConvolveWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -507,7 +527,7 @@ void VtkImageConvolveWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageConvolveWrap::InitPtpl();
+	VtkImageConvolveWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +555,7 @@ void VtkImageConvolveWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageConvolveWrap::InitPtpl();
+		VtkImageConvolveWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -564,7 +584,7 @@ void VtkImageConvolveWrap::SetKernel3x3(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -593,7 +613,7 @@ void VtkImageConvolveWrap::SetKernel3x3(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +640,7 @@ void VtkImageConvolveWrap::SetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +669,7 @@ void VtkImageConvolveWrap::SetKernel3x3x3(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +696,7 @@ void VtkImageConvolveWrap::SetKernel5x5(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -705,7 +725,7 @@ void VtkImageConvolveWrap::SetKernel5x5(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -732,7 +752,7 @@ void VtkImageConvolveWrap::SetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -761,7 +781,7 @@ void VtkImageConvolveWrap::SetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -788,7 +808,7 @@ void VtkImageConvolveWrap::SetKernel7x7(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -817,7 +837,7 @@ void VtkImageConvolveWrap::SetKernel7x7(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +864,7 @@ void VtkImageConvolveWrap::SetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -873,7 +893,7 @@ void VtkImageConvolveWrap::SetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

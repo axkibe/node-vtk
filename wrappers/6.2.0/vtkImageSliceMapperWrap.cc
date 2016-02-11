@@ -66,6 +66,9 @@ void VtkImageSliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCropping", GetCropping);
 	Nan::SetPrototypeMethod(tpl, "getCropping", GetCropping);
 
+	Nan::SetPrototypeMethod(tpl, "GetCroppingRegion", GetCroppingRegion);
+	Nan::SetPrototypeMethod(tpl, "getCroppingRegion", GetCroppingRegion);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
 	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
 
@@ -159,7 +162,7 @@ void VtkImageSliceMapperWrap::CroppingOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +174,7 @@ void VtkImageSliceMapperWrap::CroppingOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -193,7 +196,7 @@ void VtkImageSliceMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -222,7 +225,7 @@ void VtkImageSliceMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,6 +264,23 @@ void VtkImageSliceMapperWrap::GetCropping(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetCropping();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageSliceMapperWrap::GetCroppingRegion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
+	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCroppingRegion();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageSliceMapperWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -364,7 +384,7 @@ void VtkImageSliceMapperWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallb
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -394,7 +414,7 @@ void VtkImageSliceMapperWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallb
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -442,7 +462,7 @@ void VtkImageSliceMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSliceMapperWrap::InitPtpl();
+	VtkImageSliceMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -461,7 +481,7 @@ void VtkImageSliceMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +504,7 @@ void VtkImageSliceMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageSliceWrap *a1 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -515,7 +535,7 @@ void VtkImageSliceMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSliceMapperWrap::InitPtpl();
+		VtkImageSliceMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -536,7 +556,7 @@ void VtkImageSliceMapperWrap::SetCropping(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -563,7 +583,7 @@ void VtkImageSliceMapperWrap::SetCroppingRegion(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +612,7 @@ void VtkImageSliceMapperWrap::SetCroppingRegion(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +634,7 @@ void VtkImageSliceMapperWrap::SetCroppingRegion(const Nan::FunctionCallbackInfo<
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -643,7 +663,7 @@ void VtkImageSliceMapperWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8:
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -660,7 +680,7 @@ void VtkImageSliceMapperWrap::SetOrientationToX(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -672,7 +692,7 @@ void VtkImageSliceMapperWrap::SetOrientationToY(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -684,7 +704,7 @@ void VtkImageSliceMapperWrap::SetOrientationToZ(const Nan::FunctionCallbackInfo<
 {
 	VtkImageSliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageSliceMapperWrap>(info.Holder());
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -698,7 +718,7 @@ void VtkImageSliceMapperWrap::SetSliceNumber(const Nan::FunctionCallbackInfo<v8:
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +737,7 @@ void VtkImageSliceMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageSliceMapper *native = (vtkImageSliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +747,7 @@ void VtkImageSliceMapperWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>&
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

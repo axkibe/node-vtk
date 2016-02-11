@@ -31,8 +31,10 @@ class VtkTextSourceWrap : public VtkPolyDataAlgorithmWrap
 
 		static void BackingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BackingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBacking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetForegroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

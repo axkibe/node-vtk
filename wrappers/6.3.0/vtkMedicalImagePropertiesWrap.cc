@@ -82,6 +82,9 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDateAsLocale", GetDateAsLocale);
 	Nan::SetPrototypeMethod(tpl, "getDateAsLocale", GetDateAsLocale);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirectionCosine", GetDirectionCosine);
+	Nan::SetPrototypeMethod(tpl, "getDirectionCosine", GetDirectionCosine);
+
 	Nan::SetPrototypeMethod(tpl, "GetEchoTime", GetEchoTime);
 	Nan::SetPrototypeMethod(tpl, "getEchoTime", GetEchoTime);
 
@@ -135,6 +138,9 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetModality", GetModality);
 	Nan::SetPrototypeMethod(tpl, "getModality", GetModality);
+
+	Nan::SetPrototypeMethod(tpl, "GetNthWindowLevelPreset", GetNthWindowLevelPreset);
+	Nan::SetPrototypeMethod(tpl, "getNthWindowLevelPreset", GetNthWindowLevelPreset);
 
 	Nan::SetPrototypeMethod(tpl, "GetNthWindowLevelPresetComment", GetNthWindowLevelPresetComment);
 	Nan::SetPrototypeMethod(tpl, "getNthWindowLevelPresetComment", GetNthWindowLevelPresetComment);
@@ -385,7 +391,7 @@ void VtkMedicalImagePropertiesWrap::AddUserDefinedValue(const Nan::FunctionCallb
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -429,7 +435,7 @@ void VtkMedicalImagePropertiesWrap::Clear(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +450,7 @@ void VtkMedicalImagePropertiesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMedicalImagePropertiesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMedicalImagePropertiesWrap *a0 = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,6 +586,23 @@ void VtkMedicalImagePropertiesWrap::GetDateAsLocale(const Nan::FunctionCallbackI
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMedicalImagePropertiesWrap::GetDirectionCosine(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirectionCosine();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMedicalImagePropertiesWrap::GetEchoTime(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -843,6 +866,30 @@ void VtkMedicalImagePropertiesWrap::GetModality(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetModality();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMedicalImagePropertiesWrap::GetNthWindowLevelPreset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetNthWindowLevelPreset(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMedicalImagePropertiesWrap::GetNthWindowLevelPresetComment(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1328,7 +1375,7 @@ void VtkMedicalImagePropertiesWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkMedicalImagePropertiesWrap::InitPtpl();
+	VtkMedicalImagePropertiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1344,7 +1391,7 @@ void VtkMedicalImagePropertiesWrap::RemoveAllUserDefinedValues(const Nan::Functi
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1356,7 +1403,7 @@ void VtkMedicalImagePropertiesWrap::RemoveAllWindowLevelPresets(const Nan::Funct
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
 	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1372,7 +1419,7 @@ void VtkMedicalImagePropertiesWrap::RemoveWindowLevelPreset(const Nan::FunctionC
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1403,7 +1450,7 @@ void VtkMedicalImagePropertiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMedicalImagePropertiesWrap::InitPtpl();
+		VtkMedicalImagePropertiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1425,7 +1472,7 @@ void VtkMedicalImagePropertiesWrap::SetAcquisitionDate(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1445,7 +1492,7 @@ void VtkMedicalImagePropertiesWrap::SetAcquisitionTime(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1465,7 +1512,7 @@ void VtkMedicalImagePropertiesWrap::SetConvolutionKernel(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1492,7 +1539,7 @@ void VtkMedicalImagePropertiesWrap::SetDirectionCosine(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1521,7 +1568,7 @@ void VtkMedicalImagePropertiesWrap::SetDirectionCosine(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1543,7 +1590,7 @@ void VtkMedicalImagePropertiesWrap::SetDirectionCosine(const Nan::FunctionCallba
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1573,7 +1620,7 @@ void VtkMedicalImagePropertiesWrap::SetEchoTime(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1593,7 +1640,7 @@ void VtkMedicalImagePropertiesWrap::SetEchoTrainLength(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1613,7 +1660,7 @@ void VtkMedicalImagePropertiesWrap::SetExposure(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1633,7 +1680,7 @@ void VtkMedicalImagePropertiesWrap::SetExposureTime(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1653,7 +1700,7 @@ void VtkMedicalImagePropertiesWrap::SetGantryTilt(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1673,7 +1720,7 @@ void VtkMedicalImagePropertiesWrap::SetImageDate(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1693,7 +1740,7 @@ void VtkMedicalImagePropertiesWrap::SetImageNumber(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1713,7 +1760,7 @@ void VtkMedicalImagePropertiesWrap::SetImageTime(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1737,7 +1784,7 @@ void VtkMedicalImagePropertiesWrap::SetInstanceUIDFromSliceID(const Nan::Functio
 			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1761,7 +1808,7 @@ void VtkMedicalImagePropertiesWrap::SetInstitutionName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1781,7 +1828,7 @@ void VtkMedicalImagePropertiesWrap::SetKVP(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1801,7 +1848,7 @@ void VtkMedicalImagePropertiesWrap::SetManufacturer(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1821,7 +1868,7 @@ void VtkMedicalImagePropertiesWrap::SetManufacturerModelName(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1841,7 +1888,7 @@ void VtkMedicalImagePropertiesWrap::SetModality(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1863,7 +1910,7 @@ void VtkMedicalImagePropertiesWrap::SetNthWindowLevelPresetComment(const Nan::Fu
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1886,7 +1933,7 @@ void VtkMedicalImagePropertiesWrap::SetOrientationType(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1908,7 +1955,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientAge(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1928,7 +1975,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientBirthDate(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1948,7 +1995,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientID(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1968,7 +2015,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1988,7 +2035,7 @@ void VtkMedicalImagePropertiesWrap::SetPatientSex(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2008,7 +2055,7 @@ void VtkMedicalImagePropertiesWrap::SetRepetitionTime(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2028,7 +2075,7 @@ void VtkMedicalImagePropertiesWrap::SetSeriesDescription(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2048,7 +2095,7 @@ void VtkMedicalImagePropertiesWrap::SetSeriesNumber(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2068,7 +2115,7 @@ void VtkMedicalImagePropertiesWrap::SetSliceThickness(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2088,7 +2135,7 @@ void VtkMedicalImagePropertiesWrap::SetStationName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2108,7 +2155,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyDate(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2128,7 +2175,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyDescription(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2148,7 +2195,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyID(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2168,7 +2215,7 @@ void VtkMedicalImagePropertiesWrap::SetStudyTime(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2188,7 +2235,7 @@ void VtkMedicalImagePropertiesWrap::SetXRayTubeCurrent(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

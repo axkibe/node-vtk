@@ -176,7 +176,7 @@ void VtkAngleRepresentationWrap::ArcVisibilityOff(const Nan::FunctionCallbackInf
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkAngleRepresentationWrap::ArcVisibilityOn(const Nan::FunctionCallbackInfo
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkAngleRepresentationWrap::BuildRepresentation(const Nan::FunctionCallback
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkAngleRepresentationWrap::CenterWidgetInteraction(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkAngleRepresentationWrap::CenterWidgetInteraction(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkAngleRepresentationWrap::GetCenterRepresentation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetCenterRepresentation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,7 +369,7 @@ void VtkAngleRepresentationWrap::GetPoint1Representation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPoint1Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkAngleRepresentationWrap::GetPoint2Representation(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPoint2Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,7 +478,7 @@ void VtkAngleRepresentationWrap::InstantiateHandleRepresentation(const Nan::Func
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +519,7 @@ void VtkAngleRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkAngleRepresentationWrap::InitPtpl();
+	VtkAngleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +535,7 @@ void VtkAngleRepresentationWrap::Ray1VisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +547,7 @@ void VtkAngleRepresentationWrap::Ray1VisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -559,7 +559,7 @@ void VtkAngleRepresentationWrap::Ray2VisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -571,7 +571,7 @@ void VtkAngleRepresentationWrap::Ray2VisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkAngleRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentationWrap>(info.Holder());
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +595,7 @@ void VtkAngleRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAngleRepresentationWrap::InitPtpl();
+		VtkAngleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -616,7 +616,7 @@ void VtkAngleRepresentationWrap::SetArcVisibility(const Nan::FunctionCallbackInf
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -636,7 +636,7 @@ void VtkAngleRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -656,7 +656,7 @@ void VtkAngleRepresentationWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -675,7 +675,7 @@ void VtkAngleRepresentationWrap::SetRay1Visibility(const Nan::FunctionCallbackIn
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkAngleRepresentationWrap::SetRay2Visibility(const Nan::FunctionCallbackIn
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -713,7 +713,7 @@ void VtkAngleRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8
 	vtkAngleRepresentation *native = (vtkAngleRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +740,7 @@ void VtkAngleRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -769,7 +769,7 @@ void VtkAngleRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +796,7 @@ void VtkAngleRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +825,7 @@ void VtkAngleRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

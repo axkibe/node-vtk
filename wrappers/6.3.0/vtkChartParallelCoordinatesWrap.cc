@@ -128,7 +128,7 @@ void VtkChartParallelCoordinatesWrap::GetAxis(const Nan::FunctionCallbackInfo<v8
 		r = native->GetAxis(
 			info[0]->Int32Value()
 		);
-			VtkAxisWrap::InitPtpl();
+		VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkChartParallelCoordinatesWrap::GetVisibleColumns(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetVisibleColumns();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkChartParallelCoordinatesWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartParallelCoordinatesWrap::InitPtpl();
+	VtkChartParallelCoordinatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkChartParallelCoordinatesWrap::RecalculateBounds(const Nan::FunctionCallb
 {
 	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
 	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkChartParallelCoordinatesWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartParallelCoordinatesWrap::InitPtpl();
+		VtkChartParallelCoordinatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkChartParallelCoordinatesWrap::SetColumnVisibilityAll(const Nan::Function
 	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,7 @@ void VtkChartParallelCoordinatesWrap::SetPlot(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlotParallelCoordinatesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlotParallelCoordinatesWrap *a0 = ObjectWrap::Unwrap<VtkPlotParallelCoordinatesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +333,7 @@ void VtkChartParallelCoordinatesWrap::Update(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkChartParallelCoordinatesWrap *wrapper = ObjectWrap::Unwrap<VtkChartParallelCoordinatesWrap>(info.Holder());
 	vtkChartParallelCoordinates *native = (vtkChartParallelCoordinates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -141,7 +141,7 @@ void VtkAMRInformationWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAMRInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAMRInformationWrap *a0 = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -158,7 +158,7 @@ void VtkAMRInformationWrap::GenerateParentChildInformation(const Nan::FunctionCa
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
 	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkAMRInformationWrap::GenerateRefinementRatio(const Nan::FunctionCallbackI
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
 	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +241,7 @@ void VtkAMRInformationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -270,7 +270,7 @@ void VtkAMRInformationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkAMRInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRInformationWrap::InitPtpl();
+	VtkAMRInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -372,7 +372,7 @@ void VtkAMRInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRInformationWrap::InitPtpl();
+		VtkAMRInformationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -395,7 +395,7 @@ void VtkAMRInformationWrap::SetAMRBlockSourceIndex(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -416,7 +416,7 @@ void VtkAMRInformationWrap::SetGridDescription(const Nan::FunctionCallbackInfo<v
 	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -31,6 +31,8 @@ class VtkUnstructuredGridBunykRayCastFunctionWrap : public VtkUnstructuredGridVo
 
 		static void Finalize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewToWorldMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -214,7 +214,7 @@ void VtkDepthPeelingPassWrap::GetTranslucentPass(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetTranslucentPass();
-		VtkRenderPassWrap::InitPtpl();
+	VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkDepthPeelingPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDepthPeelingPassWrap::InitPtpl();
+	VtkDepthPeelingPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkDepthPeelingPassWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkDepthPeelingPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDepthPeelingPassWrap::InitPtpl();
+		VtkDepthPeelingPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -328,7 +328,7 @@ void VtkDepthPeelingPassWrap::SetMaximumNumberOfPeels(const Nan::FunctionCallbac
 	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkDepthPeelingPassWrap::SetOcclusionRatio(const Nan::FunctionCallbackInfo<
 	vtkDepthPeelingPass *native = (vtkDepthPeelingPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,7 @@ void VtkDepthPeelingPassWrap::SetTranslucentPass(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

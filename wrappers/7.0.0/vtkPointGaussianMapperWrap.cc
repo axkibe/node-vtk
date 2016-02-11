@@ -153,7 +153,7 @@ void VtkPointGaussianMapperWrap::EmissiveOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPointGaussianMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPointGaussianMapperWrap>(info.Holder());
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkPointGaussianMapperWrap::EmissiveOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPointGaussianMapperWrap *wrapper = ObjectWrap::Unwrap<VtkPointGaussianMapperWrap>(info.Holder());
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkPointGaussianMapperWrap::GetScalarOpacityFunction(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetScalarOpacityFunction();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkPointGaussianMapperWrap::GetScaleFunction(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetScaleFunction();
-		VtkPiecewiseFunctionWrap::InitPtpl();
+	VtkPiecewiseFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkPointGaussianMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointGaussianMapperWrap::InitPtpl();
+	VtkPointGaussianMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkPointGaussianMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointGaussianMapperWrap::InitPtpl();
+		VtkPointGaussianMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -413,7 +413,7 @@ void VtkPointGaussianMapperWrap::SetEmissive(const Nan::FunctionCallbackInfo<v8:
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkPointGaussianMapperWrap::SetOpacityArray(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -452,7 +452,7 @@ void VtkPointGaussianMapperWrap::SetOpacityTableSize(const Nan::FunctionCallback
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkPointGaussianMapperWrap::SetScalarOpacityFunction(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +492,7 @@ void VtkPointGaussianMapperWrap::SetScaleArray(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkPointGaussianMapperWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +531,7 @@ void VtkPointGaussianMapperWrap::SetScaleFunction(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPiecewiseFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPiecewiseFunctionWrap *a0 = ObjectWrap::Unwrap<VtkPiecewiseFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkPointGaussianMapperWrap::SetScaleTableSize(const Nan::FunctionCallbackIn
 	vtkPointGaussianMapper *native = (vtkPointGaussianMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +570,7 @@ void VtkPointGaussianMapperWrap::SetSplatShaderCode(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

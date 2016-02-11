@@ -302,7 +302,7 @@ void VtkMoleculeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -331,7 +331,7 @@ void VtkMoleculeMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkMoleculeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetInput();
-		VtkMoleculeWrap::InitPtpl();
+	VtkMoleculeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkMoleculeMapperWrap::GetSelectedAtoms(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -447,7 +447,7 @@ void VtkMoleculeMapperWrap::GetSelectedAtomsAndBonds(const Nan::FunctionCallback
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdTypeArrayWrap *a2 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -474,7 +474,7 @@ void VtkMoleculeMapperWrap::GetSelectedBonds(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -550,7 +550,7 @@ void VtkMoleculeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkMoleculeMapperWrap::InitPtpl();
+	VtkMoleculeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkMoleculeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkMoleculeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& i
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActorWrap *a1 = ObjectWrap::Unwrap<VtkActorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -611,7 +611,7 @@ void VtkMoleculeMapperWrap::RenderAtomsOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -623,7 +623,7 @@ void VtkMoleculeMapperWrap::RenderAtomsOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -635,7 +635,7 @@ void VtkMoleculeMapperWrap::RenderBondsOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -647,7 +647,7 @@ void VtkMoleculeMapperWrap::RenderBondsOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -671,7 +671,7 @@ void VtkMoleculeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMoleculeMapperWrap::InitPtpl();
+		VtkMoleculeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -692,7 +692,7 @@ void VtkMoleculeMapperWrap::SetAtomicRadiusType(const Nan::FunctionCallbackInfo<
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -709,7 +709,7 @@ void VtkMoleculeMapperWrap::SetAtomicRadiusTypeToCovalentRadius(const Nan::Funct
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -721,7 +721,7 @@ void VtkMoleculeMapperWrap::SetAtomicRadiusTypeToUnitRadius(const Nan::FunctionC
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -733,7 +733,7 @@ void VtkMoleculeMapperWrap::SetAtomicRadiusTypeToVDWRadius(const Nan::FunctionCa
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -747,7 +747,7 @@ void VtkMoleculeMapperWrap::SetBondColorMode(const Nan::FunctionCallbackInfo<v8:
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +764,7 @@ void VtkMoleculeMapperWrap::SetBondColorModeToDiscreteByAtom(const Nan::Function
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -776,7 +776,7 @@ void VtkMoleculeMapperWrap::SetBondColorModeToSingleColor(const Nan::FunctionCal
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -791,7 +791,7 @@ void VtkMoleculeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMoleculeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMoleculeWrap *a0 = ObjectWrap::Unwrap<VtkMoleculeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +810,7 @@ void VtkMoleculeMapperWrap::SetRenderAtoms(const Nan::FunctionCallbackInfo<v8::V
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -829,7 +829,7 @@ void VtkMoleculeMapperWrap::SetRenderBonds(const Nan::FunctionCallbackInfo<v8::V
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -848,7 +848,7 @@ void VtkMoleculeMapperWrap::SetUseMultiCylindersForBonds(const Nan::FunctionCall
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -865,7 +865,7 @@ void VtkMoleculeMapperWrap::UseBallAndStickSettings(const Nan::FunctionCallbackI
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -877,7 +877,7 @@ void VtkMoleculeMapperWrap::UseFastSettings(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -889,7 +889,7 @@ void VtkMoleculeMapperWrap::UseLiquoriceStickSettings(const Nan::FunctionCallbac
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -901,7 +901,7 @@ void VtkMoleculeMapperWrap::UseMultiCylindersForBondsOff(const Nan::FunctionCall
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -913,7 +913,7 @@ void VtkMoleculeMapperWrap::UseMultiCylindersForBondsOn(const Nan::FunctionCallb
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -925,7 +925,7 @@ void VtkMoleculeMapperWrap::UseVDWSpheresSettings(const Nan::FunctionCallbackInf
 {
 	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
 	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

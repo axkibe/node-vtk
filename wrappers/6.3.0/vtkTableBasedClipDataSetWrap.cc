@@ -191,7 +191,7 @@ void VtkTableBasedClipDataSetWrap::CreateDefaultLocator(const Nan::FunctionCallb
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkTableBasedClipDataSetWrap::GenerateClipScalarsOff(const Nan::FunctionCal
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkTableBasedClipDataSetWrap::GenerateClipScalarsOn(const Nan::FunctionCall
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkTableBasedClipDataSetWrap::GenerateClippedOutputOff(const Nan::FunctionC
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkTableBasedClipDataSetWrap::GenerateClippedOutputOn(const Nan::FunctionCa
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkTableBasedClipDataSetWrap::GetClipFunction(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetClipFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkTableBasedClipDataSetWrap::GetClippedOutput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetClippedOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,7 +360,7 @@ void VtkTableBasedClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -488,7 +488,7 @@ void VtkTableBasedClipDataSetWrap::InsideOutOff(const Nan::FunctionCallbackInfo<
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -500,7 +500,7 @@ void VtkTableBasedClipDataSetWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -541,7 +541,7 @@ void VtkTableBasedClipDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableBasedClipDataSetWrap::InitPtpl();
+	VtkTableBasedClipDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkTableBasedClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableBasedClipDataSetWrap::InitPtpl();
+		VtkTableBasedClipDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -591,7 +591,7 @@ void VtkTableBasedClipDataSetWrap::SetClipFunction(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkTableBasedClipDataSetWrap::SetGenerateClipScalars(const Nan::FunctionCal
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +629,7 @@ void VtkTableBasedClipDataSetWrap::SetGenerateClippedOutput(const Nan::FunctionC
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkTableBasedClipDataSetWrap::SetInsideOut(const Nan::FunctionCallbackInfo<
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +668,7 @@ void VtkTableBasedClipDataSetWrap::SetLocator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkTableBasedClipDataSetWrap::SetMergeTolerance(const Nan::FunctionCallback
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +706,7 @@ void VtkTableBasedClipDataSetWrap::SetOutputPointsPrecision(const Nan::FunctionC
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +725,7 @@ void VtkTableBasedClipDataSetWrap::SetUseValueAsOffset(const Nan::FunctionCallba
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -744,7 +744,7 @@ void VtkTableBasedClipDataSetWrap::SetValue(const Nan::FunctionCallbackInfo<v8::
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -761,7 +761,7 @@ void VtkTableBasedClipDataSetWrap::UseValueAsOffsetOff(const Nan::FunctionCallba
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +773,7 @@ void VtkTableBasedClipDataSetWrap::UseValueAsOffsetOn(const Nan::FunctionCallbac
 {
 	VtkTableBasedClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkTableBasedClipDataSetWrap>(info.Holder());
 	vtkTableBasedClipDataSet *native = (vtkTableBasedClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

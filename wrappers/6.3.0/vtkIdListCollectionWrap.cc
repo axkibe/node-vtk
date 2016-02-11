@@ -105,7 +105,7 @@ void VtkIdListCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -147,7 +147,7 @@ void VtkIdListCollectionWrap::GetItem(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetItem(
 			info[0]->Int32Value()
 		);
-			VtkIdListWrap::InitPtpl();
+		VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -173,7 +173,7 @@ void VtkIdListCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetNextItem();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkIdListCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkIdListCollectionWrap::InitPtpl();
+	VtkIdListCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkIdListCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIdListCollectionWrap::InitPtpl();
+		VtkIdListCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

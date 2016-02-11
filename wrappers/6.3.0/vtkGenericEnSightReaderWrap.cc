@@ -382,7 +382,7 @@ void VtkGenericEnSightReaderWrap::GetCellDataArraySelection(const Nan::FunctionC
 		return;
 	}
 	r = native->GetCellDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -834,7 +834,7 @@ void VtkGenericEnSightReaderWrap::GetPointDataArraySelection(const Nan::Function
 		return;
 	}
 	r = native->GetPointDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -871,7 +871,7 @@ void VtkGenericEnSightReaderWrap::GetReader(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetReader();
-		VtkGenericEnSightReaderWrap::InitPtpl();
+	VtkGenericEnSightReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -894,7 +894,7 @@ void VtkGenericEnSightReaderWrap::GetTimeSets(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTimeSets();
-		VtkDataArrayCollectionWrap::InitPtpl();
+	VtkDataArrayCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -960,7 +960,7 @@ void VtkGenericEnSightReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericEnSightReaderWrap::InitPtpl();
+	VtkGenericEnSightReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -976,7 +976,7 @@ void VtkGenericEnSightReaderWrap::ParticleCoordinatesByIndexOff(const Nan::Funct
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -988,7 +988,7 @@ void VtkGenericEnSightReaderWrap::ParticleCoordinatesByIndexOn(const Nan::Functi
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1000,7 +1000,7 @@ void VtkGenericEnSightReaderWrap::ReadAllVariablesOff(const Nan::FunctionCallbac
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1012,7 +1012,7 @@ void VtkGenericEnSightReaderWrap::ReadAllVariablesOn(const Nan::FunctionCallback
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1036,7 +1036,7 @@ void VtkGenericEnSightReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericEnSightReaderWrap::InitPtpl();
+		VtkGenericEnSightReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1057,7 +1057,7 @@ void VtkGenericEnSightReaderWrap::SetByteOrder(const Nan::FunctionCallbackInfo<v
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1074,7 +1074,7 @@ void VtkGenericEnSightReaderWrap::SetByteOrderToBigEndian(const Nan::FunctionCal
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1086,7 +1086,7 @@ void VtkGenericEnSightReaderWrap::SetByteOrderToLittleEndian(const Nan::Function
 {
 	VtkGenericEnSightReaderWrap *wrapper = ObjectWrap::Unwrap<VtkGenericEnSightReaderWrap>(info.Holder());
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1101,7 +1101,7 @@ void VtkGenericEnSightReaderWrap::SetCaseFileName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1123,7 +1123,7 @@ void VtkGenericEnSightReaderWrap::SetCellArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1145,7 +1145,7 @@ void VtkGenericEnSightReaderWrap::SetFilePath(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1164,7 +1164,7 @@ void VtkGenericEnSightReaderWrap::SetParticleCoordinatesByIndex(const Nan::Funct
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1186,7 +1186,7 @@ void VtkGenericEnSightReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbac
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1207,7 +1207,7 @@ void VtkGenericEnSightReaderWrap::SetReadAllVariables(const Nan::FunctionCallbac
 	vtkGenericEnSightReader *native = (vtkGenericEnSightReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

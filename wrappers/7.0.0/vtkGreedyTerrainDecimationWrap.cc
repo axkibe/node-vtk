@@ -176,7 +176,7 @@ void VtkGreedyTerrainDecimationWrap::BoundaryVertexDeletionOff(const Nan::Functi
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkGreedyTerrainDecimationWrap::BoundaryVertexDeletionOn(const Nan::Functio
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkGreedyTerrainDecimationWrap::ComputeNormalsOff(const Nan::FunctionCallba
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkGreedyTerrainDecimationWrap::ComputeNormalsOn(const Nan::FunctionCallbac
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -463,7 +463,7 @@ void VtkGreedyTerrainDecimationWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkGreedyTerrainDecimationWrap::InitPtpl();
+	VtkGreedyTerrainDecimationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -491,7 +491,7 @@ void VtkGreedyTerrainDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGreedyTerrainDecimationWrap::InitPtpl();
+		VtkGreedyTerrainDecimationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -512,7 +512,7 @@ void VtkGreedyTerrainDecimationWrap::SetAbsoluteError(const Nan::FunctionCallbac
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +531,7 @@ void VtkGreedyTerrainDecimationWrap::SetBoundaryVertexDeletion(const Nan::Functi
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkGreedyTerrainDecimationWrap::SetComputeNormals(const Nan::FunctionCallba
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +569,7 @@ void VtkGreedyTerrainDecimationWrap::SetErrorMeasure(const Nan::FunctionCallback
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkGreedyTerrainDecimationWrap::SetErrorMeasureToAbsoluteError(const Nan::F
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +598,7 @@ void VtkGreedyTerrainDecimationWrap::SetErrorMeasureToNumberOfTriangles(const Na
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -610,7 +610,7 @@ void VtkGreedyTerrainDecimationWrap::SetErrorMeasureToRelativeError(const Nan::F
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -622,7 +622,7 @@ void VtkGreedyTerrainDecimationWrap::SetErrorMeasureToSpecifiedReduction(const N
 {
 	VtkGreedyTerrainDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkGreedyTerrainDecimationWrap>(info.Holder());
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -636,7 +636,7 @@ void VtkGreedyTerrainDecimationWrap::SetReduction(const Nan::FunctionCallbackInf
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -655,7 +655,7 @@ void VtkGreedyTerrainDecimationWrap::SetRelativeError(const Nan::FunctionCallbac
 	vtkGreedyTerrainDecimation *native = (vtkGreedyTerrainDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

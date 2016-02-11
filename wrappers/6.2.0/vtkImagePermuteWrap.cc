@@ -50,6 +50,9 @@ void VtkImagePermuteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFilteredAxes", GetFilteredAxes);
+	Nan::SetPrototypeMethod(tpl, "getFilteredAxes", GetFilteredAxes);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -105,6 +108,23 @@ void VtkImagePermuteWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImagePermuteWrap::GetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImagePermuteWrap *wrapper = ObjectWrap::Unwrap<VtkImagePermuteWrap>(info.Holder());
+	vtkImagePermute *native = (vtkImagePermute *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFilteredAxes();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImagePermuteWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImagePermuteWrap *wrapper = ObjectWrap::Unwrap<VtkImagePermuteWrap>(info.Holder());
@@ -138,7 +158,7 @@ void VtkImagePermuteWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkImagePermuteWrap::InitPtpl();
+	VtkImagePermuteWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +186,7 @@ void VtkImagePermuteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImagePermuteWrap::InitPtpl();
+		VtkImagePermuteWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,7 +215,7 @@ void VtkImagePermuteWrap::SetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,7 +244,7 @@ void VtkImagePermuteWrap::SetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -240,7 +260,7 @@ void VtkImagePermuteWrap::SetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

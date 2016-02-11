@@ -125,7 +125,7 @@ void VtkSynchronizedTemplates2DWrap::ComputeScalarsOff(const Nan::FunctionCallba
 {
 	VtkSynchronizedTemplates2DWrap *wrapper = ObjectWrap::Unwrap<VtkSynchronizedTemplates2DWrap>(info.Holder());
 	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -137,7 +137,7 @@ void VtkSynchronizedTemplates2DWrap::ComputeScalarsOn(const Nan::FunctionCallbac
 {
 	VtkSynchronizedTemplates2DWrap *wrapper = ObjectWrap::Unwrap<VtkSynchronizedTemplates2DWrap>(info.Holder());
 	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkSynchronizedTemplates2DWrap::GenerateValues(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -191,7 +191,7 @@ void VtkSynchronizedTemplates2DWrap::GenerateValues(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -206,7 +206,7 @@ void VtkSynchronizedTemplates2DWrap::GenerateValues(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -333,7 +333,7 @@ void VtkSynchronizedTemplates2DWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkSynchronizedTemplates2DWrap::InitPtpl();
+	VtkSynchronizedTemplates2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,7 +361,7 @@ void VtkSynchronizedTemplates2DWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSynchronizedTemplates2DWrap::InitPtpl();
+		VtkSynchronizedTemplates2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -382,7 +382,7 @@ void VtkSynchronizedTemplates2DWrap::SetArrayComponent(const Nan::FunctionCallba
 	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkSynchronizedTemplates2DWrap::SetComputeScalars(const Nan::FunctionCallba
 	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +420,7 @@ void VtkSynchronizedTemplates2DWrap::SetNumberOfContours(const Nan::FunctionCall
 	vtkSynchronizedTemplates2D *native = (vtkSynchronizedTemplates2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkSynchronizedTemplates2DWrap::SetValue(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

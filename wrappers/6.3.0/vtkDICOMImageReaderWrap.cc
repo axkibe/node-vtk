@@ -77,6 +77,9 @@ void VtkDICOMImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPixelRepresentation", GetPixelRepresentation);
 	Nan::SetPrototypeMethod(tpl, "getPixelRepresentation", GetPixelRepresentation);
 
+	Nan::SetPrototypeMethod(tpl, "GetPixelSpacing", GetPixelSpacing);
+	Nan::SetPrototypeMethod(tpl, "getPixelSpacing", GetPixelSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "GetStudyID", GetStudyID);
 	Nan::SetPrototypeMethod(tpl, "getStudyID", GetStudyID);
 
@@ -281,6 +284,23 @@ void VtkDICOMImageReaderWrap::GetPixelRepresentation(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDICOMImageReaderWrap::GetPixelSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
+	vtkDICOMImageReader *native = (vtkDICOMImageReader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPixelSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDICOMImageReaderWrap::GetStudyID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDICOMImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDICOMImageReaderWrap>(info.Holder());
@@ -370,7 +390,7 @@ void VtkDICOMImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDICOMImageReaderWrap::InitPtpl();
+	VtkDICOMImageReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +418,7 @@ void VtkDICOMImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDICOMImageReaderWrap::InitPtpl();
+		VtkDICOMImageReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -420,7 +440,7 @@ void VtkDICOMImageReaderWrap::SetDirectoryName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +460,7 @@ void VtkDICOMImageReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

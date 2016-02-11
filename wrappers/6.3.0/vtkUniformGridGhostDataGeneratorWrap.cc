@@ -135,7 +135,7 @@ void VtkUniformGridGhostDataGeneratorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkUniformGridGhostDataGeneratorWrap::InitPtpl();
+	VtkUniformGridGhostDataGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkUniformGridGhostDataGeneratorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUniformGridGhostDataGeneratorWrap::InitPtpl();
+		VtkUniformGridGhostDataGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

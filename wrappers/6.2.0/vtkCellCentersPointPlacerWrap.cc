@@ -131,7 +131,7 @@ void VtkCellCentersPointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1619,7 +1619,7 @@ void VtkCellCentersPointPlacerWrap::GetCellPicker(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCellPicker();
-		VtkCellPickerWrap::InitPtpl();
+	VtkCellPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1728,7 +1728,7 @@ void VtkCellCentersPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellCentersPointPlacerWrap::InitPtpl();
+	VtkCellCentersPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1744,7 +1744,7 @@ void VtkCellCentersPointPlacerWrap::RemoveAllProps(const Nan::FunctionCallbackIn
 {
 	VtkCellCentersPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkCellCentersPointPlacerWrap>(info.Holder());
 	vtkCellCentersPointPlacer *native = (vtkCellCentersPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1759,7 +1759,7 @@ void VtkCellCentersPointPlacerWrap::RemoveViewProp(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1788,7 +1788,7 @@ void VtkCellCentersPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellCentersPointPlacerWrap::InitPtpl();
+		VtkCellCentersPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1809,7 +1809,7 @@ void VtkCellCentersPointPlacerWrap::SetMode(const Nan::FunctionCallbackInfo<v8::
 	vtkCellCentersPointPlacer *native = (vtkCellCentersPointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

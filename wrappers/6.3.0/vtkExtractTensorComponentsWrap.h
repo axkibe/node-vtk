@@ -42,12 +42,16 @@ class VtkExtractTensorComponentsWrap : public VtkDataSetAlgorithmWrap
 		static void GetExtractScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormalComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalizeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTCoordsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTCoordsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassTensorsToOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTCoordComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVectorComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NormalizeNormalsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

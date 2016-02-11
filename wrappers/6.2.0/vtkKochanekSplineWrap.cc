@@ -119,7 +119,7 @@ void VtkKochanekSplineWrap::Compute(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkKochanekSplineWrap *wrapper = ObjectWrap::Unwrap<VtkKochanekSplineWrap>(info.Holder());
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +134,7 @@ void VtkKochanekSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -257,7 +257,7 @@ void VtkKochanekSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkKochanekSplineWrap::InitPtpl();
+	VtkKochanekSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +285,7 @@ void VtkKochanekSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKochanekSplineWrap::InitPtpl();
+		VtkKochanekSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkKochanekSplineWrap::SetDefaultBias(const Nan::FunctionCallbackInfo<v8::V
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -325,7 +325,7 @@ void VtkKochanekSplineWrap::SetDefaultContinuity(const Nan::FunctionCallbackInfo
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkKochanekSplineWrap::SetDefaultTension(const Nan::FunctionCallbackInfo<v8
 	vtkKochanekSpline *native = (vtkKochanekSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

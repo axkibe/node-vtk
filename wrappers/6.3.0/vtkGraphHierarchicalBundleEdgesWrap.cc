@@ -120,7 +120,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::DirectMappingOff(const Nan::FunctionCa
 {
 	VtkGraphHierarchicalBundleEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkGraphHierarchicalBundleEdgesWrap>(info.Holder());
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +132,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::DirectMappingOn(const Nan::FunctionCal
 {
 	VtkGraphHierarchicalBundleEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkGraphHierarchicalBundleEdgesWrap>(info.Holder());
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
+	VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
+		VtkGraphHierarchicalBundleEdgesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -318,7 +318,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SetBundlingStrength(const Nan::Functio
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -337,7 +337,7 @@ void VtkGraphHierarchicalBundleEdgesWrap::SetDirectMapping(const Nan::FunctionCa
 	vtkGraphHierarchicalBundleEdges *native = (vtkGraphHierarchicalBundleEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

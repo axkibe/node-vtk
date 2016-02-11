@@ -131,7 +131,7 @@ void VtkBitArrayWrap::ClearLookup(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -143,7 +143,7 @@ void VtkBitArrayWrap::DataChanged(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -158,7 +158,7 @@ void VtkBitArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -171,7 +171,7 @@ void VtkBitArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkBitArrayWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkBitArrayWrap::InsertTuples(const Nan::FunctionCallbackInfo<v8::Value>& i
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkAbstractArrayWrap *a2 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -299,7 +299,7 @@ void VtkBitArrayWrap::LookupValue(const Nan::FunctionCallbackInfo<v8::Value>& in
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdListWrap *a1 = ObjectWrap::Unwrap<VtkIdListWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -325,7 +325,7 @@ void VtkBitArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkBitArrayWrap::InitPtpl();
+	VtkBitArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -348,7 +348,7 @@ void VtkBitArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewIterator();
-		VtkArrayIteratorWrap::InitPtpl();
+	VtkArrayIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkBitArrayWrap::RemoveFirstTuple(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkBitArrayWrap::RemoveLastTuple(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +400,7 @@ void VtkBitArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBitArrayWrap::InitPtpl();
+		VtkBitArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkBitArrayWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBitArrayWrap *wrapper = ObjectWrap::Unwrap<VtkBitArrayWrap>(info.Holder());
 	vtkBitArray *native = (vtkBitArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

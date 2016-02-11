@@ -236,7 +236,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::AbortRender(const Nan::FunctionCallba
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOff(const Na
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOn(const Nan
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +299,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::Functi
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -332,7 +332,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::Functi
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -385,7 +385,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::Functi
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -408,7 +408,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::Functi
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -439,7 +439,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::DisplayRenderedImage(const Nan::Funct
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -521,7 +521,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOHelper(const Nan::Funct
 		return;
 	}
 	r = native->GetCompositeGOHelper();
-		VtkFixedPointVolumeRayCastCompositeGOHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastCompositeGOHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -544,7 +544,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeGOShadeHelper(const Nan::
 		return;
 	}
 	r = native->GetCompositeGOShadeHelper();
-		VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastCompositeGOShadeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -567,7 +567,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeHelper(const Nan::Functio
 		return;
 	}
 	r = native->GetCompositeHelper();
-		VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastCompositeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -590,7 +590,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCompositeShadeHelper(const Nan::Fu
 		return;
 	}
 	r = native->GetCompositeShadeHelper();
-		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -613,7 +613,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetCurrentScalars(const Nan::Function
 		return;
 	}
 	r = native->GetCurrentScalars();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -748,7 +748,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetMIPHelper(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetMIPHelper();
-		VtkFixedPointVolumeRayCastMIPHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastMIPHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -785,7 +785,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetPreviousScalars(const Nan::Functio
 		return;
 	}
 	r = native->GetPreviousScalars();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -808,7 +808,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRayCastImage(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetRayCastImage();
-		VtkFixedPointRayCastImageWrap::InitPtpl();
+	VtkFixedPointRayCastImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -831,7 +831,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetRenderWindow(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetRenderWindow();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -868,7 +868,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::GetVolume(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetVolume();
-		VtkVolumeWrap::InitPtpl();
+	VtkVolumeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -887,7 +887,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::InitializeRayInfo(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeWrap *a0 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -904,7 +904,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::IntermixIntersectingGeometryOff(const
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -916,7 +916,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::IntermixIntersectingGeometryOn(const 
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -950,7 +950,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::LockSampleDistanceToInputSpacingOff(c
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -962,7 +962,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::LockSampleDistanceToInputSpacingOn(co
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -981,7 +981,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1005,7 +1005,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::PerSubVolumeInitialization(const Nan:
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1032,7 +1032,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::PerVolumeInitialization(const Nan::Fu
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1054,7 +1054,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1077,7 +1077,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1096,7 +1096,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::RenderSubVolume(const Nan::FunctionCa
 {
 	VtkFixedPointVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info.Holder());
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1120,7 +1120,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
+		VtkFixedPointVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1141,7 +1141,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(const Na
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1160,7 +1160,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry(const
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1179,7 +1179,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetLockSampleDistanceToInputSpacing(c
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1198,7 +1198,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetNumberOfThreads(const Nan::Functio
 	vtkFixedPointVolumeRayCastMapper *native = (vtkFixedPointVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1218,7 +1218,7 @@ void VtkFixedPointVolumeRayCastMapperWrap::SetRayCastImage(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFixedPointRayCastImageWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFixedPointRayCastImageWrap *a0 = ObjectWrap::Unwrap<VtkFixedPointRayCastImageWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

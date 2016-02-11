@@ -108,7 +108,7 @@ void VtkImplicitPlaneWidget2Wrap::CreateDefaultRepresentation(const Nan::Functio
 {
 	VtkImplicitPlaneWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidget2Wrap>(info.Holder());
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkImplicitPlaneWidget2Wrap::GetImplicitPlaneRepresentation(const Nan::Func
 		return;
 	}
 	r = native->GetImplicitPlaneRepresentation();
-		VtkImplicitPlaneRepresentationWrap::InitPtpl();
+	VtkImplicitPlaneRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +186,7 @@ void VtkImplicitPlaneWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitPlaneWidget2Wrap::InitPtpl();
+	VtkImplicitPlaneWidget2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkImplicitPlaneWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitPlaneWidget2Wrap::InitPtpl();
+		VtkImplicitPlaneWidget2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkImplicitPlaneWidget2Wrap::SetEnabled(const Nan::FunctionCallbackInfo<v8:
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +254,7 @@ void VtkImplicitPlaneWidget2Wrap::SetLockNormalToCamera(const Nan::FunctionCallb
 	vtkImplicitPlaneWidget2 *native = (vtkImplicitPlaneWidget2 *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void VtkImplicitPlaneWidget2Wrap::SetRepresentation(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitPlaneRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitPlaneRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkImplicitPlaneRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

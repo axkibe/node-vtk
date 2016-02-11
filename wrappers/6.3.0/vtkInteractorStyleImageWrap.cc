@@ -72,6 +72,30 @@ void VtkInteractorStyleImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInteractionModeMinValue", GetInteractionModeMinValue);
 	Nan::SetPrototypeMethod(tpl, "getInteractionModeMinValue", GetInteractionModeMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetWindowLevelCurrentPosition", GetWindowLevelCurrentPosition);
+	Nan::SetPrototypeMethod(tpl, "getWindowLevelCurrentPosition", GetWindowLevelCurrentPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetWindowLevelStartPosition", GetWindowLevelStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getWindowLevelStartPosition", GetWindowLevelStartPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetXViewRightVector", GetXViewRightVector);
+	Nan::SetPrototypeMethod(tpl, "getXViewRightVector", GetXViewRightVector);
+
+	Nan::SetPrototypeMethod(tpl, "GetXViewUpVector", GetXViewUpVector);
+	Nan::SetPrototypeMethod(tpl, "getXViewUpVector", GetXViewUpVector);
+
+	Nan::SetPrototypeMethod(tpl, "GetYViewRightVector", GetYViewRightVector);
+	Nan::SetPrototypeMethod(tpl, "getYViewRightVector", GetYViewRightVector);
+
+	Nan::SetPrototypeMethod(tpl, "GetYViewUpVector", GetYViewUpVector);
+	Nan::SetPrototypeMethod(tpl, "getYViewUpVector", GetYViewUpVector);
+
+	Nan::SetPrototypeMethod(tpl, "GetZViewRightVector", GetZViewRightVector);
+	Nan::SetPrototypeMethod(tpl, "getZViewRightVector", GetZViewRightVector);
+
+	Nan::SetPrototypeMethod(tpl, "GetZViewUpVector", GetZViewUpVector);
+	Nan::SetPrototypeMethod(tpl, "getZViewUpVector", GetZViewUpVector);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -189,7 +213,7 @@ void VtkInteractorStyleImageWrap::EndPick(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +225,7 @@ void VtkInteractorStyleImageWrap::EndSlice(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +237,7 @@ void VtkInteractorStyleImageWrap::EndWindowLevel(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +270,7 @@ void VtkInteractorStyleImageWrap::GetCurrentImageProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetCurrentImageProperty();
-		VtkImagePropertyWrap::InitPtpl();
+	VtkImagePropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -300,6 +324,142 @@ void VtkInteractorStyleImageWrap::GetInteractionModeMinValue(const Nan::Function
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkInteractorStyleImageWrap::GetWindowLevelCurrentPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWindowLevelCurrentPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetWindowLevelStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWindowLevelStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetXViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXViewRightVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetXViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXViewUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetYViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYViewRightVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetYViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYViewUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetZViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZViewRightVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleImageWrap::GetZViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
+	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetZViewUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkInteractorStyleImageWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
@@ -333,7 +493,7 @@ void VtkInteractorStyleImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleImageWrap::InitPtpl();
+	VtkInteractorStyleImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +509,7 @@ void VtkInteractorStyleImageWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -361,7 +521,7 @@ void VtkInteractorStyleImageWrap::OnLeftButtonDown(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -373,7 +533,7 @@ void VtkInteractorStyleImageWrap::OnLeftButtonUp(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -385,7 +545,7 @@ void VtkInteractorStyleImageWrap::OnMiddleButtonDown(const Nan::FunctionCallback
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -397,7 +557,7 @@ void VtkInteractorStyleImageWrap::OnMiddleButtonUp(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -409,7 +569,7 @@ void VtkInteractorStyleImageWrap::OnMouseMove(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -421,7 +581,7 @@ void VtkInteractorStyleImageWrap::OnRightButtonDown(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -433,7 +593,7 @@ void VtkInteractorStyleImageWrap::OnRightButtonUp(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -445,7 +605,7 @@ void VtkInteractorStyleImageWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -469,7 +629,7 @@ void VtkInteractorStyleImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleImageWrap::InitPtpl();
+		VtkInteractorStyleImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -507,7 +667,7 @@ void VtkInteractorStyleImageWrap::SetImageOrientation(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -537,7 +697,7 @@ void VtkInteractorStyleImageWrap::SetImageOrientation(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -587,7 +747,7 @@ void VtkInteractorStyleImageWrap::SetImageOrientation(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -607,7 +767,7 @@ void VtkInteractorStyleImageWrap::SetImageOrientation(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -628,7 +788,7 @@ void VtkInteractorStyleImageWrap::SetInteractionMode(const Nan::FunctionCallback
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +805,7 @@ void VtkInteractorStyleImageWrap::SetInteractionModeToImage2D(const Nan::Functio
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -657,7 +817,7 @@ void VtkInteractorStyleImageWrap::SetInteractionModeToImage3D(const Nan::Functio
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -669,7 +829,7 @@ void VtkInteractorStyleImageWrap::SetInteractionModeToImageSlicing(const Nan::Fu
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -691,7 +851,7 @@ void VtkInteractorStyleImageWrap::SetXViewRightVector(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -720,7 +880,7 @@ void VtkInteractorStyleImageWrap::SetXViewRightVector(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -736,7 +896,7 @@ void VtkInteractorStyleImageWrap::SetXViewRightVector(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -767,7 +927,7 @@ void VtkInteractorStyleImageWrap::SetXViewUpVector(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +956,7 @@ void VtkInteractorStyleImageWrap::SetXViewUpVector(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -812,7 +972,7 @@ void VtkInteractorStyleImageWrap::SetXViewUpVector(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -843,7 +1003,7 @@ void VtkInteractorStyleImageWrap::SetYViewRightVector(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -872,7 +1032,7 @@ void VtkInteractorStyleImageWrap::SetYViewRightVector(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -888,7 +1048,7 @@ void VtkInteractorStyleImageWrap::SetYViewRightVector(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -919,7 +1079,7 @@ void VtkInteractorStyleImageWrap::SetYViewUpVector(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -948,7 +1108,7 @@ void VtkInteractorStyleImageWrap::SetYViewUpVector(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -964,7 +1124,7 @@ void VtkInteractorStyleImageWrap::SetYViewUpVector(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -995,7 +1155,7 @@ void VtkInteractorStyleImageWrap::SetZViewRightVector(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1024,7 +1184,7 @@ void VtkInteractorStyleImageWrap::SetZViewRightVector(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1040,7 +1200,7 @@ void VtkInteractorStyleImageWrap::SetZViewRightVector(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1071,7 +1231,7 @@ void VtkInteractorStyleImageWrap::SetZViewUpVector(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1100,7 +1260,7 @@ void VtkInteractorStyleImageWrap::SetZViewUpVector(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1116,7 +1276,7 @@ void VtkInteractorStyleImageWrap::SetZViewUpVector(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1137,7 +1297,7 @@ void VtkInteractorStyleImageWrap::Slice(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1149,7 +1309,7 @@ void VtkInteractorStyleImageWrap::StartPick(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1161,7 +1321,7 @@ void VtkInteractorStyleImageWrap::StartSlice(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1173,7 +1333,7 @@ void VtkInteractorStyleImageWrap::StartWindowLevel(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1185,7 +1345,7 @@ void VtkInteractorStyleImageWrap::WindowLevel(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleImageWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleImageWrap>(info.Holder());
 	vtkInteractorStyleImage *native = (vtkInteractorStyleImage *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

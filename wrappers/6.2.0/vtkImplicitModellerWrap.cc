@@ -102,6 +102,9 @@ void VtkImplicitModellerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfThreads", GetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfThreads", GetNumberOfThreads);
 
@@ -125,6 +128,9 @@ void VtkImplicitModellerWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProcessModeMinValue", GetProcessModeMinValue);
 	Nan::SetPrototypeMethod(tpl, "getProcessModeMinValue", GetProcessModeMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "GetScaleToMaximumDistance", GetScaleToMaximumDistance);
 	Nan::SetPrototypeMethod(tpl, "getScaleToMaximumDistance", GetScaleToMaximumDistance);
@@ -252,7 +258,7 @@ void VtkImplicitModellerWrap::AdjustBoundsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +270,7 @@ void VtkImplicitModellerWrap::AdjustBoundsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +285,7 @@ void VtkImplicitModellerWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -296,7 +302,7 @@ void VtkImplicitModellerWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +314,7 @@ void VtkImplicitModellerWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +348,7 @@ void VtkImplicitModellerWrap::EndAppend(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -504,6 +510,23 @@ void VtkImplicitModellerWrap::GetMaximumDistanceMinValue(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImplicitModellerWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
+	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImplicitModellerWrap::GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
@@ -616,6 +639,23 @@ void VtkImplicitModellerWrap::GetProcessModeMinValue(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImplicitModellerWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
+	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImplicitModellerWrap::GetScaleToMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
@@ -663,7 +703,7 @@ void VtkImplicitModellerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitModellerWrap::InitPtpl();
+	VtkImplicitModellerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -691,7 +731,7 @@ void VtkImplicitModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitModellerWrap::InitPtpl();
+		VtkImplicitModellerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -710,7 +750,7 @@ void VtkImplicitModellerWrap::ScaleToMaximumDistanceOff(const Nan::FunctionCallb
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -722,7 +762,7 @@ void VtkImplicitModellerWrap::ScaleToMaximumDistanceOn(const Nan::FunctionCallba
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +776,7 @@ void VtkImplicitModellerWrap::SetAdjustBounds(const Nan::FunctionCallbackInfo<v8
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -755,7 +795,7 @@ void VtkImplicitModellerWrap::SetAdjustDistance(const Nan::FunctionCallbackInfo<
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -774,7 +814,7 @@ void VtkImplicitModellerWrap::SetCapValue(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -793,7 +833,7 @@ void VtkImplicitModellerWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -812,7 +852,7 @@ void VtkImplicitModellerWrap::SetLocatorMaxLevel(const Nan::FunctionCallbackInfo
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -831,7 +871,7 @@ void VtkImplicitModellerWrap::SetMaximumDistance(const Nan::FunctionCallbackInfo
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -858,7 +898,7 @@ void VtkImplicitModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -887,7 +927,7 @@ void VtkImplicitModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +949,7 @@ void VtkImplicitModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -938,7 +978,7 @@ void VtkImplicitModellerWrap::SetNumberOfThreads(const Nan::FunctionCallbackInfo
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -957,7 +997,7 @@ void VtkImplicitModellerWrap::SetOutputScalarType(const Nan::FunctionCallbackInf
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -974,7 +1014,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToChar(const Nan::FunctionCallb
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -986,7 +1026,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToDouble(const Nan::FunctionCal
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -998,7 +1038,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToFloat(const Nan::FunctionCall
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1010,7 +1050,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToInt(const Nan::FunctionCallba
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1022,7 +1062,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToLong(const Nan::FunctionCallb
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1034,7 +1074,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToShort(const Nan::FunctionCall
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1046,7 +1086,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToUnsignedChar(const Nan::Funct
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1058,7 +1098,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToUnsignedInt(const Nan::Functi
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1070,7 +1110,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToUnsignedLong(const Nan::Funct
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1082,7 +1122,7 @@ void VtkImplicitModellerWrap::SetOutputScalarTypeToUnsignedShort(const Nan::Func
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1096,7 +1136,7 @@ void VtkImplicitModellerWrap::SetProcessMode(const Nan::FunctionCallbackInfo<v8:
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1113,7 +1153,7 @@ void VtkImplicitModellerWrap::SetProcessModeToPerCell(const Nan::FunctionCallbac
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1125,7 +1165,7 @@ void VtkImplicitModellerWrap::SetProcessModeToPerVoxel(const Nan::FunctionCallba
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1147,7 +1187,7 @@ void VtkImplicitModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1176,7 +1216,7 @@ void VtkImplicitModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1192,7 +1232,7 @@ void VtkImplicitModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1215,7 +1255,7 @@ void VtkImplicitModellerWrap::SetScaleToMaximumDistance(const Nan::FunctionCallb
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1232,7 +1272,7 @@ void VtkImplicitModellerWrap::StartAppend(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImplicitModellerWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitModellerWrap>(info.Holder());
 	vtkImplicitModeller *native = (vtkImplicitModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

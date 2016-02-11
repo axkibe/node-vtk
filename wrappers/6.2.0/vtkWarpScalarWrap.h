@@ -31,6 +31,7 @@ class VtkWarpScalarWrap : public VtkPointSetAlgorithmWrap
 
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXYPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -135,7 +135,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
+	VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
+		VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

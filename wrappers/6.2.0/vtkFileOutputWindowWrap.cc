@@ -125,7 +125,7 @@ void VtkFileOutputWindowWrap::AppendOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkFileOutputWindowWrap>(info.Holder());
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -137,7 +137,7 @@ void VtkFileOutputWindowWrap::AppendOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkFileOutputWindowWrap>(info.Holder());
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkFileOutputWindowWrap::DisplayText(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -169,7 +169,7 @@ void VtkFileOutputWindowWrap::FlushOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkFileOutputWindowWrap>(info.Holder());
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkFileOutputWindowWrap::FlushOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkFileOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkFileOutputWindowWrap>(info.Holder());
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +278,7 @@ void VtkFileOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkFileOutputWindowWrap::InitPtpl();
+	VtkFileOutputWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkFileOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFileOutputWindowWrap::InitPtpl();
+		VtkFileOutputWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -327,7 +327,7 @@ void VtkFileOutputWindowWrap::SetAppend(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkFileOutputWindowWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +366,7 @@ void VtkFileOutputWindowWrap::SetFlush(const Nan::FunctionCallbackInfo<v8::Value
 	vtkFileOutputWindow *native = (vtkFileOutputWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -124,7 +124,7 @@ void VtkImplicitSumWrap::AddFunction(const Nan::FunctionCallbackInfo<v8::Value>&
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -135,7 +135,7 @@ void VtkImplicitSumWrap::AddFunction(const Nan::FunctionCallbackInfo<v8::Value>&
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -253,7 +253,7 @@ void VtkImplicitSumWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -283,7 +283,7 @@ void VtkImplicitSumWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -333,7 +333,7 @@ void VtkImplicitSumWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -353,7 +353,7 @@ void VtkImplicitSumWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -429,7 +429,7 @@ void VtkImplicitSumWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitSumWrap::InitPtpl();
+	VtkImplicitSumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +445,7 @@ void VtkImplicitSumWrap::NormalizeByWeightOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -457,7 +457,7 @@ void VtkImplicitSumWrap::NormalizeByWeightOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -469,7 +469,7 @@ void VtkImplicitSumWrap::RemoveAllFunctions(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImplicitSumWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSumWrap>(info.Holder());
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -493,7 +493,7 @@ void VtkImplicitSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitSumWrap::InitPtpl();
+		VtkImplicitSumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkImplicitSumWrap::SetFunctionWeight(const Nan::FunctionCallbackInfo<v8::V
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -538,7 +538,7 @@ void VtkImplicitSumWrap::SetNormalizeByWeight(const Nan::FunctionCallbackInfo<v8
 	vtkImplicitSum *native = (vtkImplicitSum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

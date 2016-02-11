@@ -54,6 +54,12 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetHistogramLookupTableRange", GetHistogramLookupTableRange);
+	Nan::SetPrototypeMethod(tpl, "getHistogramLookupTableRange", GetHistogramLookupTableRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfHistogramBins", GetNumberOfHistogramBins);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfHistogramBins", GetNumberOfHistogramBins);
+
 	Nan::SetPrototypeMethod(tpl, "GetPreferredNumberOfOutliers", GetPreferredNumberOfOutliers);
 	Nan::SetPrototypeMethod(tpl, "getPreferredNumberOfOutliers", GetPreferredNumberOfOutliers);
 
@@ -141,7 +147,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::ApplyViewTheme(const Nan
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -166,6 +172,40 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::GetClassName(const Nan::
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkParallelCoordinatesHistogramRepresentationWrap::GetHistogramLookupTableRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHistogramLookupTableRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkParallelCoordinatesHistogramRepresentationWrap::GetNumberOfHistogramBins(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfHistogramBins();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesHistogramRepresentationWrap::GetPreferredNumberOfOutliers(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -243,7 +283,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::NewInstance(const Nan::F
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl();
+	VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,7 +311,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SafeDownCast(const Nan::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl();
+		VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -300,7 +340,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetHistogramLookupTableR
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -329,7 +369,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetHistogramLookupTableR
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +383,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetHistogramLookupTableR
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -366,7 +406,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetNumberOfHistogramBins
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -387,7 +427,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetPreferredNumberOfOutl
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +511,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetShowOutliers(const Na
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +530,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::SetUseHistograms(const N
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -507,7 +547,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::ShowOutliersOff(const Na
 {
 	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +559,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::ShowOutliersOn(const Nan
 {
 	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -556,7 +596,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::UseHistogramsOff(const N
 {
 	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -568,7 +608,7 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::UseHistogramsOn(const Na
 {
 	VtkParallelCoordinatesHistogramRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesHistogramRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesHistogramRepresentation *native = (vtkParallelCoordinatesHistogramRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

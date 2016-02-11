@@ -124,7 +124,7 @@ void VtkExtentRCBPartitionerWrap::DuplicateNodesOff(const Nan::FunctionCallbackI
 {
 	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -136,7 +136,7 @@ void VtkExtentRCBPartitionerWrap::DuplicateNodesOn(const Nan::FunctionCallbackIn
 {
 	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkExtentRCBPartitionerWrap::GetPartitionExtent(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -246,7 +246,7 @@ void VtkExtentRCBPartitionerWrap::GetPartitionExtent(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -294,7 +294,7 @@ void VtkExtentRCBPartitionerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtentRCBPartitionerWrap::InitPtpl();
+	VtkExtentRCBPartitionerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkExtentRCBPartitionerWrap::Partition(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExtentRCBPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkExtentRCBPartitionerWrap>(info.Holder());
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -334,7 +334,7 @@ void VtkExtentRCBPartitionerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtentRCBPartitionerWrap::InitPtpl();
+		VtkExtentRCBPartitionerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -355,7 +355,7 @@ void VtkExtentRCBPartitionerWrap::SetDuplicateNodes(const Nan::FunctionCallbackI
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +382,7 @@ void VtkExtentRCBPartitionerWrap::SetGlobalExtent(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkExtentRCBPartitionerWrap::SetGlobalExtent(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkExtentRCBPartitionerWrap::SetGlobalExtent(const Nan::FunctionCallbackInf
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -462,7 +462,7 @@ void VtkExtentRCBPartitionerWrap::SetNumberOfGhostLayers(const Nan::FunctionCall
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -481,7 +481,7 @@ void VtkExtentRCBPartitionerWrap::SetNumberOfPartitions(const Nan::FunctionCallb
 	vtkExtentRCBPartitioner *native = (vtkExtentRCBPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

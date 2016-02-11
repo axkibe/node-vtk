@@ -135,7 +135,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -166,7 +166,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -217,7 +217,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -288,7 +288,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -329,7 +329,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -380,7 +380,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -441,7 +441,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -472,7 +472,7 @@ void VtkParametricRomanWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -966,7 +966,7 @@ void VtkParametricRomanWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricRomanWrap::InitPtpl();
+	VtkParametricRomanWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -994,7 +994,7 @@ void VtkParametricRomanWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricRomanWrap::InitPtpl();
+		VtkParametricRomanWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1015,7 +1015,7 @@ void VtkParametricRomanWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value
 	vtkParametricRoman *native = (vtkParametricRoman *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -182,7 +182,7 @@ void VtkGlobFileNamesWrap::GetFileNames(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetFileNames();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkGlobFileNamesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGlobFileNamesWrap::InitPtpl();
+	VtkGlobFileNamesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkGlobFileNamesWrap::RecurseOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGlobFileNamesWrap *wrapper = ObjectWrap::Unwrap<VtkGlobFileNamesWrap>(info.Holder());
 	vtkGlobFileNames *native = (vtkGlobFileNames *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkGlobFileNamesWrap::RecurseOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGlobFileNamesWrap *wrapper = ObjectWrap::Unwrap<VtkGlobFileNamesWrap>(info.Holder());
 	vtkGlobFileNames *native = (vtkGlobFileNames *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkGlobFileNamesWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkGlobFileNamesWrap *wrapper = ObjectWrap::Unwrap<VtkGlobFileNamesWrap>(info.Holder());
 	vtkGlobFileNames *native = (vtkGlobFileNames *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkGlobFileNamesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGlobFileNamesWrap::InitPtpl();
+		VtkGlobFileNamesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +362,7 @@ void VtkGlobFileNamesWrap::SetDirectory(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -381,7 +381,7 @@ void VtkGlobFileNamesWrap::SetRecurse(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkGlobFileNames *native = (vtkGlobFileNames *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -135,7 +135,7 @@ void VtkThreadedCompositeDataPipelineWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkThreadedCompositeDataPipelineWrap::InitPtpl();
+	VtkThreadedCompositeDataPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkThreadedCompositeDataPipelineWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThreadedCompositeDataPipelineWrap::InitPtpl();
+		VtkThreadedCompositeDataPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

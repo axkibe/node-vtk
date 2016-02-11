@@ -220,7 +220,7 @@ void VtkTreeFieldAggregatorWrap::LeafVertexUnitSizeOff(const Nan::FunctionCallba
 {
 	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkTreeFieldAggregatorWrap::LeafVertexUnitSizeOn(const Nan::FunctionCallbac
 {
 	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkTreeFieldAggregatorWrap::LogScaleOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkTreeFieldAggregatorWrap::LogScaleOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTreeFieldAggregatorWrap *wrapper = ObjectWrap::Unwrap<VtkTreeFieldAggregatorWrap>(info.Holder());
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkTreeFieldAggregatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeFieldAggregatorWrap::InitPtpl();
+	VtkTreeFieldAggregatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkTreeFieldAggregatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeFieldAggregatorWrap::InitPtpl();
+		VtkTreeFieldAggregatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +325,7 @@ void VtkTreeFieldAggregatorWrap::SetField(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkTreeFieldAggregatorWrap::SetLeafVertexUnitSize(const Nan::FunctionCallba
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkTreeFieldAggregatorWrap::SetLogScale(const Nan::FunctionCallbackInfo<v8:
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +382,7 @@ void VtkTreeFieldAggregatorWrap::SetMinValue(const Nan::FunctionCallbackInfo<v8:
 	vtkTreeFieldAggregator *native = (vtkTreeFieldAggregator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -137,7 +137,7 @@ void VtkPolyDataSourceWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataSourceWidgetWrap::InitPtpl();
+	VtkPolyDataSourceWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkPolyDataSourceWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -185,7 +185,7 @@ void VtkPolyDataSourceWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +209,7 @@ void VtkPolyDataSourceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataSourceWidgetWrap::InitPtpl();
+		VtkPolyDataSourceWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

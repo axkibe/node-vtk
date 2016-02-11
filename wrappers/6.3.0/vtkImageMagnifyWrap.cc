@@ -53,6 +53,9 @@ void VtkImageMagnifyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInterpolate", GetInterpolate);
 	Nan::SetPrototypeMethod(tpl, "getInterpolate", GetInterpolate);
 
+	Nan::SetPrototypeMethod(tpl, "GetMagnificationFactors", GetMagnificationFactors);
+	Nan::SetPrototypeMethod(tpl, "getMagnificationFactors", GetMagnificationFactors);
+
 	Nan::SetPrototypeMethod(tpl, "InterpolateOff", InterpolateOff);
 	Nan::SetPrototypeMethod(tpl, "interpolateOff", InterpolateOff);
 
@@ -131,11 +134,28 @@ void VtkImageMagnifyWrap::GetInterpolate(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageMagnifyWrap::GetMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMagnifyWrap *wrapper = ObjectWrap::Unwrap<VtkImageMagnifyWrap>(info.Holder());
+	vtkImageMagnify *native = (vtkImageMagnify *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMagnificationFactors();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageMagnifyWrap::InterpolateOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMagnifyWrap *wrapper = ObjectWrap::Unwrap<VtkImageMagnifyWrap>(info.Holder());
 	vtkImageMagnify *native = (vtkImageMagnify *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -147,7 +167,7 @@ void VtkImageMagnifyWrap::InterpolateOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMagnifyWrap *wrapper = ObjectWrap::Unwrap<VtkImageMagnifyWrap>(info.Holder());
 	vtkImageMagnify *native = (vtkImageMagnify *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +208,7 @@ void VtkImageMagnifyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMagnifyWrap::InitPtpl();
+	VtkImageMagnifyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +236,7 @@ void VtkImageMagnifyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMagnifyWrap::InitPtpl();
+		VtkImageMagnifyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +257,7 @@ void VtkImageMagnifyWrap::SetInterpolate(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageMagnify *native = (vtkImageMagnify *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +284,7 @@ void VtkImageMagnifyWrap::SetMagnificationFactors(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +313,7 @@ void VtkImageMagnifyWrap::SetMagnificationFactors(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -309,7 +329,7 @@ void VtkImageMagnifyWrap::SetMagnificationFactors(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

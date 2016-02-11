@@ -231,7 +231,7 @@ void VtkBezierContourLineInterpolatorWrap::GetSpan(const Nan::FunctionCallbackIn
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkContourRepresentationWrap *a2 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -316,7 +316,7 @@ void VtkBezierContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkBezierContourLineInterpolatorWrap::InitPtpl();
+	VtkBezierContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkBezierContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBezierContourLineInterpolatorWrap::InitPtpl();
+		VtkBezierContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -365,7 +365,7 @@ void VtkBezierContourLineInterpolatorWrap::SetMaximumCurveError(const Nan::Funct
 	vtkBezierContourLineInterpolator *native = (vtkBezierContourLineInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +384,7 @@ void VtkBezierContourLineInterpolatorWrap::SetMaximumCurveLineSegments(const Nan
 	vtkBezierContourLineInterpolator *native = (vtkBezierContourLineInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

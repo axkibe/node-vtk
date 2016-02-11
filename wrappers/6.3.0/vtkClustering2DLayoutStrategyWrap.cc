@@ -331,7 +331,7 @@ void VtkClustering2DLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackIn
 {
 	VtkClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkClustering2DLayoutStrategyWrap>(info.Holder());
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -379,7 +379,7 @@ void VtkClustering2DLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v
 {
 	VtkClustering2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkClustering2DLayoutStrategyWrap>(info.Holder());
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -398,7 +398,7 @@ void VtkClustering2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkClustering2DLayoutStrategyWrap::InitPtpl();
+	VtkClustering2DLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -426,7 +426,7 @@ void VtkClustering2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClustering2DLayoutStrategyWrap::InitPtpl();
+		VtkClustering2DLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -447,7 +447,7 @@ void VtkClustering2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCallb
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -466,7 +466,7 @@ void VtkClustering2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::Functi
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -485,7 +485,7 @@ void VtkClustering2DLayoutStrategyWrap::SetMaxNumberOfIterations(const Nan::Func
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -504,7 +504,7 @@ void VtkClustering2DLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallbac
 	vtkClustering2DLayoutStrategy *native = (vtkClustering2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -152,7 +152,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetHierarchicalBoxDataSetOutput(const Na
 		return;
 	}
 	r = native->GetHierarchicalBoxDataSetOutput();
-		VtkHierarchicalBoxDataSetWrap::InitPtpl();
+	VtkHierarchicalBoxDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -175,7 +175,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetHyperOctreeOutput(const Nan::Function
 		return;
 	}
 	r = native->GetHyperOctreeOutput();
-		VtkHyperOctreeWrap::InitPtpl();
+	VtkHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetImageDataOutput(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetImageDataOutput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetMultiBlockDataSetOutput(const Nan::Fu
 		return;
 	}
 	r = native->GetMultiBlockDataSetOutput();
-		VtkMultiBlockDataSetWrap::InitPtpl();
+	VtkMultiBlockDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetOutput(const Nan::FunctionCallbackInf
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetOutput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetPolyDataOutput(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPolyDataOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetRectilinearGridOutput(const Nan::Func
 		return;
 	}
 	r = native->GetRectilinearGridOutput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetStructuredGridOutput(const Nan::Funct
 		return;
 	}
 	r = native->GetStructuredGridOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkXMLGenericDataObjectReaderWrap::GetUnstructuredGridOutput(const Nan::Fun
 		return;
 	}
 	r = native->GetUnstructuredGridOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -404,7 +404,7 @@ void VtkXMLGenericDataObjectReaderWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLGenericDataObjectReaderWrap::InitPtpl();
+	VtkXMLGenericDataObjectReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,7 +432,7 @@ void VtkXMLGenericDataObjectReaderWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLGenericDataObjectReaderWrap::InitPtpl();
+		VtkXMLGenericDataObjectReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -451,7 +451,7 @@ void VtkXMLGenericDataObjectReaderWrap::SetupEmptyOutput(const Nan::FunctionCall
 {
 	VtkXMLGenericDataObjectReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLGenericDataObjectReaderWrap>(info.Holder());
 	vtkXMLGenericDataObjectReader *native = (vtkXMLGenericDataObjectReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

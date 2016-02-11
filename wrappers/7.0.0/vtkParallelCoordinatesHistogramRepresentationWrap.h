@@ -31,6 +31,8 @@ class VtkParallelCoordinatesHistogramRepresentationWrap : public VtkParallelCoor
 
 		static void ApplyViewTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHistogramLookupTableRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfHistogramBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreferredNumberOfOutliers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowOutliers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseHistograms(const Nan::FunctionCallbackInfo<v8::Value>& info);

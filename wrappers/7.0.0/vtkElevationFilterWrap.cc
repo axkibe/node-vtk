@@ -50,6 +50,15 @@ void VtkElevationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetHighPoint", GetHighPoint);
+	Nan::SetPrototypeMethod(tpl, "getHighPoint", GetHighPoint);
+
+	Nan::SetPrototypeMethod(tpl, "GetLowPoint", GetLowPoint);
+	Nan::SetPrototypeMethod(tpl, "getLowPoint", GetLowPoint);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarRange", GetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getScalarRange", GetScalarRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -111,6 +120,57 @@ void VtkElevationFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkElevationFilterWrap::GetHighPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkElevationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkElevationFilterWrap>(info.Holder());
+	vtkElevationFilter *native = (vtkElevationFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHighPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkElevationFilterWrap::GetLowPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkElevationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkElevationFilterWrap>(info.Holder());
+	vtkElevationFilter *native = (vtkElevationFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLowPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkElevationFilterWrap::GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkElevationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkElevationFilterWrap>(info.Holder());
+	vtkElevationFilter *native = (vtkElevationFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkElevationFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkElevationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkElevationFilterWrap>(info.Holder());
@@ -144,7 +204,7 @@ void VtkElevationFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkElevationFilterWrap::InitPtpl();
+	VtkElevationFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +232,7 @@ void VtkElevationFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkElevationFilterWrap::InitPtpl();
+		VtkElevationFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -201,7 +261,7 @@ void VtkElevationFilterWrap::SetHighPoint(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +290,7 @@ void VtkElevationFilterWrap::SetHighPoint(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,7 +306,7 @@ void VtkElevationFilterWrap::SetHighPoint(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -277,7 +337,7 @@ void VtkElevationFilterWrap::SetLowPoint(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +366,7 @@ void VtkElevationFilterWrap::SetLowPoint(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +382,7 @@ void VtkElevationFilterWrap::SetLowPoint(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -353,7 +413,7 @@ void VtkElevationFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +442,7 @@ void VtkElevationFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +456,7 @@ void VtkElevationFilterWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

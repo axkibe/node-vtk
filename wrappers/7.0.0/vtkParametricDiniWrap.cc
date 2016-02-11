@@ -141,7 +141,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -172,7 +172,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -223,7 +223,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -294,7 +294,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -335,7 +335,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -386,7 +386,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -447,7 +447,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -478,7 +478,7 @@ void VtkParametricDiniWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -986,7 +986,7 @@ void VtkParametricDiniWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricDiniWrap::InitPtpl();
+	VtkParametricDiniWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1014,7 +1014,7 @@ void VtkParametricDiniWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricDiniWrap::InitPtpl();
+		VtkParametricDiniWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1035,7 +1035,7 @@ void VtkParametricDiniWrap::SetA(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkParametricDini *native = (vtkParametricDini *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1054,7 @@ void VtkParametricDiniWrap::SetB(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkParametricDini *native = (vtkParametricDini *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

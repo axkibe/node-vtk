@@ -130,7 +130,7 @@ void VtkSQLiteDatabaseWrap::Close(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSQLiteDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLiteDatabaseWrap>(info.Holder());
 	vtkSQLiteDatabase *native = (vtkSQLiteDatabase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkSQLiteDatabaseWrap::GetQueryInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetQueryInstance();
-		VtkSQLQueryWrap::InitPtpl();
+	VtkSQLQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkSQLiteDatabaseWrap::GetRecord(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetRecord(
 			*a0
 		);
-			VtkStringArrayWrap::InitPtpl();
+		VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkSQLiteDatabaseWrap::GetTables(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTables();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,7 +353,7 @@ void VtkSQLiteDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkSQLiteDatabaseWrap::InitPtpl();
+	VtkSQLiteDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -418,7 +418,7 @@ void VtkSQLiteDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSQLiteDatabaseWrap::InitPtpl();
+		VtkSQLiteDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -440,7 +440,7 @@ void VtkSQLiteDatabaseWrap::SetDatabaseFileName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -261,7 +261,7 @@ void VtkProjectedTerrainPathWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSource();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkProjectedTerrainPathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkProjectedTerrainPathWrap::InitPtpl();
+	VtkProjectedTerrainPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +334,7 @@ void VtkProjectedTerrainPathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProjectedTerrainPathWrap::InitPtpl();
+		VtkProjectedTerrainPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -355,7 +355,7 @@ void VtkProjectedTerrainPathWrap::SetHeightOffset(const Nan::FunctionCallbackInf
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -374,7 +374,7 @@ void VtkProjectedTerrainPathWrap::SetHeightTolerance(const Nan::FunctionCallback
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -393,7 +393,7 @@ void VtkProjectedTerrainPathWrap::SetProjectionMode(const Nan::FunctionCallbackI
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +410,7 @@ void VtkProjectedTerrainPathWrap::SetProjectionModeToHug(const Nan::FunctionCall
 {
 	VtkProjectedTerrainPathWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTerrainPathWrap>(info.Holder());
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -422,7 +422,7 @@ void VtkProjectedTerrainPathWrap::SetProjectionModeToNonOccluded(const Nan::Func
 {
 	VtkProjectedTerrainPathWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTerrainPathWrap>(info.Holder());
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -434,7 +434,7 @@ void VtkProjectedTerrainPathWrap::SetProjectionModeToSimple(const Nan::FunctionC
 {
 	VtkProjectedTerrainPathWrap *wrapper = ObjectWrap::Unwrap<VtkProjectedTerrainPathWrap>(info.Holder());
 	vtkProjectedTerrainPath *native = (vtkProjectedTerrainPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -449,7 +449,7 @@ void VtkProjectedTerrainPathWrap::SetSourceConnection(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +469,7 @@ void VtkProjectedTerrainPathWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

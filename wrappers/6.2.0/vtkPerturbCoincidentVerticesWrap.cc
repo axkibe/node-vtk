@@ -155,7 +155,7 @@ void VtkPerturbCoincidentVerticesWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkPerturbCoincidentVerticesWrap::InitPtpl();
+	VtkPerturbCoincidentVerticesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkPerturbCoincidentVerticesWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPerturbCoincidentVerticesWrap::InitPtpl();
+		VtkPerturbCoincidentVerticesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkPerturbCoincidentVerticesWrap::SetPerturbFactor(const Nan::FunctionCallb
 	vtkPerturbCoincidentVertices *native = (vtkPerturbCoincidentVertices *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -56,6 +56,9 @@ void VtkCylinderSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCapping", GetCapping);
 	Nan::SetPrototypeMethod(tpl, "getCapping", GetCapping);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -149,7 +152,7 @@ void VtkCylinderSourceWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCylinderSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCylinderSourceWrap>(info.Holder());
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +164,7 @@ void VtkCylinderSourceWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCylinderSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCylinderSourceWrap>(info.Holder());
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,6 +184,23 @@ void VtkCylinderSourceWrap::GetCapping(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetCapping();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkCylinderSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCylinderSourceWrap *wrapper = ObjectWrap::Unwrap<VtkCylinderSourceWrap>(info.Holder());
+	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCylinderSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -370,7 +390,7 @@ void VtkCylinderSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkCylinderSourceWrap::InitPtpl();
+	VtkCylinderSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +418,7 @@ void VtkCylinderSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCylinderSourceWrap::InitPtpl();
+		VtkCylinderSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -419,7 +439,7 @@ void VtkCylinderSourceWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +466,7 @@ void VtkCylinderSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +495,7 @@ void VtkCylinderSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +511,7 @@ void VtkCylinderSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -514,7 +534,7 @@ void VtkCylinderSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +553,7 @@ void VtkCylinderSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallback
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +572,7 @@ void VtkCylinderSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -571,7 +591,7 @@ void VtkCylinderSourceWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Va
 	vtkCylinderSource *native = (vtkCylinderSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

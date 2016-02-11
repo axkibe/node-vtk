@@ -98,7 +98,7 @@ void VtkResliceCursorThickLineRepresentationWrap::CreateDefaultResliceAlgorithm(
 {
 	VtkResliceCursorThickLineRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorThickLineRepresentationWrap>(info.Holder());
 	vtkResliceCursorThickLineRepresentation *native = (vtkResliceCursorThickLineRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkResliceCursorThickLineRepresentationWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
+	VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +181,7 @@ void VtkResliceCursorThickLineRepresentationWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
+		VtkResliceCursorThickLineRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkResliceCursorThickLineRepresentationWrap::SetResliceParameters(const Nan
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

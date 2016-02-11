@@ -48,8 +48,14 @@ void VtkImageRectilinearWipeWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkImageRectilinearWipeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxis", GetAxis);
+	Nan::SetPrototypeMethod(tpl, "getAxis", GetAxis);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetWipe", GetWipe);
 	Nan::SetPrototypeMethod(tpl, "getWipe", GetWipe);
@@ -134,6 +140,23 @@ void VtkImageRectilinearWipeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkImageRectilinearWipeWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
+	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxis();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageRectilinearWipeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
@@ -146,6 +169,23 @@ void VtkImageRectilinearWipeWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageRectilinearWipeWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
+	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageRectilinearWipeWrap::GetWipe(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -223,7 +263,7 @@ void VtkImageRectilinearWipeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageRectilinearWipeWrap::InitPtpl();
+	VtkImageRectilinearWipeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +291,7 @@ void VtkImageRectilinearWipeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageRectilinearWipeWrap::InitPtpl();
+		VtkImageRectilinearWipeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +320,7 @@ void VtkImageRectilinearWipeWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -309,7 +349,7 @@ void VtkImageRectilinearWipeWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +363,7 @@ void VtkImageRectilinearWipeWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -345,7 +385,7 @@ void VtkImageRectilinearWipeWrap::SetInput1Data(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +405,7 @@ void VtkImageRectilinearWipeWrap::SetInput2Data(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -392,7 +432,7 @@ void VtkImageRectilinearWipeWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +461,7 @@ void VtkImageRectilinearWipeWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -435,7 +475,7 @@ void VtkImageRectilinearWipeWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -456,7 +496,7 @@ void VtkImageRectilinearWipeWrap::SetWipe(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +513,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToHorizontal(const Nan::FunctionCallbac
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -485,7 +525,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToLowerLeft(const Nan::FunctionCallback
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -497,7 +537,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToLowerRight(const Nan::FunctionCallbac
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +549,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToQuad(const Nan::FunctionCallbackInfo<
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +561,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToUpperLeft(const Nan::FunctionCallback
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +573,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToUpperRight(const Nan::FunctionCallbac
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +585,7 @@ void VtkImageRectilinearWipeWrap::SetWipeToVertical(const Nan::FunctionCallbackI
 {
 	VtkImageRectilinearWipeWrap *wrapper = ObjectWrap::Unwrap<VtkImageRectilinearWipeWrap>(info.Holder());
 	vtkImageRectilinearWipe *native = (vtkImageRectilinearWipe *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

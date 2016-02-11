@@ -62,6 +62,12 @@ void VtkInteractorStyleUserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetKeySym", GetKeySym);
 	Nan::SetPrototypeMethod(tpl, "getKeySym", GetKeySym);
 
+	Nan::SetPrototypeMethod(tpl, "GetLastPos", GetLastPos);
+	Nan::SetPrototypeMethod(tpl, "getLastPos", GetLastPos);
+
+	Nan::SetPrototypeMethod(tpl, "GetOldPos", GetOldPos);
+	Nan::SetPrototypeMethod(tpl, "getOldPos", GetOldPos);
+
 	Nan::SetPrototypeMethod(tpl, "GetShiftKey", GetShiftKey);
 	Nan::SetPrototypeMethod(tpl, "getShiftKey", GetShiftKey);
 
@@ -218,6 +224,40 @@ void VtkInteractorStyleUserWrap::GetKeySym(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkInteractorStyleUserWrap::GetLastPos(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
+	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLastPos();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkInteractorStyleUserWrap::GetOldPos(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
+	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOldPos();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkInteractorStyleUserWrap::GetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
@@ -265,7 +305,7 @@ void VtkInteractorStyleUserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleUserWrap::InitPtpl();
+	VtkInteractorStyleUserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,7 +321,7 @@ void VtkInteractorStyleUserWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +333,7 @@ void VtkInteractorStyleUserWrap::OnConfigure(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -305,7 +345,7 @@ void VtkInteractorStyleUserWrap::OnEnter(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +357,7 @@ void VtkInteractorStyleUserWrap::OnExpose(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -329,7 +369,7 @@ void VtkInteractorStyleUserWrap::OnKeyPress(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -341,7 +381,7 @@ void VtkInteractorStyleUserWrap::OnKeyRelease(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -353,7 +393,7 @@ void VtkInteractorStyleUserWrap::OnLeave(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +405,7 @@ void VtkInteractorStyleUserWrap::OnLeftButtonDown(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -377,7 +417,7 @@ void VtkInteractorStyleUserWrap::OnLeftButtonUp(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -389,7 +429,7 @@ void VtkInteractorStyleUserWrap::OnMiddleButtonDown(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -401,7 +441,7 @@ void VtkInteractorStyleUserWrap::OnMiddleButtonUp(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -413,7 +453,7 @@ void VtkInteractorStyleUserWrap::OnMouseMove(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -425,7 +465,7 @@ void VtkInteractorStyleUserWrap::OnRightButtonDown(const Nan::FunctionCallbackIn
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -437,7 +477,7 @@ void VtkInteractorStyleUserWrap::OnRightButtonUp(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -449,7 +489,7 @@ void VtkInteractorStyleUserWrap::OnTimer(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkInteractorStyleUserWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUserWrap>(info.Holder());
 	vtkInteractorStyleUser *native = (vtkInteractorStyleUser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -473,7 +513,7 @@ void VtkInteractorStyleUserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleUserWrap::InitPtpl();
+		VtkInteractorStyleUserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

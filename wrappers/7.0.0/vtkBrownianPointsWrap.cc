@@ -243,7 +243,7 @@ void VtkBrownianPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkBrownianPointsWrap::InitPtpl();
+	VtkBrownianPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,7 +271,7 @@ void VtkBrownianPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBrownianPointsWrap::InitPtpl();
+		VtkBrownianPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkBrownianPointsWrap::SetMaximumSpeed(const Nan::FunctionCallbackInfo<v8::
 	vtkBrownianPoints *native = (vtkBrownianPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -311,7 +311,7 @@ void VtkBrownianPointsWrap::SetMinimumSpeed(const Nan::FunctionCallbackInfo<v8::
 	vtkBrownianPoints *native = (vtkBrownianPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -143,7 +143,7 @@ void VtkAngleRepresentation2DWrap::BuildRepresentation(const Nan::FunctionCallba
 {
 	VtkAngleRepresentation2DWrap *wrapper = ObjectWrap::Unwrap<VtkAngleRepresentation2DWrap>(info.Holder());
 	vtkAngleRepresentation2D *native = (vtkAngleRepresentation2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkAngleRepresentation2DWrap::GetArc(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetArc();
-		VtkLeaderActor2DWrap::InitPtpl();
+	VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkAngleRepresentation2DWrap::GetCenterDisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -231,7 +231,7 @@ void VtkAngleRepresentation2DWrap::GetCenterDisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -258,7 +258,7 @@ void VtkAngleRepresentation2DWrap::GetCenterWorldPosition(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -287,7 +287,7 @@ void VtkAngleRepresentation2DWrap::GetCenterWorldPosition(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkAngleRepresentation2DWrap::GetPoint1DisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +357,7 @@ void VtkAngleRepresentation2DWrap::GetPoint1DisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +384,7 @@ void VtkAngleRepresentation2DWrap::GetPoint1WorldPosition(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -413,7 +413,7 @@ void VtkAngleRepresentation2DWrap::GetPoint1WorldPosition(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +440,7 @@ void VtkAngleRepresentation2DWrap::GetPoint2DisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +469,7 @@ void VtkAngleRepresentation2DWrap::GetPoint2DisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -496,7 +496,7 @@ void VtkAngleRepresentation2DWrap::GetPoint2WorldPosition(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +525,7 @@ void VtkAngleRepresentation2DWrap::GetPoint2WorldPosition(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +549,7 @@ void VtkAngleRepresentation2DWrap::GetRay1(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRay1();
-		VtkLeaderActor2DWrap::InitPtpl();
+	VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -572,7 +572,7 @@ void VtkAngleRepresentation2DWrap::GetRay2(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRay2();
-		VtkLeaderActor2DWrap::InitPtpl();
+	VtkLeaderActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -617,7 +617,7 @@ void VtkAngleRepresentation2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkAngleRepresentation2DWrap::InitPtpl();
+	VtkAngleRepresentation2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -636,7 +636,7 @@ void VtkAngleRepresentation2DWrap::ReleaseGraphicsResources(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkAngleRepresentation2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAngleRepresentation2DWrap::InitPtpl();
+		VtkAngleRepresentation2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -716,7 +716,7 @@ void VtkAngleRepresentation2DWrap::SetCenterDisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -745,7 +745,7 @@ void VtkAngleRepresentation2DWrap::SetCenterDisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +772,7 @@ void VtkAngleRepresentation2DWrap::SetPoint1DisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -801,7 +801,7 @@ void VtkAngleRepresentation2DWrap::SetPoint1DisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -828,7 +828,7 @@ void VtkAngleRepresentation2DWrap::SetPoint2DisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +857,7 @@ void VtkAngleRepresentation2DWrap::SetPoint2DisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

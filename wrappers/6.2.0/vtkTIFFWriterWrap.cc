@@ -204,7 +204,7 @@ void VtkTIFFWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkTIFFWriterWrap::InitPtpl();
+	VtkTIFFWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkTIFFWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTIFFWriterWrap::InitPtpl();
+		VtkTIFFWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkTIFFWriterWrap::SetCompression(const Nan::FunctionCallbackInfo<v8::Value
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -270,7 +270,7 @@ void VtkTIFFWriterWrap::SetCompressionToDeflate(const Nan::FunctionCallbackInfo<
 {
 	VtkTIFFWriterWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFWriterWrap>(info.Holder());
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -282,7 +282,7 @@ void VtkTIFFWriterWrap::SetCompressionToJPEG(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTIFFWriterWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFWriterWrap>(info.Holder());
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +294,7 @@ void VtkTIFFWriterWrap::SetCompressionToLZW(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTIFFWriterWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFWriterWrap>(info.Holder());
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkTIFFWriterWrap::SetCompressionToNoCompression(const Nan::FunctionCallbac
 {
 	VtkTIFFWriterWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFWriterWrap>(info.Holder());
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -318,7 +318,7 @@ void VtkTIFFWriterWrap::SetCompressionToPackBits(const Nan::FunctionCallbackInfo
 {
 	VtkTIFFWriterWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFWriterWrap>(info.Holder());
 	vtkTIFFWriter *native = (vtkTIFFWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

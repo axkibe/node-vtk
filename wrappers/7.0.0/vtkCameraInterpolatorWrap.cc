@@ -176,7 +176,7 @@ void VtkCameraInterpolatorWrap::AddCamera(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -216,7 +216,7 @@ void VtkCameraInterpolatorWrap::GetClippingRangeInterpolator(const Nan::Function
 		return;
 	}
 	r = native->GetClippingRangeInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkCameraInterpolatorWrap::GetFocalPointInterpolator(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetFocalPointInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkCameraInterpolatorWrap::GetParallelScaleInterpolator(const Nan::Function
 		return;
 	}
 	r = native->GetParallelScaleInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,7 +369,7 @@ void VtkCameraInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPositionInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkCameraInterpolatorWrap::GetViewAngleInterpolator(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetViewAngleInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,7 +415,7 @@ void VtkCameraInterpolatorWrap::GetViewUpInterpolator(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetViewUpInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -431,7 +431,7 @@ void VtkCameraInterpolatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -448,7 +448,7 @@ void VtkCameraInterpolatorWrap::InterpolateCamera(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCameraWrap *a1 = ObjectWrap::Unwrap<VtkCameraWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -496,7 +496,7 @@ void VtkCameraInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkCameraInterpolatorWrap::InitPtpl();
+	VtkCameraInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkCameraInterpolatorWrap::RemoveCamera(const Nan::FunctionCallbackInfo<v8:
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -543,7 +543,7 @@ void VtkCameraInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCameraInterpolatorWrap::InitPtpl();
+		VtkCameraInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -565,7 +565,7 @@ void VtkCameraInterpolatorWrap::SetClippingRangeInterpolator(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +585,7 @@ void VtkCameraInterpolatorWrap::SetFocalPointInterpolator(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -604,7 +604,7 @@ void VtkCameraInterpolatorWrap::SetInterpolationType(const Nan::FunctionCallback
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -621,7 +621,7 @@ void VtkCameraInterpolatorWrap::SetInterpolationTypeToLinear(const Nan::Function
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -633,7 +633,7 @@ void VtkCameraInterpolatorWrap::SetInterpolationTypeToManual(const Nan::Function
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -645,7 +645,7 @@ void VtkCameraInterpolatorWrap::SetInterpolationTypeToSpline(const Nan::Function
 {
 	VtkCameraInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info.Holder());
 	vtkCameraInterpolator *native = (vtkCameraInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -660,7 +660,7 @@ void VtkCameraInterpolatorWrap::SetParallelScaleInterpolator(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -680,7 +680,7 @@ void VtkCameraInterpolatorWrap::SetPositionInterpolator(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -700,7 +700,7 @@ void VtkCameraInterpolatorWrap::SetViewAngleInterpolator(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -720,7 +720,7 @@ void VtkCameraInterpolatorWrap::SetViewUpInterpolator(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

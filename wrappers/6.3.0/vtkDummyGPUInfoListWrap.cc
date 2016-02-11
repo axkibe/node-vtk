@@ -138,7 +138,7 @@ void VtkDummyGPUInfoListWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDummyGPUInfoListWrap::InitPtpl();
+	VtkDummyGPUInfoListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -154,7 +154,7 @@ void VtkDummyGPUInfoListWrap::Probe(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkDummyGPUInfoListWrap *wrapper = ObjectWrap::Unwrap<VtkDummyGPUInfoListWrap>(info.Holder());
 	vtkDummyGPUInfoList *native = (vtkDummyGPUInfoList *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkDummyGPUInfoListWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDummyGPUInfoListWrap::InitPtpl();
+		VtkDummyGPUInfoListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

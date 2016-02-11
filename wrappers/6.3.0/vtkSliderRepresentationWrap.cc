@@ -672,7 +672,7 @@ void VtkSliderRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkSliderRepresentationWrap::InitPtpl();
+	VtkSliderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -700,7 +700,7 @@ void VtkSliderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSliderRepresentationWrap::InitPtpl();
+		VtkSliderRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -721,7 +721,7 @@ void VtkSliderRepresentationWrap::SetEndCapLength(const Nan::FunctionCallbackInf
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +740,7 @@ void VtkSliderRepresentationWrap::SetEndCapWidth(const Nan::FunctionCallbackInfo
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -760,7 +760,7 @@ void VtkSliderRepresentationWrap::SetLabelFormat(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -779,7 +779,7 @@ void VtkSliderRepresentationWrap::SetLabelHeight(const Nan::FunctionCallbackInfo
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -798,7 +798,7 @@ void VtkSliderRepresentationWrap::SetMaximumValue(const Nan::FunctionCallbackInf
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -817,7 +817,7 @@ void VtkSliderRepresentationWrap::SetMinimumValue(const Nan::FunctionCallbackInf
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -836,7 +836,7 @@ void VtkSliderRepresentationWrap::SetShowSliderLabel(const Nan::FunctionCallback
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -855,7 +855,7 @@ void VtkSliderRepresentationWrap::SetSliderLength(const Nan::FunctionCallbackInf
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -874,7 +874,7 @@ void VtkSliderRepresentationWrap::SetSliderWidth(const Nan::FunctionCallbackInfo
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -893,7 +893,7 @@ void VtkSliderRepresentationWrap::SetTitleHeight(const Nan::FunctionCallbackInfo
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -913,7 +913,7 @@ void VtkSliderRepresentationWrap::SetTitleText(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -932,7 +932,7 @@ void VtkSliderRepresentationWrap::SetTubeWidth(const Nan::FunctionCallbackInfo<v
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -951,7 +951,7 @@ void VtkSliderRepresentationWrap::SetValue(const Nan::FunctionCallbackInfo<v8::V
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -968,7 +968,7 @@ void VtkSliderRepresentationWrap::ShowSliderLabelOff(const Nan::FunctionCallback
 {
 	VtkSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info.Holder());
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -980,7 +980,7 @@ void VtkSliderRepresentationWrap::ShowSliderLabelOn(const Nan::FunctionCallbackI
 {
 	VtkSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSliderRepresentationWrap>(info.Holder());
 	vtkSliderRepresentation *native = (vtkSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

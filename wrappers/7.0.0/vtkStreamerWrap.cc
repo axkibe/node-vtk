@@ -104,6 +104,9 @@ void VtkStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSpeedScalars", GetSpeedScalars);
 	Nan::SetPrototypeMethod(tpl, "getSpeedScalars", GetSpeedScalars);
 
+	Nan::SetPrototypeMethod(tpl, "GetStartPosition", GetStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getStartPosition", GetStartPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetTerminalSpeed", GetTerminalSpeed);
 	Nan::SetPrototypeMethod(tpl, "getTerminalSpeed", GetTerminalSpeed);
 
@@ -359,7 +362,7 @@ void VtkStreamerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetIntegrator();
-		VtkInitialValueProblemSolverWrap::InitPtpl();
+	VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -466,7 +469,7 @@ void VtkStreamerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetSource();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,6 +493,23 @@ void VtkStreamerWrap::GetSpeedScalars(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetSpeedScalars();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkStreamerWrap::GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
+	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkStreamerWrap::GetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -581,7 +601,7 @@ void VtkStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkStreamerWrap::InitPtpl();
+	VtkStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -597,7 +617,7 @@ void VtkStreamerWrap::OrientationScalarsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -609,7 +629,7 @@ void VtkStreamerWrap::OrientationScalarsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -633,7 +653,7 @@ void VtkStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStreamerWrap::InitPtpl();
+		VtkStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -654,7 +674,7 @@ void VtkStreamerWrap::SetEpsilon(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -673,7 +693,7 @@ void VtkStreamerWrap::SetIntegrationDirection(const Nan::FunctionCallbackInfo<v8
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -690,7 +710,7 @@ void VtkStreamerWrap::SetIntegrationDirectionToBackward(const Nan::FunctionCallb
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -702,7 +722,7 @@ void VtkStreamerWrap::SetIntegrationDirectionToForward(const Nan::FunctionCallba
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -714,7 +734,7 @@ void VtkStreamerWrap::SetIntegrationDirectionToIntegrateBothDirections(const Nan
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -728,7 +748,7 @@ void VtkStreamerWrap::SetIntegrationStepLength(const Nan::FunctionCallbackInfo<v
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +768,7 @@ void VtkStreamerWrap::SetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInitialValueProblemSolverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInitialValueProblemSolverWrap *a0 = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -767,7 +787,7 @@ void VtkStreamerWrap::SetMaximumPropagationTime(const Nan::FunctionCallbackInfo<
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -786,7 +806,7 @@ void VtkStreamerWrap::SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Val
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -805,7 +825,7 @@ void VtkStreamerWrap::SetOrientationScalars(const Nan::FunctionCallbackInfo<v8::
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +844,7 @@ void VtkStreamerWrap::SetSavePointInterval(const Nan::FunctionCallbackInfo<v8::V
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +864,7 @@ void VtkStreamerWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -864,7 +884,7 @@ void VtkStreamerWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -883,7 +903,7 @@ void VtkStreamerWrap::SetSpeedScalars(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -910,7 +930,7 @@ void VtkStreamerWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -939,7 +959,7 @@ void VtkStreamerWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -955,7 +975,7 @@ void VtkStreamerWrap::SetStartPosition(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -978,7 +998,7 @@ void VtkStreamerWrap::SetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -997,7 +1017,7 @@ void VtkStreamerWrap::SetVorticity(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1014,7 +1034,7 @@ void VtkStreamerWrap::SpeedScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1026,7 +1046,7 @@ void VtkStreamerWrap::SpeedScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1038,7 +1058,7 @@ void VtkStreamerWrap::VorticityOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1050,7 +1070,7 @@ void VtkStreamerWrap::VorticityOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkStreamerWrap>(info.Holder());
 	vtkStreamer *native = (vtkStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

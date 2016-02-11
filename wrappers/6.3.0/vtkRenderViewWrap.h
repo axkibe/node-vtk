@@ -35,6 +35,7 @@ class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 		static void DisplayHoverTextOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayHoverText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -135,7 +135,7 @@ void VtkImageResliceToColorsWrap::BypassOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -147,7 +147,7 @@ void VtkImageResliceToColorsWrap::BypassOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkImageResliceToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -281,7 +281,7 @@ void VtkImageResliceToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageResliceToColorsWrap::InitPtpl();
+	VtkImageResliceToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkImageResliceToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageResliceToColorsWrap::InitPtpl();
+		VtkImageResliceToColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -330,7 +330,7 @@ void VtkImageResliceToColorsWrap::SetBypass(const Nan::FunctionCallbackInfo<v8::
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkImageResliceToColorsWrap::SetLookupTable(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +369,7 @@ void VtkImageResliceToColorsWrap::SetOutputFormat(const Nan::FunctionCallbackInf
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -386,7 +386,7 @@ void VtkImageResliceToColorsWrap::SetOutputFormatToLuminance(const Nan::Function
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -398,7 +398,7 @@ void VtkImageResliceToColorsWrap::SetOutputFormatToLuminanceAlpha(const Nan::Fun
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -410,7 +410,7 @@ void VtkImageResliceToColorsWrap::SetOutputFormatToRGB(const Nan::FunctionCallba
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -422,7 +422,7 @@ void VtkImageResliceToColorsWrap::SetOutputFormatToRGBA(const Nan::FunctionCallb
 {
 	VtkImageResliceToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceToColorsWrap>(info.Holder());
 	vtkImageResliceToColors *native = (vtkImageResliceToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

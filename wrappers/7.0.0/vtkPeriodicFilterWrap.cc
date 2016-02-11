@@ -217,7 +217,7 @@ void VtkPeriodicFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPeriodicFilterWrap::InitPtpl();
+	VtkPeriodicFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkPeriodicFilterWrap::RemoveAllIndices(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +257,7 @@ void VtkPeriodicFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPeriodicFilterWrap::InitPtpl();
+		VtkPeriodicFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkPeriodicFilterWrap::SetIterationMode(const Nan::FunctionCallbackInfo<v8:
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -295,7 +295,7 @@ void VtkPeriodicFilterWrap::SetIterationModeToDirectNb(const Nan::FunctionCallba
 {
 	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -307,7 +307,7 @@ void VtkPeriodicFilterWrap::SetIterationModeToMax(const Nan::FunctionCallbackInf
 {
 	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -321,7 +321,7 @@ void VtkPeriodicFilterWrap::SetNumberOfPeriods(const Nan::FunctionCallbackInfo<v
 	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

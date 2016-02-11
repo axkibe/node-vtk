@@ -98,7 +98,7 @@ void VtkOpenGLHardwareSelectorWrap::BeginRenderProp(const Nan::FunctionCallbackI
 {
 	VtkOpenGLHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSelectorWrap>(info.Holder());
 	vtkOpenGLHardwareSelector *native = (vtkOpenGLHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -110,7 +110,7 @@ void VtkOpenGLHardwareSelectorWrap::EndRenderProp(const Nan::FunctionCallbackInf
 {
 	VtkOpenGLHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSelectorWrap>(info.Holder());
 	vtkOpenGLHardwareSelector *native = (vtkOpenGLHardwareSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkOpenGLHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLHardwareSelectorWrap::InitPtpl();
+	VtkOpenGLHardwareSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkOpenGLHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLHardwareSelectorWrap::InitPtpl();
+		VtkOpenGLHardwareSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

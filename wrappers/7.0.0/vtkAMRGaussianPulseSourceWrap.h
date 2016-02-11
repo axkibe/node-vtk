@@ -31,6 +31,8 @@ class VtkAMRGaussianPulseSourceWrap : public VtkOverlappingAMRAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPulseAmplitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPulseOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPulseWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

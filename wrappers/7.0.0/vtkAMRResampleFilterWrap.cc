@@ -55,6 +55,9 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillOutputPortInformation", FillOutputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillOutputPortInformation", FillOutputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetBiasVector", GetBiasVector);
+	Nan::SetPrototypeMethod(tpl, "getBiasVector", GetBiasVector);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -64,8 +67,17 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDemandDrivenMode", GetDemandDrivenMode);
 	Nan::SetPrototypeMethod(tpl, "getDemandDrivenMode", GetDemandDrivenMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetMax", GetMax);
+	Nan::SetPrototypeMethod(tpl, "getMax", GetMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetMin", GetMin);
+	Nan::SetPrototypeMethod(tpl, "getMin", GetMin);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPartitions", GetNumberOfPartitions);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPartitions", GetNumberOfPartitions);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfSamples", GetNumberOfSamples);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfSamples", GetNumberOfSamples);
 
 	Nan::SetPrototypeMethod(tpl, "GetTransferToNodes", GetTransferToNodes);
 	Nan::SetPrototypeMethod(tpl, "getTransferToNodes", GetTransferToNodes);
@@ -190,6 +202,23 @@ void VtkAMRResampleFilterWrap::FillOutputPortInformation(const Nan::FunctionCall
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAMRResampleFilterWrap::GetBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBiasVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkAMRResampleFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
@@ -215,7 +244,7 @@ void VtkAMRResampleFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,6 +270,40 @@ void VtkAMRResampleFilterWrap::GetDemandDrivenMode(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAMRResampleFilterWrap::GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMax();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkAMRResampleFilterWrap::GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkAMRResampleFilterWrap::GetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
@@ -253,6 +316,23 @@ void VtkAMRResampleFilterWrap::GetNumberOfPartitions(const Nan::FunctionCallback
 	}
 	r = native->GetNumberOfPartitions();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRResampleFilterWrap::GetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRResampleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRResampleFilterWrap>(info.Holder());
+	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfSamples();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAMRResampleFilterWrap::GetTransferToNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -316,7 +396,7 @@ void VtkAMRResampleFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRResampleFilterWrap::InitPtpl();
+	VtkAMRResampleFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +424,7 @@ void VtkAMRResampleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRResampleFilterWrap::InitPtpl();
+		VtkAMRResampleFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -373,7 +453,7 @@ void VtkAMRResampleFilterWrap::SetBiasVector(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +482,7 @@ void VtkAMRResampleFilterWrap::SetBiasVector(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +498,7 @@ void VtkAMRResampleFilterWrap::SetBiasVector(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -442,7 +522,7 @@ void VtkAMRResampleFilterWrap::SetController(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +541,7 @@ void VtkAMRResampleFilterWrap::SetDemandDrivenMode(const Nan::FunctionCallbackIn
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -488,7 +568,7 @@ void VtkAMRResampleFilterWrap::SetMax(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -517,7 +597,7 @@ void VtkAMRResampleFilterWrap::SetMax(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +613,7 @@ void VtkAMRResampleFilterWrap::SetMax(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -564,7 +644,7 @@ void VtkAMRResampleFilterWrap::SetMin(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -593,7 +673,7 @@ void VtkAMRResampleFilterWrap::SetMin(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +689,7 @@ void VtkAMRResampleFilterWrap::SetMin(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -632,7 +712,7 @@ void VtkAMRResampleFilterWrap::SetNumberOfPartitions(const Nan::FunctionCallback
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -659,7 +739,7 @@ void VtkAMRResampleFilterWrap::SetNumberOfSamples(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +768,7 @@ void VtkAMRResampleFilterWrap::SetNumberOfSamples(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +784,7 @@ void VtkAMRResampleFilterWrap::SetNumberOfSamples(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -727,7 +807,7 @@ void VtkAMRResampleFilterWrap::SetTransferToNodes(const Nan::FunctionCallbackInf
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +826,7 @@ void VtkAMRResampleFilterWrap::SetUseBiasVector(const Nan::FunctionCallbackInfo<
 	vtkAMRResampleFilter *native = (vtkAMRResampleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

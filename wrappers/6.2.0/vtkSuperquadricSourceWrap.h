@@ -30,10 +30,12 @@ class VtkSuperquadricSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetAxisOfSymmetry(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPhiResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPhiRoundness(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThetaResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThetaRoundness(const Nan::FunctionCallbackInfo<v8::Value>& info);

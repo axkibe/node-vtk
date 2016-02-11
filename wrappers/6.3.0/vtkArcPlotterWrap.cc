@@ -196,7 +196,7 @@ void VtkArcPlotterWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -465,7 +465,7 @@ void VtkArcPlotterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkArcPlotterWrap::InitPtpl();
+	VtkArcPlotterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,7 +493,7 @@ void VtkArcPlotterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArcPlotterWrap::InitPtpl();
+		VtkArcPlotterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkArcPlotterWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkArcPlotterWrap::SetFieldDataArray(const Nan::FunctionCallbackInfo<v8::Va
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkArcPlotterWrap::SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +572,7 @@ void VtkArcPlotterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkArcPlotterWrap::SetPlotComponent(const Nan::FunctionCallbackInfo<v8::Val
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkArcPlotterWrap::SetPlotMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -627,7 +627,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotFieldData(const Nan::FunctionCallbackIn
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -639,7 +639,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotNormals(const Nan::FunctionCallbackInfo
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -651,7 +651,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotScalars(const Nan::FunctionCallbackInfo
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -663,7 +663,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotTCoords(const Nan::FunctionCallbackInfo
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -675,7 +675,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotTensors(const Nan::FunctionCallbackInfo
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -687,7 +687,7 @@ void VtkArcPlotterWrap::SetPlotModeToPlotVectors(const Nan::FunctionCallbackInfo
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -701,7 +701,7 @@ void VtkArcPlotterWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -720,7 +720,7 @@ void VtkArcPlotterWrap::SetUseDefaultNormal(const Nan::FunctionCallbackInfo<v8::
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +737,7 @@ void VtkArcPlotterWrap::UseDefaultNormalOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -749,7 +749,7 @@ void VtkArcPlotterWrap::UseDefaultNormalOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkArcPlotterWrap *wrapper = ObjectWrap::Unwrap<VtkArcPlotterWrap>(info.Holder());
 	vtkArcPlotter *native = (vtkArcPlotter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

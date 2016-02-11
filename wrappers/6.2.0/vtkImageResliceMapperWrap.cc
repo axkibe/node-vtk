@@ -220,7 +220,7 @@ void VtkImageResliceMapperWrap::AutoAdjustImageQualityOff(const Nan::FunctionCal
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkImageResliceMapperWrap::AutoAdjustImageQualityOn(const Nan::FunctionCall
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkImageResliceMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -297,7 +297,7 @@ void VtkImageResliceMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkImageResliceMapperWrap::GetInterpolator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInterpolator();
-		VtkAbstractImageInterpolatorWrap::InitPtpl();
+	VtkAbstractImageInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkImageResliceMapperWrap::JumpToNearestSliceOff(const Nan::FunctionCallbac
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -581,7 +581,7 @@ void VtkImageResliceMapperWrap::JumpToNearestSliceOn(const Nan::FunctionCallback
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -600,7 +600,7 @@ void VtkImageResliceMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageResliceMapperWrap::InitPtpl();
+	VtkImageResliceMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -619,7 +619,7 @@ void VtkImageResliceMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +642,7 @@ void VtkImageResliceMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageSliceWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageSliceWrap *a1 = ObjectWrap::Unwrap<VtkImageSliceWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -661,7 +661,7 @@ void VtkImageResliceMapperWrap::ResampleToScreenPixelsOff(const Nan::FunctionCal
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -673,7 +673,7 @@ void VtkImageResliceMapperWrap::ResampleToScreenPixelsOn(const Nan::FunctionCall
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -697,7 +697,7 @@ void VtkImageResliceMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageResliceMapperWrap::InitPtpl();
+		VtkImageResliceMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -716,7 +716,7 @@ void VtkImageResliceMapperWrap::SeparateWindowLevelOperationOff(const Nan::Funct
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -728,7 +728,7 @@ void VtkImageResliceMapperWrap::SeparateWindowLevelOperationOn(const Nan::Functi
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -742,7 +742,7 @@ void VtkImageResliceMapperWrap::SetAutoAdjustImageQuality(const Nan::FunctionCal
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -761,7 +761,7 @@ void VtkImageResliceMapperWrap::SetImageSampleFactor(const Nan::FunctionCallback
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -781,7 +781,7 @@ void VtkImageResliceMapperWrap::SetInterpolator(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractImageInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractImageInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkAbstractImageInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +800,7 @@ void VtkImageResliceMapperWrap::SetJumpToNearestSlice(const Nan::FunctionCallbac
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -819,7 +819,7 @@ void VtkImageResliceMapperWrap::SetResampleToScreenPixels(const Nan::FunctionCal
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -838,7 +838,7 @@ void VtkImageResliceMapperWrap::SetSeparateWindowLevelOperation(const Nan::Funct
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +857,7 @@ void VtkImageResliceMapperWrap::SetSlabSampleFactor(const Nan::FunctionCallbackI
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -876,7 +876,7 @@ void VtkImageResliceMapperWrap::SetSlabThickness(const Nan::FunctionCallbackInfo
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -895,7 +895,7 @@ void VtkImageResliceMapperWrap::SetSlabType(const Nan::FunctionCallbackInfo<v8::
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -912,7 +912,7 @@ void VtkImageResliceMapperWrap::SetSlabTypeToMax(const Nan::FunctionCallbackInfo
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -924,7 +924,7 @@ void VtkImageResliceMapperWrap::SetSlabTypeToMean(const Nan::FunctionCallbackInf
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -936,7 +936,7 @@ void VtkImageResliceMapperWrap::SetSlabTypeToMin(const Nan::FunctionCallbackInfo
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -948,7 +948,7 @@ void VtkImageResliceMapperWrap::SetSlabTypeToSum(const Nan::FunctionCallbackInfo
 {
 	VtkImageResliceMapperWrap *wrapper = ObjectWrap::Unwrap<VtkImageResliceMapperWrap>(info.Holder());
 	vtkImageResliceMapper *native = (vtkImageResliceMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -963,7 +963,7 @@ void VtkImageResliceMapperWrap::SetSlicePlane(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

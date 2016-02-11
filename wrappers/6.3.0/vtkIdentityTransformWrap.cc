@@ -155,7 +155,7 @@ void VtkIdentityTransformWrap::InternalTransformNormal(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -185,7 +185,7 @@ void VtkIdentityTransformWrap::InternalTransformNormal(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -235,7 +235,7 @@ void VtkIdentityTransformWrap::InternalTransformNormal(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -255,7 +255,7 @@ void VtkIdentityTransformWrap::InternalTransformNormal(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -293,7 +293,7 @@ void VtkIdentityTransformWrap::InternalTransformPoint(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -323,7 +323,7 @@ void VtkIdentityTransformWrap::InternalTransformPoint(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -373,7 +373,7 @@ void VtkIdentityTransformWrap::InternalTransformPoint(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -393,7 +393,7 @@ void VtkIdentityTransformWrap::InternalTransformPoint(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -431,7 +431,7 @@ void VtkIdentityTransformWrap::InternalTransformVector(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -461,7 +461,7 @@ void VtkIdentityTransformWrap::InternalTransformVector(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -511,7 +511,7 @@ void VtkIdentityTransformWrap::InternalTransformVector(const Nan::FunctionCallba
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -531,7 +531,7 @@ void VtkIdentityTransformWrap::InternalTransformVector(const Nan::FunctionCallba
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -550,7 +550,7 @@ void VtkIdentityTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkIdentityTransformWrap *wrapper = ObjectWrap::Unwrap<VtkIdentityTransformWrap>(info.Holder());
 	vtkIdentityTransform *native = (vtkIdentityTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -591,7 +591,7 @@ void VtkIdentityTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -614,7 +614,7 @@ void VtkIdentityTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkIdentityTransformWrap::InitPtpl();
+	VtkIdentityTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -642,7 +642,7 @@ void VtkIdentityTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIdentityTransformWrap::InitPtpl();
+		VtkIdentityTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -667,7 +667,7 @@ void VtkIdentityTransformWrap::TransformNormals(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -692,7 +692,7 @@ void VtkIdentityTransformWrap::TransformPoints(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -729,7 +729,7 @@ void VtkIdentityTransformWrap::TransformPointsNormalsVectors(const Nan::Function
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkDataArrayWrap *a5 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -762,7 +762,7 @@ void VtkIdentityTransformWrap::TransformVectors(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

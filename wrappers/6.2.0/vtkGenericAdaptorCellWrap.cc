@@ -159,7 +159,7 @@ void VtkGenericAdaptorCellWrap::Clip(const Nan::FunctionCallbackInfo<v8::Value>&
 												if(info.Length() > 11 && info[11]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[11]))
 												{
 													VtkCellDataWrap *a11 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[11]->ToObject());
-													if(info.Length() != 12)
+																										if(info.Length() != 12)
 													{
 														Nan::ThrowError("Too many parameters.");
 														return;
@@ -237,7 +237,7 @@ void VtkGenericAdaptorCellWrap::Contour(const Nan::FunctionCallbackInfo<v8::Valu
 													if(info.Length() > 12 && info[12]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[12]))
 													{
 														VtkCellDataWrap *a12 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[12]->ToObject());
-														if(info.Length() != 13)
+																												if(info.Length() != 13)
 														{
 															Nan::ThrowError("Too many parameters.");
 															return;
@@ -393,7 +393,7 @@ void VtkGenericAdaptorCellWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericAdaptorCellWrap::InitPtpl();
+	VtkGenericAdaptorCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -421,7 +421,7 @@ void VtkGenericAdaptorCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericAdaptorCellWrap::InitPtpl();
+		VtkGenericAdaptorCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -467,7 +467,7 @@ void VtkGenericAdaptorCellWrap::Tessellate(const Nan::FunctionCallbackInfo<v8::V
 									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkUnsignedCharArrayWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkUnsignedCharArrayWrap *a8 = ObjectWrap::Unwrap<VtkUnsignedCharArrayWrap>(info[8]->ToObject());
-										if(info.Length() != 9)
+																				if(info.Length() != 9)
 										{
 											Nan::ThrowError("Too many parameters.");
 											return;
@@ -526,7 +526,7 @@ void VtkGenericAdaptorCellWrap::TriangulateFace(const Nan::FunctionCallbackInfo<
 									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkCellDataWrap *a8 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[8]->ToObject());
-										if(info.Length() != 9)
+																				if(info.Length() != 9)
 										{
 											Nan::ThrowError("Too many parameters.");
 											return;

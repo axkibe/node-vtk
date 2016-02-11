@@ -121,7 +121,7 @@ void VtkXMLHyperOctreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkHyperOctreeWrap::InitPtpl();
+		VtkHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkXMLHyperOctreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetOutput();
-		VtkHyperOctreeWrap::InitPtpl();
+	VtkHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkXMLHyperOctreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLHyperOctreeReaderWrap::InitPtpl();
+	VtkXMLHyperOctreeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkXMLHyperOctreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLHyperOctreeReaderWrap::InitPtpl();
+		VtkXMLHyperOctreeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

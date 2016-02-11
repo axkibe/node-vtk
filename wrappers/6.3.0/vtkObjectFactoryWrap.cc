@@ -156,7 +156,7 @@ void VtkObjectFactoryWrap::ConstructInstance(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -179,7 +179,7 @@ void VtkObjectFactoryWrap::CreateAllInstance(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCollectionWrap *a1 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -210,7 +210,7 @@ void VtkObjectFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->CreateInstance(
 			*a0
 		);
-			VtkObjectWrap::InitPtpl();
+		VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkObjectFactoryWrap::Disable(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkObjectFactoryWrap::GetOverrideInformation(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkOverrideInformationCollectionWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkOverrideInformationCollectionWrap *a1 = ObjectWrap::Unwrap<VtkOverrideInformationCollectionWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -427,7 +427,7 @@ void VtkObjectFactoryWrap::GetRegisteredFactories(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetRegisteredFactories();
-		VtkObjectFactoryCollectionWrap::InitPtpl();
+	VtkObjectFactoryCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -532,7 +532,7 @@ void VtkObjectFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkObjectFactoryWrap::InitPtpl();
+	VtkObjectFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -548,7 +548,7 @@ void VtkObjectFactoryWrap::ReHash(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -563,7 +563,7 @@ void VtkObjectFactoryWrap::RegisterFactory(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectFactoryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectFactoryWrap *a0 = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkObjectFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkObjectFactoryWrap::InitPtpl();
+		VtkObjectFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -619,7 +619,7 @@ void VtkObjectFactoryWrap::SetAllEnableFlags(const Nan::FunctionCallbackInfo<v8:
 			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -631,7 +631,7 @@ void VtkObjectFactoryWrap::SetAllEnableFlags(const Nan::FunctionCallbackInfo<v8:
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -658,7 +658,7 @@ void VtkObjectFactoryWrap::SetEnableFlag(const Nan::FunctionCallbackInfo<v8::Val
 			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -679,7 +679,7 @@ void VtkObjectFactoryWrap::UnRegisterAllFactories(const Nan::FunctionCallbackInf
 {
 	VtkObjectFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info.Holder());
 	vtkObjectFactory *native = (vtkObjectFactory *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +694,7 @@ void VtkObjectFactoryWrap::UnRegisterFactory(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectFactoryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectFactoryWrap *a0 = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

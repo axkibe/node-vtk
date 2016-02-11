@@ -170,7 +170,7 @@ void VtkParametricRandomHillsWrap::AllowRandomGenerationOff(const Nan::FunctionC
 {
 	VtkParametricRandomHillsWrap *wrapper = ObjectWrap::Unwrap<VtkParametricRandomHillsWrap>(info.Holder());
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkParametricRandomHillsWrap::AllowRandomGenerationOn(const Nan::FunctionCa
 {
 	VtkParametricRandomHillsWrap *wrapper = ObjectWrap::Unwrap<VtkParametricRandomHillsWrap>(info.Holder());
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -253,7 +253,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -304,7 +304,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -375,7 +375,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -416,7 +416,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -467,7 +467,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -528,7 +528,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -559,7 +559,7 @@ void VtkParametricRandomHillsWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -982,7 +982,7 @@ void VtkParametricRandomHillsWrap::GenerateTheHills(const Nan::FunctionCallbackI
 {
 	VtkParametricRandomHillsWrap *wrapper = ObjectWrap::Unwrap<VtkParametricRandomHillsWrap>(info.Holder());
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1205,7 +1205,7 @@ void VtkParametricRandomHillsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricRandomHillsWrap::InitPtpl();
+	VtkParametricRandomHillsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1233,7 +1233,7 @@ void VtkParametricRandomHillsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricRandomHillsWrap::InitPtpl();
+		VtkParametricRandomHillsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1254,7 +1254,7 @@ void VtkParametricRandomHillsWrap::SetAllowRandomGeneration(const Nan::FunctionC
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1273,7 +1273,7 @@ void VtkParametricRandomHillsWrap::SetAmplitudeScaleFactor(const Nan::FunctionCa
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1292,7 +1292,7 @@ void VtkParametricRandomHillsWrap::SetHillAmplitude(const Nan::FunctionCallbackI
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1311,7 +1311,7 @@ void VtkParametricRandomHillsWrap::SetHillXVariance(const Nan::FunctionCallbackI
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1330,7 +1330,7 @@ void VtkParametricRandomHillsWrap::SetHillYVariance(const Nan::FunctionCallbackI
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1349,7 +1349,7 @@ void VtkParametricRandomHillsWrap::SetNumberOfHills(const Nan::FunctionCallbackI
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1368,7 +1368,7 @@ void VtkParametricRandomHillsWrap::SetRandomSeed(const Nan::FunctionCallbackInfo
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1387,7 +1387,7 @@ void VtkParametricRandomHillsWrap::SetXVarianceScaleFactor(const Nan::FunctionCa
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1406,7 +1406,7 @@ void VtkParametricRandomHillsWrap::SetYVarianceScaleFactor(const Nan::FunctionCa
 	vtkParametricRandomHills *native = (vtkParametricRandomHills *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

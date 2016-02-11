@@ -138,7 +138,7 @@ void VtkSubPixelPositionEdgelsWrap::GetGradMaps(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetGradMaps();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkSubPixelPositionEdgelsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkSubPixelPositionEdgelsWrap::InitPtpl();
+	VtkSubPixelPositionEdgelsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkSubPixelPositionEdgelsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSubPixelPositionEdgelsWrap::InitPtpl();
+		VtkSubPixelPositionEdgelsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkSubPixelPositionEdgelsWrap::SetGradMapsData(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStructuredPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStructuredPointsWrap *a0 = ObjectWrap::Unwrap<VtkStructuredPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkSubPixelPositionEdgelsWrap::SetTargetFlag(const Nan::FunctionCallbackInf
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkSubPixelPositionEdgelsWrap::SetTargetValue(const Nan::FunctionCallbackIn
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,7 @@ void VtkSubPixelPositionEdgelsWrap::TargetFlagOff(const Nan::FunctionCallbackInf
 {
 	VtkSubPixelPositionEdgelsWrap *wrapper = ObjectWrap::Unwrap<VtkSubPixelPositionEdgelsWrap>(info.Holder());
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkSubPixelPositionEdgelsWrap::TargetFlagOn(const Nan::FunctionCallbackInfo
 {
 	VtkSubPixelPositionEdgelsWrap *wrapper = ObjectWrap::Unwrap<VtkSubPixelPositionEdgelsWrap>(info.Holder());
 	vtkSubPixelPositionEdgels *native = (vtkSubPixelPositionEdgels *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

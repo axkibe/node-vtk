@@ -298,7 +298,7 @@ void VtkDataSetAttributesWrap::CopyAllOff(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +317,7 @@ void VtkDataSetAttributesWrap::CopyAllOn(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkDataSetAttributesWrap::CopyData(const Nan::FunctionCallbackInfo<v8::Valu
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -364,7 +364,7 @@ void VtkDataSetAttributesWrap::CopyGlobalIdsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkDataSetAttributesWrap::CopyGlobalIdsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkDataSetAttributesWrap::CopyNormalsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +400,7 @@ void VtkDataSetAttributesWrap::CopyNormalsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -412,7 +412,7 @@ void VtkDataSetAttributesWrap::CopyPedigreeIdsOff(const Nan::FunctionCallbackInf
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -424,7 +424,7 @@ void VtkDataSetAttributesWrap::CopyPedigreeIdsOn(const Nan::FunctionCallbackInfo
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -436,7 +436,7 @@ void VtkDataSetAttributesWrap::CopyScalarsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -448,7 +448,7 @@ void VtkDataSetAttributesWrap::CopyScalarsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -460,7 +460,7 @@ void VtkDataSetAttributesWrap::CopyTCoordsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -472,7 +472,7 @@ void VtkDataSetAttributesWrap::CopyTCoordsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -484,7 +484,7 @@ void VtkDataSetAttributesWrap::CopyTensorsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -496,7 +496,7 @@ void VtkDataSetAttributesWrap::CopyTensorsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -520,7 +520,7 @@ void VtkDataSetAttributesWrap::CopyTuples(const Nan::FunctionCallbackInfo<v8::Va
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -543,7 +543,7 @@ void VtkDataSetAttributesWrap::CopyVectorsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -555,7 +555,7 @@ void VtkDataSetAttributesWrap::CopyVectorsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -570,7 +570,7 @@ void VtkDataSetAttributesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -598,7 +598,7 @@ void VtkDataSetAttributesWrap::GetAbstractAttribute(const Nan::FunctionCallbackI
 		r = native->GetAbstractAttribute(
 			info[0]->Int32Value()
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -628,7 +628,7 @@ void VtkDataSetAttributesWrap::GetAttribute(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetAttribute(
 			info[0]->Int32Value()
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -841,7 +841,7 @@ void VtkDataSetAttributesWrap::GetGlobalIds(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetGlobalIds(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -860,7 +860,7 @@ void VtkDataSetAttributesWrap::GetGlobalIds(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGlobalIds();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -909,7 +909,7 @@ void VtkDataSetAttributesWrap::GetNormals(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetNormals(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -928,7 +928,7 @@ void VtkDataSetAttributesWrap::GetNormals(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetNormals();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -956,7 +956,7 @@ void VtkDataSetAttributesWrap::GetPedigreeIds(const Nan::FunctionCallbackInfo<v8
 		r = native->GetPedigreeIds(
 			*a0
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -975,7 +975,7 @@ void VtkDataSetAttributesWrap::GetPedigreeIds(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetPedigreeIds();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1003,7 +1003,7 @@ void VtkDataSetAttributesWrap::GetScalars(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetScalars(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1022,7 +1022,7 @@ void VtkDataSetAttributesWrap::GetScalars(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetScalars();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1050,7 +1050,7 @@ void VtkDataSetAttributesWrap::GetTCoords(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetTCoords(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1069,7 +1069,7 @@ void VtkDataSetAttributesWrap::GetTCoords(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetTCoords();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1097,7 +1097,7 @@ void VtkDataSetAttributesWrap::GetTensors(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetTensors(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1116,7 +1116,7 @@ void VtkDataSetAttributesWrap::GetTensors(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetTensors();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1144,7 +1144,7 @@ void VtkDataSetAttributesWrap::GetVectors(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetVectors(
 			*a0
 		);
-			VtkDataArrayWrap::InitPtpl();
+		VtkDataArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1163,7 +1163,7 @@ void VtkDataSetAttributesWrap::GetVectors(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetVectors();
-		VtkDataArrayWrap::InitPtpl();
+	VtkDataArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1179,7 +1179,7 @@ void VtkDataSetAttributesWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1241,7 +1241,7 @@ void VtkDataSetAttributesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataSetAttributesWrap::InitPtpl();
+	VtkDataSetAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1260,7 +1260,7 @@ void VtkDataSetAttributesWrap::PassData(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1280,7 +1280,7 @@ void VtkDataSetAttributesWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1292,7 +1292,7 @@ void VtkDataSetAttributesWrap::RemoveArray(const Nan::FunctionCallbackInfo<v8::V
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1321,7 +1321,7 @@ void VtkDataSetAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataSetAttributesWrap::InitPtpl();
+		VtkDataSetAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1570,7 +1570,7 @@ void VtkDataSetAttributesWrap::SetCopyAttribute(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1595,7 +1595,7 @@ void VtkDataSetAttributesWrap::SetCopyGlobalIds(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1618,7 +1618,7 @@ void VtkDataSetAttributesWrap::SetCopyNormals(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1641,7 +1641,7 @@ void VtkDataSetAttributesWrap::SetCopyPedigreeIds(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1664,7 +1664,7 @@ void VtkDataSetAttributesWrap::SetCopyScalars(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1687,7 +1687,7 @@ void VtkDataSetAttributesWrap::SetCopyTCoords(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1710,7 +1710,7 @@ void VtkDataSetAttributesWrap::SetCopyTensors(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1733,7 +1733,7 @@ void VtkDataSetAttributesWrap::SetCopyVectors(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1909,7 +1909,7 @@ void VtkDataSetAttributesWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFieldDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFieldDataWrap *a0 = ObjectWrap::Unwrap<VtkFieldDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1926,7 +1926,7 @@ void VtkDataSetAttributesWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDataSetAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetAttributesWrap>(info.Holder());
 	vtkDataSetAttributes *native = (vtkDataSetAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

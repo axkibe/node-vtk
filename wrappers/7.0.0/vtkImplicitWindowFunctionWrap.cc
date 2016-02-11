@@ -59,6 +59,12 @@ void VtkImplicitWindowFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImplicitFunction", GetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "getImplicitFunction", GetImplicitFunction);
 
+	Nan::SetPrototypeMethod(tpl, "GetWindowRange", GetWindowRange);
+	Nan::SetPrototypeMethod(tpl, "getWindowRange", GetWindowRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetWindowValues", GetWindowValues);
+	Nan::SetPrototypeMethod(tpl, "getWindowValues", GetWindowValues);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -211,7 +217,7 @@ void VtkImplicitWindowFunctionWrap::EvaluateGradient(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -241,7 +247,7 @@ void VtkImplicitWindowFunctionWrap::EvaluateGradient(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -291,7 +297,7 @@ void VtkImplicitWindowFunctionWrap::EvaluateGradient(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +317,7 @@ void VtkImplicitWindowFunctionWrap::EvaluateGradient(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -351,7 +357,7 @@ void VtkImplicitWindowFunctionWrap::GetImplicitFunction(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetImplicitFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,6 +367,40 @@ void VtkImplicitWindowFunctionWrap::GetImplicitFunction(const Nan::FunctionCallb
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitWindowFunctionWrap::GetWindowRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitWindowFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitWindowFunctionWrap>(info.Holder());
+	vtkImplicitWindowFunction *native = (vtkImplicitWindowFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWindowRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImplicitWindowFunctionWrap::GetWindowValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitWindowFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitWindowFunctionWrap>(info.Holder());
+	vtkImplicitWindowFunction *native = (vtkImplicitWindowFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWindowValues();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitWindowFunctionWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -396,7 +436,7 @@ void VtkImplicitWindowFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitWindowFunctionWrap::InitPtpl();
+	VtkImplicitWindowFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -424,7 +464,7 @@ void VtkImplicitWindowFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitWindowFunctionWrap::InitPtpl();
+		VtkImplicitWindowFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -446,7 +486,7 @@ void VtkImplicitWindowFunctionWrap::SetImplicitFunction(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +513,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowRange(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -502,7 +542,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowRange(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -516,7 +556,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowRange(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -545,7 +585,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowValues(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +614,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowValues(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +628,7 @@ void VtkImplicitWindowFunctionWrap::SetWindowValues(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

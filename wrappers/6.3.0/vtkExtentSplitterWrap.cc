@@ -64,6 +64,9 @@ void VtkExtentSplitterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointMode", GetPointMode);
 	Nan::SetPrototypeMethod(tpl, "getPointMode", GetPointMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetSubExtent", GetSubExtent);
+	Nan::SetPrototypeMethod(tpl, "getSubExtent", GetSubExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetSubExtentSource", GetSubExtentSource);
 	Nan::SetPrototypeMethod(tpl, "getSubExtentSource", GetSubExtentSource);
 
@@ -136,7 +139,7 @@ void VtkExtentSplitterWrap::AddExtent(const Nan::FunctionCallbackInfo<v8::Value>
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -179,7 +182,7 @@ void VtkExtentSplitterWrap::AddExtentSource(const Nan::FunctionCallbackInfo<v8::
 							{
 								if(info.Length() > 7 && info[7]->IsInt32())
 								{
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -262,6 +265,30 @@ void VtkExtentSplitterWrap::GetPointMode(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExtentSplitterWrap::GetSubExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtentSplitterWrap *wrapper = ObjectWrap::Unwrap<VtkExtentSplitterWrap>(info.Holder());
+	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetSubExtent(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+		memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkExtentSplitterWrap::GetSubExtentSource(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtentSplitterWrap *wrapper = ObjectWrap::Unwrap<VtkExtentSplitterWrap>(info.Holder());
@@ -316,7 +343,7 @@ void VtkExtentSplitterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtentSplitterWrap::InitPtpl();
+	VtkExtentSplitterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +359,7 @@ void VtkExtentSplitterWrap::PointModeOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkExtentSplitterWrap *wrapper = ObjectWrap::Unwrap<VtkExtentSplitterWrap>(info.Holder());
 	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -344,7 +371,7 @@ void VtkExtentSplitterWrap::PointModeOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkExtentSplitterWrap *wrapper = ObjectWrap::Unwrap<VtkExtentSplitterWrap>(info.Holder());
 	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +383,7 @@ void VtkExtentSplitterWrap::RemoveAllExtentSources(const Nan::FunctionCallbackIn
 {
 	VtkExtentSplitterWrap *wrapper = ObjectWrap::Unwrap<VtkExtentSplitterWrap>(info.Holder());
 	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -370,7 +397,7 @@ void VtkExtentSplitterWrap::RemoveExtentSource(const Nan::FunctionCallbackInfo<v
 	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -399,7 +426,7 @@ void VtkExtentSplitterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtentSplitterWrap::InitPtpl();
+		VtkExtentSplitterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -420,7 +447,7 @@ void VtkExtentSplitterWrap::SetPointMode(const Nan::FunctionCallbackInfo<v8::Val
 	vtkExtentSplitter *native = (vtkExtentSplitter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

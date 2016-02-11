@@ -50,6 +50,9 @@ void VtkTableToStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetXColumn", GetXColumn);
 	Nan::SetPrototypeMethod(tpl, "getXColumn", GetXColumn);
 
@@ -157,6 +160,23 @@ void VtkTableToStructuredGridWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTableToStructuredGridWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableToStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkTableToStructuredGridWrap>(info.Holder());
+	vtkTableToStructuredGrid *native = (vtkTableToStructuredGrid *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTableToStructuredGridWrap::GetXColumn(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -360,7 +380,7 @@ void VtkTableToStructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToStructuredGridWrap::InitPtpl();
+	VtkTableToStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,7 +408,7 @@ void VtkTableToStructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToStructuredGridWrap::InitPtpl();
+		VtkTableToStructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -417,7 +437,7 @@ void VtkTableToStructuredGridWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +466,7 @@ void VtkTableToStructuredGridWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +488,7 @@ void VtkTableToStructuredGridWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -498,7 +518,7 @@ void VtkTableToStructuredGridWrap::SetXColumn(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -517,7 +537,7 @@ void VtkTableToStructuredGridWrap::SetXComponent(const Nan::FunctionCallbackInfo
 	vtkTableToStructuredGrid *native = (vtkTableToStructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -537,7 +557,7 @@ void VtkTableToStructuredGridWrap::SetYColumn(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -556,7 +576,7 @@ void VtkTableToStructuredGridWrap::SetYComponent(const Nan::FunctionCallbackInfo
 	vtkTableToStructuredGrid *native = (vtkTableToStructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +596,7 @@ void VtkTableToStructuredGridWrap::SetZColumn(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +615,7 @@ void VtkTableToStructuredGridWrap::SetZComponent(const Nan::FunctionCallbackInfo
 	vtkTableToStructuredGrid *native = (vtkTableToStructuredGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

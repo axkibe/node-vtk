@@ -128,7 +128,7 @@ void VtkBSPCutsWrap::CreateCuts(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -148,7 +148,7 @@ void VtkBSPCutsWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -220,7 +220,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkBSPCutsWrap::InitPtpl();
+			VtkBSPCutsWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -245,7 +245,7 @@ void VtkBSPCutsWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkBSPCutsWrap::InitPtpl();
+		VtkBSPCutsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +271,7 @@ void VtkBSPCutsWrap::GetKdNodeTree(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetKdNodeTree();
-		VtkKdNodeWrap::InitPtpl();
+	VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkBSPCutsWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -342,7 +342,7 @@ void VtkBSPCutsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkBSPCutsWrap::InitPtpl();
+	VtkBSPCutsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkBSPCutsWrap::PrintArrays(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -370,7 +370,7 @@ void VtkBSPCutsWrap::PrintTree(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBSPCutsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info.Holder());
 	vtkBSPCuts *native = (vtkBSPCuts *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -394,7 +394,7 @@ void VtkBSPCutsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBSPCutsWrap::InitPtpl();
+		VtkBSPCutsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -416,7 +416,7 @@ void VtkBSPCutsWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

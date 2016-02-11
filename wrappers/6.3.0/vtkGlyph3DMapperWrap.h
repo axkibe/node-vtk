@@ -41,6 +41,7 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void GetOrientationModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

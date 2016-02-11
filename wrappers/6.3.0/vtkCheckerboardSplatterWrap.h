@@ -49,6 +49,7 @@ class VtkCheckerboardSplatterWrap : public VtkImageAlgorithmWrap
 		static void GetMaximumDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDimensionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumDimensionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNullValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +59,7 @@ class VtkCheckerboardSplatterWrap : public VtkImageAlgorithmWrap
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

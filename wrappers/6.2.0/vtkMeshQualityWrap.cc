@@ -597,7 +597,7 @@ void VtkMeshQualityWrap::CompatibilityModeOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -609,7 +609,7 @@ void VtkMeshQualityWrap::CompatibilityModeOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1216,7 +1216,7 @@ void VtkMeshQualityWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkMeshQualityWrap::InitPtpl();
+	VtkMeshQualityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1738,7 +1738,7 @@ void VtkMeshQualityWrap::RatioOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1750,7 +1750,7 @@ void VtkMeshQualityWrap::RatioOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1774,7 +1774,7 @@ void VtkMeshQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMeshQualityWrap::InitPtpl();
+		VtkMeshQualityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1793,7 +1793,7 @@ void VtkMeshQualityWrap::SaveCellQualityOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1805,7 +1805,7 @@ void VtkMeshQualityWrap::SaveCellQualityOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1819,7 +1819,7 @@ void VtkMeshQualityWrap::SetCompatibilityMode(const Nan::FunctionCallbackInfo<v8
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1838,7 +1838,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasure(const Nan::FunctionCallbackInfo<v8
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1855,7 +1855,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToCondition(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1867,7 +1867,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToDiagonal(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1879,7 +1879,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToDimension(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1891,7 +1891,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToDistortion(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1903,7 +1903,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToEdgeRatio(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1915,7 +1915,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToJacobian(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1927,7 +1927,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToMaxAspectFrobenius(const Nan::Fun
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1939,7 +1939,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToMaxEdgeRatios(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1951,7 +1951,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToMedAspectFrobenius(const Nan::Fun
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1963,7 +1963,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToOddy(const Nan::FunctionCallbackI
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1975,7 +1975,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToRelativeSizeSquared(const Nan::Fu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1987,7 +1987,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToScaledJacobian(const Nan::Functio
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1999,7 +1999,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToShape(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2011,7 +2011,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToShapeAndSize(const Nan::FunctionC
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2023,7 +2023,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToShear(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2035,7 +2035,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToShearAndSize(const Nan::FunctionC
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2047,7 +2047,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToSkew(const Nan::FunctionCallbackI
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2059,7 +2059,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToStretch(const Nan::FunctionCallba
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2071,7 +2071,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToTaper(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2083,7 +2083,7 @@ void VtkMeshQualityWrap::SetHexQualityMeasureToVolume(const Nan::FunctionCallbac
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2097,7 +2097,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasure(const Nan::FunctionCallbackInfo<v
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2114,7 +2114,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToArea(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2126,7 +2126,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToAspectRatio(const Nan::FunctionC
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2138,7 +2138,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToCondition(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2150,7 +2150,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToDistortion(const Nan::FunctionCa
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2162,7 +2162,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToEdgeRatio(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2174,7 +2174,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToJacobian(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2186,7 +2186,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToMaxAngle(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2198,7 +2198,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToMaxAspectFrobenius(const Nan::Fu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2210,7 +2210,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToMaxEdgeRatios(const Nan::Functio
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2222,7 +2222,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToMedAspectFrobenius(const Nan::Fu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2234,7 +2234,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToMinAngle(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2246,7 +2246,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToOddy(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2258,7 +2258,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToRadiusRatio(const Nan::FunctionC
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2270,7 +2270,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToRelativeSizeSquared(const Nan::F
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2282,7 +2282,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToScaledJacobian(const Nan::Functi
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2294,7 +2294,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToShape(const Nan::FunctionCallbac
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2306,7 +2306,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToShapeAndSize(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2318,7 +2318,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToShear(const Nan::FunctionCallbac
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2330,7 +2330,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToShearAndSize(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2342,7 +2342,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToSkew(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2354,7 +2354,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToStretch(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2366,7 +2366,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToTaper(const Nan::FunctionCallbac
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2378,7 +2378,7 @@ void VtkMeshQualityWrap::SetQuadQualityMeasureToWarpage(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2392,7 +2392,7 @@ void VtkMeshQualityWrap::SetRatio(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2411,7 +2411,7 @@ void VtkMeshQualityWrap::SetSaveCellQuality(const Nan::FunctionCallbackInfo<v8::
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2430,7 +2430,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasure(const Nan::FunctionCallbackInfo<v8
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2447,7 +2447,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToAspectBeta(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2459,7 +2459,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToAspectFrobenius(const Nan::Functi
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2471,7 +2471,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToAspectGamma(const Nan::FunctionCa
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2483,7 +2483,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToAspectRatio(const Nan::FunctionCa
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2495,7 +2495,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToCollapseRatio(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2507,7 +2507,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToCondition(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2519,7 +2519,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToDistortion(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2531,7 +2531,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToEdgeRatio(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2543,7 +2543,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToJacobian(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2555,7 +2555,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToMinAngle(const Nan::FunctionCallb
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2567,7 +2567,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToRadiusRatio(const Nan::FunctionCa
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2579,7 +2579,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToRelativeSizeSquared(const Nan::Fu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2591,7 +2591,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToScaledJacobian(const Nan::Functio
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2603,7 +2603,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToShape(const Nan::FunctionCallback
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2615,7 +2615,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToShapeAndSize(const Nan::FunctionC
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2627,7 +2627,7 @@ void VtkMeshQualityWrap::SetTetQualityMeasureToVolume(const Nan::FunctionCallbac
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2641,7 +2641,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasure(const Nan::FunctionCallbackIn
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2658,7 +2658,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToArea(const Nan::FunctionCall
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2670,7 +2670,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToAspectFrobenius(const Nan::F
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2682,7 +2682,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToAspectRatio(const Nan::Funct
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2694,7 +2694,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToCondition(const Nan::Functio
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2706,7 +2706,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToDistortion(const Nan::Functi
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2718,7 +2718,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToEdgeRatio(const Nan::Functio
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2730,7 +2730,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToMaxAngle(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2742,7 +2742,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToMinAngle(const Nan::Function
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2754,7 +2754,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToRadiusRatio(const Nan::Funct
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2766,7 +2766,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToRelativeSizeSquared(const Na
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2778,7 +2778,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToScaledJacobian(const Nan::Fu
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2790,7 +2790,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToShape(const Nan::FunctionCal
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2802,7 +2802,7 @@ void VtkMeshQualityWrap::SetTriangleQualityMeasureToShapeAndSize(const Nan::Func
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2816,7 +2816,7 @@ void VtkMeshQualityWrap::SetVolume(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3471,7 +3471,7 @@ void VtkMeshQualityWrap::VolumeOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3483,7 +3483,7 @@ void VtkMeshQualityWrap::VolumeOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkMeshQualityWrap *wrapper = ObjectWrap::Unwrap<VtkMeshQualityWrap>(info.Holder());
 	vtkMeshQuality *native = (vtkMeshQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

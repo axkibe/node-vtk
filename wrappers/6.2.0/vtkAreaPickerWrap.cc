@@ -184,7 +184,7 @@ void VtkAreaPickerWrap::GetClipPoints(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetClipPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkAreaPickerWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkAreaPickerWrap::GetFrustum(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetFrustum();
-		VtkPlanesWrap::InitPtpl();
+	VtkPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkAreaPickerWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetMapper();
-		VtkAbstractMapper3DWrap::InitPtpl();
+	VtkAbstractMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkAreaPickerWrap::GetProp3Ds(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetProp3Ds();
-		VtkProp3DCollectionWrap::InitPtpl();
+	VtkProp3DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkAreaPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkAreaPickerWrap::InitPtpl();
+	VtkAreaPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -390,7 +390,7 @@ void VtkAreaPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAreaPickerWrap::InitPtpl();
+		VtkAreaPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkAreaPickerWrap::SetPickCoords(const Nan::FunctionCallbackInfo<v8::Value>
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -443,7 +443,7 @@ void VtkAreaPickerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

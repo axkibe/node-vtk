@@ -255,7 +255,7 @@ void VtkDotProductSimilarityWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkDotProductSimilarityWrap::InitPtpl();
+	VtkDotProductSimilarityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkDotProductSimilarityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDotProductSimilarityWrap::InitPtpl();
+		VtkDotProductSimilarityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkDotProductSimilarityWrap::SetDiagonal(const Nan::FunctionCallbackInfo<v8
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +323,7 @@ void VtkDotProductSimilarityWrap::SetFirstSecond(const Nan::FunctionCallbackInfo
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkDotProductSimilarityWrap::SetLowerDiagonal(const Nan::FunctionCallbackIn
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkDotProductSimilarityWrap::SetMinimumThreshold(const Nan::FunctionCallbac
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkDotProductSimilarityWrap::SetSecondFirst(const Nan::FunctionCallbackInfo
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -399,7 +399,7 @@ void VtkDotProductSimilarityWrap::SetUpperDiagonal(const Nan::FunctionCallbackIn
 	vtkDotProductSimilarity *native = (vtkDotProductSimilarity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

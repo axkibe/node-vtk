@@ -126,7 +126,7 @@ void VtkBoxMuellerRandomSequenceWrap::GetUniformSequence(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetUniformSequence();
-		VtkRandomSequenceWrap::InitPtpl();
+	VtkRandomSequenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkBoxMuellerRandomSequenceWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkBoxMuellerRandomSequenceWrap::InitPtpl();
+	VtkBoxMuellerRandomSequenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +201,7 @@ void VtkBoxMuellerRandomSequenceWrap::Next(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBoxMuellerRandomSequenceWrap *wrapper = ObjectWrap::Unwrap<VtkBoxMuellerRandomSequenceWrap>(info.Holder());
 	vtkBoxMuellerRandomSequence *native = (vtkBoxMuellerRandomSequence *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkBoxMuellerRandomSequenceWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBoxMuellerRandomSequenceWrap::InitPtpl();
+		VtkBoxMuellerRandomSequenceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -247,7 +247,7 @@ void VtkBoxMuellerRandomSequenceWrap::SetUniformSequence(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRandomSequenceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRandomSequenceWrap *a0 = ObjectWrap::Unwrap<VtkRandomSequenceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

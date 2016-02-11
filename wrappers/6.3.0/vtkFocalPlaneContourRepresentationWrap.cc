@@ -425,7 +425,7 @@ void VtkFocalPlaneContourRepresentationWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkFocalPlaneContourRepresentationWrap::InitPtpl();
+	VtkFocalPlaneContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,7 +453,7 @@ void VtkFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFocalPlaneContourRepresentationWrap::InitPtpl();
+		VtkFocalPlaneContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -486,7 +486,7 @@ void VtkFocalPlaneContourRepresentationWrap::UpdateContourWorldPositionsBasedOnD
 {
 	VtkFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -500,7 +500,7 @@ void VtkFocalPlaneContourRepresentationWrap::UpdateLines(const Nan::FunctionCall
 	vtkFocalPlaneContourRepresentation *native = (vtkFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

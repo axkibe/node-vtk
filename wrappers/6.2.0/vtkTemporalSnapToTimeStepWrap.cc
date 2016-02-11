@@ -164,7 +164,7 @@ void VtkTemporalSnapToTimeStepWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalSnapToTimeStepWrap::InitPtpl();
+	VtkTemporalSnapToTimeStepWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkTemporalSnapToTimeStepWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalSnapToTimeStepWrap::InitPtpl();
+		VtkTemporalSnapToTimeStepWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkTemporalSnapToTimeStepWrap::SetSnapMode(const Nan::FunctionCallbackInfo<
 	vtkTemporalSnapToTimeStep *native = (vtkTemporalSnapToTimeStep *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkTemporalSnapToTimeStepWrap::SetSnapModeToNearest(const Nan::FunctionCall
 {
 	VtkTemporalSnapToTimeStepWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalSnapToTimeStepWrap>(info.Holder());
 	vtkTemporalSnapToTimeStep *native = (vtkTemporalSnapToTimeStep *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +242,7 @@ void VtkTemporalSnapToTimeStepWrap::SetSnapModeToNextAboveOrEqual(const Nan::Fun
 {
 	VtkTemporalSnapToTimeStepWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalSnapToTimeStepWrap>(info.Holder());
 	vtkTemporalSnapToTimeStep *native = (vtkTemporalSnapToTimeStep *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +254,7 @@ void VtkTemporalSnapToTimeStepWrap::SetSnapModeToNextBelowOrEqual(const Nan::Fun
 {
 	VtkTemporalSnapToTimeStepWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalSnapToTimeStepWrap>(info.Holder());
 	vtkTemporalSnapToTimeStep *native = (vtkTemporalSnapToTimeStep *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

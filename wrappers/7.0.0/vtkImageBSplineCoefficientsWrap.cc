@@ -170,7 +170,7 @@ void VtkImageBSplineCoefficientsWrap::BypassOff(const Nan::FunctionCallbackInfo<
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkImageBSplineCoefficientsWrap::BypassOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +547,7 @@ void VtkImageBSplineCoefficientsWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageBSplineCoefficientsWrap::InitPtpl();
+	VtkImageBSplineCoefficientsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -575,7 +575,7 @@ void VtkImageBSplineCoefficientsWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageBSplineCoefficientsWrap::InitPtpl();
+		VtkImageBSplineCoefficientsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -596,7 +596,7 @@ void VtkImageBSplineCoefficientsWrap::SetBorderMode(const Nan::FunctionCallbackI
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -613,7 +613,7 @@ void VtkImageBSplineCoefficientsWrap::SetBorderModeToClamp(const Nan::FunctionCa
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -625,7 +625,7 @@ void VtkImageBSplineCoefficientsWrap::SetBorderModeToMirror(const Nan::FunctionC
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -637,7 +637,7 @@ void VtkImageBSplineCoefficientsWrap::SetBorderModeToRepeat(const Nan::FunctionC
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -651,7 +651,7 @@ void VtkImageBSplineCoefficientsWrap::SetBypass(const Nan::FunctionCallbackInfo<
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkImageBSplineCoefficientsWrap::SetOutputScalarType(const Nan::FunctionCal
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkImageBSplineCoefficientsWrap::SetOutputScalarTypeToDouble(const Nan::Fun
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -699,7 +699,7 @@ void VtkImageBSplineCoefficientsWrap::SetOutputScalarTypeToFloat(const Nan::Func
 {
 	VtkImageBSplineCoefficientsWrap *wrapper = ObjectWrap::Unwrap<VtkImageBSplineCoefficientsWrap>(info.Holder());
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -713,7 +713,7 @@ void VtkImageBSplineCoefficientsWrap::SetSplineDegree(const Nan::FunctionCallbac
 	vtkImageBSplineCoefficients *native = (vtkImageBSplineCoefficients *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

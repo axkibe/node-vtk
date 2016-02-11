@@ -133,7 +133,7 @@ void VtkPlotPointsWrap::CreateDefaultLookupTable(const Nan::FunctionCallbackInfo
 {
 	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -155,7 +155,7 @@ void VtkPlotPointsWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -184,7 +184,7 @@ void VtkPlotPointsWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -222,7 +222,7 @@ void VtkPlotPointsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkPlotPointsWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkPlotPointsWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -351,7 +351,7 @@ void VtkPlotPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotPointsWrap::InitPtpl();
+	VtkPlotPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkPlotPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotPointsWrap::InitPtpl();
+		VtkPlotPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -420,7 +420,7 @@ void VtkPlotPointsWrap::ScalarVisibilityOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +432,7 @@ void VtkPlotPointsWrap::ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +447,7 @@ void VtkPlotPointsWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -466,7 +466,7 @@ void VtkPlotPointsWrap::SetMarkerStyle(const Nan::FunctionCallbackInfo<v8::Value
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -485,7 +485,7 @@ void VtkPlotPointsWrap::SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -502,7 +502,7 @@ void VtkPlotPointsWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotPointsWrap *wrapper = ObjectWrap::Unwrap<VtkPlotPointsWrap>(info.Holder());
 	vtkPlotPoints *native = (vtkPlotPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

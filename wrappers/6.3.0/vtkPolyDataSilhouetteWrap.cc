@@ -73,11 +73,17 @@ void VtkPolyDataSilhouetteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFeatureAngle", GetFeatureAngle);
 	Nan::SetPrototypeMethod(tpl, "getFeatureAngle", GetFeatureAngle);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetPieceInvariant", GetPieceInvariant);
 	Nan::SetPrototypeMethod(tpl, "getPieceInvariant", GetPieceInvariant);
 
 	Nan::SetPrototypeMethod(tpl, "GetProp3D", GetProp3D);
 	Nan::SetPrototypeMethod(tpl, "getProp3D", GetProp3D);
+
+	Nan::SetPrototypeMethod(tpl, "GetVector", GetVector);
+	Nan::SetPrototypeMethod(tpl, "getVector", GetVector);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -166,7 +172,7 @@ void VtkPolyDataSilhouetteWrap::BorderEdgesOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +184,7 @@ void VtkPolyDataSilhouetteWrap::BorderEdgesOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -211,7 +217,7 @@ void VtkPolyDataSilhouetteWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,6 +285,23 @@ void VtkPolyDataSilhouetteWrap::GetFeatureAngle(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPolyDataSilhouetteWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
+	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPolyDataSilhouetteWrap::GetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
@@ -304,7 +327,7 @@ void VtkPolyDataSilhouetteWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetProp3D();
-		VtkProp3DWrap::InitPtpl();
+	VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,6 +337,23 @@ void VtkPolyDataSilhouetteWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPolyDataSilhouetteWrap::GetVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
+	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPolyDataSilhouetteWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -349,7 +389,7 @@ void VtkPolyDataSilhouetteWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataSilhouetteWrap::InitPtpl();
+	VtkPolyDataSilhouetteWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,7 +405,7 @@ void VtkPolyDataSilhouetteWrap::PieceInvariantOff(const Nan::FunctionCallbackInf
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -377,7 +417,7 @@ void VtkPolyDataSilhouetteWrap::PieceInvariantOn(const Nan::FunctionCallbackInfo
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -401,7 +441,7 @@ void VtkPolyDataSilhouetteWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataSilhouetteWrap::InitPtpl();
+		VtkPolyDataSilhouetteWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -422,7 +462,7 @@ void VtkPolyDataSilhouetteWrap::SetBorderEdges(const Nan::FunctionCallbackInfo<v
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -442,7 +482,7 @@ void VtkPolyDataSilhouetteWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +501,7 @@ void VtkPolyDataSilhouetteWrap::SetDirection(const Nan::FunctionCallbackInfo<v8:
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +518,7 @@ void VtkPolyDataSilhouetteWrap::SetDirectionToCameraOrigin(const Nan::FunctionCa
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +530,7 @@ void VtkPolyDataSilhouetteWrap::SetDirectionToCameraVector(const Nan::FunctionCa
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -502,7 +542,7 @@ void VtkPolyDataSilhouetteWrap::SetDirectionToSpecifiedOrigin(const Nan::Functio
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -514,7 +554,7 @@ void VtkPolyDataSilhouetteWrap::SetDirectionToSpecifiedVector(const Nan::Functio
 {
 	VtkPolyDataSilhouetteWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataSilhouetteWrap>(info.Holder());
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -528,7 +568,7 @@ void VtkPolyDataSilhouetteWrap::SetEnableFeatureAngle(const Nan::FunctionCallbac
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +587,7 @@ void VtkPolyDataSilhouetteWrap::SetFeatureAngle(const Nan::FunctionCallbackInfo<
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +614,7 @@ void VtkPolyDataSilhouetteWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -603,7 +643,7 @@ void VtkPolyDataSilhouetteWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +659,7 @@ void VtkPolyDataSilhouetteWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -642,7 +682,7 @@ void VtkPolyDataSilhouetteWrap::SetPieceInvariant(const Nan::FunctionCallbackInf
 	vtkPolyDataSilhouette *native = (vtkPolyDataSilhouette *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -662,7 +702,7 @@ void VtkPolyDataSilhouetteWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +729,7 @@ void VtkPolyDataSilhouetteWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -718,7 +758,7 @@ void VtkPolyDataSilhouetteWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -734,7 +774,7 @@ void VtkPolyDataSilhouetteWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

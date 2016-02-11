@@ -248,7 +248,7 @@ void VtkPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -279,7 +279,7 @@ void VtkPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -316,7 +316,7 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -347,7 +347,7 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -373,7 +373,7 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -403,7 +403,7 @@ void VtkPolygonWrap::ComputeNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -475,7 +475,7 @@ void VtkPolygonWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -505,7 +505,7 @@ void VtkPolygonWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -778,7 +778,7 @@ void VtkPolygonWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolygonWrap::InitPtpl();
+	VtkPolygonWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -828,7 +828,7 @@ void VtkPolygonWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolygonWrap::InitPtpl();
+		VtkPolygonWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -849,7 +849,7 @@ void VtkPolygonWrap::SetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::
 	vtkPolygon *native = (vtkPolygon *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

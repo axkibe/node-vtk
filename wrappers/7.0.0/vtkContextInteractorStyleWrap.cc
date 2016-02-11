@@ -159,7 +159,7 @@ void VtkContextInteractorStyleWrap::GetScene(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScene();
-		VtkContextSceneWrap::InitPtpl();
+	VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkContextInteractorStyleWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextInteractorStyleWrap::InitPtpl();
+	VtkContextInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +220,7 @@ void VtkContextInteractorStyleWrap::OnChar(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkContextInteractorStyleWrap::OnKeyPress(const Nan::FunctionCallbackInfo<v
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkContextInteractorStyleWrap::OnKeyRelease(const Nan::FunctionCallbackInfo
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkContextInteractorStyleWrap::OnLeftButtonDown(const Nan::FunctionCallback
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkContextInteractorStyleWrap::OnLeftButtonUp(const Nan::FunctionCallbackIn
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkContextInteractorStyleWrap::OnMiddleButtonDown(const Nan::FunctionCallba
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkContextInteractorStyleWrap::OnMiddleButtonUp(const Nan::FunctionCallback
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkContextInteractorStyleWrap::OnMouseMove(const Nan::FunctionCallbackInfo<
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkContextInteractorStyleWrap::OnMouseWheelBackward(const Nan::FunctionCall
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkContextInteractorStyleWrap::OnMouseWheelForward(const Nan::FunctionCallb
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkContextInteractorStyleWrap::OnRightButtonDown(const Nan::FunctionCallbac
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -352,7 +352,7 @@ void VtkContextInteractorStyleWrap::OnRightButtonUp(const Nan::FunctionCallbackI
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -364,7 +364,7 @@ void VtkContextInteractorStyleWrap::OnSceneModified(const Nan::FunctionCallbackI
 {
 	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
 	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkContextInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextInteractorStyleWrap::InitPtpl();
+		VtkContextInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +410,7 @@ void VtkContextInteractorStyleWrap::SetScene(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -80,8 +80,14 @@ void VtkVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCroppingRegionFlagsMinValue", GetCroppingRegionFlagsMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCroppingRegionFlagsMinValue", GetCroppingRegionFlagsMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetCroppingRegionPlanes", GetCroppingRegionPlanes);
+	Nan::SetPrototypeMethod(tpl, "getCroppingRegionPlanes", GetCroppingRegionPlanes);
+
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
+
+	Nan::SetPrototypeMethod(tpl, "GetVoxelCroppingRegionPlanes", GetVoxelCroppingRegionPlanes);
+	Nan::SetPrototypeMethod(tpl, "getVoxelCroppingRegionPlanes", GetVoxelCroppingRegionPlanes);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -169,7 +175,7 @@ void VtkVolumeMapperWrap::CroppingOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +187,7 @@ void VtkVolumeMapperWrap::CroppingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -301,6 +307,23 @@ void VtkVolumeMapperWrap::GetCroppingRegionFlagsMinValue(const Nan::FunctionCall
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVolumeMapperWrap::GetCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
+	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCroppingRegionPlanes();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVolumeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
@@ -312,7 +335,7 @@ void VtkVolumeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -322,6 +345,23 @@ void VtkVolumeMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkVolumeMapperWrap::GetVoxelCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
+	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVoxelCroppingRegionPlanes();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeMapperWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -357,7 +397,7 @@ void VtkVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeMapperWrap::InitPtpl();
+	VtkVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,7 +416,7 @@ void VtkVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +445,7 @@ void VtkVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeMapperWrap::InitPtpl();
+		VtkVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -426,7 +466,7 @@ void VtkVolumeMapperWrap::SetBlendMode(const Nan::FunctionCallbackInfo<v8::Value
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -443,7 +483,7 @@ void VtkVolumeMapperWrap::SetBlendModeToAdditive(const Nan::FunctionCallbackInfo
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -455,7 +495,7 @@ void VtkVolumeMapperWrap::SetBlendModeToComposite(const Nan::FunctionCallbackInf
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,7 +507,7 @@ void VtkVolumeMapperWrap::SetBlendModeToMaximumIntensity(const Nan::FunctionCall
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -479,7 +519,7 @@ void VtkVolumeMapperWrap::SetBlendModeToMinimumIntensity(const Nan::FunctionCall
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -493,7 +533,7 @@ void VtkVolumeMapperWrap::SetCropping(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -512,7 +552,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlags(const Nan::FunctionCallbackInfo
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +569,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlagsToCross(const Nan::FunctionCallb
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -541,7 +581,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlagsToFence(const Nan::FunctionCallb
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -553,7 +593,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlagsToInvertedCross(const Nan::Funct
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -565,7 +605,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlagsToInvertedFence(const Nan::Funct
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +617,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionFlagsToSubVolume(const Nan::FunctionC
 {
 	VtkVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info.Holder());
 	vtkVolumeMapper *native = (vtkVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -599,7 +639,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +668,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +690,7 @@ void VtkVolumeMapperWrap::SetCroppingRegionPlanes(const Nan::FunctionCallbackInf
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -680,7 +720,7 @@ void VtkVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -693,7 +733,7 @@ void VtkVolumeMapperWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

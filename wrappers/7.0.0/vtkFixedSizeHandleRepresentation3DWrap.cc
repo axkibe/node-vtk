@@ -157,7 +157,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::GetSphereSource(const Nan::Function
 		return;
 	}
 	r = native->GetSphereSource();
-		VtkSphereSourceWrap::InitPtpl();
+	VtkSphereSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
+	VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
+		VtkFixedSizeHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SetHandleSizeInPixels(const Nan::Fu
 	vtkFixedSizeHandleRepresentation3D *native = (vtkFixedSizeHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -270,7 +270,7 @@ void VtkFixedSizeHandleRepresentation3DWrap::SetHandleSizeToleranceInPixels(cons
 	vtkFixedSizeHandleRepresentation3D *native = (vtkFixedSizeHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

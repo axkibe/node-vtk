@@ -152,7 +152,7 @@ void VtkCenteredSliderRepresentationWrap::BuildRepresentation(const Nan::Functio
 {
 	VtkCenteredSliderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCenteredSliderRepresentationWrap>(info.Holder());
 	vtkCenteredSliderRepresentation *native = (vtkCenteredSliderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +196,7 @@ void VtkCenteredSliderRepresentationWrap::GetActors(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -234,7 +234,7 @@ void VtkCenteredSliderRepresentationWrap::GetLabelProperty(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetLabelProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkCenteredSliderRepresentationWrap::GetPoint1Coordinate(const Nan::Functio
 		return;
 	}
 	r = native->GetPoint1Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkCenteredSliderRepresentationWrap::GetPoint2Coordinate(const Nan::Functio
 		return;
 	}
 	r = native->GetPoint2Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkCenteredSliderRepresentationWrap::GetSelectedProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -326,7 +326,7 @@ void VtkCenteredSliderRepresentationWrap::GetSliderProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSliderProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -363,7 +363,7 @@ void VtkCenteredSliderRepresentationWrap::GetTubeProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetTubeProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +381,7 @@ void VtkCenteredSliderRepresentationWrap::Highlight(const Nan::FunctionCallbackI
 	vtkCenteredSliderRepresentation *native = (vtkCenteredSliderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +427,7 @@ void VtkCenteredSliderRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkCenteredSliderRepresentationWrap::InitPtpl();
+	VtkCenteredSliderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -453,7 +453,7 @@ void VtkCenteredSliderRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +482,7 @@ void VtkCenteredSliderRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -502,7 +502,7 @@ void VtkCenteredSliderRepresentationWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -575,7 +575,7 @@ void VtkCenteredSliderRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCenteredSliderRepresentationWrap::InitPtpl();
+		VtkCenteredSliderRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -597,7 +597,7 @@ void VtkCenteredSliderRepresentationWrap::SetTitleText(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +624,7 @@ void VtkCenteredSliderRepresentationWrap::StartWidgetInteraction(const Nan::Func
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -653,7 +653,7 @@ void VtkCenteredSliderRepresentationWrap::StartWidgetInteraction(const Nan::Func
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -680,7 +680,7 @@ void VtkCenteredSliderRepresentationWrap::WidgetInteraction(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -709,7 +709,7 @@ void VtkCenteredSliderRepresentationWrap::WidgetInteraction(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

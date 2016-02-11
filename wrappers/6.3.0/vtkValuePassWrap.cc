@@ -144,7 +144,7 @@ void VtkValuePassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkValuePassWrap::InitPtpl();
+	VtkValuePassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -172,7 +172,7 @@ void VtkValuePassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkValuePassWrap::InitPtpl();
+		VtkValuePassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkValuePassWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -209,7 +209,7 @@ void VtkValuePassWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -230,7 +230,7 @@ void VtkValuePassWrap::SetInputComponentToProcess(const Nan::FunctionCallbackInf
 	vtkValuePass *native = (vtkValuePass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkValuePassWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

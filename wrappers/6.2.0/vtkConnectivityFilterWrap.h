@@ -34,6 +34,7 @@ class VtkConnectivityFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void ColorRegionsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeleteSpecifiedRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorRegions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtractionModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +43,7 @@ class VtkConnectivityFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetNumberOfExtractedRegions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarConnectivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeSeedList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeSpecifiedRegionList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

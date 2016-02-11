@@ -114,7 +114,7 @@ void VtkEdgeTableWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeTableWrap>(info.Holder());
 	vtkEdgeTable *native = (vtkEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkEdgeTableWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeTableWrap>(info.Holder());
 	vtkEdgeTable *native = (vtkEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -167,7 +167,7 @@ void VtkEdgeTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkEdgeTableWrap::InitPtpl();
+	VtkEdgeTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkEdgeTableWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkEdgeTableWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeTableWrap>(info.Holder());
 	vtkEdgeTable *native = (vtkEdgeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +207,7 @@ void VtkEdgeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEdgeTableWrap::InitPtpl();
+		VtkEdgeTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

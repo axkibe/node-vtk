@@ -166,7 +166,7 @@ void VtkTreeHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -195,7 +195,7 @@ void VtkTreeHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -222,7 +222,7 @@ void VtkTreeHeatmapItemWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkTreeHeatmapItemWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkTreeHeatmapItemWrap::GetColumnTree(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetColumnTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkTreeHeatmapItemWrap::GetDendrogram(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetDendrogram();
-		VtkDendrogramItemWrap::InitPtpl();
+	VtkDendrogramItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -335,7 +335,7 @@ void VtkTreeHeatmapItemWrap::GetHeatmap(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetHeatmap();
-		VtkHeatmapItemWrap::InitPtpl();
+	VtkHeatmapItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -372,7 +372,7 @@ void VtkTreeHeatmapItemWrap::GetPrunedTree(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPrunedTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +398,7 @@ void VtkTreeHeatmapItemWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +427,7 @@ void VtkTreeHeatmapItemWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkTreeHeatmapItemWrap::GetTable(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTable();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -474,7 +474,7 @@ void VtkTreeHeatmapItemWrap::GetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTree();
-		VtkTreeWrap::InitPtpl();
+	VtkTreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -519,7 +519,7 @@ void VtkTreeHeatmapItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeHeatmapItemWrap::InitPtpl();
+	VtkTreeHeatmapItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +535,7 @@ void VtkTreeHeatmapItemWrap::ReorderTable(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +547,7 @@ void VtkTreeHeatmapItemWrap::ReverseTableColumns(const Nan::FunctionCallbackInfo
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -559,7 +559,7 @@ void VtkTreeHeatmapItemWrap::ReverseTableRows(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -583,7 +583,7 @@ void VtkTreeHeatmapItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeHeatmapItemWrap::InitPtpl();
+		VtkTreeHeatmapItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -605,7 +605,7 @@ void VtkTreeHeatmapItemWrap::SetColumnTree(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -625,7 +625,7 @@ void VtkTreeHeatmapItemWrap::SetDendrogram(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDendrogramItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDendrogramItemWrap *a0 = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +645,7 @@ void VtkTreeHeatmapItemWrap::SetHeatmap(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHeatmapItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHeatmapItemWrap *a0 = ObjectWrap::Unwrap<VtkHeatmapItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +664,7 @@ void VtkTreeHeatmapItemWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::
 	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -684,7 +684,7 @@ void VtkTreeHeatmapItemWrap::SetTable(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +704,7 @@ void VtkTreeHeatmapItemWrap::SetTree(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeWrap *a0 = ObjectWrap::Unwrap<VtkTreeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -724,7 +724,7 @@ void VtkTreeHeatmapItemWrap::SetTreeColorArray(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -29,7 +29,9 @@ class VtkImageRectilinearWipeWrap : public VtkThreadedImageAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWipe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWipeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWipeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

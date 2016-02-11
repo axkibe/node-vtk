@@ -59,6 +59,9 @@ void VtkTubeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDefaultNormal", GetDefaultNormal);
+	Nan::SetPrototypeMethod(tpl, "getDefaultNormal", GetDefaultNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetGenerateTCoords", GetGenerateTCoords);
 	Nan::SetPrototypeMethod(tpl, "getGenerateTCoords", GetGenerateTCoords);
 
@@ -257,7 +260,7 @@ void VtkTubeFilterWrap::CappingOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +272,7 @@ void VtkTubeFilterWrap::CappingOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -303,6 +306,23 @@ void VtkTubeFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTubeFilterWrap::GetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
+	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDefaultNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTubeFilterWrap::GetGenerateTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -716,7 +736,7 @@ void VtkTubeFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkTubeFilterWrap::InitPtpl();
+	VtkTubeFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -744,7 +764,7 @@ void VtkTubeFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTubeFilterWrap::InitPtpl();
+		VtkTubeFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -765,7 +785,7 @@ void VtkTubeFilterWrap::SetCapping(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -792,7 +812,7 @@ void VtkTubeFilterWrap::SetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +841,7 @@ void VtkTubeFilterWrap::SetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -837,7 +857,7 @@ void VtkTubeFilterWrap::SetDefaultNormal(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -860,7 +880,7 @@ void VtkTubeFilterWrap::SetGenerateTCoords(const Nan::FunctionCallbackInfo<v8::V
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -877,7 +897,7 @@ void VtkTubeFilterWrap::SetGenerateTCoordsToNormalizedLength(const Nan::Function
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -889,7 +909,7 @@ void VtkTubeFilterWrap::SetGenerateTCoordsToOff(const Nan::FunctionCallbackInfo<
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -901,7 +921,7 @@ void VtkTubeFilterWrap::SetGenerateTCoordsToUseLength(const Nan::FunctionCallbac
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -913,7 +933,7 @@ void VtkTubeFilterWrap::SetGenerateTCoordsToUseScalars(const Nan::FunctionCallba
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -927,7 +947,7 @@ void VtkTubeFilterWrap::SetNumberOfSides(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -946,7 +966,7 @@ void VtkTubeFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -965,7 +985,7 @@ void VtkTubeFilterWrap::SetOnRatio(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -984,7 +1004,7 @@ void VtkTubeFilterWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1003,7 +1023,7 @@ void VtkTubeFilterWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1022,7 +1042,7 @@ void VtkTubeFilterWrap::SetRadiusFactor(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1041,7 +1061,7 @@ void VtkTubeFilterWrap::SetSidesShareVertices(const Nan::FunctionCallbackInfo<v8
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1060,7 +1080,7 @@ void VtkTubeFilterWrap::SetTextureLength(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1079,7 +1099,7 @@ void VtkTubeFilterWrap::SetUseDefaultNormal(const Nan::FunctionCallbackInfo<v8::
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1098,7 +1118,7 @@ void VtkTubeFilterWrap::SetVaryRadius(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1115,7 +1135,7 @@ void VtkTubeFilterWrap::SetVaryRadiusToVaryRadiusByAbsoluteScalar(const Nan::Fun
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1127,7 +1147,7 @@ void VtkTubeFilterWrap::SetVaryRadiusToVaryRadiusByScalar(const Nan::FunctionCal
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1139,7 +1159,7 @@ void VtkTubeFilterWrap::SetVaryRadiusToVaryRadiusByVector(const Nan::FunctionCal
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1151,7 +1171,7 @@ void VtkTubeFilterWrap::SetVaryRadiusToVaryRadiusOff(const Nan::FunctionCallback
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1163,7 +1183,7 @@ void VtkTubeFilterWrap::SidesShareVerticesOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1175,7 +1195,7 @@ void VtkTubeFilterWrap::SidesShareVerticesOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1187,7 +1207,7 @@ void VtkTubeFilterWrap::UseDefaultNormalOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1199,7 +1219,7 @@ void VtkTubeFilterWrap::UseDefaultNormalOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTubeFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTubeFilterWrap>(info.Holder());
 	vtkTubeFilter *native = (vtkTubeFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

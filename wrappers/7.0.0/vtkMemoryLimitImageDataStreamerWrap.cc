@@ -135,7 +135,7 @@ void VtkMemoryLimitImageDataStreamerWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkMemoryLimitImageDataStreamerWrap::InitPtpl();
+	VtkMemoryLimitImageDataStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkMemoryLimitImageDataStreamerWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMemoryLimitImageDataStreamerWrap::InitPtpl();
+		VtkMemoryLimitImageDataStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

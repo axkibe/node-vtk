@@ -41,6 +41,7 @@ class VtkMFIXReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTimeSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

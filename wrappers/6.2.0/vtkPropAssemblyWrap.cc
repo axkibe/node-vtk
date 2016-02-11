@@ -58,6 +58,9 @@ void VtkPropAssemblyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BuildPaths", BuildPaths);
 	Nan::SetPrototypeMethod(tpl, "buildPaths", BuildPaths);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -142,7 +145,7 @@ void VtkPropAssemblyWrap::AddPart(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -165,7 +168,7 @@ void VtkPropAssemblyWrap::BuildPaths(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAssemblyPathWrap *a1 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -178,6 +181,23 @@ void VtkPropAssemblyWrap::BuildPaths(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPropAssemblyWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPropAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkPropAssemblyWrap>(info.Holder());
+	vtkPropAssembly *native = (vtkPropAssembly *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPropAssemblyWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -205,7 +225,7 @@ void VtkPropAssemblyWrap::GetNextPath(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetNextPath();
-		VtkAssemblyPathWrap::InitPtpl();
+	VtkAssemblyPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +262,7 @@ void VtkPropAssemblyWrap::GetParts(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetParts();
-		VtkPropCollectionWrap::InitPtpl();
+	VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +292,7 @@ void VtkPropAssemblyWrap::InitPathTraversal(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPropAssemblyWrap *wrapper = ObjectWrap::Unwrap<VtkPropAssemblyWrap>(info.Holder());
 	vtkPropAssembly *native = (vtkPropAssembly *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -313,7 +333,7 @@ void VtkPropAssemblyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkPropAssemblyWrap::InitPtpl();
+	VtkPropAssemblyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +352,7 @@ void VtkPropAssemblyWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +372,7 @@ void VtkPropAssemblyWrap::RemovePart(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +489,7 @@ void VtkPropAssemblyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPropAssemblyWrap::InitPtpl();
+		VtkPropAssemblyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -491,7 +511,7 @@ void VtkPropAssemblyWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

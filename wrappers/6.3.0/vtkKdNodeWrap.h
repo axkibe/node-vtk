@@ -40,7 +40,11 @@ class VtkKdNodeWrap : public VtkObjectWrap
 		static void GetDivisionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxID(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRight(const Nan::FunctionCallbackInfo<v8::Value>& info);

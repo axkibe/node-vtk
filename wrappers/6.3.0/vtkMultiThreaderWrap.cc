@@ -254,7 +254,7 @@ void VtkMultiThreaderWrap::MultipleMethodExecute(const Nan::FunctionCallbackInfo
 {
 	VtkMultiThreaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiThreaderWrap>(info.Holder());
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -273,7 +273,7 @@ void VtkMultiThreaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiThreaderWrap::InitPtpl();
+	VtkMultiThreaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkMultiThreaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiThreaderWrap::InitPtpl();
+		VtkMultiThreaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,7 +322,7 @@ void VtkMultiThreaderWrap::SetGlobalDefaultNumberOfThreads(const Nan::FunctionCa
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +341,7 @@ void VtkMultiThreaderWrap::SetGlobalMaximumNumberOfThreads(const Nan::FunctionCa
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -360,7 +360,7 @@ void VtkMultiThreaderWrap::SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkMultiThreaderWrap::SingleMethodExecute(const Nan::FunctionCallbackInfo<v
 {
 	VtkMultiThreaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiThreaderWrap>(info.Holder());
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +391,7 @@ void VtkMultiThreaderWrap::TerminateThread(const Nan::FunctionCallbackInfo<v8::V
 	vtkMultiThreader *native = (vtkMultiThreader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

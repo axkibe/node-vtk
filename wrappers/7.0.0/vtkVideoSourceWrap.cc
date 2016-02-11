@@ -62,6 +62,15 @@ void VtkVideoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetClipRegion", GetClipRegion);
+	Nan::SetPrototypeMethod(tpl, "getClipRegion", GetClipRegion);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataOrigin", GetDataOrigin);
+	Nan::SetPrototypeMethod(tpl, "getDataOrigin", GetDataOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataSpacing", GetDataSpacing);
+	Nan::SetPrototypeMethod(tpl, "getDataSpacing", GetDataSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "GetFrameBufferSize", GetFrameBufferSize);
 	Nan::SetPrototypeMethod(tpl, "getFrameBufferSize", GetFrameBufferSize);
 
@@ -70,6 +79,9 @@ void VtkVideoSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetFrameIndex", GetFrameIndex);
 	Nan::SetPrototypeMethod(tpl, "getFrameIndex", GetFrameIndex);
+
+	Nan::SetPrototypeMethod(tpl, "GetFrameSize", GetFrameSize);
+	Nan::SetPrototypeMethod(tpl, "getFrameSize", GetFrameSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetFrameTimeStamp", GetFrameTimeStamp);
 	Nan::SetPrototypeMethod(tpl, "getFrameTimeStamp", GetFrameTimeStamp);
@@ -82,6 +94,9 @@ void VtkVideoSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetOutputFormat", GetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "getOutputFormat", GetOutputFormat);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputWholeExtent", GetOutputWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getOutputWholeExtent", GetOutputWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "GetPlaying", GetPlaying);
 	Nan::SetPrototypeMethod(tpl, "getPlaying", GetPlaying);
@@ -203,7 +218,7 @@ void VtkVideoSourceWrap::AutoAdvanceOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +230,7 @@ void VtkVideoSourceWrap::AutoAdvanceOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +242,7 @@ void VtkVideoSourceWrap::FastForward(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -261,6 +276,57 @@ void VtkVideoSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkVideoSourceWrap::GetClipRegion(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetClipRegion();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkVideoSourceWrap::GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkVideoSourceWrap::GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVideoSourceWrap::GetFrameBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -303,6 +369,23 @@ void VtkVideoSourceWrap::GetFrameIndex(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetFrameIndex();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkVideoSourceWrap::GetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrameSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVideoSourceWrap::GetFrameTimeStamp(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -375,6 +458,23 @@ void VtkVideoSourceWrap::GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVideoSourceWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
+	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVideoSourceWrap::GetPlaying(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
@@ -421,7 +521,7 @@ void VtkVideoSourceWrap::Grab(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -433,7 +533,7 @@ void VtkVideoSourceWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -445,7 +545,7 @@ void VtkVideoSourceWrap::InternalGrab(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -486,7 +586,7 @@ void VtkVideoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkVideoSourceWrap::InitPtpl();
+	VtkVideoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -502,7 +602,7 @@ void VtkVideoSourceWrap::Play(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -514,7 +614,7 @@ void VtkVideoSourceWrap::Record(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -526,7 +626,7 @@ void VtkVideoSourceWrap::ReleaseSystemResources(const Nan::FunctionCallbackInfo<
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -538,7 +638,7 @@ void VtkVideoSourceWrap::Rewind(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +662,7 @@ void VtkVideoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVideoSourceWrap::InitPtpl();
+		VtkVideoSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -583,7 +683,7 @@ void VtkVideoSourceWrap::Seek(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +702,7 @@ void VtkVideoSourceWrap::SetAutoAdvance(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +729,7 @@ void VtkVideoSourceWrap::SetClipRegion(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -658,7 +758,7 @@ void VtkVideoSourceWrap::SetClipRegion(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -680,7 +780,7 @@ void VtkVideoSourceWrap::SetClipRegion(const Nan::FunctionCallbackInfo<v8::Value
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -717,7 +817,7 @@ void VtkVideoSourceWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +846,7 @@ void VtkVideoSourceWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +862,7 @@ void VtkVideoSourceWrap::SetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -793,7 +893,7 @@ void VtkVideoSourceWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -822,7 +922,7 @@ void VtkVideoSourceWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -838,7 +938,7 @@ void VtkVideoSourceWrap::SetDataSpacing(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -861,7 +961,7 @@ void VtkVideoSourceWrap::SetFrameBufferSize(const Nan::FunctionCallbackInfo<v8::
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -880,7 +980,7 @@ void VtkVideoSourceWrap::SetFrameCount(const Nan::FunctionCallbackInfo<v8::Value
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -907,7 +1007,7 @@ void VtkVideoSourceWrap::SetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -936,7 +1036,7 @@ void VtkVideoSourceWrap::SetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -952,7 +1052,7 @@ void VtkVideoSourceWrap::SetFrameSize(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -975,7 +1075,7 @@ void VtkVideoSourceWrap::SetNumberOfOutputFrames(const Nan::FunctionCallbackInfo
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -994,7 +1094,7 @@ void VtkVideoSourceWrap::SetOutputFormat(const Nan::FunctionCallbackInfo<v8::Val
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1011,7 +1111,7 @@ void VtkVideoSourceWrap::SetOutputFormatToLuminance(const Nan::FunctionCallbackI
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1023,7 +1123,7 @@ void VtkVideoSourceWrap::SetOutputFormatToRGB(const Nan::FunctionCallbackInfo<v8
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1035,7 +1135,7 @@ void VtkVideoSourceWrap::SetOutputFormatToRGBA(const Nan::FunctionCallbackInfo<v
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1057,7 +1157,7 @@ void VtkVideoSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1086,7 +1186,7 @@ void VtkVideoSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1108,7 +1208,7 @@ void VtkVideoSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1137,7 +1237,7 @@ void VtkVideoSourceWrap::SetStartTimeStamp(const Nan::FunctionCallbackInfo<v8::V
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1254,7 @@ void VtkVideoSourceWrap::Stop(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVideoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVideoSourceWrap>(info.Holder());
 	vtkVideoSource *native = (vtkVideoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

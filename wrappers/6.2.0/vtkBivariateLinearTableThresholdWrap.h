@@ -33,6 +33,7 @@ class VtkBivariateLinearTableThresholdWrap : public VtkTableAlgorithmWrap
 		static void ClearColumnsToThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearLineEquations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColumnRanges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistanceThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInclusive(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinearThresholdType(const Nan::FunctionCallbackInfo<v8::Value>& info);

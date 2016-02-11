@@ -55,6 +55,15 @@ void VtkImageStencilSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInformationInput", GetInformationInput);
 	Nan::SetPrototypeMethod(tpl, "getInformationInput", GetInformationInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputOrigin", GetOutputOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOutputOrigin", GetOutputOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputSpacing", GetOutputSpacing);
+	Nan::SetPrototypeMethod(tpl, "getOutputSpacing", GetOutputSpacing);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputWholeExtent", GetOutputWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getOutputWholeExtent", GetOutputWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -133,7 +142,7 @@ void VtkImageStencilSourceWrap::GetInformationInput(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetInformationInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -143,6 +152,57 @@ void VtkImageStencilSourceWrap::GetInformationInput(const Nan::FunctionCallbackI
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageStencilSourceWrap::GetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilSourceWrap>(info.Holder());
+	vtkImageStencilSource *native = (vtkImageStencilSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageStencilSourceWrap::GetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilSourceWrap>(info.Holder());
+	vtkImageStencilSource *native = (vtkImageStencilSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageStencilSourceWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageStencilSourceWrap>(info.Holder());
+	vtkImageStencilSource *native = (vtkImageStencilSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageStencilSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -178,7 +238,7 @@ void VtkImageStencilSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageStencilSourceWrap::InitPtpl();
+	VtkImageStencilSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +257,7 @@ void VtkImageStencilSourceWrap::ReportReferences(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGarbageCollectorWrap *a0 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -226,7 +286,7 @@ void VtkImageStencilSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageStencilSourceWrap::InitPtpl();
+		VtkImageStencilSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +308,7 @@ void VtkImageStencilSourceWrap::SetInformationInput(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -275,7 +335,7 @@ void VtkImageStencilSourceWrap::SetOutputOrigin(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +364,7 @@ void VtkImageStencilSourceWrap::SetOutputOrigin(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +380,7 @@ void VtkImageStencilSourceWrap::SetOutputOrigin(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -351,7 +411,7 @@ void VtkImageStencilSourceWrap::SetOutputSpacing(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +440,7 @@ void VtkImageStencilSourceWrap::SetOutputSpacing(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +456,7 @@ void VtkImageStencilSourceWrap::SetOutputSpacing(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -427,7 +487,7 @@ void VtkImageStencilSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +516,7 @@ void VtkImageStencilSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +538,7 @@ void VtkImageStencilSourceWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

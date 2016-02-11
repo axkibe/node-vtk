@@ -269,7 +269,7 @@ void VtkEarthSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkEarthSourceWrap::InitPtpl();
+	VtkEarthSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,7 +285,7 @@ void VtkEarthSourceWrap::OutlineOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkEarthSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEarthSourceWrap>(info.Holder());
 	vtkEarthSource *native = (vtkEarthSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkEarthSourceWrap::OutlineOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkEarthSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEarthSourceWrap>(info.Holder());
 	vtkEarthSource *native = (vtkEarthSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -321,7 +321,7 @@ void VtkEarthSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEarthSourceWrap::InitPtpl();
+		VtkEarthSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -342,7 +342,7 @@ void VtkEarthSourceWrap::SetOnRatio(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkEarthSource *native = (vtkEarthSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkEarthSourceWrap::SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkEarthSource *native = (vtkEarthSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkEarthSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkEarthSource *native = (vtkEarthSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

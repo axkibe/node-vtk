@@ -149,7 +149,7 @@ void VtkInteractorStyleSwitchWrap::GetCurrentStyle(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentStyle();
-		VtkInteractorStyleWrap::InitPtpl();
+	VtkInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkInteractorStyleSwitchWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleSwitchWrap::InitPtpl();
+	VtkInteractorStyleSwitchWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkInteractorStyleSwitchWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkInteractorStyleSwitchWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleSwitchWrap::InitPtpl();
+		VtkInteractorStyleSwitchWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkInteractorStyleSwitchWrap::SetAutoAdjustCameraClippingRange(const Nan::F
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -275,7 +275,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentRenderer(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -292,7 +292,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentStyleToJoystickActor(const Nan::Fun
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentStyleToJoystickCamera(const Nan::Fu
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentStyleToMultiTouchCamera(const Nan::
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentStyleToTrackballActor(const Nan::Fu
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkInteractorStyleSwitchWrap::SetCurrentStyleToTrackballCamera(const Nan::F
 {
 	VtkInteractorStyleSwitchWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleSwitchWrap>(info.Holder());
 	vtkInteractorStyleSwitch *native = (vtkInteractorStyleSwitch *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -355,7 +355,7 @@ void VtkInteractorStyleSwitchWrap::SetDefaultRenderer(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -375,7 +375,7 @@ void VtkInteractorStyleSwitchWrap::SetInteractor(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

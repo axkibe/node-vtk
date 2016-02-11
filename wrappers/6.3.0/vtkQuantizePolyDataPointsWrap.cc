@@ -195,7 +195,7 @@ void VtkQuantizePolyDataPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuantizePolyDataPointsWrap::InitPtpl();
+	VtkQuantizePolyDataPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnBounds(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -260,7 +260,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnBounds(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -310,7 +310,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnBounds(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -330,7 +330,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnBounds(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -368,7 +368,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnPoint(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -398,7 +398,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnPoint(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -448,7 +448,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnPoint(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -468,7 +468,7 @@ void VtkQuantizePolyDataPointsWrap::OperateOnPoint(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -499,7 +499,7 @@ void VtkQuantizePolyDataPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuantizePolyDataPointsWrap::InitPtpl();
+		VtkQuantizePolyDataPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkQuantizePolyDataPointsWrap::SetQFactor(const Nan::FunctionCallbackInfo<v
 	vtkQuantizePolyDataPoints *native = (vtkQuantizePolyDataPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

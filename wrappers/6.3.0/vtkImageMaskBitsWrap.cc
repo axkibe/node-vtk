@@ -170,7 +170,7 @@ void VtkImageMaskBitsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMaskBitsWrap::InitPtpl();
+	VtkImageMaskBitsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkImageMaskBitsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMaskBitsWrap::InitPtpl();
+		VtkImageMaskBitsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkImageMaskBitsWrap::SetOperation(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -236,7 +236,7 @@ void VtkImageMaskBitsWrap::SetOperationToAnd(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkImageMaskBitsWrap::SetOperationToNand(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkImageMaskBitsWrap::SetOperationToNor(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkImageMaskBitsWrap::SetOperationToOr(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkImageMaskBitsWrap::SetOperationToXor(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
 	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

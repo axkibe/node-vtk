@@ -53,11 +53,17 @@ void VtkTextSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "BackingOn", BackingOn);
 	Nan::SetPrototypeMethod(tpl, "backingOn", BackingOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBackgroundColor", GetBackgroundColor);
+	Nan::SetPrototypeMethod(tpl, "getBackgroundColor", GetBackgroundColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetBacking", GetBacking);
 	Nan::SetPrototypeMethod(tpl, "getBacking", GetBacking);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetForegroundColor", GetForegroundColor);
+	Nan::SetPrototypeMethod(tpl, "getForegroundColor", GetForegroundColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutputPointsPrecision", GetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "getOutputPointsPrecision", GetOutputPointsPrecision);
@@ -122,7 +128,7 @@ void VtkTextSourceWrap::BackingOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTextSourceWrap *wrapper = ObjectWrap::Unwrap<VtkTextSourceWrap>(info.Holder());
 	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,12 +140,29 @@ void VtkTextSourceWrap::BackingOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTextSourceWrap *wrapper = ObjectWrap::Unwrap<VtkTextSourceWrap>(info.Holder());
 	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->BackingOn();
+}
+
+void VtkTextSourceWrap::GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextSourceWrap *wrapper = ObjectWrap::Unwrap<VtkTextSourceWrap>(info.Holder());
+	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackgroundColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTextSourceWrap::GetBacking(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -168,6 +191,23 @@ void VtkTextSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTextSourceWrap::GetForegroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextSourceWrap *wrapper = ObjectWrap::Unwrap<VtkTextSourceWrap>(info.Holder());
+	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetForegroundColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTextSourceWrap::GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -231,7 +271,7 @@ void VtkTextSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextSourceWrap::InitPtpl();
+	VtkTextSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +299,7 @@ void VtkTextSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextSourceWrap::InitPtpl();
+		VtkTextSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +328,7 @@ void VtkTextSourceWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +357,7 @@ void VtkTextSourceWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +373,7 @@ void VtkTextSourceWrap::SetBackgroundColor(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -356,7 +396,7 @@ void VtkTextSourceWrap::SetBacking(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +423,7 @@ void VtkTextSourceWrap::SetForegroundColor(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +452,7 @@ void VtkTextSourceWrap::SetForegroundColor(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -428,7 +468,7 @@ void VtkTextSourceWrap::SetForegroundColor(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -451,7 +491,7 @@ void VtkTextSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	vtkTextSource *native = (vtkTextSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +511,7 @@ void VtkTextSourceWrap::SetText(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

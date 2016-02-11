@@ -70,6 +70,9 @@ void VtkPointHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors", GetActors);
 	Nan::SetPrototypeMethod(tpl, "getActors", GetActors);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -247,7 +250,7 @@ void VtkPointHandleRepresentation3DWrap::AllOff(const Nan::FunctionCallbackInfo<
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +262,7 @@ void VtkPointHandleRepresentation3DWrap::AllOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +274,7 @@ void VtkPointHandleRepresentation3DWrap::BuildRepresentation(const Nan::Function
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +318,7 @@ void VtkPointHandleRepresentation3DWrap::DeepCopy(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +338,7 @@ void VtkPointHandleRepresentation3DWrap::GetActors(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -346,6 +349,23 @@ void VtkPointHandleRepresentation3DWrap::GetActors(const Nan::FunctionCallbackIn
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPointHandleRepresentation3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
+	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPointHandleRepresentation3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -429,7 +449,7 @@ void VtkPointHandleRepresentation3DWrap::GetProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -452,7 +472,7 @@ void VtkPointHandleRepresentation3DWrap::GetSelectedProperty(const Nan::Function
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +574,7 @@ void VtkPointHandleRepresentation3DWrap::Highlight(const Nan::FunctionCallbackIn
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -600,7 +620,7 @@ void VtkPointHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointHandleRepresentation3DWrap::InitPtpl();
+	VtkPointHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,7 +636,7 @@ void VtkPointHandleRepresentation3DWrap::OutlineOff(const Nan::FunctionCallbackI
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -628,7 +648,7 @@ void VtkPointHandleRepresentation3DWrap::OutlineOn(const Nan::FunctionCallbackIn
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -650,7 +670,7 @@ void VtkPointHandleRepresentation3DWrap::PlaceWidget(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -679,7 +699,7 @@ void VtkPointHandleRepresentation3DWrap::PlaceWidget(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -699,7 +719,7 @@ void VtkPointHandleRepresentation3DWrap::ReleaseGraphicsResources(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +792,7 @@ void VtkPointHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointHandleRepresentation3DWrap::InitPtpl();
+		VtkPointHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -801,7 +821,7 @@ void VtkPointHandleRepresentation3DWrap::SetDisplayPosition(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -830,7 +850,7 @@ void VtkPointHandleRepresentation3DWrap::SetDisplayPosition(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -849,7 +869,7 @@ void VtkPointHandleRepresentation3DWrap::SetHandleSize(const Nan::FunctionCallba
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -868,7 +888,7 @@ void VtkPointHandleRepresentation3DWrap::SetHotSpotSize(const Nan::FunctionCallb
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -887,7 +907,7 @@ void VtkPointHandleRepresentation3DWrap::SetOutline(const Nan::FunctionCallbackI
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -907,7 +927,7 @@ void VtkPointHandleRepresentation3DWrap::SetProperty(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -927,7 +947,7 @@ void VtkPointHandleRepresentation3DWrap::SetSelectedProperty(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -946,7 +966,7 @@ void VtkPointHandleRepresentation3DWrap::SetSmoothMotion(const Nan::FunctionCall
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -965,7 +985,7 @@ void VtkPointHandleRepresentation3DWrap::SetTranslationMode(const Nan::FunctionC
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -992,7 +1012,7 @@ void VtkPointHandleRepresentation3DWrap::SetWorldPosition(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1021,7 +1041,7 @@ void VtkPointHandleRepresentation3DWrap::SetWorldPosition(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1040,7 +1060,7 @@ void VtkPointHandleRepresentation3DWrap::SetXShadows(const Nan::FunctionCallback
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1059,7 +1079,7 @@ void VtkPointHandleRepresentation3DWrap::SetYShadows(const Nan::FunctionCallback
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1078,7 +1098,7 @@ void VtkPointHandleRepresentation3DWrap::SetZShadows(const Nan::FunctionCallback
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1098,7 +1118,7 @@ void VtkPointHandleRepresentation3DWrap::ShallowCopy(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1115,7 +1135,7 @@ void VtkPointHandleRepresentation3DWrap::SmoothMotionOff(const Nan::FunctionCall
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1127,7 +1147,7 @@ void VtkPointHandleRepresentation3DWrap::SmoothMotionOn(const Nan::FunctionCallb
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1149,7 +1169,7 @@ void VtkPointHandleRepresentation3DWrap::StartWidgetInteraction(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1178,7 +1198,7 @@ void VtkPointHandleRepresentation3DWrap::StartWidgetInteraction(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1195,7 +1215,7 @@ void VtkPointHandleRepresentation3DWrap::TranslationModeOff(const Nan::FunctionC
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1207,7 +1227,7 @@ void VtkPointHandleRepresentation3DWrap::TranslationModeOn(const Nan::FunctionCa
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1229,7 +1249,7 @@ void VtkPointHandleRepresentation3DWrap::WidgetInteraction(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1258,7 +1278,7 @@ void VtkPointHandleRepresentation3DWrap::WidgetInteraction(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1275,7 +1295,7 @@ void VtkPointHandleRepresentation3DWrap::XShadowsOff(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1287,7 +1307,7 @@ void VtkPointHandleRepresentation3DWrap::XShadowsOn(const Nan::FunctionCallbackI
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1299,7 +1319,7 @@ void VtkPointHandleRepresentation3DWrap::YShadowsOff(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1311,7 +1331,7 @@ void VtkPointHandleRepresentation3DWrap::YShadowsOn(const Nan::FunctionCallbackI
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1323,7 +1343,7 @@ void VtkPointHandleRepresentation3DWrap::ZShadowsOff(const Nan::FunctionCallback
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1335,7 +1355,7 @@ void VtkPointHandleRepresentation3DWrap::ZShadowsOn(const Nan::FunctionCallbackI
 {
 	VtkPointHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPointHandleRepresentation3DWrap>(info.Holder());
 	vtkPointHandleRepresentation3D *native = (vtkPointHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

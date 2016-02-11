@@ -135,7 +135,7 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
+	VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkQuadratureSchemeDictionaryGeneratorWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
+		VtkQuadratureSchemeDictionaryGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

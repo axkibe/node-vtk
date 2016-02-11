@@ -171,7 +171,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -202,7 +202,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -253,7 +253,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -324,7 +324,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -365,7 +365,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -416,7 +416,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -477,7 +477,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -508,7 +508,7 @@ void VtkParametricSuperToroidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1086,7 +1086,7 @@ void VtkParametricSuperToroidWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricSuperToroidWrap::InitPtpl();
+	VtkParametricSuperToroidWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1114,7 +1114,7 @@ void VtkParametricSuperToroidWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricSuperToroidWrap::InitPtpl();
+		VtkParametricSuperToroidWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1135,7 +1135,7 @@ void VtkParametricSuperToroidWrap::SetCrossSectionRadius(const Nan::FunctionCall
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1154,7 @@ void VtkParametricSuperToroidWrap::SetN1(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1173,7 +1173,7 @@ void VtkParametricSuperToroidWrap::SetN2(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1192,7 +1192,7 @@ void VtkParametricSuperToroidWrap::SetRingRadius(const Nan::FunctionCallbackInfo
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1211,7 +1211,7 @@ void VtkParametricSuperToroidWrap::SetXRadius(const Nan::FunctionCallbackInfo<v8
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1230,7 +1230,7 @@ void VtkParametricSuperToroidWrap::SetYRadius(const Nan::FunctionCallbackInfo<v8
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1249,7 +1249,7 @@ void VtkParametricSuperToroidWrap::SetZRadius(const Nan::FunctionCallbackInfo<v8
 	vtkParametricSuperToroid *native = (vtkParametricSuperToroid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

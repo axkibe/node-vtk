@@ -80,6 +80,15 @@ void VtkTransformTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFlipT", GetFlipT);
 	Nan::SetPrototypeMethod(tpl, "getFlipT", GetFlipT);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetScale", GetScale);
+	Nan::SetPrototypeMethod(tpl, "getScale", GetScale);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -150,7 +159,7 @@ void VtkTransformTextureCoordsWrap::AddPosition(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -179,7 +188,7 @@ void VtkTransformTextureCoordsWrap::AddPosition(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -195,7 +204,7 @@ void VtkTransformTextureCoordsWrap::AddPosition(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -216,7 +225,7 @@ void VtkTransformTextureCoordsWrap::FlipROff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +237,7 @@ void VtkTransformTextureCoordsWrap::FlipROn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +249,7 @@ void VtkTransformTextureCoordsWrap::FlipSOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +261,7 @@ void VtkTransformTextureCoordsWrap::FlipSOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +273,7 @@ void VtkTransformTextureCoordsWrap::FlipTOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +285,7 @@ void VtkTransformTextureCoordsWrap::FlipTOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,6 +349,57 @@ void VtkTransformTextureCoordsWrap::GetFlipT(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTransformTextureCoordsWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
+	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTransformTextureCoordsWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
+	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTransformTextureCoordsWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
+	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScale();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTransformTextureCoordsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformTextureCoordsWrap>(info.Holder());
@@ -373,7 +433,7 @@ void VtkTransformTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransformTextureCoordsWrap::InitPtpl();
+	VtkTransformTextureCoordsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +461,7 @@ void VtkTransformTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransformTextureCoordsWrap::InitPtpl();
+		VtkTransformTextureCoordsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -422,7 +482,7 @@ void VtkTransformTextureCoordsWrap::SetFlipR(const Nan::FunctionCallbackInfo<v8:
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +501,7 @@ void VtkTransformTextureCoordsWrap::SetFlipS(const Nan::FunctionCallbackInfo<v8:
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -460,7 +520,7 @@ void VtkTransformTextureCoordsWrap::SetFlipT(const Nan::FunctionCallbackInfo<v8:
 	vtkTransformTextureCoords *native = (vtkTransformTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +547,7 @@ void VtkTransformTextureCoordsWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -516,7 +576,7 @@ void VtkTransformTextureCoordsWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -532,7 +592,7 @@ void VtkTransformTextureCoordsWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -563,7 +623,7 @@ void VtkTransformTextureCoordsWrap::SetPosition(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +652,7 @@ void VtkTransformTextureCoordsWrap::SetPosition(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -608,7 +668,7 @@ void VtkTransformTextureCoordsWrap::SetPosition(const Nan::FunctionCallbackInfo<
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -639,7 +699,7 @@ void VtkTransformTextureCoordsWrap::SetScale(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +728,7 @@ void VtkTransformTextureCoordsWrap::SetScale(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -684,7 +744,7 @@ void VtkTransformTextureCoordsWrap::SetScale(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

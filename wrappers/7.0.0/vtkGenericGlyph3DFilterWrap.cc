@@ -96,6 +96,9 @@ void VtkGenericGlyph3DFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPointIdsName", GetPointIdsName);
 	Nan::SetPrototypeMethod(tpl, "getPointIdsName", GetPointIdsName);
 
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetScaleFactor", GetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "getScaleFactor", GetScaleFactor);
 
@@ -255,7 +258,7 @@ void VtkGenericGlyph3DFilterWrap::ClampingOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +270,7 @@ void VtkGenericGlyph3DFilterWrap::ClampingOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +282,7 @@ void VtkGenericGlyph3DFilterWrap::GeneratePointIdsOff(const Nan::FunctionCallbac
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +294,7 @@ void VtkGenericGlyph3DFilterWrap::GeneratePointIdsOn(const Nan::FunctionCallback
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,6 +470,23 @@ void VtkGenericGlyph3DFilterWrap::GetPointIdsName(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkGenericGlyph3DFilterWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
+	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGenericGlyph3DFilterWrap::GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
@@ -538,7 +558,7 @@ void VtkGenericGlyph3DFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetSource(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -614,7 +634,7 @@ void VtkGenericGlyph3DFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericGlyph3DFilterWrap::InitPtpl();
+	VtkGenericGlyph3DFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -630,7 +650,7 @@ void VtkGenericGlyph3DFilterWrap::OrientOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +662,7 @@ void VtkGenericGlyph3DFilterWrap::OrientOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -666,7 +686,7 @@ void VtkGenericGlyph3DFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericGlyph3DFilterWrap::InitPtpl();
+		VtkGenericGlyph3DFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -685,7 +705,7 @@ void VtkGenericGlyph3DFilterWrap::ScalingOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -697,7 +717,7 @@ void VtkGenericGlyph3DFilterWrap::ScalingOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -712,7 +732,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputNormals(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -732,7 +752,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputScalars(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +772,7 @@ void VtkGenericGlyph3DFilterWrap::SelectInputVectors(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -771,7 +791,7 @@ void VtkGenericGlyph3DFilterWrap::SetClamping(const Nan::FunctionCallbackInfo<v8
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -790,7 +810,7 @@ void VtkGenericGlyph3DFilterWrap::SetColorMode(const Nan::FunctionCallbackInfo<v
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -807,7 +827,7 @@ void VtkGenericGlyph3DFilterWrap::SetColorModeToColorByScalar(const Nan::Functio
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -819,7 +839,7 @@ void VtkGenericGlyph3DFilterWrap::SetColorModeToColorByScale(const Nan::Function
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -831,7 +851,7 @@ void VtkGenericGlyph3DFilterWrap::SetColorModeToColorByVector(const Nan::Functio
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -845,7 +865,7 @@ void VtkGenericGlyph3DFilterWrap::SetGeneratePointIds(const Nan::FunctionCallbac
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -864,7 +884,7 @@ void VtkGenericGlyph3DFilterWrap::SetIndexMode(const Nan::FunctionCallbackInfo<v
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -881,7 +901,7 @@ void VtkGenericGlyph3DFilterWrap::SetIndexModeToOff(const Nan::FunctionCallbackI
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -893,7 +913,7 @@ void VtkGenericGlyph3DFilterWrap::SetIndexModeToScalar(const Nan::FunctionCallba
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -905,7 +925,7 @@ void VtkGenericGlyph3DFilterWrap::SetIndexModeToVector(const Nan::FunctionCallba
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -919,7 +939,7 @@ void VtkGenericGlyph3DFilterWrap::SetOrient(const Nan::FunctionCallbackInfo<v8::
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -939,7 +959,7 @@ void VtkGenericGlyph3DFilterWrap::SetPointIdsName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -966,7 +986,7 @@ void VtkGenericGlyph3DFilterWrap::SetRange(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -995,7 +1015,7 @@ void VtkGenericGlyph3DFilterWrap::SetRange(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1009,7 +1029,7 @@ void VtkGenericGlyph3DFilterWrap::SetRange(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1030,7 +1050,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleFactor(const Nan::FunctionCallbackInfo
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1049,7 +1069,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleMode(const Nan::FunctionCallbackInfo<v
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1066,7 +1086,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleModeToDataScalingOff(const Nan::Functi
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1078,7 +1098,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleModeToScaleByScalar(const Nan::Functio
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1090,7 +1110,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleModeToScaleByVector(const Nan::Functio
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1102,7 +1122,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaleModeToScaleByVectorComponents(const Na
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1116,7 +1136,7 @@ void VtkGenericGlyph3DFilterWrap::SetScaling(const Nan::FunctionCallbackInfo<v8:
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1136,7 +1156,7 @@ void VtkGenericGlyph3DFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1151,7 +1171,7 @@ void VtkGenericGlyph3DFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1172,7 +1192,7 @@ void VtkGenericGlyph3DFilterWrap::SetVectorMode(const Nan::FunctionCallbackInfo<
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1189,7 +1209,7 @@ void VtkGenericGlyph3DFilterWrap::SetVectorModeToUseNormal(const Nan::FunctionCa
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1201,7 +1221,7 @@ void VtkGenericGlyph3DFilterWrap::SetVectorModeToUseVector(const Nan::FunctionCa
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1213,7 +1233,7 @@ void VtkGenericGlyph3DFilterWrap::SetVectorModeToVectorRotationOff(const Nan::Fu
 {
 	VtkGenericGlyph3DFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGenericGlyph3DFilterWrap>(info.Holder());
 	vtkGenericGlyph3DFilter *native = (vtkGenericGlyph3DFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

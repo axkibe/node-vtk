@@ -267,7 +267,7 @@ void VtkTemporalShiftScaleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalShiftScaleWrap::InitPtpl();
+	VtkTemporalShiftScaleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkTemporalShiftScaleWrap::PeriodicEndCorrectionOff(const Nan::FunctionCall
 {
 	VtkTemporalShiftScaleWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalShiftScaleWrap>(info.Holder());
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkTemporalShiftScaleWrap::PeriodicEndCorrectionOn(const Nan::FunctionCallb
 {
 	VtkTemporalShiftScaleWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalShiftScaleWrap>(info.Holder());
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -307,7 +307,7 @@ void VtkTemporalShiftScaleWrap::PeriodicOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTemporalShiftScaleWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalShiftScaleWrap>(info.Holder());
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkTemporalShiftScaleWrap::PeriodicOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTemporalShiftScaleWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalShiftScaleWrap>(info.Holder());
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkTemporalShiftScaleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalShiftScaleWrap::InitPtpl();
+		VtkTemporalShiftScaleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkTemporalShiftScaleWrap::SetMaximumNumberOfPeriods(const Nan::FunctionCal
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkTemporalShiftScaleWrap::SetPeriodic(const Nan::FunctionCallbackInfo<v8::
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkTemporalShiftScaleWrap::SetPeriodicEndCorrection(const Nan::FunctionCall
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkTemporalShiftScaleWrap::SetPostShift(const Nan::FunctionCallbackInfo<v8:
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +440,7 @@ void VtkTemporalShiftScaleWrap::SetPreShift(const Nan::FunctionCallbackInfo<v8::
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +459,7 @@ void VtkTemporalShiftScaleWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTemporalShiftScale *native = (vtkTemporalShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

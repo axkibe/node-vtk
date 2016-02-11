@@ -62,8 +62,14 @@ void VtkPointLoadWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLoadValue", GetLoadValue);
 	Nan::SetPrototypeMethod(tpl, "getLoadValue", GetLoadValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetPoissonsRatio", GetPoissonsRatio);
 	Nan::SetPrototypeMethod(tpl, "getPoissonsRatio", GetPoissonsRatio);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -122,7 +128,7 @@ void VtkPointLoadWrap::ComputeEffectiveStressOff(const Nan::FunctionCallbackInfo
 {
 	VtkPointLoadWrap *wrapper = ObjectWrap::Unwrap<VtkPointLoadWrap>(info.Holder());
 	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +140,7 @@ void VtkPointLoadWrap::ComputeEffectiveStressOn(const Nan::FunctionCallbackInfo<
 {
 	VtkPointLoadWrap *wrapper = ObjectWrap::Unwrap<VtkPointLoadWrap>(info.Holder());
 	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,6 +190,23 @@ void VtkPointLoadWrap::GetLoadValue(const Nan::FunctionCallbackInfo<v8::Value>& 
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPointLoadWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLoadWrap *wrapper = ObjectWrap::Unwrap<VtkPointLoadWrap>(info.Holder());
+	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPointLoadWrap::GetPoissonsRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPointLoadWrap *wrapper = ObjectWrap::Unwrap<VtkPointLoadWrap>(info.Holder());
@@ -196,6 +219,23 @@ void VtkPointLoadWrap::GetPoissonsRatio(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetPoissonsRatio();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPointLoadWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLoadWrap *wrapper = ObjectWrap::Unwrap<VtkPointLoadWrap>(info.Holder());
+	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPointLoadWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -231,7 +271,7 @@ void VtkPointLoadWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointLoadWrap::InitPtpl();
+	VtkPointLoadWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +299,7 @@ void VtkPointLoadWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointLoadWrap::InitPtpl();
+		VtkPointLoadWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +320,7 @@ void VtkPointLoadWrap::SetComputeEffectiveStress(const Nan::FunctionCallbackInfo
 	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +339,7 @@ void VtkPointLoadWrap::SetLoadValue(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +366,7 @@ void VtkPointLoadWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +395,7 @@ void VtkPointLoadWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +417,7 @@ void VtkPointLoadWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -406,7 +446,7 @@ void VtkPointLoadWrap::SetPoissonsRatio(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPointLoad *native = (vtkPointLoad *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +473,7 @@ void VtkPointLoadWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -462,7 +502,7 @@ void VtkPointLoadWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -478,7 +518,7 @@ void VtkPointLoadWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

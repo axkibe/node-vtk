@@ -203,7 +203,7 @@ void VtkGlobeSourceWrap::AutoCalculateCurtainHeightOff(const Nan::FunctionCallba
 {
 	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkGlobeSourceWrap::AutoCalculateCurtainHeightOn(const Nan::FunctionCallbac
 {
 	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -578,7 +578,7 @@ void VtkGlobeSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkGlobeSourceWrap::InitPtpl();
+	VtkGlobeSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -594,7 +594,7 @@ void VtkGlobeSourceWrap::QuadrilateralTessellationOff(const Nan::FunctionCallbac
 {
 	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -606,7 +606,7 @@ void VtkGlobeSourceWrap::QuadrilateralTessellationOn(const Nan::FunctionCallback
 {
 	VtkGlobeSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGlobeSourceWrap>(info.Holder());
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +630,7 @@ void VtkGlobeSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGlobeSourceWrap::InitPtpl();
+		VtkGlobeSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -651,7 +651,7 @@ void VtkGlobeSourceWrap::SetAutoCalculateCurtainHeight(const Nan::FunctionCallba
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkGlobeSourceWrap::SetCurtainHeight(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +689,7 @@ void VtkGlobeSourceWrap::SetEndLatitude(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkGlobeSourceWrap::SetEndLongitude(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +727,7 @@ void VtkGlobeSourceWrap::SetLatitudeResolution(const Nan::FunctionCallbackInfo<v
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +746,7 @@ void VtkGlobeSourceWrap::SetLongitudeResolution(const Nan::FunctionCallbackInfo<
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -773,7 +773,7 @@ void VtkGlobeSourceWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -802,7 +802,7 @@ void VtkGlobeSourceWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -818,7 +818,7 @@ void VtkGlobeSourceWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -841,7 +841,7 @@ void VtkGlobeSourceWrap::SetQuadrilateralTessellation(const Nan::FunctionCallbac
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -860,7 +860,7 @@ void VtkGlobeSourceWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -879,7 +879,7 @@ void VtkGlobeSourceWrap::SetStartLatitude(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -898,7 +898,7 @@ void VtkGlobeSourceWrap::SetStartLongitude(const Nan::FunctionCallbackInfo<v8::V
 	vtkGlobeSource *native = (vtkGlobeSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

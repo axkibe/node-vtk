@@ -159,7 +159,7 @@ void VtkAbstractCellLocatorWrap::CacheCellBoundsOff(const Nan::FunctionCallbackI
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkAbstractCellLocatorWrap::CacheCellBoundsOn(const Nan::FunctionCallbackIn
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +207,7 @@ void VtkAbstractCellLocatorWrap::FindCellsAlongLine(const Nan::FunctionCallbackI
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -246,7 +246,7 @@ void VtkAbstractCellLocatorWrap::FindCellsAlongLine(const Nan::FunctionCallbackI
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -305,7 +305,7 @@ void VtkAbstractCellLocatorWrap::FindCellsAlongLine(const Nan::FunctionCallbackI
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -334,7 +334,7 @@ void VtkAbstractCellLocatorWrap::FindCellsAlongLine(const Nan::FunctionCallbackI
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkIdListWrap *a3 = ObjectWrap::Unwrap<VtkIdListWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -677,7 +677,7 @@ void VtkAbstractCellLocatorWrap::LazyEvaluationOff(const Nan::FunctionCallbackIn
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -689,7 +689,7 @@ void VtkAbstractCellLocatorWrap::LazyEvaluationOn(const Nan::FunctionCallbackInf
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -708,7 +708,7 @@ void VtkAbstractCellLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractCellLocatorWrap::InitPtpl();
+	VtkAbstractCellLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -724,7 +724,7 @@ void VtkAbstractCellLocatorWrap::RetainCellListsOff(const Nan::FunctionCallbackI
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +736,7 @@ void VtkAbstractCellLocatorWrap::RetainCellListsOn(const Nan::FunctionCallbackIn
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -760,7 +760,7 @@ void VtkAbstractCellLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractCellLocatorWrap::InitPtpl();
+		VtkAbstractCellLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -781,7 +781,7 @@ void VtkAbstractCellLocatorWrap::SetCacheCellBounds(const Nan::FunctionCallbackI
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +800,7 @@ void VtkAbstractCellLocatorWrap::SetLazyEvaluation(const Nan::FunctionCallbackIn
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -819,7 +819,7 @@ void VtkAbstractCellLocatorWrap::SetNumberOfCellsPerNode(const Nan::FunctionCall
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -838,7 +838,7 @@ void VtkAbstractCellLocatorWrap::SetRetainCellLists(const Nan::FunctionCallbackI
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +857,7 @@ void VtkAbstractCellLocatorWrap::SetUseExistingSearchStructure(const Nan::Functi
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -874,7 +874,7 @@ void VtkAbstractCellLocatorWrap::UseExistingSearchStructureOff(const Nan::Functi
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -886,7 +886,7 @@ void VtkAbstractCellLocatorWrap::UseExistingSearchStructureOn(const Nan::Functio
 {
 	VtkAbstractCellLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info.Holder());
 	vtkAbstractCellLocator *native = (vtkAbstractCellLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -35,6 +35,9 @@ class VtkHyperOctreeFractalSourceWrap : public VtkHyperOctreeAlgorithmWrap
 		static void GetDimensionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSizeCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpanThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

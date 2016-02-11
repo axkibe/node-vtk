@@ -32,6 +32,7 @@ class VtkXMLStructuredDataWriterWrap : public VtkXMLWriterWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWriteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWritePiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

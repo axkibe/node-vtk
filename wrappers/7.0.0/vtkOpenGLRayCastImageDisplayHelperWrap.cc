@@ -139,7 +139,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
+	VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -158,7 +158,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::ReleaseGraphicsResources(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -187,7 +187,7 @@ void VtkOpenGLRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
+		VtkOpenGLRayCastImageDisplayHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

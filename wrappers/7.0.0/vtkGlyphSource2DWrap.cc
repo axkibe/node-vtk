@@ -65,8 +65,14 @@ void VtkGlyphSource2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FilledOn", FilledOn);
 	Nan::SetPrototypeMethod(tpl, "filledOn", FilledOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetCross", GetCross);
 	Nan::SetPrototypeMethod(tpl, "getCross", GetCross);
@@ -233,7 +239,7 @@ void VtkGlyphSource2DWrap::CrossOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +251,7 @@ void VtkGlyphSource2DWrap::CrossOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +263,7 @@ void VtkGlyphSource2DWrap::DashOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +275,7 @@ void VtkGlyphSource2DWrap::DashOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +287,7 @@ void VtkGlyphSource2DWrap::FilledOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,12 +299,29 @@ void VtkGlyphSource2DWrap::FilledOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->FilledOn();
+}
+
+void VtkGlyphSource2DWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
+	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGlyphSource2DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -313,6 +336,23 @@ void VtkGlyphSource2DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGlyphSource2DWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
+	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGlyphSource2DWrap::GetCross(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -586,7 +626,7 @@ void VtkGlyphSource2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGlyphSource2DWrap::InitPtpl();
+	VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -614,7 +654,7 @@ void VtkGlyphSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGlyphSource2DWrap::InitPtpl();
+		VtkGlyphSource2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -643,7 +683,7 @@ void VtkGlyphSource2DWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -672,7 +712,7 @@ void VtkGlyphSource2DWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +728,7 @@ void VtkGlyphSource2DWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -719,7 +759,7 @@ void VtkGlyphSource2DWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +788,7 @@ void VtkGlyphSource2DWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +804,7 @@ void VtkGlyphSource2DWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -787,7 +827,7 @@ void VtkGlyphSource2DWrap::SetCross(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -806,7 +846,7 @@ void VtkGlyphSource2DWrap::SetDash(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +865,7 @@ void VtkGlyphSource2DWrap::SetFilled(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +884,7 @@ void VtkGlyphSource2DWrap::SetGlyphType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +901,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToArrow(const Nan::FunctionCallbackInfo<v
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -873,7 +913,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToCircle(const Nan::FunctionCallbackInfo<
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -885,7 +925,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToCross(const Nan::FunctionCallbackInfo<v
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -897,7 +937,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToDash(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -909,7 +949,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToDiamond(const Nan::FunctionCallbackInfo
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -921,7 +961,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToEdgeArrow(const Nan::FunctionCallbackIn
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -933,7 +973,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToHookedArrow(const Nan::FunctionCallback
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -945,7 +985,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToNone(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -957,7 +997,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToSquare(const Nan::FunctionCallbackInfo<
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -969,7 +1009,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToThickArrow(const Nan::FunctionCallbackI
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -981,7 +1021,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToThickCross(const Nan::FunctionCallbackI
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -993,7 +1033,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToTriangle(const Nan::FunctionCallbackInf
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1005,7 +1045,7 @@ void VtkGlyphSource2DWrap::SetGlyphTypeToVertex(const Nan::FunctionCallbackInfo<
 {
 	VtkGlyphSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkGlyphSource2DWrap>(info.Holder());
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1019,7 +1059,7 @@ void VtkGlyphSource2DWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackI
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1038,7 +1078,7 @@ void VtkGlyphSource2DWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1057,7 +1097,7 @@ void VtkGlyphSource2DWrap::SetRotationAngle(const Nan::FunctionCallbackInfo<v8::
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1076,7 +1116,7 @@ void VtkGlyphSource2DWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1095,7 +1135,7 @@ void VtkGlyphSource2DWrap::SetScale2(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGlyphSource2D *native = (vtkGlyphSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -110,7 +110,7 @@ void VtkPolyDataStreamerWrap::ColorByPieceOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPolyDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataStreamerWrap>(info.Holder());
 	vtkPolyDataStreamer *native = (vtkPolyDataStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -122,7 +122,7 @@ void VtkPolyDataStreamerWrap::ColorByPieceOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPolyDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataStreamerWrap>(info.Holder());
 	vtkPolyDataStreamer *native = (vtkPolyDataStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkPolyDataStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataStreamerWrap::InitPtpl();
+	VtkPolyDataStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkPolyDataStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataStreamerWrap::InitPtpl();
+		VtkPolyDataStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void VtkPolyDataStreamerWrap::SetColorByPiece(const Nan::FunctionCallbackInfo<v8
 	vtkPolyDataStreamer *native = (vtkPolyDataStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -273,7 +273,7 @@ void VtkPolyDataStreamerWrap::SetNumberOfStreamDivisions(const Nan::FunctionCall
 	vtkPolyDataStreamer *native = (vtkPolyDataStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

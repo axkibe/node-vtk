@@ -179,7 +179,7 @@ void VtkResliceCursorPickerWrap::GetResliceCursorAlgorithm(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetResliceCursorAlgorithm();
-		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
+	VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkResliceCursorPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorPickerWrap::InitPtpl();
+	VtkResliceCursorPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkResliceCursorPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkRendererWrap *a2 = ObjectWrap::Unwrap<VtkRendererWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -297,7 +297,7 @@ void VtkResliceCursorPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkRendererWrap *a2 = ObjectWrap::Unwrap<VtkRendererWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -352,7 +352,7 @@ void VtkResliceCursorPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkRendererWrap *a2 = ObjectWrap::Unwrap<VtkRendererWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -377,7 +377,7 @@ void VtkResliceCursorPickerWrap::Pick(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkRendererWrap *a2 = ObjectWrap::Unwrap<VtkRendererWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -437,7 +437,7 @@ void VtkResliceCursorPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorPickerWrap::InitPtpl();
+		VtkResliceCursorPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -459,7 +459,7 @@ void VtkResliceCursorPickerWrap::SetResliceCursorAlgorithm(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -479,7 +479,7 @@ void VtkResliceCursorPickerWrap::SetTransformMatrix(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

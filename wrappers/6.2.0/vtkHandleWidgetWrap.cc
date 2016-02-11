@@ -129,7 +129,7 @@ void VtkHandleWidgetWrap::AllowHandleResizeOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkHandleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkHandleWidgetWrap>(info.Holder());
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkHandleWidgetWrap::AllowHandleResizeOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkHandleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkHandleWidgetWrap>(info.Holder());
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkHandleWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbac
 {
 	VtkHandleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkHandleWidgetWrap>(info.Holder());
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkHandleWidgetWrap::EnableAxisConstraintOff(const Nan::FunctionCallbackInf
 {
 	VtkHandleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkHandleWidgetWrap>(info.Holder());
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkHandleWidgetWrap::EnableAxisConstraintOn(const Nan::FunctionCallbackInfo
 {
 	VtkHandleWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkHandleWidgetWrap>(info.Holder());
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -238,7 +238,7 @@ void VtkHandleWidgetWrap::GetHandleRepresentation(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetHandleRepresentation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkHandleWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkHandleWidgetWrap::InitPtpl();
+	VtkHandleWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -325,7 +325,7 @@ void VtkHandleWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHandleWidgetWrap::InitPtpl();
+		VtkHandleWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkHandleWidgetWrap::SetAllowHandleResize(const Nan::FunctionCallbackInfo<v
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkHandleWidgetWrap::SetEnableAxisConstraint(const Nan::FunctionCallbackInf
 	vtkHandleWidget *native = (vtkHandleWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -385,7 +385,7 @@ void VtkHandleWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

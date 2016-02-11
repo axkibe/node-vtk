@@ -205,7 +205,7 @@ void VtkLabelPlacerWrap::GeneratePerturbedLabelSpokesOff(const Nan::FunctionCall
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkLabelPlacerWrap::GeneratePerturbedLabelSpokesOn(const Nan::FunctionCallb
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkLabelPlacerWrap::GetAnchorTransform(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnchorTransform();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -427,7 +427,7 @@ void VtkLabelPlacerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -500,7 +500,7 @@ void VtkLabelPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkLabelPlacerWrap::InitPtpl();
+	VtkLabelPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -516,7 +516,7 @@ void VtkLabelPlacerWrap::OutputCoordinateSystemDisplay(const Nan::FunctionCallba
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -528,7 +528,7 @@ void VtkLabelPlacerWrap::OutputCoordinateSystemWorld(const Nan::FunctionCallback
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -540,7 +540,7 @@ void VtkLabelPlacerWrap::OutputTraversedBoundsOff(const Nan::FunctionCallbackInf
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -552,7 +552,7 @@ void VtkLabelPlacerWrap::OutputTraversedBoundsOn(const Nan::FunctionCallbackInfo
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -564,7 +564,7 @@ void VtkLabelPlacerWrap::PositionsAsNormalsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -576,7 +576,7 @@ void VtkLabelPlacerWrap::PositionsAsNormalsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -600,7 +600,7 @@ void VtkLabelPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLabelPlacerWrap::InitPtpl();
+		VtkLabelPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -621,7 +621,7 @@ void VtkLabelPlacerWrap::SetGeneratePerturbedLabelSpokes(const Nan::FunctionCall
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +640,7 @@ void VtkLabelPlacerWrap::SetGravity(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -659,7 +659,7 @@ void VtkLabelPlacerWrap::SetIteratorType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -678,7 +678,7 @@ void VtkLabelPlacerWrap::SetMaximumLabelFraction(const Nan::FunctionCallbackInfo
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -697,7 +697,7 @@ void VtkLabelPlacerWrap::SetOutputCoordinateSystem(const Nan::FunctionCallbackIn
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -716,7 +716,7 @@ void VtkLabelPlacerWrap::SetOutputTraversedBounds(const Nan::FunctionCallbackInf
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +735,7 @@ void VtkLabelPlacerWrap::SetPositionsAsNormals(const Nan::FunctionCallbackInfo<v
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -755,7 +755,7 @@ void VtkLabelPlacerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -774,7 +774,7 @@ void VtkLabelPlacerWrap::SetUseDepthBuffer(const Nan::FunctionCallbackInfo<v8::V
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -793,7 +793,7 @@ void VtkLabelPlacerWrap::SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +810,7 @@ void VtkLabelPlacerWrap::UseDepthBufferOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -822,7 +822,7 @@ void VtkLabelPlacerWrap::UseDepthBufferOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -834,7 +834,7 @@ void VtkLabelPlacerWrap::UseUnicodeStringsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -846,7 +846,7 @@ void VtkLabelPlacerWrap::UseUnicodeStringsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkLabelPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkLabelPlacerWrap>(info.Holder());
 	vtkLabelPlacer *native = (vtkLabelPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

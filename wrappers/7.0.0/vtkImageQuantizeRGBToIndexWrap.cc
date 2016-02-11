@@ -206,7 +206,7 @@ void VtkImageQuantizeRGBToIndexWrap::GetLookupTable(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -293,7 +293,7 @@ void VtkImageQuantizeRGBToIndexWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageQuantizeRGBToIndexWrap::InitPtpl();
+	VtkImageQuantizeRGBToIndexWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkImageQuantizeRGBToIndexWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageQuantizeRGBToIndexWrap::InitPtpl();
+		VtkImageQuantizeRGBToIndexWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -342,7 +342,7 @@ void VtkImageQuantizeRGBToIndexWrap::SetBuildTreeExecuteTime(const Nan::Function
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -361,7 +361,7 @@ void VtkImageQuantizeRGBToIndexWrap::SetInitializeExecuteTime(const Nan::Functio
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkImageQuantizeRGBToIndexWrap::SetLookupIndexExecuteTime(const Nan::Functi
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -399,7 +399,7 @@ void VtkImageQuantizeRGBToIndexWrap::SetNumberOfColors(const Nan::FunctionCallba
 	vtkImageQuantizeRGBToIndex *native = (vtkImageQuantizeRGBToIndex *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

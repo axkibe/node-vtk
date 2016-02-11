@@ -34,10 +34,14 @@ class VtkImageMandelbrotSourceWrap : public VtkImageAlgorithmWrap
 		static void CopyOriginAndSample(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConstantSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSizeCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubsampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubsampleRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubsampleRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Pan(const Nan::FunctionCallbackInfo<v8::Value>& info);

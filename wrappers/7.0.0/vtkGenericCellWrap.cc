@@ -337,7 +337,7 @@ void VtkGenericCellWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkGenericCellWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -437,7 +437,7 @@ void VtkGenericCellWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -544,7 +544,7 @@ void VtkGenericCellWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -567,7 +567,7 @@ void VtkGenericCellWrap::InstantiateCell(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->InstantiateCell(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -643,7 +643,7 @@ void VtkGenericCellWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericCellWrap::InitPtpl();
+	VtkGenericCellWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -699,7 +699,7 @@ void VtkGenericCellWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericCellWrap::InitPtpl();
+		VtkGenericCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -720,7 +720,7 @@ void VtkGenericCellWrap::SetCellType(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +737,7 @@ void VtkGenericCellWrap::SetCellTypeToBiQuadraticQuad(const Nan::FunctionCallbac
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -749,7 +749,7 @@ void VtkGenericCellWrap::SetCellTypeToBiQuadraticQuadraticHexahedron(const Nan::
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +761,7 @@ void VtkGenericCellWrap::SetCellTypeToBiQuadraticQuadraticWedge(const Nan::Funct
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +773,7 @@ void VtkGenericCellWrap::SetCellTypeToBiQuadraticTriangle(const Nan::FunctionCal
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -785,7 +785,7 @@ void VtkGenericCellWrap::SetCellTypeToConvexPointSet(const Nan::FunctionCallback
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkGenericCellWrap::SetCellTypeToCubicLine(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -809,7 +809,7 @@ void VtkGenericCellWrap::SetCellTypeToEmptyCell(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -821,7 +821,7 @@ void VtkGenericCellWrap::SetCellTypeToHexagonalPrism(const Nan::FunctionCallback
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -833,7 +833,7 @@ void VtkGenericCellWrap::SetCellTypeToHexahedron(const Nan::FunctionCallbackInfo
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -845,7 +845,7 @@ void VtkGenericCellWrap::SetCellTypeToLine(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -857,7 +857,7 @@ void VtkGenericCellWrap::SetCellTypeToPentagonalPrism(const Nan::FunctionCallbac
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -869,7 +869,7 @@ void VtkGenericCellWrap::SetCellTypeToPixel(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -881,7 +881,7 @@ void VtkGenericCellWrap::SetCellTypeToPolyLine(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -893,7 +893,7 @@ void VtkGenericCellWrap::SetCellTypeToPolyVertex(const Nan::FunctionCallbackInfo
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -905,7 +905,7 @@ void VtkGenericCellWrap::SetCellTypeToPolygon(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -917,7 +917,7 @@ void VtkGenericCellWrap::SetCellTypeToPolyhedron(const Nan::FunctionCallbackInfo
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -929,7 +929,7 @@ void VtkGenericCellWrap::SetCellTypeToPyramid(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -941,7 +941,7 @@ void VtkGenericCellWrap::SetCellTypeToQuad(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -953,7 +953,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticEdge(const Nan::FunctionCallbackI
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -965,7 +965,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticHexahedron(const Nan::FunctionCal
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -977,7 +977,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticLinearQuad(const Nan::FunctionCal
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -989,7 +989,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticLinearWedge(const Nan::FunctionCa
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1001,7 +1001,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticPolygon(const Nan::FunctionCallba
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1013,7 +1013,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticPyramid(const Nan::FunctionCallba
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1025,7 +1025,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticQuad(const Nan::FunctionCallbackI
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1037,7 +1037,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticTetra(const Nan::FunctionCallback
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1049,7 +1049,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticTriangle(const Nan::FunctionCallb
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1061,7 +1061,7 @@ void VtkGenericCellWrap::SetCellTypeToQuadraticWedge(const Nan::FunctionCallback
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1073,7 +1073,7 @@ void VtkGenericCellWrap::SetCellTypeToTetra(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1085,7 +1085,7 @@ void VtkGenericCellWrap::SetCellTypeToTriQuadraticHexahedron(const Nan::Function
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1097,7 +1097,7 @@ void VtkGenericCellWrap::SetCellTypeToTriangle(const Nan::FunctionCallbackInfo<v
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1109,7 +1109,7 @@ void VtkGenericCellWrap::SetCellTypeToTriangleStrip(const Nan::FunctionCallbackI
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1121,7 +1121,7 @@ void VtkGenericCellWrap::SetCellTypeToVertex(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1133,7 +1133,7 @@ void VtkGenericCellWrap::SetCellTypeToVoxel(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1145,7 +1145,7 @@ void VtkGenericCellWrap::SetCellTypeToWedge(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGenericCellWrap *wrapper = ObjectWrap::Unwrap<VtkGenericCellWrap>(info.Holder());
 	vtkGenericCell *native = (vtkGenericCell *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1160,7 +1160,7 @@ void VtkGenericCellWrap::SetPointIds(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdListWrap *a0 = ObjectWrap::Unwrap<VtkIdListWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1180,7 +1180,7 @@ void VtkGenericCellWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1200,7 +1200,7 @@ void VtkGenericCellWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellWrap *a0 = ObjectWrap::Unwrap<VtkCellWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

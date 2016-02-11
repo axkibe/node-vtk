@@ -125,7 +125,7 @@ void VtkAnnotationLinkWrap::AddDomainMap(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -149,7 +149,7 @@ void VtkAnnotationLinkWrap::GetAnnotationLayers(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetAnnotationLayers();
-		VtkAnnotationLayersWrap::InitPtpl();
+	VtkAnnotationLayersWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +186,7 @@ void VtkAnnotationLinkWrap::GetCurrentSelection(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCurrentSelection();
-		VtkSelectionWrap::InitPtpl();
+	VtkSelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkAnnotationLinkWrap::GetDomainMap(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetDomainMap(
 			info[0]->Int32Value()
 		);
-			VtkTableWrap::InitPtpl();
+		VtkTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkAnnotationLinkWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAnnotationLinkWrap::InitPtpl();
+	VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkAnnotationLinkWrap::RemoveAllDomainMaps(const Nan::FunctionCallbackInfo<
 {
 	VtkAnnotationLinkWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info.Holder());
 	vtkAnnotationLink *native = (vtkAnnotationLink *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkAnnotationLinkWrap::RemoveDomainMap(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +335,7 @@ void VtkAnnotationLinkWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAnnotationLinkWrap::InitPtpl();
+		VtkAnnotationLinkWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -357,7 +357,7 @@ void VtkAnnotationLinkWrap::SetAnnotationLayers(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLayersWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLayersWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkAnnotationLinkWrap::SetCurrentSelection(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

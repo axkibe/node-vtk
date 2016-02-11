@@ -32,8 +32,10 @@ class VtkHyperTreeGridSourceWrap : public VtkHyperTreeGridAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDescriptor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDescriptorBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMaskBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuadric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuadricCoefficients(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -159,7 +159,7 @@ void VtkBoundedPlanePointPlacerWrap::AddBoundingPlane(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1647,7 +1647,7 @@ void VtkBoundedPlanePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetBoundingPlanes();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1684,7 +1684,7 @@ void VtkBoundedPlanePointPlacerWrap::GetObliquePlane(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetObliquePlane();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1785,7 +1785,7 @@ void VtkBoundedPlanePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkBoundedPlanePointPlacerWrap::InitPtpl();
+	VtkBoundedPlanePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1801,7 +1801,7 @@ void VtkBoundedPlanePointPlacerWrap::RemoveAllBoundingPlanes(const Nan::Function
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1816,7 +1816,7 @@ void VtkBoundedPlanePointPlacerWrap::RemoveBoundingPlane(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1845,7 +1845,7 @@ void VtkBoundedPlanePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBoundedPlanePointPlacerWrap::InitPtpl();
+		VtkBoundedPlanePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1867,7 +1867,7 @@ void VtkBoundedPlanePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1880,7 +1880,7 @@ void VtkBoundedPlanePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallba
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1900,7 +1900,7 @@ void VtkBoundedPlanePointPlacerWrap::SetObliquePlane(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1919,7 +1919,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionNormal(const Nan::FunctionCall
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1936,7 +1936,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionNormalToOblique(const Nan::Fun
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1948,7 +1948,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionNormalToXAxis(const Nan::Funct
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1960,7 +1960,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionNormalToYAxis(const Nan::Funct
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1972,7 +1972,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionNormalToZAxis(const Nan::Funct
 {
 	VtkBoundedPlanePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkBoundedPlanePointPlacerWrap>(info.Holder());
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1986,7 +1986,7 @@ void VtkBoundedPlanePointPlacerWrap::SetProjectionPosition(const Nan::FunctionCa
 	vtkBoundedPlanePointPlacer *native = (vtkBoundedPlanePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

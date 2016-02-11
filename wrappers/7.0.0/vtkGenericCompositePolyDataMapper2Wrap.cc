@@ -136,7 +136,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::GetCompositeDataDisplayAttributes(c
 		return;
 	}
 	r = native->GetCompositeDataDisplayAttributes();
-		VtkCompositeDataDisplayAttributesWrap::InitPtpl();
+	VtkCompositeDataDisplayAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericCompositePolyDataMapper2Wrap::InitPtpl();
+	VtkGenericCompositePolyDataMapper2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::ReleaseGraphicsResources(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -231,7 +231,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::RemoveBlockColors(const Nan::Functi
 {
 	VtkGenericCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkGenericCompositePolyDataMapper2Wrap>(info.Holder());
 	vtkGenericCompositePolyDataMapper2 *native = (vtkGenericCompositePolyDataMapper2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::RemoveBlockOpacities(const Nan::Fun
 {
 	VtkGenericCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkGenericCompositePolyDataMapper2Wrap>(info.Holder());
 	vtkGenericCompositePolyDataMapper2 *native = (vtkGenericCompositePolyDataMapper2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +255,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::RemoveBlockVisibilites(const Nan::F
 {
 	VtkGenericCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkGenericCompositePolyDataMapper2Wrap>(info.Holder());
 	vtkGenericCompositePolyDataMapper2 *native = (vtkGenericCompositePolyDataMapper2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericCompositePolyDataMapper2Wrap::InitPtpl();
+		VtkGenericCompositePolyDataMapper2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkGenericCompositePolyDataMapper2Wrap::SetCompositeDataDisplayAttributes(c
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataDisplayAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataDisplayAttributesWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataDisplayAttributesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

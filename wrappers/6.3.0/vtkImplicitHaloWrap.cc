@@ -53,6 +53,9 @@ void VtkImplicitHaloWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "EvaluateGradient", EvaluateGradient);
 	Nan::SetPrototypeMethod(tpl, "evaluateGradient", EvaluateGradient);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -214,7 +217,7 @@ void VtkImplicitHaloWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -244,7 +247,7 @@ void VtkImplicitHaloWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -294,7 +297,7 @@ void VtkImplicitHaloWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -314,7 +317,7 @@ void VtkImplicitHaloWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -327,6 +330,23 @@ void VtkImplicitHaloWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::V
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImplicitHaloWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitHaloWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitHaloWrap>(info.Holder());
+	vtkImplicitHalo *native = (vtkImplicitHalo *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitHaloWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -404,7 +424,7 @@ void VtkImplicitHaloWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitHaloWrap::InitPtpl();
+	VtkImplicitHaloWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,7 +452,7 @@ void VtkImplicitHaloWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitHaloWrap::InitPtpl();
+		VtkImplicitHaloWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -461,7 +481,7 @@ void VtkImplicitHaloWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +510,7 @@ void VtkImplicitHaloWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +526,7 @@ void VtkImplicitHaloWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -529,7 +549,7 @@ void VtkImplicitHaloWrap::SetFadeOut(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImplicitHalo *native = (vtkImplicitHalo *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -548,7 +568,7 @@ void VtkImplicitHaloWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkImplicitHalo *native = (vtkImplicitHalo *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

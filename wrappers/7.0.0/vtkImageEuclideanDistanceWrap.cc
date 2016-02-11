@@ -137,7 +137,7 @@ void VtkImageEuclideanDistanceWrap::ConsiderAnisotropyOff(const Nan::FunctionCal
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -149,7 +149,7 @@ void VtkImageEuclideanDistanceWrap::ConsiderAnisotropyOn(const Nan::FunctionCall
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -231,7 +231,7 @@ void VtkImageEuclideanDistanceWrap::InitializeOff(const Nan::FunctionCallbackInf
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkImageEuclideanDistanceWrap::InitializeOn(const Nan::FunctionCallbackInfo
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkImageEuclideanDistanceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageEuclideanDistanceWrap::InitPtpl();
+	VtkImageEuclideanDistanceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkImageEuclideanDistanceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageEuclideanDistanceWrap::InitPtpl();
+		VtkImageEuclideanDistanceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkImageEuclideanDistanceWrap::SetAlgorithm(const Nan::FunctionCallbackInfo
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkImageEuclideanDistanceWrap::SetAlgorithmToSaito(const Nan::FunctionCallb
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -362,7 +362,7 @@ void VtkImageEuclideanDistanceWrap::SetAlgorithmToSaitoCached(const Nan::Functio
 {
 	VtkImageEuclideanDistanceWrap *wrapper = ObjectWrap::Unwrap<VtkImageEuclideanDistanceWrap>(info.Holder());
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkImageEuclideanDistanceWrap::SetConsiderAnisotropy(const Nan::FunctionCal
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -395,7 +395,7 @@ void VtkImageEuclideanDistanceWrap::SetInitialize(const Nan::FunctionCallbackInf
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -414,7 +414,7 @@ void VtkImageEuclideanDistanceWrap::SetMaximumDistance(const Nan::FunctionCallba
 	vtkImageEuclideanDistance *native = (vtkImageEuclideanDistance *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

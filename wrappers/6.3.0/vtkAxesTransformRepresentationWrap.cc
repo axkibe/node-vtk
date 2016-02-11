@@ -168,7 +168,7 @@ void VtkAxesTransformRepresentationWrap::BuildRepresentation(const Nan::Function
 {
 	VtkAxesTransformRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkAxesTransformRepresentationWrap>(info.Holder());
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkAxesTransformRepresentationWrap::GetLabelProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetLabelProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginDisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -327,7 +327,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginDisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -351,7 +351,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginRepresentation(const Nan::Func
 		return;
 	}
 	r = native->GetOriginRepresentation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginWorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -406,7 +406,7 @@ void VtkAxesTransformRepresentationWrap::GetOriginWorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +430,7 @@ void VtkAxesTransformRepresentationWrap::GetSelectionRepresentation(const Nan::F
 		return;
 	}
 	r = native->GetSelectionRepresentation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkAxesTransformRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkAxesTransformRepresentationWrap::InitPtpl();
+	VtkAxesTransformRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -536,7 +536,7 @@ void VtkAxesTransformRepresentationWrap::ReleaseGraphicsResources(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkAxesTransformRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAxesTransformRepresentationWrap::InitPtpl();
+		VtkAxesTransformRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -630,7 +630,7 @@ void VtkAxesTransformRepresentationWrap::SetInteractionState(const Nan::Function
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkAxesTransformRepresentationWrap::SetLabelFormat(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkAxesTransformRepresentationWrap::SetLabelScale(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +706,7 @@ void VtkAxesTransformRepresentationWrap::SetLabelScale(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +722,7 @@ void VtkAxesTransformRepresentationWrap::SetLabelScale(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -753,7 +753,7 @@ void VtkAxesTransformRepresentationWrap::SetOriginDisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +782,7 @@ void VtkAxesTransformRepresentationWrap::SetOriginDisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -809,7 +809,7 @@ void VtkAxesTransformRepresentationWrap::SetOriginWorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -838,7 +838,7 @@ void VtkAxesTransformRepresentationWrap::SetOriginWorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -857,7 +857,7 @@ void VtkAxesTransformRepresentationWrap::SetTolerance(const Nan::FunctionCallbac
 	vtkAxesTransformRepresentation *native = (vtkAxesTransformRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -884,7 +884,7 @@ void VtkAxesTransformRepresentationWrap::StartWidgetInteraction(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -913,7 +913,7 @@ void VtkAxesTransformRepresentationWrap::StartWidgetInteraction(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +940,7 @@ void VtkAxesTransformRepresentationWrap::WidgetInteraction(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +969,7 @@ void VtkAxesTransformRepresentationWrap::WidgetInteraction(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

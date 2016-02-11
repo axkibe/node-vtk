@@ -76,6 +76,12 @@ void VtkQuadricClusteringWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCopyCellData", GetCopyCellData);
 	Nan::SetPrototypeMethod(tpl, "getCopyCellData", GetCopyCellData);
 
+	Nan::SetPrototypeMethod(tpl, "GetDivisionOrigin", GetDivisionOrigin);
+	Nan::SetPrototypeMethod(tpl, "getDivisionOrigin", GetDivisionOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetDivisionSpacing", GetDivisionSpacing);
+	Nan::SetPrototypeMethod(tpl, "getDivisionSpacing", GetDivisionSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "GetFeatureEdges", GetFeatureEdges);
 	Nan::SetPrototypeMethod(tpl, "getFeatureEdges", GetFeatureEdges);
 
@@ -235,7 +241,7 @@ void VtkQuadricClusteringWrap::Append(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -252,7 +258,7 @@ void VtkQuadricClusteringWrap::AutoAdjustNumberOfDivisionsOff(const Nan::Functio
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +270,7 @@ void VtkQuadricClusteringWrap::AutoAdjustNumberOfDivisionsOn(const Nan::Function
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +282,7 @@ void VtkQuadricClusteringWrap::CopyCellDataOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -288,7 +294,7 @@ void VtkQuadricClusteringWrap::CopyCellDataOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +306,7 @@ void VtkQuadricClusteringWrap::EndAppend(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -350,6 +356,40 @@ void VtkQuadricClusteringWrap::GetCopyCellData(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkQuadricClusteringWrap::GetDivisionOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
+	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDivisionOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkQuadricClusteringWrap::GetDivisionSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
+	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDivisionSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkQuadricClusteringWrap::GetFeatureEdges(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
@@ -361,7 +401,7 @@ void VtkQuadricClusteringWrap::GetFeatureEdges(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetFeatureEdges();
-		VtkFeatureEdgesWrap::InitPtpl();
+	VtkFeatureEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +469,7 @@ void VtkQuadricClusteringWrap::GetNumberOfDivisions(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +498,7 @@ void VtkQuadricClusteringWrap::GetNumberOfDivisions(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +508,17 @@ void VtkQuadricClusteringWrap::GetNumberOfDivisions(const Nan::FunctionCallbackI
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfDivisions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkQuadricClusteringWrap::GetNumberOfXDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -616,7 +666,7 @@ void VtkQuadricClusteringWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadricClusteringWrap::InitPtpl();
+	VtkQuadricClusteringWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -632,7 +682,7 @@ void VtkQuadricClusteringWrap::PreventDuplicateCellsOff(const Nan::FunctionCallb
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -644,7 +694,7 @@ void VtkQuadricClusteringWrap::PreventDuplicateCellsOn(const Nan::FunctionCallba
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -668,7 +718,7 @@ void VtkQuadricClusteringWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadricClusteringWrap::InitPtpl();
+		VtkQuadricClusteringWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -689,7 +739,7 @@ void VtkQuadricClusteringWrap::SetAutoAdjustNumberOfDivisions(const Nan::Functio
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +758,7 @@ void VtkQuadricClusteringWrap::SetCopyCellData(const Nan::FunctionCallbackInfo<v
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +785,7 @@ void VtkQuadricClusteringWrap::SetDivisionOrigin(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +814,7 @@ void VtkQuadricClusteringWrap::SetDivisionOrigin(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -780,7 +830,7 @@ void VtkQuadricClusteringWrap::SetDivisionOrigin(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -811,7 +861,7 @@ void VtkQuadricClusteringWrap::SetDivisionSpacing(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -840,7 +890,7 @@ void VtkQuadricClusteringWrap::SetDivisionSpacing(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +906,7 @@ void VtkQuadricClusteringWrap::SetDivisionSpacing(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -879,7 +929,7 @@ void VtkQuadricClusteringWrap::SetFeaturePointsAngle(const Nan::FunctionCallback
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -906,7 +956,7 @@ void VtkQuadricClusteringWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +985,7 @@ void VtkQuadricClusteringWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -951,7 +1001,7 @@ void VtkQuadricClusteringWrap::SetNumberOfDivisions(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -974,7 +1024,7 @@ void VtkQuadricClusteringWrap::SetNumberOfXDivisions(const Nan::FunctionCallback
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -993,7 +1043,7 @@ void VtkQuadricClusteringWrap::SetNumberOfYDivisions(const Nan::FunctionCallback
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1012,7 +1062,7 @@ void VtkQuadricClusteringWrap::SetNumberOfZDivisions(const Nan::FunctionCallback
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1031,7 +1081,7 @@ void VtkQuadricClusteringWrap::SetPreventDuplicateCells(const Nan::FunctionCallb
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1050,7 +1100,7 @@ void VtkQuadricClusteringWrap::SetUseFeatureEdges(const Nan::FunctionCallbackInf
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1069,7 +1119,7 @@ void VtkQuadricClusteringWrap::SetUseFeaturePoints(const Nan::FunctionCallbackIn
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1088,7 +1138,7 @@ void VtkQuadricClusteringWrap::SetUseInputPoints(const Nan::FunctionCallbackInfo
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1107,7 +1157,7 @@ void VtkQuadricClusteringWrap::SetUseInternalTriangles(const Nan::FunctionCallba
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1136,7 +1186,7 @@ void VtkQuadricClusteringWrap::StartAppend(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1163,7 +1213,7 @@ void VtkQuadricClusteringWrap::UseFeatureEdgesOff(const Nan::FunctionCallbackInf
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1175,7 +1225,7 @@ void VtkQuadricClusteringWrap::UseFeatureEdgesOn(const Nan::FunctionCallbackInfo
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1187,7 +1237,7 @@ void VtkQuadricClusteringWrap::UseFeaturePointsOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1199,7 +1249,7 @@ void VtkQuadricClusteringWrap::UseFeaturePointsOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1211,7 +1261,7 @@ void VtkQuadricClusteringWrap::UseInputPointsOff(const Nan::FunctionCallbackInfo
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1223,7 +1273,7 @@ void VtkQuadricClusteringWrap::UseInputPointsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1235,7 +1285,7 @@ void VtkQuadricClusteringWrap::UseInternalTrianglesOff(const Nan::FunctionCallba
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1247,7 +1297,7 @@ void VtkQuadricClusteringWrap::UseInternalTrianglesOn(const Nan::FunctionCallbac
 {
 	VtkQuadricClusteringWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricClusteringWrap>(info.Holder());
 	vtkQuadricClustering *native = (vtkQuadricClustering *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

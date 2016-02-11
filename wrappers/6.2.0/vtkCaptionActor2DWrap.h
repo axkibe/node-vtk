@@ -34,6 +34,7 @@ class VtkCaptionActor2DWrap : public VtkActor2DWrap
 		static void BorderOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void BorderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttachEdgeOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAttachmentPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAttachmentPointCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCaption(const Nan::FunctionCallbackInfo<v8::Value>& info);

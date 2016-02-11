@@ -149,7 +149,7 @@ void VtkSelectEnclosedPointsWrap::CheckSurfaceOff(const Nan::FunctionCallbackInf
 {
 	VtkSelectEnclosedPointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectEnclosedPointsWrap>(info.Holder());
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkSelectEnclosedPointsWrap::CheckSurfaceOn(const Nan::FunctionCallbackInfo
 {
 	VtkSelectEnclosedPointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectEnclosedPointsWrap>(info.Holder());
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkSelectEnclosedPointsWrap::Complete(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSelectEnclosedPointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectEnclosedPointsWrap>(info.Holder());
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkSelectEnclosedPointsWrap::GetSurface(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetSurface(
 			(vtkInformationVector *) a0->native.GetPointer()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkSelectEnclosedPointsWrap::GetSurface(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetSurface();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkSelectEnclosedPointsWrap::Initialize(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkSelectEnclosedPointsWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkSelectEnclosedPointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectEnclosedPointsWrap>(info.Holder());
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +348,7 @@ void VtkSelectEnclosedPointsWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSelectEnclosedPointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectEnclosedPointsWrap>(info.Holder());
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -471,7 +471,7 @@ void VtkSelectEnclosedPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectEnclosedPointsWrap::InitPtpl();
+	VtkSelectEnclosedPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -499,7 +499,7 @@ void VtkSelectEnclosedPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectEnclosedPointsWrap::InitPtpl();
+		VtkSelectEnclosedPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkSelectEnclosedPointsWrap::SetCheckSurface(const Nan::FunctionCallbackInf
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -539,7 +539,7 @@ void VtkSelectEnclosedPointsWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +559,7 @@ void VtkSelectEnclosedPointsWrap::SetSurfaceConnection(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -579,7 +579,7 @@ void VtkSelectEnclosedPointsWrap::SetSurfaceData(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -598,7 +598,7 @@ void VtkSelectEnclosedPointsWrap::SetTolerance(const Nan::FunctionCallbackInfo<v
 	vtkSelectEnclosedPoints *native = (vtkSelectEnclosedPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

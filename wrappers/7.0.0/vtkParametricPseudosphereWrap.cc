@@ -129,7 +129,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -160,7 +160,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -211,7 +211,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -282,7 +282,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -323,7 +323,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -374,7 +374,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -435,7 +435,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -466,7 +466,7 @@ void VtkParametricPseudosphereWrap::Evaluate(const Nan::FunctionCallbackInfo<v8:
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -946,7 +946,7 @@ void VtkParametricPseudosphereWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricPseudosphereWrap::InitPtpl();
+	VtkParametricPseudosphereWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -974,7 +974,7 @@ void VtkParametricPseudosphereWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricPseudosphereWrap::InitPtpl();
+		VtkParametricPseudosphereWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

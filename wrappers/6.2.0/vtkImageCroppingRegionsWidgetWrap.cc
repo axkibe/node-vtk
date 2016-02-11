@@ -66,6 +66,9 @@ void VtkImageCroppingRegionsWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLine4Color", GetLine4Color);
 	Nan::SetPrototypeMethod(tpl, "getLine4Color", GetLine4Color);
 
+	Nan::SetPrototypeMethod(tpl, "GetPlanePositions", GetPlanePositions);
+	Nan::SetPrototypeMethod(tpl, "getPlanePositions", GetPlanePositions);
+
 	Nan::SetPrototypeMethod(tpl, "GetSlice", GetSlice);
 	Nan::SetPrototypeMethod(tpl, "getSlice", GetSlice);
 
@@ -221,7 +224,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine1Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -250,7 +253,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine1Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -277,7 +280,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine2Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +309,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine2Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +336,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine3Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +365,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine3Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -389,7 +392,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine4Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +421,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine4Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,6 +432,23 @@ void VtkImageCroppingRegionsWidgetWrap::GetLine4Color(const Nan::FunctionCallbac
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageCroppingRegionsWidgetWrap::GetPlanePositions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
+	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPlanePositions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageCroppingRegionsWidgetWrap::GetSlice(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -470,7 +490,7 @@ void VtkImageCroppingRegionsWidgetWrap::GetVolumeMapper(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetVolumeMapper();
-		VtkVolumeMapperWrap::InitPtpl();
+	VtkVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,7 +528,7 @@ void VtkImageCroppingRegionsWidgetWrap::MoveHorizontalLine(const Nan::FunctionCa
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -520,7 +540,7 @@ void VtkImageCroppingRegionsWidgetWrap::MoveIntersectingLines(const Nan::Functio
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -532,7 +552,7 @@ void VtkImageCroppingRegionsWidgetWrap::MoveVerticalLine(const Nan::FunctionCall
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -551,7 +571,7 @@ void VtkImageCroppingRegionsWidgetWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageCroppingRegionsWidgetWrap::InitPtpl();
+	VtkImageCroppingRegionsWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -567,7 +587,7 @@ void VtkImageCroppingRegionsWidgetWrap::OnButtonPress(const Nan::FunctionCallbac
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -579,7 +599,7 @@ void VtkImageCroppingRegionsWidgetWrap::OnButtonRelease(const Nan::FunctionCallb
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -591,7 +611,7 @@ void VtkImageCroppingRegionsWidgetWrap::OnMouseMove(const Nan::FunctionCallbackI
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -613,7 +633,7 @@ void VtkImageCroppingRegionsWidgetWrap::PlaceWidget(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +662,7 @@ void VtkImageCroppingRegionsWidgetWrap::PlaceWidget(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +691,7 @@ void VtkImageCroppingRegionsWidgetWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageCroppingRegionsWidgetWrap::InitPtpl();
+		VtkImageCroppingRegionsWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -692,7 +712,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetCroppingRegionFlags(const Nan::Functi
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -711,7 +731,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetEnabled(const Nan::FunctionCallbackIn
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -738,7 +758,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine1Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -767,7 +787,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine1Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -783,7 +803,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine1Color(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -814,7 +834,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine2Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -843,7 +863,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine2Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +879,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine2Color(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -890,7 +910,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine3Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -919,7 +939,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine3Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +955,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine3Color(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -966,7 +986,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine4Color(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -995,7 +1015,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine4Color(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1011,7 +1031,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetLine4Color(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1042,7 +1062,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetPlanePositions(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1071,7 +1091,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetPlanePositions(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1093,7 +1113,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetPlanePositions(const Nan::FunctionCal
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1122,7 +1142,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetSlice(const Nan::FunctionCallbackInfo
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1141,7 +1161,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetSliceOrientation(const Nan::FunctionC
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1158,7 +1178,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetSliceOrientationToXY(const Nan::Funct
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1170,7 +1190,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetSliceOrientationToXZ(const Nan::Funct
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1182,7 +1202,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetSliceOrientationToYZ(const Nan::Funct
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1197,7 +1217,7 @@ void VtkImageCroppingRegionsWidgetWrap::SetVolumeMapper(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeMapperWrap *a0 = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1214,7 +1234,7 @@ void VtkImageCroppingRegionsWidgetWrap::UpdateAccordingToInput(const Nan::Functi
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1226,7 +1246,7 @@ void VtkImageCroppingRegionsWidgetWrap::UpdateCursorIcon(const Nan::FunctionCall
 {
 	VtkImageCroppingRegionsWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageCroppingRegionsWidgetWrap>(info.Holder());
 	vtkImageCroppingRegionsWidget *native = (vtkImageCroppingRegionsWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

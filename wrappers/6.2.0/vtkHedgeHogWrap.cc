@@ -218,7 +218,7 @@ void VtkHedgeHogWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkHedgeHogWrap::InitPtpl();
+	VtkHedgeHogWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkHedgeHogWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHedgeHogWrap::InitPtpl();
+		VtkHedgeHogWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkHedgeHogWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -286,7 +286,7 @@ void VtkHedgeHogWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkHedgeHogWrap::SetVectorMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +322,7 @@ void VtkHedgeHogWrap::SetVectorModeToUseNormal(const Nan::FunctionCallbackInfo<v
 {
 	VtkHedgeHogWrap *wrapper = ObjectWrap::Unwrap<VtkHedgeHogWrap>(info.Holder());
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -334,7 +334,7 @@ void VtkHedgeHogWrap::SetVectorModeToUseVector(const Nan::FunctionCallbackInfo<v
 {
 	VtkHedgeHogWrap *wrapper = ObjectWrap::Unwrap<VtkHedgeHogWrap>(info.Holder());
 	vtkHedgeHog *native = (vtkHedgeHog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

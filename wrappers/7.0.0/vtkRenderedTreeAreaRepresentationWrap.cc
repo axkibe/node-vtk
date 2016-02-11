@@ -271,7 +271,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ApplyViewTheme(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -288,7 +288,7 @@ void VtkRenderedTreeAreaRepresentationWrap::AreaLabelVisibilityOff(const Nan::Fu
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +300,7 @@ void VtkRenderedTreeAreaRepresentationWrap::AreaLabelVisibilityOn(const Nan::Fun
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +312,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ColorAreasByArrayOff(const Nan::Func
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -324,7 +324,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ColorAreasByArrayOn(const Nan::Funct
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +336,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ColorGraphEdgesByArrayOff(const Nan:
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +348,7 @@ void VtkRenderedTreeAreaRepresentationWrap::ColorGraphEdgesByArrayOn(const Nan::
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -409,7 +409,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLabelMapper(const Nan::Functi
 		return;
 	}
 	r = native->GetAreaLabelMapper();
-		VtkLabeledDataMapperWrap::InitPtpl();
+	VtkLabeledDataMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,7 +446,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLabelTextProperty(const Nan::
 		return;
 	}
 	r = native->GetAreaLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -483,7 +483,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaLayoutStrategy(const Nan::Fun
 		return;
 	}
 	r = native->GetAreaLayoutStrategy();
-		VtkAreaLayoutStrategyWrap::InitPtpl();
+	VtkAreaLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetAreaToPolyData(const Nan::Functio
 		return;
 	}
 	r = native->GetAreaToPolyData();
-		VtkPolyDataAlgorithmWrap::InitPtpl();
+	VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -701,7 +701,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetGraphEdgeLabelTextProperty(const 
 		r = native->GetGraphEdgeLabelTextProperty(
 			info[0]->Int32Value()
 		);
-			VtkTextPropertyWrap::InitPtpl();
+		VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -720,7 +720,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GetGraphEdgeLabelTextProperty(const 
 		return;
 	}
 	r = native->GetGraphEdgeLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -841,7 +841,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GraphEdgeLabelVisibilityOff(const Na
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -853,7 +853,7 @@ void VtkRenderedTreeAreaRepresentationWrap::GraphEdgeLabelVisibilityOn(const Nan
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -894,7 +894,7 @@ void VtkRenderedTreeAreaRepresentationWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
+	VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -922,7 +922,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
+		VtkRenderedTreeAreaRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -944,7 +944,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaColorArrayName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -964,7 +964,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaHoverArrayName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -984,7 +984,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelArrayName(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1004,7 +1004,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelMapper(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLabeledDataMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLabeledDataMapperWrap *a0 = ObjectWrap::Unwrap<VtkLabeledDataMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1024,7 +1024,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelPriorityArrayName(const 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1044,7 +1044,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelTextProperty(const Nan::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1063,7 +1063,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLabelVisibility(const Nan::Fu
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1083,7 +1083,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaLayoutStrategy(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1103,7 +1103,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaSizeArrayName(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1123,7 +1123,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetAreaToPolyData(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataAlgorithmWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1142,7 +1142,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetColorAreasByArray(const Nan::Func
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1163,7 +1163,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetColorGraphEdgesByArray(const Nan:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1174,7 +1174,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetColorGraphEdgesByArray(const Nan:
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1193,7 +1193,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetEdgeScalarBarVisibility(const Nan
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1214,7 +1214,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphBundlingStrength(const Nan::
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1225,7 +1225,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphBundlingStrength(const Nan::
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1247,7 +1247,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeColorArrayName(const Nan
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1258,7 +1258,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeColorArrayName(const Nan
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1277,7 +1277,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeColorToSplineFraction(co
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1287,7 +1287,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeColorToSplineFraction(co
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1304,7 +1304,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelArrayName(const Nan
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1315,7 +1315,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelArrayName(const Nan
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1337,7 +1337,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelTextProperty(const 
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1348,7 +1348,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelTextProperty(const 
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1369,7 +1369,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelVisibility(const Na
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1380,7 +1380,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphEdgeLabelVisibility(const Na
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1402,7 +1402,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphHoverArrayName(const Nan::Fu
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1413,7 +1413,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphHoverArrayName(const Nan::Fu
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1434,7 +1434,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetGraphSplineType(const Nan::Functi
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1455,7 +1455,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetLabelRenderMode(const Nan::Functi
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1474,7 +1474,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetShrinkPercentage(const Nan::Funct
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1493,7 +1493,7 @@ void VtkRenderedTreeAreaRepresentationWrap::SetUseRectangularCoordinates(const N
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1510,7 +1510,7 @@ void VtkRenderedTreeAreaRepresentationWrap::UseRectangularCoordinatesOff(const N
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1522,7 +1522,7 @@ void VtkRenderedTreeAreaRepresentationWrap::UseRectangularCoordinatesOn(const Na
 {
 	VtkRenderedTreeAreaRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedTreeAreaRepresentationWrap>(info.Holder());
 	vtkRenderedTreeAreaRepresentation *native = (vtkRenderedTreeAreaRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

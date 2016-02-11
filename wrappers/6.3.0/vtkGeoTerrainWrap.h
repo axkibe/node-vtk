@@ -34,6 +34,7 @@ class VtkGeoTerrainWrap : public VtkObjectWrap
 		static void GetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxLevelMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxLevelMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

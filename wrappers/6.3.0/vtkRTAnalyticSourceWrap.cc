@@ -47,6 +47,9 @@ void VtkRTAnalyticSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkRTAnalyticSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -58,6 +61,9 @@ void VtkRTAnalyticSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSubsampleRate", GetSubsampleRate);
 	Nan::SetPrototypeMethod(tpl, "getSubsampleRate", GetSubsampleRate);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "GetXFreq", GetXFreq);
 	Nan::SetPrototypeMethod(tpl, "getXFreq", GetXFreq);
@@ -148,6 +154,23 @@ void VtkRTAnalyticSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkRTAnalyticSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRTAnalyticSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRTAnalyticSourceWrap>(info.Holder());
+	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkRTAnalyticSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRTAnalyticSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRTAnalyticSourceWrap>(info.Holder());
@@ -202,6 +225,23 @@ void VtkRTAnalyticSourceWrap::GetSubsampleRate(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetSubsampleRate();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRTAnalyticSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRTAnalyticSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRTAnalyticSourceWrap>(info.Holder());
+	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRTAnalyticSourceWrap::GetXFreq(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -321,7 +361,7 @@ void VtkRTAnalyticSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkRTAnalyticSourceWrap::InitPtpl();
+	VtkRTAnalyticSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +389,7 @@ void VtkRTAnalyticSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRTAnalyticSourceWrap::InitPtpl();
+		VtkRTAnalyticSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -378,7 +418,7 @@ void VtkRTAnalyticSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +447,7 @@ void VtkRTAnalyticSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -423,7 +463,7 @@ void VtkRTAnalyticSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -446,7 +486,7 @@ void VtkRTAnalyticSourceWrap::SetMaximum(const Nan::FunctionCallbackInfo<v8::Val
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -465,7 +505,7 @@ void VtkRTAnalyticSourceWrap::SetStandardDeviation(const Nan::FunctionCallbackIn
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +524,7 @@ void VtkRTAnalyticSourceWrap::SetSubsampleRate(const Nan::FunctionCallbackInfo<v
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +553,7 @@ void VtkRTAnalyticSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -542,7 +582,7 @@ void VtkRTAnalyticSourceWrap::SetXFreq(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -561,7 +601,7 @@ void VtkRTAnalyticSourceWrap::SetXMag(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,7 +620,7 @@ void VtkRTAnalyticSourceWrap::SetYFreq(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -599,7 +639,7 @@ void VtkRTAnalyticSourceWrap::SetYMag(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +658,7 @@ void VtkRTAnalyticSourceWrap::SetZFreq(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -637,7 +677,7 @@ void VtkRTAnalyticSourceWrap::SetZMag(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRTAnalyticSource *native = (vtkRTAnalyticSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -77,6 +77,12 @@ void VtkRIBExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFilePrefix", GetFilePrefix);
 	Nan::SetPrototypeMethod(tpl, "getFilePrefix", GetFilePrefix);
 
+	Nan::SetPrototypeMethod(tpl, "GetPixelSamples", GetPixelSamples);
+	Nan::SetPrototypeMethod(tpl, "getPixelSamples", GetPixelSamples);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetTexturePrefix", GetTexturePrefix);
 	Nan::SetPrototypeMethod(tpl, "getTexturePrefix", GetTexturePrefix);
 
@@ -140,7 +146,7 @@ void VtkRIBExporterWrap::BackgroundOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +158,7 @@ void VtkRIBExporterWrap::BackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +170,7 @@ void VtkRIBExporterWrap::ExportArraysOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +182,7 @@ void VtkRIBExporterWrap::ExportArraysOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,6 +274,40 @@ void VtkRIBExporterWrap::GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRIBExporterWrap::GetPixelSamples(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
+	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPixelSamples();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkRIBExporterWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
+	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkRIBExporterWrap::GetTexturePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRIBExporterWrap *wrapper = ObjectWrap::Unwrap<VtkRIBExporterWrap>(info.Holder());
@@ -315,7 +355,7 @@ void VtkRIBExporterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkRIBExporterWrap::InitPtpl();
+	VtkRIBExporterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +383,7 @@ void VtkRIBExporterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRIBExporterWrap::InitPtpl();
+		VtkRIBExporterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +404,7 @@ void VtkRIBExporterWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +423,7 @@ void VtkRIBExporterWrap::SetExportArrays(const Nan::FunctionCallbackInfo<v8::Val
 	vtkRIBExporter *native = (vtkRIBExporter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +443,7 @@ void VtkRIBExporterWrap::SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +470,7 @@ void VtkRIBExporterWrap::SetPixelSamples(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +499,7 @@ void VtkRIBExporterWrap::SetPixelSamples(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +513,7 @@ void VtkRIBExporterWrap::SetPixelSamples(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -502,7 +542,7 @@ void VtkRIBExporterWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +571,7 @@ void VtkRIBExporterWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +585,7 @@ void VtkRIBExporterWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -567,7 +607,7 @@ void VtkRIBExporterWrap::SetTexturePrefix(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

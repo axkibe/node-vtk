@@ -36,11 +36,15 @@ class VtkImageThresholdConnectivityWrap : public VtkImageAlgorithmWrap
 		static void GetNeighborhoodFraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeighborhoodFractionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeighborhoodFractionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNeighborhoodRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfInVoxels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReplaceIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReplaceOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSeedPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceRangeX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceRangeY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSliceRangeZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpperThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

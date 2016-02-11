@@ -50,6 +50,9 @@ void VtkRectilinearGridGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtent", GetExtent);
+	Nan::SetPrototypeMethod(tpl, "getExtent", GetExtent);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -105,6 +108,23 @@ void VtkRectilinearGridGeometryFilterWrap::GetClassName(const Nan::FunctionCallb
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkRectilinearGridGeometryFilterWrap::GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRectilinearGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridGeometryFilterWrap>(info.Holder());
+	vtkRectilinearGridGeometryFilter *native = (vtkRectilinearGridGeometryFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkRectilinearGridGeometryFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRectilinearGridGeometryFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridGeometryFilterWrap>(info.Holder());
@@ -138,7 +158,7 @@ void VtkRectilinearGridGeometryFilterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearGridGeometryFilterWrap::InitPtpl();
+	VtkRectilinearGridGeometryFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +186,7 @@ void VtkRectilinearGridGeometryFilterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearGridGeometryFilterWrap::InitPtpl();
+		VtkRectilinearGridGeometryFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,7 +215,7 @@ void VtkRectilinearGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,7 +244,7 @@ void VtkRectilinearGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,7 +266,7 @@ void VtkRectilinearGridGeometryFilterWrap::SetExtent(const Nan::FunctionCallback
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

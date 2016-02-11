@@ -34,7 +34,9 @@ class VtkAbstractPickerWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickFromList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickList(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPickPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializePickList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

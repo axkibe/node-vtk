@@ -147,7 +147,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -178,7 +178,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -229,7 +229,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -300,7 +300,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -341,7 +341,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -392,7 +392,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -453,7 +453,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -484,7 +484,7 @@ void VtkParametricEllipsoidWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::Va
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1006,7 +1006,7 @@ void VtkParametricEllipsoidWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricEllipsoidWrap::InitPtpl();
+	VtkParametricEllipsoidWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1034,7 +1034,7 @@ void VtkParametricEllipsoidWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricEllipsoidWrap::InitPtpl();
+		VtkParametricEllipsoidWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1055,7 +1055,7 @@ void VtkParametricEllipsoidWrap::SetXRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricEllipsoid *native = (vtkParametricEllipsoid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1074,7 +1074,7 @@ void VtkParametricEllipsoidWrap::SetYRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricEllipsoid *native = (vtkParametricEllipsoid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1093,7 +1093,7 @@ void VtkParametricEllipsoidWrap::SetZRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricEllipsoid *native = (vtkParametricEllipsoid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

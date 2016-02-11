@@ -188,7 +188,7 @@ void VtkMINCImageReaderWrap::GetDataRange(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -217,7 +217,7 @@ void VtkMINCImageReaderWrap::GetDataRange(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,17 @@ void VtkMINCImageReaderWrap::GetDataRange(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMINCImageReaderWrap::GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -255,7 +265,7 @@ void VtkMINCImageReaderWrap::GetDirectionCosines(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDirectionCosines();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +302,7 @@ void VtkMINCImageReaderWrap::GetImageAttributes(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetImageAttributes();
-		VtkMINCImageAttributesWrap::InitPtpl();
+	VtkMINCImageAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -407,7 +417,7 @@ void VtkMINCImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkMINCImageReaderWrap::InitPtpl();
+	VtkMINCImageReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -423,7 +433,7 @@ void VtkMINCImageReaderWrap::RescaleRealValuesOff(const Nan::FunctionCallbackInf
 {
 	VtkMINCImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageReaderWrap>(info.Holder());
 	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -435,7 +445,7 @@ void VtkMINCImageReaderWrap::RescaleRealValuesOn(const Nan::FunctionCallbackInfo
 {
 	VtkMINCImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageReaderWrap>(info.Holder());
 	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +469,7 @@ void VtkMINCImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMINCImageReaderWrap::InitPtpl();
+		VtkMINCImageReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -481,7 +491,7 @@ void VtkMINCImageReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +510,7 @@ void VtkMINCImageReaderWrap::SetRescaleRealValues(const Nan::FunctionCallbackInf
 	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -519,7 +529,7 @@ void VtkMINCImageReaderWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMINCImageReader *native = (vtkMINCImageReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

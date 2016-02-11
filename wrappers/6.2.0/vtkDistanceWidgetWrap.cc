@@ -117,7 +117,7 @@ void VtkDistanceWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallb
 {
 	VtkDistanceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceWidgetWrap>(info.Holder());
 	vtkDistanceWidget *native = (vtkDistanceWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -150,7 +150,7 @@ void VtkDistanceWidgetWrap::GetDistanceRepresentation(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetDistanceRepresentation();
-		VtkDistanceRepresentationWrap::InitPtpl();
+	VtkDistanceRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -209,7 +209,7 @@ void VtkDistanceWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistanceWidgetWrap::InitPtpl();
+	VtkDistanceWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkDistanceWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistanceWidgetWrap::InitPtpl();
+		VtkDistanceWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkDistanceWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value
 	vtkDistanceWidget *native = (vtkDistanceWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -277,7 +277,7 @@ void VtkDistanceWidgetWrap::SetProcessEvents(const Nan::FunctionCallbackInfo<v8:
 	vtkDistanceWidget *native = (vtkDistanceWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -297,7 +297,7 @@ void VtkDistanceWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDistanceRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDistanceRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkDistanceRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkDistanceWidgetWrap::SetWidgetStateToManipulate(const Nan::FunctionCallba
 {
 	VtkDistanceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceWidgetWrap>(info.Holder());
 	vtkDistanceWidget *native = (vtkDistanceWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkDistanceWidgetWrap::SetWidgetStateToStart(const Nan::FunctionCallbackInf
 {
 	VtkDistanceWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceWidgetWrap>(info.Holder());
 	vtkDistanceWidget *native = (vtkDistanceWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -61,11 +61,17 @@ void VtkDepthSortPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDirection", GetDirection);
 	Nan::SetPrototypeMethod(tpl, "getDirection", GetDirection);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetProp3D", GetProp3D);
 	Nan::SetPrototypeMethod(tpl, "getProp3D", GetProp3D);
 
 	Nan::SetPrototypeMethod(tpl, "GetSortScalars", GetSortScalars);
 	Nan::SetPrototypeMethod(tpl, "getSortScalars", GetSortScalars);
+
+	Nan::SetPrototypeMethod(tpl, "GetVector", GetVector);
+	Nan::SetPrototypeMethod(tpl, "getVector", GetVector);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -161,7 +167,7 @@ void VtkDepthSortPolyDataWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,6 +221,23 @@ void VtkDepthSortPolyDataWrap::GetDirection(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDepthSortPolyDataWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
+	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDepthSortPolyDataWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
@@ -226,7 +249,7 @@ void VtkDepthSortPolyDataWrap::GetProp3D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetProp3D();
-		VtkProp3DWrap::InitPtpl();
+	VtkProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,6 +273,23 @@ void VtkDepthSortPolyDataWrap::GetSortScalars(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetSortScalars();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDepthSortPolyDataWrap::GetVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
+	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDepthSortPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -285,7 +325,7 @@ void VtkDepthSortPolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkDepthSortPolyDataWrap::InitPtpl();
+	VtkDepthSortPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +353,7 @@ void VtkDepthSortPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDepthSortPolyDataWrap::InitPtpl();
+		VtkDepthSortPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -335,7 +375,7 @@ void VtkDepthSortPolyDataWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +394,7 @@ void VtkDepthSortPolyDataWrap::SetDepthSortMode(const Nan::FunctionCallbackInfo<
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +411,7 @@ void VtkDepthSortPolyDataWrap::SetDepthSortModeToBoundsCenter(const Nan::Functio
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +423,7 @@ void VtkDepthSortPolyDataWrap::SetDepthSortModeToFirstPoint(const Nan::FunctionC
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,7 +435,7 @@ void VtkDepthSortPolyDataWrap::SetDepthSortModeToParametricCenter(const Nan::Fun
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -409,7 +449,7 @@ void VtkDepthSortPolyDataWrap::SetDirection(const Nan::FunctionCallbackInfo<v8::
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +466,7 @@ void VtkDepthSortPolyDataWrap::SetDirectionToBackToFront(const Nan::FunctionCall
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -438,7 +478,7 @@ void VtkDepthSortPolyDataWrap::SetDirectionToFrontToBack(const Nan::FunctionCall
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +490,7 @@ void VtkDepthSortPolyDataWrap::SetDirectionToSpecifiedVector(const Nan::Function
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -472,7 +512,7 @@ void VtkDepthSortPolyDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -501,7 +541,7 @@ void VtkDepthSortPolyDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -517,7 +557,7 @@ void VtkDepthSortPolyDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -541,7 +581,7 @@ void VtkDepthSortPolyDataWrap::SetProp3D(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProp3DWrap *a0 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -560,7 +600,7 @@ void VtkDepthSortPolyDataWrap::SetSortScalars(const Nan::FunctionCallbackInfo<v8
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -587,7 +627,7 @@ void VtkDepthSortPolyDataWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -616,7 +656,7 @@ void VtkDepthSortPolyDataWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +672,7 @@ void VtkDepthSortPolyDataWrap::SetVector(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -653,7 +693,7 @@ void VtkDepthSortPolyDataWrap::SortScalarsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -665,7 +705,7 @@ void VtkDepthSortPolyDataWrap::SortScalarsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDepthSortPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDepthSortPolyDataWrap>(info.Holder());
 	vtkDepthSortPolyData *native = (vtkDepthSortPolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

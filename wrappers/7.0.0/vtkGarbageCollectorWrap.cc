@@ -110,7 +110,7 @@ void VtkGarbageCollectorWrap::Collect(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectBaseWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectBaseWrap *a0 = ObjectWrap::Unwrap<VtkObjectBaseWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -120,7 +120,7 @@ void VtkGarbageCollectorWrap::Collect(const Nan::FunctionCallbackInfo<v8::Value>
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +132,7 @@ void VtkGarbageCollectorWrap::DeferredCollectionPop(const Nan::FunctionCallbackI
 {
 	VtkGarbageCollectorWrap *wrapper = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info.Holder());
 	vtkGarbageCollector *native = (vtkGarbageCollector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +144,7 @@ void VtkGarbageCollectorWrap::DeferredCollectionPush(const Nan::FunctionCallback
 {
 	VtkGarbageCollectorWrap *wrapper = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info.Holder());
 	vtkGarbageCollector *native = (vtkGarbageCollector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkGarbageCollectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkGarbageCollectorWrap::InitPtpl();
+	VtkGarbageCollectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkGarbageCollectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGarbageCollectorWrap::InitPtpl();
+		VtkGarbageCollectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkGarbageCollectorWrap::SetGlobalDebugFlag(const Nan::FunctionCallbackInfo
 	vtkGarbageCollector *native = (vtkGarbageCollector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

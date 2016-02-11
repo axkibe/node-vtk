@@ -129,7 +129,7 @@ void VtkBSPIntersectionsWrap::ComputeIntersectionsUsingDataBoundsOff(const Nan::
 {
 	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkBSPIntersectionsWrap::ComputeIntersectionsUsingDataBoundsOn(const Nan::F
 {
 	VtkBSPIntersectionsWrap *wrapper = ObjectWrap::Unwrap<VtkBSPIntersectionsWrap>(info.Holder());
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkBSPIntersectionsWrap::GetCuts(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCuts();
-		VtkBSPCutsWrap::InitPtpl();
+	VtkBSPCutsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -489,7 +489,7 @@ void VtkBSPIntersectionsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkBSPIntersectionsWrap::InitPtpl();
+	VtkBSPIntersectionsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkBSPIntersectionsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBSPIntersectionsWrap::InitPtpl();
+		VtkBSPIntersectionsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -538,7 +538,7 @@ void VtkBSPIntersectionsWrap::SetComputeIntersectionsUsingDataBounds(const Nan::
 	vtkBSPIntersections *native = (vtkBSPIntersections *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +558,7 @@ void VtkBSPIntersectionsWrap::SetCuts(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBSPCutsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBSPCutsWrap *a0 = ObjectWrap::Unwrap<VtkBSPCutsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -187,7 +187,7 @@ void VtkIntersectionPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkIntersectionPolyDataFilterWrap::InitPtpl();
+	VtkIntersectionPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkIntersectionPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIntersectionPolyDataFilterWrap::InitPtpl();
+		VtkIntersectionPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -236,7 +236,7 @@ void VtkIntersectionPolyDataFilterWrap::SetSplitFirstOutput(const Nan::FunctionC
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -255,7 +255,7 @@ void VtkIntersectionPolyDataFilterWrap::SetSplitSecondOutput(const Nan::Function
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -272,7 +272,7 @@ void VtkIntersectionPolyDataFilterWrap::SplitFirstOutputOff(const Nan::FunctionC
 {
 	VtkIntersectionPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIntersectionPolyDataFilterWrap>(info.Holder());
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkIntersectionPolyDataFilterWrap::SplitFirstOutputOn(const Nan::FunctionCa
 {
 	VtkIntersectionPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIntersectionPolyDataFilterWrap>(info.Holder());
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkIntersectionPolyDataFilterWrap::SplitSecondOutputOff(const Nan::Function
 {
 	VtkIntersectionPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIntersectionPolyDataFilterWrap>(info.Holder());
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkIntersectionPolyDataFilterWrap::SplitSecondOutputOn(const Nan::FunctionC
 {
 	VtkIntersectionPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIntersectionPolyDataFilterWrap>(info.Holder());
 	vtkIntersectionPolyDataFilter *native = (vtkIntersectionPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

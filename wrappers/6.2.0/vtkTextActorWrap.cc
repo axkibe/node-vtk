@@ -66,6 +66,9 @@ void VtkTextActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
+	Nan::SetPrototypeMethod(tpl, "GetMinimumSize", GetMinimumSize);
+	Nan::SetPrototypeMethod(tpl, "getMinimumSize", GetMinimumSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetScaledTextProperty", GetScaledTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getScaledTextProperty", GetScaledTextProperty);
 
@@ -189,7 +192,7 @@ void VtkTextActorWrap::ComputeScaledFont(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -233,7 +236,7 @@ void VtkTextActorWrap::GetBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -263,7 +266,7 @@ void VtkTextActorWrap::GetBoundingBox(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -306,6 +309,23 @@ void VtkTextActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTextActorWrap::GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
+	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTextActorWrap::GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
@@ -317,7 +337,7 @@ void VtkTextActorWrap::GetScaledTextProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetScaledTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -346,7 +366,7 @@ void VtkTextActorWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +396,7 @@ void VtkTextActorWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -402,7 +422,7 @@ void VtkTextActorWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +537,7 @@ void VtkTextActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextActorWrap::InitPtpl();
+	VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -536,7 +556,7 @@ void VtkTextActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +651,7 @@ void VtkTextActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextActorWrap::InitPtpl();
+		VtkTextActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -652,7 +672,7 @@ void VtkTextActorWrap::SetAlignmentPoint(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +750,7 @@ void VtkTextActorWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -757,7 +777,7 @@ void VtkTextActorWrap::SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -786,7 +806,7 @@ void VtkTextActorWrap::SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +820,7 @@ void VtkTextActorWrap::SetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -823,7 +843,7 @@ void VtkTextActorWrap::SetNonLinearFontScale(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -845,7 +865,7 @@ void VtkTextActorWrap::SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -864,7 +884,7 @@ void VtkTextActorWrap::SetTextScaleMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -881,7 +901,7 @@ void VtkTextActorWrap::SetTextScaleModeToNone(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -893,7 +913,7 @@ void VtkTextActorWrap::SetTextScaleModeToProp(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -905,7 +925,7 @@ void VtkTextActorWrap::SetTextScaleModeToViewport(const Nan::FunctionCallbackInf
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -919,7 +939,7 @@ void VtkTextActorWrap::SetUseBorderAlign(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -939,7 +959,7 @@ void VtkTextActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -956,7 +976,7 @@ void VtkTextActorWrap::UseBorderAlignOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -968,7 +988,7 @@ void VtkTextActorWrap::UseBorderAlignOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTextActorWrap *wrapper = ObjectWrap::Unwrap<VtkTextActorWrap>(info.Holder());
 	vtkTextActor *native = (vtkTextActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -90,6 +90,9 @@ void VtkImageDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
 	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetExtent", GetExtent);
+	Nan::SetPrototypeMethod(tpl, "getExtent", GetExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetExtentType", GetExtentType);
 	Nan::SetPrototypeMethod(tpl, "getExtentType", GetExtentType);
 
@@ -98,6 +101,9 @@ void VtkImageDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfScalarComponents", GetNumberOfScalarComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfScalarComponents", GetNumberOfScalarComponents);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointGradient", GetPointGradient);
 	Nan::SetPrototypeMethod(tpl, "getPointGradient", GetPointGradient);
@@ -119,6 +125,9 @@ void VtkImageDataWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarTypeMin", GetScalarTypeMin);
 	Nan::SetPrototypeMethod(tpl, "getScalarTypeMin", GetScalarTypeMin);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "GetVoxelGradient", GetVoxelGradient);
 	Nan::SetPrototypeMethod(tpl, "getVoxelGradient", GetVoxelGradient);
@@ -204,7 +213,7 @@ void VtkImageDataWrap::AllocateScalars(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -218,7 +227,7 @@ void VtkImageDataWrap::AllocateScalars(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -237,7 +246,7 @@ void VtkImageDataWrap::ComputeBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -664,7 +673,7 @@ void VtkImageDataWrap::CopyAndCastFrom(const Nan::FunctionCallbackInfo<v8::Value
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -694,7 +703,7 @@ void VtkImageDataWrap::CopyAndCastFrom(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -717,7 +726,7 @@ void VtkImageDataWrap::CopyAndCastFrom(const Nan::FunctionCallbackInfo<v8::Value
 						{
 							if(info.Length() > 6 && info[6]->IsInt32())
 							{
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -749,7 +758,7 @@ void VtkImageDataWrap::CopyInformationFromPipeline(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -769,7 +778,7 @@ void VtkImageDataWrap::CopyInformationToPipeline(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -789,7 +798,7 @@ void VtkImageDataWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -809,7 +818,7 @@ void VtkImageDataWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -855,7 +864,7 @@ void VtkImageDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkImageDataWrap::InitPtpl();
+			VtkImageDataWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -880,7 +889,7 @@ void VtkImageDataWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -937,7 +946,7 @@ void VtkImageDataWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -966,7 +975,7 @@ void VtkImageDataWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -976,7 +985,34 @@ void VtkImageDataWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageDataWrap::GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageDataWrap::GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1036,6 +1072,23 @@ void VtkImageDataWrap::GetNumberOfScalarComponents(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageDataWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageDataWrap::GetPointGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
@@ -1059,7 +1112,7 @@ void VtkImageDataWrap::GetPointGradient(const Nan::FunctionCallbackInfo<v8::Valu
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1092,7 +1145,7 @@ void VtkImageDataWrap::GetPointGradient(const Nan::FunctionCallbackInfo<v8::Valu
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1276,6 +1329,23 @@ void VtkImageDataWrap::GetScalarTypeMin(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageDataWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
+	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageDataWrap::GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
@@ -1292,7 +1362,7 @@ void VtkImageDataWrap::GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Valu
 					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkDataArrayWrap *a4 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1361,7 +1431,7 @@ void VtkImageDataWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1402,7 +1472,7 @@ void VtkImageDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1418,7 +1488,7 @@ void VtkImageDataWrap::PrepareForNewData(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageDataWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataWrap>(info.Holder());
 	vtkImageData *native = (vtkImageData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1442,7 +1512,7 @@ void VtkImageDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1471,7 +1541,7 @@ void VtkImageDataWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1500,7 +1570,7 @@ void VtkImageDataWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1516,7 +1586,7 @@ void VtkImageDataWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1547,7 +1617,7 @@ void VtkImageDataWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1576,7 +1646,7 @@ void VtkImageDataWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1598,7 +1668,7 @@ void VtkImageDataWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& inf
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1630,7 +1700,7 @@ void VtkImageDataWrap::SetNumberOfScalarComponents(const Nan::FunctionCallbackIn
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1659,7 +1729,7 @@ void VtkImageDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1688,7 +1758,7 @@ void VtkImageDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1704,7 +1774,7 @@ void VtkImageDataWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1735,7 +1805,7 @@ void VtkImageDataWrap::SetScalarComponentFromDouble(const Nan::FunctionCallbackI
 				{
 					if(info.Length() > 4 && info[4]->IsNumber())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -1765,7 +1835,7 @@ void VtkImageDataWrap::SetScalarType(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1794,7 +1864,7 @@ void VtkImageDataWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1823,7 +1893,7 @@ void VtkImageDataWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1839,7 +1909,7 @@ void VtkImageDataWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& in
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1863,7 +1933,7 @@ void VtkImageDataWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

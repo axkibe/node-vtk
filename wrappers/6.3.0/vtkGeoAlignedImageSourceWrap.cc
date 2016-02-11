@@ -61,6 +61,12 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImage", GetImage);
 	Nan::SetPrototypeMethod(tpl, "getImage", GetImage);
 
+	Nan::SetPrototypeMethod(tpl, "GetLatitudeRange", GetLatitudeRange);
+	Nan::SetPrototypeMethod(tpl, "getLatitudeRange", GetLatitudeRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetLongitudeRange", GetLongitudeRange);
+	Nan::SetPrototypeMethod(tpl, "getLongitudeRange", GetLongitudeRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetOverlap", GetOverlap);
 	Nan::SetPrototypeMethod(tpl, "getOverlap", GetOverlap);
 
@@ -210,7 +216,7 @@ void VtkGeoAlignedImageSourceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetImage();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,6 +226,40 @@ void VtkGeoAlignedImageSourceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGeoAlignedImageSourceWrap::GetLatitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLatitudeRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkGeoAlignedImageSourceWrap::GetLongitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
+	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLongitudeRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGeoAlignedImageSourceWrap::GetOverlap(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -311,7 +351,7 @@ void VtkGeoAlignedImageSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoAlignedImageSourceWrap::InitPtpl();
+	VtkGeoAlignedImageSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -327,7 +367,7 @@ void VtkGeoAlignedImageSourceWrap::PowerOfTwoSizeOff(const Nan::FunctionCallback
 {
 	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
 	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -339,7 +379,7 @@ void VtkGeoAlignedImageSourceWrap::PowerOfTwoSizeOn(const Nan::FunctionCallbackI
 {
 	VtkGeoAlignedImageSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoAlignedImageSourceWrap>(info.Holder());
 	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -363,7 +403,7 @@ void VtkGeoAlignedImageSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoAlignedImageSourceWrap::InitPtpl();
+		VtkGeoAlignedImageSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -385,7 +425,7 @@ void VtkGeoAlignedImageSourceWrap::SetImage(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +452,7 @@ void VtkGeoAlignedImageSourceWrap::SetLatitudeRange(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +481,7 @@ void VtkGeoAlignedImageSourceWrap::SetLatitudeRange(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -455,7 +495,7 @@ void VtkGeoAlignedImageSourceWrap::SetLatitudeRange(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -484,7 +524,7 @@ void VtkGeoAlignedImageSourceWrap::SetLongitudeRange(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +553,7 @@ void VtkGeoAlignedImageSourceWrap::SetLongitudeRange(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +567,7 @@ void VtkGeoAlignedImageSourceWrap::SetLongitudeRange(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -548,7 +588,7 @@ void VtkGeoAlignedImageSourceWrap::SetOverlap(const Nan::FunctionCallbackInfo<v8
 	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +607,7 @@ void VtkGeoAlignedImageSourceWrap::SetPowerOfTwoSize(const Nan::FunctionCallback
 	vtkGeoAlignedImageSource *native = (vtkGeoAlignedImageSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

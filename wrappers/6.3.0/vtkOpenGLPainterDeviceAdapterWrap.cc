@@ -119,7 +119,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::BeginPrimitive(const Nan::FunctionCallba
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -160,7 +160,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::DisableAttributeArray(const Nan::Functio
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -179,7 +179,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::EnableAttributeArray(const Nan::Function
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -196,7 +196,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::EndPrimitive(const Nan::FunctionCallback
 {
 	VtkOpenGLPainterDeviceAdapterWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPainterDeviceAdapterWrap>(info.Holder());
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +267,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::MakeVertexEmphasis(const Nan::FunctionCa
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -291,7 +291,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
+	VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
+		VtkOpenGLPainterDeviceAdapterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +340,7 @@ void VtkOpenGLPainterDeviceAdapterWrap::Stencil(const Nan::FunctionCallbackInfo<
 	vtkOpenGLPainterDeviceAdapter *native = (vtkOpenGLPainterDeviceAdapter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -213,7 +213,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::BuildRepresentation(const N
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +257,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::DeepCopy(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -277,7 +277,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetActors(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -315,7 +315,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetHandle(const Nan::Functi
 		return;
 	}
 	r = native->GetHandle();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetLabelTextActor(const Nan
 		return;
 	}
 	r = native->GetLabelTextActor();
-		VtkFollowerWrap::InitPtpl();
+	VtkFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -403,7 +403,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetProperty(const Nan::Func
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -426,7 +426,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetSelectedProperty(const N
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -463,7 +463,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::GetTransform(const Nan::Fun
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -479,7 +479,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::HandleVisibilityOff(const N
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -491,7 +491,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::HandleVisibilityOn(const Na
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +519,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::Highlight(const Nan::Functi
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +558,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::LabelVisibilityOff(const Na
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -570,7 +570,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::LabelVisibilityOn(const Nan
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -589,7 +589,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::Func
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl();
+	VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,7 +608,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::ReleaseGraphicsResources(co
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -681,7 +681,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::Fun
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl();
+		VtkAbstractPolygonalHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -710,7 +710,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetDisplayPosition(const Na
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -739,7 +739,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetDisplayPosition(const Na
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -759,7 +759,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetHandle(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -778,7 +778,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetHandleVisibility(const N
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -798,7 +798,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelText(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +825,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelTextScale(const Nan
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -854,7 +854,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelTextScale(const Nan
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -870,7 +870,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelTextScale(const Nan
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -893,7 +893,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetLabelVisibility(const Na
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -913,7 +913,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetProperty(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -933,7 +933,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetSelectedProperty(const N
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -952,7 +952,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetSmoothMotion(const Nan::
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -971,7 +971,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetUniformScale(const Nan::
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -998,7 +998,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetWorldPosition(const Nan:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1027,7 +1027,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SetWorldPosition(const Nan:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1047,7 +1047,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::ShallowCopy(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1064,7 +1064,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SmoothMotionOff(const Nan::
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1076,7 +1076,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::SmoothMotionOn(const Nan::F
 {
 	VtkAbstractPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractPolygonalHandleRepresentation3DWrap>(info.Holder());
 	vtkAbstractPolygonalHandleRepresentation3D *native = (vtkAbstractPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1098,7 +1098,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::StartWidgetInteraction(cons
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1127,7 +1127,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::StartWidgetInteraction(cons
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1154,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::WidgetInteraction(const Nan
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1183,7 +1183,7 @@ void VtkAbstractPolygonalHandleRepresentation3DWrap::WidgetInteraction(const Nan
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -134,7 +134,7 @@ void VtkIdFilterWrap::CellIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -146,7 +146,7 @@ void VtkIdFilterWrap::CellIdsOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -158,7 +158,7 @@ void VtkIdFilterWrap::FieldDataOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkIdFilterWrap::FieldDataOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +281,7 @@ void VtkIdFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkIdFilterWrap::InitPtpl();
+	VtkIdFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkIdFilterWrap::PointIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -309,7 +309,7 @@ void VtkIdFilterWrap::PointIdsOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkIdFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIdFilterWrap>(info.Holder());
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkIdFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIdFilterWrap::InitPtpl();
+		VtkIdFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkIdFilterWrap::SetCellIds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -373,7 +373,7 @@ void VtkIdFilterWrap::SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -393,7 +393,7 @@ void VtkIdFilterWrap::SetIdsArrayName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +412,7 @@ void VtkIdFilterWrap::SetPointIds(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkIdFilter *native = (vtkIdFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

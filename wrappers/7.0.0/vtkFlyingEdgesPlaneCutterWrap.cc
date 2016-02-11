@@ -117,7 +117,7 @@ void VtkFlyingEdgesPlaneCutterWrap::ComputeNormalsOff(const Nan::FunctionCallbac
 {
 	VtkFlyingEdgesPlaneCutterWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdgesPlaneCutterWrap>(info.Holder());
 	vtkFlyingEdgesPlaneCutter *native = (vtkFlyingEdgesPlaneCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -129,7 +129,7 @@ void VtkFlyingEdgesPlaneCutterWrap::ComputeNormalsOn(const Nan::FunctionCallback
 {
 	VtkFlyingEdgesPlaneCutterWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdgesPlaneCutterWrap>(info.Holder());
 	vtkFlyingEdgesPlaneCutter *native = (vtkFlyingEdgesPlaneCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -190,7 +190,7 @@ void VtkFlyingEdgesPlaneCutterWrap::GetPlane(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPlane();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +235,7 @@ void VtkFlyingEdgesPlaneCutterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkFlyingEdgesPlaneCutterWrap::InitPtpl();
+	VtkFlyingEdgesPlaneCutterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkFlyingEdgesPlaneCutterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFlyingEdgesPlaneCutterWrap::InitPtpl();
+		VtkFlyingEdgesPlaneCutterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkFlyingEdgesPlaneCutterWrap::SetArrayComponent(const Nan::FunctionCallbac
 	vtkFlyingEdgesPlaneCutter *native = (vtkFlyingEdgesPlaneCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkFlyingEdgesPlaneCutterWrap::SetComputeNormals(const Nan::FunctionCallbac
 	vtkFlyingEdgesPlaneCutter *native = (vtkFlyingEdgesPlaneCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +323,7 @@ void VtkFlyingEdgesPlaneCutterWrap::SetPlane(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

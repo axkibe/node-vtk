@@ -117,7 +117,7 @@ void VtkHyperOctreeContourFilterWrap::CreateDefaultLocator(const Nan::FunctionCa
 {
 	VtkHyperOctreeContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeContourFilterWrap>(info.Holder());
 	vtkHyperOctreeContourFilter *native = (vtkHyperOctreeContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -141,7 +141,7 @@ void VtkHyperOctreeContourFilterWrap::GenerateValues(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -171,7 +171,7 @@ void VtkHyperOctreeContourFilterWrap::GenerateValues(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -186,7 +186,7 @@ void VtkHyperOctreeContourFilterWrap::GenerateValues(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -228,7 +228,7 @@ void VtkHyperOctreeContourFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkHyperOctreeContourFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeContourFilterWrap::InitPtpl();
+	VtkHyperOctreeContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkHyperOctreeContourFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeContourFilterWrap::InitPtpl();
+		VtkHyperOctreeContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkHyperOctreeContourFilterWrap::SetLocator(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkHyperOctreeContourFilterWrap::SetNumberOfContours(const Nan::FunctionCal
 	vtkHyperOctreeContourFilter *native = (vtkHyperOctreeContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -398,7 +398,7 @@ void VtkHyperOctreeContourFilterWrap::SetValue(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

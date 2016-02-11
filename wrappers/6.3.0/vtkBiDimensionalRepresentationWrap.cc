@@ -312,7 +312,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +341,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint1Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,7 +391,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +420,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint1WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +447,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +500,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint2Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -526,7 +526,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +555,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint2WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -582,7 +582,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -635,7 +635,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint3Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -661,7 +661,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -690,7 +690,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint3WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +717,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +746,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -770,7 +770,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4Representation(const Nan::Func
 		return;
 	}
 	r = native->GetPoint4Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -796,7 +796,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +825,7 @@ void VtkBiDimensionalRepresentationWrap::GetPoint4WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -898,7 +898,7 @@ void VtkBiDimensionalRepresentationWrap::InstantiateHandleRepresentation(const N
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -932,7 +932,7 @@ void VtkBiDimensionalRepresentationWrap::Line1VisibilityOff(const Nan::FunctionC
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -944,7 +944,7 @@ void VtkBiDimensionalRepresentationWrap::Line1VisibilityOn(const Nan::FunctionCa
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -956,7 +956,7 @@ void VtkBiDimensionalRepresentationWrap::Line2VisibilityOff(const Nan::FunctionC
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -968,7 +968,7 @@ void VtkBiDimensionalRepresentationWrap::Line2VisibilityOn(const Nan::FunctionCa
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -987,7 +987,7 @@ void VtkBiDimensionalRepresentationWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkBiDimensionalRepresentationWrap::InitPtpl();
+	VtkBiDimensionalRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1015,7 +1015,7 @@ void VtkBiDimensionalRepresentationWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBiDimensionalRepresentationWrap::InitPtpl();
+		VtkBiDimensionalRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1037,7 +1037,7 @@ void VtkBiDimensionalRepresentationWrap::SetHandleRepresentation(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1057,7 +1057,7 @@ void VtkBiDimensionalRepresentationWrap::SetLabelFormat(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1076,7 +1076,7 @@ void VtkBiDimensionalRepresentationWrap::SetLine1Visibility(const Nan::FunctionC
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1095,7 +1095,7 @@ void VtkBiDimensionalRepresentationWrap::SetLine2Visibility(const Nan::FunctionC
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1122,7 +1122,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint1DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1151,7 +1151,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint1DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1178,7 +1178,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint1WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1207,7 +1207,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint1WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1234,7 +1234,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint2DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1263,7 +1263,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint2DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1290,7 +1290,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint2WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1319,7 +1319,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint2WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1346,7 +1346,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint3DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1375,7 +1375,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint3DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1402,7 +1402,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint3WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1431,7 +1431,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint3WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1458,7 +1458,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint4DisplayPosition(const Nan::Fun
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1487,7 +1487,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint4DisplayPosition(const Nan::Fun
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1514,7 +1514,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint4WorldPosition(const Nan::Funct
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1543,7 +1543,7 @@ void VtkBiDimensionalRepresentationWrap::SetPoint4WorldPosition(const Nan::Funct
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1562,7 +1562,7 @@ void VtkBiDimensionalRepresentationWrap::SetShowLabelAboveWidget(const Nan::Func
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1581,7 +1581,7 @@ void VtkBiDimensionalRepresentationWrap::SetTolerance(const Nan::FunctionCallbac
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1598,7 +1598,7 @@ void VtkBiDimensionalRepresentationWrap::ShowLabelAboveWidgetOff(const Nan::Func
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1610,7 +1610,7 @@ void VtkBiDimensionalRepresentationWrap::ShowLabelAboveWidgetOn(const Nan::Funct
 {
 	VtkBiDimensionalRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info.Holder());
 	vtkBiDimensionalRepresentation *native = (vtkBiDimensionalRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

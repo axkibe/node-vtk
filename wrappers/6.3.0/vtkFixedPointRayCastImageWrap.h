@@ -33,9 +33,15 @@ class VtkFixedPointRayCastImageWrap : public VtkObjectWrap
 		static void AllocateZBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageMemorySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseZBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseZBufferMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseZBufferMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZBufferOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

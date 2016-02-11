@@ -67,6 +67,9 @@ void VtkContextSceneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDirty", GetDirty);
 	Nan::SetPrototypeMethod(tpl, "getDirty", GetDirty);
 
+	Nan::SetPrototypeMethod(tpl, "GetGeometry", GetGeometry);
+	Nan::SetPrototypeMethod(tpl, "getGeometry", GetGeometry);
+
 	Nan::SetPrototypeMethod(tpl, "GetScaleTiles", GetScaleTiles);
 	Nan::SetPrototypeMethod(tpl, "getScaleTiles", GetScaleTiles);
 
@@ -169,7 +172,7 @@ void VtkContextSceneWrap::ClearItems(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +191,7 @@ void VtkContextSceneWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAnnotationLink();
-		VtkAnnotationLinkWrap::InitPtpl();
+	VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +214,7 @@ void VtkContextSceneWrap::GetBufferId(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetBufferId();
-		VtkAbstractContextBufferIdWrap::InitPtpl();
+	VtkAbstractContextBufferIdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,6 +252,23 @@ void VtkContextSceneWrap::GetDirty(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetDirty();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkContextSceneWrap::GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
+	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeometry();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkContextSceneWrap::GetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -304,7 +324,7 @@ void VtkContextSceneWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransform2DWrap::InitPtpl();
+	VtkTransform2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -405,7 +425,7 @@ void VtkContextSceneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextSceneWrap::InitPtpl();
+	VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +463,7 @@ void VtkContextSceneWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackIn
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -489,7 +509,7 @@ void VtkContextSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextSceneWrap::InitPtpl();
+		VtkContextSceneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -508,7 +528,7 @@ void VtkContextSceneWrap::ScaleTilesOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -520,7 +540,7 @@ void VtkContextSceneWrap::ScaleTilesOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkContextSceneWrap *wrapper = ObjectWrap::Unwrap<VtkContextSceneWrap>(info.Holder());
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -535,7 +555,7 @@ void VtkContextSceneWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLinkWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLinkWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +574,7 @@ void VtkContextSceneWrap::SetDirty(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -581,7 +601,7 @@ void VtkContextSceneWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +630,7 @@ void VtkContextSceneWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +644,7 @@ void VtkContextSceneWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -646,7 +666,7 @@ void VtkContextSceneWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -665,7 +685,7 @@ void VtkContextSceneWrap::SetScaleTiles(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -685,7 +705,7 @@ void VtkContextSceneWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransform2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransform2DWrap *a0 = ObjectWrap::Unwrap<VtkTransform2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +724,7 @@ void VtkContextSceneWrap::SetUseBufferId(const Nan::FunctionCallbackInfo<v8::Val
 	vtkContextScene *native = (vtkContextScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

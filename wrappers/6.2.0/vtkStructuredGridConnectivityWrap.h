@@ -37,6 +37,7 @@ class VtkStructuredGridConnectivityWrap : public VtkAbstractGridConnectivityWrap
 		static void GetGhostedGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RegisterGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);

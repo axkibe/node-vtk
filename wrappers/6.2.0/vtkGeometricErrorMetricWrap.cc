@@ -176,7 +176,7 @@ void VtkGeometricErrorMetricWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeometricErrorMetricWrap::InitPtpl();
+	VtkGeometricErrorMetricWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkGeometricErrorMetricWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeometricErrorMetricWrap::InitPtpl();
+		VtkGeometricErrorMetricWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkGeometricErrorMetricWrap::SetAbsoluteGeometricTolerance(const Nan::Funct
 	vtkGeometricErrorMetric *native = (vtkGeometricErrorMetric *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -247,7 +247,7 @@ void VtkGeometricErrorMetricWrap::SetRelativeGeometricTolerance(const Nan::Funct
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericDataSetWrap *a1 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

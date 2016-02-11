@@ -153,7 +153,7 @@ void VtkMarchingCubesWrap::ComputeGradientsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkMarchingCubesWrap::ComputeGradientsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkMarchingCubesWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkMarchingCubesWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkMarchingCubesWrap::ComputeScalarsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkMarchingCubesWrap::ComputeScalarsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkMarchingCubesWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<
 {
 	VtkMarchingCubesWrap *wrapper = ObjectWrap::Unwrap<VtkMarchingCubesWrap>(info.Holder());
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -249,7 +249,7 @@ void VtkMarchingCubesWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -279,7 +279,7 @@ void VtkMarchingCubesWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -294,7 +294,7 @@ void VtkMarchingCubesWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -378,7 +378,7 @@ void VtkMarchingCubesWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +458,7 @@ void VtkMarchingCubesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkMarchingCubesWrap::InitPtpl();
+	VtkMarchingCubesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -486,7 +486,7 @@ void VtkMarchingCubesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMarchingCubesWrap::InitPtpl();
+		VtkMarchingCubesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -507,7 +507,7 @@ void VtkMarchingCubesWrap::SetComputeGradients(const Nan::FunctionCallbackInfo<v
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +526,7 @@ void VtkMarchingCubesWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8:
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +545,7 @@ void VtkMarchingCubesWrap::SetComputeScalars(const Nan::FunctionCallbackInfo<v8:
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +565,7 @@ void VtkMarchingCubesWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +584,7 @@ void VtkMarchingCubesWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo<v
 	vtkMarchingCubes *native = (vtkMarchingCubes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -605,7 +605,7 @@ void VtkMarchingCubesWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& 
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

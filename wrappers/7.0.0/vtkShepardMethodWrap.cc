@@ -62,8 +62,14 @@ void VtkShepardMethodWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNullValue", GetNullValue);
 	Nan::SetPrototypeMethod(tpl, "getNullValue", GetNullValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -317,6 +323,23 @@ void VtkShepardMethodWrap::GetMaximumDistanceMinValue(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkShepardMethodWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShepardMethodWrap *wrapper = ObjectWrap::Unwrap<VtkShepardMethodWrap>(info.Holder());
+	vtkShepardMethod *native = (vtkShepardMethod *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkShepardMethodWrap::GetNullValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkShepardMethodWrap *wrapper = ObjectWrap::Unwrap<VtkShepardMethodWrap>(info.Holder());
@@ -329,6 +352,23 @@ void VtkShepardMethodWrap::GetNullValue(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetNullValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkShepardMethodWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShepardMethodWrap *wrapper = ObjectWrap::Unwrap<VtkShepardMethodWrap>(info.Holder());
+	vtkShepardMethod *native = (vtkShepardMethod *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkShepardMethodWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -364,7 +404,7 @@ void VtkShepardMethodWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkShepardMethodWrap::InitPtpl();
+	VtkShepardMethodWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +432,7 @@ void VtkShepardMethodWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkShepardMethodWrap::InitPtpl();
+		VtkShepardMethodWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -413,7 +453,7 @@ void VtkShepardMethodWrap::SetMaximumDistance(const Nan::FunctionCallbackInfo<v8
 	vtkShepardMethod *native = (vtkShepardMethod *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +480,7 @@ void VtkShepardMethodWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -469,7 +509,7 @@ void VtkShepardMethodWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +531,7 @@ void VtkShepardMethodWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -520,7 +560,7 @@ void VtkShepardMethodWrap::SetNullValue(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkShepardMethod *native = (vtkShepardMethod *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +587,7 @@ void VtkShepardMethodWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +616,7 @@ void VtkShepardMethodWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +632,7 @@ void VtkShepardMethodWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

@@ -49,7 +49,12 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void DrawZGridpolysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawZInnerGridlinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawZInnerGridlinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAxisOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenterStickyAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -77,6 +82,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetInertiaMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRebuildAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderedBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -99,6 +105,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetXAxesLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisMinorTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXAxisRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -110,6 +117,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetYAxesLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxisMinorTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYAxisRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxisTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxisVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -121,6 +129,7 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void GetZAxesLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZAxisLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZAxisMinorTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZAxisRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZAxisTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZAxisVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -175,7 +175,7 @@ void VtkTexturedButtonRepresentationWrap::BuildRepresentation(const Nan::Functio
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkTexturedButtonRepresentationWrap::FollowCameraOff(const Nan::FunctionCal
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +228,7 @@ void VtkTexturedButtonRepresentationWrap::FollowCameraOn(const Nan::FunctionCall
 {
 	VtkTexturedButtonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkTexturedButtonRepresentationWrap>(info.Holder());
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkTexturedButtonRepresentationWrap::GetActors(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -267,7 +267,7 @@ void VtkTexturedButtonRepresentationWrap::GetButtonGeometry(const Nan::FunctionC
 		return;
 	}
 	r = native->GetButtonGeometry();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkTexturedButtonRepresentationWrap::GetButtonTexture(const Nan::FunctionCa
 		r = native->GetButtonTexture(
 			info[0]->Int32Value()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -348,7 +348,7 @@ void VtkTexturedButtonRepresentationWrap::GetHoveringProperty(const Nan::Functio
 		return;
 	}
 	r = native->GetHoveringProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkTexturedButtonRepresentationWrap::GetProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,7 +394,7 @@ void VtkTexturedButtonRepresentationWrap::GetSelectingProperty(const Nan::Functi
 		return;
 	}
 	r = native->GetSelectingProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -426,7 +426,7 @@ void VtkTexturedButtonRepresentationWrap::Highlight(const Nan::FunctionCallbackI
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkTexturedButtonRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkTexturedButtonRepresentationWrap::InitPtpl();
+	VtkTexturedButtonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +498,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +527,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +557,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -588,7 +588,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -639,7 +639,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -660,7 +660,7 @@ void VtkTexturedButtonRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -684,7 +684,7 @@ void VtkTexturedButtonRepresentationWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -757,7 +757,7 @@ void VtkTexturedButtonRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTexturedButtonRepresentationWrap::InitPtpl();
+		VtkTexturedButtonRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -779,7 +779,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonGeometry(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -799,7 +799,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonGeometryConnection(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +821,7 @@ void VtkTexturedButtonRepresentationWrap::SetButtonTexture(const Nan::FunctionCa
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageDataWrap *a1 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -842,7 +842,7 @@ void VtkTexturedButtonRepresentationWrap::SetFollowCamera(const Nan::FunctionCal
 	vtkTexturedButtonRepresentation *native = (vtkTexturedButtonRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -862,7 +862,7 @@ void VtkTexturedButtonRepresentationWrap::SetHoveringProperty(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +882,7 @@ void VtkTexturedButtonRepresentationWrap::SetProperty(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -902,7 +902,7 @@ void VtkTexturedButtonRepresentationWrap::SetSelectingProperty(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -922,7 +922,7 @@ void VtkTexturedButtonRepresentationWrap::ShallowCopy(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

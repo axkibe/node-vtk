@@ -141,7 +141,7 @@ void VtkPolygonalSurfacePointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1629,7 +1629,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetCellPicker(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetCellPicker();
-		VtkCellPickerWrap::InitPtpl();
+	VtkCellPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1680,7 +1680,7 @@ void VtkPolygonalSurfacePointPlacerWrap::GetPolys(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPolys();
-		VtkPolyDataCollectionWrap::InitPtpl();
+	VtkPolyDataCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1739,7 +1739,7 @@ void VtkPolygonalSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolygonalSurfacePointPlacerWrap::InitPtpl();
+	VtkPolygonalSurfacePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1755,7 +1755,7 @@ void VtkPolygonalSurfacePointPlacerWrap::RemoveAllProps(const Nan::FunctionCallb
 {
 	VtkPolygonalSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalSurfacePointPlacerWrap>(info.Holder());
 	vtkPolygonalSurfacePointPlacer *native = (vtkPolygonalSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1770,7 +1770,7 @@ void VtkPolygonalSurfacePointPlacerWrap::RemoveViewProp(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1799,7 +1799,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolygonalSurfacePointPlacerWrap::InitPtpl();
+		VtkPolygonalSurfacePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1820,7 +1820,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SetDistanceOffset(const Nan::FunctionCa
 	vtkPolygonalSurfacePointPlacer *native = (vtkPolygonalSurfacePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1839,7 +1839,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SetSnapToClosestPoint(const Nan::Functi
 	vtkPolygonalSurfacePointPlacer *native = (vtkPolygonalSurfacePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1856,7 +1856,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SnapToClosestPointOff(const Nan::Functi
 {
 	VtkPolygonalSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalSurfacePointPlacerWrap>(info.Holder());
 	vtkPolygonalSurfacePointPlacer *native = (vtkPolygonalSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1868,7 +1868,7 @@ void VtkPolygonalSurfacePointPlacerWrap::SnapToClosestPointOn(const Nan::Functio
 {
 	VtkPolygonalSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalSurfacePointPlacerWrap>(info.Holder());
 	vtkPolygonalSurfacePointPlacer *native = (vtkPolygonalSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

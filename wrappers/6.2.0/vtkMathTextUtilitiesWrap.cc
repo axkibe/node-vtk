@@ -118,7 +118,7 @@ void VtkMathTextUtilitiesWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetInstance();
-		VtkMathTextUtilitiesWrap::InitPtpl();
+	VtkMathTextUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkMathTextUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkMathTextUtilitiesWrap::InitPtpl();
+	VtkMathTextUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +191,7 @@ void VtkMathTextUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMathTextUtilitiesWrap::InitPtpl();
+		VtkMathTextUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkMathTextUtilitiesWrap::SetInstance(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMathTextUtilitiesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMathTextUtilitiesWrap *a0 = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

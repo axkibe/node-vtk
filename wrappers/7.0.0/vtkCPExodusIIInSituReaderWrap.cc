@@ -56,6 +56,9 @@ void VtkCPExodusIIInSituReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileName", GetFileName);
 	Nan::SetPrototypeMethod(tpl, "getFileName", GetFileName);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetTimeStepValue", GetTimeStepValue);
 	Nan::SetPrototypeMethod(tpl, "getTimeStepValue", GetTimeStepValue);
 
@@ -145,6 +148,23 @@ void VtkCPExodusIIInSituReaderWrap::GetFileName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCPExodusIIInSituReaderWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCPExodusIIInSituReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCPExodusIIInSituReaderWrap>(info.Holder());
+	vtkCPExodusIIInSituReader *native = (vtkCPExodusIIInSituReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCPExodusIIInSituReaderWrap::GetTimeStepValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCPExodusIIInSituReaderWrap *wrapper = ObjectWrap::Unwrap<VtkCPExodusIIInSituReaderWrap>(info.Holder());
@@ -199,7 +219,7 @@ void VtkCPExodusIIInSituReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkCPExodusIIInSituReaderWrap::InitPtpl();
+	VtkCPExodusIIInSituReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -227,7 +247,7 @@ void VtkCPExodusIIInSituReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCPExodusIIInSituReaderWrap::InitPtpl();
+		VtkCPExodusIIInSituReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +268,7 @@ void VtkCPExodusIIInSituReaderWrap::SetCurrentTimeStep(const Nan::FunctionCallba
 	vtkCPExodusIIInSituReader *native = (vtkCPExodusIIInSituReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -268,7 +288,7 @@ void VtkCPExodusIIInSituReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

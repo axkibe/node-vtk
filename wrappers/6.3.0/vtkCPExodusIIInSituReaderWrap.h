@@ -32,6 +32,7 @@ class VtkCPExodusIIInSituReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStepValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

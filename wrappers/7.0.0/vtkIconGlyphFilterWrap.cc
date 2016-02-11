@@ -50,11 +50,23 @@ void VtkIconGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDisplaySize", GetDisplaySize);
+	Nan::SetPrototypeMethod(tpl, "getDisplaySize", GetDisplaySize);
+
 	Nan::SetPrototypeMethod(tpl, "GetGravity", GetGravity);
 	Nan::SetPrototypeMethod(tpl, "getGravity", GetGravity);
 
 	Nan::SetPrototypeMethod(tpl, "GetIconScaling", GetIconScaling);
 	Nan::SetPrototypeMethod(tpl, "getIconScaling", GetIconScaling);
+
+	Nan::SetPrototypeMethod(tpl, "GetIconSheetSize", GetIconSheetSize);
+	Nan::SetPrototypeMethod(tpl, "getIconSheetSize", GetIconSheetSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetIconSize", GetIconSize);
+	Nan::SetPrototypeMethod(tpl, "getIconSize", GetIconSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
+	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
 
 	Nan::SetPrototypeMethod(tpl, "GetPassScalars", GetPassScalars);
 	Nan::SetPrototypeMethod(tpl, "getPassScalars", GetPassScalars);
@@ -183,6 +195,23 @@ void VtkIconGlyphFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkIconGlyphFilterWrap::GetDisplaySize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDisplaySize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkIconGlyphFilterWrap::GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
@@ -209,6 +238,57 @@ void VtkIconGlyphFilterWrap::GetIconScaling(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetIconScaling();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkIconGlyphFilterWrap::GetIconSheetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIconSheetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkIconGlyphFilterWrap::GetIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetIconSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkIconGlyphFilterWrap::GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
+	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOffset();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkIconGlyphFilterWrap::GetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -272,7 +352,7 @@ void VtkIconGlyphFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkIconGlyphFilterWrap::InitPtpl();
+	VtkIconGlyphFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +368,7 @@ void VtkIconGlyphFilterWrap::PassScalarsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +380,7 @@ void VtkIconGlyphFilterWrap::PassScalarsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -324,7 +404,7 @@ void VtkIconGlyphFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkIconGlyphFilterWrap::InitPtpl();
+		VtkIconGlyphFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -353,7 +433,7 @@ void VtkIconGlyphFilterWrap::SetDisplaySize(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +462,7 @@ void VtkIconGlyphFilterWrap::SetDisplaySize(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +476,7 @@ void VtkIconGlyphFilterWrap::SetDisplaySize(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -417,7 +497,7 @@ void VtkIconGlyphFilterWrap::SetGravity(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +514,7 @@ void VtkIconGlyphFilterWrap::SetGravityToBottomCenter(const Nan::FunctionCallbac
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -446,7 +526,7 @@ void VtkIconGlyphFilterWrap::SetGravityToBottomLeft(const Nan::FunctionCallbackI
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -458,7 +538,7 @@ void VtkIconGlyphFilterWrap::SetGravityToBottomRight(const Nan::FunctionCallback
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -470,7 +550,7 @@ void VtkIconGlyphFilterWrap::SetGravityToCenterCenter(const Nan::FunctionCallbac
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -482,7 +562,7 @@ void VtkIconGlyphFilterWrap::SetGravityToCenterLeft(const Nan::FunctionCallbackI
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -494,7 +574,7 @@ void VtkIconGlyphFilterWrap::SetGravityToCenterRight(const Nan::FunctionCallback
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -506,7 +586,7 @@ void VtkIconGlyphFilterWrap::SetGravityToTopCenter(const Nan::FunctionCallbackIn
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -518,7 +598,7 @@ void VtkIconGlyphFilterWrap::SetGravityToTopLeft(const Nan::FunctionCallbackInfo
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -530,7 +610,7 @@ void VtkIconGlyphFilterWrap::SetGravityToTopRight(const Nan::FunctionCallbackInf
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -544,7 +624,7 @@ void VtkIconGlyphFilterWrap::SetIconScaling(const Nan::FunctionCallbackInfo<v8::
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -561,7 +641,7 @@ void VtkIconGlyphFilterWrap::SetIconScalingToScalingArray(const Nan::FunctionCal
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -573,7 +653,7 @@ void VtkIconGlyphFilterWrap::SetIconScalingToScalingOff(const Nan::FunctionCallb
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +675,7 @@ void VtkIconGlyphFilterWrap::SetIconSheetSize(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +704,7 @@ void VtkIconGlyphFilterWrap::SetIconSheetSize(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +718,7 @@ void VtkIconGlyphFilterWrap::SetIconSheetSize(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -667,7 +747,7 @@ void VtkIconGlyphFilterWrap::SetIconSize(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +776,7 @@ void VtkIconGlyphFilterWrap::SetIconSize(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -710,7 +790,7 @@ void VtkIconGlyphFilterWrap::SetIconSize(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -739,7 +819,7 @@ void VtkIconGlyphFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -768,7 +848,7 @@ void VtkIconGlyphFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +862,7 @@ void VtkIconGlyphFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -803,7 +883,7 @@ void VtkIconGlyphFilterWrap::SetPassScalars(const Nan::FunctionCallbackInfo<v8::
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -822,7 +902,7 @@ void VtkIconGlyphFilterWrap::SetUseIconSize(const Nan::FunctionCallbackInfo<v8::
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -839,7 +919,7 @@ void VtkIconGlyphFilterWrap::UseIconSizeOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -851,7 +931,7 @@ void VtkIconGlyphFilterWrap::UseIconSizeOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkIconGlyphFilterWrap *wrapper = ObjectWrap::Unwrap<VtkIconGlyphFilterWrap>(info.Holder());
 	vtkIconGlyphFilter *native = (vtkIconGlyphFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

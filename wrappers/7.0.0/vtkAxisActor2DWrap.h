@@ -58,6 +58,7 @@ class VtkAxisActor2DWrap : public VtkActor2DWrap
 		static void GetNumberOfMinorTicksMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRulerDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRulerDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRulerDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

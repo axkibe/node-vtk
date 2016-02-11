@@ -187,7 +187,7 @@ void VtkTriangleFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkTriangleFilterWrap::InitPtpl();
+	VtkTriangleFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkTriangleFilterWrap::PassLinesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleFilterWrap>(info.Holder());
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkTriangleFilterWrap::PassLinesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleFilterWrap>(info.Holder());
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkTriangleFilterWrap::PassVertsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleFilterWrap>(info.Holder());
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkTriangleFilterWrap::PassVertsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTriangleFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTriangleFilterWrap>(info.Holder());
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -263,7 +263,7 @@ void VtkTriangleFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTriangleFilterWrap::InitPtpl();
+		VtkTriangleFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkTriangleFilterWrap::SetPassLines(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkTriangleFilterWrap::SetPassVerts(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTriangleFilter *native = (vtkTriangleFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

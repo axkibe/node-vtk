@@ -67,8 +67,20 @@ void VtkBorderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumSize", GetMaximumSize);
+	Nan::SetPrototypeMethod(tpl, "getMaximumSize", GetMaximumSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinimumSize", GetMinimumSize);
+	Nan::SetPrototypeMethod(tpl, "getMinimumSize", GetMinimumSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetMoving", GetMoving);
 	Nan::SetPrototypeMethod(tpl, "getMoving", GetMoving);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition2", GetPosition2);
+	Nan::SetPrototypeMethod(tpl, "getPosition2", GetPosition2);
 
 	Nan::SetPrototypeMethod(tpl, "GetPosition2Coordinate", GetPosition2Coordinate);
 	Nan::SetPrototypeMethod(tpl, "getPosition2Coordinate", GetPosition2Coordinate);
@@ -78,6 +90,9 @@ void VtkBorderRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetProportionalResize", GetProportionalResize);
 	Nan::SetPrototypeMethod(tpl, "getProportionalResize", GetProportionalResize);
+
+	Nan::SetPrototypeMethod(tpl, "GetSelectionPoint", GetSelectionPoint);
+	Nan::SetPrototypeMethod(tpl, "getSelectionPoint", GetSelectionPoint);
 
 	Nan::SetPrototypeMethod(tpl, "GetShowBorder", GetShowBorder);
 	Nan::SetPrototypeMethod(tpl, "getShowBorder", GetShowBorder);
@@ -232,7 +247,7 @@ void VtkBorderRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbac
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +291,7 @@ void VtkBorderRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +315,7 @@ void VtkBorderRepresentationWrap::GetBorderProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetBorderProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -326,6 +341,40 @@ void VtkBorderRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkBorderRepresentationWrap::GetMaximumSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
+	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkBorderRepresentationWrap::GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
+	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinimumSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkBorderRepresentationWrap::GetMoving(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
@@ -340,6 +389,40 @@ void VtkBorderRepresentationWrap::GetMoving(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkBorderRepresentationWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
+	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkBorderRepresentationWrap::GetPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
+	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkBorderRepresentationWrap::GetPosition2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
@@ -351,7 +434,7 @@ void VtkBorderRepresentationWrap::GetPosition2Coordinate(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPosition2Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,7 +457,7 @@ void VtkBorderRepresentationWrap::GetPositionCoordinate(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetPositionCoordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,6 +481,23 @@ void VtkBorderRepresentationWrap::GetProportionalResize(const Nan::FunctionCallb
 	}
 	r = native->GetProportionalResize();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkBorderRepresentationWrap::GetSelectionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
+	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectionPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkBorderRepresentationWrap::GetShowBorder(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -540,7 +640,7 @@ void VtkBorderRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +669,7 @@ void VtkBorderRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +764,7 @@ void VtkBorderRepresentationWrap::MovingOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -676,7 +776,7 @@ void VtkBorderRepresentationWrap::MovingOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -695,7 +795,7 @@ void VtkBorderRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkBorderRepresentationWrap::InitPtpl();
+	VtkBorderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -711,7 +811,7 @@ void VtkBorderRepresentationWrap::ProportionalResizeOff(const Nan::FunctionCallb
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -723,7 +823,7 @@ void VtkBorderRepresentationWrap::ProportionalResizeOn(const Nan::FunctionCallba
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -738,7 +838,7 @@ void VtkBorderRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -833,7 +933,7 @@ void VtkBorderRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBorderRepresentationWrap::InitPtpl();
+		VtkBorderRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -862,7 +962,7 @@ void VtkBorderRepresentationWrap::SetMaximumSize(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -891,7 +991,7 @@ void VtkBorderRepresentationWrap::SetMaximumSize(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -905,7 +1005,7 @@ void VtkBorderRepresentationWrap::SetMaximumSize(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -934,7 +1034,7 @@ void VtkBorderRepresentationWrap::SetMinimumSize(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -963,7 +1063,7 @@ void VtkBorderRepresentationWrap::SetMinimumSize(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -977,7 +1077,7 @@ void VtkBorderRepresentationWrap::SetMinimumSize(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -998,7 +1098,7 @@ void VtkBorderRepresentationWrap::SetMoving(const Nan::FunctionCallbackInfo<v8::
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1025,7 +1125,7 @@ void VtkBorderRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1154,7 @@ void VtkBorderRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1068,7 +1168,7 @@ void VtkBorderRepresentationWrap::SetPosition(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1097,7 +1197,7 @@ void VtkBorderRepresentationWrap::SetPosition2(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1126,7 +1226,7 @@ void VtkBorderRepresentationWrap::SetPosition2(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1140,7 +1240,7 @@ void VtkBorderRepresentationWrap::SetPosition2(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1161,7 +1261,7 @@ void VtkBorderRepresentationWrap::SetProportionalResize(const Nan::FunctionCallb
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1180,7 +1280,7 @@ void VtkBorderRepresentationWrap::SetShowBorder(const Nan::FunctionCallbackInfo<
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1197,7 +1297,7 @@ void VtkBorderRepresentationWrap::SetShowBorderToActive(const Nan::FunctionCallb
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1209,7 +1309,7 @@ void VtkBorderRepresentationWrap::SetShowBorderToOff(const Nan::FunctionCallback
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1221,7 +1321,7 @@ void VtkBorderRepresentationWrap::SetShowBorderToOn(const Nan::FunctionCallbackI
 {
 	VtkBorderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info.Holder());
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1235,7 +1335,7 @@ void VtkBorderRepresentationWrap::SetShowHorizontalBorder(const Nan::FunctionCal
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1254,7 +1354,7 @@ void VtkBorderRepresentationWrap::SetShowVerticalBorder(const Nan::FunctionCallb
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1273,7 +1373,7 @@ void VtkBorderRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v
 	vtkBorderRepresentation *native = (vtkBorderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1300,7 +1400,7 @@ void VtkBorderRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1329,7 +1429,7 @@ void VtkBorderRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1356,7 +1456,7 @@ void VtkBorderRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1385,7 +1485,7 @@ void VtkBorderRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -203,7 +203,7 @@ void VtkThresholdWrap::AllScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkThresholdWrap::AllScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -480,7 +480,7 @@ void VtkThresholdWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkThresholdWrap::InitPtpl();
+	VtkThresholdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -508,7 +508,7 @@ void VtkThresholdWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThresholdWrap::InitPtpl();
+		VtkThresholdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -529,7 +529,7 @@ void VtkThresholdWrap::SetAllScalars(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -548,7 +548,7 @@ void VtkThresholdWrap::SetAttributeMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +565,7 @@ void VtkThresholdWrap::SetAttributeModeToDefault(const Nan::FunctionCallbackInfo
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +577,7 @@ void VtkThresholdWrap::SetAttributeModeToUseCellData(const Nan::FunctionCallback
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -589,7 +589,7 @@ void VtkThresholdWrap::SetAttributeModeToUsePointData(const Nan::FunctionCallbac
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -603,7 +603,7 @@ void VtkThresholdWrap::SetComponentMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +620,7 @@ void VtkThresholdWrap::SetComponentModeToUseAll(const Nan::FunctionCallbackInfo<
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +632,7 @@ void VtkThresholdWrap::SetComponentModeToUseAny(const Nan::FunctionCallbackInfo<
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -644,7 +644,7 @@ void VtkThresholdWrap::SetComponentModeToUseSelected(const Nan::FunctionCallback
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -658,7 +658,7 @@ void VtkThresholdWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkThresholdWrap::SetPointsDataType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkThresholdWrap::SetPointsDataTypeToDouble(const Nan::FunctionCallbackInfo
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -706,7 +706,7 @@ void VtkThresholdWrap::SetPointsDataTypeToFloat(const Nan::FunctionCallbackInfo<
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -720,7 +720,7 @@ void VtkThresholdWrap::SetSelectedComponent(const Nan::FunctionCallbackInfo<v8::
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -739,7 +739,7 @@ void VtkThresholdWrap::SetUseContinuousCellRange(const Nan::FunctionCallbackInfo
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -760,7 +760,7 @@ void VtkThresholdWrap::ThresholdBetween(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -781,7 +781,7 @@ void VtkThresholdWrap::ThresholdByLower(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +800,7 @@ void VtkThresholdWrap::ThresholdByUpper(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -817,7 +817,7 @@ void VtkThresholdWrap::UseContinuousCellRangeOff(const Nan::FunctionCallbackInfo
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -829,7 +829,7 @@ void VtkThresholdWrap::UseContinuousCellRangeOn(const Nan::FunctionCallbackInfo<
 {
 	VtkThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkThresholdWrap>(info.Holder());
 	vtkThreshold *native = (vtkThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

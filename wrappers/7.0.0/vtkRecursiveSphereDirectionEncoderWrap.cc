@@ -206,7 +206,7 @@ void VtkRecursiveSphereDirectionEncoderWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkRecursiveSphereDirectionEncoderWrap::InitPtpl();
+	VtkRecursiveSphereDirectionEncoderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkRecursiveSphereDirectionEncoderWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRecursiveSphereDirectionEncoderWrap::InitPtpl();
+		VtkRecursiveSphereDirectionEncoderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkRecursiveSphereDirectionEncoderWrap::SetRecursionDepth(const Nan::Functi
 	vtkRecursiveSphereDirectionEncoder *native = (vtkRecursiveSphereDirectionEncoder *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -119,7 +119,7 @@ void VtkWidgetCallbackMapperWrap::GetEventTranslator(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetEventTranslator();
-		VtkWidgetEventTranslatorWrap::InitPtpl();
+	VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +164,7 @@ void VtkWidgetCallbackMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkWidgetCallbackMapperWrap::InitPtpl();
+	VtkWidgetCallbackMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkWidgetCallbackMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWidgetCallbackMapperWrap::InitPtpl();
+		VtkWidgetCallbackMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkWidgetCallbackMapperWrap::SetEventTranslator(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWidgetEventTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWidgetEventTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkWidgetEventTranslatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

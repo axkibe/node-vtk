@@ -33,9 +33,11 @@ class VtkRegularPolygonSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void GeneratePolygonOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePolylineOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GeneratePolylineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeneratePolygon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeneratePolyline(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSides(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSidesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSidesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -71,6 +71,9 @@ void VtkPointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDivisions", GetDivisions);
+	Nan::SetPrototypeMethod(tpl, "getDivisions", GetDivisions);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPointsPerBucket", GetNumberOfPointsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPointsPerBucket", GetNumberOfPointsPerBucket);
 
@@ -140,7 +143,7 @@ void VtkPointLocatorWrap::BuildLocator(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -167,7 +170,7 @@ void VtkPointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8:
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -202,7 +205,7 @@ void VtkPointLocatorWrap::FindClosestNPoints(const Nan::FunctionCallbackInfo<v8:
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -240,7 +243,7 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -279,7 +282,7 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -305,7 +308,7 @@ void VtkPointLocatorWrap::FindDistributedPoints(const Nan::FunctionCallbackInfo<
 						VtkIdListWrap *a4 = ObjectWrap::Unwrap<VtkIdListWrap>(info[4]->ToObject());
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -347,7 +350,7 @@ void VtkPointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -382,7 +385,7 @@ void VtkPointLocatorWrap::FindPointsWithinRadius(const Nan::FunctionCallbackInfo
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -403,7 +406,7 @@ void VtkPointLocatorWrap::FreeSearchStructure(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -420,7 +423,7 @@ void VtkPointLocatorWrap::GenerateRepresentation(const Nan::FunctionCallbackInfo
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -447,6 +450,23 @@ void VtkPointLocatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPointLocatorWrap::GetDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
+	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDivisions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPointLocatorWrap::GetNumberOfPointsPerBucket(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -502,7 +522,7 @@ void VtkPointLocatorWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -547,7 +567,7 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 				(double *)(a0->Buffer()->GetContents().Data()),
 				(int *)(a1->Buffer()->GetContents().Data())
 			);
-				VtkIdListWrap::InitPtpl();
+			VtkIdListWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -588,7 +608,7 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 				(double *)(a0->Buffer()->GetContents().Data()),
 				b1
 			);
-				VtkIdListWrap::InitPtpl();
+			VtkIdListWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -649,7 +669,7 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 				b0,
 				b1
 			);
-				VtkIdListWrap::InitPtpl();
+			VtkIdListWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -680,7 +700,7 @@ void VtkPointLocatorWrap::GetPointsInBucket(const Nan::FunctionCallbackInfo<v8::
 				b0,
 				(int *)(a1->Buffer()->GetContents().Data())
 			);
-				VtkIdListWrap::InitPtpl();
+			VtkIdListWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -766,7 +786,7 @@ void VtkPointLocatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPointLocatorWrap *wrapper = ObjectWrap::Unwrap<VtkPointLocatorWrap>(info.Holder());
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -807,7 +827,7 @@ void VtkPointLocatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointLocatorWrap::InitPtpl();
+	VtkPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -835,7 +855,7 @@ void VtkPointLocatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointLocatorWrap::InitPtpl();
+		VtkPointLocatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -864,7 +884,7 @@ void VtkPointLocatorWrap::SetDivisions(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -893,7 +913,7 @@ void VtkPointLocatorWrap::SetDivisions(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +929,7 @@ void VtkPointLocatorWrap::SetDivisions(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -932,7 +952,7 @@ void VtkPointLocatorWrap::SetNumberOfPointsPerBucket(const Nan::FunctionCallback
 	vtkPointLocator *native = (vtkPointLocator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

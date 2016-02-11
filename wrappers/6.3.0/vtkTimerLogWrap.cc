@@ -160,7 +160,7 @@ void VtkTimerLogWrap::AllocateLog(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -172,7 +172,7 @@ void VtkTimerLogWrap::CleanupLog(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -187,7 +187,7 @@ void VtkTimerLogWrap::DumpLog(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -207,7 +207,7 @@ void VtkTimerLogWrap::FormatAndMarkEvent(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkTimerLogWrap::LoggingOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -419,7 +419,7 @@ void VtkTimerLogWrap::LoggingOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -434,7 +434,7 @@ void VtkTimerLogWrap::MarkEndEvent(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -454,7 +454,7 @@ void VtkTimerLogWrap::MarkEvent(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +474,7 @@ void VtkTimerLogWrap::MarkStartEvent(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -498,7 +498,7 @@ void VtkTimerLogWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkTimerLogWrap::InitPtpl();
+	VtkTimerLogWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkTimerLogWrap::ResetLog(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -538,7 +538,7 @@ void VtkTimerLogWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTimerLogWrap::InitPtpl();
+		VtkTimerLogWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -559,7 +559,7 @@ void VtkTimerLogWrap::SetLogging(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -578,7 +578,7 @@ void VtkTimerLogWrap::SetMaxEntries(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +595,7 @@ void VtkTimerLogWrap::StartTimer(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +607,7 @@ void VtkTimerLogWrap::StopTimer(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkTimerLogWrap *wrapper = ObjectWrap::Unwrap<VtkTimerLogWrap>(info.Holder());
 	vtkTimerLog *native = (vtkTimerLog *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

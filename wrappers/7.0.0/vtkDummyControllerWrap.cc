@@ -120,7 +120,7 @@ void VtkDummyControllerWrap::CreateOutputWindow(const Nan::FunctionCallbackInfo<
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +134,7 @@ void VtkDummyControllerWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -144,7 +144,7 @@ void VtkDummyControllerWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value>
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkDummyControllerWrap::GetCommunicator(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetCommunicator();
-		VtkCommunicatorWrap::InitPtpl();
+	VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkDummyControllerWrap::GetRMICommunicator(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetRMICommunicator();
-		VtkCommunicatorWrap::InitPtpl();
+	VtkCommunicatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkDummyControllerWrap::MultipleMethodExecute(const Nan::FunctionCallbackIn
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkDummyControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkDummyControllerWrap::InitPtpl();
+	VtkDummyControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,7 +299,7 @@ void VtkDummyControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDummyControllerWrap::InitPtpl();
+		VtkDummyControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkDummyControllerWrap::SetCommunicator(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +341,7 @@ void VtkDummyControllerWrap::SetRMICommunicator(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkCommunicatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -358,7 +358,7 @@ void VtkDummyControllerWrap::SingleMethodExecute(const Nan::FunctionCallbackInfo
 {
 	VtkDummyControllerWrap *wrapper = ObjectWrap::Unwrap<VtkDummyControllerWrap>(info.Holder());
 	vtkDummyController *native = (vtkDummyController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

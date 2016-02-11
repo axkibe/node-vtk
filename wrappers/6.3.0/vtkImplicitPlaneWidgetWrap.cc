@@ -270,7 +270,7 @@ void VtkImplicitPlaneWidgetWrap::DrawPlaneOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -282,7 +282,7 @@ void VtkImplicitPlaneWidgetWrap::DrawPlaneOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -371,7 +371,7 @@ void VtkImplicitPlaneWidgetWrap::GetEdgesProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetEdgesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkImplicitPlaneWidgetWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +426,7 @@ void VtkImplicitPlaneWidgetWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +436,17 @@ void VtkImplicitPlaneWidgetWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::V
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitPlaneWidgetWrap::GetNormalProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -450,7 +460,7 @@ void VtkImplicitPlaneWidgetWrap::GetNormalProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetNormalProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -518,7 +528,7 @@ void VtkImplicitPlaneWidgetWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +557,7 @@ void VtkImplicitPlaneWidgetWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +567,17 @@ void VtkImplicitPlaneWidgetWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::V
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitPlaneWidgetWrap::GetOriginTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -585,7 +605,7 @@ void VtkImplicitPlaneWidgetWrap::GetOutlineProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -632,7 +652,7 @@ void VtkImplicitPlaneWidgetWrap::GetPlane(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -656,7 +676,7 @@ void VtkImplicitPlaneWidgetWrap::GetPlaneProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPlaneProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -675,7 +695,7 @@ void VtkImplicitPlaneWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -699,7 +719,7 @@ void VtkImplicitPlaneWidgetWrap::GetPolyDataAlgorithm(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPolyDataAlgorithm();
-		VtkPolyDataAlgorithmWrap::InitPtpl();
+	VtkPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -736,7 +756,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedNormalProperty(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetSelectedNormalProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -759,7 +779,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedOutlineProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -782,7 +802,7 @@ void VtkImplicitPlaneWidgetWrap::GetSelectedPlaneProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetSelectedPlaneProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -841,7 +861,7 @@ void VtkImplicitPlaneWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitPlaneWidgetWrap::InitPtpl();
+	VtkImplicitPlaneWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -857,7 +877,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToXAxisOff(const Nan::FunctionCallbackInf
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -869,7 +889,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToXAxisOn(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -881,7 +901,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToYAxisOff(const Nan::FunctionCallbackInf
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -893,7 +913,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToYAxisOn(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -905,7 +925,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToZAxisOff(const Nan::FunctionCallbackInf
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -917,7 +937,7 @@ void VtkImplicitPlaneWidgetWrap::NormalToZAxisOn(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -929,7 +949,7 @@ void VtkImplicitPlaneWidgetWrap::OriginTranslationOff(const Nan::FunctionCallbac
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -941,7 +961,7 @@ void VtkImplicitPlaneWidgetWrap::OriginTranslationOn(const Nan::FunctionCallback
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -953,7 +973,7 @@ void VtkImplicitPlaneWidgetWrap::OutlineTranslationOff(const Nan::FunctionCallba
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -965,7 +985,7 @@ void VtkImplicitPlaneWidgetWrap::OutlineTranslationOn(const Nan::FunctionCallbac
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -977,7 +997,7 @@ void VtkImplicitPlaneWidgetWrap::OutsideBoundsOff(const Nan::FunctionCallbackInf
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -989,7 +1009,7 @@ void VtkImplicitPlaneWidgetWrap::OutsideBoundsOn(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1011,7 +1031,7 @@ void VtkImplicitPlaneWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1040,7 +1060,7 @@ void VtkImplicitPlaneWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1062,7 +1082,7 @@ void VtkImplicitPlaneWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1082,7 +1102,7 @@ void VtkImplicitPlaneWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8:
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1106,7 +1126,7 @@ void VtkImplicitPlaneWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitPlaneWidgetWrap::InitPtpl();
+		VtkImplicitPlaneWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1125,7 +1145,7 @@ void VtkImplicitPlaneWidgetWrap::ScaleEnabledOff(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1137,7 +1157,7 @@ void VtkImplicitPlaneWidgetWrap::ScaleEnabledOn(const Nan::FunctionCallbackInfo<
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1151,7 +1171,7 @@ void VtkImplicitPlaneWidgetWrap::SetDiagonalRatio(const Nan::FunctionCallbackInf
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1170,7 +1190,7 @@ void VtkImplicitPlaneWidgetWrap::SetDrawPlane(const Nan::FunctionCallbackInfo<v8
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1189,7 +1209,7 @@ void VtkImplicitPlaneWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1216,7 +1236,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1245,7 +1265,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1261,7 +1281,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1284,7 +1304,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormalToXAxis(const Nan::FunctionCallbackInf
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1303,7 +1323,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormalToYAxis(const Nan::FunctionCallbackInf
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1322,7 +1342,7 @@ void VtkImplicitPlaneWidgetWrap::SetNormalToZAxis(const Nan::FunctionCallbackInf
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1349,7 +1369,7 @@ void VtkImplicitPlaneWidgetWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1378,7 +1398,7 @@ void VtkImplicitPlaneWidgetWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1394,7 +1414,7 @@ void VtkImplicitPlaneWidgetWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1417,7 +1437,7 @@ void VtkImplicitPlaneWidgetWrap::SetOriginTranslation(const Nan::FunctionCallbac
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1436,7 +1456,7 @@ void VtkImplicitPlaneWidgetWrap::SetOutlineTranslation(const Nan::FunctionCallba
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1455,7 +1475,7 @@ void VtkImplicitPlaneWidgetWrap::SetOutsideBounds(const Nan::FunctionCallbackInf
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1474,7 +1494,7 @@ void VtkImplicitPlaneWidgetWrap::SetScaleEnabled(const Nan::FunctionCallbackInfo
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1493,7 +1513,7 @@ void VtkImplicitPlaneWidgetWrap::SetTubing(const Nan::FunctionCallbackInfo<v8::V
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1510,7 +1530,7 @@ void VtkImplicitPlaneWidgetWrap::SizeHandles(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1522,7 +1542,7 @@ void VtkImplicitPlaneWidgetWrap::TubingOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1534,7 +1554,7 @@ void VtkImplicitPlaneWidgetWrap::TubingOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1546,7 +1566,7 @@ void VtkImplicitPlaneWidgetWrap::UpdatePlacement(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitPlaneWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitPlaneWidgetWrap>(info.Holder());
 	vtkImplicitPlaneWidget *native = (vtkImplicitPlaneWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

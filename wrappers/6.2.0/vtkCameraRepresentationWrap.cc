@@ -159,7 +159,7 @@ void VtkCameraRepresentationWrap::AddCameraToPath(const Nan::FunctionCallbackInf
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -174,7 +174,7 @@ void VtkCameraRepresentationWrap::AnimatePath(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -191,7 +191,7 @@ void VtkCameraRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbac
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkCameraRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkCameraRepresentationWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkCameraRepresentationWrap::GetInterpolator(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetInterpolator();
-		VtkCameraInterpolatorWrap::InitPtpl();
+	VtkCameraInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +332,7 @@ void VtkCameraRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkCameraRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -387,7 +387,7 @@ void VtkCameraRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +418,7 @@ void VtkCameraRepresentationWrap::InitializePath(const Nan::FunctionCallbackInfo
 {
 	VtkCameraRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCameraRepresentationWrap>(info.Holder());
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +459,7 @@ void VtkCameraRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkCameraRepresentationWrap::InitPtpl();
+	VtkCameraRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,7 +478,7 @@ void VtkCameraRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +573,7 @@ void VtkCameraRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCameraRepresentationWrap::InitPtpl();
+		VtkCameraRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -595,7 +595,7 @@ void VtkCameraRepresentationWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -615,7 +615,7 @@ void VtkCameraRepresentationWrap::SetInterpolator(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkCameraInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -634,7 +634,7 @@ void VtkCameraRepresentationWrap::SetNumberOfFrames(const Nan::FunctionCallbackI
 	vtkCameraRepresentation *native = (vtkCameraRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -58,6 +58,12 @@ void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAngleBrushThreshold", GetAngleBrushThreshold);
 	Nan::SetPrototypeMethod(tpl, "getAngleBrushThreshold", GetAngleBrushThreshold);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxisColor", GetAxisColor);
+	Nan::SetPrototypeMethod(tpl, "getAxisColor", GetAxisColor);
+
+	Nan::SetPrototypeMethod(tpl, "GetAxisLabelColor", GetAxisLabelColor);
+	Nan::SetPrototypeMethod(tpl, "getAxisLabelColor", GetAxisLabelColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -72,6 +78,9 @@ void VtkParallelCoordinatesRepresentationWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetHoverText", GetHoverText);
 	Nan::SetPrototypeMethod(tpl, "getHoverText", GetHoverText);
+
+	Nan::SetPrototypeMethod(tpl, "GetLineColor", GetLineColor);
+	Nan::SetPrototypeMethod(tpl, "getLineColor", GetLineColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetLineOpacity", GetLineOpacity);
 	Nan::SetPrototypeMethod(tpl, "getLineOpacity", GetLineOpacity);
@@ -199,7 +208,7 @@ void VtkParallelCoordinatesRepresentationWrap::ApplyViewTheme(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,6 +233,40 @@ void VtkParallelCoordinatesRepresentationWrap::GetAngleBrushThreshold(const Nan:
 	}
 	r = native->GetAngleBrushThreshold();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkParallelCoordinatesRepresentationWrap::GetAxisColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkParallelCoordinatesRepresentationWrap::GetAxisLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisLabelColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -310,6 +353,23 @@ void VtkParallelCoordinatesRepresentationWrap::GetHoverText(const Nan::FunctionC
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParallelCoordinatesRepresentationWrap::GetLineColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
+	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLineColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesRepresentationWrap::GetLineOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -522,7 +582,7 @@ void VtkParallelCoordinatesRepresentationWrap::LassoSelect(const Nan::FunctionCa
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkPointsWrap *a2 = ObjectWrap::Unwrap<VtkPointsWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -550,7 +610,7 @@ void VtkParallelCoordinatesRepresentationWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelCoordinatesRepresentationWrap::InitPtpl();
+	VtkParallelCoordinatesRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -566,7 +626,7 @@ void VtkParallelCoordinatesRepresentationWrap::ResetAxes(const Nan::FunctionCall
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -590,7 +650,7 @@ void VtkParallelCoordinatesRepresentationWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelCoordinatesRepresentationWrap::InitPtpl();
+		VtkParallelCoordinatesRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -611,7 +671,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAngleBrushThreshold(const Nan:
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +698,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisColor(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -667,7 +727,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisColor(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -683,7 +743,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisColor(const Nan::FunctionC
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -714,7 +774,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisLabelColor(const Nan::Func
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -743,7 +803,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisLabelColor(const Nan::Func
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -759,7 +819,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisLabelColor(const Nan::Func
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -783,7 +843,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisTitles(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -796,7 +856,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetAxisTitles(const Nan::Function
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -815,7 +875,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetCurveResolution(const Nan::Fun
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -834,7 +894,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetFontSize(const Nan::FunctionCa
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -853,7 +913,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetFunctionBrushThreshold(const N
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -880,7 +940,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetLineColor(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +969,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetLineColor(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -925,7 +985,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetLineColor(const Nan::FunctionC
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -948,7 +1008,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetLineOpacity(const Nan::Functio
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -967,7 +1027,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetNumberOfAxisLabels(const Nan::
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -987,7 +1047,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetPlotTitle(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1071,7 +1131,7 @@ void VtkParallelCoordinatesRepresentationWrap::SetUseCurves(const Nan::FunctionC
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1138,7 +1198,7 @@ void VtkParallelCoordinatesRepresentationWrap::UseCurvesOff(const Nan::FunctionC
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1150,7 +1210,7 @@ void VtkParallelCoordinatesRepresentationWrap::UseCurvesOn(const Nan::FunctionCa
 {
 	VtkParallelCoordinatesRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesRepresentationWrap>(info.Holder());
 	vtkParallelCoordinatesRepresentation *native = (vtkParallelCoordinatesRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

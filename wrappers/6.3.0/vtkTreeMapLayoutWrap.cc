@@ -129,7 +129,7 @@ void VtkTreeMapLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkTreeMapLayoutStrategyWrap::InitPtpl();
+	VtkTreeMapLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +188,7 @@ void VtkTreeMapLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeMapLayoutWrap::InitPtpl();
+	VtkTreeMapLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkTreeMapLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeMapLayoutWrap::InitPtpl();
+		VtkTreeMapLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkTreeMapLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTreeMapLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTreeMapLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkTreeMapLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -258,7 +258,7 @@ void VtkTreeMapLayoutWrap::SetRectanglesFieldName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkTreeMapLayoutWrap::SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

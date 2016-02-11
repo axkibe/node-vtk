@@ -47,11 +47,17 @@ void VtkVectorDotWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkVectorDotWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetActualRange", GetActualRange);
+	Nan::SetPrototypeMethod(tpl, "getActualRange", GetActualRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetMapScalars", GetMapScalars);
 	Nan::SetPrototypeMethod(tpl, "getMapScalars", GetMapScalars);
+
+	Nan::SetPrototypeMethod(tpl, "GetScalarRange", GetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getScalarRange", GetScalarRange);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -103,6 +109,23 @@ void VtkVectorDotWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(info.This());
 }
 
+void VtkVectorDotWrap::GetActualRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
+	vtkVectorDot *native = (vtkVectorDot *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActualRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVectorDotWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
@@ -131,6 +154,23 @@ void VtkVectorDotWrap::GetMapScalars(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVectorDotWrap::GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
+	vtkVectorDot *native = (vtkVectorDot *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVectorDotWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
@@ -157,7 +197,7 @@ void VtkVectorDotWrap::MapScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
 	vtkVectorDot *native = (vtkVectorDot *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -169,7 +209,7 @@ void VtkVectorDotWrap::MapScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkVectorDotWrap *wrapper = ObjectWrap::Unwrap<VtkVectorDotWrap>(info.Holder());
 	vtkVectorDot *native = (vtkVectorDot *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +228,7 @@ void VtkVectorDotWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkVectorDotWrap::InitPtpl();
+	VtkVectorDotWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +256,7 @@ void VtkVectorDotWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVectorDotWrap::InitPtpl();
+		VtkVectorDotWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +277,7 @@ void VtkVectorDotWrap::SetMapScalars(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkVectorDot *native = (vtkVectorDot *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +304,7 @@ void VtkVectorDotWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +333,7 @@ void VtkVectorDotWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +347,7 @@ void VtkVectorDotWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

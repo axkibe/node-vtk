@@ -131,7 +131,7 @@ void VtkAMRDataSetCacheWrap::GetAMRBlock(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetAMRBlock(
 			info[0]->Int32Value()
 		);
-			VtkUniformGridWrap::InitPtpl();
+		VtkUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkAMRDataSetCacheWrap::GetAMRBlockCellData(const Nan::FunctionCallbackInfo
 				info[0]->Int32Value(),
 				*a1
 			);
-				VtkDataArrayWrap::InitPtpl();
+			VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -200,7 +200,7 @@ void VtkAMRDataSetCacheWrap::GetAMRBlockPointData(const Nan::FunctionCallbackInf
 				info[0]->Int32Value(),
 				*a1
 			);
-				VtkDataArrayWrap::InitPtpl();
+			VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkAMRDataSetCacheWrap::InsertAMRBlock(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkUniformGridWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkUniformGridWrap *a1 = ObjectWrap::Unwrap<VtkUniformGridWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -336,7 +336,7 @@ void VtkAMRDataSetCacheWrap::InsertAMRBlockCellData(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -360,7 +360,7 @@ void VtkAMRDataSetCacheWrap::InsertAMRBlockPointData(const Nan::FunctionCallback
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -408,7 +408,7 @@ void VtkAMRDataSetCacheWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRDataSetCacheWrap::InitPtpl();
+	VtkAMRDataSetCacheWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -436,7 +436,7 @@ void VtkAMRDataSetCacheWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRDataSetCacheWrap::InitPtpl();
+		VtkAMRDataSetCacheWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

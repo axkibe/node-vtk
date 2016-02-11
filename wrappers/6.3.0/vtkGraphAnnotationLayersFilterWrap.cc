@@ -163,7 +163,7 @@ void VtkGraphAnnotationLayersFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphAnnotationLayersFilterWrap::InitPtpl();
+	VtkGraphAnnotationLayersFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -179,7 +179,7 @@ void VtkGraphAnnotationLayersFilterWrap::OutlineOff(const Nan::FunctionCallbackI
 {
 	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkGraphAnnotationLayersFilterWrap::OutlineOn(const Nan::FunctionCallbackIn
 {
 	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkGraphAnnotationLayersFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphAnnotationLayersFilterWrap::InitPtpl();
+		VtkGraphAnnotationLayersFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetHullShapeToBoundingRectangle(const N
 {
 	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -246,7 +246,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetHullShapeToConvexHull(const Nan::Fun
 {
 	VtkGraphAnnotationLayersFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphAnnotationLayersFilterWrap>(info.Holder());
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetMinHullSizeInDisplay(const Nan::Func
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +279,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetMinHullSizeInWorld(const Nan::Functi
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -298,7 +298,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetOutline(const Nan::FunctionCallbackI
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetRenderer(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -337,7 +337,7 @@ void VtkGraphAnnotationLayersFilterWrap::SetScaleFactor(const Nan::FunctionCallb
 	vtkGraphAnnotationLayersFilter *native = (vtkGraphAnnotationLayersFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

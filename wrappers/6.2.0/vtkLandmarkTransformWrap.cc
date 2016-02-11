@@ -179,7 +179,7 @@ void VtkLandmarkTransformWrap::GetSourceLandmarks(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetSourceLandmarks();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -202,7 +202,7 @@ void VtkLandmarkTransformWrap::GetTargetLandmarks(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTargetLandmarks();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkLandmarkTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkLandmarkTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkLandmarkTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkLandmarkTransformWrap::InitPtpl();
+	VtkLandmarkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkLandmarkTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLandmarkTransformWrap::InitPtpl();
+		VtkLandmarkTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -331,7 +331,7 @@ void VtkLandmarkTransformWrap::SetMode(const Nan::FunctionCallbackInfo<v8::Value
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -348,7 +348,7 @@ void VtkLandmarkTransformWrap::SetModeToAffine(const Nan::FunctionCallbackInfo<v
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -360,7 +360,7 @@ void VtkLandmarkTransformWrap::SetModeToRigidBody(const Nan::FunctionCallbackInf
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkLandmarkTransformWrap::SetModeToSimilarity(const Nan::FunctionCallbackIn
 {
 	VtkLandmarkTransformWrap *wrapper = ObjectWrap::Unwrap<VtkLandmarkTransformWrap>(info.Holder());
 	vtkLandmarkTransform *native = (vtkLandmarkTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -387,7 +387,7 @@ void VtkLandmarkTransformWrap::SetSourceLandmarks(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkLandmarkTransformWrap::SetTargetLandmarks(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

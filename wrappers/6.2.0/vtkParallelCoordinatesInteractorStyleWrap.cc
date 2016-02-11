@@ -156,7 +156,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::EndInspect(const Nan::FunctionCa
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -168,7 +168,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::EndPan(const Nan::FunctionCallba
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,7 +180,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::EndZoom(const Nan::FunctionCallb
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorCurrentPosition(const N
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -249,7 +249,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorCurrentPosition(const N
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -261,7 +261,17 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorCurrentPosition(const N
 			return;
 		}
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCursorCurrentPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesInteractorStyleWrap::GetCursorLastPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -281,7 +291,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorLastPosition(const Nan:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +321,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorLastPosition(const Nan:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -323,7 +333,17 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorLastPosition(const Nan:
 			return;
 		}
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCursorLastPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesInteractorStyleWrap::GetCursorStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -343,7 +363,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorStartPosition(const Nan
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -373,7 +393,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorStartPosition(const Nan
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -385,7 +405,17 @@ void VtkParallelCoordinatesInteractorStyleWrap::GetCursorStartPosition(const Nan
 			return;
 		}
 	}
-	Nan::ThrowError("Parameter mismatch");
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCursorStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelCoordinatesInteractorStyleWrap::Inspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -396,7 +426,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::Inspect(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -444,7 +474,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
+	VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -460,7 +490,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnChar(const Nan::FunctionCallba
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -472,7 +502,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnLeave(const Nan::FunctionCallb
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -484,7 +514,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnLeftButtonDown(const Nan::Func
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -496,7 +526,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnLeftButtonUp(const Nan::Functi
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -508,7 +538,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnMiddleButtonDown(const Nan::Fu
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -520,7 +550,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnMiddleButtonUp(const Nan::Func
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -532,7 +562,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnMouseMove(const Nan::FunctionC
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -544,7 +574,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnRightButtonDown(const Nan::Fun
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -556,7 +586,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::OnRightButtonUp(const Nan::Funct
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -568,7 +598,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::Pan(const Nan::FunctionCallbackI
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -592,7 +622,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
+		VtkParallelCoordinatesInteractorStyleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -615,7 +645,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::StartInspect(const Nan::Function
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -634,7 +664,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::StartPan(const Nan::FunctionCall
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -646,7 +676,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::StartZoom(const Nan::FunctionCal
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -658,7 +688,7 @@ void VtkParallelCoordinatesInteractorStyleWrap::Zoom(const Nan::FunctionCallback
 {
 	VtkParallelCoordinatesInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesInteractorStyleWrap>(info.Holder());
 	vtkParallelCoordinatesInteractorStyle *native = (vtkParallelCoordinatesInteractorStyle *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

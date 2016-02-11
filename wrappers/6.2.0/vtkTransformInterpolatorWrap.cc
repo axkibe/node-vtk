@@ -161,7 +161,7 @@ void VtkTransformInterpolatorWrap::AddTransform(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkProp3DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkProp3DWrap *a1 = ObjectWrap::Unwrap<VtkProp3DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -175,7 +175,7 @@ void VtkTransformInterpolatorWrap::AddTransform(const Nan::FunctionCallbackInfo<
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -189,7 +189,7 @@ void VtkTransformInterpolatorWrap::AddTransform(const Nan::FunctionCallbackInfo<
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTransformWrap *a1 = ObjectWrap::Unwrap<VtkTransformWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -313,7 +313,7 @@ void VtkTransformInterpolatorWrap::GetPositionInterpolator(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetPositionInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkTransformInterpolatorWrap::GetRotationInterpolator(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetRotationInterpolator();
-		VtkQuaternionInterpolatorWrap::InitPtpl();
+	VtkQuaternionInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkTransformInterpolatorWrap::GetScaleInterpolator(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetScaleInterpolator();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -375,7 +375,7 @@ void VtkTransformInterpolatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTransformInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTransformInterpolatorWrap>(info.Holder());
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkTransformInterpolatorWrap::InterpolateTransform(const Nan::FunctionCallb
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTransformWrap *a1 = ObjectWrap::Unwrap<VtkTransformWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -440,7 +440,7 @@ void VtkTransformInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransformInterpolatorWrap::InitPtpl();
+	VtkTransformInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +458,7 @@ void VtkTransformInterpolatorWrap::RemoveTransform(const Nan::FunctionCallbackIn
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +487,7 @@ void VtkTransformInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransformInterpolatorWrap::InitPtpl();
+		VtkTransformInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -508,7 +508,7 @@ void VtkTransformInterpolatorWrap::SetInterpolationType(const Nan::FunctionCallb
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +525,7 @@ void VtkTransformInterpolatorWrap::SetInterpolationTypeToLinear(const Nan::Funct
 {
 	VtkTransformInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTransformInterpolatorWrap>(info.Holder());
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -537,7 +537,7 @@ void VtkTransformInterpolatorWrap::SetInterpolationTypeToManual(const Nan::Funct
 {
 	VtkTransformInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTransformInterpolatorWrap>(info.Holder());
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -549,7 +549,7 @@ void VtkTransformInterpolatorWrap::SetInterpolationTypeToSpline(const Nan::Funct
 {
 	VtkTransformInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTransformInterpolatorWrap>(info.Holder());
 	vtkTransformInterpolator *native = (vtkTransformInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -564,7 +564,7 @@ void VtkTransformInterpolatorWrap::SetPositionInterpolator(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +584,7 @@ void VtkTransformInterpolatorWrap::SetRotationInterpolator(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkQuaternionInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkQuaternionInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -604,7 +604,7 @@ void VtkTransformInterpolatorWrap::SetScaleInterpolator(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTupleInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTupleInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

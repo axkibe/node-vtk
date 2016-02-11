@@ -157,7 +157,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentDataObject(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetCurrentDataObject();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetCurrentMetaData();
-		VtkInformationWrap::InitPtpl();
+	VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkDataObjectTreeIteratorWrap::GoToFirstItem(const Nan::FunctionCallbackInf
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkDataObjectTreeIteratorWrap::GoToNextItem(const Nan::FunctionCallbackInfo
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -305,7 +305,7 @@ void VtkDataObjectTreeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataObjectTreeIteratorWrap::InitPtpl();
+	VtkDataObjectTreeIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkDataObjectTreeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataObjectTreeIteratorWrap::InitPtpl();
+		VtkDataObjectTreeIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkDataObjectTreeIteratorWrap::SetTraverseSubTree(const Nan::FunctionCallba
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -373,7 +373,7 @@ void VtkDataObjectTreeIteratorWrap::SetVisitOnlyLeaves(const Nan::FunctionCallba
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -390,7 +390,7 @@ void VtkDataObjectTreeIteratorWrap::TraverseSubTreeOff(const Nan::FunctionCallba
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +402,7 @@ void VtkDataObjectTreeIteratorWrap::TraverseSubTreeOn(const Nan::FunctionCallbac
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +414,7 @@ void VtkDataObjectTreeIteratorWrap::VisitOnlyLeavesOff(const Nan::FunctionCallba
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +426,7 @@ void VtkDataObjectTreeIteratorWrap::VisitOnlyLeavesOn(const Nan::FunctionCallbac
 {
 	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
 	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

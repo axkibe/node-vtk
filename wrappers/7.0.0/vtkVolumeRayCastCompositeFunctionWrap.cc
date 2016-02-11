@@ -212,7 +212,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
+	VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
+		VtkVolumeRayCastCompositeFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SetCompositeMethod(const Nan::Functi
 	vtkVolumeRayCastCompositeFunction *native = (vtkVolumeRayCastCompositeFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SetCompositeMethodToClassifyFirst(co
 {
 	VtkVolumeRayCastCompositeFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastCompositeFunctionWrap>(info.Holder());
 	vtkVolumeRayCastCompositeFunction *native = (vtkVolumeRayCastCompositeFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,7 +290,7 @@ void VtkVolumeRayCastCompositeFunctionWrap::SetCompositeMethodToInterpolateFirst
 {
 	VtkVolumeRayCastCompositeFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastCompositeFunctionWrap>(info.Holder());
 	vtkVolumeRayCastCompositeFunction *native = (vtkVolumeRayCastCompositeFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -31,6 +31,9 @@ class VtkImageStencilSourceWrap : public VtkImageStencilAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformationInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReportReferences(const Nan::FunctionCallbackInfo<v8::Value>& info);

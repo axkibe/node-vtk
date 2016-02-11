@@ -34,6 +34,8 @@ class VtkInteractorStyleUserWrap : public VtkInteractorStyleWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCtrlKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastPos(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOldPos(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

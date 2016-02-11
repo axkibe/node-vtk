@@ -138,7 +138,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
+	VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -154,7 +154,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::PrepareForRender(const Nan::FunctionCallba
 {
 	VtkGLSLShaderDeviceAdapter2Wrap *wrapper = ObjectWrap::Unwrap<VtkGLSLShaderDeviceAdapter2Wrap>(info.Holder());
 	vtkGLSLShaderDeviceAdapter2 *native = (vtkGLSLShaderDeviceAdapter2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkGLSLShaderDeviceAdapter2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
+		VtkGLSLShaderDeviceAdapter2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

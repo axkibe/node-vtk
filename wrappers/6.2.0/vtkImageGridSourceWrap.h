@@ -30,9 +30,14 @@ class VtkImageGridSourceWrap : public VtkImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFillValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -31,10 +31,12 @@ class VtkGeoGraticuleWrap : public VtkPolyDataAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeometryType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLatitudeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeDelta(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeLevelMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLatitudeLevelMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLongitudeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitudeDelta(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitudeLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLongitudeLevelMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -154,7 +154,7 @@ void VtkGraphLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGraphLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info.Holder());
 	vtkGraphLayoutStrategy *native = (vtkGraphLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +209,7 @@ void VtkGraphLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphLayoutStrategyWrap::InitPtpl();
+	VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkGraphLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphLayoutStrategyWrap::InitPtpl();
+		VtkGraphLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkGraphLayoutStrategyWrap::SetEdgeWeightField(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +279,7 @@ void VtkGraphLayoutStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -298,7 +298,7 @@ void VtkGraphLayoutStrategyWrap::SetWeightEdges(const Nan::FunctionCallbackInfo<
 	vtkGraphLayoutStrategy *native = (vtkGraphLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

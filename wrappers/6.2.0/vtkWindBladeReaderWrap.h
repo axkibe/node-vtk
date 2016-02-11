@@ -39,6 +39,8 @@ class VtkWindBladeReaderWrap : public VtkStructuredGridAlgorithmWrap
 		static void GetNumberOfPointArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSubExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

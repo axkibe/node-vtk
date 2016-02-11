@@ -30,10 +30,14 @@ class VtkImageImportWrap : public VtkImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InvokeExecuteDataCallbacks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InvokeExecuteInformationCallbacks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InvokePipelineModifiedCallbacks(const Nan::FunctionCallbackInfo<v8::Value>& info);

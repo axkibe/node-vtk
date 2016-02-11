@@ -36,6 +36,7 @@ class VtkGraphLayoutFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetCoolDownRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoolDownRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCoolDownRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterationsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxNumberOfIterationsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

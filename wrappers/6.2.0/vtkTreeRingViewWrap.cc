@@ -224,7 +224,7 @@ void VtkTreeRingViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeRingViewWrap::InitPtpl();
+	VtkTreeRingViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkTreeRingViewWrap::RootAtCenterOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTreeRingViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeRingViewWrap>(info.Holder());
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +252,7 @@ void VtkTreeRingViewWrap::RootAtCenterOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTreeRingViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeRingViewWrap>(info.Holder());
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +276,7 @@ void VtkTreeRingViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeRingViewWrap::InitPtpl();
+		VtkTreeRingViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkTreeRingViewWrap::SetInteriorLogSpacingValue(const Nan::FunctionCallback
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,7 @@ void VtkTreeRingViewWrap::SetInteriorRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +335,7 @@ void VtkTreeRingViewWrap::SetLayerThickness(const Nan::FunctionCallbackInfo<v8::
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -356,7 +356,7 @@ void VtkTreeRingViewWrap::SetRootAngles(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -377,7 +377,7 @@ void VtkTreeRingViewWrap::SetRootAtCenter(const Nan::FunctionCallbackInfo<v8::Va
 	vtkTreeRingView *native = (vtkTreeRingView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

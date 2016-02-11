@@ -197,7 +197,7 @@ void VtkCosmicTreeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCosmicTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCosmicTreeLayoutStrategyWrap>(info.Holder());
 	vtkCosmicTreeLayoutStrategy *native = (vtkCosmicTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkCosmicTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkCosmicTreeLayoutStrategyWrap::InitPtpl();
+	VtkCosmicTreeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCosmicTreeLayoutStrategyWrap::InitPtpl();
+		VtkCosmicTreeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -265,7 +265,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SetLayoutDepth(const Nan::FunctionCallback
 	vtkCosmicTreeLayoutStrategy *native = (vtkCosmicTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -285,7 +285,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SetNodeSizeArrayName(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +304,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SetSizeLeafNodesOnly(const Nan::FunctionCa
 	vtkCosmicTreeLayoutStrategy *native = (vtkCosmicTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +321,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SizeLeafNodesOnlyOff(const Nan::FunctionCa
 {
 	VtkCosmicTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCosmicTreeLayoutStrategyWrap>(info.Holder());
 	vtkCosmicTreeLayoutStrategy *native = (vtkCosmicTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkCosmicTreeLayoutStrategyWrap::SizeLeafNodesOnlyOn(const Nan::FunctionCal
 {
 	VtkCosmicTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCosmicTreeLayoutStrategyWrap>(info.Holder());
 	vtkCosmicTreeLayoutStrategy *native = (vtkCosmicTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

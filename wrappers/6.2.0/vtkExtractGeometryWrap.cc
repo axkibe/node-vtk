@@ -135,7 +135,7 @@ void VtkExtractGeometryWrap::ExtractBoundaryCellsOff(const Nan::FunctionCallback
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -147,7 +147,7 @@ void VtkExtractGeometryWrap::ExtractBoundaryCellsOn(const Nan::FunctionCallbackI
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -159,7 +159,7 @@ void VtkExtractGeometryWrap::ExtractInsideOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkExtractGeometryWrap::ExtractInsideOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkExtractGeometryWrap::ExtractOnlyBoundaryCellsOff(const Nan::FunctionCall
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkExtractGeometryWrap::ExtractOnlyBoundaryCellsOn(const Nan::FunctionCallb
 {
 	VtkExtractGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractGeometryWrap>(info.Holder());
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkExtractGeometryWrap::GetImplicitFunction(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetImplicitFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkExtractGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractGeometryWrap::InitPtpl();
+	VtkExtractGeometryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -343,7 +343,7 @@ void VtkExtractGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractGeometryWrap::InitPtpl();
+		VtkExtractGeometryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkExtractGeometryWrap::SetExtractBoundaryCells(const Nan::FunctionCallback
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkExtractGeometryWrap::SetExtractInside(const Nan::FunctionCallbackInfo<v8
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkExtractGeometryWrap::SetExtractOnlyBoundaryCells(const Nan::FunctionCall
 	vtkExtractGeometry *native = (vtkExtractGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkExtractGeometryWrap::SetImplicitFunction(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

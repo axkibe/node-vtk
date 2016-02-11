@@ -214,7 +214,7 @@ void VtkParticleTracerBaseWrap::AddSourceConnection(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -231,7 +231,7 @@ void VtkParticleTracerBaseWrap::DisableResetCacheOff(const Nan::FunctionCallback
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkParticleTracerBaseWrap::DisableResetCacheOn(const Nan::FunctionCallbackI
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +255,7 @@ void VtkParticleTracerBaseWrap::EnableParticleWritingOff(const Nan::FunctionCall
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +267,7 @@ void VtkParticleTracerBaseWrap::EnableParticleWritingOn(const Nan::FunctionCallb
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -370,7 +370,7 @@ void VtkParticleTracerBaseWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetIntegrator();
-		VtkInitialValueProblemSolverWrap::InitPtpl();
+	VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -421,7 +421,7 @@ void VtkParticleTracerBaseWrap::GetParticleWriter(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetParticleWriter();
-		VtkAbstractParticleWriterWrap::InitPtpl();
+	VtkAbstractParticleWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -521,7 +521,7 @@ void VtkParticleTracerBaseWrap::IgnorePipelineTimeOff(const Nan::FunctionCallbac
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +533,7 @@ void VtkParticleTracerBaseWrap::IgnorePipelineTimeOn(const Nan::FunctionCallback
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +574,7 @@ void VtkParticleTracerBaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkParticleTracerBaseWrap::InitPtpl();
+	VtkParticleTracerBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -590,7 +590,7 @@ void VtkParticleTracerBaseWrap::PrintParticleHistories(const Nan::FunctionCallba
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -602,7 +602,7 @@ void VtkParticleTracerBaseWrap::RemoveAllSources(const Nan::FunctionCallbackInfo
 {
 	VtkParticleTracerBaseWrap *wrapper = ObjectWrap::Unwrap<VtkParticleTracerBaseWrap>(info.Holder());
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -626,7 +626,7 @@ void VtkParticleTracerBaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParticleTracerBaseWrap::InitPtpl();
+		VtkParticleTracerBaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -647,7 +647,7 @@ void VtkParticleTracerBaseWrap::SetComputeVorticity(const Nan::FunctionCallbackI
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -666,7 +666,7 @@ void VtkParticleTracerBaseWrap::SetDisableResetCache(const Nan::FunctionCallback
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -685,7 +685,7 @@ void VtkParticleTracerBaseWrap::SetEnableParticleWriting(const Nan::FunctionCall
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +704,7 @@ void VtkParticleTracerBaseWrap::SetForceReinjectionEveryNSteps(const Nan::Functi
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -723,7 +723,7 @@ void VtkParticleTracerBaseWrap::SetIgnorePipelineTime(const Nan::FunctionCallbac
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -743,7 +743,7 @@ void VtkParticleTracerBaseWrap::SetIntegrator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInitialValueProblemSolverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInitialValueProblemSolverWrap *a0 = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +762,7 @@ void VtkParticleTracerBaseWrap::SetIntegratorType(const Nan::FunctionCallbackInf
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +782,7 @@ void VtkParticleTracerBaseWrap::SetParticleFileName(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -802,7 +802,7 @@ void VtkParticleTracerBaseWrap::SetParticleWriter(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractParticleWriterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractParticleWriterWrap *a0 = ObjectWrap::Unwrap<VtkAbstractParticleWriterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +821,7 @@ void VtkParticleTracerBaseWrap::SetRotationScale(const Nan::FunctionCallbackInfo
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -840,7 +840,7 @@ void VtkParticleTracerBaseWrap::SetStartTime(const Nan::FunctionCallbackInfo<v8:
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +859,7 @@ void VtkParticleTracerBaseWrap::SetStaticMesh(const Nan::FunctionCallbackInfo<v8
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -878,7 +878,7 @@ void VtkParticleTracerBaseWrap::SetStaticSeeds(const Nan::FunctionCallbackInfo<v
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -897,7 +897,7 @@ void VtkParticleTracerBaseWrap::SetTerminalSpeed(const Nan::FunctionCallbackInfo
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -916,7 +916,7 @@ void VtkParticleTracerBaseWrap::SetTerminationTime(const Nan::FunctionCallbackIn
 	vtkParticleTracerBase *native = (vtkParticleTracerBase *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

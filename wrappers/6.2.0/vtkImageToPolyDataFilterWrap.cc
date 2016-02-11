@@ -210,7 +210,7 @@ void VtkImageToPolyDataFilterWrap::DecimationOff(const Nan::FunctionCallbackInfo
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkImageToPolyDataFilterWrap::DecimationOn(const Nan::FunctionCallbackInfo<
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,7 +395,7 @@ void VtkImageToPolyDataFilterWrap::GetLookupTable(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -580,7 +580,7 @@ void VtkImageToPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageToPolyDataFilterWrap::InitPtpl();
+	VtkImageToPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,7 +608,7 @@ void VtkImageToPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageToPolyDataFilterWrap::InitPtpl();
+		VtkImageToPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -629,7 +629,7 @@ void VtkImageToPolyDataFilterWrap::SetColorMode(const Nan::FunctionCallbackInfo<
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -646,7 +646,7 @@ void VtkImageToPolyDataFilterWrap::SetColorModeToLUT(const Nan::FunctionCallback
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -658,7 +658,7 @@ void VtkImageToPolyDataFilterWrap::SetColorModeToLinear256(const Nan::FunctionCa
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -672,7 +672,7 @@ void VtkImageToPolyDataFilterWrap::SetDecimation(const Nan::FunctionCallbackInfo
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -691,7 +691,7 @@ void VtkImageToPolyDataFilterWrap::SetDecimationError(const Nan::FunctionCallbac
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -710,7 +710,7 @@ void VtkImageToPolyDataFilterWrap::SetError(const Nan::FunctionCallbackInfo<v8::
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +730,7 @@ void VtkImageToPolyDataFilterWrap::SetLookupTable(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -749,7 +749,7 @@ void VtkImageToPolyDataFilterWrap::SetNumberOfSmoothingIterations(const Nan::Fun
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -768,7 +768,7 @@ void VtkImageToPolyDataFilterWrap::SetOutputStyle(const Nan::FunctionCallbackInf
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -785,7 +785,7 @@ void VtkImageToPolyDataFilterWrap::SetOutputStyleToPixelize(const Nan::FunctionC
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkImageToPolyDataFilterWrap::SetOutputStyleToPolygonalize(const Nan::Funct
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -809,7 +809,7 @@ void VtkImageToPolyDataFilterWrap::SetOutputStyleToRunLength(const Nan::Function
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -823,7 +823,7 @@ void VtkImageToPolyDataFilterWrap::SetSmoothing(const Nan::FunctionCallbackInfo<
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -842,7 +842,7 @@ void VtkImageToPolyDataFilterWrap::SetSubImageSize(const Nan::FunctionCallbackIn
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +859,7 @@ void VtkImageToPolyDataFilterWrap::SmoothingOff(const Nan::FunctionCallbackInfo<
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -871,7 +871,7 @@ void VtkImageToPolyDataFilterWrap::SmoothingOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageToPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkImageToPolyDataFilterWrap>(info.Holder());
 	vtkImageToPolyDataFilter *native = (vtkImageToPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

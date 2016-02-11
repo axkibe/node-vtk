@@ -40,6 +40,7 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 		static void GetCurrentScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfIndependentComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUpdateGradientOpacityFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

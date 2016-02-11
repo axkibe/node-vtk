@@ -68,14 +68,32 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetActors2D", GetActors2D);
 	Nan::SetPrototypeMethod(tpl, "getActors2D", GetActors2D);
 
+	Nan::SetPrototypeMethod(tpl, "GetAspect", GetAspect);
+	Nan::SetPrototypeMethod(tpl, "getAspect", GetAspect);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackground", GetBackground);
+	Nan::SetPrototypeMethod(tpl, "getBackground", GetBackground);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackground2", GetBackground2);
+	Nan::SetPrototypeMethod(tpl, "getBackground2", GetBackground2);
+
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetDisplayPoint", GetDisplayPoint);
+	Nan::SetPrototypeMethod(tpl, "getDisplayPoint", GetDisplayPoint);
 
 	Nan::SetPrototypeMethod(tpl, "GetGradientBackground", GetGradientBackground);
 	Nan::SetPrototypeMethod(tpl, "getGradientBackground", GetGradientBackground);
 
 	Nan::SetPrototypeMethod(tpl, "GetIsPicking", GetIsPicking);
 	Nan::SetPrototypeMethod(tpl, "getIsPicking", GetIsPicking);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
 	Nan::SetPrototypeMethod(tpl, "GetPickHeight", GetPickHeight);
 	Nan::SetPrototypeMethod(tpl, "getPickHeight", GetPickHeight);
@@ -104,8 +122,23 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPickY2", GetPickY2);
 	Nan::SetPrototypeMethod(tpl, "getPickY2", GetPickY2);
 
+	Nan::SetPrototypeMethod(tpl, "GetPixelAspect", GetPixelAspect);
+	Nan::SetPrototypeMethod(tpl, "getPixelAspect", GetPixelAspect);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetViewPoint", GetViewPoint);
+	Nan::SetPrototypeMethod(tpl, "getViewPoint", GetViewPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetViewProps", GetViewProps);
 	Nan::SetPrototypeMethod(tpl, "getViewProps", GetViewProps);
+
+	Nan::SetPrototypeMethod(tpl, "GetViewport", GetViewport);
+	Nan::SetPrototypeMethod(tpl, "getViewport", GetViewport);
+
+	Nan::SetPrototypeMethod(tpl, "GetWorldPoint", GetWorldPoint);
+	Nan::SetPrototypeMethod(tpl, "getWorldPoint", GetWorldPoint);
 
 	Nan::SetPrototypeMethod(tpl, "GradientBackgroundOff", GradientBackgroundOff);
 	Nan::SetPrototypeMethod(tpl, "gradientBackgroundOff", GradientBackgroundOff);
@@ -214,7 +247,7 @@ void VtkViewportWrap::AddActor2D(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -234,7 +267,7 @@ void VtkViewportWrap::AddViewProp(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +284,7 @@ void VtkViewportWrap::ComputeAspect(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -263,7 +296,7 @@ void VtkViewportWrap::DisplayToView(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +308,7 @@ void VtkViewportWrap::DisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +327,7 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetActors2D();
-		VtkActor2DCollectionWrap::InitPtpl();
+	VtkActor2DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,6 +337,74 @@ void VtkViewportWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkViewportWrap::GetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAspect();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackground();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetBackground2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackground2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkViewportWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -318,6 +419,23 @@ void VtkViewportWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkViewportWrap::GetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDisplayPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkViewportWrap::GetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -348,6 +466,23 @@ void VtkViewportWrap::GetIsPicking(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkViewportWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkViewportWrap::GetPickHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -373,7 +508,7 @@ void VtkViewportWrap::GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPickResultProps();
-		VtkPropCollectionWrap::InitPtpl();
+	VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -483,6 +618,57 @@ void VtkViewportWrap::GetPickY2(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkViewportWrap::GetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPixelAspect();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
@@ -494,7 +680,7 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetViewProps();
-		VtkPropCollectionWrap::InitPtpl();
+	VtkPropCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -506,11 +692,45 @@ void VtkViewportWrap::GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkViewportWrap::GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewport();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkViewportWrap::GetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWorldPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkViewportWrap::GradientBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -522,7 +742,7 @@ void VtkViewportWrap::GradientBackgroundOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -610,7 +830,7 @@ void VtkViewportWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkViewportWrap::InitPtpl();
+	VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -644,7 +864,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 					info[1]->NumberValue(),
 					(vtkPropCollection *) a2->native.GetPointer()
 				);
-					VtkAssemblyPathWrap::InitPtpl();
+				VtkAssemblyPathWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -676,7 +896,7 @@ void VtkViewportWrap::PickPropFrom(const Nan::FunctionCallbackInfo<v8::Value>& i
 							info[3]->NumberValue(),
 							(vtkPropCollection *) a4->native.GetPointer()
 						);
-							VtkAssemblyPathWrap::InitPtpl();
+						VtkAssemblyPathWrap::InitPtpl();
 						v8::Local<v8::Value> argv[1] =
 							{ Nan::New(vtkNodeJsNoWrap) };
 						v8::Local<v8::Function> cons =
@@ -702,7 +922,7 @@ void VtkViewportWrap::RemoveActor2D(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +939,7 @@ void VtkViewportWrap::RemoveAllViewProps(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -734,7 +954,7 @@ void VtkViewportWrap::RemoveViewProp(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -763,7 +983,7 @@ void VtkViewportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkViewportWrap::InitPtpl();
+		VtkViewportWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -792,7 +1012,7 @@ void VtkViewportWrap::SetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +1041,7 @@ void VtkViewportWrap::SetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -835,7 +1055,7 @@ void VtkViewportWrap::SetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -864,7 +1084,7 @@ void VtkViewportWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -893,7 +1113,7 @@ void VtkViewportWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +1129,7 @@ void VtkViewportWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -940,7 +1160,7 @@ void VtkViewportWrap::SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +1189,7 @@ void VtkViewportWrap::SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -985,7 +1205,7 @@ void VtkViewportWrap::SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1016,7 +1236,7 @@ void VtkViewportWrap::SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1045,7 +1265,7 @@ void VtkViewportWrap::SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1061,7 +1281,7 @@ void VtkViewportWrap::SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1084,7 +1304,7 @@ void VtkViewportWrap::SetGradientBackground(const Nan::FunctionCallbackInfo<v8::
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1111,7 +1331,7 @@ void VtkViewportWrap::SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1140,7 +1360,7 @@ void VtkViewportWrap::SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1374,7 @@ void VtkViewportWrap::SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1183,7 +1403,7 @@ void VtkViewportWrap::SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1212,7 +1432,7 @@ void VtkViewportWrap::SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1228,7 +1448,7 @@ void VtkViewportWrap::SetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1259,7 +1479,7 @@ void VtkViewportWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1288,7 +1508,7 @@ void VtkViewportWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1306,7 +1526,7 @@ void VtkViewportWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& in
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1339,7 +1559,7 @@ void VtkViewportWrap::SetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1368,7 +1588,7 @@ void VtkViewportWrap::SetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1386,7 +1606,7 @@ void VtkViewportWrap::SetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1409,7 +1629,7 @@ void VtkViewportWrap::ViewToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1421,7 +1641,7 @@ void VtkViewportWrap::ViewToWorld(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1433,7 +1653,7 @@ void VtkViewportWrap::WorldToDisplay(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1445,7 +1665,7 @@ void VtkViewportWrap::WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
 	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

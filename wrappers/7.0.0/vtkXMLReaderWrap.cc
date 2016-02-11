@@ -106,6 +106,9 @@ void VtkXMLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetXMLParser", GetXMLParser);
 	Nan::SetPrototypeMethod(tpl, "getXMLParser", GetXMLParser);
 
@@ -207,7 +210,7 @@ void VtkXMLReaderWrap::CopyOutputInformation(const Nan::FunctionCallbackInfo<v8:
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -276,7 +279,7 @@ void VtkXMLReaderWrap::GetCellDataArraySelection(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetCellDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +376,7 @@ void VtkXMLReaderWrap::GetOutputAsDataSet(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->GetOutputAsDataSet(
 			info[0]->Int32Value()
 		);
-			VtkDataSetWrap::InitPtpl();
+		VtkDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -392,7 +395,7 @@ void VtkXMLReaderWrap::GetOutputAsDataSet(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetOutputAsDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,7 +418,7 @@ void VtkXMLReaderWrap::GetParserErrorObserver(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetParserErrorObserver();
-		VtkCommandWrap::InitPtpl();
+	VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -481,7 +484,7 @@ void VtkXMLReaderWrap::GetPointDataArraySelection(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPointDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -518,7 +521,7 @@ void VtkXMLReaderWrap::GetReaderErrorObserver(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetReaderErrorObserver();
-		VtkCommandWrap::InitPtpl();
+	VtkCommandWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -544,6 +547,23 @@ void VtkXMLReaderWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkXMLReaderWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
+	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkXMLReaderWrap::GetXMLParser(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
@@ -555,7 +575,7 @@ void VtkXMLReaderWrap::GetXMLParser(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetXMLParser();
-		VtkXMLDataParserWrap::InitPtpl();
+	VtkXMLDataParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -600,7 +620,7 @@ void VtkXMLReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLReaderWrap::InitPtpl();
+	VtkXMLReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,7 +636,7 @@ void VtkXMLReaderWrap::ReadFromInputStringOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -628,7 +648,7 @@ void VtkXMLReaderWrap::ReadFromInputStringOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLReaderWrap>(info.Holder());
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -652,7 +672,7 @@ void VtkXMLReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLReaderWrap::InitPtpl();
+		VtkXMLReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -676,7 +696,7 @@ void VtkXMLReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -698,7 +718,7 @@ void VtkXMLReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -718,7 +738,7 @@ void VtkXMLReaderWrap::SetParserErrorObserver(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +760,7 @@ void VtkXMLReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -761,7 +781,7 @@ void VtkXMLReaderWrap::SetReadFromInputString(const Nan::FunctionCallbackInfo<v8
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -781,7 +801,7 @@ void VtkXMLReaderWrap::SetReaderErrorObserver(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCommandWrap *a0 = ObjectWrap::Unwrap<VtkCommandWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +820,7 @@ void VtkXMLReaderWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkXMLReader *native = (vtkXMLReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -827,7 +847,7 @@ void VtkXMLReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +876,7 @@ void VtkXMLReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -870,7 +890,7 @@ void VtkXMLReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

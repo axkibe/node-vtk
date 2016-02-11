@@ -33,6 +33,7 @@ class VtkRandomLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void AutomaticBoundsComputationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticBoundsComputation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRandomSeedMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRandomSeedMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

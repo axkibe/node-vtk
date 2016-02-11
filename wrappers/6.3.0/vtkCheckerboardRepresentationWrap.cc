@@ -170,7 +170,7 @@ void VtkCheckerboardRepresentationWrap::BuildRepresentation(const Nan::FunctionC
 {
 	VtkCheckerboardRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCheckerboardRepresentationWrap>(info.Holder());
 	vtkCheckerboardRepresentation *native = (vtkCheckerboardRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkCheckerboardRepresentationWrap::GetActors(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -209,7 +209,7 @@ void VtkCheckerboardRepresentationWrap::GetBottomRepresentation(const Nan::Funct
 		return;
 	}
 	r = native->GetBottomRepresentation();
-		VtkSliderRepresentation3DWrap::InitPtpl();
+	VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkCheckerboardRepresentationWrap::GetCheckerboard(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetCheckerboard();
-		VtkImageCheckerboardWrap::InitPtpl();
+	VtkImageCheckerboardWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkCheckerboardRepresentationWrap::GetImageActor(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetImageActor();
-		VtkImageActorWrap::InitPtpl();
+	VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -334,7 +334,7 @@ void VtkCheckerboardRepresentationWrap::GetLeftRepresentation(const Nan::Functio
 		return;
 	}
 	r = native->GetLeftRepresentation();
-		VtkSliderRepresentation3DWrap::InitPtpl();
+	VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -357,7 +357,7 @@ void VtkCheckerboardRepresentationWrap::GetRightRepresentation(const Nan::Functi
 		return;
 	}
 	r = native->GetRightRepresentation();
-		VtkSliderRepresentation3DWrap::InitPtpl();
+	VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,7 +380,7 @@ void VtkCheckerboardRepresentationWrap::GetTopRepresentation(const Nan::Function
 		return;
 	}
 	r = native->GetTopRepresentation();
-		VtkSliderRepresentation3DWrap::InitPtpl();
+	VtkSliderRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -439,7 +439,7 @@ void VtkCheckerboardRepresentationWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkCheckerboardRepresentationWrap::InitPtpl();
+	VtkCheckerboardRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -458,7 +458,7 @@ void VtkCheckerboardRepresentationWrap::ReleaseGraphicsResources(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkCheckerboardRepresentationWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCheckerboardRepresentationWrap::InitPtpl();
+		VtkCheckerboardRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -575,7 +575,7 @@ void VtkCheckerboardRepresentationWrap::SetBottomRepresentation(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSliderRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSliderRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +595,7 @@ void VtkCheckerboardRepresentationWrap::SetCheckerboard(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageCheckerboardWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageCheckerboardWrap *a0 = ObjectWrap::Unwrap<VtkImageCheckerboardWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +614,7 @@ void VtkCheckerboardRepresentationWrap::SetCornerOffset(const Nan::FunctionCallb
 	vtkCheckerboardRepresentation *native = (vtkCheckerboardRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -634,7 +634,7 @@ void VtkCheckerboardRepresentationWrap::SetImageActor(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageActorWrap *a0 = ObjectWrap::Unwrap<VtkImageActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -654,7 +654,7 @@ void VtkCheckerboardRepresentationWrap::SetLeftRepresentation(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSliderRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSliderRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -674,7 +674,7 @@ void VtkCheckerboardRepresentationWrap::SetRightRepresentation(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSliderRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSliderRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkCheckerboardRepresentationWrap::SetTopRepresentation(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSliderRepresentation3DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSliderRepresentation3DWrap *a0 = ObjectWrap::Unwrap<VtkSliderRepresentation3DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -713,7 +713,7 @@ void VtkCheckerboardRepresentationWrap::SliderValueChanged(const Nan::FunctionCa
 	vtkCheckerboardRepresentation *native = (vtkCheckerboardRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

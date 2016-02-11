@@ -136,7 +136,7 @@ void VtkGeoProjectionWrap::ClearOptionalParameters(const Nan::FunctionCallbackIn
 {
 	VtkGeoProjectionWrap *wrapper = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info.Holder());
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -359,7 +359,7 @@ void VtkGeoProjectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoProjectionWrap::InitPtpl();
+	VtkGeoProjectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -378,7 +378,7 @@ void VtkGeoProjectionWrap::RemoveOptionalParameter(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkGeoProjectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoProjectionWrap::InitPtpl();
+		VtkGeoProjectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -428,7 +428,7 @@ void VtkGeoProjectionWrap::SetCentralMeridian(const Nan::FunctionCallbackInfo<v8
 	vtkGeoProjection *native = (vtkGeoProjection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +448,7 @@ void VtkGeoProjectionWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +471,7 @@ void VtkGeoProjectionWrap::SetOptionalParameter(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -106,7 +106,7 @@ void VtkInstantiatorWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->CreateInstance(
 			*a0
 		);
-			VtkObjectWrap::InitPtpl();
+		VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkInstantiatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkInstantiatorWrap::InitPtpl();
+	VtkInstantiatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkInstantiatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInstantiatorWrap::InitPtpl();
+		VtkInstantiatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

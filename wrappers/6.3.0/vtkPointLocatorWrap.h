@@ -36,6 +36,7 @@ class VtkPointLocatorWrap : public VtkIncrementalPointLocatorWrap
 		static void FreeSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPointsPerBucket(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPointsPerBucketMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPointsPerBucketMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

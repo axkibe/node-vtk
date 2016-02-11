@@ -129,7 +129,7 @@ void VtkStructuredAMRGridConnectivityWrap::ComputeNeighbors(const Nan::FunctionC
 {
 	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -143,7 +143,7 @@ void VtkStructuredAMRGridConnectivityWrap::CreateGhostLayers(const Nan::Function
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -214,7 +214,7 @@ void VtkStructuredAMRGridConnectivityWrap::GetGhostedExtent(const Nan::FunctionC
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -244,7 +244,7 @@ void VtkStructuredAMRGridConnectivityWrap::GetGhostedExtent(const Nan::FunctionC
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -327,7 +327,7 @@ void VtkStructuredAMRGridConnectivityWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredAMRGridConnectivityWrap::InitPtpl();
+	VtkStructuredAMRGridConnectivityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,7 +374,7 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkPointsWrap *a8 = ObjectWrap::Unwrap<VtkPointsWrap>(info[8]->ToObject());
-										if(info.Length() != 9)
+																				if(info.Length() != 9)
 										{
 											Nan::ThrowError("Too many parameters.");
 											return;
@@ -431,7 +431,7 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 									if(info.Length() > 8 && info[8]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[8]))
 									{
 										VtkPointsWrap *a8 = ObjectWrap::Unwrap<VtkPointsWrap>(info[8]->ToObject());
-										if(info.Length() != 9)
+																				if(info.Length() != 9)
 										{
 											Nan::ThrowError("Too many parameters.");
 											return;
@@ -479,7 +479,7 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkPointsWrap *a7 = ObjectWrap::Unwrap<VtkPointsWrap>(info[7]->ToObject());
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -535,7 +535,7 @@ void VtkStructuredAMRGridConnectivityWrap::RegisterGrid(const Nan::FunctionCallb
 								if(info.Length() > 7 && info[7]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[7]))
 								{
 									VtkPointsWrap *a7 = ObjectWrap::Unwrap<VtkPointsWrap>(info[7]->ToObject());
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -578,7 +578,7 @@ void VtkStructuredAMRGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredAMRGridConnectivityWrap::InitPtpl();
+		VtkStructuredAMRGridConnectivityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -599,7 +599,7 @@ void VtkStructuredAMRGridConnectivityWrap::SetBalancedRefinement(const Nan::Func
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkStructuredAMRGridConnectivityWrap::SetCellCentered(const Nan::FunctionCa
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -637,7 +637,7 @@ void VtkStructuredAMRGridConnectivityWrap::SetNodeCentered(const Nan::FunctionCa
 	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

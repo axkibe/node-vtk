@@ -68,6 +68,12 @@ void VtkVoxelModellerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMaximumDistanceMinValue", GetMaximumDistanceMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleDimensions", GetSampleDimensions);
+	Nan::SetPrototypeMethod(tpl, "getSampleDimensions", GetSampleDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarType", GetScalarType);
 	Nan::SetPrototypeMethod(tpl, "getScalarType", GetScalarType);
 
@@ -390,6 +396,40 @@ void VtkVoxelModellerWrap::GetMaximumDistanceMinValue(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVoxelModellerWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
+	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkVoxelModellerWrap::GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
+	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVoxelModellerWrap::GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
@@ -437,7 +477,7 @@ void VtkVoxelModellerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkVoxelModellerWrap::InitPtpl();
+	VtkVoxelModellerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -465,7 +505,7 @@ void VtkVoxelModellerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVoxelModellerWrap::InitPtpl();
+		VtkVoxelModellerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -486,7 +526,7 @@ void VtkVoxelModellerWrap::SetBackgroundValue(const Nan::FunctionCallbackInfo<v8
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -505,7 +545,7 @@ void VtkVoxelModellerWrap::SetForegroundValue(const Nan::FunctionCallbackInfo<v8
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -524,7 +564,7 @@ void VtkVoxelModellerWrap::SetMaximumDistance(const Nan::FunctionCallbackInfo<v8
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -551,7 +591,7 @@ void VtkVoxelModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,7 +620,7 @@ void VtkVoxelModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +642,7 @@ void VtkVoxelModellerWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Va
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -639,7 +679,7 @@ void VtkVoxelModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +708,7 @@ void VtkVoxelModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -684,7 +724,7 @@ void VtkVoxelModellerWrap::SetSampleDimensions(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -707,7 +747,7 @@ void VtkVoxelModellerWrap::SetScalarType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -724,7 +764,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToBit(const Nan::FunctionCallbackInfo<v8
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +776,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToChar(const Nan::FunctionCallbackInfo<v
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +788,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToDouble(const Nan::FunctionCallbackInfo
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -760,7 +800,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToFloat(const Nan::FunctionCallbackInfo<
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -772,7 +812,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToInt(const Nan::FunctionCallbackInfo<v8
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -784,7 +824,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToLong(const Nan::FunctionCallbackInfo<v
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -796,7 +836,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToShort(const Nan::FunctionCallbackInfo<
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -808,7 +848,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToUnsignedChar(const Nan::FunctionCallba
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -820,7 +860,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToUnsignedInt(const Nan::FunctionCallbac
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -832,7 +872,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToUnsignedLong(const Nan::FunctionCallba
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -844,7 +884,7 @@ void VtkVoxelModellerWrap::SetScalarTypeToUnsignedShort(const Nan::FunctionCallb
 {
 	VtkVoxelModellerWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelModellerWrap>(info.Holder());
 	vtkVoxelModeller *native = (vtkVoxelModeller *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -248,7 +248,7 @@ void VtkBrokenLineWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -278,7 +278,7 @@ void VtkBrokenLineWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -304,7 +304,7 @@ void VtkBrokenLineWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,7 +369,7 @@ void VtkBrokenLineWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +402,7 @@ void VtkBrokenLineWidgetWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +538,7 @@ void VtkBrokenLineWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,7 +561,7 @@ void VtkBrokenLineWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetSelectedLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -594,7 +594,7 @@ void VtkBrokenLineWidgetWrap::InitializeHandles(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +640,7 @@ void VtkBrokenLineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkBrokenLineWidgetWrap::InitPtpl();
+	VtkBrokenLineWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -666,7 +666,7 @@ void VtkBrokenLineWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +695,7 @@ void VtkBrokenLineWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +717,7 @@ void VtkBrokenLineWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Va
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -737,7 +737,7 @@ void VtkBrokenLineWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::Va
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -749,7 +749,7 @@ void VtkBrokenLineWidgetWrap::ProcessEventsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +761,7 @@ void VtkBrokenLineWidgetWrap::ProcessEventsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +773,7 @@ void VtkBrokenLineWidgetWrap::ProjectToPlaneOff(const Nan::FunctionCallbackInfo<
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -785,7 +785,7 @@ void VtkBrokenLineWidgetWrap::ProjectToPlaneOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -809,7 +809,7 @@ void VtkBrokenLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBrokenLineWidgetWrap::InitPtpl();
+		VtkBrokenLineWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -830,7 +830,7 @@ void VtkBrokenLineWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Val
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +859,7 @@ void VtkBrokenLineWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -889,7 +889,7 @@ void VtkBrokenLineWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -906,7 +906,7 @@ void VtkBrokenLineWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo<
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -932,7 +932,7 @@ void VtkBrokenLineWidgetWrap::SetHandleProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -951,7 +951,7 @@ void VtkBrokenLineWidgetWrap::SetHandleSizeFactor(const Nan::FunctionCallbackInf
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -971,7 +971,7 @@ void VtkBrokenLineWidgetWrap::SetLineProperty(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -990,7 +990,7 @@ void VtkBrokenLineWidgetWrap::SetNumberOfHandles(const Nan::FunctionCallbackInfo
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1010,7 +1010,7 @@ void VtkBrokenLineWidgetWrap::SetPlaneSource(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneSourceWrap *a0 = ObjectWrap::Unwrap<VtkPlaneSourceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1029,7 +1029,7 @@ void VtkBrokenLineWidgetWrap::SetProcessEvents(const Nan::FunctionCallbackInfo<v
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1048,7 +1048,7 @@ void VtkBrokenLineWidgetWrap::SetProjectToPlane(const Nan::FunctionCallbackInfo<
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1067,7 +1067,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionNormal(const Nan::FunctionCallbackInf
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1084,7 +1084,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionNormalToOblique(const Nan::FunctionCa
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1096,7 +1096,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionNormalToXAxes(const Nan::FunctionCall
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1108,7 +1108,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionNormalToYAxes(const Nan::FunctionCall
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1120,7 +1120,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionNormalToZAxes(const Nan::FunctionCall
 {
 	VtkBrokenLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBrokenLineWidgetWrap>(info.Holder());
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1134,7 +1134,7 @@ void VtkBrokenLineWidgetWrap::SetProjectionPosition(const Nan::FunctionCallbackI
 	vtkBrokenLineWidget *native = (vtkBrokenLineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1154,7 @@ void VtkBrokenLineWidgetWrap::SetSelectedHandleProperty(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1174,7 +1174,7 @@ void VtkBrokenLineWidgetWrap::SetSelectedLineProperty(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

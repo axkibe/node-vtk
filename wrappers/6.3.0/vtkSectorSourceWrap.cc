@@ -513,7 +513,7 @@ void VtkSectorSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSectorSourceWrap::InitPtpl();
+	VtkSectorSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -541,7 +541,7 @@ void VtkSectorSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSectorSourceWrap::InitPtpl();
+		VtkSectorSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -562,7 +562,7 @@ void VtkSectorSourceWrap::SetCircumferentialResolution(const Nan::FunctionCallba
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -581,7 +581,7 @@ void VtkSectorSourceWrap::SetEndAngle(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -600,7 +600,7 @@ void VtkSectorSourceWrap::SetInnerRadius(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +619,7 @@ void VtkSectorSourceWrap::SetOuterRadius(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +638,7 @@ void VtkSectorSourceWrap::SetRadialResolution(const Nan::FunctionCallbackInfo<v8
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkSectorSourceWrap::SetStartAngle(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkSectorSourceWrap::SetZCoord(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkSectorSource *native = (vtkSectorSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

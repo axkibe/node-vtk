@@ -135,7 +135,7 @@ void VtkTreeMapViewWrap::GetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -164,7 +164,7 @@ void VtkTreeMapViewWrap::GetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -210,7 +210,7 @@ void VtkTreeMapViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeMapViewWrap::InitPtpl();
+	VtkTreeMapViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkTreeMapViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeMapViewWrap::InitPtpl();
+		VtkTreeMapViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkTreeMapViewWrap::SetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -287,7 +287,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +300,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +317,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategyToBox(const Nan::FunctionCallbackInfo<
 {
 	VtkTreeMapViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapViewWrap>(info.Holder());
 	vtkTreeMapView *native = (vtkTreeMapView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -329,7 +329,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategyToSliceAndDice(const Nan::FunctionCall
 {
 	VtkTreeMapViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapViewWrap>(info.Holder());
 	vtkTreeMapView *native = (vtkTreeMapView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -341,7 +341,7 @@ void VtkTreeMapViewWrap::SetLayoutStrategyToSquarify(const Nan::FunctionCallback
 {
 	VtkTreeMapViewWrap *wrapper = ObjectWrap::Unwrap<VtkTreeMapViewWrap>(info.Holder());
 	vtkTreeMapView *native = (vtkTreeMapView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

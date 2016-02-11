@@ -244,7 +244,7 @@ void VtkBooleanOperationPolyDataFilterWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkBooleanOperationPolyDataFilterWrap::InitPtpl();
+	VtkBooleanOperationPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkBooleanOperationPolyDataFilterWrap::ReorientDifferenceCellsOff(const Nan
 {
 	VtkBooleanOperationPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBooleanOperationPolyDataFilterWrap>(info.Holder());
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkBooleanOperationPolyDataFilterWrap::ReorientDifferenceCellsOn(const Nan:
 {
 	VtkBooleanOperationPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBooleanOperationPolyDataFilterWrap>(info.Holder());
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBooleanOperationPolyDataFilterWrap::InitPtpl();
+		VtkBooleanOperationPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -317,7 +317,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetOperation(const Nan::FunctionCall
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetOperationToDifference(const Nan::
 {
 	VtkBooleanOperationPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBooleanOperationPolyDataFilterWrap>(info.Holder());
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -346,7 +346,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetOperationToIntersection(const Nan
 {
 	VtkBooleanOperationPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBooleanOperationPolyDataFilterWrap>(info.Holder());
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -358,7 +358,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetOperationToUnion(const Nan::Funct
 {
 	VtkBooleanOperationPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBooleanOperationPolyDataFilterWrap>(info.Holder());
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetReorientDifferenceCells(const Nan
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +391,7 @@ void VtkBooleanOperationPolyDataFilterWrap::SetTolerance(const Nan::FunctionCall
 	vtkBooleanOperationPolyDataFilter *native = (vtkBooleanOperationPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

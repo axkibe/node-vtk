@@ -149,7 +149,7 @@ void VtkReflectionFilterWrap::CopyInputOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkReflectionFilterWrap::CopyInputOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -286,7 +286,7 @@ void VtkReflectionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkReflectionFilterWrap::InitPtpl();
+	VtkReflectionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkReflectionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkReflectionFilterWrap::InitPtpl();
+		VtkReflectionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -335,7 +335,7 @@ void VtkReflectionFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -354,7 +354,7 @@ void VtkReflectionFilterWrap::SetCopyInput(const Nan::FunctionCallbackInfo<v8::V
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -373,7 +373,7 @@ void VtkReflectionFilterWrap::SetPlane(const Nan::FunctionCallbackInfo<v8::Value
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -390,7 +390,7 @@ void VtkReflectionFilterWrap::SetPlaneToX(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +402,7 @@ void VtkReflectionFilterWrap::SetPlaneToXMax(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +414,7 @@ void VtkReflectionFilterWrap::SetPlaneToXMin(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +426,7 @@ void VtkReflectionFilterWrap::SetPlaneToY(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -438,7 +438,7 @@ void VtkReflectionFilterWrap::SetPlaneToYMax(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +450,7 @@ void VtkReflectionFilterWrap::SetPlaneToYMin(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -462,7 +462,7 @@ void VtkReflectionFilterWrap::SetPlaneToZ(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -474,7 +474,7 @@ void VtkReflectionFilterWrap::SetPlaneToZMax(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -486,7 +486,7 @@ void VtkReflectionFilterWrap::SetPlaneToZMin(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkReflectionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkReflectionFilterWrap>(info.Holder());
 	vtkReflectionFilter *native = (vtkReflectionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

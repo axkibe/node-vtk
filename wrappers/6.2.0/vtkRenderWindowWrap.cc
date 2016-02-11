@@ -97,6 +97,9 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAlphaBitPlanes", GetAlphaBitPlanes);
 	Nan::SetPrototypeMethod(tpl, "getAlphaBitPlanes", GetAlphaBitPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "GetAnaglyphColorMask", GetAnaglyphColorMask);
+	Nan::SetPrototypeMethod(tpl, "getAnaglyphColorMask", GetAnaglyphColorMask);
+
 	Nan::SetPrototypeMethod(tpl, "GetBorders", GetBorders);
 	Nan::SetPrototypeMethod(tpl, "getBorders", GetBorders);
 
@@ -427,7 +430,7 @@ void VtkRenderWindowWrap::AddRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -444,7 +447,7 @@ void VtkRenderWindowWrap::AlphaBitPlanesOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +459,7 @@ void VtkRenderWindowWrap::AlphaBitPlanesOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -468,7 +471,7 @@ void VtkRenderWindowWrap::BordersOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -480,7 +483,7 @@ void VtkRenderWindowWrap::BordersOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -495,7 +498,7 @@ void VtkRenderWindowWrap::CaptureGL2PSSpecialProps(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +543,7 @@ void VtkRenderWindowWrap::ClearInRenderStatus(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -552,7 +555,7 @@ void VtkRenderWindowWrap::CopyResultFrame(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -564,7 +567,7 @@ void VtkRenderWindowWrap::FullScreenOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -576,7 +579,7 @@ void VtkRenderWindowWrap::FullScreenOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -624,6 +627,23 @@ void VtkRenderWindowWrap::GetAlphaBitPlanes(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetAlphaBitPlanes();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRenderWindowWrap::GetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
+	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAnaglyphColorMask();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRenderWindowWrap::GetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -749,7 +769,7 @@ void VtkRenderWindowWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetInteractor();
-		VtkRenderWindowInteractorWrap::InitPtpl();
+	VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -870,7 +890,7 @@ void VtkRenderWindowWrap::GetPainterDeviceAdapter(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPainterDeviceAdapter();
-		VtkPainterDeviceAdapterWrap::InitPtpl();
+	VtkPainterDeviceAdapterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -935,7 +955,7 @@ void VtkRenderWindowWrap::GetRenderers(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetRenderers();
-		VtkRendererCollectionWrap::InitPtpl();
+	VtkRendererCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1163,7 +1183,7 @@ void VtkRenderWindowWrap::IsPickingOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1175,7 +1195,7 @@ void VtkRenderWindowWrap::IsPickingOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1187,7 +1207,7 @@ void VtkRenderWindowWrap::LineSmoothingOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1199,7 +1219,7 @@ void VtkRenderWindowWrap::LineSmoothingOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1218,7 +1238,7 @@ void VtkRenderWindowWrap::MakeRenderWindowInteractor(const Nan::FunctionCallback
 		return;
 	}
 	r = native->MakeRenderWindowInteractor();
-		VtkRenderWindowInteractorWrap::InitPtpl();
+	VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1241,7 +1261,7 @@ void VtkRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1257,7 +1277,7 @@ void VtkRenderWindowWrap::PointSmoothingOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1269,7 +1289,7 @@ void VtkRenderWindowWrap::PointSmoothingOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1281,7 +1301,7 @@ void VtkRenderWindowWrap::PolygonSmoothingOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1293,7 +1313,7 @@ void VtkRenderWindowWrap::PolygonSmoothingOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1308,7 +1328,7 @@ void VtkRenderWindowWrap::RemoveRenderer(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1325,7 +1345,7 @@ void VtkRenderWindowWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1363,7 +1383,7 @@ void VtkRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderWindowWrap::InitPtpl();
+		VtkRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1384,7 +1404,7 @@ void VtkRenderWindowWrap::SetAAFrames(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1403,7 +1423,7 @@ void VtkRenderWindowWrap::SetAbortRender(const Nan::FunctionCallbackInfo<v8::Val
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1422,7 +1442,7 @@ void VtkRenderWindowWrap::SetAlphaBitPlanes(const Nan::FunctionCallbackInfo<v8::
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1449,7 +1469,7 @@ void VtkRenderWindowWrap::SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1478,7 +1498,7 @@ void VtkRenderWindowWrap::SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1492,7 +1512,7 @@ void VtkRenderWindowWrap::SetAnaglyphColorMask(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1513,7 +1533,7 @@ void VtkRenderWindowWrap::SetBorders(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1532,7 +1552,7 @@ void VtkRenderWindowWrap::SetCurrentCursor(const Nan::FunctionCallbackInfo<v8::V
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1553,7 +1573,7 @@ void VtkRenderWindowWrap::SetCursorPosition(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1574,7 +1594,7 @@ void VtkRenderWindowWrap::SetDesiredUpdateRate(const Nan::FunctionCallbackInfo<v
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1593,7 +1613,7 @@ void VtkRenderWindowWrap::SetFDFrames(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1610,7 +1630,7 @@ void VtkRenderWindowWrap::SetForceMakeCurrent(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1624,7 +1644,7 @@ void VtkRenderWindowWrap::SetInAbortCheck(const Nan::FunctionCallbackInfo<v8::Va
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1644,7 +1664,7 @@ void VtkRenderWindowWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1663,7 +1683,7 @@ void VtkRenderWindowWrap::SetIsPicking(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1682,7 +1702,7 @@ void VtkRenderWindowWrap::SetLineSmoothing(const Nan::FunctionCallbackInfo<v8::V
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1701,7 +1721,7 @@ void VtkRenderWindowWrap::SetMultiSamples(const Nan::FunctionCallbackInfo<v8::Va
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1720,7 +1740,7 @@ void VtkRenderWindowWrap::SetNumberOfLayers(const Nan::FunctionCallbackInfo<v8::
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1739,7 +1759,7 @@ void VtkRenderWindowWrap::SetPointSmoothing(const Nan::FunctionCallbackInfo<v8::
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1758,7 +1778,7 @@ void VtkRenderWindowWrap::SetPolygonSmoothing(const Nan::FunctionCallbackInfo<v8
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1777,7 +1797,7 @@ void VtkRenderWindowWrap::SetReportGraphicErrors(const Nan::FunctionCallbackInfo
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1794,7 +1814,7 @@ void VtkRenderWindowWrap::SetReportGraphicErrorsOff(const Nan::FunctionCallbackI
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1806,7 +1826,7 @@ void VtkRenderWindowWrap::SetReportGraphicErrorsOn(const Nan::FunctionCallbackIn
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1820,7 +1840,7 @@ void VtkRenderWindowWrap::SetStencilCapable(const Nan::FunctionCallbackInfo<v8::
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1839,7 +1859,7 @@ void VtkRenderWindowWrap::SetStereoCapableWindow(const Nan::FunctionCallbackInfo
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1858,7 +1878,7 @@ void VtkRenderWindowWrap::SetStereoRender(const Nan::FunctionCallbackInfo<v8::Va
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1877,7 +1897,7 @@ void VtkRenderWindowWrap::SetStereoType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1894,7 +1914,7 @@ void VtkRenderWindowWrap::SetStereoTypeToAnaglyph(const Nan::FunctionCallbackInf
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1906,7 +1926,7 @@ void VtkRenderWindowWrap::SetStereoTypeToCheckerboard(const Nan::FunctionCallbac
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1918,7 +1938,7 @@ void VtkRenderWindowWrap::SetStereoTypeToCrystalEyes(const Nan::FunctionCallback
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1930,7 +1950,7 @@ void VtkRenderWindowWrap::SetStereoTypeToDresden(const Nan::FunctionCallbackInfo
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1942,7 +1962,7 @@ void VtkRenderWindowWrap::SetStereoTypeToInterlaced(const Nan::FunctionCallbackI
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1954,7 +1974,7 @@ void VtkRenderWindowWrap::SetStereoTypeToLeft(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1966,7 +1986,7 @@ void VtkRenderWindowWrap::SetStereoTypeToRedBlue(const Nan::FunctionCallbackInfo
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1978,7 +1998,7 @@ void VtkRenderWindowWrap::SetStereoTypeToRight(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1990,7 +2010,7 @@ void VtkRenderWindowWrap::SetStereoTypeToSplitViewportHorizontal(const Nan::Func
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2004,7 +2024,7 @@ void VtkRenderWindowWrap::SetSubFrames(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2023,7 +2043,7 @@ void VtkRenderWindowWrap::SetSwapBuffers(const Nan::FunctionCallbackInfo<v8::Val
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2042,7 +2062,7 @@ void VtkRenderWindowWrap::SetUseConstantFDOffsets(const Nan::FunctionCallbackInf
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2059,7 +2079,7 @@ void VtkRenderWindowWrap::StencilCapableOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2071,7 +2091,7 @@ void VtkRenderWindowWrap::StencilCapableOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2083,7 +2103,7 @@ void VtkRenderWindowWrap::StereoCapableWindowOff(const Nan::FunctionCallbackInfo
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2095,7 +2115,7 @@ void VtkRenderWindowWrap::StereoCapableWindowOn(const Nan::FunctionCallbackInfo<
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2107,7 +2127,7 @@ void VtkRenderWindowWrap::StereoMidpoint(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2119,7 +2139,7 @@ void VtkRenderWindowWrap::StereoRenderComplete(const Nan::FunctionCallbackInfo<v
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2131,7 +2151,7 @@ void VtkRenderWindowWrap::StereoRenderOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2143,7 +2163,7 @@ void VtkRenderWindowWrap::StereoRenderOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2155,7 +2175,7 @@ void VtkRenderWindowWrap::StereoUpdate(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2181,7 +2201,7 @@ void VtkRenderWindowWrap::SwapBuffersOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2193,7 +2213,7 @@ void VtkRenderWindowWrap::SwapBuffersOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info.Holder());
 	vtkRenderWindow *native = (vtkRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

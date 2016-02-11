@@ -236,7 +236,7 @@ void VtkRandomGraphSourceWrap::AllowParallelEdgesOff(const Nan::FunctionCallback
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkRandomGraphSourceWrap::AllowParallelEdgesOn(const Nan::FunctionCallbackI
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkRandomGraphSourceWrap::AllowSelfLoopsOff(const Nan::FunctionCallbackInfo
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkRandomGraphSourceWrap::AllowSelfLoopsOn(const Nan::FunctionCallbackInfo<
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkRandomGraphSourceWrap::DirectedOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkRandomGraphSourceWrap::DirectedOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkRandomGraphSourceWrap::GeneratePedigreeIdsOff(const Nan::FunctionCallbac
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -320,7 +320,7 @@ void VtkRandomGraphSourceWrap::GeneratePedigreeIdsOn(const Nan::FunctionCallback
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -626,7 +626,7 @@ void VtkRandomGraphSourceWrap::IncludeEdgeWeightsOff(const Nan::FunctionCallback
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -638,7 +638,7 @@ void VtkRandomGraphSourceWrap::IncludeEdgeWeightsOn(const Nan::FunctionCallbackI
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -679,7 +679,7 @@ void VtkRandomGraphSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkRandomGraphSourceWrap::InitPtpl();
+	VtkRandomGraphSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -707,7 +707,7 @@ void VtkRandomGraphSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRandomGraphSourceWrap::InitPtpl();
+		VtkRandomGraphSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -728,7 +728,7 @@ void VtkRandomGraphSourceWrap::SetAllowParallelEdges(const Nan::FunctionCallback
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -747,7 +747,7 @@ void VtkRandomGraphSourceWrap::SetAllowSelfLoops(const Nan::FunctionCallbackInfo
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -766,7 +766,7 @@ void VtkRandomGraphSourceWrap::SetDirected(const Nan::FunctionCallbackInfo<v8::V
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -786,7 +786,7 @@ void VtkRandomGraphSourceWrap::SetEdgePedigreeIdArrayName(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -805,7 +805,7 @@ void VtkRandomGraphSourceWrap::SetEdgeProbability(const Nan::FunctionCallbackInf
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -825,7 +825,7 @@ void VtkRandomGraphSourceWrap::SetEdgeWeightArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +844,7 @@ void VtkRandomGraphSourceWrap::SetGeneratePedigreeIds(const Nan::FunctionCallbac
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +863,7 @@ void VtkRandomGraphSourceWrap::SetIncludeEdgeWeights(const Nan::FunctionCallback
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +882,7 @@ void VtkRandomGraphSourceWrap::SetNumberOfEdges(const Nan::FunctionCallbackInfo<
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -901,7 +901,7 @@ void VtkRandomGraphSourceWrap::SetNumberOfVertices(const Nan::FunctionCallbackIn
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -920,7 +920,7 @@ void VtkRandomGraphSourceWrap::SetSeed(const Nan::FunctionCallbackInfo<v8::Value
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -939,7 +939,7 @@ void VtkRandomGraphSourceWrap::SetStartWithTree(const Nan::FunctionCallbackInfo<
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -958,7 +958,7 @@ void VtkRandomGraphSourceWrap::SetUseEdgeProbability(const Nan::FunctionCallback
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +978,7 @@ void VtkRandomGraphSourceWrap::SetVertexPedigreeIdArrayName(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -995,7 +995,7 @@ void VtkRandomGraphSourceWrap::StartWithTreeOff(const Nan::FunctionCallbackInfo<
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1007,7 +1007,7 @@ void VtkRandomGraphSourceWrap::StartWithTreeOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1019,7 +1019,7 @@ void VtkRandomGraphSourceWrap::UseEdgeProbabilityOff(const Nan::FunctionCallback
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1031,7 +1031,7 @@ void VtkRandomGraphSourceWrap::UseEdgeProbabilityOn(const Nan::FunctionCallbackI
 {
 	VtkRandomGraphSourceWrap *wrapper = ObjectWrap::Unwrap<VtkRandomGraphSourceWrap>(info.Holder());
 	vtkRandomGraphSource *native = (vtkRandomGraphSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

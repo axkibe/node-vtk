@@ -162,7 +162,7 @@ void VtkDuplicatePolyDataWrap::GetController(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkDuplicatePolyDataWrap::GetSocketController(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetSocketController();
-		VtkSocketControllerWrap::InitPtpl();
+	VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkDuplicatePolyDataWrap::InitializeSchedule(const Nan::FunctionCallbackInf
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkDuplicatePolyDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkDuplicatePolyDataWrap::InitPtpl();
+	VtkDuplicatePolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkDuplicatePolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDuplicatePolyDataWrap::InitPtpl();
+		VtkDuplicatePolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkDuplicatePolyDataWrap::SetClientFlag(const Nan::FunctionCallbackInfo<v8:
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -332,7 +332,7 @@ void VtkDuplicatePolyDataWrap::SetController(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +352,7 @@ void VtkDuplicatePolyDataWrap::SetSocketController(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketControllerWrap *a0 = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +371,7 @@ void VtkDuplicatePolyDataWrap::SetSynchronous(const Nan::FunctionCallbackInfo<v8
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +388,7 @@ void VtkDuplicatePolyDataWrap::SynchronousOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +400,7 @@ void VtkDuplicatePolyDataWrap::SynchronousOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDuplicatePolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDuplicatePolyDataWrap>(info.Holder());
 	vtkDuplicatePolyData *native = (vtkDuplicatePolyData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

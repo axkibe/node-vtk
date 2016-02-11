@@ -348,7 +348,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongXAxisOff(const Nan::FunctionCal
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -360,7 +360,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongXAxisOn(const Nan::FunctionCall
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongYAxisOff(const Nan::FunctionCal
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -384,7 +384,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongYAxisOn(const Nan::FunctionCall
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongZAxisOff(const Nan::FunctionCal
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -408,7 +408,7 @@ void VtkImplicitCylinderRepresentationWrap::AlongZAxisOn(const Nan::FunctionCall
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -420,7 +420,7 @@ void VtkImplicitCylinderRepresentationWrap::BuildRepresentation(const Nan::Funct
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -436,7 +436,7 @@ void VtkImplicitCylinderRepresentationWrap::BumpCylinder(const Nan::FunctionCall
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -484,7 +484,7 @@ void VtkImplicitCylinderRepresentationWrap::DrawCylinderOff(const Nan::FunctionC
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -496,7 +496,7 @@ void VtkImplicitCylinderRepresentationWrap::DrawCylinderOn(const Nan::FunctionCa
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -518,7 +518,7 @@ void VtkImplicitCylinderRepresentationWrap::EndWidgetInteraction(const Nan::Func
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +547,7 @@ void VtkImplicitCylinderRepresentationWrap::EndWidgetInteraction(const Nan::Func
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +567,7 @@ void VtkImplicitCylinderRepresentationWrap::GetActors(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -636,7 +636,7 @@ void VtkImplicitCylinderRepresentationWrap::GetAxis(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -665,7 +665,7 @@ void VtkImplicitCylinderRepresentationWrap::GetAxis(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +689,7 @@ void VtkImplicitCylinderRepresentationWrap::GetAxisProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetAxisProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -757,7 +757,7 @@ void VtkImplicitCylinderRepresentationWrap::GetCenter(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -786,7 +786,7 @@ void VtkImplicitCylinderRepresentationWrap::GetCenter(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -820,7 +820,7 @@ void VtkImplicitCylinderRepresentationWrap::GetCylinder(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCylinderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCylinderWrap *a0 = ObjectWrap::Unwrap<VtkCylinderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +844,7 @@ void VtkImplicitCylinderRepresentationWrap::GetCylinderProperty(const Nan::Funct
 		return;
 	}
 	r = native->GetCylinderProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -881,7 +881,7 @@ void VtkImplicitCylinderRepresentationWrap::GetEdgesProperty(const Nan::Function
 		return;
 	}
 	r = native->GetEdgesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1016,7 +1016,7 @@ void VtkImplicitCylinderRepresentationWrap::GetOutlineProperty(const Nan::Functi
 		return;
 	}
 	r = native->GetOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1063,7 +1063,7 @@ void VtkImplicitCylinderRepresentationWrap::GetPolyData(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1171,7 +1171,7 @@ void VtkImplicitCylinderRepresentationWrap::GetSelectedAxisProperty(const Nan::F
 		return;
 	}
 	r = native->GetSelectedAxisProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1194,7 +1194,7 @@ void VtkImplicitCylinderRepresentationWrap::GetSelectedCylinderProperty(const Na
 		return;
 	}
 	r = native->GetSelectedCylinderProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1217,7 +1217,7 @@ void VtkImplicitCylinderRepresentationWrap::GetSelectedOutlineProperty(const Nan
 		return;
 	}
 	r = native->GetSelectedOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1290,7 +1290,7 @@ void VtkImplicitCylinderRepresentationWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitCylinderRepresentationWrap::InitPtpl();
+	VtkImplicitCylinderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1306,7 +1306,7 @@ void VtkImplicitCylinderRepresentationWrap::OutlineTranslationOff(const Nan::Fun
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1318,7 +1318,7 @@ void VtkImplicitCylinderRepresentationWrap::OutlineTranslationOn(const Nan::Func
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1330,7 +1330,7 @@ void VtkImplicitCylinderRepresentationWrap::OutsideBoundsOff(const Nan::Function
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1342,7 +1342,7 @@ void VtkImplicitCylinderRepresentationWrap::OutsideBoundsOn(const Nan::FunctionC
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1364,7 +1364,7 @@ void VtkImplicitCylinderRepresentationWrap::PlaceWidget(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1393,7 +1393,7 @@ void VtkImplicitCylinderRepresentationWrap::PlaceWidget(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1412,7 +1412,7 @@ void VtkImplicitCylinderRepresentationWrap::PushCylinder(const Nan::FunctionCall
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1432,7 +1432,7 @@ void VtkImplicitCylinderRepresentationWrap::ReleaseGraphicsResources(const Nan::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1505,7 +1505,7 @@ void VtkImplicitCylinderRepresentationWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitCylinderRepresentationWrap::InitPtpl();
+		VtkImplicitCylinderRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1524,7 +1524,7 @@ void VtkImplicitCylinderRepresentationWrap::ScaleEnabledOff(const Nan::FunctionC
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1536,7 +1536,7 @@ void VtkImplicitCylinderRepresentationWrap::ScaleEnabledOn(const Nan::FunctionCa
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1550,7 +1550,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAlongXAxis(const Nan::FunctionCal
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1569,7 +1569,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAlongYAxis(const Nan::FunctionCal
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1588,7 +1588,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAlongZAxis(const Nan::FunctionCal
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1615,7 +1615,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAxis(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1644,7 +1644,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAxis(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1660,7 +1660,7 @@ void VtkImplicitCylinderRepresentationWrap::SetAxis(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1683,7 +1683,7 @@ void VtkImplicitCylinderRepresentationWrap::SetBumpDistance(const Nan::FunctionC
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1710,7 +1710,7 @@ void VtkImplicitCylinderRepresentationWrap::SetCenter(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1739,7 +1739,7 @@ void VtkImplicitCylinderRepresentationWrap::SetCenter(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1755,7 +1755,7 @@ void VtkImplicitCylinderRepresentationWrap::SetCenter(const Nan::FunctionCallbac
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1778,7 +1778,7 @@ void VtkImplicitCylinderRepresentationWrap::SetDrawCylinder(const Nan::FunctionC
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1799,7 +1799,7 @@ void VtkImplicitCylinderRepresentationWrap::SetEdgeColor(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLookupTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLookupTableWrap *a0 = ObjectWrap::Unwrap<VtkLookupTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1818,7 +1818,7 @@ void VtkImplicitCylinderRepresentationWrap::SetEdgeColor(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1847,7 +1847,7 @@ void VtkImplicitCylinderRepresentationWrap::SetEdgeColor(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1863,7 +1863,7 @@ void VtkImplicitCylinderRepresentationWrap::SetEdgeColor(const Nan::FunctionCall
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1886,7 +1886,7 @@ void VtkImplicitCylinderRepresentationWrap::SetInteractionState(const Nan::Funct
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1905,7 +1905,7 @@ void VtkImplicitCylinderRepresentationWrap::SetMaxRadius(const Nan::FunctionCall
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1924,7 +1924,7 @@ void VtkImplicitCylinderRepresentationWrap::SetMinRadius(const Nan::FunctionCall
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1943,7 +1943,7 @@ void VtkImplicitCylinderRepresentationWrap::SetOutlineTranslation(const Nan::Fun
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1962,7 +1962,7 @@ void VtkImplicitCylinderRepresentationWrap::SetOutsideBounds(const Nan::Function
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1981,7 +1981,7 @@ void VtkImplicitCylinderRepresentationWrap::SetRadius(const Nan::FunctionCallbac
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2000,7 +2000,7 @@ void VtkImplicitCylinderRepresentationWrap::SetRepresentationState(const Nan::Fu
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2019,7 +2019,7 @@ void VtkImplicitCylinderRepresentationWrap::SetResolution(const Nan::FunctionCal
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2038,7 +2038,7 @@ void VtkImplicitCylinderRepresentationWrap::SetScaleEnabled(const Nan::FunctionC
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2057,7 +2057,7 @@ void VtkImplicitCylinderRepresentationWrap::SetTubing(const Nan::FunctionCallbac
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2084,7 +2084,7 @@ void VtkImplicitCylinderRepresentationWrap::StartWidgetInteraction(const Nan::Fu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2113,7 +2113,7 @@ void VtkImplicitCylinderRepresentationWrap::StartWidgetInteraction(const Nan::Fu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2130,7 +2130,7 @@ void VtkImplicitCylinderRepresentationWrap::TubingOff(const Nan::FunctionCallbac
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2142,7 +2142,7 @@ void VtkImplicitCylinderRepresentationWrap::TubingOn(const Nan::FunctionCallback
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2154,7 +2154,7 @@ void VtkImplicitCylinderRepresentationWrap::UpdatePlacement(const Nan::FunctionC
 {
 	VtkImplicitCylinderRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitCylinderRepresentationWrap>(info.Holder());
 	vtkImplicitCylinderRepresentation *native = (vtkImplicitCylinderRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2176,7 +2176,7 @@ void VtkImplicitCylinderRepresentationWrap::WidgetInteraction(const Nan::Functio
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2205,7 +2205,7 @@ void VtkImplicitCylinderRepresentationWrap::WidgetInteraction(const Nan::Functio
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

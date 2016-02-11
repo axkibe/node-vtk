@@ -135,7 +135,7 @@ void VtkSeedWidgetWrap::CompleteInteraction(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSeedWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSeedWidgetWrap>(info.Holder());
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -147,7 +147,7 @@ void VtkSeedWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbackI
 {
 	VtkSeedWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSeedWidgetWrap>(info.Holder());
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -166,7 +166,7 @@ void VtkSeedWidgetWrap::CreateNewHandle(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->CreateNewHandle();
-		VtkHandleWidgetWrap::InitPtpl();
+	VtkHandleWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkSeedWidgetWrap::DeleteSeed(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -226,7 +226,7 @@ void VtkSeedWidgetWrap::GetSeed(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetSeed(
 			info[0]->Int32Value()
 		);
-			VtkHandleWidgetWrap::InitPtpl();
+		VtkHandleWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkSeedWidgetWrap::GetSeedRepresentation(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSeedRepresentation();
-		VtkSeedRepresentationWrap::InitPtpl();
+	VtkSeedRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkSeedWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkSeedWidgetWrap::InitPtpl();
+	VtkSeedWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -327,7 +327,7 @@ void VtkSeedWidgetWrap::RestartInteraction(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSeedWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkSeedWidgetWrap>(info.Holder());
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -351,7 +351,7 @@ void VtkSeedWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSeedWidgetWrap::InitPtpl();
+		VtkSeedWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -373,7 +373,7 @@ void VtkSeedWidgetWrap::SetCurrentRenderer(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -392,7 +392,7 @@ void VtkSeedWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +412,7 @@ void VtkSeedWidgetWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -431,7 +431,7 @@ void VtkSeedWidgetWrap::SetProcessEvents(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSeedWidget *native = (vtkSeedWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkSeedWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSeedRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSeedRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

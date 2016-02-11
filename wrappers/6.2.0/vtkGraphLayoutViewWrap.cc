@@ -387,7 +387,7 @@ void VtkGraphLayoutViewWrap::AddIconType(const Nan::FunctionCallbackInfo<v8::Val
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -406,7 +406,7 @@ void VtkGraphLayoutViewWrap::ClearIconTypes(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkGraphLayoutViewWrap::ColorEdgesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -430,7 +430,7 @@ void VtkGraphLayoutViewWrap::ColorEdgesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -442,7 +442,7 @@ void VtkGraphLayoutViewWrap::ColorVerticesOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -454,7 +454,7 @@ void VtkGraphLayoutViewWrap::ColorVerticesOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -466,7 +466,7 @@ void VtkGraphLayoutViewWrap::EdgeLabelVisibilityOff(const Nan::FunctionCallbackI
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -478,7 +478,7 @@ void VtkGraphLayoutViewWrap::EdgeLabelVisibilityOn(const Nan::FunctionCallbackIn
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +490,7 @@ void VtkGraphLayoutViewWrap::EdgeSelectionOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -502,7 +502,7 @@ void VtkGraphLayoutViewWrap::EdgeSelectionOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -514,7 +514,7 @@ void VtkGraphLayoutViewWrap::EdgeVisibilityOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -526,7 +526,7 @@ void VtkGraphLayoutViewWrap::EdgeVisibilityOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -643,7 +643,7 @@ void VtkGraphLayoutViewWrap::GetEdgeLayoutStrategy(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetEdgeLayoutStrategy();
-		VtkEdgeLayoutStrategyWrap::InitPtpl();
+	VtkEdgeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -848,7 +848,7 @@ void VtkGraphLayoutViewWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkGraphLayoutStrategyWrap::InitPtpl();
+	VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -976,7 +976,7 @@ void VtkGraphLayoutViewWrap::HideEdgeLabelsOnInteractionOff(const Nan::FunctionC
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -988,7 +988,7 @@ void VtkGraphLayoutViewWrap::HideEdgeLabelsOnInteractionOn(const Nan::FunctionCa
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1000,7 +1000,7 @@ void VtkGraphLayoutViewWrap::HideVertexLabelsOnInteractionOff(const Nan::Functio
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1012,7 +1012,7 @@ void VtkGraphLayoutViewWrap::HideVertexLabelsOnInteractionOn(const Nan::Function
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1024,7 +1024,7 @@ void VtkGraphLayoutViewWrap::IconVisibilityOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1036,7 +1036,7 @@ void VtkGraphLayoutViewWrap::IconVisibilityOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1091,7 +1091,7 @@ void VtkGraphLayoutViewWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphLayoutViewWrap::InitPtpl();
+	VtkGraphLayoutViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1119,7 +1119,7 @@ void VtkGraphLayoutViewWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphLayoutViewWrap::InitPtpl();
+		VtkGraphLayoutViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1138,7 +1138,7 @@ void VtkGraphLayoutViewWrap::ScaledGlyphsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1150,7 +1150,7 @@ void VtkGraphLayoutViewWrap::ScaledGlyphsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1164,7 +1164,7 @@ void VtkGraphLayoutViewWrap::SetColorEdges(const Nan::FunctionCallbackInfo<v8::V
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1183,7 +1183,7 @@ void VtkGraphLayoutViewWrap::SetColorVertices(const Nan::FunctionCallbackInfo<v8
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1203,7 +1203,7 @@ void VtkGraphLayoutViewWrap::SetEdgeColorArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1223,7 +1223,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLabelArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1242,7 +1242,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLabelFontSize(const Nan::FunctionCallbackInf
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1261,7 +1261,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLabelVisibility(const Nan::FunctionCallbackI
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1281,7 +1281,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategy(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1294,7 +1294,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategy(const Nan::FunctionCallbackIn
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEdgeLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEdgeLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkEdgeLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1311,7 +1311,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategyToArcParallel(const Nan::Funct
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1323,7 +1323,7 @@ void VtkGraphLayoutViewWrap::SetEdgeLayoutStrategyToPassThrough(const Nan::Funct
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1337,7 +1337,7 @@ void VtkGraphLayoutViewWrap::SetEdgeScalarBarVisibility(const Nan::FunctionCallb
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1356,7 +1356,7 @@ void VtkGraphLayoutViewWrap::SetEdgeSelection(const Nan::FunctionCallbackInfo<v8
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1375,7 +1375,7 @@ void VtkGraphLayoutViewWrap::SetEdgeVisibility(const Nan::FunctionCallbackInfo<v
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1394,7 +1394,7 @@ void VtkGraphLayoutViewWrap::SetEnableEdgesByArray(const Nan::FunctionCallbackIn
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1413,7 +1413,7 @@ void VtkGraphLayoutViewWrap::SetEnableVerticesByArray(const Nan::FunctionCallbac
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1433,7 +1433,7 @@ void VtkGraphLayoutViewWrap::SetEnabledEdgesArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1453,7 +1453,7 @@ void VtkGraphLayoutViewWrap::SetEnabledVerticesArrayName(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1472,7 +1472,7 @@ void VtkGraphLayoutViewWrap::SetGlyphType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1491,7 +1491,7 @@ void VtkGraphLayoutViewWrap::SetHideEdgeLabelsOnInteraction(const Nan::FunctionC
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1510,7 +1510,7 @@ void VtkGraphLayoutViewWrap::SetHideVertexLabelsOnInteraction(const Nan::Functio
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1529,7 +1529,7 @@ void VtkGraphLayoutViewWrap::SetIconAlignment(const Nan::FunctionCallbackInfo<v8
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1549,7 +1549,7 @@ void VtkGraphLayoutViewWrap::SetIconArrayName(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1568,7 +1568,7 @@ void VtkGraphLayoutViewWrap::SetIconVisibility(const Nan::FunctionCallbackInfo<v
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1588,7 +1588,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1601,7 +1601,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1618,7 +1618,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToCircular(const Nan::FunctionCall
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1630,7 +1630,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToClustering2D(const Nan::Function
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1642,7 +1642,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToCommunity2D(const Nan::FunctionC
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1654,7 +1654,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToCone(const Nan::FunctionCallback
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1666,7 +1666,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToCosmicTree(const Nan::FunctionCa
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1678,7 +1678,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToFast2D(const Nan::FunctionCallba
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1690,7 +1690,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToForceDirected(const Nan::Functio
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1702,7 +1702,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToPassThrough(const Nan::FunctionC
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1714,7 +1714,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToRandom(const Nan::FunctionCallba
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1726,7 +1726,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToSimple2D(const Nan::FunctionCall
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1738,7 +1738,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToSpanTree(const Nan::FunctionCall
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1750,7 +1750,7 @@ void VtkGraphLayoutViewWrap::SetLayoutStrategyToTree(const Nan::FunctionCallback
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1764,7 +1764,7 @@ void VtkGraphLayoutViewWrap::SetScaledGlyphs(const Nan::FunctionCallbackInfo<v8:
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1784,7 +1784,7 @@ void VtkGraphLayoutViewWrap::SetScalingArrayName(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1804,7 +1804,7 @@ void VtkGraphLayoutViewWrap::SetVertexColorArrayName(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1824,7 +1824,7 @@ void VtkGraphLayoutViewWrap::SetVertexLabelArrayName(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1843,7 +1843,7 @@ void VtkGraphLayoutViewWrap::SetVertexLabelFontSize(const Nan::FunctionCallbackI
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1862,7 +1862,7 @@ void VtkGraphLayoutViewWrap::SetVertexLabelVisibility(const Nan::FunctionCallbac
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1881,7 +1881,7 @@ void VtkGraphLayoutViewWrap::SetVertexScalarBarVisibility(const Nan::FunctionCal
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1898,7 +1898,7 @@ void VtkGraphLayoutViewWrap::UpdateLayout(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1910,7 +1910,7 @@ void VtkGraphLayoutViewWrap::VertexLabelVisibilityOff(const Nan::FunctionCallbac
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1922,7 +1922,7 @@ void VtkGraphLayoutViewWrap::VertexLabelVisibilityOn(const Nan::FunctionCallback
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1934,7 +1934,7 @@ void VtkGraphLayoutViewWrap::ZoomToSelection(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGraphLayoutViewWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutViewWrap>(info.Holder());
 	vtkGraphLayoutView *native = (vtkGraphLayoutView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

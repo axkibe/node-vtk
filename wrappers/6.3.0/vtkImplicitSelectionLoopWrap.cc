@@ -69,6 +69,9 @@ void VtkImplicitSelectionLoopWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLoop", GetLoop);
 	Nan::SetPrototypeMethod(tpl, "getLoop", GetLoop);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -120,7 +123,7 @@ void VtkImplicitSelectionLoopWrap::AutomaticNormalGenerationOff(const Nan::Funct
 {
 	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
 	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +135,7 @@ void VtkImplicitSelectionLoopWrap::AutomaticNormalGenerationOn(const Nan::Functi
 {
 	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
 	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +248,7 @@ void VtkImplicitSelectionLoopWrap::EvaluateGradient(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -275,7 +278,7 @@ void VtkImplicitSelectionLoopWrap::EvaluateGradient(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -325,7 +328,7 @@ void VtkImplicitSelectionLoopWrap::EvaluateGradient(const Nan::FunctionCallbackI
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -345,7 +348,7 @@ void VtkImplicitSelectionLoopWrap::EvaluateGradient(const Nan::FunctionCallbackI
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -399,7 +402,7 @@ void VtkImplicitSelectionLoopWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLoop();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,6 +412,23 @@ void VtkImplicitSelectionLoopWrap::GetLoop(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitSelectionLoopWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitSelectionLoopWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitSelectionLoopWrap>(info.Holder());
+	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitSelectionLoopWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -444,7 +464,7 @@ void VtkImplicitSelectionLoopWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitSelectionLoopWrap::InitPtpl();
+	VtkImplicitSelectionLoopWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -472,7 +492,7 @@ void VtkImplicitSelectionLoopWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitSelectionLoopWrap::InitPtpl();
+		VtkImplicitSelectionLoopWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -493,7 +513,7 @@ void VtkImplicitSelectionLoopWrap::SetAutomaticNormalGeneration(const Nan::Funct
 	vtkImplicitSelectionLoop *native = (vtkImplicitSelectionLoop *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +533,7 @@ void VtkImplicitSelectionLoopWrap::SetLoop(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +560,7 @@ void VtkImplicitSelectionLoopWrap::SetNormal(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +589,7 @@ void VtkImplicitSelectionLoopWrap::SetNormal(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +605,7 @@ void VtkImplicitSelectionLoopWrap::SetNormal(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

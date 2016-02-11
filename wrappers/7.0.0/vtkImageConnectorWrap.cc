@@ -149,7 +149,7 @@ void VtkImageConnectorWrap::MarkData(const Nan::FunctionCallbackInfo<v8::Value>&
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -180,7 +180,7 @@ void VtkImageConnectorWrap::MarkData(const Nan::FunctionCallbackInfo<v8::Value>&
 					}
 					b2[i] = a2->Get(i)->Int32Value();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -208,7 +208,7 @@ void VtkImageConnectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageConnectorWrap::InitPtpl();
+	VtkImageConnectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkImageConnectorWrap::RemoveAllSeeds(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
 	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkImageConnectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageConnectorWrap::InitPtpl();
+		VtkImageConnectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

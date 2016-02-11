@@ -30,8 +30,12 @@ class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplaySize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGravity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIconScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIconSheetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

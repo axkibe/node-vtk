@@ -33,6 +33,8 @@ class VtkGeoAlignedImageSourceWrap : public VtkGeoSourceWrap
 		static void FetchRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLatitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLongitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOverlap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOverlapMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOverlapMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -139,7 +139,7 @@ void VtkDatabaseToTableReaderWrap::GetDatabase(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetDatabase();
-		VtkSQLDatabaseWrap::InitPtpl();
+	VtkSQLDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkDatabaseToTableReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkDatabaseToTableReaderWrap::InitPtpl();
+	VtkDatabaseToTableReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkDatabaseToTableReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDatabaseToTableReaderWrap::InitPtpl();
+		VtkDatabaseToTableReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

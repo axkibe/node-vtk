@@ -134,7 +134,7 @@ void VtkAbstractContextItemWrap::ClearItems(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkAbstractContextItemWrap::GetParent(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetParent();
-		VtkAbstractContextItemWrap::InitPtpl();
+	VtkAbstractContextItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkAbstractContextItemWrap::GetScene(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetScene();
-		VtkContextSceneWrap::InitPtpl();
+	VtkContextSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -263,7 +263,7 @@ void VtkAbstractContextItemWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractContextItemWrap::InitPtpl();
+	VtkAbstractContextItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +323,7 @@ void VtkAbstractContextItemWrap::ReleaseGraphicsResources(const Nan::FunctionCal
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -369,7 +369,7 @@ void VtkAbstractContextItemWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractContextItemWrap::InitPtpl();
+		VtkAbstractContextItemWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -390,7 +390,7 @@ void VtkAbstractContextItemWrap::SetInteractive(const Nan::FunctionCallbackInfo<
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +410,7 @@ void VtkAbstractContextItemWrap::SetParent(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractContextItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractContextItemWrap *a0 = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +430,7 @@ void VtkAbstractContextItemWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -449,7 +449,7 @@ void VtkAbstractContextItemWrap::SetVisible(const Nan::FunctionCallbackInfo<v8::
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -466,7 +466,7 @@ void VtkAbstractContextItemWrap::Update(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAbstractContextItemWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractContextItemWrap>(info.Holder());
 	vtkAbstractContextItem *native = (vtkAbstractContextItem *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

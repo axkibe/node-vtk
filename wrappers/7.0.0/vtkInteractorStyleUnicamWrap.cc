@@ -50,6 +50,9 @@ void VtkInteractorStyleUnicamWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetWorldUpVector", GetWorldUpVector);
+	Nan::SetPrototypeMethod(tpl, "getWorldUpVector", GetWorldUpVector);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -120,6 +123,23 @@ void VtkInteractorStyleUnicamWrap::GetClassName(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkInteractorStyleUnicamWrap::GetWorldUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
+	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWorldUpVector();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkInteractorStyleUnicamWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
@@ -153,7 +173,7 @@ void VtkInteractorStyleUnicamWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleUnicamWrap::InitPtpl();
+	VtkInteractorStyleUnicamWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +189,7 @@ void VtkInteractorStyleUnicamWrap::OnLeftButtonDown(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
 	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +201,7 @@ void VtkInteractorStyleUnicamWrap::OnLeftButtonMove(const Nan::FunctionCallbackI
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
 	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -193,7 +213,7 @@ void VtkInteractorStyleUnicamWrap::OnLeftButtonUp(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
 	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +225,7 @@ void VtkInteractorStyleUnicamWrap::OnMouseMove(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
 	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +237,7 @@ void VtkInteractorStyleUnicamWrap::OnTimer(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorStyleUnicamWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleUnicamWrap>(info.Holder());
 	vtkInteractorStyleUnicam *native = (vtkInteractorStyleUnicam *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +261,7 @@ void VtkInteractorStyleUnicamWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleUnicamWrap::InitPtpl();
+		VtkInteractorStyleUnicamWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,7 +290,7 @@ void VtkInteractorStyleUnicamWrap::SetWorldUpVector(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +319,7 @@ void VtkInteractorStyleUnicamWrap::SetWorldUpVector(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -315,7 +335,7 @@ void VtkInteractorStyleUnicamWrap::SetWorldUpVector(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

@@ -123,7 +123,7 @@ void VtkOutEdgeIteratorWrap::GetGraph(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetGraph();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkOutEdgeIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkOutEdgeIteratorWrap::InitPtpl();
+	VtkOutEdgeIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkOutEdgeIteratorWrap::NextGraphEdge(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NextGraphEdge();
-		VtkGraphEdgeWrap::InitPtpl();
+	VtkGraphEdgeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +233,7 @@ void VtkOutEdgeIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOutEdgeIteratorWrap::InitPtpl();
+		VtkOutEdgeIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

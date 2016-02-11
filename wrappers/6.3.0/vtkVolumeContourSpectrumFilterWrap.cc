@@ -137,7 +137,7 @@ void VtkVolumeContourSpectrumFilterWrap::GetOutput(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetOutput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkVolumeContourSpectrumFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeContourSpectrumFilterWrap::InitPtpl();
+	VtkVolumeContourSpectrumFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkVolumeContourSpectrumFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeContourSpectrumFilterWrap::InitPtpl();
+		VtkVolumeContourSpectrumFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -231,7 +231,7 @@ void VtkVolumeContourSpectrumFilterWrap::SetNumberOfSamples(const Nan::FunctionC
 	vtkVolumeContourSpectrumFilter *native = (vtkVolumeContourSpectrumFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

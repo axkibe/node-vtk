@@ -30,10 +30,12 @@ class VtkExtentTranslatorWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSplitMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PieceToExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);

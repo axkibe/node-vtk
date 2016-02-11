@@ -47,6 +47,9 @@ void VtkClearRGBPassWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkClearRGBPassWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBackground", GetBackground);
+	Nan::SetPrototypeMethod(tpl, "getBackground", GetBackground);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -89,6 +92,23 @@ void VtkClearRGBPassWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkClearRGBPassWrap::GetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkClearRGBPassWrap *wrapper = ObjectWrap::Unwrap<VtkClearRGBPassWrap>(info.Holder());
+	vtkClearRGBPass *native = (vtkClearRGBPass *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackground();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkClearRGBPassWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -138,7 +158,7 @@ void VtkClearRGBPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkClearRGBPassWrap::InitPtpl();
+	VtkClearRGBPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +186,7 @@ void VtkClearRGBPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClearRGBPassWrap::InitPtpl();
+		VtkClearRGBPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -195,7 +215,7 @@ void VtkClearRGBPassWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -224,7 +244,7 @@ void VtkClearRGBPassWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -240,7 +260,7 @@ void VtkClearRGBPassWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

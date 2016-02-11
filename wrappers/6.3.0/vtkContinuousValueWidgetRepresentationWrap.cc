@@ -103,7 +103,7 @@ void VtkContinuousValueWidgetRepresentationWrap::BuildRepresentation(const Nan::
 {
 	VtkContinuousValueWidgetRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContinuousValueWidgetRepresentationWrap>(info.Holder());
 	vtkContinuousValueWidgetRepresentation *native = (vtkContinuousValueWidgetRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -172,7 +172,7 @@ void VtkContinuousValueWidgetRepresentationWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
+	VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkContinuousValueWidgetRepresentationWrap::PlaceWidget(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,7 @@ void VtkContinuousValueWidgetRepresentationWrap::PlaceWidget(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkContinuousValueWidgetRepresentationWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
+		VtkContinuousValueWidgetRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -277,7 +277,7 @@ void VtkContinuousValueWidgetRepresentationWrap::SetValue(const Nan::FunctionCal
 	vtkContinuousValueWidgetRepresentation *native = (vtkContinuousValueWidgetRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -59,6 +59,9 @@ void VtkAxesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetComputeNormals", GetComputeNormals);
 	Nan::SetPrototypeMethod(tpl, "getComputeNormals", GetComputeNormals);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetScaleFactor", GetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "getScaleFactor", GetScaleFactor);
 
@@ -125,7 +128,7 @@ void VtkAxesWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkAxesWrap *wrapper = ObjectWrap::Unwrap<VtkAxesWrap>(info.Holder());
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -137,7 +140,7 @@ void VtkAxesWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAxesWrap *wrapper = ObjectWrap::Unwrap<VtkAxesWrap>(info.Holder());
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,6 +174,23 @@ void VtkAxesWrap::GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetComputeNormals();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAxesWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxesWrap *wrapper = ObjectWrap::Unwrap<VtkAxesWrap>(info.Holder());
+	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAxesWrap::GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -234,7 +254,7 @@ void VtkAxesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkAxesWrap::InitPtpl();
+	VtkAxesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +282,7 @@ void VtkAxesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAxesWrap::InitPtpl();
+		VtkAxesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +303,7 @@ void VtkAxesWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -310,7 +330,7 @@ void VtkAxesWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -339,7 +359,7 @@ void VtkAxesWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +375,7 @@ void VtkAxesWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -378,7 +398,7 @@ void VtkAxesWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -397,7 +417,7 @@ void VtkAxesWrap::SetSymmetric(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -414,7 +434,7 @@ void VtkAxesWrap::SymmetricOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxesWrap *wrapper = ObjectWrap::Unwrap<VtkAxesWrap>(info.Holder());
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +446,7 @@ void VtkAxesWrap::SymmetricOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAxesWrap *wrapper = ObjectWrap::Unwrap<VtkAxesWrap>(info.Holder());
 	vtkAxes *native = (vtkAxes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -42,9 +42,11 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void GetDataDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarComponentAsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +54,7 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void GetScalarTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarTypeMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarTypeMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVoxelGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);

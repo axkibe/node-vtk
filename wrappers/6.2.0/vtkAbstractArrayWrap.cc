@@ -224,7 +224,7 @@ void VtkAbstractArrayWrap::CreateArray(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->CreateArray(
 			info[0]->Int32Value()
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkAbstractArrayWrap::DISCRETE_VALUES(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->DISCRETE_VALUES();
-		VtkInformationVariantVectorKeyWrap::InitPtpl();
+	VtkInformationVariantVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkAbstractArrayWrap::DISCRETE_VALUE_SAMPLE_PARAMETERS(const Nan::FunctionC
 		return;
 	}
 	r = native->DISCRETE_VALUE_SAMPLE_PARAMETERS();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkAbstractArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,7 @@ void VtkAbstractArrayWrap::GUI_HIDE(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GUI_HIDE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +402,7 @@ void VtkAbstractArrayWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInformation();
-		VtkInformationWrap::InitPtpl();
+	VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -483,7 +483,7 @@ void VtkAbstractArrayWrap::GetProminentComponentValues(const Nan::FunctionCallba
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -512,7 +512,7 @@ void VtkAbstractArrayWrap::GetTuples(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAbstractArrayWrap *a1 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -602,7 +602,7 @@ void VtkAbstractArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -625,7 +625,7 @@ void VtkAbstractArrayWrap::PER_COMPONENT(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->PER_COMPONENT();
-		VtkInformationInformationVectorKeyWrap::InitPtpl();
+	VtkInformationInformationVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -641,7 +641,7 @@ void VtkAbstractArrayWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
 	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -665,7 +665,7 @@ void VtkAbstractArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractArrayWrap::InitPtpl();
+		VtkAbstractArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -687,7 +687,7 @@ void VtkAbstractArrayWrap::SetName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +706,7 @@ void VtkAbstractArrayWrap::SetNumberOfComponents(const Nan::FunctionCallbackInfo
 	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

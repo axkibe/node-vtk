@@ -56,6 +56,7 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void GetScalarMaterialModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStatic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);

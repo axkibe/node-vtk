@@ -255,7 +255,7 @@ void VtkUnstructuredGridPreIntegrationWrap::GetIntegrator(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetIntegrator();
-		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -271,7 +271,7 @@ void VtkUnstructuredGridPreIntegrationWrap::IncrementalPreIntegrationOff(const N
 {
 	VtkUnstructuredGridPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -283,7 +283,7 @@ void VtkUnstructuredGridPreIntegrationWrap::IncrementalPreIntegrationOn(const Na
 {
 	VtkUnstructuredGridPreIntegrationWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridPreIntegrationWrap>(info.Holder());
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -301,7 +301,7 @@ void VtkUnstructuredGridPreIntegrationWrap::Initialize(const Nan::FunctionCallba
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -349,7 +349,7 @@ void VtkUnstructuredGridPreIntegrationWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
+	VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
+		VtkUnstructuredGridPreIntegrationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -398,7 +398,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SetIncrementalPreIntegration(const N
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -417,7 +417,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SetIntegrationTableLengthResolution(
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +436,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SetIntegrationTableScalarResolution(
 	vtkUnstructuredGridPreIntegration *native = (vtkUnstructuredGridPreIntegration *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +456,7 @@ void VtkUnstructuredGridPreIntegrationWrap::SetIntegrator(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridVolumeRayIntegratorWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

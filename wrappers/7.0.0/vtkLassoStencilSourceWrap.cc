@@ -162,7 +162,7 @@ void VtkLassoStencilSourceWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,7 +287,7 @@ void VtkLassoStencilSourceWrap::GetSlicePoints(const Nan::FunctionCallbackInfo<v
 		r = native->GetSlicePoints(
 			info[0]->Int32Value()
 		);
-			VtkPointsWrap::InitPtpl();
+		VtkPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -335,7 +335,7 @@ void VtkLassoStencilSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkLassoStencilSourceWrap::InitPtpl();
+	VtkLassoStencilSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkLassoStencilSourceWrap::RemoveAllSlicePoints(const Nan::FunctionCallback
 {
 	VtkLassoStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkLassoStencilSourceWrap>(info.Holder());
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -375,7 +375,7 @@ void VtkLassoStencilSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLassoStencilSourceWrap::InitPtpl();
+		VtkLassoStencilSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkLassoStencilSourceWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -416,7 +416,7 @@ void VtkLassoStencilSourceWrap::SetShape(const Nan::FunctionCallbackInfo<v8::Val
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkLassoStencilSourceWrap::SetShapeToPolygon(const Nan::FunctionCallbackInf
 {
 	VtkLassoStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkLassoStencilSourceWrap>(info.Holder());
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -445,7 +445,7 @@ void VtkLassoStencilSourceWrap::SetShapeToSpline(const Nan::FunctionCallbackInfo
 {
 	VtkLassoStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkLassoStencilSourceWrap>(info.Holder());
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -459,7 +459,7 @@ void VtkLassoStencilSourceWrap::SetSliceOrientation(const Nan::FunctionCallbackI
 	vtkLassoStencilSource *native = (vtkLassoStencilSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -481,7 +481,7 @@ void VtkLassoStencilSourceWrap::SetSlicePoints(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

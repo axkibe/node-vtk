@@ -165,7 +165,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeGradientsOff(const Nan::Fun
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeGradientsOn(const Nan::Func
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeNormalsOff(const Nan::Funct
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeNormalsOn(const Nan::Functi
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeScalarsOff(const Nan::Funct
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeScalarsOn(const Nan::Functi
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -265,7 +265,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeSpacing(const Nan::Function
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -299,7 +299,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeSpacing(const Nan::Function
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -353,7 +353,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeSpacing(const Nan::Function
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -377,7 +377,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::ComputeSpacing(const Nan::Function
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -404,7 +404,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::GenerateTrianglesOff(const Nan::Fu
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::GenerateTrianglesOn(const Nan::Fun
 {
 	VtkRectilinearSynchronizedTemplatesWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearSynchronizedTemplatesWrap>(info.Holder());
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -440,7 +440,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::GenerateValues(const Nan::Function
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -470,7 +470,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::GenerateValues(const Nan::Function
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -485,7 +485,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::GenerateValues(const Nan::Function
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -654,7 +654,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
+	VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -682,7 +682,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
+		VtkRectilinearSynchronizedTemplatesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -703,7 +703,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetArrayComponent(const Nan::Funct
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +722,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetComputeGradients(const Nan::Fun
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -741,7 +741,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetComputeNormals(const Nan::Funct
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -760,7 +760,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetComputeScalars(const Nan::Funct
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -779,7 +779,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetGenerateTriangles(const Nan::Fu
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -798,7 +798,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetNumberOfContours(const Nan::Fun
 	vtkRectilinearSynchronizedTemplates *native = (vtkRectilinearSynchronizedTemplates *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -819,7 +819,7 @@ void VtkRectilinearSynchronizedTemplatesWrap::SetValue(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

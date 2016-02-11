@@ -149,7 +149,7 @@ void VtkMapArrayValuesWrap::AddToMap(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -162,7 +162,7 @@ void VtkMapArrayValuesWrap::AddToMap(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -179,7 +179,7 @@ void VtkMapArrayValuesWrap::AddToMap(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -192,7 +192,7 @@ void VtkMapArrayValuesWrap::AddToMap(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -211,7 +211,7 @@ void VtkMapArrayValuesWrap::ClearMap(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMapArrayValuesWrap *wrapper = ObjectWrap::Unwrap<VtkMapArrayValuesWrap>(info.Holder());
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -364,7 +364,7 @@ void VtkMapArrayValuesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkMapArrayValuesWrap::InitPtpl();
+	VtkMapArrayValuesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,7 +380,7 @@ void VtkMapArrayValuesWrap::PassArrayOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkMapArrayValuesWrap *wrapper = ObjectWrap::Unwrap<VtkMapArrayValuesWrap>(info.Holder());
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkMapArrayValuesWrap::PassArrayOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMapArrayValuesWrap *wrapper = ObjectWrap::Unwrap<VtkMapArrayValuesWrap>(info.Holder());
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkMapArrayValuesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMapArrayValuesWrap::InitPtpl();
+		VtkMapArrayValuesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -437,7 +437,7 @@ void VtkMapArrayValuesWrap::SetFieldType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +456,7 @@ void VtkMapArrayValuesWrap::SetFillValue(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkMapArrayValuesWrap::SetInputArrayName(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -496,7 +496,7 @@ void VtkMapArrayValuesWrap::SetOutputArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -515,7 +515,7 @@ void VtkMapArrayValuesWrap::SetOutputArrayType(const Nan::FunctionCallbackInfo<v
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkMapArrayValuesWrap::SetPassArray(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMapArrayValues *native = (vtkMapArrayValues *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

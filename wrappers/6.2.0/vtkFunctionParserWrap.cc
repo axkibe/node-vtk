@@ -328,7 +328,7 @@ void VtkFunctionParserWrap::GetVectorResult(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +357,7 @@ void VtkFunctionParserWrap::GetVectorResult(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,17 @@ void VtkFunctionParserWrap::GetVectorResult(const Nan::FunctionCallbackInfo<v8::
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVectorResult();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkFunctionParserWrap::GetVectorVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -408,7 +418,7 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -438,7 +448,7 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -449,6 +459,20 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 			);
 			return;
 		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetVectorVariableValue(
+			*a0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
@@ -461,7 +485,7 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -491,7 +515,7 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -502,6 +526,20 @@ void VtkFunctionParserWrap::GetVectorVariableValue(const Nan::FunctionCallbackIn
 			);
 			return;
 		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetVectorVariableValue(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -510,7 +548,7 @@ void VtkFunctionParserWrap::InvalidateFunction(const Nan::FunctionCallbackInfo<v
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -579,7 +617,7 @@ void VtkFunctionParserWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkFunctionParserWrap::InitPtpl();
+	VtkFunctionParserWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -595,7 +633,7 @@ void VtkFunctionParserWrap::RemoveAllVariables(const Nan::FunctionCallbackInfo<v
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +645,7 @@ void VtkFunctionParserWrap::RemoveScalarVariables(const Nan::FunctionCallbackInf
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -619,7 +657,7 @@ void VtkFunctionParserWrap::RemoveVectorVariables(const Nan::FunctionCallbackInf
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -631,7 +669,7 @@ void VtkFunctionParserWrap::ReplaceInvalidValuesOff(const Nan::FunctionCallbackI
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -643,7 +681,7 @@ void VtkFunctionParserWrap::ReplaceInvalidValuesOn(const Nan::FunctionCallbackIn
 {
 	VtkFunctionParserWrap *wrapper = ObjectWrap::Unwrap<VtkFunctionParserWrap>(info.Holder());
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -667,7 +705,7 @@ void VtkFunctionParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFunctionParserWrap::InitPtpl();
+		VtkFunctionParserWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -689,7 +727,7 @@ void VtkFunctionParserWrap::SetFunction(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +746,7 @@ void VtkFunctionParserWrap::SetReplaceInvalidValues(const Nan::FunctionCallbackI
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +765,7 @@ void VtkFunctionParserWrap::SetReplacementValue(const Nan::FunctionCallbackInfo<
 	vtkFunctionParser *native = (vtkFunctionParser *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -749,7 +787,7 @@ void VtkFunctionParserWrap::SetScalarVariableValue(const Nan::FunctionCallbackIn
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -765,7 +803,7 @@ void VtkFunctionParserWrap::SetScalarVariableValue(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -797,7 +835,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -827,7 +865,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -844,7 +882,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -871,7 +909,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -901,7 +939,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -918,7 +956,7 @@ void VtkFunctionParserWrap::SetVectorVariableValue(const Nan::FunctionCallbackIn
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

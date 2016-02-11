@@ -50,6 +50,24 @@ void VtkCoordinateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetComputedDisplayValue", GetComputedDisplayValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedDisplayValue", GetComputedDisplayValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetComputedDoubleDisplayValue", GetComputedDoubleDisplayValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedDoubleDisplayValue", GetComputedDoubleDisplayValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetComputedDoubleViewportValue", GetComputedDoubleViewportValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedDoubleViewportValue", GetComputedDoubleViewportValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetComputedLocalDisplayValue", GetComputedLocalDisplayValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedLocalDisplayValue", GetComputedLocalDisplayValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetComputedViewportValue", GetComputedViewportValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedViewportValue", GetComputedViewportValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetComputedWorldValue", GetComputedWorldValue);
+	Nan::SetPrototypeMethod(tpl, "getComputedWorldValue", GetComputedWorldValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetCoordinateSystem", GetCoordinateSystem);
 	Nan::SetPrototypeMethod(tpl, "getCoordinateSystem", GetCoordinateSystem);
 
@@ -58,6 +76,9 @@ void VtkCoordinateWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetReferenceCoordinate", GetReferenceCoordinate);
 	Nan::SetPrototypeMethod(tpl, "getReferenceCoordinate", GetReferenceCoordinate);
+
+	Nan::SetPrototypeMethod(tpl, "GetValue", GetValue);
+	Nan::SetPrototypeMethod(tpl, "getValue", GetValue);
 
 	Nan::SetPrototypeMethod(tpl, "GetViewport", GetViewport);
 	Nan::SetPrototypeMethod(tpl, "getViewport", GetViewport);
@@ -144,6 +165,156 @@ void VtkCoordinateWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCoordinateWrap::GetComputedDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedDisplayValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCoordinateWrap::GetComputedDoubleDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedDoubleDisplayValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCoordinateWrap::GetComputedDoubleViewportValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedDoubleViewportValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCoordinateWrap::GetComputedLocalDisplayValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedLocalDisplayValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCoordinateWrap::GetComputedViewportValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedViewportValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+		Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCoordinateWrap::GetComputedWorldValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComputedWorldValue(
+			(vtkViewport *) a0->native.GetPointer()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCoordinateWrap::GetCoordinateSystem(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
@@ -183,7 +354,7 @@ void VtkCoordinateWrap::GetReferenceCoordinate(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetReferenceCoordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,6 +364,23 @@ void VtkCoordinateWrap::GetReferenceCoordinate(const Nan::FunctionCallbackInfo<v
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkCoordinateWrap::GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
+	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValue();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCoordinateWrap::GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -206,7 +394,7 @@ void VtkCoordinateWrap::GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetViewport();
-		VtkViewportWrap::InitPtpl();
+	VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +439,7 @@ void VtkCoordinateWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +467,7 @@ void VtkCoordinateWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCoordinateWrap::InitPtpl();
+		VtkCoordinateWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -300,7 +488,7 @@ void VtkCoordinateWrap::SetCoordinateSystem(const Nan::FunctionCallbackInfo<v8::
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +505,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToDisplay(const Nan::FunctionCallback
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -329,7 +517,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToNormalizedDisplay(const Nan::Functi
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -341,7 +529,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToNormalizedViewport(const Nan::Funct
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -353,7 +541,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToView(const Nan::FunctionCallbackInf
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +553,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToViewport(const Nan::FunctionCallbac
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -377,7 +565,7 @@ void VtkCoordinateWrap::SetCoordinateSystemToWorld(const Nan::FunctionCallbackIn
 {
 	VtkCoordinateWrap *wrapper = ObjectWrap::Unwrap<VtkCoordinateWrap>(info.Holder());
 	vtkCoordinate *native = (vtkCoordinate *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +580,7 @@ void VtkCoordinateWrap::SetReferenceCoordinate(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCoordinateWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCoordinateWrap *a0 = ObjectWrap::Unwrap<VtkCoordinateWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +607,7 @@ void VtkCoordinateWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +636,7 @@ void VtkCoordinateWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -464,7 +652,7 @@ void VtkCoordinateWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -476,7 +664,7 @@ void VtkCoordinateWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -498,7 +686,7 @@ void VtkCoordinateWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -128,7 +128,7 @@ void VtkOpenGLHardwareSupportWrap::GetExtensionManager(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetExtensionManager();
-		VtkOpenGLExtensionManagerWrap::InitPtpl();
+	VtkOpenGLExtensionManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkOpenGLHardwareSupportWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLHardwareSupportWrap::InitPtpl();
+	VtkOpenGLHardwareSupportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkOpenGLHardwareSupportWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLHardwareSupportWrap::InitPtpl();
+		VtkOpenGLHardwareSupportWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -265,7 +265,7 @@ void VtkOpenGLHardwareSupportWrap::SetExtensionManager(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOpenGLExtensionManagerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOpenGLExtensionManagerWrap *a0 = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

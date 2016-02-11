@@ -69,6 +69,9 @@ void VtkSimple3DCirclesStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDirection", GetDirection);
+	Nan::SetPrototypeMethod(tpl, "getDirection", GetDirection);
+
 	Nan::SetPrototypeMethod(tpl, "GetForceToUseUniversalStartPointsFinder", GetForceToUseUniversalStartPointsFinder);
 	Nan::SetPrototypeMethod(tpl, "getForceToUseUniversalStartPointsFinder", GetForceToUseUniversalStartPointsFinder);
 
@@ -92,6 +95,9 @@ void VtkSimple3DCirclesStrategyWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMinimumRadian", GetMinimumRadian);
 	Nan::SetPrototypeMethod(tpl, "getMinimumRadian", GetMinimumRadian);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
 	Nan::SetPrototypeMethod(tpl, "GetRadius", GetRadius);
 	Nan::SetPrototypeMethod(tpl, "getRadius", GetRadius);
@@ -180,7 +186,7 @@ void VtkSimple3DCirclesStrategyWrap::AutoHeightOff(const Nan::FunctionCallbackIn
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +198,7 @@ void VtkSimple3DCirclesStrategyWrap::AutoHeightOn(const Nan::FunctionCallbackInf
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +210,7 @@ void VtkSimple3DCirclesStrategyWrap::ForceToUseUniversalStartPointsFinderOff(con
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +222,7 @@ void VtkSimple3DCirclesStrategyWrap::ForceToUseUniversalStartPointsFinderOn(cons
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -250,6 +256,23 @@ void VtkSimple3DCirclesStrategyWrap::GetClassName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSimple3DCirclesStrategyWrap::GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
+	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDirection();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSimple3DCirclesStrategyWrap::GetForceToUseUniversalStartPointsFinder(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -291,7 +314,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalLayers(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetHierarchicalLayers();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +337,7 @@ void VtkSimple3DCirclesStrategyWrap::GetHierarchicalOrder(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetHierarchicalOrder();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,7 +360,7 @@ void VtkSimple3DCirclesStrategyWrap::GetMarkedStartVertices(const Nan::FunctionC
 		return;
 	}
 	r = native->GetMarkedStartVertices();
-		VtkAbstractArrayWrap::InitPtpl();
+	VtkAbstractArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,6 +414,23 @@ void VtkSimple3DCirclesStrategyWrap::GetMinimumRadian(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkSimple3DCirclesStrategyWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
+	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkSimple3DCirclesStrategyWrap::GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
@@ -431,7 +471,7 @@ void VtkSimple3DCirclesStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSimple3DCirclesStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSimple3DCirclesStrategyWrap>(info.Holder());
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +490,7 @@ void VtkSimple3DCirclesStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkSimple3DCirclesStrategyWrap::InitPtpl();
+	VtkSimple3DCirclesStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -478,7 +518,7 @@ void VtkSimple3DCirclesStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSimple3DCirclesStrategyWrap::InitPtpl();
+		VtkSimple3DCirclesStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -499,7 +539,7 @@ void VtkSimple3DCirclesStrategyWrap::SetAutoHeight(const Nan::FunctionCallbackIn
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +566,7 @@ void VtkSimple3DCirclesStrategyWrap::SetDirection(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +595,7 @@ void VtkSimple3DCirclesStrategyWrap::SetDirection(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -571,7 +611,7 @@ void VtkSimple3DCirclesStrategyWrap::SetDirection(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -594,7 +634,7 @@ void VtkSimple3DCirclesStrategyWrap::SetForceToUseUniversalStartPointsFinder(con
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +654,7 @@ void VtkSimple3DCirclesStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -633,7 +673,7 @@ void VtkSimple3DCirclesStrategyWrap::SetHeight(const Nan::FunctionCallbackInfo<v
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -653,7 +693,7 @@ void VtkSimple3DCirclesStrategyWrap::SetHierarchicalLayers(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIntArrayWrap *a0 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -673,7 +713,7 @@ void VtkSimple3DCirclesStrategyWrap::SetHierarchicalOrder(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIdTypeArrayWrap *a0 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -693,7 +733,7 @@ void VtkSimple3DCirclesStrategyWrap::SetMarkedStartVertices(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -712,7 +752,7 @@ void VtkSimple3DCirclesStrategyWrap::SetMethod(const Nan::FunctionCallbackInfo<v
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -731,7 +771,7 @@ void VtkSimple3DCirclesStrategyWrap::SetMinimumDegree(const Nan::FunctionCallbac
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -750,7 +790,7 @@ void VtkSimple3DCirclesStrategyWrap::SetMinimumRadian(const Nan::FunctionCallbac
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -777,7 +817,7 @@ void VtkSimple3DCirclesStrategyWrap::SetOrigin(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -806,7 +846,7 @@ void VtkSimple3DCirclesStrategyWrap::SetOrigin(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -822,7 +862,7 @@ void VtkSimple3DCirclesStrategyWrap::SetOrigin(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -845,7 +885,7 @@ void VtkSimple3DCirclesStrategyWrap::SetRadius(const Nan::FunctionCallbackInfo<v
 	vtkSimple3DCirclesStrategy *native = (vtkSimple3DCirclesStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

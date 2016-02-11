@@ -101,7 +101,7 @@ void VtkFreeTypeStringToImageWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFreeTypeStringToImageWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFreeTypeStringToImageWrap *a0 = ObjectWrap::Unwrap<VtkFreeTypeStringToImageWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -161,7 +161,7 @@ void VtkFreeTypeStringToImageWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkFreeTypeStringToImageWrap::InitPtpl();
+	VtkFreeTypeStringToImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkFreeTypeStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFreeTypeStringToImageWrap::InitPtpl();
+		VtkFreeTypeStringToImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkFreeTypeStringToImageWrap::SetScaleToPowerOfTwo(const Nan::FunctionCallb
 	vtkFreeTypeStringToImage *native = (vtkFreeTypeStringToImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

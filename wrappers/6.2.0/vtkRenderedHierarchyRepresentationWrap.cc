@@ -161,7 +161,7 @@ void VtkRenderedHierarchyRepresentationWrap::ColorGraphEdgesByArrayOff(const Nan
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkRenderedHierarchyRepresentationWrap::ColorGraphEdgesByArrayOn(const Nan:
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkRenderedHierarchyRepresentationWrap::GraphEdgeLabelVisibilityOff(const N
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -428,7 +428,7 @@ void VtkRenderedHierarchyRepresentationWrap::GraphEdgeLabelVisibilityOn(const Na
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -440,7 +440,7 @@ void VtkRenderedHierarchyRepresentationWrap::GraphVisibilityOff(const Nan::Funct
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -452,7 +452,7 @@ void VtkRenderedHierarchyRepresentationWrap::GraphVisibilityOn(const Nan::Functi
 {
 	VtkRenderedHierarchyRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkRenderedHierarchyRepresentationWrap>(info.Holder());
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -493,7 +493,7 @@ void VtkRenderedHierarchyRepresentationWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkRenderedHierarchyRepresentationWrap::InitPtpl();
+	VtkRenderedHierarchyRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -521,7 +521,7 @@ void VtkRenderedHierarchyRepresentationWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRenderedHierarchyRepresentationWrap::InitPtpl();
+		VtkRenderedHierarchyRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -544,7 +544,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetBundlingStrength(const Nan::Func
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -555,7 +555,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetBundlingStrength(const Nan::Func
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +576,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetColorGraphEdgesByArray(const Nan
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -587,7 +587,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetColorGraphEdgesByArray(const Nan
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeColorArrayName(const Na
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -620,7 +620,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeColorArrayName(const Na
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -639,7 +639,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeColorToSplineFraction(c
 	vtkRenderedHierarchyRepresentation *native = (vtkRenderedHierarchyRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +649,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeColorToSplineFraction(c
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -666,7 +666,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelArrayName(const Na
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -677,7 +677,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelArrayName(const Na
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -698,7 +698,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelFontSize(const Nan
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -709,7 +709,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelFontSize(const Nan
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +730,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelVisibility(const N
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -741,7 +741,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphEdgeLabelVisibility(const N
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +762,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphSplineType(const Nan::Funct
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -785,7 +785,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphVisibility(const Nan::Funct
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -796,7 +796,7 @@ void VtkRenderedHierarchyRepresentationWrap::SetGraphVisibility(const Nan::Funct
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

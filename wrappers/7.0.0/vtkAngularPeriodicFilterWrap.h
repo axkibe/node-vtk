@@ -29,6 +29,7 @@ class VtkAngularPeriodicFilterWrap : public VtkPeriodicFilterWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotationAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotationArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);

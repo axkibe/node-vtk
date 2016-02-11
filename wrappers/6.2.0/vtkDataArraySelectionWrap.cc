@@ -211,7 +211,7 @@ void VtkDataArraySelectionWrap::CopySelections(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArraySelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataArraySelectionWrap *a0 = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -228,7 +228,7 @@ void VtkDataArraySelectionWrap::DisableAllArrays(const Nan::FunctionCallbackInfo
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkDataArraySelectionWrap::DisableArray(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -260,7 +260,7 @@ void VtkDataArraySelectionWrap::EnableAllArrays(const Nan::FunctionCallbackInfo<
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkDataArraySelectionWrap::EnableArray(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -464,7 +464,7 @@ void VtkDataArraySelectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -480,7 +480,7 @@ void VtkDataArraySelectionWrap::RemoveAllArrays(const Nan::FunctionCallbackInfo<
 {
 	VtkDataArraySelectionWrap *wrapper = ObjectWrap::Unwrap<VtkDataArraySelectionWrap>(info.Holder());
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -494,7 +494,7 @@ void VtkDataArraySelectionWrap::RemoveArrayByIndex(const Nan::FunctionCallbackIn
 	vtkDataArraySelection *native = (vtkDataArraySelection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -514,7 +514,7 @@ void VtkDataArraySelectionWrap::RemoveArrayByName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -543,7 +543,7 @@ void VtkDataArraySelectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataArraySelectionWrap::InitPtpl();
+		VtkDataArraySelectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -34,6 +34,8 @@ class VtkXOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDesiredDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEventPending(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InitializeFromCurrentContext(const Nan::FunctionCallbackInfo<v8::Value>& info);

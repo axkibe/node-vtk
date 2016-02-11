@@ -50,6 +50,9 @@ void VtkImageButterworthLowPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCutOff", GetCutOff);
+	Nan::SetPrototypeMethod(tpl, "getCutOff", GetCutOff);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrder", GetOrder);
 	Nan::SetPrototypeMethod(tpl, "getOrder", GetOrder);
 
@@ -127,6 +130,23 @@ void VtkImageButterworthLowPassWrap::GetClassName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageButterworthLowPassWrap::GetCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageButterworthLowPassWrap *wrapper = ObjectWrap::Unwrap<VtkImageButterworthLowPassWrap>(info.Holder());
+	vtkImageButterworthLowPass *native = (vtkImageButterworthLowPass *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCutOff();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageButterworthLowPassWrap::GetOrder(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -218,7 +238,7 @@ void VtkImageButterworthLowPassWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageButterworthLowPassWrap::InitPtpl();
+	VtkImageButterworthLowPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +266,7 @@ void VtkImageButterworthLowPassWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageButterworthLowPassWrap::InitPtpl();
+		VtkImageButterworthLowPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -275,7 +295,7 @@ void VtkImageButterworthLowPassWrap::SetCutOff(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +324,7 @@ void VtkImageButterworthLowPassWrap::SetCutOff(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +340,7 @@ void VtkImageButterworthLowPassWrap::SetCutOff(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -333,7 +353,7 @@ void VtkImageButterworthLowPassWrap::SetCutOff(const Nan::FunctionCallbackInfo<v
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +372,7 @@ void VtkImageButterworthLowPassWrap::SetOrder(const Nan::FunctionCallbackInfo<v8
 	vtkImageButterworthLowPass *native = (vtkImageButterworthLowPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +391,7 @@ void VtkImageButterworthLowPassWrap::SetXCutOff(const Nan::FunctionCallbackInfo<
 	vtkImageButterworthLowPass *native = (vtkImageButterworthLowPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -390,7 +410,7 @@ void VtkImageButterworthLowPassWrap::SetYCutOff(const Nan::FunctionCallbackInfo<
 	vtkImageButterworthLowPass *native = (vtkImageButterworthLowPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -409,7 +429,7 @@ void VtkImageButterworthLowPassWrap::SetZCutOff(const Nan::FunctionCallbackInfo<
 	vtkImageButterworthLowPass *native = (vtkImageButterworthLowPass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

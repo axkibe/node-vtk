@@ -152,7 +152,7 @@ void VtkGenericAttributeCollectionWrap::DeepCopy(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkGenericAttributeCollectionWrap::GetAttribute(const Nan::FunctionCallback
 		r = native->GetAttribute(
 			info[0]->Int32Value()
 		);
-			VtkGenericAttributeWrap::InitPtpl();
+		VtkGenericAttributeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -359,7 +359,7 @@ void VtkGenericAttributeCollectionWrap::InsertAttribute(const Nan::FunctionCallb
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGenericAttributeWrap *a1 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -381,7 +381,7 @@ void VtkGenericAttributeCollectionWrap::InsertNextAttribute(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkGenericAttributeCollectionWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericAttributeCollectionWrap::InitPtpl();
+	VtkGenericAttributeCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -459,7 +459,7 @@ void VtkGenericAttributeCollectionWrap::RemoveAttribute(const Nan::FunctionCallb
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkGenericAttributeCollectionWrap::Reset(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -500,7 +500,7 @@ void VtkGenericAttributeCollectionWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericAttributeCollectionWrap::InitPtpl();
+		VtkGenericAttributeCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -523,7 +523,7 @@ void VtkGenericAttributeCollectionWrap::SetActiveAttribute(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -542,7 +542,7 @@ void VtkGenericAttributeCollectionWrap::SetAttributesToInterpolateToAll(const Na
 {
 	VtkGenericAttributeCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info.Holder());
 	vtkGenericAttributeCollection *native = (vtkGenericAttributeCollection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -557,7 +557,7 @@ void VtkGenericAttributeCollectionWrap::ShallowCopy(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericAttributeCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericAttributeCollectionWrap *a0 = ObjectWrap::Unwrap<VtkGenericAttributeCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

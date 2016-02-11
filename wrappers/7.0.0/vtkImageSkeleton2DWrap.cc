@@ -164,7 +164,7 @@ void VtkImageSkeleton2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSkeleton2DWrap::InitPtpl();
+	VtkImageSkeleton2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkImageSkeleton2DWrap::PruneOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageSkeleton2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageSkeleton2DWrap>(info.Holder());
 	vtkImageSkeleton2D *native = (vtkImageSkeleton2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkImageSkeleton2DWrap::PruneOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageSkeleton2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageSkeleton2DWrap>(info.Holder());
 	vtkImageSkeleton2D *native = (vtkImageSkeleton2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkImageSkeleton2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSkeleton2DWrap::InitPtpl();
+		VtkImageSkeleton2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkImageSkeleton2DWrap::SetNumberOfIterations(const Nan::FunctionCallbackIn
 	vtkImageSkeleton2D *native = (vtkImageSkeleton2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkImageSkeleton2DWrap::SetPrune(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageSkeleton2D *native = (vtkImageSkeleton2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

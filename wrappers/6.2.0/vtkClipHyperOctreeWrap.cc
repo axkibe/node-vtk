@@ -155,7 +155,7 @@ void VtkClipHyperOctreeWrap::CreateDefaultLocator(const Nan::FunctionCallbackInf
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -167,7 +167,7 @@ void VtkClipHyperOctreeWrap::GenerateClipScalarsOff(const Nan::FunctionCallbackI
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -179,7 +179,7 @@ void VtkClipHyperOctreeWrap::GenerateClipScalarsOn(const Nan::FunctionCallbackIn
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkClipHyperOctreeWrap::GenerateClippedOutputOff(const Nan::FunctionCallbac
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkClipHyperOctreeWrap::GenerateClippedOutputOn(const Nan::FunctionCallback
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkClipHyperOctreeWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetClipFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkClipHyperOctreeWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetClippedOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkClipHyperOctreeWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkClipHyperOctreeWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -366,7 +366,7 @@ void VtkClipHyperOctreeWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkClipHyperOctreeWrap *wrapper = ObjectWrap::Unwrap<VtkClipHyperOctreeWrap>(info.Holder());
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -407,7 +407,7 @@ void VtkClipHyperOctreeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipHyperOctreeWrap::InitPtpl();
+	VtkClipHyperOctreeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,7 +435,7 @@ void VtkClipHyperOctreeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipHyperOctreeWrap::InitPtpl();
+		VtkClipHyperOctreeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -457,7 +457,7 @@ void VtkClipHyperOctreeWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkClipHyperOctreeWrap::SetGenerateClipScalars(const Nan::FunctionCallbackI
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -495,7 +495,7 @@ void VtkClipHyperOctreeWrap::SetGenerateClippedOutput(const Nan::FunctionCallbac
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -514,7 +514,7 @@ void VtkClipHyperOctreeWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v8::Va
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkClipHyperOctreeWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -553,7 +553,7 @@ void VtkClipHyperOctreeWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkClipHyperOctree *native = (vtkClipHyperOctree *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

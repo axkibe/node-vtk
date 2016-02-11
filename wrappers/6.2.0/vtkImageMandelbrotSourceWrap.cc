@@ -62,6 +62,15 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetConstantSize", GetConstantSize);
 	Nan::SetPrototypeMethod(tpl, "getConstantSize", GetConstantSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetOriginCX", GetOriginCX);
+	Nan::SetPrototypeMethod(tpl, "getOriginCX", GetOriginCX);
+
+	Nan::SetPrototypeMethod(tpl, "GetProjectionAxes", GetProjectionAxes);
+	Nan::SetPrototypeMethod(tpl, "getProjectionAxes", GetProjectionAxes);
+
+	Nan::SetPrototypeMethod(tpl, "GetSampleCX", GetSampleCX);
+	Nan::SetPrototypeMethod(tpl, "getSampleCX", GetSampleCX);
+
 	Nan::SetPrototypeMethod(tpl, "GetSizeCX", GetSizeCX);
 	Nan::SetPrototypeMethod(tpl, "getSizeCX", GetSizeCX);
 
@@ -73,6 +82,9 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSubsampleRateMinValue", GetSubsampleRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getSubsampleRateMinValue", GetSubsampleRateMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetWholeExtent", GetWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getWholeExtent", GetWholeExtent);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -143,7 +155,7 @@ void VtkImageMandelbrotSourceWrap::ConstantSizeOff(const Nan::FunctionCallbackIn
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -155,7 +167,7 @@ void VtkImageMandelbrotSourceWrap::ConstantSizeOn(const Nan::FunctionCallbackInf
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +182,7 @@ void VtkImageMandelbrotSourceWrap::CopyOriginAndSample(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMandelbrotSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMandelbrotSourceWrap *a0 = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -211,6 +223,57 @@ void VtkImageMandelbrotSourceWrap::GetConstantSize(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageMandelbrotSourceWrap::GetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOriginCX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageMandelbrotSourceWrap::GetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProjectionAxes();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkImageMandelbrotSourceWrap::GetSampleCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSampleCX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageMandelbrotSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
@@ -225,7 +288,7 @@ void VtkImageMandelbrotSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +317,7 @@ void VtkImageMandelbrotSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -264,7 +327,17 @@ void VtkImageMandelbrotSourceWrap::GetSizeCX(const Nan::FunctionCallbackInfo<v8:
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSizeCX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageMandelbrotSourceWrap::GetSubsampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -309,6 +382,23 @@ void VtkImageMandelbrotSourceWrap::GetSubsampleRateMinValue(const Nan::FunctionC
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageMandelbrotSourceWrap::GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageMandelbrotSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
@@ -342,7 +432,7 @@ void VtkImageMandelbrotSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMandelbrotSourceWrap::InitPtpl();
+	VtkImageMandelbrotSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +454,7 @@ void VtkImageMandelbrotSourceWrap::Pan(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -397,7 +487,7 @@ void VtkImageMandelbrotSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMandelbrotSourceWrap::InitPtpl();
+		VtkImageMandelbrotSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -418,7 +508,7 @@ void VtkImageMandelbrotSourceWrap::SetConstantSize(const Nan::FunctionCallbackIn
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -445,7 +535,7 @@ void VtkImageMandelbrotSourceWrap::SetOriginCX(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +564,7 @@ void VtkImageMandelbrotSourceWrap::SetOriginCX(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +582,7 @@ void VtkImageMandelbrotSourceWrap::SetOriginCX(const Nan::FunctionCallbackInfo<v
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -525,7 +615,7 @@ void VtkImageMandelbrotSourceWrap::SetProjectionAxes(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +644,7 @@ void VtkImageMandelbrotSourceWrap::SetProjectionAxes(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -570,7 +660,7 @@ void VtkImageMandelbrotSourceWrap::SetProjectionAxes(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -601,7 +691,7 @@ void VtkImageMandelbrotSourceWrap::SetSampleCX(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +720,7 @@ void VtkImageMandelbrotSourceWrap::SetSampleCX(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +738,7 @@ void VtkImageMandelbrotSourceWrap::SetSampleCX(const Nan::FunctionCallbackInfo<v
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -679,7 +769,7 @@ void VtkImageMandelbrotSourceWrap::SetSizeCX(const Nan::FunctionCallbackInfo<v8:
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -704,7 +794,7 @@ void VtkImageMandelbrotSourceWrap::SetSubsampleRate(const Nan::FunctionCallbackI
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -731,7 +821,7 @@ void VtkImageMandelbrotSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -760,7 +850,7 @@ void VtkImageMandelbrotSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +872,7 @@ void VtkImageMandelbrotSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInf
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -811,7 +901,7 @@ void VtkImageMandelbrotSourceWrap::Zoom(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

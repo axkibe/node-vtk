@@ -211,7 +211,7 @@ void VtkTensorGlyphWrap::ClampScalingOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -223,7 +223,7 @@ void VtkTensorGlyphWrap::ClampScalingOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -235,7 +235,7 @@ void VtkTensorGlyphWrap::ColorGlyphsOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -247,7 +247,7 @@ void VtkTensorGlyphWrap::ColorGlyphsOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkTensorGlyphWrap::ExtractEigenvaluesOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkTensorGlyphWrap::ExtractEigenvaluesOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +444,7 @@ void VtkTensorGlyphWrap::GetSource(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetSource();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkTensorGlyphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkTensorGlyphWrap::InitPtpl();
+	VtkTensorGlyphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -545,7 +545,7 @@ void VtkTensorGlyphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTensorGlyphWrap::InitPtpl();
+		VtkTensorGlyphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -564,7 +564,7 @@ void VtkTensorGlyphWrap::ScalingOff(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -576,7 +576,7 @@ void VtkTensorGlyphWrap::ScalingOn(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -590,7 +590,7 @@ void VtkTensorGlyphWrap::SetClampScaling(const Nan::FunctionCallbackInfo<v8::Val
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkTensorGlyphWrap::SetColorGlyphs(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +628,7 @@ void VtkTensorGlyphWrap::SetColorMode(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +645,7 @@ void VtkTensorGlyphWrap::SetColorModeToEigenvalues(const Nan::FunctionCallbackIn
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -657,7 +657,7 @@ void VtkTensorGlyphWrap::SetColorModeToScalars(const Nan::FunctionCallbackInfo<v
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -671,7 +671,7 @@ void VtkTensorGlyphWrap::SetExtractEigenvalues(const Nan::FunctionCallbackInfo<v
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -690,7 +690,7 @@ void VtkTensorGlyphWrap::SetLength(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -709,7 +709,7 @@ void VtkTensorGlyphWrap::SetMaxScaleFactor(const Nan::FunctionCallbackInfo<v8::V
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -728,7 +728,7 @@ void VtkTensorGlyphWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -747,7 +747,7 @@ void VtkTensorGlyphWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -767,7 +767,7 @@ void VtkTensorGlyphWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +782,7 @@ void VtkTensorGlyphWrap::SetSourceConnection(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAlgorithmOutputWrap *a1 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -804,7 +804,7 @@ void VtkTensorGlyphWrap::SetSourceData(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -823,7 +823,7 @@ void VtkTensorGlyphWrap::SetSymmetric(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -842,7 +842,7 @@ void VtkTensorGlyphWrap::SetThreeGlyphs(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +859,7 @@ void VtkTensorGlyphWrap::SymmetricOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -871,7 +871,7 @@ void VtkTensorGlyphWrap::SymmetricOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -883,7 +883,7 @@ void VtkTensorGlyphWrap::ThreeGlyphsOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -895,7 +895,7 @@ void VtkTensorGlyphWrap::ThreeGlyphsOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkTensorGlyphWrap *wrapper = ObjectWrap::Unwrap<VtkTensorGlyphWrap>(info.Holder());
 	vtkTensorGlyph *native = (vtkTensorGlyph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

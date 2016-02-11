@@ -835,7 +835,7 @@ void VtkContourRepresentationWrap::ClearAllNodes(const Nan::FunctionCallbackInfo
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -847,7 +847,7 @@ void VtkContourRepresentationWrap::ClosedLoopOff(const Nan::FunctionCallbackInfo
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -859,7 +859,7 @@ void VtkContourRepresentationWrap::ClosedLoopOn(const Nan::FunctionCallbackInfo<
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1261,7 +1261,7 @@ void VtkContourRepresentationWrap::GetLineInterpolator(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetLineInterpolator();
-		VtkContourLineInterpolatorWrap::InitPtpl();
+	VtkContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1280,7 +1280,7 @@ void VtkContourRepresentationWrap::GetNodePolyData(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1662,7 +1662,7 @@ void VtkContourRepresentationWrap::GetPointPlacer(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPointPlacer();
-		VtkPointPlacerWrap::InitPtpl();
+	VtkPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1763,7 +1763,7 @@ void VtkContourRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkContourRepresentationWrap::InitPtpl();
+	VtkContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1791,7 +1791,7 @@ void VtkContourRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContourRepresentationWrap::InitPtpl();
+		VtkContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2140,7 +2140,7 @@ void VtkContourRepresentationWrap::SetClosedLoop(const Nan::FunctionCallbackInfo
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2159,7 +2159,7 @@ void VtkContourRepresentationWrap::SetCurrentOperation(const Nan::FunctionCallba
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2176,7 +2176,7 @@ void VtkContourRepresentationWrap::SetCurrentOperationToInactive(const Nan::Func
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2188,7 +2188,7 @@ void VtkContourRepresentationWrap::SetCurrentOperationToScale(const Nan::Functio
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2200,7 +2200,7 @@ void VtkContourRepresentationWrap::SetCurrentOperationToShift(const Nan::Functio
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2212,7 +2212,7 @@ void VtkContourRepresentationWrap::SetCurrentOperationToTranslate(const Nan::Fun
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2227,7 +2227,7 @@ void VtkContourRepresentationWrap::SetLineInterpolator(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContourLineInterpolatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContourLineInterpolatorWrap *a0 = ObjectWrap::Unwrap<VtkContourLineInterpolatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2612,7 +2612,7 @@ void VtkContourRepresentationWrap::SetPixelTolerance(const Nan::FunctionCallback
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2632,7 +2632,7 @@ void VtkContourRepresentationWrap::SetPointPlacer(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointPlacerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointPlacerWrap *a0 = ObjectWrap::Unwrap<VtkPointPlacerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2651,7 +2651,7 @@ void VtkContourRepresentationWrap::SetRebuildLocator(const Nan::FunctionCallback
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2670,7 +2670,7 @@ void VtkContourRepresentationWrap::SetShowSelectedNodes(const Nan::FunctionCallb
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2689,7 +2689,7 @@ void VtkContourRepresentationWrap::SetWorldTolerance(const Nan::FunctionCallback
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2706,7 +2706,7 @@ void VtkContourRepresentationWrap::ShowSelectedNodesOff(const Nan::FunctionCallb
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2718,7 +2718,7 @@ void VtkContourRepresentationWrap::ShowSelectedNodesOn(const Nan::FunctionCallba
 {
 	VtkContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info.Holder());
 	vtkContourRepresentation *native = (vtkContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

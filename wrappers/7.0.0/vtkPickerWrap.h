@@ -33,6 +33,7 @@ class VtkPickerWrap : public VtkAbstractPropPickerWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMapperPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickedPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProp3Ds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);

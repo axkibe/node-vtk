@@ -73,6 +73,9 @@ void VtkMPASReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCellArrayStatus", GetCellArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "getCellArrayStatus", GetCellArrayStatus);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenterLonRange", GetCenterLonRange);
+	Nan::SetPrototypeMethod(tpl, "getCenterLonRange", GetCenterLonRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -87,6 +90,9 @@ void VtkMPASReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLayerThickness", GetLayerThickness);
 	Nan::SetPrototypeMethod(tpl, "getLayerThickness", GetLayerThickness);
+
+	Nan::SetPrototypeMethod(tpl, "GetLayerThicknessRange", GetLayerThicknessRange);
+	Nan::SetPrototypeMethod(tpl, "getLayerThicknessRange", GetLayerThicknessRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetMaximumCells", GetMaximumCells);
 	Nan::SetPrototypeMethod(tpl, "getMaximumCells", GetMaximumCells);
@@ -129,6 +135,9 @@ void VtkMPASReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetVerticalLevel", GetVerticalLevel);
 	Nan::SetPrototypeMethod(tpl, "getVerticalLevel", GetVerticalLevel);
+
+	Nan::SetPrototypeMethod(tpl, "GetVerticalLevelRange", GetVerticalLevelRange);
+	Nan::SetPrototypeMethod(tpl, "getVerticalLevelRange", GetVerticalLevelRange);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -233,7 +242,7 @@ void VtkMPASReaderWrap::DisableAllCellArrays(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +254,7 @@ void VtkMPASReaderWrap::DisableAllPointArrays(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +266,7 @@ void VtkMPASReaderWrap::EnableAllCellArrays(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +278,7 @@ void VtkMPASReaderWrap::EnableAllPointArrays(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -288,7 +297,7 @@ void VtkMPASReaderWrap::GetAllDimensions(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetAllDimensions();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,6 +350,23 @@ void VtkMPASReaderWrap::GetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMPASReaderWrap::GetCenterLonRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
+	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenterLonRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMPASReaderWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -411,6 +437,23 @@ void VtkMPASReaderWrap::GetLayerThickness(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetLayerThickness();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMPASReaderWrap::GetLayerThicknessRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
+	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLayerThicknessRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMPASReaderWrap::GetMaximumCells(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -526,7 +569,7 @@ void VtkMPASReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkUnstructuredGridWrap::InitPtpl();
+		VtkUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -545,7 +588,7 @@ void VtkMPASReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -656,6 +699,23 @@ void VtkMPASReaderWrap::GetVerticalLevel(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkMPASReaderWrap::GetVerticalLevelRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
+	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVerticalLevelRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkMPASReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
@@ -689,7 +749,7 @@ void VtkMPASReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkMPASReaderWrap::InitPtpl();
+	VtkMPASReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -717,7 +777,7 @@ void VtkMPASReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMPASReaderWrap::InitPtpl();
+		VtkMPASReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -741,7 +801,7 @@ void VtkMPASReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::V
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -762,7 +822,7 @@ void VtkMPASReaderWrap::SetCenterLon(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +842,7 @@ void VtkMPASReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -801,7 +861,7 @@ void VtkMPASReaderWrap::SetIsAtmosphere(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -820,7 +880,7 @@ void VtkMPASReaderWrap::SetIsZeroCentered(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -839,7 +899,7 @@ void VtkMPASReaderWrap::SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +921,7 @@ void VtkMPASReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -882,7 +942,7 @@ void VtkMPASReaderWrap::SetProjectLatLon(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -901,7 +961,7 @@ void VtkMPASReaderWrap::SetShowMultilayerView(const Nan::FunctionCallbackInfo<v8
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -920,7 +980,7 @@ void VtkMPASReaderWrap::SetUseDimensionedArrayNames(const Nan::FunctionCallbackI
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -939,7 +999,7 @@ void VtkMPASReaderWrap::SetVerticalLevel(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -956,7 +1016,7 @@ void VtkMPASReaderWrap::UseDimensionedArrayNamesOff(const Nan::FunctionCallbackI
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -968,7 +1028,7 @@ void VtkMPASReaderWrap::UseDimensionedArrayNamesOn(const Nan::FunctionCallbackIn
 {
 	VtkMPASReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMPASReaderWrap>(info.Holder());
 	vtkMPASReader *native = (vtkMPASReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

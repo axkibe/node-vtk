@@ -155,7 +155,7 @@ void VtkImageLogarithmicScaleWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageLogarithmicScaleWrap::InitPtpl();
+	VtkImageLogarithmicScaleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkImageLogarithmicScaleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageLogarithmicScaleWrap::InitPtpl();
+		VtkImageLogarithmicScaleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkImageLogarithmicScaleWrap::SetConstant(const Nan::FunctionCallbackInfo<v
 	vtkImageLogarithmicScale *native = (vtkImageLogarithmicScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

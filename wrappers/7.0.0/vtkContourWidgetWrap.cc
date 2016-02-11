@@ -155,7 +155,7 @@ void VtkContourWidgetWrap::AllowNodePickingOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -167,7 +167,7 @@ void VtkContourWidgetWrap::AllowNodePickingOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -179,7 +179,7 @@ void VtkContourWidgetWrap::CloseLoop(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkContourWidgetWrap::ContinuousDrawOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkContourWidgetWrap::ContinuousDrawOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkContourWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallba
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkContourWidgetWrap::FollowCursorOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkContourWidgetWrap::FollowCursorOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContourWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkContourWidgetWrap>(info.Holder());
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +300,7 @@ void VtkContourWidgetWrap::GetContourRepresentation(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetContourRepresentation();
-		VtkContourRepresentationWrap::InitPtpl();
+	VtkContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +352,7 @@ void VtkContourWidgetWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIdListWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIdListWrap *a2 = ObjectWrap::Unwrap<VtkIdListWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -366,7 +366,7 @@ void VtkContourWidgetWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -407,7 +407,7 @@ void VtkContourWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkContourWidgetWrap::InitPtpl();
+	VtkContourWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,7 +435,7 @@ void VtkContourWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContourWidgetWrap::InitPtpl();
+		VtkContourWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -456,7 +456,7 @@ void VtkContourWidgetWrap::SetAllowNodePicking(const Nan::FunctionCallbackInfo<v
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +475,7 @@ void VtkContourWidgetWrap::SetContinuousDraw(const Nan::FunctionCallbackInfo<v8:
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +494,7 @@ void VtkContourWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +513,7 @@ void VtkContourWidgetWrap::SetFollowCursor(const Nan::FunctionCallbackInfo<v8::V
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +533,7 @@ void VtkContourWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContourRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +552,7 @@ void VtkContourWidgetWrap::SetWidgetState(const Nan::FunctionCallbackInfo<v8::Va
 	vtkContourWidget *native = (vtkContourWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

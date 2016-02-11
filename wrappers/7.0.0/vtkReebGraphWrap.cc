@@ -202,7 +202,7 @@ void VtkReebGraphWrap::CloseStream(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkReebGraphWrap *wrapper = ObjectWrap::Unwrap<VtkReebGraphWrap>(info.Holder());
 	vtkReebGraph *native = (vtkReebGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkReebGraphWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -291,7 +291,7 @@ void VtkReebGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkReebGraphWrap::InitPtpl();
+	VtkReebGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkReebGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkReebGraphWrap::InitPtpl();
+		VtkReebGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -341,7 +341,7 @@ void VtkReebGraphWrap::Set(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMutableDirectedGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMutableDirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkMutableDirectedGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -211,7 +211,7 @@ void VtkConeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -241,7 +241,7 @@ void VtkConeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& i
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -291,7 +291,7 @@ void VtkConeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& i
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +311,7 @@ void VtkConeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -415,7 +415,7 @@ void VtkConeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkConeWrap::InitPtpl();
+	VtkConeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +443,7 @@ void VtkConeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConeWrap::InitPtpl();
+		VtkConeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -464,7 +464,7 @@ void VtkConeWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkCone *native = (vtkCone *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

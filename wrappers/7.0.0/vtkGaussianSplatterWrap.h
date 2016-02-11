@@ -43,11 +43,13 @@ class VtkGaussianSplatterWrap : public VtkImageAlgorithmWrap
 		static void GetEccentricityMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEccentricityMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExponentFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNullValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactorMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

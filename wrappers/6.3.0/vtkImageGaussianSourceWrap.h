@@ -29,6 +29,7 @@ class VtkImageGaussianSourceWrap : public VtkImageAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);

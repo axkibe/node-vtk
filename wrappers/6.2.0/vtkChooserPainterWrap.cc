@@ -173,7 +173,7 @@ void VtkChooserPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkChooserPainterWrap::InitPtpl();
+	VtkChooserPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +201,7 @@ void VtkChooserPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChooserPainterWrap::InitPtpl();
+		VtkChooserPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkChooserPainterWrap::SetLinePainter(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataPainterWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkChooserPainterWrap::SetPolyPainter(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataPainterWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkChooserPainterWrap::SetStripPainter(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataPainterWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -282,7 +282,7 @@ void VtkChooserPainterWrap::SetUseLinesPainterForWireframes(const Nan::FunctionC
 	vtkChooserPainter *native = (vtkChooserPainter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkChooserPainterWrap::SetVertPainter(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataPainterWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -319,7 +319,7 @@ void VtkChooserPainterWrap::UseLinesPainterForWireframesOff(const Nan::FunctionC
 {
 	VtkChooserPainterWrap *wrapper = ObjectWrap::Unwrap<VtkChooserPainterWrap>(info.Holder());
 	vtkChooserPainter *native = (vtkChooserPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -331,7 +331,7 @@ void VtkChooserPainterWrap::UseLinesPainterForWireframesOn(const Nan::FunctionCa
 {
 	VtkChooserPainterWrap *wrapper = ObjectWrap::Unwrap<VtkChooserPainterWrap>(info.Holder());
 	vtkChooserPainter *native = (vtkChooserPainter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

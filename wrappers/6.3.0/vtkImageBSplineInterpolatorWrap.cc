@@ -129,7 +129,7 @@ void VtkImageBSplineInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -159,7 +159,7 @@ void VtkImageBSplineInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -209,7 +209,7 @@ void VtkImageBSplineInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCall
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -229,7 +229,7 @@ void VtkImageBSplineInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCall
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -347,7 +347,7 @@ void VtkImageBSplineInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageBSplineInterpolatorWrap::InitPtpl();
+	VtkImageBSplineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -375,7 +375,7 @@ void VtkImageBSplineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageBSplineInterpolatorWrap::InitPtpl();
+		VtkImageBSplineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkImageBSplineInterpolatorWrap::SetSplineDegree(const Nan::FunctionCallbac
 	vtkImageBSplineInterpolator *native = (vtkImageBSplineInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -196,7 +196,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl();
+	VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::ReleaseGraphicsResources(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -238,7 +238,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::Render(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -269,7 +269,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl();
+		VtkOpenGLProjectedTetrahedraMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::SetUseFloatingPointFrameBuffer(cons
 	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::UseFloatingPointFrameBufferOff(cons
 {
 	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
 	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkOpenGLProjectedTetrahedraMapperWrap::UseFloatingPointFrameBufferOn(const
 {
 	VtkOpenGLProjectedTetrahedraMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLProjectedTetrahedraMapperWrap>(info.Holder());
 	vtkOpenGLProjectedTetrahedraMapper *native = (vtkOpenGLProjectedTetrahedraMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

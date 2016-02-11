@@ -189,7 +189,7 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 									return;
 								}
 
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -224,7 +224,7 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 									}
 									b6[i] = a6->Get(i)->NumberValue();
 								}
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -279,7 +279,7 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 									}
 									b6[i] = a6->Get(i)->NumberValue();
 								}
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -304,7 +304,7 @@ void VtkSmartVolumeMapperWrap::CreateCanonicalView(const Nan::FunctionCallbackIn
 									return;
 								}
 
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -488,7 +488,7 @@ void VtkSmartVolumeMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkSmartVolumeMapperWrap::InitPtpl();
+	VtkSmartVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -507,7 +507,7 @@ void VtkSmartVolumeMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkSmartVolumeMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -561,7 +561,7 @@ void VtkSmartVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSmartVolumeMapperWrap::InitPtpl();
+		VtkSmartVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -582,7 +582,7 @@ void VtkSmartVolumeMapperWrap::SetInteractiveUpdateRate(const Nan::FunctionCallb
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -601,7 +601,7 @@ void VtkSmartVolumeMapperWrap::SetInterpolationMode(const Nan::FunctionCallbackI
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkSmartVolumeMapperWrap::SetInterpolationModeToCubic(const Nan::FunctionCa
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +630,7 @@ void VtkSmartVolumeMapperWrap::SetInterpolationModeToLinear(const Nan::FunctionC
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +642,7 @@ void VtkSmartVolumeMapperWrap::SetInterpolationModeToNearestNeighbor(const Nan::
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -656,7 +656,7 @@ void VtkSmartVolumeMapperWrap::SetRequestedRenderMode(const Nan::FunctionCallbac
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -673,7 +673,7 @@ void VtkSmartVolumeMapperWrap::SetRequestedRenderModeToDefault(const Nan::Functi
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -685,7 +685,7 @@ void VtkSmartVolumeMapperWrap::SetRequestedRenderModeToRayCast(const Nan::Functi
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -697,7 +697,7 @@ void VtkSmartVolumeMapperWrap::SetRequestedRenderModeToRayCastAndTexture(const N
 {
 	VtkSmartVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkSmartVolumeMapperWrap>(info.Holder());
 	vtkSmartVolumeMapper *native = (vtkSmartVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

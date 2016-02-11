@@ -167,7 +167,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeGradientsOff(const Nan::Func
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -179,7 +179,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeGradientsOn(const Nan::Funct
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeNormalsOff(const Nan::Functi
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeNormalsOn(const Nan::Functio
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeScalarsOff(const Nan::Functi
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ComputeScalarsOn(const Nan::Functio
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::GenerateTrianglesOff(const Nan::Fun
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::GenerateTrianglesOn(const Nan::Func
 {
 	VtkThreadedSynchronizedTemplates3DWrap *wrapper = ObjectWrap::Unwrap<VtkThreadedSynchronizedTemplates3DWrap>(info.Holder());
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionC
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -305,7 +305,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionC
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -320,7 +320,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::GenerateValues(const Nan::FunctionC
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -489,7 +489,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkThreadedSynchronizedTemplates3DWrap::InitPtpl();
+	VtkThreadedSynchronizedTemplates3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkThreadedSynchronizedTemplates3DWrap::InitPtpl();
+		VtkThreadedSynchronizedTemplates3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -538,7 +538,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetArrayComponent(const Nan::Functi
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +557,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetComputeGradients(const Nan::Func
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +576,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetComputeNormals(const Nan::Functi
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +595,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetComputeScalars(const Nan::Functi
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +614,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetGenerateTriangles(const Nan::Fun
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -633,7 +633,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetNumberOfContours(const Nan::Func
 	vtkThreadedSynchronizedTemplates3D *native = (vtkThreadedSynchronizedTemplates3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -654,7 +654,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::SetValue(const Nan::FunctionCallbac
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -685,7 +685,7 @@ void VtkThreadedSynchronizedTemplates3DWrap::ThreadedExecute(const Nan::Function
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkDataArrayWrap *a3 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

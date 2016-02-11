@@ -152,7 +152,7 @@ void VtkExtractSelectedFrustumWrap::CreateFrustum(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -181,7 +181,7 @@ void VtkExtractSelectedFrustumWrap::CreateFrustum(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -219,7 +219,7 @@ void VtkExtractSelectedFrustumWrap::GetClipPoints(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetClipPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkExtractSelectedFrustumWrap::GetFrustum(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetFrustum();
-		VtkPlanesWrap::InitPtpl();
+	VtkPlanesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkExtractSelectedFrustumWrap::InsideOutOff(const Nan::FunctionCallbackInfo
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkExtractSelectedFrustumWrap::InsideOutOn(const Nan::FunctionCallbackInfo<
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +367,7 @@ void VtkExtractSelectedFrustumWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractSelectedFrustumWrap::InitPtpl();
+	VtkExtractSelectedFrustumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,7 +395,7 @@ void VtkExtractSelectedFrustumWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractSelectedFrustumWrap::InitPtpl();
+		VtkExtractSelectedFrustumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -416,7 +416,7 @@ void VtkExtractSelectedFrustumWrap::SetContainingCells(const Nan::FunctionCallba
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -435,7 +435,7 @@ void VtkExtractSelectedFrustumWrap::SetFieldType(const Nan::FunctionCallbackInfo
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -455,7 +455,7 @@ void VtkExtractSelectedFrustumWrap::SetFrustum(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +474,7 @@ void VtkExtractSelectedFrustumWrap::SetInsideOut(const Nan::FunctionCallbackInfo
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -493,7 +493,7 @@ void VtkExtractSelectedFrustumWrap::SetShowBounds(const Nan::FunctionCallbackInf
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkExtractSelectedFrustumWrap::ShowBoundsOff(const Nan::FunctionCallbackInf
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -522,7 +522,7 @@ void VtkExtractSelectedFrustumWrap::ShowBoundsOn(const Nan::FunctionCallbackInfo
 {
 	VtkExtractSelectedFrustumWrap *wrapper = ObjectWrap::Unwrap<VtkExtractSelectedFrustumWrap>(info.Holder());
 	vtkExtractSelectedFrustum *native = (vtkExtractSelectedFrustum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

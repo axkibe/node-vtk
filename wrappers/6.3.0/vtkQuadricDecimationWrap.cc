@@ -209,7 +209,7 @@ void VtkQuadricDecimationWrap::AttributeErrorMetricOff(const Nan::FunctionCallba
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -221,7 +221,7 @@ void VtkQuadricDecimationWrap::AttributeErrorMetricOn(const Nan::FunctionCallbac
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -486,7 +486,7 @@ void VtkQuadricDecimationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadricDecimationWrap::InitPtpl();
+	VtkQuadricDecimationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -502,7 +502,7 @@ void VtkQuadricDecimationWrap::NormalsAttributeOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -514,7 +514,7 @@ void VtkQuadricDecimationWrap::NormalsAttributeOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -538,7 +538,7 @@ void VtkQuadricDecimationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadricDecimationWrap::InitPtpl();
+		VtkQuadricDecimationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -557,7 +557,7 @@ void VtkQuadricDecimationWrap::ScalarsAttributeOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -569,7 +569,7 @@ void VtkQuadricDecimationWrap::ScalarsAttributeOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -583,7 +583,7 @@ void VtkQuadricDecimationWrap::SetAttributeErrorMetric(const Nan::FunctionCallba
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +602,7 @@ void VtkQuadricDecimationWrap::SetNormalsAttribute(const Nan::FunctionCallbackIn
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -621,7 +621,7 @@ void VtkQuadricDecimationWrap::SetNormalsWeight(const Nan::FunctionCallbackInfo<
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -640,7 +640,7 @@ void VtkQuadricDecimationWrap::SetScalarsAttribute(const Nan::FunctionCallbackIn
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -659,7 +659,7 @@ void VtkQuadricDecimationWrap::SetScalarsWeight(const Nan::FunctionCallbackInfo<
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -678,7 +678,7 @@ void VtkQuadricDecimationWrap::SetTCoordsAttribute(const Nan::FunctionCallbackIn
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -697,7 +697,7 @@ void VtkQuadricDecimationWrap::SetTCoordsWeight(const Nan::FunctionCallbackInfo<
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -716,7 +716,7 @@ void VtkQuadricDecimationWrap::SetTargetReduction(const Nan::FunctionCallbackInf
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +735,7 @@ void VtkQuadricDecimationWrap::SetTensorsAttribute(const Nan::FunctionCallbackIn
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -754,7 +754,7 @@ void VtkQuadricDecimationWrap::SetTensorsWeight(const Nan::FunctionCallbackInfo<
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -773,7 +773,7 @@ void VtkQuadricDecimationWrap::SetVectorsAttribute(const Nan::FunctionCallbackIn
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -792,7 +792,7 @@ void VtkQuadricDecimationWrap::SetVectorsWeight(const Nan::FunctionCallbackInfo<
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -809,7 +809,7 @@ void VtkQuadricDecimationWrap::TCoordsAttributeOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -821,7 +821,7 @@ void VtkQuadricDecimationWrap::TCoordsAttributeOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -833,7 +833,7 @@ void VtkQuadricDecimationWrap::TensorsAttributeOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -845,7 +845,7 @@ void VtkQuadricDecimationWrap::TensorsAttributeOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -857,7 +857,7 @@ void VtkQuadricDecimationWrap::VectorsAttributeOff(const Nan::FunctionCallbackIn
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -869,7 +869,7 @@ void VtkQuadricDecimationWrap::VectorsAttributeOn(const Nan::FunctionCallbackInf
 {
 	VtkQuadricDecimationWrap *wrapper = ObjectWrap::Unwrap<VtkQuadricDecimationWrap>(info.Holder());
 	vtkQuadricDecimation *native = (vtkQuadricDecimation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

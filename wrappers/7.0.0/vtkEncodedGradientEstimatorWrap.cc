@@ -66,6 +66,9 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CylinderClipOn", CylinderClipOn);
 	Nan::SetPrototypeMethod(tpl, "cylinderClipOn", CylinderClipOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetBoundsClip", GetBoundsClip);
 	Nan::SetPrototypeMethod(tpl, "getBoundsClip", GetBoundsClip);
 
@@ -92,6 +95,9 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetInputData", GetInputData);
 	Nan::SetPrototypeMethod(tpl, "getInputData", GetInputData);
+
+	Nan::SetPrototypeMethod(tpl, "GetInputSize", GetInputSize);
+	Nan::SetPrototypeMethod(tpl, "getInputSize", GetInputSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfThreads", GetNumberOfThreads);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfThreads", GetNumberOfThreads);
@@ -188,7 +194,7 @@ void VtkEncodedGradientEstimatorWrap::BoundsClipOff(const Nan::FunctionCallbackI
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +206,7 @@ void VtkEncodedGradientEstimatorWrap::BoundsClipOn(const Nan::FunctionCallbackIn
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +218,7 @@ void VtkEncodedGradientEstimatorWrap::ComputeGradientMagnitudesOff(const Nan::Fu
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +230,7 @@ void VtkEncodedGradientEstimatorWrap::ComputeGradientMagnitudesOn(const Nan::Fun
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +242,7 @@ void VtkEncodedGradientEstimatorWrap::CylinderClipOff(const Nan::FunctionCallbac
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,12 +254,29 @@ void VtkEncodedGradientEstimatorWrap::CylinderClipOn(const Nan::FunctionCallback
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->CylinderClipOn();
+}
+
+void VtkEncodedGradientEstimatorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkEncodedGradientEstimatorWrap::GetBoundsClip(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -351,7 +374,7 @@ void VtkEncodedGradientEstimatorWrap::GetDirectionEncoder(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetDirectionEncoder();
-		VtkDirectionEncoderWrap::InitPtpl();
+	VtkDirectionEncoderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -403,7 +426,7 @@ void VtkEncodedGradientEstimatorWrap::GetInputData(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInputData();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,6 +436,23 @@ void VtkEncodedGradientEstimatorWrap::GetInputData(const Nan::FunctionCallbackIn
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkEncodedGradientEstimatorWrap::GetInputSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
+	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkEncodedGradientEstimatorWrap::GetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -546,7 +586,7 @@ void VtkEncodedGradientEstimatorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkEncodedGradientEstimatorWrap::InitPtpl();
+	VtkEncodedGradientEstimatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -574,7 +614,7 @@ void VtkEncodedGradientEstimatorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEncodedGradientEstimatorWrap::InitPtpl();
+		VtkEncodedGradientEstimatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -603,7 +643,7 @@ void VtkEncodedGradientEstimatorWrap::SetBounds(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -632,7 +672,7 @@ void VtkEncodedGradientEstimatorWrap::SetBounds(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -654,7 +694,7 @@ void VtkEncodedGradientEstimatorWrap::SetBounds(const Nan::FunctionCallbackInfo<
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -683,7 +723,7 @@ void VtkEncodedGradientEstimatorWrap::SetBoundsClip(const Nan::FunctionCallbackI
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -702,7 +742,7 @@ void VtkEncodedGradientEstimatorWrap::SetComputeGradientMagnitudes(const Nan::Fu
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -721,7 +761,7 @@ void VtkEncodedGradientEstimatorWrap::SetCylinderClip(const Nan::FunctionCallbac
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -741,7 +781,7 @@ void VtkEncodedGradientEstimatorWrap::SetDirectionEncoder(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDirectionEncoderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDirectionEncoderWrap *a0 = ObjectWrap::Unwrap<VtkDirectionEncoderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -761,7 +801,7 @@ void VtkEncodedGradientEstimatorWrap::SetInputData(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -780,7 +820,7 @@ void VtkEncodedGradientEstimatorWrap::SetNumberOfThreads(const Nan::FunctionCall
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -799,7 +839,7 @@ void VtkEncodedGradientEstimatorWrap::SetZeroPad(const Nan::FunctionCallbackInfo
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -816,7 +856,7 @@ void VtkEncodedGradientEstimatorWrap::Update(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -828,7 +868,7 @@ void VtkEncodedGradientEstimatorWrap::ZeroPadOff(const Nan::FunctionCallbackInfo
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -840,7 +880,7 @@ void VtkEncodedGradientEstimatorWrap::ZeroPadOn(const Nan::FunctionCallbackInfo<
 {
 	VtkEncodedGradientEstimatorWrap *wrapper = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info.Holder());
 	vtkEncodedGradientEstimator *native = (vtkEncodedGradientEstimator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -116,7 +116,7 @@ void VtkInformationStringVectorKeyWrap::Append(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -238,7 +238,7 @@ void VtkInformationStringVectorKeyWrap::MakeKey(const Nan::FunctionCallbackInfo<
 					*a1,
 					info[2]->Int32Value()
 				);
-					VtkInformationStringVectorKeyWrap::InitPtpl();
+				VtkInformationStringVectorKeyWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkInformationStringVectorKeyWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationStringVectorKeyWrap::InitPtpl();
+	VtkInformationStringVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkInformationStringVectorKeyWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationStringVectorKeyWrap::InitPtpl();
+		VtkInformationStringVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +321,7 @@ void VtkInformationStringVectorKeyWrap::Set(const Nan::FunctionCallbackInfo<v8::
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -348,7 +348,7 @@ void VtkInformationStringVectorKeyWrap::ShallowCopy(const Nan::FunctionCallbackI
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

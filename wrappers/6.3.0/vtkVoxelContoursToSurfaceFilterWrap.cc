@@ -53,6 +53,9 @@ void VtkVoxelContoursToSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMemoryLimitInBytes", GetMemoryLimitInBytes);
 	Nan::SetPrototypeMethod(tpl, "getMemoryLimitInBytes", GetMemoryLimitInBytes);
 
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -125,6 +128,23 @@ void VtkVoxelContoursToSurfaceFilterWrap::GetMemoryLimitInBytes(const Nan::Funct
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkVoxelContoursToSurfaceFilterWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVoxelContoursToSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelContoursToSurfaceFilterWrap>(info.Holder());
+	vtkVoxelContoursToSurfaceFilter *native = (vtkVoxelContoursToSurfaceFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVoxelContoursToSurfaceFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVoxelContoursToSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkVoxelContoursToSurfaceFilterWrap>(info.Holder());
@@ -158,7 +178,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkVoxelContoursToSurfaceFilterWrap::InitPtpl();
+	VtkVoxelContoursToSurfaceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +206,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVoxelContoursToSurfaceFilterWrap::InitPtpl();
+		VtkVoxelContoursToSurfaceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -207,7 +227,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SetMemoryLimitInBytes(const Nan::Funct
 	vtkVoxelContoursToSurfaceFilter *native = (vtkVoxelContoursToSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -234,7 +254,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SetSpacing(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +283,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SetSpacing(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +299,7 @@ void VtkVoxelContoursToSurfaceFilterWrap::SetSpacing(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

@@ -92,6 +92,9 @@ void VtkRuledSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPassLines", GetPassLines);
 	Nan::SetPrototypeMethod(tpl, "getPassLines", GetPassLines);
 
+	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
+	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
+
 	Nan::SetPrototypeMethod(tpl, "GetRuledMode", GetRuledMode);
 	Nan::SetPrototypeMethod(tpl, "getRuledMode", GetRuledMode);
 
@@ -188,7 +191,7 @@ void VtkRuledSurfaceFilterWrap::CloseSurfaceOff(const Nan::FunctionCallbackInfo<
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +203,7 @@ void VtkRuledSurfaceFilterWrap::CloseSurfaceOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -390,6 +393,23 @@ void VtkRuledSurfaceFilterWrap::GetPassLines(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkRuledSurfaceFilterWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
+	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolution();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkRuledSurfaceFilterWrap::GetRuledMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
@@ -479,7 +499,7 @@ void VtkRuledSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkRuledSurfaceFilterWrap::InitPtpl();
+	VtkRuledSurfaceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -495,7 +515,7 @@ void VtkRuledSurfaceFilterWrap::OrientLoopsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -507,7 +527,7 @@ void VtkRuledSurfaceFilterWrap::OrientLoopsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -519,7 +539,7 @@ void VtkRuledSurfaceFilterWrap::PassLinesOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -531,7 +551,7 @@ void VtkRuledSurfaceFilterWrap::PassLinesOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -555,7 +575,7 @@ void VtkRuledSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRuledSurfaceFilterWrap::InitPtpl();
+		VtkRuledSurfaceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -576,7 +596,7 @@ void VtkRuledSurfaceFilterWrap::SetCloseSurface(const Nan::FunctionCallbackInfo<
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +615,7 @@ void VtkRuledSurfaceFilterWrap::SetDistanceFactor(const Nan::FunctionCallbackInf
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +634,7 @@ void VtkRuledSurfaceFilterWrap::SetOffset(const Nan::FunctionCallbackInfo<v8::Va
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -633,7 +653,7 @@ void VtkRuledSurfaceFilterWrap::SetOnRatio(const Nan::FunctionCallbackInfo<v8::V
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -652,7 +672,7 @@ void VtkRuledSurfaceFilterWrap::SetOrientLoops(const Nan::FunctionCallbackInfo<v
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +691,7 @@ void VtkRuledSurfaceFilterWrap::SetPassLines(const Nan::FunctionCallbackInfo<v8:
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -698,7 +718,7 @@ void VtkRuledSurfaceFilterWrap::SetResolution(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +747,7 @@ void VtkRuledSurfaceFilterWrap::SetResolution(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -741,7 +761,7 @@ void VtkRuledSurfaceFilterWrap::SetResolution(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -762,7 +782,7 @@ void VtkRuledSurfaceFilterWrap::SetRuledMode(const Nan::FunctionCallbackInfo<v8:
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -779,7 +799,7 @@ void VtkRuledSurfaceFilterWrap::SetRuledModeToPointWalk(const Nan::FunctionCallb
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -791,7 +811,7 @@ void VtkRuledSurfaceFilterWrap::SetRuledModeToResample(const Nan::FunctionCallba
 {
 	VtkRuledSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRuledSurfaceFilterWrap>(info.Holder());
 	vtkRuledSurfaceFilter *native = (vtkRuledSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

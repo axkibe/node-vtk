@@ -142,7 +142,7 @@ void VtkChartHistogram2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartHistogram2DWrap::InitPtpl();
+	VtkChartHistogram2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -170,7 +170,7 @@ void VtkChartHistogram2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartHistogram2DWrap::InitPtpl();
+		VtkChartHistogram2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkChartHistogram2DWrap::SetTransferFunction(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -209,7 +209,7 @@ void VtkChartHistogram2DWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkChartHistogram2DWrap *wrapper = ObjectWrap::Unwrap<VtkChartHistogram2DWrap>(info.Holder());
 	vtkChartHistogram2D *native = (vtkChartHistogram2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

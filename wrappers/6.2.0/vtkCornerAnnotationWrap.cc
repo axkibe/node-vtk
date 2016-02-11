@@ -196,7 +196,7 @@ void VtkCornerAnnotationWrap::ClearAllTexts(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -211,7 +211,7 @@ void VtkCornerAnnotationWrap::CopyAllTextsFrom(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCornerAnnotationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCornerAnnotationWrap *a0 = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -249,7 +249,7 @@ void VtkCornerAnnotationWrap::GetImageActor(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetImageActor();
-		VtkImageActorWrap::InitPtpl();
+	VtkImageActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -405,7 +405,7 @@ void VtkCornerAnnotationWrap::GetTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -428,7 +428,7 @@ void VtkCornerAnnotationWrap::GetWindowLevel(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetWindowLevel();
-		VtkImageMapToWindowLevelColorsWrap::InitPtpl();
+	VtkImageMapToWindowLevelColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -487,7 +487,7 @@ void VtkCornerAnnotationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkCornerAnnotationWrap::InitPtpl();
+	VtkCornerAnnotationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -506,7 +506,7 @@ void VtkCornerAnnotationWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -601,7 +601,7 @@ void VtkCornerAnnotationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCornerAnnotationWrap::InitPtpl();
+		VtkCornerAnnotationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -623,7 +623,7 @@ void VtkCornerAnnotationWrap::SetImageActor(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageActorWrap *a0 = ObjectWrap::Unwrap<VtkImageActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -642,7 +642,7 @@ void VtkCornerAnnotationWrap::SetLevelScale(const Nan::FunctionCallbackInfo<v8::
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -661,7 +661,7 @@ void VtkCornerAnnotationWrap::SetLevelShift(const Nan::FunctionCallbackInfo<v8::
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -680,7 +680,7 @@ void VtkCornerAnnotationWrap::SetLinearFontScaleFactor(const Nan::FunctionCallba
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -699,7 +699,7 @@ void VtkCornerAnnotationWrap::SetMaximumFontSize(const Nan::FunctionCallbackInfo
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -718,7 +718,7 @@ void VtkCornerAnnotationWrap::SetMaximumLineHeight(const Nan::FunctionCallbackIn
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +737,7 @@ void VtkCornerAnnotationWrap::SetMinimumFontSize(const Nan::FunctionCallbackInfo
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -756,7 +756,7 @@ void VtkCornerAnnotationWrap::SetNonlinearFontScaleFactor(const Nan::FunctionCal
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -775,7 +775,7 @@ void VtkCornerAnnotationWrap::SetShowSliceAndImage(const Nan::FunctionCallbackIn
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -797,7 +797,7 @@ void VtkCornerAnnotationWrap::SetText(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -819,7 +819,7 @@ void VtkCornerAnnotationWrap::SetTextProperty(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -839,7 +839,7 @@ void VtkCornerAnnotationWrap::SetWindowLevel(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageMapToWindowLevelColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageMapToWindowLevelColorsWrap *a0 = ObjectWrap::Unwrap<VtkImageMapToWindowLevelColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +856,7 @@ void VtkCornerAnnotationWrap::ShowSliceAndImageOff(const Nan::FunctionCallbackIn
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -868,7 +868,7 @@ void VtkCornerAnnotationWrap::ShowSliceAndImageOn(const Nan::FunctionCallbackInf
 {
 	VtkCornerAnnotationWrap *wrapper = ObjectWrap::Unwrap<VtkCornerAnnotationWrap>(info.Holder());
 	vtkCornerAnnotation *native = (vtkCornerAnnotation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

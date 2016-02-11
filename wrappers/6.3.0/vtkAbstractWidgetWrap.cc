@@ -162,7 +162,7 @@ void VtkAbstractWidgetWrap::GetEventTranslator(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetEventTranslator();
-		VtkWidgetEventTranslatorWrap::InitPtpl();
+	VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,7 +199,7 @@ void VtkAbstractWidgetWrap::GetParent(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetParent();
-		VtkAbstractWidgetWrap::InitPtpl();
+	VtkAbstractWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkAbstractWidgetWrap::GetRepresentation(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetRepresentation();
-		VtkWidgetRepresentationWrap::InitPtpl();
+	VtkWidgetRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +302,7 @@ void VtkAbstractWidgetWrap::ManagesCursorOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -314,7 +314,7 @@ void VtkAbstractWidgetWrap::ManagesCursorOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkAbstractWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractWidgetWrap::InitPtpl();
+	VtkAbstractWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +349,7 @@ void VtkAbstractWidgetWrap::ProcessEventsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -361,7 +361,7 @@ void VtkAbstractWidgetWrap::ProcessEventsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -373,7 +373,7 @@ void VtkAbstractWidgetWrap::Render(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAbstractWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info.Holder());
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -397,7 +397,7 @@ void VtkAbstractWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractWidgetWrap::InitPtpl();
+		VtkAbstractWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -418,7 +418,7 @@ void VtkAbstractWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +437,7 @@ void VtkAbstractWidgetWrap::SetManagesCursor(const Nan::FunctionCallbackInfo<v8:
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -457,7 +457,7 @@ void VtkAbstractWidgetWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractWidgetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractWidgetWrap *a0 = ObjectWrap::Unwrap<VtkAbstractWidgetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkAbstractWidgetWrap::SetProcessEvents(const Nan::FunctionCallbackInfo<v8:
 	vtkAbstractWidget *native = (vtkAbstractWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

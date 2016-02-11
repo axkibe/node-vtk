@@ -104,7 +104,7 @@ void VtkWidgetEventTranslatorWrap::ClearEvents(const Nan::FunctionCallbackInfo<v
 {
 	VtkWidgetEventTranslatorWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetEventTranslatorWrap>(info.Holder());
 	vtkWidgetEventTranslator *native = (vtkWidgetEventTranslator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkWidgetEventTranslatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkWidgetEventTranslatorWrap::InitPtpl();
+	VtkWidgetEventTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkWidgetEventTranslatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWidgetEventTranslatorWrap::InitPtpl();
+		VtkWidgetEventTranslatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +271,7 @@ void VtkWidgetEventTranslatorWrap::SetTranslation(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

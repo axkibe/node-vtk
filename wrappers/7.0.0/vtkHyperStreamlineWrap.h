@@ -49,6 +49,7 @@ class VtkHyperStreamlineWrap : public VtkPolyDataAlgorithmWrap
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadiusMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStepLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStepLengthMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStepLengthMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

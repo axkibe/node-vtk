@@ -132,7 +132,7 @@ void VtkImageDataStreamerWrap::GetExtentTranslator(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetExtentTranslator();
-		VtkExtentTranslatorWrap::InitPtpl();
+	VtkExtentTranslatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -191,7 +191,7 @@ void VtkImageDataStreamerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDataStreamerWrap::InitPtpl();
+	VtkImageDataStreamerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkImageDataStreamerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDataStreamerWrap::InitPtpl();
+		VtkImageDataStreamerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -241,7 +241,7 @@ void VtkImageDataStreamerWrap::SetExtentTranslator(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkExtentTranslatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkExtentTranslatorWrap *a0 = ObjectWrap::Unwrap<VtkExtentTranslatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -260,7 +260,7 @@ void VtkImageDataStreamerWrap::SetNumberOfStreamDivisions(const Nan::FunctionCal
 	vtkImageDataStreamer *native = (vtkImageDataStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +279,7 @@ void VtkImageDataStreamerWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkImageDataStreamer *native = (vtkImageDataStreamer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkImageDataStreamerWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -301,7 +301,7 @@ void VtkImageDataStreamerWrap::UpdateWholeExtent(const Nan::FunctionCallbackInfo
 {
 	VtkImageDataStreamerWrap *wrapper = ObjectWrap::Unwrap<VtkImageDataStreamerWrap>(info.Holder());
 	vtkImageDataStreamer *native = (vtkImageDataStreamer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -173,7 +173,7 @@ void VtkChacoReaderWrap::GenerateEdgeWeightArraysOff(const Nan::FunctionCallback
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkChacoReaderWrap::GenerateEdgeWeightArraysOn(const Nan::FunctionCallbackI
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -197,7 +197,7 @@ void VtkChacoReaderWrap::GenerateGlobalElementIdArrayOff(const Nan::FunctionCall
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +209,7 @@ void VtkChacoReaderWrap::GenerateGlobalElementIdArrayOn(const Nan::FunctionCallb
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -221,7 +221,7 @@ void VtkChacoReaderWrap::GenerateGlobalNodeIdArrayOff(const Nan::FunctionCallbac
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -233,7 +233,7 @@ void VtkChacoReaderWrap::GenerateGlobalNodeIdArrayOn(const Nan::FunctionCallback
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +245,7 @@ void VtkChacoReaderWrap::GenerateVertexWeightArraysOff(const Nan::FunctionCallba
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +257,7 @@ void VtkChacoReaderWrap::GenerateVertexWeightArraysOn(const Nan::FunctionCallbac
 {
 	VtkChacoReaderWrap *wrapper = ObjectWrap::Unwrap<VtkChacoReaderWrap>(info.Holder());
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -522,7 +522,7 @@ void VtkChacoReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkChacoReaderWrap::InitPtpl();
+	VtkChacoReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -550,7 +550,7 @@ void VtkChacoReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChacoReaderWrap::InitPtpl();
+		VtkChacoReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -572,7 +572,7 @@ void VtkChacoReaderWrap::SetBaseName(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkChacoReaderWrap::SetGenerateEdgeWeightArrays(const Nan::FunctionCallback
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkChacoReaderWrap::SetGenerateGlobalElementIdArray(const Nan::FunctionCall
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +629,7 @@ void VtkChacoReaderWrap::SetGenerateGlobalNodeIdArray(const Nan::FunctionCallbac
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkChacoReaderWrap::SetGenerateVertexWeightArrays(const Nan::FunctionCallba
 	vtkChacoReader *native = (vtkChacoReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

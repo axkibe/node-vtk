@@ -30,8 +30,11 @@ class VtkVolumeReaderWrap : public VtkImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

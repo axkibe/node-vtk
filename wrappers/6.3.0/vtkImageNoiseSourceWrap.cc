@@ -178,7 +178,7 @@ void VtkImageNoiseSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageNoiseSourceWrap::InitPtpl();
+	VtkImageNoiseSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +206,7 @@ void VtkImageNoiseSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageNoiseSourceWrap::InitPtpl();
+		VtkImageNoiseSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -227,7 +227,7 @@ void VtkImageNoiseSourceWrap::SetMaximum(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageNoiseSource *native = (vtkImageNoiseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,7 +246,7 @@ void VtkImageNoiseSourceWrap::SetMinimum(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageNoiseSource *native = (vtkImageNoiseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -273,7 +273,7 @@ void VtkImageNoiseSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkImageNoiseSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -324,7 +324,7 @@ void VtkImageNoiseSourceWrap::SetWholeExtent(const Nan::FunctionCallbackInfo<v8:
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

@@ -102,7 +102,7 @@ void VtkObjectFactoryCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectFactoryWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectFactoryWrap *a0 = ObjectWrap::Unwrap<VtkObjectFactoryWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -140,7 +140,7 @@ void VtkObjectFactoryCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetNextItem();
-		VtkObjectFactoryWrap::InitPtpl();
+	VtkObjectFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkObjectFactoryCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkObjectFactoryCollectionWrap::InitPtpl();
+	VtkObjectFactoryCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkObjectFactoryCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkObjectFactoryCollectionWrap::InitPtpl();
+		VtkObjectFactoryCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

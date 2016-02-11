@@ -157,7 +157,7 @@ void VtkHyperOctreeCutterWrap::CreateDefaultLocator(const Nan::FunctionCallbackI
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -169,7 +169,7 @@ void VtkHyperOctreeCutterWrap::GenerateCutScalarsOff(const Nan::FunctionCallback
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkHyperOctreeCutterWrap::GenerateCutScalarsOn(const Nan::FunctionCallbackI
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkHyperOctreeCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -235,7 +235,7 @@ void VtkHyperOctreeCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -250,7 +250,7 @@ void VtkHyperOctreeCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -292,7 +292,7 @@ void VtkHyperOctreeCutterWrap::GetCutFunction(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetCutFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkHyperOctreeCutterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -465,7 +465,7 @@ void VtkHyperOctreeCutterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeCutterWrap::InitPtpl();
+	VtkHyperOctreeCutterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,7 +493,7 @@ void VtkHyperOctreeCutterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeCutterWrap::InitPtpl();
+		VtkHyperOctreeCutterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkHyperOctreeCutterWrap::SetCutFunction(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -534,7 +534,7 @@ void VtkHyperOctreeCutterWrap::SetGenerateCutScalars(const Nan::FunctionCallback
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +554,7 @@ void VtkHyperOctreeCutterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +573,7 @@ void VtkHyperOctreeCutterWrap::SetNumberOfContours(const Nan::FunctionCallbackIn
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkHyperOctreeCutterWrap::SetSortBy(const Nan::FunctionCallbackInfo<v8::Val
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +609,7 @@ void VtkHyperOctreeCutterWrap::SetSortByToSortByCell(const Nan::FunctionCallback
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -621,7 +621,7 @@ void VtkHyperOctreeCutterWrap::SetSortByToSortByValue(const Nan::FunctionCallbac
 {
 	VtkHyperOctreeCutterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeCutterWrap>(info.Holder());
 	vtkHyperOctreeCutter *native = (vtkHyperOctreeCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -637,7 +637,7 @@ void VtkHyperOctreeCutterWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

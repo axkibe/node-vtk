@@ -51,6 +51,9 @@ void VtkWarpLensWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "FillInputPortInformation", FillInputPortInformation);
 	Nan::SetPrototypeMethod(tpl, "fillInputPortInformation", FillInputPortInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -80,6 +83,9 @@ void VtkWarpLensWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetP2", GetP2);
 	Nan::SetPrototypeMethod(tpl, "getP2", GetP2);
+
+	Nan::SetPrototypeMethod(tpl, "GetPrincipalPoint", GetPrincipalPoint);
+	Nan::SetPrototypeMethod(tpl, "getPrincipalPoint", GetPrincipalPoint);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -176,6 +182,23 @@ void VtkWarpLensWrap::FillInputPortInformation(const Nan::FunctionCallbackInfo<v
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWarpLensWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWarpLensWrap *wrapper = ObjectWrap::Unwrap<VtkWarpLensWrap>(info.Holder());
+	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkWarpLensWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -318,6 +341,23 @@ void VtkWarpLensWrap::GetP2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkWarpLensWrap::GetPrincipalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWarpLensWrap *wrapper = ObjectWrap::Unwrap<VtkWarpLensWrap>(info.Holder());
+	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPrincipalPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkWarpLensWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWarpLensWrap *wrapper = ObjectWrap::Unwrap<VtkWarpLensWrap>(info.Holder());
@@ -351,7 +391,7 @@ void VtkWarpLensWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkWarpLensWrap::InitPtpl();
+	VtkWarpLensWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,7 +419,7 @@ void VtkWarpLensWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWarpLensWrap::InitPtpl();
+		VtkWarpLensWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -402,7 +442,7 @@ void VtkWarpLensWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -423,7 +463,7 @@ void VtkWarpLensWrap::SetFormatHeight(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -442,7 +482,7 @@ void VtkWarpLensWrap::SetFormatWidth(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +501,7 @@ void VtkWarpLensWrap::SetImageHeight(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -480,7 +520,7 @@ void VtkWarpLensWrap::SetImageWidth(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +539,7 @@ void VtkWarpLensWrap::SetK1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -518,7 +558,7 @@ void VtkWarpLensWrap::SetK2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -537,7 +577,7 @@ void VtkWarpLensWrap::SetKappa(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -556,7 +596,7 @@ void VtkWarpLensWrap::SetP1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -575,7 +615,7 @@ void VtkWarpLensWrap::SetP2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkWarpLens *native = (vtkWarpLens *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +642,7 @@ void VtkWarpLensWrap::SetPrincipalPoint(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +671,7 @@ void VtkWarpLensWrap::SetPrincipalPoint(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -645,7 +685,7 @@ void VtkWarpLensWrap::SetPrincipalPoint(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

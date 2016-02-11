@@ -123,7 +123,7 @@ void VtkImplicitTextureCoordsWrap::FlipTextureOff(const Nan::FunctionCallbackInf
 {
 	VtkImplicitTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitTextureCoordsWrap>(info.Holder());
 	vtkImplicitTextureCoords *native = (vtkImplicitTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -135,7 +135,7 @@ void VtkImplicitTextureCoordsWrap::FlipTextureOn(const Nan::FunctionCallbackInfo
 {
 	VtkImplicitTextureCoordsWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitTextureCoordsWrap>(info.Holder());
 	vtkImplicitTextureCoords *native = (vtkImplicitTextureCoords *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkImplicitTextureCoordsWrap::GetRFunction(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetRFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkImplicitTextureCoordsWrap::GetSFunction(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetSFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkImplicitTextureCoordsWrap::GetTFunction(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetTFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkImplicitTextureCoordsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitTextureCoordsWrap::InitPtpl();
+	VtkImplicitTextureCoordsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkImplicitTextureCoordsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitTextureCoordsWrap::InitPtpl();
+		VtkImplicitTextureCoordsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -322,7 +322,7 @@ void VtkImplicitTextureCoordsWrap::SetFlipTexture(const Nan::FunctionCallbackInf
 	vtkImplicitTextureCoords *native = (vtkImplicitTextureCoords *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkImplicitTextureCoordsWrap::SetRFunction(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +362,7 @@ void VtkImplicitTextureCoordsWrap::SetSFunction(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +382,7 @@ void VtkImplicitTextureCoordsWrap::SetTFunction(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -108,7 +108,7 @@ void VtkPassThroughWrap::DeepCopyInputOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPassThroughWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughWrap>(info.Holder());
 	vtkPassThrough *native = (vtkPassThrough *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -120,7 +120,7 @@ void VtkPassThroughWrap::DeepCopyInputOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPassThroughWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughWrap>(info.Holder());
 	vtkPassThrough *native = (vtkPassThrough *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkPassThroughWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkPassThroughWrap::InitPtpl();
+	VtkPassThroughWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkPassThroughWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPassThroughWrap::InitPtpl();
+		VtkPassThroughWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkPassThroughWrap::SetDeepCopyInput(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPassThrough *native = (vtkPassThrough *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

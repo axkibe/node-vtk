@@ -262,7 +262,7 @@ void VtkQuadraticPyramidWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkQuadraticPyramidWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -418,7 +418,7 @@ void VtkQuadraticPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -448,7 +448,7 @@ void VtkQuadraticPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -498,7 +498,7 @@ void VtkQuadraticPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -518,7 +518,7 @@ void VtkQuadraticPyramidWrap::InterpolateDerivs(const Nan::FunctionCallbackInfo<
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -556,7 +556,7 @@ void VtkQuadraticPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -586,7 +586,7 @@ void VtkQuadraticPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -636,7 +636,7 @@ void VtkQuadraticPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -656,7 +656,7 @@ void VtkQuadraticPyramidWrap::InterpolateFunctions(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -694,7 +694,7 @@ void VtkQuadraticPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -724,7 +724,7 @@ void VtkQuadraticPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -774,7 +774,7 @@ void VtkQuadraticPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -794,7 +794,7 @@ void VtkQuadraticPyramidWrap::InterpolationDerivs(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -832,7 +832,7 @@ void VtkQuadraticPyramidWrap::InterpolationFunctions(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -862,7 +862,7 @@ void VtkQuadraticPyramidWrap::InterpolationFunctions(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -912,7 +912,7 @@ void VtkQuadraticPyramidWrap::InterpolationFunctions(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -932,7 +932,7 @@ void VtkQuadraticPyramidWrap::InterpolationFunctions(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -980,7 +980,7 @@ void VtkQuadraticPyramidWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadraticPyramidWrap::InitPtpl();
+	VtkQuadraticPyramidWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1008,7 +1008,7 @@ void VtkQuadraticPyramidWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadraticPyramidWrap::InitPtpl();
+		VtkQuadraticPyramidWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

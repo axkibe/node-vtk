@@ -297,7 +297,7 @@ void VtkContextTransformWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransform2DWrap::InitPtpl();
+	VtkTransform2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -355,7 +355,7 @@ void VtkContextTransformWrap::Identity(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkContextTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextTransformWrap::InitPtpl();
+	VtkContextTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkContextTransformWrap::PanYOnMouseWheelOff(const Nan::FunctionCallbackInf
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -446,7 +446,7 @@ void VtkContextTransformWrap::PanYOnMouseWheelOn(const Nan::FunctionCallbackInfo
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -470,7 +470,7 @@ void VtkContextTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextTransformWrap::InitPtpl();
+		VtkContextTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -491,7 +491,7 @@ void VtkContextTransformWrap::SetPanModifier(const Nan::FunctionCallbackInfo<v8:
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkContextTransformWrap::SetPanMouseButton(const Nan::FunctionCallbackInfo<
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +529,7 @@ void VtkContextTransformWrap::SetPanYOnMouseWheel(const Nan::FunctionCallbackInf
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -548,7 +548,7 @@ void VtkContextTransformWrap::SetSecondaryPanModifier(const Nan::FunctionCallbac
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -567,7 +567,7 @@ void VtkContextTransformWrap::SetSecondaryPanMouseButton(const Nan::FunctionCall
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkContextTransformWrap::SetSecondaryZoomModifier(const Nan::FunctionCallba
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -605,7 +605,7 @@ void VtkContextTransformWrap::SetSecondaryZoomMouseButton(const Nan::FunctionCal
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +624,7 @@ void VtkContextTransformWrap::SetZoomModifier(const Nan::FunctionCallbackInfo<v8
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -643,7 +643,7 @@ void VtkContextTransformWrap::SetZoomMouseButton(const Nan::FunctionCallbackInfo
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -662,7 +662,7 @@ void VtkContextTransformWrap::SetZoomOnMouseWheel(const Nan::FunctionCallbackInf
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -679,7 +679,7 @@ void VtkContextTransformWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -691,7 +691,7 @@ void VtkContextTransformWrap::ZoomOnMouseWheelOff(const Nan::FunctionCallbackInf
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -703,7 +703,7 @@ void VtkContextTransformWrap::ZoomOnMouseWheelOn(const Nan::FunctionCallbackInfo
 {
 	VtkContextTransformWrap *wrapper = ObjectWrap::Unwrap<VtkContextTransformWrap>(info.Holder());
 	vtkContextTransform *native = (vtkContextTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

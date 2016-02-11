@@ -150,7 +150,7 @@ void VtkUnstructuredGridVolumeMapperWrap::GetInput(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetInput();
-		VtkUnstructuredGridBaseWrap::InitPtpl();
+	VtkUnstructuredGridBaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkUnstructuredGridVolumeMapperWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
+	VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkUnstructuredGridVolumeMapperWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
+		VtkUnstructuredGridVolumeMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetBlendMode(const Nan::FunctionCallba
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -281,7 +281,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetBlendModeToComposite(const Nan::Fun
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +293,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetBlendModeToMaximumIntensity(const N
 {
 	VtkUnstructuredGridVolumeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeMapper *native = (vtkUnstructuredGridVolumeMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetInputData(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +321,7 @@ void VtkUnstructuredGridVolumeMapperWrap::SetInputData(const Nan::FunctionCallba
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridBaseWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridBaseWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridBaseWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

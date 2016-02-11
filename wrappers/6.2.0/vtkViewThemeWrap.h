@@ -32,7 +32,10 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void CreateMellowTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateNeonTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateOceanTheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackgroundColor2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellAlphaRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,7 +45,9 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutlineColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointAlphaRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,7 +57,9 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void GetPointValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleCellLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalePointLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectedCellColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectedPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectedPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVertexLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

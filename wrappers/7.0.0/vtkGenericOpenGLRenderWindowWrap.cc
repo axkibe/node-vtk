@@ -65,6 +65,9 @@ void VtkGenericOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEventPending", GetEventPending);
 	Nan::SetPrototypeMethod(tpl, "getEventPending", GetEventPending);
 
+	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
+	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
+
 	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
 	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
 
@@ -158,7 +161,7 @@ void VtkGenericOpenGLRenderWindowWrap::CreateAWindow(const Nan::FunctionCallback
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +173,7 @@ void VtkGenericOpenGLRenderWindowWrap::DestroyWindow(const Nan::FunctionCallback
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +185,7 @@ void VtkGenericOpenGLRenderWindowWrap::Finalize(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +197,7 @@ void VtkGenericOpenGLRenderWindowWrap::Frame(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,11 +233,28 @@ void VtkGenericOpenGLRenderWindowWrap::GetEventPending(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGenericOpenGLRenderWindowWrap::GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScreenSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGenericOpenGLRenderWindowWrap::HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +316,7 @@ void VtkGenericOpenGLRenderWindowWrap::MakeCurrent(const Nan::FunctionCallbackIn
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +335,7 @@ void VtkGenericOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericOpenGLRenderWindowWrap::InitPtpl();
+	VtkGenericOpenGLRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -331,7 +351,7 @@ void VtkGenericOpenGLRenderWindowWrap::PopState(const Nan::FunctionCallbackInfo<
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +363,7 @@ void VtkGenericOpenGLRenderWindowWrap::PushState(const Nan::FunctionCallbackInfo
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +387,7 @@ void VtkGenericOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericOpenGLRenderWindowWrap::InitPtpl();
+		VtkGenericOpenGLRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -388,7 +408,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetFullScreen(const Nan::FunctionCallback
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +427,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetIsCurrent(const Nan::FunctionCallbackI
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +446,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetIsDirect(const Nan::FunctionCallbackIn
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +466,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetNextWindowInfo(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -466,7 +486,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetParentInfo(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -485,7 +505,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetSupportsOpenGL(const Nan::FunctionCall
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -505,7 +525,7 @@ void VtkGenericOpenGLRenderWindowWrap::SetWindowInfo(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -522,7 +542,7 @@ void VtkGenericOpenGLRenderWindowWrap::ShowCursor(const Nan::FunctionCallbackInf
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -534,7 +554,7 @@ void VtkGenericOpenGLRenderWindowWrap::Start(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -560,7 +580,7 @@ void VtkGenericOpenGLRenderWindowWrap::WindowRemap(const Nan::FunctionCallbackIn
 {
 	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
 	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

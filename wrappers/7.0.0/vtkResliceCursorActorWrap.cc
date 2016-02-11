@@ -133,7 +133,7 @@ void VtkResliceCursorActorWrap::GetCenterlineActor(const Nan::FunctionCallbackIn
 		r = native->GetCenterlineActor(
 			info[0]->Int32Value()
 		);
-			VtkActorWrap::InitPtpl();
+		VtkActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkResliceCursorActorWrap::GetCenterlineProperty(const Nan::FunctionCallbac
 		r = native->GetCenterlineProperty(
 			info[0]->Int32Value()
 		);
-			VtkPropertyWrap::InitPtpl();
+		VtkPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkResliceCursorActorWrap::GetCursorAlgorithm(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCursorAlgorithm();
-		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
+	VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkResliceCursorActorWrap::GetThickSlabProperty(const Nan::FunctionCallback
 		r = native->GetThickSlabProperty(
 			info[0]->Int32Value()
 		);
-			VtkPropertyWrap::InitPtpl();
+		VtkPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkResliceCursorActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorActorWrap::InitPtpl();
+	VtkResliceCursorActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkResliceCursorActorWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +362,7 @@ void VtkResliceCursorActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorActorWrap::InitPtpl();
+		VtkResliceCursorActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkResliceCursorActorWrap::SetUserMatrix(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

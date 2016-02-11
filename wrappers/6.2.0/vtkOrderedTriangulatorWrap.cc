@@ -254,7 +254,7 @@ void VtkOrderedTriangulatorWrap::InitTetraTraversal(const Nan::FunctionCallbackI
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -278,7 +278,7 @@ void VtkOrderedTriangulatorWrap::InitTriangulation(const Nan::FunctionCallbackIn
 
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +311,7 @@ void VtkOrderedTriangulatorWrap::InitTriangulation(const Nan::FunctionCallbackIn
 		}
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -337,7 +337,7 @@ void VtkOrderedTriangulatorWrap::InitTriangulation(const Nan::FunctionCallbackIn
 						{
 							if(info.Length() > 6 && info[6]->IsInt32())
 							{
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -395,7 +395,7 @@ void VtkOrderedTriangulatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkOrderedTriangulatorWrap::InitPtpl();
+	VtkOrderedTriangulatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkOrderedTriangulatorWrap::PreSortedOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -423,7 +423,7 @@ void VtkOrderedTriangulatorWrap::PreSortedOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -447,7 +447,7 @@ void VtkOrderedTriangulatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOrderedTriangulatorWrap::InitPtpl();
+		VtkOrderedTriangulatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -468,7 +468,7 @@ void VtkOrderedTriangulatorWrap::SetPreSorted(const Nan::FunctionCallbackInfo<v8
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +487,7 @@ void VtkOrderedTriangulatorWrap::SetUseTemplates(const Nan::FunctionCallbackInfo
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +506,7 @@ void VtkOrderedTriangulatorWrap::SetUseTwoSortIds(const Nan::FunctionCallbackInf
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +529,7 @@ void VtkOrderedTriangulatorWrap::TemplateTriangulate(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -550,7 +550,7 @@ void VtkOrderedTriangulatorWrap::Triangulate(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +562,7 @@ void VtkOrderedTriangulatorWrap::UseTemplatesOff(const Nan::FunctionCallbackInfo
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +574,7 @@ void VtkOrderedTriangulatorWrap::UseTemplatesOn(const Nan::FunctionCallbackInfo<
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,7 +586,7 @@ void VtkOrderedTriangulatorWrap::UseTwoSortIdsOff(const Nan::FunctionCallbackInf
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +598,7 @@ void VtkOrderedTriangulatorWrap::UseTwoSortIdsOn(const Nan::FunctionCallbackInfo
 {
 	VtkOrderedTriangulatorWrap *wrapper = ObjectWrap::Unwrap<VtkOrderedTriangulatorWrap>(info.Holder());
 	vtkOrderedTriangulator *native = (vtkOrderedTriangulator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

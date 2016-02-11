@@ -175,7 +175,7 @@ void VtkHyperTreeGridAxisCutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperTreeGridAxisCutWrap::InitPtpl();
+	VtkHyperTreeGridAxisCutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkHyperTreeGridAxisCutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperTreeGridAxisCutWrap::InitPtpl();
+		VtkHyperTreeGridAxisCutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkHyperTreeGridAxisCutWrap::SetPlaneNormalAxis(const Nan::FunctionCallback
 	vtkHyperTreeGridAxisCut *native = (vtkHyperTreeGridAxisCut *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkHyperTreeGridAxisCutWrap::SetPlanePosition(const Nan::FunctionCallbackIn
 	vtkHyperTreeGridAxisCut *native = (vtkHyperTreeGridAxisCut *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

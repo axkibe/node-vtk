@@ -51,6 +51,9 @@ void VtkSpherePuzzleArrowsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetPermutation", GetPermutation);
+	Nan::SetPrototypeMethod(tpl, "getPermutation", GetPermutation);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -109,6 +112,23 @@ void VtkSpherePuzzleArrowsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkSpherePuzzleArrowsWrap::GetPermutation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSpherePuzzleArrowsWrap *wrapper = ObjectWrap::Unwrap<VtkSpherePuzzleArrowsWrap>(info.Holder());
+	vtkSpherePuzzleArrows *native = (vtkSpherePuzzleArrows *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPermutation();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 32 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 32);
+	memcpy(ab->GetContents().Data(), r, 32 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkSpherePuzzleArrowsWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSpherePuzzleArrowsWrap *wrapper = ObjectWrap::Unwrap<VtkSpherePuzzleArrowsWrap>(info.Holder());
@@ -142,7 +162,7 @@ void VtkSpherePuzzleArrowsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpherePuzzleArrowsWrap::InitPtpl();
+	VtkSpherePuzzleArrowsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -170,7 +190,7 @@ void VtkSpherePuzzleArrowsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpherePuzzleArrowsWrap::InitPtpl();
+		VtkSpherePuzzleArrowsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -193,7 +213,7 @@ void VtkSpherePuzzleArrowsWrap::SetPermutation(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSpherePuzzleWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSpherePuzzleWrap *a0 = ObjectWrap::Unwrap<VtkSpherePuzzleWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -212,7 +232,7 @@ void VtkSpherePuzzleArrowsWrap::SetPermutation(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -241,7 +261,7 @@ void VtkSpherePuzzleArrowsWrap::SetPermutation(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -262,7 +282,7 @@ void VtkSpherePuzzleArrowsWrap::SetPermutationComponent(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

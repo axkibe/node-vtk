@@ -59,6 +59,24 @@ void VtkTextureMapToPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
+
+	Nan::SetPrototypeMethod(tpl, "GetSRange", GetSRange);
+	Nan::SetPrototypeMethod(tpl, "getSRange", GetSRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetTRange", GetTRange);
+	Nan::SetPrototypeMethod(tpl, "getTRange", GetTRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -122,7 +140,7 @@ void VtkTextureMapToPlaneWrap::AutomaticPlaneGenerationOff(const Nan::FunctionCa
 {
 	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
 	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +152,7 @@ void VtkTextureMapToPlaneWrap::AutomaticPlaneGenerationOn(const Nan::FunctionCal
 {
 	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
 	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,6 +188,108 @@ void VtkTextureMapToPlaneWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkTextureMapToPlaneWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToPlaneWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToPlaneWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToPlaneWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToPlaneWrap::GetSRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToPlaneWrap::GetTRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
+	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTextureMapToPlaneWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureMapToPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToPlaneWrap>(info.Holder());
@@ -203,7 +323,7 @@ void VtkTextureMapToPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextureMapToPlaneWrap::InitPtpl();
+	VtkTextureMapToPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -231,7 +351,7 @@ void VtkTextureMapToPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextureMapToPlaneWrap::InitPtpl();
+		VtkTextureMapToPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -252,7 +372,7 @@ void VtkTextureMapToPlaneWrap::SetAutomaticPlaneGeneration(const Nan::FunctionCa
 	vtkTextureMapToPlane *native = (vtkTextureMapToPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -279,7 +399,7 @@ void VtkTextureMapToPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -308,7 +428,7 @@ void VtkTextureMapToPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -324,7 +444,7 @@ void VtkTextureMapToPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -355,7 +475,7 @@ void VtkTextureMapToPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +504,7 @@ void VtkTextureMapToPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -400,7 +520,7 @@ void VtkTextureMapToPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -431,7 +551,7 @@ void VtkTextureMapToPlaneWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -460,7 +580,7 @@ void VtkTextureMapToPlaneWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +596,7 @@ void VtkTextureMapToPlaneWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -507,7 +627,7 @@ void VtkTextureMapToPlaneWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -536,7 +656,7 @@ void VtkTextureMapToPlaneWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +672,7 @@ void VtkTextureMapToPlaneWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -583,7 +703,7 @@ void VtkTextureMapToPlaneWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -612,7 +732,7 @@ void VtkTextureMapToPlaneWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -626,7 +746,7 @@ void VtkTextureMapToPlaneWrap::SetSRange(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -655,7 +775,7 @@ void VtkTextureMapToPlaneWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -684,7 +804,7 @@ void VtkTextureMapToPlaneWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -698,7 +818,7 @@ void VtkTextureMapToPlaneWrap::SetTRange(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

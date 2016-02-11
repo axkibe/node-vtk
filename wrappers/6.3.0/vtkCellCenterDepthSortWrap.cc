@@ -120,7 +120,7 @@ void VtkCellCenterDepthSortWrap::GetNextCells(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextCells();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -136,7 +136,7 @@ void VtkCellCenterDepthSortWrap::InitTraversal(const Nan::FunctionCallbackInfo<v
 {
 	VtkCellCenterDepthSortWrap *wrapper = ObjectWrap::Unwrap<VtkCellCenterDepthSortWrap>(info.Holder());
 	vtkCellCenterDepthSort *native = (vtkCellCenterDepthSort *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkCellCenterDepthSortWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellCenterDepthSortWrap::InitPtpl();
+	VtkCellCenterDepthSortWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkCellCenterDepthSortWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellCenterDepthSortWrap::InitPtpl();
+		VtkCellCenterDepthSortWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

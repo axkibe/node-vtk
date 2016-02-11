@@ -35,8 +35,10 @@ class VtkVolumeOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void GenerateOutlineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActivePlaneColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActivePlaneId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -191,7 +191,7 @@ void VtkXMLCompositeDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLCompositeDataWriterWrap::InitPtpl();
+	VtkXMLCompositeDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkXMLCompositeDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLCompositeDataWriterWrap::InitPtpl();
+		VtkXMLCompositeDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkXMLCompositeDataWriterWrap::SetGhostLevel(const Nan::FunctionCallbackInf
 	vtkXMLCompositeDataWriter *native = (vtkXMLCompositeDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +259,7 @@ void VtkXMLCompositeDataWriterWrap::SetWriteMetaFile(const Nan::FunctionCallback
 	vtkXMLCompositeDataWriter *native = (vtkXMLCompositeDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

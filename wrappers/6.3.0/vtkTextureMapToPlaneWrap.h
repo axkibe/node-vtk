@@ -33,6 +33,12 @@ class VtkTextureMapToPlaneWrap : public VtkDataSetAlgorithmWrap
 		static void AutomaticPlaneGenerationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticPlaneGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

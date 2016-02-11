@@ -178,7 +178,7 @@ void VtkTransformCoordinateSystemsWrap::GetViewport(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetViewport();
-		VtkViewportWrap::InitPtpl();
+	VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkTransformCoordinateSystemsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransformCoordinateSystemsWrap::InitPtpl();
+	VtkTransformCoordinateSystemsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkTransformCoordinateSystemsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransformCoordinateSystemsWrap::InitPtpl();
+		VtkTransformCoordinateSystemsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -272,7 +272,7 @@ void VtkTransformCoordinateSystemsWrap::SetInputCoordinateSystem(const Nan::Func
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkTransformCoordinateSystemsWrap::SetInputCoordinateSystemToDisplay(const 
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -301,7 +301,7 @@ void VtkTransformCoordinateSystemsWrap::SetInputCoordinateSystemToViewport(const
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -313,7 +313,7 @@ void VtkTransformCoordinateSystemsWrap::SetInputCoordinateSystemToWorld(const Na
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -327,7 +327,7 @@ void VtkTransformCoordinateSystemsWrap::SetOutputCoordinateSystem(const Nan::Fun
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkTransformCoordinateSystemsWrap::SetOutputCoordinateSystemToDisplay(const
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkTransformCoordinateSystemsWrap::SetOutputCoordinateSystemToViewport(cons
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkTransformCoordinateSystemsWrap::SetOutputCoordinateSystemToWorld(const N
 {
 	VtkTransformCoordinateSystemsWrap *wrapper = ObjectWrap::Unwrap<VtkTransformCoordinateSystemsWrap>(info.Holder());
 	vtkTransformCoordinateSystems *native = (vtkTransformCoordinateSystems *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +383,7 @@ void VtkTransformCoordinateSystemsWrap::SetViewport(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

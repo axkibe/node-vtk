@@ -33,6 +33,7 @@ class VtkWidgetRepresentationWrap : public VtkPropWrap
 		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleSizeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

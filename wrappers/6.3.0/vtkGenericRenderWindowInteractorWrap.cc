@@ -164,7 +164,7 @@ void VtkGenericRenderWindowInteractorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericRenderWindowInteractorWrap::InitPtpl();
+	VtkGenericRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkGenericRenderWindowInteractorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericRenderWindowInteractorWrap::InitPtpl();
+		VtkGenericRenderWindowInteractorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkGenericRenderWindowInteractorWrap::SetTimerEventResetsTimer(const Nan::F
 	vtkGenericRenderWindowInteractor *native = (vtkGenericRenderWindowInteractor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkGenericRenderWindowInteractorWrap::TimerEvent(const Nan::FunctionCallbac
 {
 	VtkGenericRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericRenderWindowInteractorWrap>(info.Holder());
 	vtkGenericRenderWindowInteractor *native = (vtkGenericRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +242,7 @@ void VtkGenericRenderWindowInteractorWrap::TimerEventResetsTimerOff(const Nan::F
 {
 	VtkGenericRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericRenderWindowInteractorWrap>(info.Holder());
 	vtkGenericRenderWindowInteractor *native = (vtkGenericRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -254,7 +254,7 @@ void VtkGenericRenderWindowInteractorWrap::TimerEventResetsTimerOn(const Nan::Fu
 {
 	VtkGenericRenderWindowInteractorWrap *wrapper = ObjectWrap::Unwrap<VtkGenericRenderWindowInteractorWrap>(info.Holder());
 	vtkGenericRenderWindowInteractor *native = (vtkGenericRenderWindowInteractor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

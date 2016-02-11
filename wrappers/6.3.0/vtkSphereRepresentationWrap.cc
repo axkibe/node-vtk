@@ -65,6 +65,12 @@ void VtkSphereRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetHandleDirection", GetHandleDirection);
+	Nan::SetPrototypeMethod(tpl, "getHandleDirection", GetHandleDirection);
+
+	Nan::SetPrototypeMethod(tpl, "GetHandlePosition", GetHandlePosition);
+	Nan::SetPrototypeMethod(tpl, "getHandlePosition", GetHandlePosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetHandleProperty", GetHandleProperty);
 	Nan::SetPrototypeMethod(tpl, "getHandleProperty", GetHandleProperty);
 
@@ -242,7 +248,7 @@ void VtkSphereRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbac
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +299,7 @@ void VtkSphereRepresentationWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +328,7 @@ void VtkSphereRepresentationWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -332,7 +338,17 @@ void VtkSphereRepresentationWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSphereRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -349,6 +365,40 @@ void VtkSphereRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkSphereRepresentationWrap::GetHandleDirection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
+	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHandleDirection();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkSphereRepresentationWrap::GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
+	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHandlePosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkSphereRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
@@ -360,7 +410,7 @@ void VtkSphereRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +447,7 @@ void VtkSphereRepresentationWrap::GetHandleTextProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetHandleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -444,7 +494,7 @@ void VtkSphereRepresentationWrap::GetPolyData(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +532,7 @@ void VtkSphereRepresentationWrap::GetRadialLineProperty(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRadialLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,7 +611,7 @@ void VtkSphereRepresentationWrap::GetSelectedHandleProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -584,7 +634,7 @@ void VtkSphereRepresentationWrap::GetSelectedSphereProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSelectedSphereProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -603,7 +653,7 @@ void VtkSphereRepresentationWrap::GetSphere(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSphereWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSphereWrap *a0 = ObjectWrap::Unwrap<VtkSphereWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -627,7 +677,7 @@ void VtkSphereRepresentationWrap::GetSphereProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetSphereProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -657,7 +707,7 @@ void VtkSphereRepresentationWrap::HandleTextOff(const Nan::FunctionCallbackInfo<
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -669,7 +719,7 @@ void VtkSphereRepresentationWrap::HandleTextOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -681,7 +731,7 @@ void VtkSphereRepresentationWrap::HandleVisibilityOff(const Nan::FunctionCallbac
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -693,7 +743,7 @@ void VtkSphereRepresentationWrap::HandleVisibilityOn(const Nan::FunctionCallback
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +798,7 @@ void VtkSphereRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkSphereRepresentationWrap::InitPtpl();
+	VtkSphereRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -783,7 +833,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -813,7 +863,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -863,7 +913,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -883,7 +933,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -904,7 +954,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -933,7 +983,7 @@ void VtkSphereRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -950,7 +1000,7 @@ void VtkSphereRepresentationWrap::RadialLineOff(const Nan::FunctionCallbackInfo<
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -962,7 +1012,7 @@ void VtkSphereRepresentationWrap::RadialLineOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -977,7 +1027,7 @@ void VtkSphereRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1072,7 +1122,7 @@ void VtkSphereRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSphereRepresentationWrap::InitPtpl();
+		VtkSphereRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1101,7 +1151,7 @@ void VtkSphereRepresentationWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1130,7 +1180,7 @@ void VtkSphereRepresentationWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1146,7 +1196,7 @@ void VtkSphereRepresentationWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1177,7 +1227,7 @@ void VtkSphereRepresentationWrap::SetHandleDirection(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1206,7 +1256,7 @@ void VtkSphereRepresentationWrap::SetHandleDirection(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1222,7 +1272,7 @@ void VtkSphereRepresentationWrap::SetHandleDirection(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1253,7 +1303,7 @@ void VtkSphereRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1282,7 +1332,7 @@ void VtkSphereRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1298,7 +1348,7 @@ void VtkSphereRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackI
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1321,7 +1371,7 @@ void VtkSphereRepresentationWrap::SetHandleText(const Nan::FunctionCallbackInfo<
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1340,7 +1390,7 @@ void VtkSphereRepresentationWrap::SetHandleVisibility(const Nan::FunctionCallbac
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1359,7 +1409,7 @@ void VtkSphereRepresentationWrap::SetInteractionState(const Nan::FunctionCallbac
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1378,7 +1428,7 @@ void VtkSphereRepresentationWrap::SetPhiResolution(const Nan::FunctionCallbackIn
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1397,7 +1447,7 @@ void VtkSphereRepresentationWrap::SetRadialLine(const Nan::FunctionCallbackInfo<
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1416,7 +1466,7 @@ void VtkSphereRepresentationWrap::SetRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1435,7 +1485,7 @@ void VtkSphereRepresentationWrap::SetRepresentation(const Nan::FunctionCallbackI
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1452,7 +1502,7 @@ void VtkSphereRepresentationWrap::SetRepresentationToOff(const Nan::FunctionCall
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1464,7 +1514,7 @@ void VtkSphereRepresentationWrap::SetRepresentationToSurface(const Nan::Function
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1476,7 +1526,7 @@ void VtkSphereRepresentationWrap::SetRepresentationToWireframe(const Nan::Functi
 {
 	VtkSphereRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSphereRepresentationWrap>(info.Holder());
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1490,7 +1540,7 @@ void VtkSphereRepresentationWrap::SetThetaResolution(const Nan::FunctionCallback
 	vtkSphereRepresentation *native = (vtkSphereRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1517,7 +1567,7 @@ void VtkSphereRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1546,7 +1596,7 @@ void VtkSphereRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1573,7 +1623,7 @@ void VtkSphereRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1602,7 +1652,7 @@ void VtkSphereRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

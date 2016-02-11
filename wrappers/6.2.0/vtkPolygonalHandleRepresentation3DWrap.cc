@@ -50,6 +50,9 @@ void VtkPolygonalHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
+	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -108,6 +111,23 @@ void VtkPolygonalHandleRepresentation3DWrap::GetClassName(const Nan::FunctionCal
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkPolygonalHandleRepresentation3DWrap::GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalHandleRepresentation3DWrap>(info.Holder());
+	vtkPolygonalHandleRepresentation3D *native = (vtkPolygonalHandleRepresentation3D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOffset();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPolygonalHandleRepresentation3DWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolygonalHandleRepresentation3DWrap *wrapper = ObjectWrap::Unwrap<VtkPolygonalHandleRepresentation3DWrap>(info.Holder());
@@ -141,7 +161,7 @@ void VtkPolygonalHandleRepresentation3DWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
+	VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +189,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
+		VtkPolygonalHandleRepresentation3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -198,7 +218,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SetOffset(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +247,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SetOffset(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +263,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SetOffset(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -274,7 +294,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SetWorldPosition(const Nan::Functio
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +323,7 @@ void VtkPolygonalHandleRepresentation3DWrap::SetWorldPosition(const Nan::Functio
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

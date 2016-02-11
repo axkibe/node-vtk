@@ -116,7 +116,7 @@ void VtkRectilinearGridPartitionerWrap::DuplicateNodesOff(const Nan::FunctionCal
 {
 	VtkRectilinearGridPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridPartitionerWrap>(info.Holder());
 	vtkRectilinearGridPartitioner *native = (vtkRectilinearGridPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -128,7 +128,7 @@ void VtkRectilinearGridPartitionerWrap::DuplicateNodesOn(const Nan::FunctionCall
 {
 	VtkRectilinearGridPartitionerWrap *wrapper = ObjectWrap::Unwrap<VtkRectilinearGridPartitionerWrap>(info.Holder());
 	vtkRectilinearGridPartitioner *native = (vtkRectilinearGridPartitioner *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -225,7 +225,7 @@ void VtkRectilinearGridPartitionerWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkRectilinearGridPartitionerWrap::InitPtpl();
+	VtkRectilinearGridPartitionerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkRectilinearGridPartitionerWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRectilinearGridPartitionerWrap::InitPtpl();
+		VtkRectilinearGridPartitionerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkRectilinearGridPartitionerWrap::SetDuplicateNodes(const Nan::FunctionCal
 	vtkRectilinearGridPartitioner *native = (vtkRectilinearGridPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkRectilinearGridPartitionerWrap::SetNumberOfGhostLayers(const Nan::Functi
 	vtkRectilinearGridPartitioner *native = (vtkRectilinearGridPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -312,7 +312,7 @@ void VtkRectilinearGridPartitionerWrap::SetNumberOfPartitions(const Nan::Functio
 	vtkRectilinearGridPartitioner *native = (vtkRectilinearGridPartitioner *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

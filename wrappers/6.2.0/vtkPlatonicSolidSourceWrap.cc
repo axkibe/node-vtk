@@ -224,7 +224,7 @@ void VtkPlatonicSolidSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlatonicSolidSourceWrap::InitPtpl();
+	VtkPlatonicSolidSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkPlatonicSolidSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlatonicSolidSourceWrap::InitPtpl();
+		VtkPlatonicSolidSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkPlatonicSolidSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCal
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -292,7 +292,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidType(const Nan::FunctionCallbackInfo<v8
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -309,7 +309,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidTypeToCube(const Nan::FunctionCallbackI
 {
 	VtkPlatonicSolidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPlatonicSolidSourceWrap>(info.Holder());
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -321,7 +321,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidTypeToDodecahedron(const Nan::FunctionC
 {
 	VtkPlatonicSolidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPlatonicSolidSourceWrap>(info.Holder());
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +333,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidTypeToIcosahedron(const Nan::FunctionCa
 {
 	VtkPlatonicSolidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPlatonicSolidSourceWrap>(info.Holder());
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -345,7 +345,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidTypeToOctahedron(const Nan::FunctionCal
 {
 	VtkPlatonicSolidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPlatonicSolidSourceWrap>(info.Holder());
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +357,7 @@ void VtkPlatonicSolidSourceWrap::SetSolidTypeToTetrahedron(const Nan::FunctionCa
 {
 	VtkPlatonicSolidSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPlatonicSolidSourceWrap>(info.Holder());
 	vtkPlatonicSolidSource *native = (vtkPlatonicSolidSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

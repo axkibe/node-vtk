@@ -31,9 +31,13 @@ class VtkImageExportWrap : public VtkImageAlgorithmWrap
 
 		static void Export(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageLowerLeft(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ImageLowerLeftOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

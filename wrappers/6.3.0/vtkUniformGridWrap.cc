@@ -140,7 +140,7 @@ void VtkUniformGridWrap::BlankCell(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -167,7 +167,7 @@ void VtkUniformGridWrap::BlankPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -191,7 +191,7 @@ void VtkUniformGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +237,7 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkUniformGridWrap::InitPtpl();
+			VtkUniformGridWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkUniformGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkUniformGridWrap::InitPtpl();
+		VtkUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkUniformGridWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
 	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkUniformGridWrap::NewImageDataCopy(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewImageDataCopy();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,7 +415,7 @@ void VtkUniformGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkUniformGridWrap::InitPtpl();
+	VtkUniformGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -443,7 +443,7 @@ void VtkUniformGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUniformGridWrap::InitPtpl();
+		VtkUniformGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -468,7 +468,7 @@ void VtkUniformGridWrap::UnBlankCell(const Nan::FunctionCallbackInfo<v8::Value>&
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -495,7 +495,7 @@ void VtkUniformGridWrap::UnBlankPoint(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

@@ -137,7 +137,7 @@ void VtkPolyDataToReebGraphFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutput();
-		VtkReebGraphWrap::InitPtpl();
+	VtkReebGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkPolyDataToReebGraphFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataToReebGraphFilterWrap::InitPtpl();
+	VtkPolyDataToReebGraphFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkPolyDataToReebGraphFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataToReebGraphFilterWrap::InitPtpl();
+		VtkPolyDataToReebGraphFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -231,7 +231,7 @@ void VtkPolyDataToReebGraphFilterWrap::SetFieldId(const Nan::FunctionCallbackInf
 	vtkPolyDataToReebGraphFilter *native = (vtkPolyDataToReebGraphFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

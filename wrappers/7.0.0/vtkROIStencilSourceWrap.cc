@@ -47,6 +47,9 @@ void VtkROIStencilSourceWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkROIStencilSourceWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -119,6 +122,23 @@ void VtkROIStencilSourceWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& in
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkROIStencilSourceWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
+	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkROIStencilSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -224,7 +244,7 @@ void VtkROIStencilSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkROIStencilSourceWrap::InitPtpl();
+	VtkROIStencilSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +272,7 @@ void VtkROIStencilSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkROIStencilSourceWrap::InitPtpl();
+		VtkROIStencilSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -281,7 +301,7 @@ void VtkROIStencilSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -310,7 +330,7 @@ void VtkROIStencilSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -332,7 +352,7 @@ void VtkROIStencilSourceWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Valu
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -361,7 +381,7 @@ void VtkROIStencilSourceWrap::SetShape(const Nan::FunctionCallbackInfo<v8::Value
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -378,7 +398,7 @@ void VtkROIStencilSourceWrap::SetShapeToBox(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -390,7 +410,7 @@ void VtkROIStencilSourceWrap::SetShapeToCylinderX(const Nan::FunctionCallbackInf
 {
 	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +422,7 @@ void VtkROIStencilSourceWrap::SetShapeToCylinderY(const Nan::FunctionCallbackInf
 {
 	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +434,7 @@ void VtkROIStencilSourceWrap::SetShapeToCylinderZ(const Nan::FunctionCallbackInf
 {
 	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +446,7 @@ void VtkROIStencilSourceWrap::SetShapeToEllipsoid(const Nan::FunctionCallbackInf
 {
 	VtkROIStencilSourceWrap *wrapper = ObjectWrap::Unwrap<VtkROIStencilSourceWrap>(info.Holder());
 	vtkROIStencilSource *native = (vtkROIStencilSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

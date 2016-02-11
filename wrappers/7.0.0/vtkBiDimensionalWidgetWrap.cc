@@ -120,7 +120,7 @@ void VtkBiDimensionalWidgetWrap::CreateDefaultRepresentation(const Nan::Function
 {
 	VtkBiDimensionalWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalWidgetWrap>(info.Holder());
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -139,7 +139,7 @@ void VtkBiDimensionalWidgetWrap::GetBiDimensionalRepresentation(const Nan::Funct
 		return;
 	}
 	r = native->GetBiDimensionalRepresentation();
-		VtkBiDimensionalRepresentationWrap::InitPtpl();
+	VtkBiDimensionalRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +226,7 @@ void VtkBiDimensionalWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkBiDimensionalWidgetWrap::InitPtpl();
+	VtkBiDimensionalWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -254,7 +254,7 @@ void VtkBiDimensionalWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBiDimensionalWidgetWrap::InitPtpl();
+		VtkBiDimensionalWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkBiDimensionalWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -294,7 +294,7 @@ void VtkBiDimensionalWidgetWrap::SetProcessEvents(const Nan::FunctionCallbackInf
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +314,7 @@ void VtkBiDimensionalWidgetWrap::SetRepresentation(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBiDimensionalRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBiDimensionalRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkBiDimensionalRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -331,7 +331,7 @@ void VtkBiDimensionalWidgetWrap::SetWidgetStateToManipulate(const Nan::FunctionC
 {
 	VtkBiDimensionalWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalWidgetWrap>(info.Holder());
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkBiDimensionalWidgetWrap::SetWidgetStateToStart(const Nan::FunctionCallba
 {
 	VtkBiDimensionalWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBiDimensionalWidgetWrap>(info.Holder());
 	vtkBiDimensionalWidget *native = (vtkBiDimensionalWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -135,7 +135,7 @@ void VtkMergeDataObjectFilterWrap::GetDataObject(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetDataObject();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkMergeDataObjectFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkMergeDataObjectFilterWrap::InitPtpl();
+	VtkMergeDataObjectFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkMergeDataObjectFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMergeDataObjectFilterWrap::InitPtpl();
+		VtkMergeDataObjectFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkMergeDataObjectFilterWrap::SetDataObjectInputData(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkMergeDataObjectFilterWrap::SetOutputField(const Nan::FunctionCallbackInf
 	vtkMergeDataObjectFilter *native = (vtkMergeDataObjectFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkMergeDataObjectFilterWrap::SetOutputFieldToCellDataField(const Nan::Func
 {
 	VtkMergeDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeDataObjectFilterWrap>(info.Holder());
 	vtkMergeDataObjectFilter *native = (vtkMergeDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkMergeDataObjectFilterWrap::SetOutputFieldToDataObjectField(const Nan::Fu
 {
 	VtkMergeDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeDataObjectFilterWrap>(info.Holder());
 	vtkMergeDataObjectFilter *native = (vtkMergeDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkMergeDataObjectFilterWrap::SetOutputFieldToPointDataField(const Nan::Fun
 {
 	VtkMergeDataObjectFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMergeDataObjectFilterWrap>(info.Holder());
 	vtkMergeDataObjectFilter *native = (vtkMergeDataObjectFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

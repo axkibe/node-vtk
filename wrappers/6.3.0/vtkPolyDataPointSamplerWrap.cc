@@ -152,7 +152,7 @@ void VtkPolyDataPointSamplerWrap::GenerateEdgePointsOff(const Nan::FunctionCallb
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkPolyDataPointSamplerWrap::GenerateEdgePointsOn(const Nan::FunctionCallba
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkPolyDataPointSamplerWrap::GenerateInteriorPointsOff(const Nan::FunctionC
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkPolyDataPointSamplerWrap::GenerateInteriorPointsOn(const Nan::FunctionCa
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkPolyDataPointSamplerWrap::GenerateVertexPointsOff(const Nan::FunctionCal
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkPolyDataPointSamplerWrap::GenerateVertexPointsOn(const Nan::FunctionCall
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkPolyDataPointSamplerWrap::GenerateVerticesOff(const Nan::FunctionCallbac
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkPolyDataPointSamplerWrap::GenerateVerticesOn(const Nan::FunctionCallback
 {
 	VtkPolyDataPointSamplerWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataPointSamplerWrap>(info.Holder());
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -389,7 +389,7 @@ void VtkPolyDataPointSamplerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataPointSamplerWrap::InitPtpl();
+	VtkPolyDataPointSamplerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -417,7 +417,7 @@ void VtkPolyDataPointSamplerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataPointSamplerWrap::InitPtpl();
+		VtkPolyDataPointSamplerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -438,7 +438,7 @@ void VtkPolyDataPointSamplerWrap::SetDistance(const Nan::FunctionCallbackInfo<v8
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -457,7 +457,7 @@ void VtkPolyDataPointSamplerWrap::SetGenerateEdgePoints(const Nan::FunctionCallb
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkPolyDataPointSamplerWrap::SetGenerateInteriorPoints(const Nan::FunctionC
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -495,7 +495,7 @@ void VtkPolyDataPointSamplerWrap::SetGenerateVertexPoints(const Nan::FunctionCal
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -514,7 +514,7 @@ void VtkPolyDataPointSamplerWrap::SetGenerateVertices(const Nan::FunctionCallbac
 	vtkPolyDataPointSampler *native = (vtkPolyDataPointSampler *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

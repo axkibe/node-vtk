@@ -53,6 +53,12 @@ void VtkAMRGaussianPulseSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPulseAmplitude", GetPulseAmplitude);
 	Nan::SetPrototypeMethod(tpl, "getPulseAmplitude", GetPulseAmplitude);
 
+	Nan::SetPrototypeMethod(tpl, "GetPulseOrigin", GetPulseOrigin);
+	Nan::SetPrototypeMethod(tpl, "getPulseOrigin", GetPulseOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetPulseWidth", GetPulseWidth);
+	Nan::SetPrototypeMethod(tpl, "getPulseWidth", GetPulseWidth);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -158,6 +164,40 @@ void VtkAMRGaussianPulseSourceWrap::GetPulseAmplitude(const Nan::FunctionCallbac
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAMRGaussianPulseSourceWrap::GetPulseOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRGaussianPulseSourceWrap *wrapper = ObjectWrap::Unwrap<VtkAMRGaussianPulseSourceWrap>(info.Holder());
+	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPulseOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkAMRGaussianPulseSourceWrap::GetPulseWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRGaussianPulseSourceWrap *wrapper = ObjectWrap::Unwrap<VtkAMRGaussianPulseSourceWrap>(info.Holder());
+	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPulseWidth();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkAMRGaussianPulseSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRGaussianPulseSourceWrap *wrapper = ObjectWrap::Unwrap<VtkAMRGaussianPulseSourceWrap>(info.Holder());
@@ -191,7 +231,7 @@ void VtkAMRGaussianPulseSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRGaussianPulseSourceWrap::InitPtpl();
+	VtkAMRGaussianPulseSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -219,7 +259,7 @@ void VtkAMRGaussianPulseSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRGaussianPulseSourceWrap::InitPtpl();
+		VtkAMRGaussianPulseSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -240,7 +280,7 @@ void VtkAMRGaussianPulseSourceWrap::SetDimension(const Nan::FunctionCallbackInfo
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -259,7 +299,7 @@ void VtkAMRGaussianPulseSourceWrap::SetNumberOfLevels(const Nan::FunctionCallbac
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +318,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseAmplitude(const Nan::FunctionCallbac
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +345,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseOrigin(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +374,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseOrigin(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +390,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseOrigin(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -381,7 +421,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseWidth(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -410,7 +450,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseWidth(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +466,7 @@ void VtkAMRGaussianPulseSourceWrap::SetPulseWidth(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -449,7 +489,7 @@ void VtkAMRGaussianPulseSourceWrap::SetRefinementRatio(const Nan::FunctionCallba
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +508,7 @@ void VtkAMRGaussianPulseSourceWrap::SetRootSpacing(const Nan::FunctionCallbackIn
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +527,7 @@ void VtkAMRGaussianPulseSourceWrap::SetXPulseOrigin(const Nan::FunctionCallbackI
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +546,7 @@ void VtkAMRGaussianPulseSourceWrap::SetXPulseWidth(const Nan::FunctionCallbackIn
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +565,7 @@ void VtkAMRGaussianPulseSourceWrap::SetYPulseOrigin(const Nan::FunctionCallbackI
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -544,7 +584,7 @@ void VtkAMRGaussianPulseSourceWrap::SetYPulseWidth(const Nan::FunctionCallbackIn
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -563,7 +603,7 @@ void VtkAMRGaussianPulseSourceWrap::SetZPulseOrigin(const Nan::FunctionCallbackI
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -582,7 +622,7 @@ void VtkAMRGaussianPulseSourceWrap::SetZPulseWidth(const Nan::FunctionCallbackIn
 	vtkAMRGaussianPulseSource *native = (vtkAMRGaussianPulseSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

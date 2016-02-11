@@ -273,7 +273,7 @@ void VtkOpenFOAMReaderWrap::AddDimensionsToArrayNamesOff(const Nan::FunctionCall
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkOpenFOAMReaderWrap::AddDimensionsToArrayNamesOn(const Nan::FunctionCallb
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -297,7 +297,7 @@ void VtkOpenFOAMReaderWrap::CacheMeshOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -309,7 +309,7 @@ void VtkOpenFOAMReaderWrap::CacheMeshOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkOpenFOAMReaderWrap::CreateCellToPointOff(const Nan::FunctionCallbackInfo
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -355,7 +355,7 @@ void VtkOpenFOAMReaderWrap::CreateCellToPointOn(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +367,7 @@ void VtkOpenFOAMReaderWrap::DecomposePolyhedraOff(const Nan::FunctionCallbackInf
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -379,7 +379,7 @@ void VtkOpenFOAMReaderWrap::DecomposePolyhedraOn(const Nan::FunctionCallbackInfo
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +391,7 @@ void VtkOpenFOAMReaderWrap::DisableAllCellArrays(const Nan::FunctionCallbackInfo
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -403,7 +403,7 @@ void VtkOpenFOAMReaderWrap::DisableAllLagrangianArrays(const Nan::FunctionCallba
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -415,7 +415,7 @@ void VtkOpenFOAMReaderWrap::DisableAllPatchArrays(const Nan::FunctionCallbackInf
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -427,7 +427,7 @@ void VtkOpenFOAMReaderWrap::DisableAllPointArrays(const Nan::FunctionCallbackInf
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -439,7 +439,7 @@ void VtkOpenFOAMReaderWrap::EnableAllCellArrays(const Nan::FunctionCallbackInfo<
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +451,7 @@ void VtkOpenFOAMReaderWrap::EnableAllLagrangianArrays(const Nan::FunctionCallbac
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -463,7 +463,7 @@ void VtkOpenFOAMReaderWrap::EnableAllPatchArrays(const Nan::FunctionCallbackInfo
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -475,7 +475,7 @@ void VtkOpenFOAMReaderWrap::EnableAllPointArrays(const Nan::FunctionCallbackInfo
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -848,7 +848,7 @@ void VtkOpenFOAMReaderWrap::GetTimeValues(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetTimeValues();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -886,7 +886,7 @@ void VtkOpenFOAMReaderWrap::ListTimeStepsByControlDictOff(const Nan::FunctionCal
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -898,7 +898,7 @@ void VtkOpenFOAMReaderWrap::ListTimeStepsByControlDictOn(const Nan::FunctionCall
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -938,7 +938,7 @@ void VtkOpenFOAMReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenFOAMReaderWrap::InitPtpl();
+	VtkOpenFOAMReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -954,7 +954,7 @@ void VtkOpenFOAMReaderWrap::PositionsIsIn13FormatOff(const Nan::FunctionCallback
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -966,7 +966,7 @@ void VtkOpenFOAMReaderWrap::PositionsIsIn13FormatOn(const Nan::FunctionCallbackI
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -978,7 +978,7 @@ void VtkOpenFOAMReaderWrap::ReadZonesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -990,7 +990,7 @@ void VtkOpenFOAMReaderWrap::ReadZonesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1014,7 +1014,7 @@ void VtkOpenFOAMReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenFOAMReaderWrap::InitPtpl();
+		VtkOpenFOAMReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1035,7 +1035,7 @@ void VtkOpenFOAMReaderWrap::SetAddDimensionsToArrayNames(const Nan::FunctionCall
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1054,7 @@ void VtkOpenFOAMReaderWrap::SetCacheMesh(const Nan::FunctionCallbackInfo<v8::Val
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1076,7 +1076,7 @@ void VtkOpenFOAMReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1097,7 +1097,7 @@ void VtkOpenFOAMReaderWrap::SetCreateCellToPoint(const Nan::FunctionCallbackInfo
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1116,7 +1116,7 @@ void VtkOpenFOAMReaderWrap::SetDecomposePolyhedra(const Nan::FunctionCallbackInf
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1136,7 +1136,7 @@ void VtkOpenFOAMReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1158,7 +1158,7 @@ void VtkOpenFOAMReaderWrap::SetLagrangianArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1179,7 +1179,7 @@ void VtkOpenFOAMReaderWrap::SetListTimeStepsByControlDict(const Nan::FunctionCal
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1199,7 +1199,7 @@ void VtkOpenFOAMReaderWrap::SetParent(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOpenFOAMReaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOpenFOAMReaderWrap *a0 = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1221,7 +1221,7 @@ void VtkOpenFOAMReaderWrap::SetPatchArrayStatus(const Nan::FunctionCallbackInfo<
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1245,7 +1245,7 @@ void VtkOpenFOAMReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1266,7 +1266,7 @@ void VtkOpenFOAMReaderWrap::SetPositionsIsIn13Format(const Nan::FunctionCallback
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1285,7 +1285,7 @@ void VtkOpenFOAMReaderWrap::SetReadZones(const Nan::FunctionCallbackInfo<v8::Val
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1302,7 +1302,7 @@ void VtkOpenFOAMReaderWrap::SetRefresh(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkOpenFOAMReaderWrap *wrapper = ObjectWrap::Unwrap<VtkOpenFOAMReaderWrap>(info.Holder());
 	vtkOpenFOAMReader *native = (vtkOpenFOAMReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

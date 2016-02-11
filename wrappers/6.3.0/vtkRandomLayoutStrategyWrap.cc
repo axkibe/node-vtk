@@ -60,6 +60,9 @@ void VtkRandomLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetGraphBounds", GetGraphBounds);
+	Nan::SetPrototypeMethod(tpl, "getGraphBounds", GetGraphBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetRandomSeed", GetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "getRandomSeed", GetRandomSeed);
 
@@ -138,7 +141,7 @@ void VtkRandomLayoutStrategyWrap::AutomaticBoundsComputationOff(const Nan::Funct
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -150,7 +153,7 @@ void VtkRandomLayoutStrategyWrap::AutomaticBoundsComputationOn(const Nan::Functi
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,6 +187,23 @@ void VtkRandomLayoutStrategyWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkRandomLayoutStrategyWrap::GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
+	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGraphBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRandomLayoutStrategyWrap::GetRandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -268,7 +288,7 @@ void VtkRandomLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -287,7 +307,7 @@ void VtkRandomLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkRandomLayoutStrategyWrap::InitPtpl();
+	VtkRandomLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,7 +335,7 @@ void VtkRandomLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRandomLayoutStrategyWrap::InitPtpl();
+		VtkRandomLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -336,7 +356,7 @@ void VtkRandomLayoutStrategyWrap::SetAutomaticBoundsComputation(const Nan::Funct
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -356,7 +376,7 @@ void VtkRandomLayoutStrategyWrap::SetGraph(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphWrap *a0 = ObjectWrap::Unwrap<VtkGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +403,7 @@ void VtkRandomLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +432,7 @@ void VtkRandomLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +454,7 @@ void VtkRandomLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallbackInfo
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -463,7 +483,7 @@ void VtkRandomLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallbackInfo<
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +502,7 @@ void VtkRandomLayoutStrategyWrap::SetThreeDimensionalLayout(const Nan::FunctionC
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -499,7 +519,7 @@ void VtkRandomLayoutStrategyWrap::ThreeDimensionalLayoutOff(const Nan::FunctionC
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -511,7 +531,7 @@ void VtkRandomLayoutStrategyWrap::ThreeDimensionalLayoutOn(const Nan::FunctionCa
 {
 	VtkRandomLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkRandomLayoutStrategyWrap>(info.Holder());
 	vtkRandomLayoutStrategy *native = (vtkRandomLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -111,7 +111,7 @@ void VtkCellLinksWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Value>& in
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCellArrayWrap *a1 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -122,7 +122,7 @@ void VtkCellLinksWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Value>& in
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -142,7 +142,7 @@ void VtkCellLinksWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellLinksWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellLinksWrap *a0 = ObjectWrap::Unwrap<VtkCellLinksWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -202,7 +202,7 @@ void VtkCellLinksWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellLinksWrap::InitPtpl();
+	VtkCellLinksWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkCellLinksWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkCellLinksWrap>(info.Holder());
 	vtkCellLinks *native = (vtkCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +242,7 @@ void VtkCellLinksWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellLinksWrap::InitPtpl();
+		VtkCellLinksWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkCellLinksWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellLinksWrap *wrapper = ObjectWrap::Unwrap<VtkCellLinksWrap>(info.Holder());
 	vtkCellLinks *native = (vtkCellLinks *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

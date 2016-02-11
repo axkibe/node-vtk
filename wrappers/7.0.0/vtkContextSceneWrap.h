@@ -34,6 +34,7 @@ class VtkContextSceneWrap : public VtkObjectWrap
 		static void GetBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSceneHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -125,7 +125,7 @@ void VtkArrayDataWriterWrap::BinaryOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -137,7 +137,7 @@ void VtkArrayDataWriterWrap::BinaryOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkArrayDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkArrayDataWriterWrap::InitPtpl();
+	VtkArrayDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkArrayDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArrayDataWriterWrap::InitPtpl();
+		VtkArrayDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkArrayDataWriterWrap::SetBinary(const Nan::FunctionCallbackInfo<v8::Value
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkArrayDataWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +322,7 @@ void VtkArrayDataWriterWrap::SetWriteToOutputString(const Nan::FunctionCallbackI
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -353,7 +353,7 @@ void VtkArrayDataWriterWrap::WriteToOutputStringOff(const Nan::FunctionCallbackI
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -365,7 +365,7 @@ void VtkArrayDataWriterWrap::WriteToOutputStringOn(const Nan::FunctionCallbackIn
 {
 	VtkArrayDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkArrayDataWriterWrap>(info.Holder());
 	vtkArrayDataWriter *native = (vtkArrayDataWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

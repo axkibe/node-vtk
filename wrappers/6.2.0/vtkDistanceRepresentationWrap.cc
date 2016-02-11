@@ -170,7 +170,7 @@ void VtkDistanceRepresentationWrap::BuildRepresentation(const Nan::FunctionCallb
 {
 	VtkDistanceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentationWrap>(info.Holder());
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -288,7 +288,7 @@ void VtkDistanceRepresentationWrap::GetPoint1Representation(const Nan::FunctionC
 		return;
 	}
 	r = native->GetPoint1Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkDistanceRepresentationWrap::GetPoint2Representation(const Nan::FunctionC
 		return;
 	}
 	r = native->GetPoint2Representation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -425,7 +425,7 @@ void VtkDistanceRepresentationWrap::InstantiateHandleRepresentation(const Nan::F
 {
 	VtkDistanceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentationWrap>(info.Holder());
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -466,7 +466,7 @@ void VtkDistanceRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistanceRepresentationWrap::InitPtpl();
+	VtkDistanceRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -482,7 +482,7 @@ void VtkDistanceRepresentationWrap::RulerModeOff(const Nan::FunctionCallbackInfo
 {
 	VtkDistanceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentationWrap>(info.Holder());
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -494,7 +494,7 @@ void VtkDistanceRepresentationWrap::RulerModeOn(const Nan::FunctionCallbackInfo<
 {
 	VtkDistanceRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceRepresentationWrap>(info.Holder());
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -518,7 +518,7 @@ void VtkDistanceRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistanceRepresentationWrap::InitPtpl();
+		VtkDistanceRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -540,7 +540,7 @@ void VtkDistanceRepresentationWrap::SetHandleRepresentation(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -560,7 +560,7 @@ void VtkDistanceRepresentationWrap::SetLabelFormat(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -579,7 +579,7 @@ void VtkDistanceRepresentationWrap::SetNumberOfRulerTicks(const Nan::FunctionCal
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -598,7 +598,7 @@ void VtkDistanceRepresentationWrap::SetRulerDistance(const Nan::FunctionCallback
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -617,7 +617,7 @@ void VtkDistanceRepresentationWrap::SetRulerMode(const Nan::FunctionCallbackInfo
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -636,7 +636,7 @@ void VtkDistanceRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo
 	vtkDistanceRepresentation *native = (vtkDistanceRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -663,7 +663,7 @@ void VtkDistanceRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -692,7 +692,7 @@ void VtkDistanceRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +719,7 @@ void VtkDistanceRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -748,7 +748,7 @@ void VtkDistanceRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

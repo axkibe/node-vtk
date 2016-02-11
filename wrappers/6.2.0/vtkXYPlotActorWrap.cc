@@ -178,6 +178,12 @@ void VtkXYPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLegendActor", GetLegendActor);
 	Nan::SetPrototypeMethod(tpl, "getLegendActor", GetLegendActor);
 
+	Nan::SetPrototypeMethod(tpl, "GetLegendPosition", GetLegendPosition);
+	Nan::SetPrototypeMethod(tpl, "getLegendPosition", GetLegendPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetLegendPosition2", GetLegendPosition2);
+	Nan::SetPrototypeMethod(tpl, "getLegendPosition2", GetLegendPosition2);
+
 	Nan::SetPrototypeMethod(tpl, "GetLogx", GetLogx);
 	Nan::SetPrototypeMethod(tpl, "getLogx", GetLogx);
 
@@ -204,6 +210,12 @@ void VtkXYPlotActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfYMinorTicks", GetNumberOfYMinorTicks);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfYMinorTicks", GetNumberOfYMinorTicks);
+
+	Nan::SetPrototypeMethod(tpl, "GetPlotColor", GetPlotColor);
+	Nan::SetPrototypeMethod(tpl, "getPlotColor", GetPlotColor);
+
+	Nan::SetPrototypeMethod(tpl, "GetPlotCoordinate", GetPlotCoordinate);
+	Nan::SetPrototypeMethod(tpl, "getPlotCoordinate", GetPlotCoordinate);
 
 	Nan::SetPrototypeMethod(tpl, "GetPlotCurveLines", GetPlotCurveLines);
 	Nan::SetPrototypeMethod(tpl, "getPlotCurveLines", GetPlotCurveLines);
@@ -247,14 +259,23 @@ void VtkXYPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTitle", GetTitle);
 	Nan::SetPrototypeMethod(tpl, "getTitle", GetTitle);
 
+	Nan::SetPrototypeMethod(tpl, "GetTitlePosition", GetTitlePosition);
+	Nan::SetPrototypeMethod(tpl, "getTitlePosition", GetTitlePosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetTitleTextProperty", GetTitleTextProperty);
 	Nan::SetPrototypeMethod(tpl, "getTitleTextProperty", GetTitleTextProperty);
+
+	Nan::SetPrototypeMethod(tpl, "GetViewportCoordinate", GetViewportCoordinate);
+	Nan::SetPrototypeMethod(tpl, "getViewportCoordinate", GetViewportCoordinate);
 
 	Nan::SetPrototypeMethod(tpl, "GetXAxisActor2D", GetXAxisActor2D);
 	Nan::SetPrototypeMethod(tpl, "getXAxisActor2D", GetXAxisActor2D);
 
 	Nan::SetPrototypeMethod(tpl, "GetXLabelFormat", GetXLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getXLabelFormat", GetXLabelFormat);
+
+	Nan::SetPrototypeMethod(tpl, "GetXRange", GetXRange);
+	Nan::SetPrototypeMethod(tpl, "getXRange", GetXRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetXTitle", GetXTitle);
 	Nan::SetPrototypeMethod(tpl, "getXTitle", GetXTitle);
@@ -279,6 +300,9 @@ void VtkXYPlotActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetYLabelFormat", GetYLabelFormat);
 	Nan::SetPrototypeMethod(tpl, "getYLabelFormat", GetYLabelFormat);
+
+	Nan::SetPrototypeMethod(tpl, "GetYRange", GetYRange);
+	Nan::SetPrototypeMethod(tpl, "getYRange", GetYRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetYTitle", GetYTitle);
 	Nan::SetPrototypeMethod(tpl, "getYTitle", GetYTitle);
@@ -715,7 +739,7 @@ void VtkXYPlotActorWrap::AddDataObjectInput(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -735,7 +759,7 @@ void VtkXYPlotActorWrap::AddDataObjectInputConnection(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -760,7 +784,7 @@ void VtkXYPlotActorWrap::AddDataSetInput(const Nan::FunctionCallbackInfo<v8::Val
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -773,7 +797,7 @@ void VtkXYPlotActorWrap::AddDataSetInput(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -798,7 +822,7 @@ void VtkXYPlotActorWrap::AddDataSetInputConnection(const Nan::FunctionCallbackIn
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -811,7 +835,7 @@ void VtkXYPlotActorWrap::AddDataSetInputConnection(const Nan::FunctionCallbackIn
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -834,7 +858,7 @@ void VtkXYPlotActorWrap::AddUserCurvesPoint(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -855,7 +879,7 @@ void VtkXYPlotActorWrap::AdjustTitlePositionOff(const Nan::FunctionCallbackInfo<
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -867,7 +891,7 @@ void VtkXYPlotActorWrap::AdjustTitlePositionOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -879,7 +903,7 @@ void VtkXYPlotActorWrap::ChartBorderOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -891,7 +915,7 @@ void VtkXYPlotActorWrap::ChartBorderOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -903,7 +927,7 @@ void VtkXYPlotActorWrap::ChartBoxOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -915,7 +939,7 @@ void VtkXYPlotActorWrap::ChartBoxOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -927,7 +951,7 @@ void VtkXYPlotActorWrap::ExchangeAxesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -939,7 +963,7 @@ void VtkXYPlotActorWrap::ExchangeAxesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1014,7 +1038,7 @@ void VtkXYPlotActorWrap::GetAxisLabelTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetAxisLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1037,7 +1061,7 @@ void VtkXYPlotActorWrap::GetAxisTitleTextProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetAxisTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1130,7 +1154,7 @@ void VtkXYPlotActorWrap::GetChartBoxProperty(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetChartBoxProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1321,7 +1345,7 @@ void VtkXYPlotActorWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetGlyphSource();
-		VtkGlyphSource2DWrap::InitPtpl();
+	VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1372,7 +1396,7 @@ void VtkXYPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetLegendActor();
-		VtkLegendBoxActorWrap::InitPtpl();
+	VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1382,6 +1406,40 @@ void VtkXYPlotActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkXYPlotActorWrap::GetLegendPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLegendPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkXYPlotActorWrap::GetLegendPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLegendPosition2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXYPlotActorWrap::GetLogx(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1510,6 +1568,47 @@ void VtkXYPlotActorWrap::GetNumberOfYMinorTicks(const Nan::FunctionCallbackInfo<
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkXYPlotActorWrap::GetPlotColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetPlotColor(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXYPlotActorWrap::GetPlotCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPlotCoordinate();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkXYPlotActorWrap::GetPlotCurveLines(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
@@ -1630,7 +1729,7 @@ void VtkXYPlotActorWrap::GetPlotSymbol(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->GetPlotSymbol(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1764,6 +1863,23 @@ void VtkXYPlotActorWrap::GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& in
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkXYPlotActorWrap::GetTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTitlePosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkXYPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
@@ -1775,7 +1891,7 @@ void VtkXYPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1785,6 +1901,23 @@ void VtkXYPlotActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkXYPlotActorWrap::GetViewportCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewportCoordinate();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXYPlotActorWrap::GetXAxisActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1798,7 +1931,7 @@ void VtkXYPlotActorWrap::GetXAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXAxisActor2D();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1822,6 +1955,23 @@ void VtkXYPlotActorWrap::GetXLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetXLabelFormat();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkXYPlotActorWrap::GetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetXRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXYPlotActorWrap::GetXTitle(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1919,7 +2069,7 @@ void VtkXYPlotActorWrap::GetYAxisActor2D(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetYAxisActor2D();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1943,6 +2093,23 @@ void VtkXYPlotActorWrap::GetYLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetYLabelFormat();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkXYPlotActorWrap::GetYRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
+	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetYRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXYPlotActorWrap::GetYTitle(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -2043,7 +2210,7 @@ void VtkXYPlotActorWrap::LegendOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2055,7 +2222,7 @@ void VtkXYPlotActorWrap::LegendOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2067,7 +2234,7 @@ void VtkXYPlotActorWrap::LogxOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2079,7 +2246,7 @@ void VtkXYPlotActorWrap::LogxOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2098,7 +2265,7 @@ void VtkXYPlotActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkXYPlotActorWrap::InitPtpl();
+	VtkXYPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2114,7 +2281,7 @@ void VtkXYPlotActorWrap::PlotCurveLinesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2126,7 +2293,7 @@ void VtkXYPlotActorWrap::PlotCurveLinesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2138,7 +2305,7 @@ void VtkXYPlotActorWrap::PlotCurvePointsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2150,7 +2317,7 @@ void VtkXYPlotActorWrap::PlotCurvePointsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2162,7 +2329,7 @@ void VtkXYPlotActorWrap::PlotLinesOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2174,7 +2341,7 @@ void VtkXYPlotActorWrap::PlotLinesOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2186,7 +2353,7 @@ void VtkXYPlotActorWrap::PlotPointsOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2198,7 +2365,7 @@ void VtkXYPlotActorWrap::PlotPointsOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2213,7 +2380,7 @@ void VtkXYPlotActorWrap::PlotToViewportCoordinate(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2233,7 +2400,7 @@ void VtkXYPlotActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2250,7 +2417,7 @@ void VtkXYPlotActorWrap::RemoveAllActiveCurves(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2262,7 +2429,7 @@ void VtkXYPlotActorWrap::RemoveAllDataSetInputConnections(const Nan::FunctionCal
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2277,7 +2444,7 @@ void VtkXYPlotActorWrap::RemoveDataObjectInput(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2297,7 +2464,7 @@ void VtkXYPlotActorWrap::RemoveDataObjectInputConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2322,7 +2489,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInput(const Nan::FunctionCallbackInfo<v8::
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2335,7 +2502,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInput(const Nan::FunctionCallbackInfo<v8::
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2360,7 +2527,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInputConnection(const Nan::FunctionCallbac
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2373,7 +2540,7 @@ void VtkXYPlotActorWrap::RemoveDataSetInputConnection(const Nan::FunctionCallbac
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2456,7 +2623,7 @@ void VtkXYPlotActorWrap::ReverseXAxisOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2468,7 +2635,7 @@ void VtkXYPlotActorWrap::ReverseXAxisOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2480,7 +2647,7 @@ void VtkXYPlotActorWrap::ReverseYAxisOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2492,7 +2659,7 @@ void VtkXYPlotActorWrap::ReverseYAxisOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2516,7 +2683,7 @@ void VtkXYPlotActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXYPlotActorWrap::InitPtpl();
+		VtkXYPlotActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2537,7 +2704,7 @@ void VtkXYPlotActorWrap::SetAdjustTitlePosition(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2556,7 +2723,7 @@ void VtkXYPlotActorWrap::SetAdjustTitlePositionMode(const Nan::FunctionCallbackI
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2575,7 +2742,7 @@ void VtkXYPlotActorWrap::SetAdjustXLabels(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2594,7 +2761,7 @@ void VtkXYPlotActorWrap::SetAdjustYLabels(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2613,7 +2780,7 @@ void VtkXYPlotActorWrap::SetAxisLabelBold(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2636,7 +2803,7 @@ void VtkXYPlotActorWrap::SetAxisLabelColor(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2659,7 +2826,7 @@ void VtkXYPlotActorWrap::SetAxisLabelFontFamily(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2678,7 +2845,7 @@ void VtkXYPlotActorWrap::SetAxisLabelFontSize(const Nan::FunctionCallbackInfo<v8
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2697,7 +2864,7 @@ void VtkXYPlotActorWrap::SetAxisLabelItalic(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2716,7 +2883,7 @@ void VtkXYPlotActorWrap::SetAxisLabelJustification(const Nan::FunctionCallbackIn
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2735,7 +2902,7 @@ void VtkXYPlotActorWrap::SetAxisLabelShadow(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2755,7 +2922,7 @@ void VtkXYPlotActorWrap::SetAxisLabelTextProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2774,7 +2941,7 @@ void VtkXYPlotActorWrap::SetAxisLabelVerticalJustification(const Nan::FunctionCa
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2793,7 +2960,7 @@ void VtkXYPlotActorWrap::SetAxisTitleBold(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2816,7 +2983,7 @@ void VtkXYPlotActorWrap::SetAxisTitleColor(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2839,7 +3006,7 @@ void VtkXYPlotActorWrap::SetAxisTitleFontFamily(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2858,7 +3025,7 @@ void VtkXYPlotActorWrap::SetAxisTitleFontSize(const Nan::FunctionCallbackInfo<v8
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2877,7 +3044,7 @@ void VtkXYPlotActorWrap::SetAxisTitleItalic(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2896,7 +3063,7 @@ void VtkXYPlotActorWrap::SetAxisTitleJustification(const Nan::FunctionCallbackIn
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2915,7 +3082,7 @@ void VtkXYPlotActorWrap::SetAxisTitleShadow(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2935,7 +3102,7 @@ void VtkXYPlotActorWrap::SetAxisTitleTextProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2954,7 +3121,7 @@ void VtkXYPlotActorWrap::SetAxisTitleVerticalJustification(const Nan::FunctionCa
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2973,7 +3140,7 @@ void VtkXYPlotActorWrap::SetBorder(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2992,7 +3159,7 @@ void VtkXYPlotActorWrap::SetChartBorder(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3011,7 +3178,7 @@ void VtkXYPlotActorWrap::SetChartBox(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3030,7 +3197,7 @@ void VtkXYPlotActorWrap::SetDataObjectPlotMode(const Nan::FunctionCallbackInfo<v
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3047,7 +3214,7 @@ void VtkXYPlotActorWrap::SetDataObjectPlotModeToColumns(const Nan::FunctionCallb
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3059,7 +3226,7 @@ void VtkXYPlotActorWrap::SetDataObjectPlotModeToRows(const Nan::FunctionCallback
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3075,7 +3242,7 @@ void VtkXYPlotActorWrap::SetDataObjectXComponent(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3098,7 +3265,7 @@ void VtkXYPlotActorWrap::SetDataObjectYComponent(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3119,7 +3286,7 @@ void VtkXYPlotActorWrap::SetExchangeAxes(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3138,7 +3305,7 @@ void VtkXYPlotActorWrap::SetGlyphSize(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3158,7 +3325,7 @@ void VtkXYPlotActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3177,7 +3344,7 @@ void VtkXYPlotActorWrap::SetLegend(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3200,7 +3367,7 @@ void VtkXYPlotActorWrap::SetLegendBackgroundColor(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3223,7 +3390,7 @@ void VtkXYPlotActorWrap::SetLegendBorder(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3242,7 +3409,7 @@ void VtkXYPlotActorWrap::SetLegendBox(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3269,7 +3436,7 @@ void VtkXYPlotActorWrap::SetLegendPosition(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3298,7 +3465,7 @@ void VtkXYPlotActorWrap::SetLegendPosition(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3312,7 +3479,7 @@ void VtkXYPlotActorWrap::SetLegendPosition(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3341,7 +3508,7 @@ void VtkXYPlotActorWrap::SetLegendPosition2(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3370,7 +3537,7 @@ void VtkXYPlotActorWrap::SetLegendPosition2(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3384,7 +3551,7 @@ void VtkXYPlotActorWrap::SetLegendPosition2(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3405,7 +3572,7 @@ void VtkXYPlotActorWrap::SetLegendUseBackground(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3424,7 +3591,7 @@ void VtkXYPlotActorWrap::SetLineWidth(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3443,7 +3610,7 @@ void VtkXYPlotActorWrap::SetLogx(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3462,7 +3629,7 @@ void VtkXYPlotActorWrap::SetNumberOfLabels(const Nan::FunctionCallbackInfo<v8::V
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3481,7 +3648,7 @@ void VtkXYPlotActorWrap::SetNumberOfXLabels(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3500,7 +3667,7 @@ void VtkXYPlotActorWrap::SetNumberOfXMinorTicks(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3519,7 +3686,7 @@ void VtkXYPlotActorWrap::SetNumberOfYLabels(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3538,7 +3705,7 @@ void VtkXYPlotActorWrap::SetNumberOfYMinorTicks(const Nan::FunctionCallbackInfo<
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3567,7 +3734,7 @@ void VtkXYPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Value>
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3597,7 +3764,7 @@ void VtkXYPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Value>
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3614,7 +3781,7 @@ void VtkXYPlotActorWrap::SetPlotColor(const Nan::FunctionCallbackInfo<v8::Value>
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3647,7 +3814,7 @@ void VtkXYPlotActorWrap::SetPlotCoordinate(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3676,7 +3843,7 @@ void VtkXYPlotActorWrap::SetPlotCoordinate(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3690,7 +3857,7 @@ void VtkXYPlotActorWrap::SetPlotCoordinate(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3711,7 +3878,7 @@ void VtkXYPlotActorWrap::SetPlotCurveLines(const Nan::FunctionCallbackInfo<v8::V
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3730,7 +3897,7 @@ void VtkXYPlotActorWrap::SetPlotCurvePoints(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3751,7 +3918,7 @@ void VtkXYPlotActorWrap::SetPlotGlyphType(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3775,7 +3942,7 @@ void VtkXYPlotActorWrap::SetPlotLabel(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3798,7 +3965,7 @@ void VtkXYPlotActorWrap::SetPlotLines(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3809,7 +3976,7 @@ void VtkXYPlotActorWrap::SetPlotLines(const Nan::FunctionCallbackInfo<v8::Value>
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3830,7 +3997,7 @@ void VtkXYPlotActorWrap::SetPlotPoints(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3841,7 +4008,7 @@ void VtkXYPlotActorWrap::SetPlotPoints(const Nan::FunctionCallbackInfo<v8::Value
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3866,7 +4033,7 @@ void VtkXYPlotActorWrap::SetPlotRange(const Nan::FunctionCallbackInfo<v8::Value>
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3894,7 +4061,7 @@ void VtkXYPlotActorWrap::SetPlotSymbol(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPolyDataWrap *a1 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3917,7 +4084,7 @@ void VtkXYPlotActorWrap::SetPointComponent(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3938,7 +4105,7 @@ void VtkXYPlotActorWrap::SetReferenceXValue(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3957,7 +4124,7 @@ void VtkXYPlotActorWrap::SetReferenceYValue(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3976,7 +4143,7 @@ void VtkXYPlotActorWrap::SetReverseXAxis(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3995,7 +4162,7 @@ void VtkXYPlotActorWrap::SetReverseYAxis(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4014,7 +4181,7 @@ void VtkXYPlotActorWrap::SetShowReferenceXLine(const Nan::FunctionCallbackInfo<v
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4033,7 +4200,7 @@ void VtkXYPlotActorWrap::SetShowReferenceYLine(const Nan::FunctionCallbackInfo<v
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4053,7 +4220,7 @@ void VtkXYPlotActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4072,7 +4239,7 @@ void VtkXYPlotActorWrap::SetTitleBold(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4095,7 +4262,7 @@ void VtkXYPlotActorWrap::SetTitleColor(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -4118,7 +4285,7 @@ void VtkXYPlotActorWrap::SetTitleFontFamily(const Nan::FunctionCallbackInfo<v8::
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4137,7 +4304,7 @@ void VtkXYPlotActorWrap::SetTitleFontSize(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4156,7 +4323,7 @@ void VtkXYPlotActorWrap::SetTitleItalic(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4175,7 +4342,7 @@ void VtkXYPlotActorWrap::SetTitleJustification(const Nan::FunctionCallbackInfo<v
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4202,7 +4369,7 @@ void VtkXYPlotActorWrap::SetTitlePosition(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4231,7 +4398,7 @@ void VtkXYPlotActorWrap::SetTitlePosition(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4245,7 +4412,7 @@ void VtkXYPlotActorWrap::SetTitlePosition(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4266,7 +4433,7 @@ void VtkXYPlotActorWrap::SetTitleShadow(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4286,7 +4453,7 @@ void VtkXYPlotActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4305,7 +4472,7 @@ void VtkXYPlotActorWrap::SetTitleVerticalJustification(const Nan::FunctionCallba
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4332,7 +4499,7 @@ void VtkXYPlotActorWrap::SetViewportCoordinate(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4361,7 +4528,7 @@ void VtkXYPlotActorWrap::SetViewportCoordinate(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4375,7 +4542,7 @@ void VtkXYPlotActorWrap::SetViewportCoordinate(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4400,7 +4567,7 @@ void VtkXYPlotActorWrap::SetXAxisColor(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -4424,7 +4591,7 @@ void VtkXYPlotActorWrap::SetXLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4451,7 +4618,7 @@ void VtkXYPlotActorWrap::SetXRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4480,7 +4647,7 @@ void VtkXYPlotActorWrap::SetXRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4494,7 +4661,7 @@ void VtkXYPlotActorWrap::SetXRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4516,7 +4683,7 @@ void VtkXYPlotActorWrap::SetXTitle(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4535,7 +4702,7 @@ void VtkXYPlotActorWrap::SetXTitlePosition(const Nan::FunctionCallbackInfo<v8::V
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4554,7 +4721,7 @@ void VtkXYPlotActorWrap::SetXValues(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4571,7 +4738,7 @@ void VtkXYPlotActorWrap::SetXValuesToArcLength(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4583,7 +4750,7 @@ void VtkXYPlotActorWrap::SetXValuesToIndex(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4595,7 +4762,7 @@ void VtkXYPlotActorWrap::SetXValuesToNormalizedArcLength(const Nan::FunctionCall
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4607,7 +4774,7 @@ void VtkXYPlotActorWrap::SetXValuesToValue(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4625,7 +4792,7 @@ void VtkXYPlotActorWrap::SetYAxisColor(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -4649,7 +4816,7 @@ void VtkXYPlotActorWrap::SetYLabelFormat(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4676,7 +4843,7 @@ void VtkXYPlotActorWrap::SetYRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4705,7 +4872,7 @@ void VtkXYPlotActorWrap::SetYRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4719,7 +4886,7 @@ void VtkXYPlotActorWrap::SetYRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4741,7 +4908,7 @@ void VtkXYPlotActorWrap::SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4760,7 +4927,7 @@ void VtkXYPlotActorWrap::SetYTitlePosition(const Nan::FunctionCallbackInfo<v8::V
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4777,7 +4944,7 @@ void VtkXYPlotActorWrap::SetYTitlePositionToHCenter(const Nan::FunctionCallbackI
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4789,7 +4956,7 @@ void VtkXYPlotActorWrap::SetYTitlePositionToTop(const Nan::FunctionCallbackInfo<
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4801,7 +4968,7 @@ void VtkXYPlotActorWrap::SetYTitlePositionToVCenter(const Nan::FunctionCallbackI
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4813,7 +4980,7 @@ void VtkXYPlotActorWrap::ShowReferenceXLineOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4825,7 +4992,7 @@ void VtkXYPlotActorWrap::ShowReferenceXLineOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4837,7 +5004,7 @@ void VtkXYPlotActorWrap::ShowReferenceYLineOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4849,7 +5016,7 @@ void VtkXYPlotActorWrap::ShowReferenceYLineOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXYPlotActorWrap *wrapper = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info.Holder());
 	vtkXYPlotActor *native = (vtkXYPlotActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4864,7 +5031,7 @@ void VtkXYPlotActorWrap::ViewportToPlotCoordinate(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

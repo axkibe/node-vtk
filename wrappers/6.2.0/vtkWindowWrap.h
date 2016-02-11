@@ -41,6 +41,10 @@ class VtkWindowWrap : public VtkObjectWrap
 		static void GetErase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapped(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffScreenRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTileScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTileViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);

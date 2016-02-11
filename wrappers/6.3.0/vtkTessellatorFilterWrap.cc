@@ -253,7 +253,7 @@ void VtkTessellatorFilterWrap::GetSubdivider(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetSubdivider();
-		VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
+	VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkTessellatorFilterWrap::GetTessellator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTessellator();
-		VtkStreamingTessellatorWrap::InitPtpl();
+	VtkStreamingTessellatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkTessellatorFilterWrap::MergePointsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -326,7 +326,7 @@ void VtkTessellatorFilterWrap::MergePointsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -345,7 +345,7 @@ void VtkTessellatorFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTessellatorFilterWrap::InitPtpl();
+	VtkTessellatorFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -361,7 +361,7 @@ void VtkTessellatorFilterWrap::ResetFieldCriteria(const Nan::FunctionCallbackInf
 {
 	VtkTessellatorFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTessellatorFilterWrap>(info.Holder());
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -385,7 +385,7 @@ void VtkTessellatorFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTessellatorFilterWrap::InitPtpl();
+		VtkTessellatorFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -406,7 +406,7 @@ void VtkTessellatorFilterWrap::SetChordError(const Nan::FunctionCallbackInfo<v8:
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +427,7 @@ void VtkTessellatorFilterWrap::SetFieldCriterion(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -448,7 +448,7 @@ void VtkTessellatorFilterWrap::SetMaximumNumberOfSubdivisions(const Nan::Functio
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -467,7 +467,7 @@ void VtkTessellatorFilterWrap::SetMergePoints(const Nan::FunctionCallbackInfo<v8
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -486,7 +486,7 @@ void VtkTessellatorFilterWrap::SetOutputDimension(const Nan::FunctionCallbackInf
 	vtkTessellatorFilter *native = (vtkTessellatorFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +506,7 @@ void VtkTessellatorFilterWrap::SetSubdivider(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetEdgeSubdivisionCriterionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetEdgeSubdivisionCriterionWrap *a0 = ObjectWrap::Unwrap<VtkDataSetEdgeSubdivisionCriterionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +526,7 @@ void VtkTessellatorFilterWrap::SetTessellator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStreamingTessellatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStreamingTessellatorWrap *a0 = ObjectWrap::Unwrap<VtkStreamingTessellatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

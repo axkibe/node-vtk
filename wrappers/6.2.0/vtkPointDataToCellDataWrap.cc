@@ -161,7 +161,7 @@ void VtkPointDataToCellDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointDataToCellDataWrap::InitPtpl();
+	VtkPointDataToCellDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +177,7 @@ void VtkPointDataToCellDataWrap::PassPointDataOff(const Nan::FunctionCallbackInf
 {
 	VtkPointDataToCellDataWrap *wrapper = ObjectWrap::Unwrap<VtkPointDataToCellDataWrap>(info.Holder());
 	vtkPointDataToCellData *native = (vtkPointDataToCellData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkPointDataToCellDataWrap::PassPointDataOn(const Nan::FunctionCallbackInfo
 {
 	VtkPointDataToCellDataWrap *wrapper = ObjectWrap::Unwrap<VtkPointDataToCellDataWrap>(info.Holder());
 	vtkPointDataToCellData *native = (vtkPointDataToCellData *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkPointDataToCellDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointDataToCellDataWrap::InitPtpl();
+		VtkPointDataToCellDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkPointDataToCellDataWrap::SetPassPointData(const Nan::FunctionCallbackInf
 	vtkPointDataToCellData *native = (vtkPointDataToCellData *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

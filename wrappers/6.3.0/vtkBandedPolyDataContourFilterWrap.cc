@@ -159,7 +159,7 @@ void VtkBandedPolyDataContourFilterWrap::ClippingOff(const Nan::FunctionCallback
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkBandedPolyDataContourFilterWrap::ClippingOn(const Nan::FunctionCallbackI
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkBandedPolyDataContourFilterWrap::GenerateContourEdgesOff(const Nan::Func
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkBandedPolyDataContourFilterWrap::GenerateContourEdgesOn(const Nan::Funct
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkBandedPolyDataContourFilterWrap::GenerateValues(const Nan::FunctionCallb
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -249,7 +249,7 @@ void VtkBandedPolyDataContourFilterWrap::GenerateValues(const Nan::FunctionCallb
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -264,7 +264,7 @@ void VtkBandedPolyDataContourFilterWrap::GenerateValues(const Nan::FunctionCallb
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -334,7 +334,7 @@ void VtkBandedPolyDataContourFilterWrap::GetContourEdgesOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetContourEdgesOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -470,7 +470,7 @@ void VtkBandedPolyDataContourFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkBandedPolyDataContourFilterWrap::InitPtpl();
+	VtkBandedPolyDataContourFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -498,7 +498,7 @@ void VtkBandedPolyDataContourFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBandedPolyDataContourFilterWrap::InitPtpl();
+		VtkBandedPolyDataContourFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -519,7 +519,7 @@ void VtkBandedPolyDataContourFilterWrap::SetClipTolerance(const Nan::FunctionCal
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +538,7 @@ void VtkBandedPolyDataContourFilterWrap::SetClipping(const Nan::FunctionCallback
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -557,7 +557,7 @@ void VtkBandedPolyDataContourFilterWrap::SetGenerateContourEdges(const Nan::Func
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +576,7 @@ void VtkBandedPolyDataContourFilterWrap::SetNumberOfContours(const Nan::Function
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +595,7 @@ void VtkBandedPolyDataContourFilterWrap::SetScalarMode(const Nan::FunctionCallba
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -612,7 +612,7 @@ void VtkBandedPolyDataContourFilterWrap::SetScalarModeToIndex(const Nan::Functio
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -624,7 +624,7 @@ void VtkBandedPolyDataContourFilterWrap::SetScalarModeToValue(const Nan::Functio
 {
 	VtkBandedPolyDataContourFilterWrap *wrapper = ObjectWrap::Unwrap<VtkBandedPolyDataContourFilterWrap>(info.Holder());
 	vtkBandedPolyDataContourFilter *native = (vtkBandedPolyDataContourFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -640,7 +640,7 @@ void VtkBandedPolyDataContourFilterWrap::SetValue(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

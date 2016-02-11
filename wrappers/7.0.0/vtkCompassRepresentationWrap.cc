@@ -183,7 +183,7 @@ void VtkCompassRepresentationWrap::BuildRepresentation(const Nan::FunctionCallba
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkCompassRepresentationWrap::DistanceWidgetInteraction(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -263,7 +263,7 @@ void VtkCompassRepresentationWrap::DistanceWidgetInteraction(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkCompassRepresentationWrap::EndDistance(const Nan::FunctionCallbackInfo<v
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkCompassRepresentationWrap::EndTilt(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCompassRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCompassRepresentationWrap>(info.Holder());
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -307,7 +307,7 @@ void VtkCompassRepresentationWrap::GetActors(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -373,7 +373,7 @@ void VtkCompassRepresentationWrap::GetLabelProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetLabelProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkCompassRepresentationWrap::GetPoint1Coordinate(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPoint1Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkCompassRepresentationWrap::GetPoint2Coordinate(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetPoint2Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,7 +442,7 @@ void VtkCompassRepresentationWrap::GetRingProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetRingProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -465,7 +465,7 @@ void VtkCompassRepresentationWrap::GetSelectedProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectedProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkCompassRepresentationWrap::Highlight(const Nan::FunctionCallbackInfo<v8:
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -543,7 +543,7 @@ void VtkCompassRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompassRepresentationWrap::InitPtpl();
+	VtkCompassRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkCompassRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -598,7 +598,7 @@ void VtkCompassRepresentationWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkCompassRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -691,7 +691,7 @@ void VtkCompassRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompassRepresentationWrap::InitPtpl();
+		VtkCompassRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -712,7 +712,7 @@ void VtkCompassRepresentationWrap::SetDistance(const Nan::FunctionCallbackInfo<v
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -731,7 +731,7 @@ void VtkCompassRepresentationWrap::SetHeading(const Nan::FunctionCallbackInfo<v8
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -751,7 +751,7 @@ void VtkCompassRepresentationWrap::SetRenderer(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -770,7 +770,7 @@ void VtkCompassRepresentationWrap::SetTilt(const Nan::FunctionCallbackInfo<v8::V
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -797,7 +797,7 @@ void VtkCompassRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -826,7 +826,7 @@ void VtkCompassRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -853,7 +853,7 @@ void VtkCompassRepresentationWrap::TiltWidgetInteraction(const Nan::FunctionCall
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +882,7 @@ void VtkCompassRepresentationWrap::TiltWidgetInteraction(const Nan::FunctionCall
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -901,7 +901,7 @@ void VtkCompassRepresentationWrap::UpdateDistance(const Nan::FunctionCallbackInf
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -920,7 +920,7 @@ void VtkCompassRepresentationWrap::UpdateTilt(const Nan::FunctionCallbackInfo<v8
 	vtkCompassRepresentation *native = (vtkCompassRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -947,7 +947,7 @@ void VtkCompassRepresentationWrap::WidgetInteraction(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -976,7 +976,7 @@ void VtkCompassRepresentationWrap::WidgetInteraction(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

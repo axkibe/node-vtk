@@ -149,7 +149,7 @@ void VtkAnimationSceneWrap::AddCue(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnimationCueWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnimationCueWrap *a0 = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkAnimationSceneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAnimationSceneWrap::InitPtpl();
+	VtkAnimationSceneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkAnimationSceneWrap::Play(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -321,7 +321,7 @@ void VtkAnimationSceneWrap::RemoveAllCues(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +336,7 @@ void VtkAnimationSceneWrap::RemoveCue(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnimationCueWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnimationCueWrap *a0 = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkAnimationSceneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAnimationSceneWrap::InitPtpl();
+		VtkAnimationSceneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -386,7 +386,7 @@ void VtkAnimationSceneWrap::SetAnimationTime(const Nan::FunctionCallbackInfo<v8:
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -405,7 +405,7 @@ void VtkAnimationSceneWrap::SetFrameRate(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -424,7 +424,7 @@ void VtkAnimationSceneWrap::SetLoop(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkAnimationSceneWrap::SetModeToRealTime(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -453,7 +453,7 @@ void VtkAnimationSceneWrap::SetModeToSequence(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,7 +467,7 @@ void VtkAnimationSceneWrap::SetPlayMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -486,7 +486,7 @@ void VtkAnimationSceneWrap::SetTimeMode(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -503,7 +503,7 @@ void VtkAnimationSceneWrap::Stop(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkAnimationSceneWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationSceneWrap>(info.Holder());
 	vtkAnimationScene *native = (vtkAnimationScene *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

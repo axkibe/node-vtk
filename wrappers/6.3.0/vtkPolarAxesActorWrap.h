@@ -55,6 +55,7 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void GetPolarLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolarTickVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolarTitleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPole(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadialAxesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadialAxesVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadialTitleVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);

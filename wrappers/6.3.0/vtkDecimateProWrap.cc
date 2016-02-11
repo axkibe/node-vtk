@@ -248,7 +248,7 @@ void VtkDecimateProWrap::AccumulateErrorOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkDecimateProWrap::AccumulateErrorOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkDecimateProWrap::BoundaryVertexDeletionOff(const Nan::FunctionCallbackIn
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkDecimateProWrap::BoundaryVertexDeletionOn(const Nan::FunctionCallbackInf
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -731,7 +731,7 @@ void VtkDecimateProWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkDecimateProWrap::InitPtpl();
+	VtkDecimateProWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -747,7 +747,7 @@ void VtkDecimateProWrap::PreSplitMeshOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -759,7 +759,7 @@ void VtkDecimateProWrap::PreSplitMeshOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -771,7 +771,7 @@ void VtkDecimateProWrap::PreserveTopologyOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -783,7 +783,7 @@ void VtkDecimateProWrap::PreserveTopologyOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -807,7 +807,7 @@ void VtkDecimateProWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDecimateProWrap::InitPtpl();
+		VtkDecimateProWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -828,7 +828,7 @@ void VtkDecimateProWrap::SetAbsoluteError(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -847,7 +847,7 @@ void VtkDecimateProWrap::SetAccumulateError(const Nan::FunctionCallbackInfo<v8::
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -866,7 +866,7 @@ void VtkDecimateProWrap::SetBoundaryVertexDeletion(const Nan::FunctionCallbackIn
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -885,7 +885,7 @@ void VtkDecimateProWrap::SetDegree(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -904,7 +904,7 @@ void VtkDecimateProWrap::SetErrorIsAbsolute(const Nan::FunctionCallbackInfo<v8::
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -923,7 +923,7 @@ void VtkDecimateProWrap::SetFeatureAngle(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -942,7 +942,7 @@ void VtkDecimateProWrap::SetInflectionPointRatio(const Nan::FunctionCallbackInfo
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -961,7 +961,7 @@ void VtkDecimateProWrap::SetMaximumError(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -980,7 +980,7 @@ void VtkDecimateProWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInf
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -999,7 +999,7 @@ void VtkDecimateProWrap::SetPreSplitMesh(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1018,7 +1018,7 @@ void VtkDecimateProWrap::SetPreserveTopology(const Nan::FunctionCallbackInfo<v8:
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1037,7 +1037,7 @@ void VtkDecimateProWrap::SetSplitAngle(const Nan::FunctionCallbackInfo<v8::Value
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1056,7 +1056,7 @@ void VtkDecimateProWrap::SetSplitting(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1075,7 +1075,7 @@ void VtkDecimateProWrap::SetTargetReduction(const Nan::FunctionCallbackInfo<v8::
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1092,7 +1092,7 @@ void VtkDecimateProWrap::SplittingOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1104,7 +1104,7 @@ void VtkDecimateProWrap::SplittingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDecimateProWrap *wrapper = ObjectWrap::Unwrap<VtkDecimateProWrap>(info.Holder());
 	vtkDecimatePro *native = (vtkDecimatePro *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

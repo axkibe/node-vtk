@@ -162,7 +162,7 @@ void VtkChartBoxWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetTooltip();
-		VtkTooltipItemWrap::InitPtpl();
+	VtkTooltipItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkChartBoxWrap::GetVisibleColumns(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetVisibleColumns();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkChartBoxWrap::GetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetYAxis();
-		VtkAxisWrap::InitPtpl();
+	VtkAxisWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkChartBoxWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartBoxWrap::InitPtpl();
+	VtkChartBoxWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkChartBoxWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartBoxWrap::InitPtpl();
+		VtkChartBoxWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkChartBoxWrap::SetColumnVisibilityAll(const Nan::FunctionCallbackInfo<v8:
 	vtkChartBox *native = (vtkChartBox *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -344,7 +344,7 @@ void VtkChartBoxWrap::SetPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlotBoxWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlotBoxWrap *a0 = ObjectWrap::Unwrap<VtkPlotBoxWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkChartBoxWrap::SetSelectedColumn(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkChartBox *native = (vtkChartBox *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkChartBoxWrap::SetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTooltipItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTooltipItemWrap *a0 = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -400,7 +400,7 @@ void VtkChartBoxWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartBoxWrap *wrapper = ObjectWrap::Unwrap<VtkChartBoxWrap>(info.Holder());
 	vtkChartBox *native = (vtkChartBox *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

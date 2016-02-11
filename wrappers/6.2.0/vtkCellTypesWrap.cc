@@ -142,7 +142,7 @@ void VtkCellTypesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCellTypesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCellTypesWrap *a0 = ObjectWrap::Unwrap<VtkCellTypesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -245,7 +245,7 @@ void VtkCellTypesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellTypesWrap::InitPtpl();
+	VtkCellTypesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -261,7 +261,7 @@ void VtkCellTypesWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkCellTypesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellTypesWrap::InitPtpl();
+		VtkCellTypesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkCellTypesWrap::SetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& 
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkIntArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkIntArrayWrap *a2 = ObjectWrap::Unwrap<VtkIntArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -333,7 +333,7 @@ void VtkCellTypesWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
 	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -30,6 +30,7 @@ class VtkImageIdealLowPassWrap : public VtkThreadedImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetZCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

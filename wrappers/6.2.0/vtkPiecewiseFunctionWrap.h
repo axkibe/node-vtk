@@ -44,6 +44,7 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFirstNonZeroValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

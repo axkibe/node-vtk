@@ -200,7 +200,7 @@ void VtkPolyDataNormalsWrap::AutoOrientNormalsOff(const Nan::FunctionCallbackInf
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkPolyDataNormalsWrap::AutoOrientNormalsOn(const Nan::FunctionCallbackInfo
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkPolyDataNormalsWrap::ComputeCellNormalsOff(const Nan::FunctionCallbackIn
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkPolyDataNormalsWrap::ComputeCellNormalsOn(const Nan::FunctionCallbackInf
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkPolyDataNormalsWrap::ComputePointNormalsOff(const Nan::FunctionCallbackI
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkPolyDataNormalsWrap::ComputePointNormalsOn(const Nan::FunctionCallbackIn
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkPolyDataNormalsWrap::ConsistencyOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkPolyDataNormalsWrap::ConsistencyOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkPolyDataNormalsWrap::FlipNormalsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -308,7 +308,7 @@ void VtkPolyDataNormalsWrap::FlipNormalsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +545,7 @@ void VtkPolyDataNormalsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataNormalsWrap::InitPtpl();
+	VtkPolyDataNormalsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,7 +561,7 @@ void VtkPolyDataNormalsWrap::NonManifoldTraversalOff(const Nan::FunctionCallback
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -573,7 +573,7 @@ void VtkPolyDataNormalsWrap::NonManifoldTraversalOn(const Nan::FunctionCallbackI
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -597,7 +597,7 @@ void VtkPolyDataNormalsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataNormalsWrap::InitPtpl();
+		VtkPolyDataNormalsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -618,7 +618,7 @@ void VtkPolyDataNormalsWrap::SetAutoOrientNormals(const Nan::FunctionCallbackInf
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -637,7 +637,7 @@ void VtkPolyDataNormalsWrap::SetComputeCellNormals(const Nan::FunctionCallbackIn
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -656,7 +656,7 @@ void VtkPolyDataNormalsWrap::SetComputePointNormals(const Nan::FunctionCallbackI
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -675,7 +675,7 @@ void VtkPolyDataNormalsWrap::SetConsistency(const Nan::FunctionCallbackInfo<v8::
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkPolyDataNormalsWrap::SetFeatureAngle(const Nan::FunctionCallbackInfo<v8:
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -713,7 +713,7 @@ void VtkPolyDataNormalsWrap::SetFlipNormals(const Nan::FunctionCallbackInfo<v8::
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -732,7 +732,7 @@ void VtkPolyDataNormalsWrap::SetNonManifoldTraversal(const Nan::FunctionCallback
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -751,7 +751,7 @@ void VtkPolyDataNormalsWrap::SetOutputPointsPrecision(const Nan::FunctionCallbac
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -770,7 +770,7 @@ void VtkPolyDataNormalsWrap::SetSplitting(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -787,7 +787,7 @@ void VtkPolyDataNormalsWrap::SplittingOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -799,7 +799,7 @@ void VtkPolyDataNormalsWrap::SplittingOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPolyDataNormalsWrap *wrapper = ObjectWrap::Unwrap<VtkPolyDataNormalsWrap>(info.Holder());
 	vtkPolyDataNormals *native = (vtkPolyDataNormals *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

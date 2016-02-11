@@ -31,6 +31,7 @@ class VtkImplicitHaloWrap : public VtkImplicitFunctionWrap
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFadeOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);

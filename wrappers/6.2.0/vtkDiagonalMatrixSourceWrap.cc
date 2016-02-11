@@ -255,7 +255,7 @@ void VtkDiagonalMatrixSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkDiagonalMatrixSourceWrap::InitPtpl();
+	VtkDiagonalMatrixSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkDiagonalMatrixSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDiagonalMatrixSourceWrap::InitPtpl();
+		VtkDiagonalMatrixSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkDiagonalMatrixSourceWrap::SetArrayType(const Nan::FunctionCallbackInfo<v
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -324,7 +324,7 @@ void VtkDiagonalMatrixSourceWrap::SetColumnLabel(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkDiagonalMatrixSourceWrap::SetDiagonal(const Nan::FunctionCallbackInfo<v8
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkDiagonalMatrixSourceWrap::SetRowLabel(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -382,7 +382,7 @@ void VtkDiagonalMatrixSourceWrap::SetSubDiagonal(const Nan::FunctionCallbackInfo
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -401,7 +401,7 @@ void VtkDiagonalMatrixSourceWrap::SetSuperDiagonal(const Nan::FunctionCallbackIn
 	vtkDiagonalMatrixSource *native = (vtkDiagonalMatrixSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

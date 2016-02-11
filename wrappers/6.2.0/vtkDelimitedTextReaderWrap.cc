@@ -263,7 +263,7 @@ void VtkDelimitedTextReaderWrap::DetectNumericColumnsOff(const Nan::FunctionCall
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkDelimitedTextReaderWrap::DetectNumericColumnsOn(const Nan::FunctionCallb
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -287,7 +287,7 @@ void VtkDelimitedTextReaderWrap::ForceDoubleOff(const Nan::FunctionCallbackInfo<
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -299,7 +299,7 @@ void VtkDelimitedTextReaderWrap::ForceDoubleOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -311,7 +311,7 @@ void VtkDelimitedTextReaderWrap::GeneratePedigreeIdsOff(const Nan::FunctionCallb
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -323,7 +323,7 @@ void VtkDelimitedTextReaderWrap::GeneratePedigreeIdsOn(const Nan::FunctionCallba
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -665,7 +665,7 @@ void VtkDelimitedTextReaderWrap::MergeConsecutiveDelimitersOff(const Nan::Functi
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -677,7 +677,7 @@ void VtkDelimitedTextReaderWrap::MergeConsecutiveDelimitersOn(const Nan::Functio
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -696,7 +696,7 @@ void VtkDelimitedTextReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkDelimitedTextReaderWrap::InitPtpl();
+	VtkDelimitedTextReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -712,7 +712,7 @@ void VtkDelimitedTextReaderWrap::OutputPedigreeIdsOff(const Nan::FunctionCallbac
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -724,7 +724,7 @@ void VtkDelimitedTextReaderWrap::OutputPedigreeIdsOn(const Nan::FunctionCallback
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +736,7 @@ void VtkDelimitedTextReaderWrap::ReadFromInputStringOff(const Nan::FunctionCallb
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +748,7 @@ void VtkDelimitedTextReaderWrap::ReadFromInputStringOn(const Nan::FunctionCallba
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -772,7 +772,7 @@ void VtkDelimitedTextReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDelimitedTextReaderWrap::InitPtpl();
+		VtkDelimitedTextReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -793,7 +793,7 @@ void VtkDelimitedTextReaderWrap::SetDefaultDoubleValue(const Nan::FunctionCallba
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -812,7 +812,7 @@ void VtkDelimitedTextReaderWrap::SetDefaultIntegerValue(const Nan::FunctionCallb
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -831,7 +831,7 @@ void VtkDelimitedTextReaderWrap::SetDetectNumericColumns(const Nan::FunctionCall
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -851,7 +851,7 @@ void VtkDelimitedTextReaderWrap::SetFieldDelimiterCharacters(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -871,7 +871,7 @@ void VtkDelimitedTextReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -890,7 +890,7 @@ void VtkDelimitedTextReaderWrap::SetForceDouble(const Nan::FunctionCallbackInfo<
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -909,7 +909,7 @@ void VtkDelimitedTextReaderWrap::SetGeneratePedigreeIds(const Nan::FunctionCallb
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -928,7 +928,7 @@ void VtkDelimitedTextReaderWrap::SetHaveHeaders(const Nan::FunctionCallbackInfo<
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -950,7 +950,7 @@ void VtkDelimitedTextReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -961,7 +961,7 @@ void VtkDelimitedTextReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -980,7 +980,7 @@ void VtkDelimitedTextReaderWrap::SetMergeConsecutiveDelimiters(const Nan::Functi
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -999,7 +999,7 @@ void VtkDelimitedTextReaderWrap::SetOutputPedigreeIds(const Nan::FunctionCallbac
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1019,7 +1019,7 @@ void VtkDelimitedTextReaderWrap::SetPedigreeIdArrayName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1038,7 +1038,7 @@ void VtkDelimitedTextReaderWrap::SetReadFromInputString(const Nan::FunctionCallb
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1063,7 +1063,7 @@ void VtkDelimitedTextReaderWrap::SetStringDelimiter(const Nan::FunctionCallbackI
 			Nan::ThrowError("char value out of bounds.");
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1082,7 +1082,7 @@ void VtkDelimitedTextReaderWrap::SetTrimWhitespacePriorToNumericConversion(const
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1102,7 +1102,7 @@ void VtkDelimitedTextReaderWrap::SetUTF8FieldDelimiters(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1122,7 +1122,7 @@ void VtkDelimitedTextReaderWrap::SetUTF8RecordDelimiters(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1142,7 +1142,7 @@ void VtkDelimitedTextReaderWrap::SetUTF8StringDelimiters(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1162,7 +1162,7 @@ void VtkDelimitedTextReaderWrap::SetUnicodeCharacterSet(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1181,7 +1181,7 @@ void VtkDelimitedTextReaderWrap::SetUseStringDelimiter(const Nan::FunctionCallba
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1198,7 +1198,7 @@ void VtkDelimitedTextReaderWrap::TrimWhitespacePriorToNumericConversionOff(const
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1210,7 +1210,7 @@ void VtkDelimitedTextReaderWrap::TrimWhitespacePriorToNumericConversionOn(const 
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1222,7 +1222,7 @@ void VtkDelimitedTextReaderWrap::UseStringDelimiterOff(const Nan::FunctionCallba
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1234,7 +1234,7 @@ void VtkDelimitedTextReaderWrap::UseStringDelimiterOn(const Nan::FunctionCallbac
 {
 	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
 	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

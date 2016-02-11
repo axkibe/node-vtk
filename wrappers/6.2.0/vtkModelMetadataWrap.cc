@@ -220,7 +220,7 @@ void VtkModelMetadataWrap::AllVariablesDefinedInAllBlocksOff(const Nan::Function
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkModelMetadataWrap::AllVariablesDefinedInAllBlocksOn(const Nan::FunctionC
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkModelMetadataWrap::FreeAllGlobalData(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkModelMetadataWrap::FreeAllLocalData(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkModelMetadataWrap::FreeBlockDependentData(const Nan::FunctionCallbackInf
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkModelMetadataWrap::FreeOriginalElementVariableNames(const Nan::FunctionC
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkModelMetadataWrap::FreeOriginalNodeVariableNames(const Nan::FunctionCall
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkModelMetadataWrap::FreeUsedElementVariableNames(const Nan::FunctionCallb
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkModelMetadataWrap::FreeUsedElementVariables(const Nan::FunctionCallbackI
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkModelMetadataWrap::FreeUsedNodeVariableNames(const Nan::FunctionCallback
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkModelMetadataWrap::FreeUsedNodeVariables(const Nan::FunctionCallbackInfo
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -717,7 +717,7 @@ void VtkModelMetadataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkModelMetadataWrap::InitPtpl();
+	VtkModelMetadataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -733,7 +733,7 @@ void VtkModelMetadataWrap::PrintGlobalInformation(const Nan::FunctionCallbackInf
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -745,7 +745,7 @@ void VtkModelMetadataWrap::PrintLocalInformation(const Nan::FunctionCallbackInfo
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -757,7 +757,7 @@ void VtkModelMetadataWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkModelMetadataWrap *wrapper = ObjectWrap::Unwrap<VtkModelMetadataWrap>(info.Holder());
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -781,7 +781,7 @@ void VtkModelMetadataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkModelMetadataWrap::InitPtpl();
+		VtkModelMetadataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -802,7 +802,7 @@ void VtkModelMetadataWrap::SetAllVariablesDefinedInAllBlocks(const Nan::Function
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +821,7 @@ void VtkModelMetadataWrap::SetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8:
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -840,7 +840,7 @@ void VtkModelMetadataWrap::SetNumberOfNodeSets(const Nan::FunctionCallbackInfo<v
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -859,7 +859,7 @@ void VtkModelMetadataWrap::SetNumberOfSideSets(const Nan::FunctionCallbackInfo<v
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -878,7 +878,7 @@ void VtkModelMetadataWrap::SetTimeStepIndex(const Nan::FunctionCallbackInfo<v8::
 	vtkModelMetadata *native = (vtkModelMetadata *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -898,7 +898,7 @@ void VtkModelMetadataWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

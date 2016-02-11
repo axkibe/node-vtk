@@ -34,6 +34,7 @@ class VtkSelectPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void GenerateUnselectedOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateUnselectedOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClosestPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateSelectionScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateUnselectedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);

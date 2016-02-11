@@ -109,7 +109,7 @@ void VtkRowQueryWrap::CaseSensitiveFieldNamesOff(const Nan::FunctionCallbackInfo
 {
 	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
 	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -121,7 +121,7 @@ void VtkRowQueryWrap::CaseSensitiveFieldNamesOn(const Nan::FunctionCallbackInfo<
 {
 	VtkRowQueryWrap *wrapper = ObjectWrap::Unwrap<VtkRowQueryWrap>(info.Holder());
 	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkRowQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkRowQueryWrap::InitPtpl();
+	VtkRowQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkRowQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRowQueryWrap::InitPtpl();
+		VtkRowQueryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkRowQueryWrap::SetCaseSensitiveFieldNames(const Nan::FunctionCallbackInfo
 	vtkRowQuery *native = (vtkRowQuery *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

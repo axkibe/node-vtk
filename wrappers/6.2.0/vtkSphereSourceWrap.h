@@ -29,6 +29,7 @@ class VtkSphereSourceWrap : public VtkPolyDataAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEndPhi(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEndPhiMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

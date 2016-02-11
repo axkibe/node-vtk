@@ -281,7 +281,7 @@ void VtkDataObjectWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataObjectWriterWrap::InitPtpl();
+	VtkDataObjectWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -309,7 +309,7 @@ void VtkDataObjectWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataObjectWriterWrap::InitPtpl();
+		VtkDataObjectWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -331,7 +331,7 @@ void VtkDataObjectWriterWrap::SetFieldDataName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -351,7 +351,7 @@ void VtkDataObjectWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -370,7 +370,7 @@ void VtkDataObjectWriterWrap::SetFileType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -387,7 +387,7 @@ void VtkDataObjectWriterWrap::SetFileTypeToASCII(const Nan::FunctionCallbackInfo
 {
 	VtkDataObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWriterWrap>(info.Holder());
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -399,7 +399,7 @@ void VtkDataObjectWriterWrap::SetFileTypeToBinary(const Nan::FunctionCallbackInf
 {
 	VtkDataObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWriterWrap>(info.Holder());
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +414,7 @@ void VtkDataObjectWriterWrap::SetHeader(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkDataObjectWriterWrap::SetWriteToOutputString(const Nan::FunctionCallback
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +450,7 @@ void VtkDataObjectWriterWrap::WriteToOutputStringOff(const Nan::FunctionCallback
 {
 	VtkDataObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWriterWrap>(info.Holder());
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -462,7 +462,7 @@ void VtkDataObjectWriterWrap::WriteToOutputStringOn(const Nan::FunctionCallbackI
 {
 	VtkDataObjectWriterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectWriterWrap>(info.Holder());
 	vtkDataObjectWriter *native = (vtkDataObjectWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

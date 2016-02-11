@@ -118,7 +118,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::ClearLastCellInfo(const Nan::Funct
 {
 	VtkCachingInterpolatedVelocityFieldWrap *wrapper = ObjectWrap::Unwrap<VtkCachingInterpolatedVelocityFieldWrap>(info.Holder());
 	vtkCachingInterpolatedVelocityField *native = (vtkCachingInterpolatedVelocityField *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -289,7 +289,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::NewInstance(const Nan::FunctionCal
 		return;
 	}
 	r = native->NewInstance();
-		VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
+	VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +317,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SafeDownCast(const Nan::FunctionCa
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
+		VtkCachingInterpolatedVelocityFieldWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +339,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SelectVectors(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +366,7 @@ void VtkCachingInterpolatedVelocityFieldWrap::SetDataSet(const Nan::FunctionCall
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkAbstractCellLocatorWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkAbstractCellLocatorWrap *a3 = ObjectWrap::Unwrap<VtkAbstractCellLocatorWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;

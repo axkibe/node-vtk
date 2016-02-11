@@ -160,7 +160,7 @@ void VtkExecutiveWrap::ALGORITHM_AFTER_FORWARD(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->ALGORITHM_AFTER_FORWARD();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkExecutiveWrap::ALGORITHM_BEFORE_FORWARD(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->ALGORITHM_BEFORE_FORWARD();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -206,7 +206,7 @@ void VtkExecutiveWrap::ALGORITHM_DIRECTION(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->ALGORITHM_DIRECTION();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -229,7 +229,7 @@ void VtkExecutiveWrap::CONSUMERS(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->CONSUMERS();
-		VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
+	VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -252,7 +252,7 @@ void VtkExecutiveWrap::FORWARD_DIRECTION(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->FORWARD_DIRECTION();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkExecutiveWrap::FROM_OUTPUT_PORT(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->FROM_OUTPUT_PORT();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkExecutiveWrap::GetAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetAlgorithm();
-		VtkAlgorithmWrap::InitPtpl();
+	VtkAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,7 +342,7 @@ void VtkExecutiveWrap::GetInputData(const Nan::FunctionCallbackInfo<v8::Value>& 
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkDataObjectWrap::InitPtpl();
+			VtkDataObjectWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -376,7 +376,7 @@ void VtkExecutiveWrap::GetInputExecutive(const Nan::FunctionCallbackInfo<v8::Val
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkExecutiveWrap::InitPtpl();
+			VtkExecutiveWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -410,7 +410,7 @@ void VtkExecutiveWrap::GetInputInformation(const Nan::FunctionCallbackInfo<v8::V
 				info[0]->Int32Value(),
 				info[1]->Int32Value()
 			);
-				VtkInformationWrap::InitPtpl();
+			VtkInformationWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -431,7 +431,7 @@ void VtkExecutiveWrap::GetInputInformation(const Nan::FunctionCallbackInfo<v8::V
 		r = native->GetInputInformation(
 			info[0]->Int32Value()
 		);
-			VtkInformationVectorWrap::InitPtpl();
+		VtkInformationVectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -510,7 +510,7 @@ void VtkExecutiveWrap::GetOutputData(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetOutputData(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -540,7 +540,7 @@ void VtkExecutiveWrap::GetOutputInformation(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetOutputInformation(
 			info[0]->Int32Value()
 		);
-			VtkInformationWrap::InitPtpl();
+		VtkInformationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -559,7 +559,7 @@ void VtkExecutiveWrap::GetOutputInformation(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetOutputInformation();
-		VtkInformationVectorWrap::InitPtpl();
+	VtkInformationVectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -604,7 +604,7 @@ void VtkExecutiveWrap::KEYS_TO_COPY(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->KEYS_TO_COPY();
-		VtkInformationKeyVectorKeyWrap::InitPtpl();
+	VtkInformationKeyVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -627,7 +627,7 @@ void VtkExecutiveWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkExecutiveWrap::InitPtpl();
+	VtkExecutiveWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -650,7 +650,7 @@ void VtkExecutiveWrap::PRODUCER(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->PRODUCER();
-		VtkInformationExecutivePortKeyWrap::InitPtpl();
+	VtkInformationExecutivePortKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -678,7 +678,7 @@ void VtkExecutiveWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExecutiveWrap::InitPtpl();
+		VtkExecutiveWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -705,7 +705,7 @@ void VtkExecutiveWrap::SetOutputData(const Nan::FunctionCallbackInfo<v8::Value>&
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkInformationWrap *a2 = ObjectWrap::Unwrap<VtkInformationWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -717,7 +717,7 @@ void VtkExecutiveWrap::SetOutputData(const Nan::FunctionCallbackInfo<v8::Value>&
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -739,7 +739,7 @@ void VtkExecutiveWrap::SetSharedOutputInformation(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationVectorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationVectorWrap *a0 = ObjectWrap::Unwrap<VtkInformationVectorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

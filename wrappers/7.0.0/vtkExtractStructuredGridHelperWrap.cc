@@ -73,6 +73,9 @@ void VtkExtractStructuredGridHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMappedIndexFromExtentValue", GetMappedIndexFromExtentValue);
 	Nan::SetPrototypeMethod(tpl, "getMappedIndexFromExtentValue", GetMappedIndexFromExtentValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutputWholeExtent", GetOutputWholeExtent);
+	Nan::SetPrototypeMethod(tpl, "getOutputWholeExtent", GetOutputWholeExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetPartitionedOutputExtent", GetPartitionedOutputExtent);
 	Nan::SetPrototypeMethod(tpl, "getPartitionedOutputExtent", GetPartitionedOutputExtent);
 
@@ -167,7 +170,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -199,7 +202,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -251,7 +254,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -323,7 +326,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -415,7 +418,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -477,7 +480,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -549,7 +552,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -631,7 +634,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -683,7 +686,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						}
 						b3[i] = a3->Get(i)->Int32Value();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -745,7 +748,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -807,7 +810,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -889,7 +892,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -941,7 +944,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1003,7 +1006,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1075,7 +1078,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1117,7 +1120,7 @@ void VtkExtractStructuredGridHelperWrap::ComputeBeginAndEnd(const Nan::FunctionC
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1165,7 +1168,7 @@ void VtkExtractStructuredGridHelperWrap::CopyCellData(const Nan::FunctionCallbac
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellDataWrap *a3 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1205,7 +1208,7 @@ void VtkExtractStructuredGridHelperWrap::CopyCellData(const Nan::FunctionCallbac
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellDataWrap *a3 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1265,7 +1268,7 @@ void VtkExtractStructuredGridHelperWrap::CopyCellData(const Nan::FunctionCallbac
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellDataWrap *a3 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1295,7 +1298,7 @@ void VtkExtractStructuredGridHelperWrap::CopyCellData(const Nan::FunctionCallbac
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkCellDataWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkCellDataWrap *a3 = ObjectWrap::Unwrap<VtkCellDataWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1349,7 +1352,7 @@ void VtkExtractStructuredGridHelperWrap::CopyPointsAndPointData(const Nan::Funct
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkPointsWrap *a5 = ObjectWrap::Unwrap<VtkPointsWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1399,7 +1402,7 @@ void VtkExtractStructuredGridHelperWrap::CopyPointsAndPointData(const Nan::Funct
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkPointsWrap *a5 = ObjectWrap::Unwrap<VtkPointsWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1469,7 +1472,7 @@ void VtkExtractStructuredGridHelperWrap::CopyPointsAndPointData(const Nan::Funct
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkPointsWrap *a5 = ObjectWrap::Unwrap<VtkPointsWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1509,7 +1512,7 @@ void VtkExtractStructuredGridHelperWrap::CopyPointsAndPointData(const Nan::Funct
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkPointsWrap *a5 = ObjectWrap::Unwrap<VtkPointsWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1646,6 +1649,23 @@ void VtkExtractStructuredGridHelperWrap::GetMappedIndexFromExtentValue(const Nan
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkExtractStructuredGridHelperWrap::GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
+	vtkExtractStructuredGridHelper *native = (vtkExtractStructuredGridHelper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputWholeExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExtractStructuredGridHelperWrap *wrapper = ObjectWrap::Unwrap<VtkExtractStructuredGridHelperWrap>(info.Holder());
@@ -1698,7 +1718,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1732,7 +1752,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1789,7 +1809,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1866,7 +1886,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1963,7 +1983,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2080,7 +2100,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2167,7 +2187,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2264,7 +2284,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2371,7 +2391,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2448,7 +2468,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2535,7 +2555,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2622,7 +2642,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2729,7 +2749,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2806,7 +2826,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2893,7 +2913,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2990,7 +3010,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3057,7 +3077,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								}
 								b5[i] = a5->Get(i)->Int32Value();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3134,7 +3154,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3201,7 +3221,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3288,7 +3308,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3395,7 +3415,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3472,7 +3492,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3559,7 +3579,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3656,7 +3676,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3723,7 +3743,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3800,7 +3820,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3877,7 +3897,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -3974,7 +3994,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4041,7 +4061,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4118,7 +4138,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4205,7 +4225,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4262,7 +4282,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedOutputExtent(const Nan::F
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -4328,7 +4348,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4361,7 +4381,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4417,7 +4437,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4493,7 +4513,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4589,7 +4609,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4655,7 +4675,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4731,7 +4751,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4817,7 +4837,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4873,7 +4893,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							}
 							b4[i] = a4->Get(i)->Int32Value();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -4939,7 +4959,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5005,7 +5025,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5091,7 +5111,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5147,7 +5167,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5213,7 +5233,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5289,7 +5309,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5335,7 +5355,7 @@ void VtkExtractStructuredGridHelperWrap::GetPartitionedVOI(const Nan::FunctionCa
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -5411,7 +5431,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5446,7 +5466,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 				}
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5501,7 +5521,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 				}
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5576,7 +5596,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 				}
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5621,7 +5641,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 				}
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5676,7 +5696,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5741,7 +5761,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5776,7 +5796,7 @@ void VtkExtractStructuredGridHelperWrap::Initialize(const Nan::FunctionCallbackI
 
 				if(info.Length() > 3 && info[3]->IsBoolean())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5842,7 +5862,7 @@ void VtkExtractStructuredGridHelperWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractStructuredGridHelperWrap::InitPtpl();
+	VtkExtractStructuredGridHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -5870,7 +5890,7 @@ void VtkExtractStructuredGridHelperWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractStructuredGridHelperWrap::InitPtpl();
+		VtkExtractStructuredGridHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

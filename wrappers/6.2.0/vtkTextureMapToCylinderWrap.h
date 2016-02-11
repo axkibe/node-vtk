@@ -33,6 +33,8 @@ class VtkTextureMapToCylinderWrap : public VtkDataSetAlgorithmWrap
 		static void AutomaticCylinderGenerationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticCylinderGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPreventSeam(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

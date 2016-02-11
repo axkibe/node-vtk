@@ -194,7 +194,7 @@ void VtkImageSincInterpolatorWrap::AntialiasingOff(const Nan::FunctionCallbackIn
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkImageSincInterpolatorWrap::AntialiasingOn(const Nan::FunctionCallbackInf
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -237,7 +237,7 @@ void VtkImageSincInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -267,7 +267,7 @@ void VtkImageSincInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -317,7 +317,7 @@ void VtkImageSincInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbac
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -337,7 +337,7 @@ void VtkImageSincInterpolatorWrap::ComputeSupportSize(const Nan::FunctionCallbac
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -380,7 +380,7 @@ void VtkImageSincInterpolatorWrap::GetBlurFactors(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -409,7 +409,7 @@ void VtkImageSincInterpolatorWrap::GetBlurFactors(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +419,17 @@ void VtkImageSincInterpolatorWrap::GetBlurFactors(const Nan::FunctionCallbackInf
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBlurFactors();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageSincInterpolatorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -567,7 +577,7 @@ void VtkImageSincInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSincInterpolatorWrap::InitPtpl();
+	VtkImageSincInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -583,7 +593,7 @@ void VtkImageSincInterpolatorWrap::RenormalizationOff(const Nan::FunctionCallbac
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +605,7 @@ void VtkImageSincInterpolatorWrap::RenormalizationOn(const Nan::FunctionCallback
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -619,7 +629,7 @@ void VtkImageSincInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSincInterpolatorWrap::InitPtpl();
+		VtkImageSincInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -640,7 +650,7 @@ void VtkImageSincInterpolatorWrap::SetAntialiasing(const Nan::FunctionCallbackIn
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -667,7 +677,7 @@ void VtkImageSincInterpolatorWrap::SetBlurFactors(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +706,7 @@ void VtkImageSincInterpolatorWrap::SetBlurFactors(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -712,7 +722,7 @@ void VtkImageSincInterpolatorWrap::SetBlurFactors(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -735,7 +745,7 @@ void VtkImageSincInterpolatorWrap::SetRenormalization(const Nan::FunctionCallbac
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -754,7 +764,7 @@ void VtkImageSincInterpolatorWrap::SetUseWindowParameter(const Nan::FunctionCall
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -773,7 +783,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunction(const Nan::FunctionCallback
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -790,7 +800,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToBlackman(const Nan::Functi
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -802,7 +812,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToBlackmanHarris3(const Nan:
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -814,7 +824,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToBlackmanHarris4(const Nan:
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -826,7 +836,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToBlackmanNuttall3(const Nan
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -838,7 +848,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToBlackmanNuttall4(const Nan
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -850,7 +860,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToCosine(const Nan::Function
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -862,7 +872,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToHamming(const Nan::Functio
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -874,7 +884,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToHann(const Nan::FunctionCa
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -886,7 +896,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToKaiser(const Nan::Function
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -898,7 +908,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToLanczos(const Nan::Functio
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -910,7 +920,7 @@ void VtkImageSincInterpolatorWrap::SetWindowFunctionToNuttall(const Nan::Functio
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -924,7 +934,7 @@ void VtkImageSincInterpolatorWrap::SetWindowHalfWidth(const Nan::FunctionCallbac
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -943,7 +953,7 @@ void VtkImageSincInterpolatorWrap::SetWindowParameter(const Nan::FunctionCallbac
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -960,7 +970,7 @@ void VtkImageSincInterpolatorWrap::UseWindowParameterOff(const Nan::FunctionCall
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -972,7 +982,7 @@ void VtkImageSincInterpolatorWrap::UseWindowParameterOn(const Nan::FunctionCallb
 {
 	VtkImageSincInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkImageSincInterpolatorWrap>(info.Holder());
 	vtkImageSincInterpolator *native = (vtkImageSincInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

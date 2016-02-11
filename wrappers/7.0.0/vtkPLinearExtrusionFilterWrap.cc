@@ -161,7 +161,7 @@ void VtkPLinearExtrusionFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkPLinearExtrusionFilterWrap::InitPtpl();
+	VtkPLinearExtrusionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +177,7 @@ void VtkPLinearExtrusionFilterWrap::PieceInvariantOff(const Nan::FunctionCallbac
 {
 	VtkPLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPLinearExtrusionFilterWrap>(info.Holder());
 	vtkPLinearExtrusionFilter *native = (vtkPLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkPLinearExtrusionFilterWrap::PieceInvariantOn(const Nan::FunctionCallback
 {
 	VtkPLinearExtrusionFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPLinearExtrusionFilterWrap>(info.Holder());
 	vtkPLinearExtrusionFilter *native = (vtkPLinearExtrusionFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -213,7 +213,7 @@ void VtkPLinearExtrusionFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPLinearExtrusionFilterWrap::InitPtpl();
+		VtkPLinearExtrusionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkPLinearExtrusionFilterWrap::SetPieceInvariant(const Nan::FunctionCallbac
 	vtkPLinearExtrusionFilter *native = (vtkPLinearExtrusionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

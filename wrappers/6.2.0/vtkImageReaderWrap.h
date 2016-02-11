@@ -31,6 +31,7 @@ class VtkImageReaderWrap : public VtkImageReader2Wrap
 
 		static void ComputeInverseTransformedExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

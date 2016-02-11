@@ -231,7 +231,7 @@ void VtkMNITagPointReaderWrap::GetLabelText(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelText();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +268,7 @@ void VtkMNITagPointReaderWrap::GetPatientIds(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPatientIds();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkMNITagPointReaderWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetPoints(
 			info[0]->Int32Value()
 		);
-			VtkPointsWrap::InitPtpl();
+		VtkPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkMNITagPointReaderWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -337,7 +337,7 @@ void VtkMNITagPointReaderWrap::GetStructureIds(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetStructureIds();
-		VtkIntArrayWrap::InitPtpl();
+	VtkIntArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,7 +360,7 @@ void VtkMNITagPointReaderWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetWeights();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -405,7 +405,7 @@ void VtkMNITagPointReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkMNITagPointReaderWrap::InitPtpl();
+	VtkMNITagPointReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -433,7 +433,7 @@ void VtkMNITagPointReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMNITagPointReaderWrap::InitPtpl();
+		VtkMNITagPointReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -455,7 +455,7 @@ void VtkMNITagPointReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

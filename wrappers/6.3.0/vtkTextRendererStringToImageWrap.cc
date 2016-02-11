@@ -101,7 +101,7 @@ void VtkTextRendererStringToImageWrap::DeepCopy(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextRendererStringToImageWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextRendererStringToImageWrap *a0 = ObjectWrap::Unwrap<VtkTextRendererStringToImageWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -161,7 +161,7 @@ void VtkTextRendererStringToImageWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextRendererStringToImageWrap::InitPtpl();
+	VtkTextRendererStringToImageWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkTextRendererStringToImageWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextRendererStringToImageWrap::InitPtpl();
+		VtkTextRendererStringToImageWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkTextRendererStringToImageWrap::SetScaleToPowerOfTwo(const Nan::FunctionC
 	vtkTextRendererStringToImage *native = (vtkTextRendererStringToImage *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -128,7 +128,7 @@ void VtkInteractorStyleJoystickActorWrap::Dolly(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkInteractorStyleJoystickActorWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleJoystickActorWrap::InitPtpl();
+	VtkInteractorStyleJoystickActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,7 +199,7 @@ void VtkInteractorStyleJoystickActorWrap::OnLeftButtonDown(const Nan::FunctionCa
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -211,7 +211,7 @@ void VtkInteractorStyleJoystickActorWrap::OnLeftButtonUp(const Nan::FunctionCall
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -223,7 +223,7 @@ void VtkInteractorStyleJoystickActorWrap::OnMiddleButtonDown(const Nan::Function
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -235,7 +235,7 @@ void VtkInteractorStyleJoystickActorWrap::OnMiddleButtonUp(const Nan::FunctionCa
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -247,7 +247,7 @@ void VtkInteractorStyleJoystickActorWrap::OnMouseMove(const Nan::FunctionCallbac
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkInteractorStyleJoystickActorWrap::OnRightButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkInteractorStyleJoystickActorWrap::OnRightButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -283,7 +283,7 @@ void VtkInteractorStyleJoystickActorWrap::Pan(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkInteractorStyleJoystickActorWrap::Rotate(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkInteractorStyleJoystickActorWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleJoystickActorWrap::InitPtpl();
+		VtkInteractorStyleJoystickActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkInteractorStyleJoystickActorWrap::Spin(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -350,7 +350,7 @@ void VtkInteractorStyleJoystickActorWrap::UniformScale(const Nan::FunctionCallba
 {
 	VtkInteractorStyleJoystickActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleJoystickActorWrap>(info.Holder());
 	vtkInteractorStyleJoystickActor *native = (vtkInteractorStyleJoystickActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

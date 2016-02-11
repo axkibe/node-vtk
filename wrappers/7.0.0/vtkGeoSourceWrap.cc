@@ -137,7 +137,7 @@ void VtkGeoSourceWrap::GetRequestedNodes(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->GetRequestedNodes(
 			(vtkGeoTreeNode *) a0->native.GetPointer()
 		);
-			VtkCollectionWrap::InitPtpl();
+		VtkCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkGeoSourceWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -181,7 +181,7 @@ void VtkGeoSourceWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkGeoSource *native = (vtkGeoSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,7 @@ void VtkGeoSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoSourceWrap::InitPtpl();
+	VtkGeoSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -246,7 +246,7 @@ void VtkGeoSourceWrap::RequestChildren(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoTreeNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoTreeNodeWrap *a0 = ObjectWrap::Unwrap<VtkGeoTreeNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -275,7 +275,7 @@ void VtkGeoSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoSourceWrap::InitPtpl();
+		VtkGeoSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkGeoSourceWrap::ShutDown(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkGeoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info.Holder());
 	vtkGeoSource *native = (vtkGeoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkGeoSourceWrap::WorkerThread(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoSourceWrap *wrapper = ObjectWrap::Unwrap<VtkGeoSourceWrap>(info.Holder());
 	vtkGeoSource *native = (vtkGeoSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

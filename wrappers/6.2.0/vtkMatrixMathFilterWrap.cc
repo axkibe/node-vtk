@@ -167,7 +167,7 @@ void VtkMatrixMathFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkMatrixMathFilterWrap::InitPtpl();
+	VtkMatrixMathFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkMatrixMathFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMatrixMathFilterWrap::InitPtpl();
+		VtkMatrixMathFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkMatrixMathFilterWrap::SetOperation(const Nan::FunctionCallbackInfo<v8::V
 	vtkMatrixMathFilter *native = (vtkMatrixMathFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -233,7 +233,7 @@ void VtkMatrixMathFilterWrap::SetOperationToDeterminant(const Nan::FunctionCallb
 {
 	VtkMatrixMathFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixMathFilterWrap>(info.Holder());
 	vtkMatrixMathFilter *native = (vtkMatrixMathFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +245,7 @@ void VtkMatrixMathFilterWrap::SetOperationToEigenvalue(const Nan::FunctionCallba
 {
 	VtkMatrixMathFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixMathFilterWrap>(info.Holder());
 	vtkMatrixMathFilter *native = (vtkMatrixMathFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +257,7 @@ void VtkMatrixMathFilterWrap::SetOperationToEigenvector(const Nan::FunctionCallb
 {
 	VtkMatrixMathFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixMathFilterWrap>(info.Holder());
 	vtkMatrixMathFilter *native = (vtkMatrixMathFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkMatrixMathFilterWrap::SetOperationToInverse(const Nan::FunctionCallbackI
 {
 	VtkMatrixMathFilterWrap *wrapper = ObjectWrap::Unwrap<VtkMatrixMathFilterWrap>(info.Holder());
 	vtkMatrixMathFilter *native = (vtkMatrixMathFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -154,7 +154,7 @@ void VtkPolynomialSolversUnivariateWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolynomialSolversUnivariateWrap::InitPtpl();
+	VtkPolynomialSolversUnivariateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkPolynomialSolversUnivariateWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolynomialSolversUnivariateWrap::InitPtpl();
+		VtkPolynomialSolversUnivariateWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkPolynomialSolversUnivariateWrap::SetDivisionTolerance(const Nan::Functio
 	vtkPolynomialSolversUnivariate *native = (vtkPolynomialSolversUnivariate *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

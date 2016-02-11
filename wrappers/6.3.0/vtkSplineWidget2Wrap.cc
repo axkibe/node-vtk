@@ -99,7 +99,7 @@ void VtkSplineWidget2Wrap::CreateDefaultRepresentation(const Nan::FunctionCallba
 {
 	VtkSplineWidget2Wrap *wrapper = ObjectWrap::Unwrap<VtkSplineWidget2Wrap>(info.Holder());
 	vtkSplineWidget2 *native = (vtkSplineWidget2 *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -154,7 +154,7 @@ void VtkSplineWidget2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkSplineWidget2Wrap::InitPtpl();
+	VtkSplineWidget2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkSplineWidget2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSplineWidget2Wrap::InitPtpl();
+		VtkSplineWidget2Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkSplineWidget2Wrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkSplineRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

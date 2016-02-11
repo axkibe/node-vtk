@@ -371,7 +371,7 @@ void VtkDataReaderWrap::CloseVTKFile(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -481,7 +481,7 @@ void VtkDataReaderWrap::GetInputArray(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInputArray();
-		VtkCharArrayWrap::InitPtpl();
+	VtkCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1031,7 +1031,7 @@ void VtkDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataReaderWrap::InitPtpl();
+	VtkDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1083,7 +1083,7 @@ void VtkDataReaderWrap::ReadAllColorScalarsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1095,7 +1095,7 @@ void VtkDataReaderWrap::ReadAllColorScalarsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1107,7 +1107,7 @@ void VtkDataReaderWrap::ReadAllFieldsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1119,7 +1119,7 @@ void VtkDataReaderWrap::ReadAllFieldsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1131,7 +1131,7 @@ void VtkDataReaderWrap::ReadAllNormalsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1143,7 +1143,7 @@ void VtkDataReaderWrap::ReadAllNormalsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1155,7 +1155,7 @@ void VtkDataReaderWrap::ReadAllScalarsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1167,7 +1167,7 @@ void VtkDataReaderWrap::ReadAllScalarsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1179,7 +1179,7 @@ void VtkDataReaderWrap::ReadAllTCoordsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1191,7 +1191,7 @@ void VtkDataReaderWrap::ReadAllTCoordsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1203,7 +1203,7 @@ void VtkDataReaderWrap::ReadAllTensorsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1215,7 +1215,7 @@ void VtkDataReaderWrap::ReadAllTensorsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1227,7 +1227,7 @@ void VtkDataReaderWrap::ReadAllVectorsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1239,7 +1239,7 @@ void VtkDataReaderWrap::ReadAllVectorsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1269,7 +1269,7 @@ void VtkDataReaderWrap::ReadArray(const Nan::FunctionCallbackInfo<v8::Value>& in
 					info[1]->Int32Value(),
 					info[2]->Int32Value()
 				);
-					VtkAbstractArrayWrap::InitPtpl();
+				VtkAbstractArrayWrap::InitPtpl();
 				v8::Local<v8::Value> argv[1] =
 					{ Nan::New(vtkNodeJsNoWrap) };
 				v8::Local<v8::Function> cons =
@@ -1379,7 +1379,7 @@ void VtkDataReaderWrap::ReadFieldData(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->ReadFieldData();
-		VtkFieldDataWrap::InitPtpl();
+	VtkFieldDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1395,7 +1395,7 @@ void VtkDataReaderWrap::ReadFromInputStringOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1407,7 +1407,7 @@ void VtkDataReaderWrap::ReadFromInputStringOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDataReaderWrap>(info.Holder());
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1710,7 +1710,7 @@ void VtkDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataReaderWrap::InitPtpl();
+		VtkDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1734,7 +1734,7 @@ void VtkDataReaderWrap::SetBinaryInputString(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1756,7 +1756,7 @@ void VtkDataReaderWrap::SetFieldDataName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1776,7 +1776,7 @@ void VtkDataReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1796,7 +1796,7 @@ void VtkDataReaderWrap::SetInputArray(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCharArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCharArrayWrap *a0 = ObjectWrap::Unwrap<VtkCharArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1818,7 +1818,7 @@ void VtkDataReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<v8::Value
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1829,7 +1829,7 @@ void VtkDataReaderWrap::SetInputString(const Nan::FunctionCallbackInfo<v8::Value
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1849,7 +1849,7 @@ void VtkDataReaderWrap::SetLookupTableName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1869,7 +1869,7 @@ void VtkDataReaderWrap::SetNormalsName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1888,7 +1888,7 @@ void VtkDataReaderWrap::SetReadAllColorScalars(const Nan::FunctionCallbackInfo<v
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1907,7 +1907,7 @@ void VtkDataReaderWrap::SetReadAllFields(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1926,7 +1926,7 @@ void VtkDataReaderWrap::SetReadAllNormals(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1945,7 +1945,7 @@ void VtkDataReaderWrap::SetReadAllScalars(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1964,7 +1964,7 @@ void VtkDataReaderWrap::SetReadAllTCoords(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1983,7 +1983,7 @@ void VtkDataReaderWrap::SetReadAllTensors(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2002,7 +2002,7 @@ void VtkDataReaderWrap::SetReadAllVectors(const Nan::FunctionCallbackInfo<v8::Va
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2021,7 +2021,7 @@ void VtkDataReaderWrap::SetReadFromInputString(const Nan::FunctionCallbackInfo<v
 	vtkDataReader *native = (vtkDataReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2041,7 +2041,7 @@ void VtkDataReaderWrap::SetScalarsName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2061,7 +2061,7 @@ void VtkDataReaderWrap::SetTCoordsName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2081,7 +2081,7 @@ void VtkDataReaderWrap::SetTensorsName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2101,7 +2101,7 @@ void VtkDataReaderWrap::SetVectorsName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

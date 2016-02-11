@@ -135,7 +135,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
+	VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkHierarchicalDataExtractDataSetsWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
+		VtkHierarchicalDataExtractDataSetsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

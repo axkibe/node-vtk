@@ -117,7 +117,7 @@ void VtkContourLineInterpolatorWrap::GetSpan(const Nan::FunctionCallbackInfo<v8:
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkContourRepresentationWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkContourRepresentationWrap *a2 = ObjectWrap::Unwrap<VtkContourRepresentationWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -167,7 +167,7 @@ void VtkContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkContourLineInterpolatorWrap::InitPtpl();
+	VtkContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContourLineInterpolatorWrap::InitPtpl();
+		VtkContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

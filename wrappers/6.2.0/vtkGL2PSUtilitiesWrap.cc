@@ -126,7 +126,7 @@ void VtkGL2PSUtilitiesWrap::DrawString(const Nan::FunctionCallbackInfo<v8::Value
 
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -161,7 +161,7 @@ void VtkGL2PSUtilitiesWrap::DrawString(const Nan::FunctionCallbackInfo<v8::Value
 				}
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -205,7 +205,7 @@ void VtkGL2PSUtilitiesWrap::GetRenderWindow(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetRenderWindow();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkGL2PSUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkGL2PSUtilitiesWrap::InitPtpl();
+	VtkGL2PSUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -292,7 +292,7 @@ void VtkGL2PSUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGL2PSUtilitiesWrap::InitPtpl();
+		VtkGL2PSUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

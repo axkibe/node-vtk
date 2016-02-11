@@ -68,6 +68,9 @@ void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRateMinValue", GetCoolDownRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRateMinValue", GetCoolDownRateMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetGraphBounds", GetGraphBounds);
+	Nan::SetPrototypeMethod(tpl, "getGraphBounds", GetGraphBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetIterationsPerLayout", GetIterationsPerLayout);
 	Nan::SetPrototypeMethod(tpl, "getIterationsPerLayout", GetIterationsPerLayout);
 
@@ -188,7 +191,7 @@ void VtkForceDirectedLayoutStrategyWrap::AutomaticBoundsComputationOff(const Nan
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +203,7 @@ void VtkForceDirectedLayoutStrategyWrap::AutomaticBoundsComputationOn(const Nan:
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,6 +279,23 @@ void VtkForceDirectedLayoutStrategyWrap::GetCoolDownRateMinValue(const Nan::Func
 	}
 	r = native->GetCoolDownRateMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkForceDirectedLayoutStrategyWrap::GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
+	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGraphBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkForceDirectedLayoutStrategyWrap::GetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -436,7 +456,7 @@ void VtkForceDirectedLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackI
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -484,7 +504,7 @@ void VtkForceDirectedLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -503,7 +523,7 @@ void VtkForceDirectedLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkForceDirectedLayoutStrategyWrap::InitPtpl();
+	VtkForceDirectedLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -519,7 +539,7 @@ void VtkForceDirectedLayoutStrategyWrap::RandomInitialPointsOff(const Nan::Funct
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -531,7 +551,7 @@ void VtkForceDirectedLayoutStrategyWrap::RandomInitialPointsOn(const Nan::Functi
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -555,7 +575,7 @@ void VtkForceDirectedLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkForceDirectedLayoutStrategyWrap::InitPtpl();
+		VtkForceDirectedLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -576,7 +596,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetAutomaticBoundsComputation(const Nan
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +615,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCall
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -622,7 +642,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -651,7 +671,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -673,7 +693,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetGraphBounds(const Nan::FunctionCallb
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -702,7 +722,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetIterationsPerLayout(const Nan::Funct
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -721,7 +741,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetMaxNumberOfIterations(const Nan::Fun
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +760,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetRandomInitialPoints(const Nan::Funct
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -759,7 +779,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallba
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -778,7 +798,7 @@ void VtkForceDirectedLayoutStrategyWrap::SetThreeDimensionalLayout(const Nan::Fu
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -795,7 +815,7 @@ void VtkForceDirectedLayoutStrategyWrap::ThreeDimensionalLayoutOff(const Nan::Fu
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -807,7 +827,7 @@ void VtkForceDirectedLayoutStrategyWrap::ThreeDimensionalLayoutOn(const Nan::Fun
 {
 	VtkForceDirectedLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkForceDirectedLayoutStrategyWrap>(info.Holder());
 	vtkForceDirectedLayoutStrategy *native = (vtkForceDirectedLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

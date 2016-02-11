@@ -250,7 +250,7 @@ void VtkLODProp3DWrap::AddEstimatedRenderTime(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -497,7 +497,7 @@ void VtkLODProp3DWrap::AutomaticLODSelectionOff(const Nan::FunctionCallbackInfo<
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +509,7 @@ void VtkLODProp3DWrap::AutomaticLODSelectionOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +521,7 @@ void VtkLODProp3DWrap::AutomaticPickLODSelectionOff(const Nan::FunctionCallbackI
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +533,7 @@ void VtkLODProp3DWrap::AutomaticPickLODSelectionOn(const Nan::FunctionCallbackIn
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +547,7 @@ void VtkLODProp3DWrap::DisableLOD(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -566,7 +566,7 @@ void VtkLODProp3DWrap::EnableLOD(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -586,7 +586,7 @@ void VtkLODProp3DWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -697,7 +697,7 @@ void VtkLODProp3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -726,7 +726,7 @@ void VtkLODProp3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -736,7 +736,17 @@ void VtkLODProp3DWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkLODProp3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -866,7 +876,7 @@ void VtkLODProp3DWrap::GetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->GetLODMapper(
 			info[0]->Int32Value()
 		);
-			VtkAbstractMapper3DWrap::InitPtpl();
+		VtkAbstractMapper3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -958,7 +968,7 @@ void VtkLODProp3DWrap::GetVolumes(const Nan::FunctionCallbackInfo<v8::Value>& in
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1039,7 +1049,7 @@ void VtkLODProp3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkLODProp3DWrap::InitPtpl();
+	VtkLODProp3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1058,7 +1068,7 @@ void VtkLODProp3DWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1077,7 +1087,7 @@ void VtkLODProp3DWrap::RemoveLOD(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1160,7 +1170,7 @@ void VtkLODProp3DWrap::RestoreEstimatedRenderTime(const Nan::FunctionCallbackInf
 {
 	VtkLODProp3DWrap *wrapper = ObjectWrap::Unwrap<VtkLODProp3DWrap>(info.Holder());
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1184,7 +1194,7 @@ void VtkLODProp3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLODProp3DWrap::InitPtpl();
+		VtkLODProp3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1208,7 +1218,7 @@ void VtkLODProp3DWrap::SetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkViewportWrap *a1 = ObjectWrap::Unwrap<VtkViewportWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1229,7 +1239,7 @@ void VtkLODProp3DWrap::SetAutomaticLODSelection(const Nan::FunctionCallbackInfo<
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1248,7 +1258,7 @@ void VtkLODProp3DWrap::SetAutomaticPickLODSelection(const Nan::FunctionCallbackI
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1270,7 +1280,7 @@ void VtkLODProp3DWrap::SetLODBackfaceProperty(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1293,7 +1303,7 @@ void VtkLODProp3DWrap::SetLODLevel(const Nan::FunctionCallbackInfo<v8::Value>& i
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1317,7 +1327,7 @@ void VtkLODProp3DWrap::SetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImageMapper3DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImageMapper3DWrap *a1 = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1331,7 +1341,7 @@ void VtkLODProp3DWrap::SetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkAbstractVolumeMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkAbstractVolumeMapperWrap *a1 = ObjectWrap::Unwrap<VtkAbstractVolumeMapperWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1345,7 +1355,7 @@ void VtkLODProp3DWrap::SetLODMapper(const Nan::FunctionCallbackInfo<v8::Value>& 
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMapperWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMapperWrap *a1 = ObjectWrap::Unwrap<VtkMapperWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1369,7 +1379,7 @@ void VtkLODProp3DWrap::SetLODProperty(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkImagePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkImagePropertyWrap *a1 = ObjectWrap::Unwrap<VtkImagePropertyWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1383,7 +1393,7 @@ void VtkLODProp3DWrap::SetLODProperty(const Nan::FunctionCallbackInfo<v8::Value>
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumePropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumePropertyWrap *a1 = ObjectWrap::Unwrap<VtkVolumePropertyWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1397,7 +1407,7 @@ void VtkLODProp3DWrap::SetLODProperty(const Nan::FunctionCallbackInfo<v8::Value>
 		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPropertyWrap *a1 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1421,7 +1431,7 @@ void VtkLODProp3DWrap::SetLODTexture(const Nan::FunctionCallbackInfo<v8::Value>&
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextureWrap *a1 = ObjectWrap::Unwrap<VtkTextureWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1442,7 +1452,7 @@ void VtkLODProp3DWrap::SetSelectedLODID(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1461,7 +1471,7 @@ void VtkLODProp3DWrap::SetSelectedPickLODID(const Nan::FunctionCallbackInfo<v8::
 	vtkLODProp3D *native = (vtkLODProp3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1481,7 +1491,7 @@ void VtkLODProp3DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

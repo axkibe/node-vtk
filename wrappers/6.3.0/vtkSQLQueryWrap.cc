@@ -267,7 +267,7 @@ void VtkSQLQueryWrap::GetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->GetDatabase();
-		VtkSQLDatabaseWrap::InitPtpl();
+	VtkSQLDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +340,7 @@ void VtkSQLQueryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkSQLQueryWrap::InitPtpl();
+	VtkSQLQueryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +382,7 @@ void VtkSQLQueryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSQLQueryWrap::InitPtpl();
+		VtkSQLQueryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

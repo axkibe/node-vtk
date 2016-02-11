@@ -191,7 +191,7 @@ void VtkGeoEdgeStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkGeoEdgeStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkGeoEdgeStrategyWrap>(info.Holder());
 	vtkGeoEdgeStrategy *native = (vtkGeoEdgeStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -210,7 +210,7 @@ void VtkGeoEdgeStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoEdgeStrategyWrap::InitPtpl();
+	VtkGeoEdgeStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkGeoEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoEdgeStrategyWrap::InitPtpl();
+		VtkGeoEdgeStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkGeoEdgeStrategyWrap::SetExplodeFactor(const Nan::FunctionCallbackInfo<v8
 	vtkGeoEdgeStrategy *native = (vtkGeoEdgeStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkGeoEdgeStrategyWrap::SetGlobeRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkGeoEdgeStrategy *native = (vtkGeoEdgeStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -297,7 +297,7 @@ void VtkGeoEdgeStrategyWrap::SetNumberOfSubdivisions(const Nan::FunctionCallback
 	vtkGeoEdgeStrategy *native = (vtkGeoEdgeStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

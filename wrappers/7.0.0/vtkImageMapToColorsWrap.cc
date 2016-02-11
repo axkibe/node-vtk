@@ -170,7 +170,7 @@ void VtkImageMapToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkImageMapToColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMapToColorsWrap::InitPtpl();
+	VtkImageMapToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkImageMapToColorsWrap::PassAlphaToOutputOff(const Nan::FunctionCallbackIn
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkImageMapToColorsWrap::PassAlphaToOutputOn(const Nan::FunctionCallbackInf
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkImageMapToColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMapToColorsWrap::InitPtpl();
+		VtkImageMapToColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkImageMapToColorsWrap::SetActiveComponent(const Nan::FunctionCallbackInfo
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkImageMapToColorsWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +355,7 @@ void VtkImageMapToColorsWrap::SetOutputFormat(const Nan::FunctionCallbackInfo<v8
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -372,7 +372,7 @@ void VtkImageMapToColorsWrap::SetOutputFormatToLuminance(const Nan::FunctionCall
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -384,7 +384,7 @@ void VtkImageMapToColorsWrap::SetOutputFormatToLuminanceAlpha(const Nan::Functio
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkImageMapToColorsWrap::SetOutputFormatToRGB(const Nan::FunctionCallbackIn
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -408,7 +408,7 @@ void VtkImageMapToColorsWrap::SetOutputFormatToRGBA(const Nan::FunctionCallbackI
 {
 	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -422,7 +422,7 @@ void VtkImageMapToColorsWrap::SetPassAlphaToOutput(const Nan::FunctionCallbackIn
 	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

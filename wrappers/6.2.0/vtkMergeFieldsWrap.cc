@@ -161,7 +161,7 @@ void VtkMergeFieldsWrap::Merge(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -189,7 +189,7 @@ void VtkMergeFieldsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkMergeFieldsWrap::InitPtpl();
+	VtkMergeFieldsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkMergeFieldsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMergeFieldsWrap::InitPtpl();
+		VtkMergeFieldsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkMergeFieldsWrap::SetNumberOfComponents(const Nan::FunctionCallbackInfo<v
 	vtkMergeFields *native = (vtkMergeFields *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,7 +261,7 @@ void VtkMergeFieldsWrap::SetOutputField(const Nan::FunctionCallbackInfo<v8::Valu
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -274,7 +274,7 @@ void VtkMergeFieldsWrap::SetOutputField(const Nan::FunctionCallbackInfo<v8::Valu
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

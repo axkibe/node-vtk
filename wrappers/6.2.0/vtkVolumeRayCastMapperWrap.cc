@@ -203,7 +203,7 @@ void VtkVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOff(const Nan::Functio
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOn(const Nan::Function
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,7 +290,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientEstimator(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetGradientEstimator();
-		VtkEncodedGradientEstimatorWrap::InitPtpl();
+	VtkEncodedGradientEstimatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkVolumeRayCastMapperWrap::GetGradientShader(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetGradientShader();
-		VtkEncodedGradientShaderWrap::InitPtpl();
+	VtkEncodedGradientShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -532,7 +532,7 @@ void VtkVolumeRayCastMapperWrap::GetVolumeRayCastFunction(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetVolumeRayCastFunction();
-		VtkVolumeRayCastFunctionWrap::InitPtpl();
+	VtkVolumeRayCastFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -548,7 +548,7 @@ void VtkVolumeRayCastMapperWrap::IntermixIntersectingGeometryOff(const Nan::Func
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -560,7 +560,7 @@ void VtkVolumeRayCastMapperWrap::IntermixIntersectingGeometryOn(const Nan::Funct
 {
 	VtkVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeRayCastMapperWrap>(info.Holder());
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -601,7 +601,7 @@ void VtkVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeRayCastMapperWrap::InitPtpl();
+	VtkVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -620,7 +620,7 @@ void VtkVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -643,7 +643,7 @@ void VtkVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::Valu
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -674,7 +674,7 @@ void VtkVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeRayCastMapperWrap::InitPtpl();
+		VtkVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -695,7 +695,7 @@ void VtkVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(const Nan::Functio
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +715,7 @@ void VtkVolumeRayCastMapperWrap::SetGradientEstimator(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkEncodedGradientEstimatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkEncodedGradientEstimatorWrap *a0 = ObjectWrap::Unwrap<VtkEncodedGradientEstimatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -734,7 +734,7 @@ void VtkVolumeRayCastMapperWrap::SetImageSampleDistance(const Nan::FunctionCallb
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -753,7 +753,7 @@ void VtkVolumeRayCastMapperWrap::SetIntermixIntersectingGeometry(const Nan::Func
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +772,7 @@ void VtkVolumeRayCastMapperWrap::SetMaximumImageSampleDistance(const Nan::Functi
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -791,7 +791,7 @@ void VtkVolumeRayCastMapperWrap::SetMinimumImageSampleDistance(const Nan::Functi
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +810,7 @@ void VtkVolumeRayCastMapperWrap::SetNumberOfThreads(const Nan::FunctionCallbackI
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -829,7 +829,7 @@ void VtkVolumeRayCastMapperWrap::SetSampleDistance(const Nan::FunctionCallbackIn
 	vtkVolumeRayCastMapper *native = (vtkVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -849,7 +849,7 @@ void VtkVolumeRayCastMapperWrap::SetVolumeRayCastFunction(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeRayCastFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeRayCastFunctionWrap *a0 = ObjectWrap::Unwrap<VtkVolumeRayCastFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

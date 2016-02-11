@@ -351,7 +351,7 @@ void VtkConstrained2DLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackI
 {
 	VtkConstrained2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConstrained2DLayoutStrategyWrap>(info.Holder());
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -399,7 +399,7 @@ void VtkConstrained2DLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<
 {
 	VtkConstrained2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConstrained2DLayoutStrategyWrap>(info.Holder());
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkConstrained2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkConstrained2DLayoutStrategyWrap::InitPtpl();
+	VtkConstrained2DLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,7 +446,7 @@ void VtkConstrained2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConstrained2DLayoutStrategyWrap::InitPtpl();
+		VtkConstrained2DLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -467,7 +467,7 @@ void VtkConstrained2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCall
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +487,7 @@ void VtkConstrained2DLayoutStrategyWrap::SetInputArrayName(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +506,7 @@ void VtkConstrained2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::Funct
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +525,7 @@ void VtkConstrained2DLayoutStrategyWrap::SetMaxNumberOfIterations(const Nan::Fun
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -544,7 +544,7 @@ void VtkConstrained2DLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallba
 	vtkConstrained2DLayoutStrategy *native = (vtkConstrained2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

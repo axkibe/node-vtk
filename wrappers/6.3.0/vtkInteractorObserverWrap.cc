@@ -193,7 +193,7 @@ void VtkInteractorObserverWrap::ComputeDisplayToWorld(const Nan::FunctionCallbac
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -226,7 +226,7 @@ void VtkInteractorObserverWrap::ComputeDisplayToWorld(const Nan::FunctionCallbac
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -270,7 +270,7 @@ void VtkInteractorObserverWrap::ComputeWorldToDisplay(const Nan::FunctionCallbac
 							return;
 						}
 
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -303,7 +303,7 @@ void VtkInteractorObserverWrap::ComputeWorldToDisplay(const Nan::FunctionCallbac
 							}
 							b4[i] = a4->Get(i)->NumberValue();
 						}
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -328,7 +328,7 @@ void VtkInteractorObserverWrap::EnabledOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkInteractorObserverWrap::EnabledOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -373,7 +373,7 @@ void VtkInteractorObserverWrap::GetCurrentRenderer(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCurrentRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkInteractorObserverWrap::GetDefaultRenderer(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDefaultRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -433,7 +433,7 @@ void VtkInteractorObserverWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetInteractor();
-		VtkRenderWindowInteractorWrap::InitPtpl();
+	VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkInteractorObserverWrap::GrabFocus(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCommandWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCommandWrap *a1 = ObjectWrap::Unwrap<VtkCommandWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -538,7 +538,7 @@ void VtkInteractorObserverWrap::KeyPressActivationOff(const Nan::FunctionCallbac
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -550,7 +550,7 @@ void VtkInteractorObserverWrap::KeyPressActivationOn(const Nan::FunctionCallback
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -569,7 +569,7 @@ void VtkInteractorObserverWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorObserverWrap::InitPtpl();
+	VtkInteractorObserverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -585,7 +585,7 @@ void VtkInteractorObserverWrap::Off(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -597,7 +597,7 @@ void VtkInteractorObserverWrap::On(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -609,7 +609,7 @@ void VtkInteractorObserverWrap::OnChar(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -621,7 +621,7 @@ void VtkInteractorObserverWrap::PickingManagedOff(const Nan::FunctionCallbackInf
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -633,7 +633,7 @@ void VtkInteractorObserverWrap::PickingManagedOn(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -645,7 +645,7 @@ void VtkInteractorObserverWrap::ReleaseFocus(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkInteractorObserverWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorObserverWrap>(info.Holder());
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -669,7 +669,7 @@ void VtkInteractorObserverWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorObserverWrap::InitPtpl();
+		VtkInteractorObserverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -691,7 +691,7 @@ void VtkInteractorObserverWrap::SetCurrentRenderer(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -711,7 +711,7 @@ void VtkInteractorObserverWrap::SetDefaultRenderer(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -730,7 +730,7 @@ void VtkInteractorObserverWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::V
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -750,7 +750,7 @@ void VtkInteractorObserverWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -769,7 +769,7 @@ void VtkInteractorObserverWrap::SetKeyPressActivation(const Nan::FunctionCallbac
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -794,7 +794,7 @@ void VtkInteractorObserverWrap::SetKeyPressActivationValue(const Nan::FunctionCa
 			Nan::ThrowError("char value out of bounds.");
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -813,7 +813,7 @@ void VtkInteractorObserverWrap::SetPickingManaged(const Nan::FunctionCallbackInf
 	vtkInteractorObserver *native = (vtkInteractorObserver *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

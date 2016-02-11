@@ -118,7 +118,7 @@ void VtkSQLDatabaseWrap::CreateFromURL(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->CreateFromURL(
 			*a0
 		);
-			VtkSQLDatabaseWrap::InitPtpl();
+		VtkSQLDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -144,7 +144,7 @@ void VtkSQLDatabaseWrap::DATABASE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->DATABASE();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -250,7 +250,7 @@ void VtkSQLDatabaseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkSQLDatabaseWrap::InitPtpl();
+	VtkSQLDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkSQLDatabaseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSQLDatabaseWrap::InitPtpl();
+		VtkSQLDatabaseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkSQLDatabaseWrap::UnRegisterAllCreateFromURLCallbacks(const Nan::Function
 {
 	VtkSQLDatabaseWrap *wrapper = ObjectWrap::Unwrap<VtkSQLDatabaseWrap>(info.Holder());
 	vtkSQLDatabase *native = (vtkSQLDatabase *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

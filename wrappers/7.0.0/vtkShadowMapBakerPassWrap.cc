@@ -142,7 +142,7 @@ void VtkShadowMapBakerPassWrap::GetCompositeZPass(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetCompositeZPass();
-		VtkRenderPassWrap::InitPtpl();
+	VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkShadowMapBakerPassWrap::GetOpaqueSequence(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetOpaqueSequence();
-		VtkRenderPassWrap::InitPtpl();
+	VtkRenderPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkShadowMapBakerPassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkShadowMapBakerPassWrap::InitPtpl();
+	VtkShadowMapBakerPassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -279,7 +279,7 @@ void VtkShadowMapBakerPassWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -308,7 +308,7 @@ void VtkShadowMapBakerPassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkShadowMapBakerPassWrap::InitPtpl();
+		VtkShadowMapBakerPassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -330,7 +330,7 @@ void VtkShadowMapBakerPassWrap::SetCompositeZPass(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -350,7 +350,7 @@ void VtkShadowMapBakerPassWrap::SetOpaqueSequence(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderPassWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderPassWrap *a0 = ObjectWrap::Unwrap<VtkRenderPassWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,7 @@ void VtkShadowMapBakerPassWrap::SetUpToDate(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
 	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

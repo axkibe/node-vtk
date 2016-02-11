@@ -221,7 +221,7 @@ void VtkEnSightMasterServerReaderWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkEnSightMasterServerReaderWrap::InitPtpl();
+	VtkEnSightMasterServerReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkEnSightMasterServerReaderWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEnSightMasterServerReaderWrap::InitPtpl();
+		VtkEnSightMasterServerReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -270,7 +270,7 @@ void VtkEnSightMasterServerReaderWrap::SetCurrentPiece(const Nan::FunctionCallba
 	vtkEnSightMasterServerReader *native = (vtkEnSightMasterServerReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

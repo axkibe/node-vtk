@@ -187,7 +187,7 @@ void VtkSLACReaderWrap::AddModeFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -247,7 +247,7 @@ void VtkSLACReaderWrap::GetFrequencyScales(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetFrequencyScales();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkSLACReaderWrap::GetPhaseShifts(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetPhaseShifts();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -406,7 +406,7 @@ void VtkSLACReaderWrap::IS_EXTERNAL_SURFACE(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->IS_EXTERNAL_SURFACE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -429,7 +429,7 @@ void VtkSLACReaderWrap::IS_INTERNAL_VOLUME(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->IS_INTERNAL_VOLUME();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -474,7 +474,7 @@ void VtkSLACReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkSLACReaderWrap::InitPtpl();
+	VtkSLACReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkSLACReaderWrap::POINTS(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->POINTS();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkSLACReaderWrap::POINT_DATA(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->POINT_DATA();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -536,7 +536,7 @@ void VtkSLACReaderWrap::ReadExternalSurfaceOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -548,7 +548,7 @@ void VtkSLACReaderWrap::ReadExternalSurfaceOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -560,7 +560,7 @@ void VtkSLACReaderWrap::ReadInternalVolumeOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -572,7 +572,7 @@ void VtkSLACReaderWrap::ReadInternalVolumeOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -584,7 +584,7 @@ void VtkSLACReaderWrap::ReadMidpointsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -596,7 +596,7 @@ void VtkSLACReaderWrap::ReadMidpointsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -608,7 +608,7 @@ void VtkSLACReaderWrap::RemoveAllModeFileNames(const Nan::FunctionCallbackInfo<v
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -620,7 +620,7 @@ void VtkSLACReaderWrap::ResetFrequencyScales(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +632,7 @@ void VtkSLACReaderWrap::ResetPhaseShifts(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -656,7 +656,7 @@ void VtkSLACReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSLACReaderWrap::InitPtpl();
+		VtkSLACReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -679,7 +679,7 @@ void VtkSLACReaderWrap::SetFrequencyScale(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -701,7 +701,7 @@ void VtkSLACReaderWrap::SetMeshFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -722,7 +722,7 @@ void VtkSLACReaderWrap::SetPhaseShift(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -743,7 +743,7 @@ void VtkSLACReaderWrap::SetReadExternalSurface(const Nan::FunctionCallbackInfo<v
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +762,7 @@ void VtkSLACReaderWrap::SetReadInternalVolume(const Nan::FunctionCallbackInfo<v8
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -781,7 +781,7 @@ void VtkSLACReaderWrap::SetReadMidpoints(const Nan::FunctionCallbackInfo<v8::Val
 	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -803,7 +803,7 @@ void VtkSLACReaderWrap::SetVariableArrayStatus(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

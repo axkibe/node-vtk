@@ -133,7 +133,7 @@ void VtkCriticalSectionWrap::Lock(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCriticalSectionWrap *wrapper = ObjectWrap::Unwrap<VtkCriticalSectionWrap>(info.Holder());
 	vtkCriticalSection *native = (vtkCriticalSection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkCriticalSectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkCriticalSectionWrap::InitPtpl();
+	VtkCriticalSectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkCriticalSectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCriticalSectionWrap::InitPtpl();
+		VtkCriticalSectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -199,7 +199,7 @@ void VtkCriticalSectionWrap::Unlock(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCriticalSectionWrap *wrapper = ObjectWrap::Unwrap<VtkCriticalSectionWrap>(info.Holder());
 	vtkCriticalSection *native = (vtkCriticalSection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

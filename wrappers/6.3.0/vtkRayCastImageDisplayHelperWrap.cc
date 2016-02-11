@@ -198,7 +198,7 @@ void VtkRayCastImageDisplayHelperWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkRayCastImageDisplayHelperWrap::InitPtpl();
+	VtkRayCastImageDisplayHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkRayCastImageDisplayHelperWrap::PreMultipliedColorsOff(const Nan::Functio
 {
 	VtkRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkRayCastImageDisplayHelperWrap>(info.Holder());
 	vtkRayCastImageDisplayHelper *native = (vtkRayCastImageDisplayHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -226,7 +226,7 @@ void VtkRayCastImageDisplayHelperWrap::PreMultipliedColorsOn(const Nan::Function
 {
 	VtkRayCastImageDisplayHelperWrap *wrapper = ObjectWrap::Unwrap<VtkRayCastImageDisplayHelperWrap>(info.Holder());
 	vtkRayCastImageDisplayHelper *native = (vtkRayCastImageDisplayHelper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +241,7 @@ void VtkRayCastImageDisplayHelperWrap::ReleaseGraphicsResources(const Nan::Funct
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -270,7 +270,7 @@ void VtkRayCastImageDisplayHelperWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRayCastImageDisplayHelperWrap::InitPtpl();
+		VtkRayCastImageDisplayHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkRayCastImageDisplayHelperWrap::SetPreMultipliedColors(const Nan::Functio
 	vtkRayCastImageDisplayHelper *native = (vtkRayCastImageDisplayHelper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

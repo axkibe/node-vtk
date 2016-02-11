@@ -120,7 +120,7 @@ void VtkBMPReaderWrap::Allow8BitBMPOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkBMPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBMPReaderWrap>(info.Holder());
 	vtkBMPReader *native = (vtkBMPReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +132,7 @@ void VtkBMPReaderWrap::Allow8BitBMPOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBMPReaderWrap *wrapper = ObjectWrap::Unwrap<VtkBMPReaderWrap>(info.Holder());
 	vtkBMPReader *native = (vtkBMPReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkBMPReaderWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkLookupTableWrap::InitPtpl();
+	VtkLookupTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkBMPReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkBMPReaderWrap::InitPtpl();
+	VtkBMPReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkBMPReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBMPReaderWrap::InitPtpl();
+		VtkBMPReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -337,7 +337,7 @@ void VtkBMPReaderWrap::SetAllow8BitBMP(const Nan::FunctionCallbackInfo<v8::Value
 	vtkBMPReader *native = (vtkBMPReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

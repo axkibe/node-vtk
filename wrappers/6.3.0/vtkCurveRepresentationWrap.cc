@@ -209,7 +209,7 @@ void VtkCurveRepresentationWrap::ClosedOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -221,7 +221,7 @@ void VtkCurveRepresentationWrap::ClosedOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkCurveRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -301,7 +301,7 @@ void VtkCurveRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -358,7 +358,7 @@ void VtkCurveRepresentationWrap::GetHandlePosition(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -388,7 +388,7 @@ void VtkCurveRepresentationWrap::GetHandlePosition(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -414,7 +414,7 @@ void VtkCurveRepresentationWrap::GetHandleProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -437,7 +437,7 @@ void VtkCurveRepresentationWrap::GetLineProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -544,7 +544,7 @@ void VtkCurveRepresentationWrap::GetSelectedHandleProperty(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -567,7 +567,7 @@ void VtkCurveRepresentationWrap::GetSelectedLineProperty(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSelectedLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -640,7 +640,7 @@ void VtkCurveRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkCurveRepresentationWrap::InitPtpl();
+	VtkCurveRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -656,7 +656,7 @@ void VtkCurveRepresentationWrap::ProjectToPlaneOff(const Nan::FunctionCallbackIn
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -668,7 +668,7 @@ void VtkCurveRepresentationWrap::ProjectToPlaneOn(const Nan::FunctionCallbackInf
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -683,7 +683,7 @@ void VtkCurveRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -778,7 +778,7 @@ void VtkCurveRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCurveRepresentationWrap::InitPtpl();
+		VtkCurveRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -799,7 +799,7 @@ void VtkCurveRepresentationWrap::SetClosed(const Nan::FunctionCallbackInfo<v8::V
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -828,7 +828,7 @@ void VtkCurveRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackIn
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -858,7 +858,7 @@ void VtkCurveRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackIn
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -875,7 +875,7 @@ void VtkCurveRepresentationWrap::SetHandlePosition(const Nan::FunctionCallbackIn
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -900,7 +900,7 @@ void VtkCurveRepresentationWrap::SetInteractionState(const Nan::FunctionCallback
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -923,7 +923,7 @@ void VtkCurveRepresentationWrap::SetLineColor(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -947,7 +947,7 @@ void VtkCurveRepresentationWrap::SetPlaneSource(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneSourceWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneSourceWrap *a0 = ObjectWrap::Unwrap<VtkPlaneSourceWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -966,7 +966,7 @@ void VtkCurveRepresentationWrap::SetProjectToPlane(const Nan::FunctionCallbackIn
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -985,7 +985,7 @@ void VtkCurveRepresentationWrap::SetProjectionNormal(const Nan::FunctionCallback
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1002,7 +1002,7 @@ void VtkCurveRepresentationWrap::SetProjectionNormalToOblique(const Nan::Functio
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1014,7 +1014,7 @@ void VtkCurveRepresentationWrap::SetProjectionNormalToXAxes(const Nan::FunctionC
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1026,7 +1026,7 @@ void VtkCurveRepresentationWrap::SetProjectionNormalToYAxes(const Nan::FunctionC
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1038,7 +1038,7 @@ void VtkCurveRepresentationWrap::SetProjectionNormalToZAxes(const Nan::FunctionC
 {
 	VtkCurveRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkCurveRepresentationWrap>(info.Holder());
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1052,7 +1052,7 @@ void VtkCurveRepresentationWrap::SetProjectionPosition(const Nan::FunctionCallba
 	vtkCurveRepresentation *native = (vtkCurveRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1079,7 +1079,7 @@ void VtkCurveRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1108,7 +1108,7 @@ void VtkCurveRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1135,7 +1135,7 @@ void VtkCurveRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackIn
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1164,7 +1164,7 @@ void VtkCurveRepresentationWrap::WidgetInteraction(const Nan::FunctionCallbackIn
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

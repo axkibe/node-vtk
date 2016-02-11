@@ -126,7 +126,7 @@ void VtkSocketControllerWrap::CloseConnection(const Nan::FunctionCallbackInfo<v8
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkSocketControllerWrap::CreateCompliantController(const Nan::FunctionCallb
 		return;
 	}
 	r = native->CreateCompliantController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -187,7 +187,7 @@ void VtkSocketControllerWrap::CreateOutputWindow(const Nan::FunctionCallbackInfo
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkSocketControllerWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -211,7 +211,7 @@ void VtkSocketControllerWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value
 		);
 		return;
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkSocketControllerWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkSocketControllerWrap::MultipleMethodExecute(const Nan::FunctionCallbackI
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkSocketControllerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkSocketControllerWrap::InitPtpl();
+	VtkSocketControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -332,7 +332,7 @@ void VtkSocketControllerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSocketControllerWrap::InitPtpl();
+		VtkSocketControllerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -354,7 +354,7 @@ void VtkSocketControllerWrap::SetCommunicator(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSocketCommunicatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSocketCommunicatorWrap *a0 = ObjectWrap::Unwrap<VtkSocketCommunicatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +371,7 @@ void VtkSocketControllerWrap::SingleMethodExecute(const Nan::FunctionCallbackInf
 {
 	VtkSocketControllerWrap *wrapper = ObjectWrap::Unwrap<VtkSocketControllerWrap>(info.Holder());
 	vtkSocketController *native = (vtkSocketController *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

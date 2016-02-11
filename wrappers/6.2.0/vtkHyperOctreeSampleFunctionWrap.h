@@ -36,7 +36,9 @@ class VtkHyperOctreeSampleFunctionWrap : public VtkHyperOctreeAlgorithmWrap
 		static void GetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

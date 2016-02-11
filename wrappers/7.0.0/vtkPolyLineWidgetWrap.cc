@@ -99,7 +99,7 @@ void VtkPolyLineWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallb
 {
 	VtkPolyLineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineWidgetWrap>(info.Holder());
 	vtkPolyLineWidget *native = (vtkPolyLineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -154,7 +154,7 @@ void VtkPolyLineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyLineWidgetWrap::InitPtpl();
+	VtkPolyLineWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkPolyLineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyLineWidgetWrap::InitPtpl();
+		VtkPolyLineWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkPolyLineWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyLineRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyLineRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkPolyLineRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

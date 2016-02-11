@@ -35,7 +35,9 @@ class VtkGlyphSource2DWrap : public VtkPolyDataAlgorithmWrap
 		static void DashOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FilledOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FilledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCross(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDash(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilled(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -124,7 +124,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkMultiPieceDataSetWrap::InitPtpl();
+		VtkMultiPieceDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -143,7 +143,7 @@ void VtkMultiNewickTreeReaderWrap::GetOutput(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetOutput();
-		VtkMultiPieceDataSetWrap::InitPtpl();
+	VtkMultiPieceDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -188,7 +188,7 @@ void VtkMultiNewickTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiNewickTreeReaderWrap::InitPtpl();
+	VtkMultiNewickTreeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -216,7 +216,7 @@ void VtkMultiNewickTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiNewickTreeReaderWrap::InitPtpl();
+		VtkMultiNewickTreeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkMultiNewickTreeReaderWrap::SetOutput(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiPieceDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiPieceDataSetWrap *a0 = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

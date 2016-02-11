@@ -187,7 +187,7 @@ void VtkReverseSenseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkReverseSenseWrap::InitPtpl();
+	VtkReverseSenseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkReverseSenseWrap::ReverseCellsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkReverseSenseWrap *wrapper = ObjectWrap::Unwrap<VtkReverseSenseWrap>(info.Holder());
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkReverseSenseWrap::ReverseCellsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkReverseSenseWrap *wrapper = ObjectWrap::Unwrap<VtkReverseSenseWrap>(info.Holder());
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkReverseSenseWrap::ReverseNormalsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkReverseSenseWrap *wrapper = ObjectWrap::Unwrap<VtkReverseSenseWrap>(info.Holder());
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkReverseSenseWrap::ReverseNormalsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkReverseSenseWrap *wrapper = ObjectWrap::Unwrap<VtkReverseSenseWrap>(info.Holder());
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -263,7 +263,7 @@ void VtkReverseSenseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkReverseSenseWrap::InitPtpl();
+		VtkReverseSenseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkReverseSenseWrap::SetReverseCells(const Nan::FunctionCallbackInfo<v8::Va
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -303,7 +303,7 @@ void VtkReverseSenseWrap::SetReverseNormals(const Nan::FunctionCallbackInfo<v8::
 	vtkReverseSense *native = (vtkReverseSense *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

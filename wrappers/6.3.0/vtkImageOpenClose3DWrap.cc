@@ -123,7 +123,7 @@ void VtkImageOpenClose3DWrap::DebugOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageOpenClose3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageOpenClose3DWrap>(info.Holder());
 	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -135,7 +135,7 @@ void VtkImageOpenClose3DWrap::DebugOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkImageOpenClose3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageOpenClose3DWrap>(info.Holder());
 	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkImageOpenClose3DWrap::GetFilter0(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetFilter0();
-		VtkImageDilateErode3DWrap::InitPtpl();
+	VtkImageDilateErode3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkImageOpenClose3DWrap::GetFilter1(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetFilter1();
-		VtkImageDilateErode3DWrap::InitPtpl();
+	VtkImageDilateErode3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkImageOpenClose3DWrap::Modified(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageOpenClose3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageOpenClose3DWrap>(info.Holder());
 	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -276,7 +276,7 @@ void VtkImageOpenClose3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageOpenClose3DWrap::InitPtpl();
+	VtkImageOpenClose3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkImageOpenClose3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageOpenClose3DWrap::InitPtpl();
+		VtkImageOpenClose3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -325,7 +325,7 @@ void VtkImageOpenClose3DWrap::SetCloseValue(const Nan::FunctionCallbackInfo<v8::
 	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -348,7 +348,7 @@ void VtkImageOpenClose3DWrap::SetKernelSize(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -371,7 +371,7 @@ void VtkImageOpenClose3DWrap::SetOpenValue(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageOpenClose3D *native = (vtkImageOpenClose3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

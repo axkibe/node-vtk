@@ -107,7 +107,7 @@ void VtkSpanTreeLayoutStrategyWrap::DepthFirstSpanningTreeOff(const Nan::Functio
 {
 	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
 	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -119,7 +119,7 @@ void VtkSpanTreeLayoutStrategyWrap::DepthFirstSpanningTreeOn(const Nan::Function
 {
 	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
 	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkSpanTreeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSpanTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkSpanTreeLayoutStrategyWrap>(info.Holder());
 	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkSpanTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkSpanTreeLayoutStrategyWrap::InitPtpl();
+	VtkSpanTreeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkSpanTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSpanTreeLayoutStrategyWrap::InitPtpl();
+		VtkSpanTreeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkSpanTreeLayoutStrategyWrap::SetDepthFirstSpanningTree(const Nan::Functio
 	vtkSpanTreeLayoutStrategy *native = (vtkSpanTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

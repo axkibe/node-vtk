@@ -121,7 +121,7 @@ void VtkXMLPUnstructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInf
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkUnstructuredGridWrap::InitPtpl();
+		VtkUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -140,7 +140,7 @@ void VtkXMLPUnstructuredGridReaderWrap::GetOutput(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkXMLPUnstructuredGridReaderWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPUnstructuredGridReaderWrap::InitPtpl();
+	VtkXMLPUnstructuredGridReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkXMLPUnstructuredGridReaderWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPUnstructuredGridReaderWrap::InitPtpl();
+		VtkXMLPUnstructuredGridReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

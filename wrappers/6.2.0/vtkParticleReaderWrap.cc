@@ -344,7 +344,7 @@ void VtkParticleReaderWrap::HasScalarOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkParticleReaderWrap::HasScalarOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -397,7 +397,7 @@ void VtkParticleReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkParticleReaderWrap::InitPtpl();
+	VtkParticleReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -425,7 +425,7 @@ void VtkParticleReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParticleReaderWrap::InitPtpl();
+		VtkParticleReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -446,7 +446,7 @@ void VtkParticleReaderWrap::SetDataByteOrder(const Nan::FunctionCallbackInfo<v8:
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +463,7 @@ void VtkParticleReaderWrap::SetDataByteOrderToBigEndian(const Nan::FunctionCallb
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -475,7 +475,7 @@ void VtkParticleReaderWrap::SetDataByteOrderToLittleEndian(const Nan::FunctionCa
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -489,7 +489,7 @@ void VtkParticleReaderWrap::SetDataType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +506,7 @@ void VtkParticleReaderWrap::SetDataTypeToDouble(const Nan::FunctionCallbackInfo<
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -518,7 +518,7 @@ void VtkParticleReaderWrap::SetDataTypeToFloat(const Nan::FunctionCallbackInfo<v
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +533,7 @@ void VtkParticleReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +552,7 @@ void VtkParticleReaderWrap::SetFileType(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +569,7 @@ void VtkParticleReaderWrap::SetFileTypeToBinary(const Nan::FunctionCallbackInfo<
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -581,7 +581,7 @@ void VtkParticleReaderWrap::SetFileTypeToText(const Nan::FunctionCallbackInfo<v8
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -593,7 +593,7 @@ void VtkParticleReaderWrap::SetFileTypeToUnknown(const Nan::FunctionCallbackInfo
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +607,7 @@ void VtkParticleReaderWrap::SetHasScalar(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -626,7 +626,7 @@ void VtkParticleReaderWrap::SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -643,7 +643,7 @@ void VtkParticleReaderWrap::SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -655,7 +655,7 @@ void VtkParticleReaderWrap::SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParticleReaderWrap *wrapper = ObjectWrap::Unwrap<VtkParticleReaderWrap>(info.Holder());
 	vtkParticleReader *native = (vtkParticleReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

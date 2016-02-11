@@ -39,6 +39,8 @@ class VtkRIBExporterWrap : public VtkExporterWrap
 		static void GetExportArraysMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExportArraysMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPixelSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexturePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

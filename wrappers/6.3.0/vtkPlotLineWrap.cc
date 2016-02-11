@@ -165,7 +165,7 @@ void VtkPlotLineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotLineWrap::InitPtpl();
+	VtkPlotLineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkPlotLineWrap::PolyLineOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
 	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkPlotLineWrap::PolyLineOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkPlotLineWrap *wrapper = ObjectWrap::Unwrap<VtkPlotLineWrap>(info.Holder());
 	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkPlotLineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotLineWrap::InitPtpl();
+		VtkPlotLineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkPlotLineWrap::SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkPlotLine *native = (vtkPlotLine *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

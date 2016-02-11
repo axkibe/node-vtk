@@ -151,7 +151,7 @@ void VtkArcParallelEdgeStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkArcParallelEdgeStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkArcParallelEdgeStrategyWrap>(info.Holder());
 	vtkArcParallelEdgeStrategy *native = (vtkArcParallelEdgeStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkArcParallelEdgeStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkArcParallelEdgeStrategyWrap::InitPtpl();
+	VtkArcParallelEdgeStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkArcParallelEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArcParallelEdgeStrategyWrap::InitPtpl();
+		VtkArcParallelEdgeStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -219,7 +219,7 @@ void VtkArcParallelEdgeStrategyWrap::SetNumberOfSubdivisions(const Nan::Function
 	vtkArcParallelEdgeStrategy *native = (vtkArcParallelEdgeStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

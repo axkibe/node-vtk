@@ -139,7 +139,7 @@ void VtkGeoTransformWrap::GetDestinationProjection(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDestinationProjection();
-		VtkGeoProjectionWrap::InitPtpl();
+	VtkGeoProjectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -162,7 +162,7 @@ void VtkGeoTransformWrap::GetSourceProjection(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetSourceProjection();
-		VtkGeoProjectionWrap::InitPtpl();
+	VtkGeoProjectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -197,7 +197,7 @@ void VtkGeoTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -227,7 +227,7 @@ void VtkGeoTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -277,7 +277,7 @@ void VtkGeoTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -297,7 +297,7 @@ void VtkGeoTransformWrap::InternalTransformPoint(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -316,7 +316,7 @@ void VtkGeoTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkGeoTransformWrap *wrapper = ObjectWrap::Unwrap<VtkGeoTransformWrap>(info.Holder());
 	vtkGeoTransform *native = (vtkGeoTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +357,7 @@ void VtkGeoTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,7 +380,7 @@ void VtkGeoTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoTransformWrap::InitPtpl();
+	VtkGeoTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -408,7 +408,7 @@ void VtkGeoTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoTransformWrap::InitPtpl();
+		VtkGeoTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -430,7 +430,7 @@ void VtkGeoTransformWrap::SetDestinationProjection(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoProjectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoProjectionWrap *a0 = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +450,7 @@ void VtkGeoTransformWrap::SetSourceProjection(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGeoProjectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGeoProjectionWrap *a0 = ObjectWrap::Unwrap<VtkGeoProjectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +473,7 @@ void VtkGeoTransformWrap::TransformPoints(const Nan::FunctionCallbackInfo<v8::Va
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

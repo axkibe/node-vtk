@@ -137,7 +137,7 @@ void VtkCellDistanceSelectorWrap::AddIntermediateOff(const Nan::FunctionCallback
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -149,7 +149,7 @@ void VtkCellDistanceSelectorWrap::AddIntermediateOn(const Nan::FunctionCallbackI
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkCellDistanceSelectorWrap::IncludeSeedOff(const Nan::FunctionCallbackInfo
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -229,7 +229,7 @@ void VtkCellDistanceSelectorWrap::IncludeSeedOn(const Nan::FunctionCallbackInfo<
 {
 	VtkCellDistanceSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkCellDistanceSelectorWrap>(info.Holder());
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkCellDistanceSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellDistanceSelectorWrap::InitPtpl();
+	VtkCellDistanceSelectorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkCellDistanceSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellDistanceSelectorWrap::InitPtpl();
+		VtkCellDistanceSelectorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -319,7 +319,7 @@ void VtkCellDistanceSelectorWrap::SetAddIntermediate(const Nan::FunctionCallback
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -338,7 +338,7 @@ void VtkCellDistanceSelectorWrap::SetDistance(const Nan::FunctionCallbackInfo<v8
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +357,7 @@ void VtkCellDistanceSelectorWrap::SetIncludeSeed(const Nan::FunctionCallbackInfo
 	vtkCellDistanceSelector *native = (vtkCellDistanceSelector *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -377,7 +377,7 @@ void VtkCellDistanceSelectorWrap::SetInputMesh(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -397,7 +397,7 @@ void VtkCellDistanceSelectorWrap::SetInputMeshConnection(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -417,7 +417,7 @@ void VtkCellDistanceSelectorWrap::SetInputSelection(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSelectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSelectionWrap *a0 = ObjectWrap::Unwrap<VtkSelectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -437,7 +437,7 @@ void VtkCellDistanceSelectorWrap::SetInputSelectionConnection(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

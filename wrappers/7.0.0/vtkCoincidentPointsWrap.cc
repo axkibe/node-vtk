@@ -107,7 +107,7 @@ void VtkCoincidentPointsWrap::Clear(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkCoincidentPointsWrap *wrapper = ObjectWrap::Unwrap<VtkCoincidentPointsWrap>(info.Holder());
 	vtkCoincidentPoints *native = (vtkCoincidentPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkCoincidentPointsWrap::GetCoincidentPointIds(const Nan::FunctionCallbackI
 		r = native->GetCoincidentPointIds(
 			(double *)(a0->Buffer()->GetContents().Data())
 		);
-			VtkIdListWrap::InitPtpl();
+		VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkCoincidentPointsWrap::GetCoincidentPointIds(const Nan::FunctionCallbackI
 		r = native->GetCoincidentPointIds(
 			b0
 		);
-			VtkIdListWrap::InitPtpl();
+		VtkIdListWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -218,7 +218,7 @@ void VtkCoincidentPointsWrap::GetNextCoincidentPointIds(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetNextCoincidentPointIds();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkCoincidentPointsWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkCoincidentPointsWrap *wrapper = ObjectWrap::Unwrap<VtkCoincidentPointsWrap>(info.Holder());
 	vtkCoincidentPoints *native = (vtkCoincidentPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkCoincidentPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkCoincidentPointsWrap::InitPtpl();
+	VtkCoincidentPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkCoincidentPointsWrap::RemoveNonCoincidentPoints(const Nan::FunctionCallb
 {
 	VtkCoincidentPointsWrap *wrapper = ObjectWrap::Unwrap<VtkCoincidentPointsWrap>(info.Holder());
 	vtkCoincidentPoints *native = (vtkCoincidentPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkCoincidentPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCoincidentPointsWrap::InitPtpl();
+		VtkCoincidentPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

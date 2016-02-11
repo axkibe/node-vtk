@@ -280,7 +280,7 @@ void VtkLegendScaleActorWrap::AllAnnotationsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkLegendScaleActorWrap::AllAnnotationsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -304,7 +304,7 @@ void VtkLegendScaleActorWrap::AllAxesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +316,7 @@ void VtkLegendScaleActorWrap::AllAxesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkLegendScaleActorWrap::BottomAxisVisibilityOff(const Nan::FunctionCallbac
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -340,7 +340,7 @@ void VtkLegendScaleActorWrap::BottomAxisVisibilityOn(const Nan::FunctionCallback
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -355,7 +355,7 @@ void VtkLegendScaleActorWrap::BuildRepresentation(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -375,7 +375,7 @@ void VtkLegendScaleActorWrap::GetActors2D(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -399,7 +399,7 @@ void VtkLegendScaleActorWrap::GetBottomAxis(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetBottomAxis();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -576,7 +576,7 @@ void VtkLegendScaleActorWrap::GetLeftAxis(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLeftAxis();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -655,7 +655,7 @@ void VtkLegendScaleActorWrap::GetLegendLabelProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLegendLabelProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -678,7 +678,7 @@ void VtkLegendScaleActorWrap::GetLegendTitleProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetLegendTitleProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -715,7 +715,7 @@ void VtkLegendScaleActorWrap::GetRightAxis(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetRightAxis();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -794,7 +794,7 @@ void VtkLegendScaleActorWrap::GetTopAxis(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTopAxis();
-		VtkAxisActor2DWrap::InitPtpl();
+	VtkAxisActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -888,7 +888,7 @@ void VtkLegendScaleActorWrap::LeftAxisVisibilityOff(const Nan::FunctionCallbackI
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -900,7 +900,7 @@ void VtkLegendScaleActorWrap::LeftAxisVisibilityOn(const Nan::FunctionCallbackIn
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -912,7 +912,7 @@ void VtkLegendScaleActorWrap::LegendVisibilityOff(const Nan::FunctionCallbackInf
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -924,7 +924,7 @@ void VtkLegendScaleActorWrap::LegendVisibilityOn(const Nan::FunctionCallbackInfo
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -943,7 +943,7 @@ void VtkLegendScaleActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkLegendScaleActorWrap::InitPtpl();
+	VtkLegendScaleActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -962,7 +962,7 @@ void VtkLegendScaleActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1023,7 +1023,7 @@ void VtkLegendScaleActorWrap::RightAxisVisibilityOff(const Nan::FunctionCallback
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1035,7 +1035,7 @@ void VtkLegendScaleActorWrap::RightAxisVisibilityOn(const Nan::FunctionCallbackI
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1059,7 +1059,7 @@ void VtkLegendScaleActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLegendScaleActorWrap::InitPtpl();
+		VtkLegendScaleActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1080,7 +1080,7 @@ void VtkLegendScaleActorWrap::SetBottomAxisVisibility(const Nan::FunctionCallbac
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1099,7 +1099,7 @@ void VtkLegendScaleActorWrap::SetBottomBorderOffset(const Nan::FunctionCallbackI
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1118,7 +1118,7 @@ void VtkLegendScaleActorWrap::SetCornerOffsetFactor(const Nan::FunctionCallbackI
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1137,7 +1137,7 @@ void VtkLegendScaleActorWrap::SetLabelMode(const Nan::FunctionCallbackInfo<v8::V
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1154,7 +1154,7 @@ void VtkLegendScaleActorWrap::SetLabelModeToDistance(const Nan::FunctionCallback
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1166,7 +1166,7 @@ void VtkLegendScaleActorWrap::SetLabelModeToXYCoordinates(const Nan::FunctionCal
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1180,7 +1180,7 @@ void VtkLegendScaleActorWrap::SetLeftAxisVisibility(const Nan::FunctionCallbackI
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1199,7 +1199,7 @@ void VtkLegendScaleActorWrap::SetLeftBorderOffset(const Nan::FunctionCallbackInf
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1218,7 +1218,7 @@ void VtkLegendScaleActorWrap::SetLegendVisibility(const Nan::FunctionCallbackInf
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1237,7 +1237,7 @@ void VtkLegendScaleActorWrap::SetRightAxisVisibility(const Nan::FunctionCallback
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1256,7 +1256,7 @@ void VtkLegendScaleActorWrap::SetRightBorderOffset(const Nan::FunctionCallbackIn
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1275,7 +1275,7 @@ void VtkLegendScaleActorWrap::SetTopAxisVisibility(const Nan::FunctionCallbackIn
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1294,7 +1294,7 @@ void VtkLegendScaleActorWrap::SetTopBorderOffset(const Nan::FunctionCallbackInfo
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1311,7 +1311,7 @@ void VtkLegendScaleActorWrap::TopAxisVisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1323,7 +1323,7 @@ void VtkLegendScaleActorWrap::TopAxisVisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkLegendScaleActorWrap *wrapper = ObjectWrap::Unwrap<VtkLegendScaleActorWrap>(info.Holder());
 	vtkLegendScaleActor *native = (vtkLegendScaleActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

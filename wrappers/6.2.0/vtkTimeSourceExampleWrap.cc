@@ -140,7 +140,7 @@ void VtkTimeSourceExampleWrap::AnalyticOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTimeSourceExampleWrap *wrapper = ObjectWrap::Unwrap<VtkTimeSourceExampleWrap>(info.Holder());
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkTimeSourceExampleWrap::AnalyticOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTimeSourceExampleWrap *wrapper = ObjectWrap::Unwrap<VtkTimeSourceExampleWrap>(info.Holder());
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,7 +290,7 @@ void VtkTimeSourceExampleWrap::GrowingOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTimeSourceExampleWrap *wrapper = ObjectWrap::Unwrap<VtkTimeSourceExampleWrap>(info.Holder());
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -302,7 +302,7 @@ void VtkTimeSourceExampleWrap::GrowingOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTimeSourceExampleWrap *wrapper = ObjectWrap::Unwrap<VtkTimeSourceExampleWrap>(info.Holder());
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkTimeSourceExampleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTimeSourceExampleWrap::InitPtpl();
+	VtkTimeSourceExampleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkTimeSourceExampleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTimeSourceExampleWrap::InitPtpl();
+		VtkTimeSourceExampleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkTimeSourceExampleWrap::SetAnalytic(const Nan::FunctionCallbackInfo<v8::V
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -411,7 +411,7 @@ void VtkTimeSourceExampleWrap::SetGrowing(const Nan::FunctionCallbackInfo<v8::Va
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +430,7 @@ void VtkTimeSourceExampleWrap::SetXAmplitude(const Nan::FunctionCallbackInfo<v8:
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -449,7 +449,7 @@ void VtkTimeSourceExampleWrap::SetYAmplitude(const Nan::FunctionCallbackInfo<v8:
 	vtkTimeSourceExample *native = (vtkTimeSourceExample *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

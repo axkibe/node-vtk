@@ -155,7 +155,7 @@ void VtkFiniteDifferenceGradientEstimatorWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
-		VtkFiniteDifferenceGradientEstimatorWrap::InitPtpl();
+	VtkFiniteDifferenceGradientEstimatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkFiniteDifferenceGradientEstimatorWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFiniteDifferenceGradientEstimatorWrap::InitPtpl();
+		VtkFiniteDifferenceGradientEstimatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -204,7 +204,7 @@ void VtkFiniteDifferenceGradientEstimatorWrap::SetSampleSpacingInVoxels(const Na
 	vtkFiniteDifferenceGradientEstimator *native = (vtkFiniteDifferenceGradientEstimator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

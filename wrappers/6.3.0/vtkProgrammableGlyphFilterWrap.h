@@ -32,6 +32,7 @@ class VtkProgrammableGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

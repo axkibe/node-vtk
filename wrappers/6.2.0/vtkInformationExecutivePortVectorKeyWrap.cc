@@ -120,7 +120,7 @@ void VtkInformationExecutivePortVectorKeyWrap::Append(const Nan::FunctionCallbac
 			VtkExecutiveWrap *a1 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -215,7 +215,7 @@ void VtkInformationExecutivePortVectorKeyWrap::MakeKey(const Nan::FunctionCallba
 				*a0,
 				*a1
 			);
-				VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
+			VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkInformationExecutivePortVectorKeyWrap::NewInstance(const Nan::FunctionCa
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
+	VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkInformationExecutivePortVectorKeyWrap::Remove(const Nan::FunctionCallbac
 			VtkExecutiveWrap *a1 = ObjectWrap::Unwrap<VtkExecutiveWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -279,7 +279,7 @@ void VtkInformationExecutivePortVectorKeyWrap::Remove(const Nan::FunctionCallbac
 				return;
 			}
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkInformationExecutivePortVectorKeyWrap::Report(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkGarbageCollectorWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkGarbageCollectorWrap *a1 = ObjectWrap::Unwrap<VtkGarbageCollectorWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -333,7 +333,7 @@ void VtkInformationExecutivePortVectorKeyWrap::SafeDownCast(const Nan::FunctionC
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
+		VtkInformationExecutivePortVectorKeyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkInformationExecutivePortVectorKeyWrap::ShallowCopy(const Nan::FunctionCa
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

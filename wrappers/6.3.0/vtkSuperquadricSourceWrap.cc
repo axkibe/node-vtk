@@ -50,6 +50,9 @@ void VtkSuperquadricSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxisOfSymmetry", GetAxisOfSymmetry);
 	Nan::SetPrototypeMethod(tpl, "getAxisOfSymmetry", GetAxisOfSymmetry);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -61,6 +64,9 @@ void VtkSuperquadricSourceWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPhiRoundness", GetPhiRoundness);
 	Nan::SetPrototypeMethod(tpl, "getPhiRoundness", GetPhiRoundness);
+
+	Nan::SetPrototypeMethod(tpl, "GetScale", GetScale);
+	Nan::SetPrototypeMethod(tpl, "getScale", GetScale);
 
 	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
 	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
@@ -183,6 +189,23 @@ void VtkSuperquadricSourceWrap::GetAxisOfSymmetry(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkSuperquadricSourceWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
+	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkSuperquadricSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
@@ -237,6 +260,23 @@ void VtkSuperquadricSourceWrap::GetPhiRoundness(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetPhiRoundness();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSuperquadricSourceWrap::GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
+	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScale();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSuperquadricSourceWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -370,7 +410,7 @@ void VtkSuperquadricSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkSuperquadricSourceWrap::InitPtpl();
+	VtkSuperquadricSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -398,7 +438,7 @@ void VtkSuperquadricSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSuperquadricSourceWrap::InitPtpl();
+		VtkSuperquadricSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -419,7 +459,7 @@ void VtkSuperquadricSourceWrap::SetAxisOfSymmetry(const Nan::FunctionCallbackInf
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +486,7 @@ void VtkSuperquadricSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -475,7 +515,7 @@ void VtkSuperquadricSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +531,7 @@ void VtkSuperquadricSourceWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -514,7 +554,7 @@ void VtkSuperquadricSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCall
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +573,7 @@ void VtkSuperquadricSourceWrap::SetPhiResolution(const Nan::FunctionCallbackInfo
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -552,7 +592,7 @@ void VtkSuperquadricSourceWrap::SetPhiRoundness(const Nan::FunctionCallbackInfo<
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -579,7 +619,7 @@ void VtkSuperquadricSourceWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -608,7 +648,7 @@ void VtkSuperquadricSourceWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -624,7 +664,7 @@ void VtkSuperquadricSourceWrap::SetScale(const Nan::FunctionCallbackInfo<v8::Val
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -647,7 +687,7 @@ void VtkSuperquadricSourceWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -666,7 +706,7 @@ void VtkSuperquadricSourceWrap::SetThetaResolution(const Nan::FunctionCallbackIn
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -685,7 +725,7 @@ void VtkSuperquadricSourceWrap::SetThetaRoundness(const Nan::FunctionCallbackInf
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -704,7 +744,7 @@ void VtkSuperquadricSourceWrap::SetThickness(const Nan::FunctionCallbackInfo<v8:
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -723,7 +763,7 @@ void VtkSuperquadricSourceWrap::SetToroidal(const Nan::FunctionCallbackInfo<v8::
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -740,7 +780,7 @@ void VtkSuperquadricSourceWrap::SetXAxisOfSymmetry(const Nan::FunctionCallbackIn
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -752,7 +792,7 @@ void VtkSuperquadricSourceWrap::SetYAxisOfSymmetry(const Nan::FunctionCallbackIn
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -764,7 +804,7 @@ void VtkSuperquadricSourceWrap::SetZAxisOfSymmetry(const Nan::FunctionCallbackIn
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -776,7 +816,7 @@ void VtkSuperquadricSourceWrap::ToroidalOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -788,7 +828,7 @@ void VtkSuperquadricSourceWrap::ToroidalOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkSuperquadricSourceWrap *wrapper = ObjectWrap::Unwrap<VtkSuperquadricSourceWrap>(info.Holder());
 	vtkSuperquadricSource *native = (vtkSuperquadricSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

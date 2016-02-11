@@ -47,6 +47,9 @@ void VtkAngularPeriodicFilterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkAngularPeriodicFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -140,6 +143,23 @@ void VtkAngularPeriodicFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkAngularPeriodicFilterWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
+	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAngularPeriodicFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -301,7 +321,7 @@ void VtkAngularPeriodicFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkAngularPeriodicFilterWrap::InitPtpl();
+	VtkAngularPeriodicFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +349,7 @@ void VtkAngularPeriodicFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAngularPeriodicFilterWrap::InitPtpl();
+		VtkAngularPeriodicFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -358,7 +378,7 @@ void VtkAngularPeriodicFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -387,7 +407,7 @@ void VtkAngularPeriodicFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +423,7 @@ void VtkAngularPeriodicFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -426,7 +446,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationAngle(const Nan::FunctionCallbackI
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +466,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationArrayName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -465,7 +485,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationAxis(const Nan::FunctionCallbackIn
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -482,7 +502,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationAxisToX(const Nan::FunctionCallbac
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -494,7 +514,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationAxisToY(const Nan::FunctionCallbac
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -506,7 +526,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationAxisToZ(const Nan::FunctionCallbac
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -520,7 +540,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationMode(const Nan::FunctionCallbackIn
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -537,7 +557,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationModeToArrayValue(const Nan::Functi
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -549,7 +569,7 @@ void VtkAngularPeriodicFilterWrap::SetRotationModeToDirectAngle(const Nan::Funct
 {
 	VtkAngularPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAngularPeriodicFilterWrap>(info.Holder());
 	vtkAngularPeriodicFilter *native = (vtkAngularPeriodicFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

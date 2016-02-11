@@ -270,7 +270,7 @@ void VtkParametricFunctionWrap::ClockwiseOrderingOff(const Nan::FunctionCallback
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -282,7 +282,7 @@ void VtkParametricFunctionWrap::ClockwiseOrderingOn(const Nan::FunctionCallbackI
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +294,7 @@ void VtkParametricFunctionWrap::DerivativesAvailableOff(const Nan::FunctionCallb
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -306,7 +306,7 @@ void VtkParametricFunctionWrap::DerivativesAvailableOn(const Nan::FunctionCallba
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -774,7 +774,7 @@ void VtkParametricFunctionWrap::JoinUOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -786,7 +786,7 @@ void VtkParametricFunctionWrap::JoinUOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -798,7 +798,7 @@ void VtkParametricFunctionWrap::JoinVOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -810,7 +810,7 @@ void VtkParametricFunctionWrap::JoinVOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -822,7 +822,7 @@ void VtkParametricFunctionWrap::JoinWOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -834,7 +834,7 @@ void VtkParametricFunctionWrap::JoinWOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -853,7 +853,7 @@ void VtkParametricFunctionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricFunctionWrap::InitPtpl();
+	VtkParametricFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -881,7 +881,7 @@ void VtkParametricFunctionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricFunctionWrap::InitPtpl();
+		VtkParametricFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -902,7 +902,7 @@ void VtkParametricFunctionWrap::SetClockwiseOrdering(const Nan::FunctionCallback
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -921,7 +921,7 @@ void VtkParametricFunctionWrap::SetDerivativesAvailable(const Nan::FunctionCallb
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +940,7 @@ void VtkParametricFunctionWrap::SetJoinU(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -959,7 +959,7 @@ void VtkParametricFunctionWrap::SetJoinV(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +978,7 @@ void VtkParametricFunctionWrap::SetJoinW(const Nan::FunctionCallbackInfo<v8::Val
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -997,7 +997,7 @@ void VtkParametricFunctionWrap::SetMaximumU(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1016,7 +1016,7 @@ void VtkParametricFunctionWrap::SetMaximumV(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1035,7 +1035,7 @@ void VtkParametricFunctionWrap::SetMaximumW(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1054,7 @@ void VtkParametricFunctionWrap::SetMinimumU(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1073,7 +1073,7 @@ void VtkParametricFunctionWrap::SetMinimumV(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1092,7 +1092,7 @@ void VtkParametricFunctionWrap::SetMinimumW(const Nan::FunctionCallbackInfo<v8::
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1111,7 +1111,7 @@ void VtkParametricFunctionWrap::SetTwistU(const Nan::FunctionCallbackInfo<v8::Va
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1130,7 +1130,7 @@ void VtkParametricFunctionWrap::SetTwistV(const Nan::FunctionCallbackInfo<v8::Va
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1149,7 +1149,7 @@ void VtkParametricFunctionWrap::SetTwistW(const Nan::FunctionCallbackInfo<v8::Va
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1166,7 +1166,7 @@ void VtkParametricFunctionWrap::TwistUOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1178,7 +1178,7 @@ void VtkParametricFunctionWrap::TwistUOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1190,7 +1190,7 @@ void VtkParametricFunctionWrap::TwistVOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1202,7 +1202,7 @@ void VtkParametricFunctionWrap::TwistVOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1214,7 +1214,7 @@ void VtkParametricFunctionWrap::TwistWOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1226,7 +1226,7 @@ void VtkParametricFunctionWrap::TwistWOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkParametricFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkParametricFunctionWrap>(info.Holder());
 	vtkParametricFunction *native = (vtkParametricFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

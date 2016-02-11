@@ -58,8 +58,17 @@ void VtkTransformToGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDisplacementShift", GetDisplacementShift);
 	Nan::SetPrototypeMethod(tpl, "getDisplacementShift", GetDisplacementShift);
 
+	Nan::SetPrototypeMethod(tpl, "GetGridExtent", GetGridExtent);
+	Nan::SetPrototypeMethod(tpl, "getGridExtent", GetGridExtent);
+
+	Nan::SetPrototypeMethod(tpl, "GetGridOrigin", GetGridOrigin);
+	Nan::SetPrototypeMethod(tpl, "getGridOrigin", GetGridOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetGridScalarType", GetGridScalarType);
 	Nan::SetPrototypeMethod(tpl, "getGridScalarType", GetGridScalarType);
+
+	Nan::SetPrototypeMethod(tpl, "GetGridSpacing", GetGridSpacing);
+	Nan::SetPrototypeMethod(tpl, "getGridSpacing", GetGridSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
@@ -180,6 +189,40 @@ void VtkTransformToGridWrap::GetDisplacementShift(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTransformToGridWrap::GetGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
+	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGridExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTransformToGridWrap::GetGridOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
+	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGridOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTransformToGridWrap::GetGridScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
@@ -194,6 +237,23 @@ void VtkTransformToGridWrap::GetGridScalarType(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTransformToGridWrap::GetGridSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
+	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGridSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTransformToGridWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
@@ -205,7 +265,7 @@ void VtkTransformToGridWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInput();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +288,7 @@ void VtkTransformToGridWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetOutput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -273,7 +333,7 @@ void VtkTransformToGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransformToGridWrap::InitPtpl();
+	VtkTransformToGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +361,7 @@ void VtkTransformToGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransformToGridWrap::InitPtpl();
+		VtkTransformToGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -330,7 +390,7 @@ void VtkTransformToGridWrap::SetGridExtent(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +419,7 @@ void VtkTransformToGridWrap::SetGridExtent(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -381,7 +441,7 @@ void VtkTransformToGridWrap::SetGridExtent(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -418,7 +478,7 @@ void VtkTransformToGridWrap::SetGridOrigin(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +507,7 @@ void VtkTransformToGridWrap::SetGridOrigin(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +523,7 @@ void VtkTransformToGridWrap::SetGridOrigin(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -486,7 +546,7 @@ void VtkTransformToGridWrap::SetGridScalarType(const Nan::FunctionCallbackInfo<v
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -503,7 +563,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToChar(const Nan::FunctionCallback
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -515,7 +575,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToDouble(const Nan::FunctionCallba
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -527,7 +587,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToFloat(const Nan::FunctionCallbac
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -539,7 +599,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToShort(const Nan::FunctionCallbac
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -551,7 +611,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToUnsignedChar(const Nan::Function
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -563,7 +623,7 @@ void VtkTransformToGridWrap::SetGridScalarTypeToUnsignedShort(const Nan::Functio
 {
 	VtkTransformToGridWrap *wrapper = ObjectWrap::Unwrap<VtkTransformToGridWrap>(info.Holder());
 	vtkTransformToGrid *native = (vtkTransformToGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -585,7 +645,7 @@ void VtkTransformToGridWrap::SetGridSpacing(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +674,7 @@ void VtkTransformToGridWrap::SetGridSpacing(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +690,7 @@ void VtkTransformToGridWrap::SetGridSpacing(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -654,7 +714,7 @@ void VtkTransformToGridWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

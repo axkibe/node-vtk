@@ -31,12 +31,18 @@ class VtkImageAccumulateWrap : public VtkImageAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponentExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComponentOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComponentSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZero(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZeroMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIgnoreZeroMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMean(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReverseStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReverseStencilMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReverseStencilMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnoreZeroOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnoreZeroOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

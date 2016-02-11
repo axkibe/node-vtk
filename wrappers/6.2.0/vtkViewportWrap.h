@@ -35,9 +35,15 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void DisplayToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackground2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsPicking(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickResultProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,7 +53,12 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void GetPickY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickY1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPickY2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetViewProps(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWorldPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GradientBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);

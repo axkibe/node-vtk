@@ -31,6 +31,8 @@ class VtkExtractRectilinearGridWrap : public VtkRectilinearGridAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIncludeBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeBoundaryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IncludeBoundaryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

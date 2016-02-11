@@ -130,6 +130,9 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPolarTitleVisibility", GetPolarTitleVisibility);
 	Nan::SetPrototypeMethod(tpl, "getPolarTitleVisibility", GetPolarTitleVisibility);
 
+	Nan::SetPrototypeMethod(tpl, "GetPole", GetPole);
+	Nan::SetPrototypeMethod(tpl, "getPole", GetPole);
+
 	Nan::SetPrototypeMethod(tpl, "GetRadialAxesProperty", GetRadialAxesProperty);
 	Nan::SetPrototypeMethod(tpl, "getRadialAxesProperty", GetRadialAxesProperty);
 
@@ -343,7 +346,7 @@ void VtkPolarAxesActorWrap::AutoSubdividePolarAxisOff(const Nan::FunctionCallbac
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -355,7 +358,7 @@ void VtkPolarAxesActorWrap::AutoSubdividePolarAxisOn(const Nan::FunctionCallback
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -405,7 +408,7 @@ void VtkPolarAxesActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +437,7 @@ void VtkPolarAxesActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +461,7 @@ void VtkPolarAxesActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -607,7 +610,7 @@ void VtkPolarAxesActorWrap::GetPolarArcsProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolarArcsProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -644,7 +647,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisLabelTextProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPolarAxisLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -667,7 +670,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolarAxisProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -704,7 +707,7 @@ void VtkPolarAxesActorWrap::GetPolarAxisTitleTextProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetPolarAxisTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -786,6 +789,23 @@ void VtkPolarAxesActorWrap::GetPolarTitleVisibility(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkPolarAxesActorWrap::GetPole(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
+	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPole();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPolarAxesActorWrap::GetRadialAxesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
@@ -797,7 +817,7 @@ void VtkPolarAxesActorWrap::GetRadialAxesProperty(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetRadialAxesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -982,7 +1002,7 @@ void VtkPolarAxesActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolarAxesActorWrap::InitPtpl();
+	VtkPolarAxesActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -998,7 +1018,7 @@ void VtkPolarAxesActorWrap::PolarArcsVisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1010,7 +1030,7 @@ void VtkPolarAxesActorWrap::PolarArcsVisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1022,7 +1042,7 @@ void VtkPolarAxesActorWrap::PolarAxisVisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1034,7 +1054,7 @@ void VtkPolarAxesActorWrap::PolarAxisVisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1046,7 +1066,7 @@ void VtkPolarAxesActorWrap::PolarLabelVisibilityOff(const Nan::FunctionCallbackI
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1058,7 +1078,7 @@ void VtkPolarAxesActorWrap::PolarLabelVisibilityOn(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1070,7 +1090,7 @@ void VtkPolarAxesActorWrap::PolarTickVisibilityOff(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1082,7 +1102,7 @@ void VtkPolarAxesActorWrap::PolarTickVisibilityOn(const Nan::FunctionCallbackInf
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1094,7 +1114,7 @@ void VtkPolarAxesActorWrap::PolarTitleVisibilityOff(const Nan::FunctionCallbackI
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1106,7 +1126,7 @@ void VtkPolarAxesActorWrap::PolarTitleVisibilityOn(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1118,7 +1138,7 @@ void VtkPolarAxesActorWrap::RadialAxesVisibilityOff(const Nan::FunctionCallbackI
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1130,7 +1150,7 @@ void VtkPolarAxesActorWrap::RadialAxesVisibilityOn(const Nan::FunctionCallbackIn
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1142,7 +1162,7 @@ void VtkPolarAxesActorWrap::RadialTitleVisibilityOff(const Nan::FunctionCallback
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1154,7 +1174,7 @@ void VtkPolarAxesActorWrap::RadialTitleVisibilityOn(const Nan::FunctionCallbackI
 {
 	VtkPolarAxesActorWrap *wrapper = ObjectWrap::Unwrap<VtkPolarAxesActorWrap>(info.Holder());
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1169,7 +1189,7 @@ void VtkPolarAxesActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1242,7 +1262,7 @@ void VtkPolarAxesActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolarAxesActorWrap::InitPtpl();
+		VtkPolarAxesActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1263,7 +1283,7 @@ void VtkPolarAxesActorWrap::SetAutoScaleRadius(const Nan::FunctionCallbackInfo<v
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1282,7 +1302,7 @@ void VtkPolarAxesActorWrap::SetAutoSubdividePolarAxis(const Nan::FunctionCallbac
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1309,7 +1329,7 @@ void VtkPolarAxesActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1338,7 +1358,7 @@ void VtkPolarAxesActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1360,7 +1380,7 @@ void VtkPolarAxesActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1390,7 +1410,7 @@ void VtkPolarAxesActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1409,7 +1429,7 @@ void VtkPolarAxesActorWrap::SetDistanceLODThreshold(const Nan::FunctionCallbackI
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1428,7 +1448,7 @@ void VtkPolarAxesActorWrap::SetEnableDistanceLOD(const Nan::FunctionCallbackInfo
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1447,7 +1467,7 @@ void VtkPolarAxesActorWrap::SetEnableViewAngleLOD(const Nan::FunctionCallbackInf
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1466,7 +1486,7 @@ void VtkPolarAxesActorWrap::SetMaximumAngle(const Nan::FunctionCallbackInfo<v8::
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1485,7 +1505,7 @@ void VtkPolarAxesActorWrap::SetMaximumRadius(const Nan::FunctionCallbackInfo<v8:
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1504,7 +1524,7 @@ void VtkPolarAxesActorWrap::SetMinimumAngle(const Nan::FunctionCallbackInfo<v8::
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1524,7 +1544,7 @@ void VtkPolarAxesActorWrap::SetPolarArcsProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1543,7 +1563,7 @@ void VtkPolarAxesActorWrap::SetPolarArcsVisibility(const Nan::FunctionCallbackIn
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1563,7 +1583,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisLabelTextProperty(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1583,7 +1603,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1603,7 +1623,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisTitle(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1623,7 +1643,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisTitleTextProperty(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1642,7 +1662,7 @@ void VtkPolarAxesActorWrap::SetPolarAxisVisibility(const Nan::FunctionCallbackIn
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1662,7 +1682,7 @@ void VtkPolarAxesActorWrap::SetPolarLabelFormat(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1681,7 +1701,7 @@ void VtkPolarAxesActorWrap::SetPolarLabelVisibility(const Nan::FunctionCallbackI
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1700,7 +1720,7 @@ void VtkPolarAxesActorWrap::SetPolarTickVisibility(const Nan::FunctionCallbackIn
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1719,7 +1739,7 @@ void VtkPolarAxesActorWrap::SetPolarTitleVisibility(const Nan::FunctionCallbackI
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1746,7 +1766,7 @@ void VtkPolarAxesActorWrap::SetPole(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1775,7 +1795,7 @@ void VtkPolarAxesActorWrap::SetPole(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1791,7 +1811,7 @@ void VtkPolarAxesActorWrap::SetPole(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1815,7 +1835,7 @@ void VtkPolarAxesActorWrap::SetRadialAxesProperty(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1834,7 +1854,7 @@ void VtkPolarAxesActorWrap::SetRadialAxesVisibility(const Nan::FunctionCallbackI
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1853,7 +1873,7 @@ void VtkPolarAxesActorWrap::SetRadialTitleVisibility(const Nan::FunctionCallback
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1872,7 +1892,7 @@ void VtkPolarAxesActorWrap::SetRadialUnits(const Nan::FunctionCallbackInfo<v8::V
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1891,7 +1911,7 @@ void VtkPolarAxesActorWrap::SetScreenSize(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1910,7 +1930,7 @@ void VtkPolarAxesActorWrap::SetSmallestVisiblePolarAngle(const Nan::FunctionCall
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1929,7 +1949,7 @@ void VtkPolarAxesActorWrap::SetViewAngleLODThreshold(const Nan::FunctionCallback
 	vtkPolarAxesActor *native = (vtkPolarAxesActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

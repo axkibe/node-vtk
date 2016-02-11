@@ -155,7 +155,7 @@ void VtkCollapseVerticesByArrayWrap::AddAggregateEdgeArray(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -172,7 +172,7 @@ void VtkCollapseVerticesByArrayWrap::AllowSelfLoopsOff(const Nan::FunctionCallba
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -184,7 +184,7 @@ void VtkCollapseVerticesByArrayWrap::AllowSelfLoopsOn(const Nan::FunctionCallbac
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -196,7 +196,7 @@ void VtkCollapseVerticesByArrayWrap::ClearAggregateEdgeArray(const Nan::Function
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -208,7 +208,7 @@ void VtkCollapseVerticesByArrayWrap::CountEdgesCollapsedOff(const Nan::FunctionC
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -220,7 +220,7 @@ void VtkCollapseVerticesByArrayWrap::CountEdgesCollapsedOn(const Nan::FunctionCa
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkCollapseVerticesByArrayWrap::CountVerticesCollapsedOff(const Nan::Functi
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkCollapseVerticesByArrayWrap::CountVerticesCollapsedOn(const Nan::Functio
 {
 	VtkCollapseVerticesByArrayWrap *wrapper = ObjectWrap::Unwrap<VtkCollapseVerticesByArrayWrap>(info.Holder());
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +383,7 @@ void VtkCollapseVerticesByArrayWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkCollapseVerticesByArrayWrap::InitPtpl();
+	VtkCollapseVerticesByArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkCollapseVerticesByArrayWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCollapseVerticesByArrayWrap::InitPtpl();
+		VtkCollapseVerticesByArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -432,7 +432,7 @@ void VtkCollapseVerticesByArrayWrap::SetAllowSelfLoops(const Nan::FunctionCallba
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkCollapseVerticesByArrayWrap::SetCountEdgesCollapsed(const Nan::FunctionC
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +470,7 @@ void VtkCollapseVerticesByArrayWrap::SetCountVerticesCollapsed(const Nan::Functi
 	vtkCollapseVerticesByArray *native = (vtkCollapseVerticesByArray *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +490,7 @@ void VtkCollapseVerticesByArrayWrap::SetEdgesCollapsedArray(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkCollapseVerticesByArrayWrap::SetVertexArray(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkCollapseVerticesByArrayWrap::SetVerticesCollapsedArray(const Nan::Functi
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -138,7 +138,7 @@ void VtkInformationIteratorWrap::GetCurrentKey(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetCurrentKey();
-		VtkInformationKeyWrap::InitPtpl();
+	VtkInformationKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkInformationIteratorWrap::GetInformation(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInformation();
-		VtkInformationWrap::InitPtpl();
+	VtkInformationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -177,7 +177,7 @@ void VtkInformationIteratorWrap::GoToFirstItem(const Nan::FunctionCallbackInfo<v
 {
 	VtkInformationIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIteratorWrap>(info.Holder());
 	vtkInformationIterator *native = (vtkInformationIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkInformationIteratorWrap::GoToNextItem(const Nan::FunctionCallbackInfo<v8
 {
 	VtkInformationIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIteratorWrap>(info.Holder());
 	vtkInformationIterator *native = (vtkInformationIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -201,7 +201,7 @@ void VtkInformationIteratorWrap::InitTraversal(const Nan::FunctionCallbackInfo<v
 {
 	VtkInformationIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkInformationIteratorWrap>(info.Holder());
 	vtkInformationIterator *native = (vtkInformationIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkInformationIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkInformationIteratorWrap::InitPtpl();
+	VtkInformationIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -284,7 +284,7 @@ void VtkInformationIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInformationIteratorWrap::InitPtpl();
+		VtkInformationIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkInformationIteratorWrap::SetInformation(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +326,7 @@ void VtkInformationIteratorWrap::SetInformationWeak(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInformationWrap *a0 = ObjectWrap::Unwrap<VtkInformationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

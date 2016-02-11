@@ -80,11 +80,20 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClickActionToButton", GetClickActionToButton);
 	Nan::SetPrototypeMethod(tpl, "getClickActionToButton", GetClickActionToButton);
 
+	Nan::SetPrototypeMethod(tpl, "GetGeometry", GetGeometry);
+	Nan::SetPrototypeMethod(tpl, "getGeometry", GetGeometry);
+
 	Nan::SetPrototypeMethod(tpl, "GetLayoutStrategy", GetLayoutStrategy);
 	Nan::SetPrototypeMethod(tpl, "getLayoutStrategy", GetLayoutStrategy);
 
 	Nan::SetPrototypeMethod(tpl, "GetLegend", GetLegend);
 	Nan::SetPrototypeMethod(tpl, "getLegend", GetLegend);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
 
 	Nan::SetPrototypeMethod(tpl, "GetRenderEmpty", GetRenderEmpty);
 	Nan::SetPrototypeMethod(tpl, "getRenderEmpty", GetRenderEmpty);
@@ -213,7 +222,7 @@ void VtkChartWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->AddPlot(
 			info[0]->Int32Value()
 		);
-			VtkPlotWrap::InitPtpl();
+		VtkPlotWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +241,7 @@ void VtkChartWrap::ClearPlots(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +281,7 @@ void VtkChartWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetAnnotationLink();
-		VtkAnnotationLinkWrap::InitPtpl();
+	VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +322,7 @@ void VtkChartWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetAxis(
 			info[0]->Int32Value()
 		);
-			VtkAxisWrap::InitPtpl();
+		VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +348,7 @@ void VtkChartWrap::GetBackgroundBrush(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetBackgroundBrush();
-		VtkBrushWrap::InitPtpl();
+	VtkBrushWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,6 +395,23 @@ void VtkChartWrap::GetClickActionToButton(const Nan::FunctionCallbackInfo<v8::Va
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkChartWrap::GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGeometry();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkChartWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
@@ -411,7 +437,7 @@ void VtkChartWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLegend();
-		VtkChartLegendWrap::InitPtpl();
+	VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -421,6 +447,40 @@ void VtkChartWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkChartWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkChartWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
+	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkChartWrap::GetRenderEmpty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -490,7 +550,7 @@ void VtkChartWrap::GetTitleProperties(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTitleProperties();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +595,7 @@ void VtkChartWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartWrap::InitPtpl();
+	VtkChartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -551,7 +611,7 @@ void VtkChartWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkChartWrap *wrapper = ObjectWrap::Unwrap<VtkChartWrap>(info.Holder());
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -597,7 +657,7 @@ void VtkChartWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartWrap::InitPtpl();
+		VtkChartWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -620,7 +680,7 @@ void VtkChartWrap::SetActionToButton(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -642,7 +702,7 @@ void VtkChartWrap::SetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAnnotationLinkWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAnnotationLinkWrap *a0 = ObjectWrap::Unwrap<VtkAnnotationLinkWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -661,7 +721,7 @@ void VtkChartWrap::SetAutoSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -681,7 +741,7 @@ void VtkChartWrap::SetBackgroundBrush(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBrushWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBrushWrap *a0 = ObjectWrap::Unwrap<VtkBrushWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +766,7 @@ void VtkChartWrap::SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -731,7 +791,7 @@ void VtkChartWrap::SetBottomBorder(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +812,7 @@ void VtkChartWrap::SetClickActionToButton(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -781,7 +841,7 @@ void VtkChartWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +870,7 @@ void VtkChartWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +884,7 @@ void VtkChartWrap::SetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -845,7 +905,7 @@ void VtkChartWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -864,7 +924,7 @@ void VtkChartWrap::SetLeftBorder(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -891,7 +951,7 @@ void VtkChartWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -920,7 +980,7 @@ void VtkChartWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -934,7 +994,7 @@ void VtkChartWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -963,7 +1023,7 @@ void VtkChartWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -992,7 +1052,7 @@ void VtkChartWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1006,7 +1066,7 @@ void VtkChartWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1027,7 +1087,7 @@ void VtkChartWrap::SetRenderEmpty(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1046,7 +1106,7 @@ void VtkChartWrap::SetRightBorder(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1065,7 +1125,7 @@ void VtkChartWrap::SetSelectionMethod(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1084,7 +1144,7 @@ void VtkChartWrap::SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1103,7 +1163,7 @@ void VtkChartWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1122,7 +1182,7 @@ void VtkChartWrap::SetTopBorder(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkChart *native = (vtkChart *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

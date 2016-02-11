@@ -31,8 +31,10 @@ class VtkSuperquadricWrap : public VtkImplicitFunctionWrap
 
 		static void EvaluateFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPhiRoundness(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThetaRoundness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);

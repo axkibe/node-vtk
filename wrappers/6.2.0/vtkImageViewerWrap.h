@@ -36,8 +36,10 @@ class VtkImageViewerWrap : public VtkObjectWrap
 		static void GetImageMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOffScreenRendering(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWholeZMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWholeZMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);

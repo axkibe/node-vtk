@@ -200,7 +200,7 @@ void VtkMINCImageAttributesWrap::AddDimension(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,7 @@ void VtkMINCImageAttributesWrap::FindImageRange(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkMINCImageAttributesWrap::FindImageRange(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +283,7 @@ void VtkMINCImageAttributesWrap::FindValidRange(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -312,7 +312,7 @@ void VtkMINCImageAttributesWrap::FindValidRange(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -341,7 +341,7 @@ void VtkMINCImageAttributesWrap::GetAttributeNames(const Nan::FunctionCallbackIn
 		r = native->GetAttributeNames(
 			*a0
 		);
-			VtkStringArrayWrap::InitPtpl();
+		VtkStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -376,7 +376,7 @@ void VtkMINCImageAttributesWrap::GetAttributeValueAsArray(const Nan::FunctionCal
 				*a0,
 				*a1
 			);
-				VtkDataArrayWrap::InitPtpl();
+			VtkDataArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -512,7 +512,7 @@ void VtkMINCImageAttributesWrap::GetDimensionLengths(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetDimensionLengths();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -535,7 +535,7 @@ void VtkMINCImageAttributesWrap::GetDimensionNames(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetDimensionNames();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -558,7 +558,7 @@ void VtkMINCImageAttributesWrap::GetImageMax(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetImageMax();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -581,7 +581,7 @@ void VtkMINCImageAttributesWrap::GetImageMin(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetImageMin();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -646,7 +646,7 @@ void VtkMINCImageAttributesWrap::GetVariableNames(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetVariableNames();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -718,7 +718,7 @@ void VtkMINCImageAttributesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkMINCImageAttributesWrap::InitPtpl();
+	VtkMINCImageAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -734,7 +734,7 @@ void VtkMINCImageAttributesWrap::PrintFileHeader(const Nan::FunctionCallbackInfo
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -746,7 +746,7 @@ void VtkMINCImageAttributesWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -770,7 +770,7 @@ void VtkMINCImageAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMINCImageAttributesWrap::InitPtpl();
+		VtkMINCImageAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -798,7 +798,7 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsArray(const Nan::FunctionCal
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -827,7 +827,7 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsDouble(const Nan::FunctionCa
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -856,7 +856,7 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsInt(const Nan::FunctionCallb
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -886,7 +886,7 @@ void VtkMINCImageAttributesWrap::SetAttributeValueAsString(const Nan::FunctionCa
 			if(info.Length() > 2 && info[2]->IsString())
 			{
 				Nan::Utf8String a2(info[2]);
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -909,7 +909,7 @@ void VtkMINCImageAttributesWrap::SetDataType(const Nan::FunctionCallbackInfo<v8:
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -929,7 +929,7 @@ void VtkMINCImageAttributesWrap::SetImageMax(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -949,7 +949,7 @@ void VtkMINCImageAttributesWrap::SetImageMin(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -969,7 +969,7 @@ void VtkMINCImageAttributesWrap::SetName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -988,7 +988,7 @@ void VtkMINCImageAttributesWrap::SetNumberOfImageMinMaxDimensions(const Nan::Fun
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1007,7 +1007,7 @@ void VtkMINCImageAttributesWrap::SetValidateAttributes(const Nan::FunctionCallba
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1027,7 +1027,7 @@ void VtkMINCImageAttributesWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMINCImageAttributesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMINCImageAttributesWrap *a0 = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1076,7 +1076,7 @@ void VtkMINCImageAttributesWrap::ValidateAttributesOff(const Nan::FunctionCallba
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1088,7 +1088,7 @@ void VtkMINCImageAttributesWrap::ValidateAttributesOn(const Nan::FunctionCallbac
 {
 	VtkMINCImageAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkMINCImageAttributesWrap>(info.Holder());
 	vtkMINCImageAttributes *native = (vtkMINCImageAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

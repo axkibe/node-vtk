@@ -92,6 +92,9 @@ void VtkYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetUseFractionAsDistance", GetUseFractionAsDistance);
 	Nan::SetPrototypeMethod(tpl, "getUseFractionAsDistance", GetUseFractionAsDistance);
 
+	Nan::SetPrototypeMethod(tpl, "GetVolumeFractionRange", GetVolumeFractionRange);
+	Nan::SetPrototypeMethod(tpl, "getVolumeFractionRange", GetVolumeFractionRange);
+
 	Nan::SetPrototypeMethod(tpl, "InverseNormalOff", InverseNormalOff);
 	Nan::SetPrototypeMethod(tpl, "inverseNormalOff", InverseNormalOff);
 
@@ -211,7 +214,7 @@ void VtkYoungsMaterialInterfaceWrap::AddMaterialBlockMapping(const Nan::Function
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -228,7 +231,7 @@ void VtkYoungsMaterialInterfaceWrap::AxisSymetricOff(const Nan::FunctionCallback
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +243,7 @@ void VtkYoungsMaterialInterfaceWrap::AxisSymetricOn(const Nan::FunctionCallbackI
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +255,7 @@ void VtkYoungsMaterialInterfaceWrap::FillMaterialOff(const Nan::FunctionCallback
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,7 +267,7 @@ void VtkYoungsMaterialInterfaceWrap::FillMaterialOn(const Nan::FunctionCallbackI
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -412,11 +415,28 @@ void VtkYoungsMaterialInterfaceWrap::GetUseFractionAsDistance(const Nan::Functio
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkYoungsMaterialInterfaceWrap::GetVolumeFractionRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
+	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetVolumeFractionRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkYoungsMaterialInterfaceWrap::InverseNormalOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -428,7 +448,7 @@ void VtkYoungsMaterialInterfaceWrap::InverseNormalOn(const Nan::FunctionCallback
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -469,7 +489,7 @@ void VtkYoungsMaterialInterfaceWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkYoungsMaterialInterfaceWrap::InitPtpl();
+	VtkYoungsMaterialInterfaceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -485,7 +505,7 @@ void VtkYoungsMaterialInterfaceWrap::OnionPeelOff(const Nan::FunctionCallbackInf
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -497,7 +517,7 @@ void VtkYoungsMaterialInterfaceWrap::OnionPeelOn(const Nan::FunctionCallbackInfo
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +529,7 @@ void VtkYoungsMaterialInterfaceWrap::RemoveAllMaterialBlockMappings(const Nan::F
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +541,7 @@ void VtkYoungsMaterialInterfaceWrap::RemoveAllMaterials(const Nan::FunctionCallb
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +553,7 @@ void VtkYoungsMaterialInterfaceWrap::ReverseMaterialOrderOff(const Nan::Function
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +565,7 @@ void VtkYoungsMaterialInterfaceWrap::ReverseMaterialOrderOn(const Nan::FunctionC
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -569,7 +589,7 @@ void VtkYoungsMaterialInterfaceWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkYoungsMaterialInterfaceWrap::InitPtpl();
+		VtkYoungsMaterialInterfaceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -590,7 +610,7 @@ void VtkYoungsMaterialInterfaceWrap::SetAxisSymetric(const Nan::FunctionCallback
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +629,7 @@ void VtkYoungsMaterialInterfaceWrap::SetFillMaterial(const Nan::FunctionCallback
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -628,7 +648,7 @@ void VtkYoungsMaterialInterfaceWrap::SetInverseNormal(const Nan::FunctionCallbac
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -662,7 +682,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialArrays(const Nan::FunctionCallba
 						if(info.Length() > 5 && info[5]->IsString())
 						{
 							Nan::Utf8String a5(info[5]);
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -678,7 +698,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialArrays(const Nan::FunctionCallba
 							return;
 						}
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -707,7 +727,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialNormalArray(const Nan::FunctionC
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -724,7 +744,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialNormalArray(const Nan::FunctionC
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -749,7 +769,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialOrderingArray(const Nan::Functio
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -766,7 +786,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialOrderingArray(const Nan::Functio
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -790,7 +810,7 @@ void VtkYoungsMaterialInterfaceWrap::SetMaterialVolumeFractionArray(const Nan::F
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -811,7 +831,7 @@ void VtkYoungsMaterialInterfaceWrap::SetNumberOfMaterials(const Nan::FunctionCal
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -830,7 +850,7 @@ void VtkYoungsMaterialInterfaceWrap::SetOnionPeel(const Nan::FunctionCallbackInf
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -849,7 +869,7 @@ void VtkYoungsMaterialInterfaceWrap::SetReverseMaterialOrder(const Nan::Function
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -868,7 +888,7 @@ void VtkYoungsMaterialInterfaceWrap::SetUseAllBlocks(const Nan::FunctionCallback
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -887,7 +907,7 @@ void VtkYoungsMaterialInterfaceWrap::SetUseFractionAsDistance(const Nan::Functio
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -914,7 +934,7 @@ void VtkYoungsMaterialInterfaceWrap::SetVolumeFractionRange(const Nan::FunctionC
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -943,7 +963,7 @@ void VtkYoungsMaterialInterfaceWrap::SetVolumeFractionRange(const Nan::FunctionC
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -957,7 +977,7 @@ void VtkYoungsMaterialInterfaceWrap::SetVolumeFractionRange(const Nan::FunctionC
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -976,7 +996,7 @@ void VtkYoungsMaterialInterfaceWrap::UseAllBlocksOff(const Nan::FunctionCallback
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -988,7 +1008,7 @@ void VtkYoungsMaterialInterfaceWrap::UseAllBlocksOn(const Nan::FunctionCallbackI
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1000,7 +1020,7 @@ void VtkYoungsMaterialInterfaceWrap::UseFractionAsDistanceOff(const Nan::Functio
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1012,7 +1032,7 @@ void VtkYoungsMaterialInterfaceWrap::UseFractionAsDistanceOn(const Nan::Function
 {
 	VtkYoungsMaterialInterfaceWrap *wrapper = ObjectWrap::Unwrap<VtkYoungsMaterialInterfaceWrap>(info.Holder());
 	vtkYoungsMaterialInterface *native = (vtkYoungsMaterialInterface *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -203,7 +203,7 @@ void VtkAMRCutPlaneWrap::GetController(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkAMRCutPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRCutPlaneWrap::InitPtpl();
+	VtkAMRCutPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -304,7 +304,7 @@ void VtkAMRCutPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRCutPlaneWrap::InitPtpl();
+		VtkAMRCutPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkAMRCutPlaneWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +362,7 @@ void VtkAMRCutPlaneWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -378,7 +378,7 @@ void VtkAMRCutPlaneWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -402,7 +402,7 @@ void VtkAMRCutPlaneWrap::SetController(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkAMRCutPlaneWrap::SetLevelOfResolution(const Nan::FunctionCallbackInfo<v8
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +448,7 @@ void VtkAMRCutPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -477,7 +477,7 @@ void VtkAMRCutPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -493,7 +493,7 @@ void VtkAMRCutPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -516,7 +516,7 @@ void VtkAMRCutPlaneWrap::SetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +533,7 @@ void VtkAMRCutPlaneWrap::UseNativeCutterOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +545,7 @@ void VtkAMRCutPlaneWrap::UseNativeCutterOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAMRCutPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkAMRCutPlaneWrap>(info.Holder());
 	vtkAMRCutPlane *native = (vtkAMRCutPlane *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

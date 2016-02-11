@@ -56,6 +56,9 @@ void VtkTextureMapToSphereWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAutomaticSphereGeneration", GetAutomaticSphereGeneration);
 	Nan::SetPrototypeMethod(tpl, "getAutomaticSphereGeneration", GetAutomaticSphereGeneration);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -119,7 +122,7 @@ void VtkTextureMapToSphereWrap::AutomaticSphereGenerationOff(const Nan::Function
 {
 	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -131,7 +134,7 @@ void VtkTextureMapToSphereWrap::AutomaticSphereGenerationOn(const Nan::FunctionC
 {
 	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -151,6 +154,23 @@ void VtkTextureMapToSphereWrap::GetAutomaticSphereGeneration(const Nan::Function
 	}
 	r = native->GetAutomaticSphereGeneration();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureMapToSphereWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
+	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTextureMapToSphereWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -214,7 +234,7 @@ void VtkTextureMapToSphereWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextureMapToSphereWrap::InitPtpl();
+	VtkTextureMapToSphereWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +250,7 @@ void VtkTextureMapToSphereWrap::PreventSeamOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +262,7 @@ void VtkTextureMapToSphereWrap::PreventSeamOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTextureMapToSphereWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToSphereWrap>(info.Holder());
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -266,7 +286,7 @@ void VtkTextureMapToSphereWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextureMapToSphereWrap::InitPtpl();
+		VtkTextureMapToSphereWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -287,7 +307,7 @@ void VtkTextureMapToSphereWrap::SetAutomaticSphereGeneration(const Nan::Function
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -314,7 +334,7 @@ void VtkTextureMapToSphereWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +363,7 @@ void VtkTextureMapToSphereWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +379,7 @@ void VtkTextureMapToSphereWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -382,7 +402,7 @@ void VtkTextureMapToSphereWrap::SetPreventSeam(const Nan::FunctionCallbackInfo<v
 	vtkTextureMapToSphere *native = (vtkTextureMapToSphere *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

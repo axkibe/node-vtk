@@ -135,7 +135,7 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
+	VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkXMLPHierarchicalBoxDataWriterWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
+		VtkXMLPHierarchicalBoxDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -106,7 +106,7 @@ void VtkTextWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbackI
 {
 	VtkTextWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkTextWidgetWrap>(info.Holder());
 	vtkTextWidget *native = (vtkTextWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -139,7 +139,7 @@ void VtkTextWidgetWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTextActor();
-		VtkTextActorWrap::InitPtpl();
+	VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -184,7 +184,7 @@ void VtkTextWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextWidgetWrap::InitPtpl();
+	VtkTextWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -212,7 +212,7 @@ void VtkTextWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextWidgetWrap::InitPtpl();
+		VtkTextWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkTextWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkTextRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -254,7 +254,7 @@ void VtkTextWidgetWrap::SetTextActor(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextActorWrap *a0 = ObjectWrap::Unwrap<VtkTextActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

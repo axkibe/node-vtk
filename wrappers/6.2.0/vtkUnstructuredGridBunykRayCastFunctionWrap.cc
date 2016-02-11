@@ -57,6 +57,12 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
+	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
+	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetViewToWorldMatrix", GetViewToWorldMatrix);
 	Nan::SetPrototypeMethod(tpl, "getViewToWorldMatrix", GetViewToWorldMatrix);
 
@@ -108,7 +114,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::Finalize(const Nan::FunctionCa
 {
 	VtkUnstructuredGridBunykRayCastFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBunykRayCastFunctionWrap>(info.Holder());
 	vtkUnstructuredGridBunykRayCastFunction *native = (vtkUnstructuredGridBunykRayCastFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -130,6 +136,40 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::GetClassName(const Nan::Functi
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkUnstructuredGridBunykRayCastFunctionWrap::GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridBunykRayCastFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBunykRayCastFunctionWrap>(info.Holder());
+	vtkUnstructuredGridBunykRayCastFunction *native = (vtkUnstructuredGridBunykRayCastFunction *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkUnstructuredGridBunykRayCastFunctionWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridBunykRayCastFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBunykRayCastFunctionWrap>(info.Holder());
+	vtkUnstructuredGridBunykRayCastFunction *native = (vtkUnstructuredGridBunykRayCastFunction *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageViewportSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkUnstructuredGridBunykRayCastFunctionWrap::GetViewToWorldMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUnstructuredGridBunykRayCastFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridBunykRayCastFunctionWrap>(info.Holder());
@@ -141,7 +181,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::GetViewToWorldMatrix(const Nan
 		return;
 	}
 	r = native->GetViewToWorldMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +203,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::Initialize(const Nan::Function
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -211,7 +251,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::NewInstance(const Nan::Functio
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl();
+	VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -234,7 +274,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::NewIterator(const Nan::Functio
 		return;
 	}
 	r = native->NewIterator();
-		VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +302,7 @@ void VtkUnstructuredGridBunykRayCastFunctionWrap::SafeDownCast(const Nan::Functi
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl();
+		VtkUnstructuredGridBunykRayCastFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

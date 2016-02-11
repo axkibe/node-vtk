@@ -694,7 +694,7 @@ void VtkOpenGLExtensionManagerWrap::GetRenderWindow(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetRenderWindow();
-		VtkRenderWindowWrap::InitPtpl();
+	VtkRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -710,7 +710,7 @@ void VtkOpenGLExtensionManagerWrap::IgnoreDriverBugsOff(const Nan::FunctionCallb
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -722,7 +722,7 @@ void VtkOpenGLExtensionManagerWrap::IgnoreDriverBugsOn(const Nan::FunctionCallba
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -759,7 +759,7 @@ void VtkOpenGLExtensionManagerWrap::LoadAsARBExtension(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -779,7 +779,7 @@ void VtkOpenGLExtensionManagerWrap::LoadCorePromotedExtension(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -799,7 +799,7 @@ void VtkOpenGLExtensionManagerWrap::LoadExtension(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -845,7 +845,7 @@ void VtkOpenGLExtensionManagerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkOpenGLExtensionManagerWrap::InitPtpl();
+	VtkOpenGLExtensionManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -873,7 +873,7 @@ void VtkOpenGLExtensionManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOpenGLExtensionManagerWrap::InitPtpl();
+		VtkOpenGLExtensionManagerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -894,7 +894,7 @@ void VtkOpenGLExtensionManagerWrap::SetIgnoreDriverBugs(const Nan::FunctionCallb
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -914,7 +914,7 @@ void VtkOpenGLExtensionManagerWrap::SetRenderWindow(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -931,7 +931,7 @@ void VtkOpenGLExtensionManagerWrap::Update(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkOpenGLExtensionManagerWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLExtensionManagerWrap>(info.Holder());
 	vtkOpenGLExtensionManager *native = (vtkOpenGLExtensionManager *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

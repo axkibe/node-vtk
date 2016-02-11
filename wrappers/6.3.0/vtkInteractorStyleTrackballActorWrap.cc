@@ -128,7 +128,7 @@ void VtkInteractorStyleTrackballActorWrap::Dolly(const Nan::FunctionCallbackInfo
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +183,7 @@ void VtkInteractorStyleTrackballActorWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleTrackballActorWrap::InitPtpl();
+	VtkInteractorStyleTrackballActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,7 +199,7 @@ void VtkInteractorStyleTrackballActorWrap::OnLeftButtonDown(const Nan::FunctionC
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -211,7 +211,7 @@ void VtkInteractorStyleTrackballActorWrap::OnLeftButtonUp(const Nan::FunctionCal
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -223,7 +223,7 @@ void VtkInteractorStyleTrackballActorWrap::OnMiddleButtonDown(const Nan::Functio
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -235,7 +235,7 @@ void VtkInteractorStyleTrackballActorWrap::OnMiddleButtonUp(const Nan::FunctionC
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -247,7 +247,7 @@ void VtkInteractorStyleTrackballActorWrap::OnMouseMove(const Nan::FunctionCallba
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -259,7 +259,7 @@ void VtkInteractorStyleTrackballActorWrap::OnRightButtonDown(const Nan::Function
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkInteractorStyleTrackballActorWrap::OnRightButtonUp(const Nan::FunctionCa
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -283,7 +283,7 @@ void VtkInteractorStyleTrackballActorWrap::Pan(const Nan::FunctionCallbackInfo<v
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkInteractorStyleTrackballActorWrap::Rotate(const Nan::FunctionCallbackInf
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkInteractorStyleTrackballActorWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleTrackballActorWrap::InitPtpl();
+		VtkInteractorStyleTrackballActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkInteractorStyleTrackballActorWrap::Spin(const Nan::FunctionCallbackInfo<
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -350,7 +350,7 @@ void VtkInteractorStyleTrackballActorWrap::UniformScale(const Nan::FunctionCallb
 {
 	VtkInteractorStyleTrackballActorWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleTrackballActorWrap>(info.Holder());
 	vtkInteractorStyleTrackballActor *native = (vtkInteractorStyleTrackballActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

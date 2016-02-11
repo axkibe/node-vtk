@@ -273,7 +273,7 @@ void VtkSubGroupWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkSubGroupWrap::InitPtpl();
+	VtkSubGroupWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkSubGroupWrap::PrintSubGroup(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkSubGroupWrap *wrapper = ObjectWrap::Unwrap<VtkSubGroupWrap>(info.Holder());
 	vtkSubGroup *native = (vtkSubGroup *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -313,7 +313,7 @@ void VtkSubGroupWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSubGroupWrap::InitPtpl();
+		VtkSubGroupWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -357,7 +357,7 @@ void VtkSubGroupWrap::setGatherPattern(const Nan::FunctionCallbackInfo<v8::Value
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

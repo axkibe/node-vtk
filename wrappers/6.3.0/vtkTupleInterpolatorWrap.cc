@@ -152,7 +152,7 @@ void VtkTupleInterpolatorWrap::GetInterpolatingSpline(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetInterpolatingSpline();
-		VtkSplineWrap::InitPtpl();
+	VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkTupleInterpolatorWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTupleInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info.Holder());
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkTupleInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTupleInterpolatorWrap::InitPtpl();
+	VtkTupleInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -297,7 +297,7 @@ void VtkTupleInterpolatorWrap::RemoveTuple(const Nan::FunctionCallbackInfo<v8::V
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +326,7 @@ void VtkTupleInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTupleInterpolatorWrap::InitPtpl();
+		VtkTupleInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -348,7 +348,7 @@ void VtkTupleInterpolatorWrap::SetInterpolatingSpline(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,7 @@ void VtkTupleInterpolatorWrap::SetInterpolationType(const Nan::FunctionCallbackI
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +384,7 @@ void VtkTupleInterpolatorWrap::SetInterpolationTypeToLinear(const Nan::FunctionC
 {
 	VtkTupleInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info.Holder());
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -396,7 +396,7 @@ void VtkTupleInterpolatorWrap::SetInterpolationTypeToSpline(const Nan::FunctionC
 {
 	VtkTupleInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkTupleInterpolatorWrap>(info.Holder());
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -410,7 +410,7 @@ void VtkTupleInterpolatorWrap::SetNumberOfComponents(const Nan::FunctionCallback
 	vtkTupleInterpolator *native = (vtkTupleInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

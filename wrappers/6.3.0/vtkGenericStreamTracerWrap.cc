@@ -122,6 +122,9 @@ void VtkGenericStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSource", GetSource);
 	Nan::SetPrototypeMethod(tpl, "getSource", GetSource);
 
+	Nan::SetPrototypeMethod(tpl, "GetStartPosition", GetStartPosition);
+	Nan::SetPrototypeMethod(tpl, "getStartPosition", GetStartPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetTerminalSpeed", GetTerminalSpeed);
 	Nan::SetPrototypeMethod(tpl, "getTerminalSpeed", GetTerminalSpeed);
 
@@ -287,7 +290,7 @@ void VtkGenericStreamTracerWrap::AddInputData(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericDataSetWrap *a0 = ObjectWrap::Unwrap<VtkGenericDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +307,7 @@ void VtkGenericStreamTracerWrap::ComputeVorticityOff(const Nan::FunctionCallback
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -316,7 +319,7 @@ void VtkGenericStreamTracerWrap::ComputeVorticityOn(const Nan::FunctionCallbackI
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -473,7 +476,7 @@ void VtkGenericStreamTracerWrap::GetIntegrator(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetIntegrator();
-		VtkInitialValueProblemSolverWrap::InitPtpl();
+	VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -622,7 +625,7 @@ void VtkGenericStreamTracerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetSource();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -632,6 +635,23 @@ void VtkGenericStreamTracerWrap::GetSource(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkGenericStreamTracerWrap::GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
+	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetStartPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGenericStreamTracerWrap::GetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -681,7 +701,7 @@ void VtkGenericStreamTracerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkGenericStreamTracerWrap::InitPtpl();
+	VtkGenericStreamTracerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -709,7 +729,7 @@ void VtkGenericStreamTracerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGenericStreamTracerWrap::InitPtpl();
+		VtkGenericStreamTracerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -731,7 +751,7 @@ void VtkGenericStreamTracerWrap::SelectInputVectors(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -750,7 +770,7 @@ void VtkGenericStreamTracerWrap::SetComputeVorticity(const Nan::FunctionCallback
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -769,7 +789,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStep(const Nan::FunctionCa
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -783,7 +803,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStep(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -804,7 +824,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStepUnit(const Nan::Functi
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -821,7 +841,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStepUnitToCellLengthUnit(c
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -833,7 +853,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStepUnitToLengthUnit(const
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -845,7 +865,7 @@ void VtkGenericStreamTracerWrap::SetInitialIntegrationStepUnitToTimeUnit(const N
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -859,7 +879,7 @@ void VtkGenericStreamTracerWrap::SetIntegrationDirection(const Nan::FunctionCall
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -876,7 +896,7 @@ void VtkGenericStreamTracerWrap::SetIntegrationDirectionToBackward(const Nan::Fu
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -888,7 +908,7 @@ void VtkGenericStreamTracerWrap::SetIntegrationDirectionToBoth(const Nan::Functi
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -900,7 +920,7 @@ void VtkGenericStreamTracerWrap::SetIntegrationDirectionToForward(const Nan::Fun
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -914,7 +934,7 @@ void VtkGenericStreamTracerWrap::SetIntegrationStepUnit(const Nan::FunctionCallb
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -934,7 +954,7 @@ void VtkGenericStreamTracerWrap::SetIntegrator(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkInitialValueProblemSolverWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkInitialValueProblemSolverWrap *a0 = ObjectWrap::Unwrap<VtkInitialValueProblemSolverWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -953,7 +973,7 @@ void VtkGenericStreamTracerWrap::SetIntegratorType(const Nan::FunctionCallbackIn
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -970,7 +990,7 @@ void VtkGenericStreamTracerWrap::SetIntegratorTypeToRungeKutta2(const Nan::Funct
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -982,7 +1002,7 @@ void VtkGenericStreamTracerWrap::SetIntegratorTypeToRungeKutta4(const Nan::Funct
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -994,7 +1014,7 @@ void VtkGenericStreamTracerWrap::SetIntegratorTypeToRungeKutta45(const Nan::Func
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1009,7 +1029,7 @@ void VtkGenericStreamTracerWrap::SetInterpolatorPrototype(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGenericInterpolatedVelocityFieldWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGenericInterpolatedVelocityFieldWrap *a0 = ObjectWrap::Unwrap<VtkGenericInterpolatedVelocityFieldWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1028,7 +1048,7 @@ void VtkGenericStreamTracerWrap::SetMaximumError(const Nan::FunctionCallbackInfo
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1047,7 +1067,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStep(const Nan::FunctionCa
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1061,7 +1081,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStep(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1082,7 +1102,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStepUnit(const Nan::Functi
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1099,7 +1119,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStepUnitToCellLengthUnit(c
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1111,7 +1131,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStepUnitToLengthUnit(const
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1123,7 +1143,7 @@ void VtkGenericStreamTracerWrap::SetMaximumIntegrationStepUnitToTimeUnit(const N
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1137,7 +1157,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagation(const Nan::FunctionCallba
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1151,7 +1171,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagation(const Nan::FunctionCallba
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1172,7 +1192,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagationUnit(const Nan::FunctionCa
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1189,7 +1209,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagationUnitToCellLengthUnit(const
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1201,7 +1221,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagationUnitToLengthUnit(const Nan
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1213,7 +1233,7 @@ void VtkGenericStreamTracerWrap::SetMaximumPropagationUnitToTimeUnit(const Nan::
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1227,7 +1247,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStep(const Nan::FunctionCa
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1241,7 +1261,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStep(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1262,7 +1282,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStepUnit(const Nan::Functi
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1279,7 +1299,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStepUnitToCellLengthUnit(c
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1291,7 +1311,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStepUnitToLengthUnit(const
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1303,7 +1323,7 @@ void VtkGenericStreamTracerWrap::SetMinimumIntegrationStepUnitToTimeUnit(const N
 {
 	VtkGenericStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkGenericStreamTracerWrap>(info.Holder());
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1317,7 +1337,7 @@ void VtkGenericStreamTracerWrap::SetRotationScale(const Nan::FunctionCallbackInf
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1337,7 +1357,7 @@ void VtkGenericStreamTracerWrap::SetSourceConnection(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1357,7 +1377,7 @@ void VtkGenericStreamTracerWrap::SetSourceData(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1384,7 +1404,7 @@ void VtkGenericStreamTracerWrap::SetStartPosition(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1413,7 +1433,7 @@ void VtkGenericStreamTracerWrap::SetStartPosition(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1429,7 +1449,7 @@ void VtkGenericStreamTracerWrap::SetStartPosition(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1452,7 +1472,7 @@ void VtkGenericStreamTracerWrap::SetTerminalSpeed(const Nan::FunctionCallbackInf
 	vtkGenericStreamTracer *native = (vtkGenericStreamTracer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -123,7 +123,7 @@ void VtkXYPlotWidgetWrap::GetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetXYPlotActor();
-		VtkXYPlotActorWrap::InitPtpl();
+	VtkXYPlotActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -168,7 +168,7 @@ void VtkXYPlotWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkXYPlotWidgetWrap::InitPtpl();
+	VtkXYPlotWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -196,7 +196,7 @@ void VtkXYPlotWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXYPlotWidgetWrap::InitPtpl();
+		VtkXYPlotWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkXYPlotWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkXYPlotWidget *native = (vtkXYPlotWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -237,7 +237,7 @@ void VtkXYPlotWidgetWrap::SetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkXYPlotActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkXYPlotActorWrap *a0 = ObjectWrap::Unwrap<VtkXYPlotActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

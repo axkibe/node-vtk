@@ -30,9 +30,13 @@ class VtkCutMaterialWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenterPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterial(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

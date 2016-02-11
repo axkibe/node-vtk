@@ -377,7 +377,7 @@ void VtkPLYWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkPolyDataWrap::InitPtpl();
+		VtkPolyDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -396,7 +396,7 @@ void VtkPLYWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +419,7 @@ void VtkPLYWriterWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -464,7 +464,7 @@ void VtkPLYWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkPLYWriterWrap::InitPtpl();
+	VtkPLYWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -492,7 +492,7 @@ void VtkPLYWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPLYWriterWrap::InitPtpl();
+		VtkPLYWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -514,7 +514,7 @@ void VtkPLYWriterWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +533,7 @@ void VtkPLYWriterWrap::SetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkPLYWriterWrap::SetColorModeToDefault(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +562,7 @@ void VtkPLYWriterWrap::SetColorModeToOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +574,7 @@ void VtkPLYWriterWrap::SetColorModeToUniformCellColor(const Nan::FunctionCallbac
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -586,7 +586,7 @@ void VtkPLYWriterWrap::SetColorModeToUniformColor(const Nan::FunctionCallbackInf
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -598,7 +598,7 @@ void VtkPLYWriterWrap::SetColorModeToUniformPointColor(const Nan::FunctionCallba
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -612,7 +612,7 @@ void VtkPLYWriterWrap::SetComponent(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +631,7 @@ void VtkPLYWriterWrap::SetDataByteOrder(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkPLYWriterWrap::SetDataByteOrderToBigEndian(const Nan::FunctionCallbackIn
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -660,7 +660,7 @@ void VtkPLYWriterWrap::SetDataByteOrderToLittleEndian(const Nan::FunctionCallbac
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -675,7 +675,7 @@ void VtkPLYWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -694,7 +694,7 @@ void VtkPLYWriterWrap::SetFileType(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -711,7 +711,7 @@ void VtkPLYWriterWrap::SetFileTypeToASCII(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -723,7 +723,7 @@ void VtkPLYWriterWrap::SetFileTypeToBinary(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPLYWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPLYWriterWrap>(info.Holder());
 	vtkPLYWriter *native = (vtkPLYWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -738,7 +738,7 @@ void VtkPLYWriterWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

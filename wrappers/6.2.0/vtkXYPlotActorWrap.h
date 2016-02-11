@@ -69,6 +69,8 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void GetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLegendActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLegendPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLegendPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogx(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXLabels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfXLabelsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -78,6 +80,8 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void GetNumberOfYLabelsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfYLabelsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfYMinorTicks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPlotColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPlotCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlotCurveLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlotCurvePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPlotLabel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -92,9 +96,12 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void GetShowReferenceXLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowReferenceYLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewportCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXAxisActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -103,6 +110,7 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void GetXValuesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYAxisActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);

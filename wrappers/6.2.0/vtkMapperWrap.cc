@@ -130,6 +130,9 @@ void VtkMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetScalarModeAsString", GetScalarModeAsString);
 	Nan::SetPrototypeMethod(tpl, "getScalarModeAsString", GetScalarModeAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetScalarRange", GetScalarRange);
+	Nan::SetPrototypeMethod(tpl, "getScalarRange", GetScalarRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetScalarVisibility", GetScalarVisibility);
 	Nan::SetPrototypeMethod(tpl, "getScalarVisibility", GetScalarVisibility);
 
@@ -338,7 +341,7 @@ void VtkMapperWrap::ColorByArrayComponent(const Nan::FunctionCallbackInfo<v8::Va
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -354,7 +357,7 @@ void VtkMapperWrap::ColorByArrayComponent(const Nan::FunctionCallbackInfo<v8::Va
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -373,7 +376,7 @@ void VtkMapperWrap::CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -451,7 +454,7 @@ void VtkMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -480,7 +483,7 @@ void VtkMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +493,17 @@ void VtkMapperWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMapperWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -588,7 +601,7 @@ void VtkMapperWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetInput();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -611,7 +624,7 @@ void VtkMapperWrap::GetInputAsDataSet(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInputAsDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -662,7 +675,7 @@ void VtkMapperWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -786,6 +799,23 @@ void VtkMapperWrap::GetScalarModeAsString(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkMapperWrap::GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
+	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScalarRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkMapperWrap::GetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
@@ -846,7 +876,7 @@ void VtkMapperWrap::GlobalImmediateModeRenderingOff(const Nan::FunctionCallbackI
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -858,7 +888,7 @@ void VtkMapperWrap::GlobalImmediateModeRenderingOn(const Nan::FunctionCallbackIn
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -870,7 +900,7 @@ void VtkMapperWrap::ImmediateModeRenderingOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -882,7 +912,7 @@ void VtkMapperWrap::ImmediateModeRenderingOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -894,7 +924,7 @@ void VtkMapperWrap::InterpolateScalarsBeforeMappingOff(const Nan::FunctionCallba
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -906,7 +936,7 @@ void VtkMapperWrap::InterpolateScalarsBeforeMappingOn(const Nan::FunctionCallbac
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -955,7 +985,7 @@ void VtkMapperWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				(vtkDataSet *) a0->native.GetPointer(),
 				info[1]->NumberValue()
 			);
-				VtkUnsignedCharArrayWrap::InitPtpl();
+			VtkUnsignedCharArrayWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -979,7 +1009,7 @@ void VtkMapperWrap::MapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->MapScalars(
 			info[0]->NumberValue()
 		);
-			VtkUnsignedCharArrayWrap::InitPtpl();
+		VtkUnsignedCharArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1005,7 +1035,7 @@ void VtkMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkMapperWrap::InitPtpl();
+	VtkMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1024,7 +1054,7 @@ void VtkMapperWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1053,7 +1083,7 @@ void VtkMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMapperWrap::InitPtpl();
+		VtkMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1072,7 +1102,7 @@ void VtkMapperWrap::ScalarVisibilityOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1084,7 +1114,7 @@ void VtkMapperWrap::ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1099,7 +1129,7 @@ void VtkMapperWrap::SelectColorArray(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1111,7 +1141,7 @@ void VtkMapperWrap::SelectColorArray(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	else if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1130,7 +1160,7 @@ void VtkMapperWrap::SetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1147,7 +1177,7 @@ void VtkMapperWrap::SetColorModeToDefault(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1159,7 +1189,7 @@ void VtkMapperWrap::SetColorModeToDirectScalars(const Nan::FunctionCallbackInfo<
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1171,7 +1201,7 @@ void VtkMapperWrap::SetColorModeToMapScalars(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1185,7 +1215,7 @@ void VtkMapperWrap::SetForceCompileOnly(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1204,7 +1234,7 @@ void VtkMapperWrap::SetGlobalImmediateModeRendering(const Nan::FunctionCallbackI
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1223,7 +1253,7 @@ void VtkMapperWrap::SetImmediateModeRendering(const Nan::FunctionCallbackInfo<v8
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1242,7 +1272,7 @@ void VtkMapperWrap::SetInterpolateScalarsBeforeMapping(const Nan::FunctionCallba
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1262,7 +1292,7 @@ void VtkMapperWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1281,7 +1311,7 @@ void VtkMapperWrap::SetRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1300,7 +1330,7 @@ void VtkMapperWrap::SetResolveCoincidentTopology(const Nan::FunctionCallbackInfo
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1319,7 +1349,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyPolygonOffsetFaces(const Nan::Fu
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1340,7 +1370,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyPolygonOffsetParameters(const Na
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1359,7 +1389,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyToDefault(const Nan::FunctionCal
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1371,7 +1401,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyToOff(const Nan::FunctionCallbac
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1383,7 +1413,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyToPolygonOffset(const Nan::Funct
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1395,7 +1425,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyToShiftZBuffer(const Nan::Functi
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1409,7 +1439,7 @@ void VtkMapperWrap::SetResolveCoincidentTopologyZShift(const Nan::FunctionCallba
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1428,7 +1458,7 @@ void VtkMapperWrap::SetScalarMaterialMode(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1445,7 +1475,7 @@ void VtkMapperWrap::SetScalarMaterialModeToAmbient(const Nan::FunctionCallbackIn
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1457,7 +1487,7 @@ void VtkMapperWrap::SetScalarMaterialModeToAmbientAndDiffuse(const Nan::Function
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1469,7 +1499,7 @@ void VtkMapperWrap::SetScalarMaterialModeToDefault(const Nan::FunctionCallbackIn
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1481,7 +1511,7 @@ void VtkMapperWrap::SetScalarMaterialModeToDiffuse(const Nan::FunctionCallbackIn
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1495,7 +1525,7 @@ void VtkMapperWrap::SetScalarMode(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1512,7 +1542,7 @@ void VtkMapperWrap::SetScalarModeToDefault(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1524,7 +1554,7 @@ void VtkMapperWrap::SetScalarModeToUseCellData(const Nan::FunctionCallbackInfo<v
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1536,7 +1566,7 @@ void VtkMapperWrap::SetScalarModeToUseCellFieldData(const Nan::FunctionCallbackI
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1548,7 +1578,7 @@ void VtkMapperWrap::SetScalarModeToUseFieldData(const Nan::FunctionCallbackInfo<
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1560,7 +1590,7 @@ void VtkMapperWrap::SetScalarModeToUsePointData(const Nan::FunctionCallbackInfo<
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1572,7 +1602,7 @@ void VtkMapperWrap::SetScalarModeToUsePointFieldData(const Nan::FunctionCallback
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1594,7 +1624,7 @@ void VtkMapperWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1623,7 +1653,7 @@ void VtkMapperWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1637,7 +1667,7 @@ void VtkMapperWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1658,7 +1688,7 @@ void VtkMapperWrap::SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1677,7 +1707,7 @@ void VtkMapperWrap::SetStatic(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1696,7 +1726,7 @@ void VtkMapperWrap::SetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1716,7 +1746,7 @@ void VtkMapperWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractMapperWrap *a0 = ObjectWrap::Unwrap<VtkAbstractMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1733,7 +1763,7 @@ void VtkMapperWrap::StaticOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1745,7 +1775,7 @@ void VtkMapperWrap::StaticOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1757,7 +1787,7 @@ void VtkMapperWrap::UseLookupTableScalarRangeOff(const Nan::FunctionCallbackInfo
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1769,7 +1799,7 @@ void VtkMapperWrap::UseLookupTableScalarRangeOn(const Nan::FunctionCallbackInfo<
 {
 	VtkMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMapperWrap>(info.Holder());
 	vtkMapper *native = (vtkMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

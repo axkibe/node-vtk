@@ -127,7 +127,7 @@ void VtkPCAAnalysisFilterWrap::GetEvals(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetEvals();
-		VtkFloatArrayWrap::InitPtpl();
+	VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -170,7 +170,7 @@ void VtkPCAAnalysisFilterWrap::GetParameterisedShape(const Nan::FunctionCallback
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointSetWrap *a1 = ObjectWrap::Unwrap<VtkPointSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -197,7 +197,7 @@ void VtkPCAAnalysisFilterWrap::GetShapeParameters(const Nan::FunctionCallbackInf
 			VtkFloatArrayWrap *a1 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -247,7 +247,7 @@ void VtkPCAAnalysisFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkPCAAnalysisFilterWrap::InitPtpl();
+	VtkPCAAnalysisFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -275,7 +275,7 @@ void VtkPCAAnalysisFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPCAAnalysisFilterWrap::InitPtpl();
+		VtkPCAAnalysisFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

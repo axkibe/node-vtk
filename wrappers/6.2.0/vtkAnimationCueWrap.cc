@@ -133,7 +133,7 @@ void VtkAnimationCueWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkAnimationCueWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info.Holder());
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkAnimationCueWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkAnimationCueWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info.Holder());
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkAnimationCueWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkAnimationCueWrap::InitPtpl();
+	VtkAnimationCueWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkAnimationCueWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAnimationCueWrap::InitPtpl();
+		VtkAnimationCueWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -333,7 +333,7 @@ void VtkAnimationCueWrap::SetEndTime(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -352,7 +352,7 @@ void VtkAnimationCueWrap::SetStartTime(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +371,7 @@ void VtkAnimationCueWrap::SetTimeMode(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -388,7 +388,7 @@ void VtkAnimationCueWrap::SetTimeModeToNormalized(const Nan::FunctionCallbackInf
 {
 	VtkAnimationCueWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info.Holder());
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +400,7 @@ void VtkAnimationCueWrap::SetTimeModeToRelative(const Nan::FunctionCallbackInfo<
 {
 	VtkAnimationCueWrap *wrapper = ObjectWrap::Unwrap<VtkAnimationCueWrap>(info.Holder());
 	vtkAnimationCue *native = (vtkAnimationCue *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkAnimationCueWrap::Tick(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

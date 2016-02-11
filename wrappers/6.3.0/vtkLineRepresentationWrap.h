@@ -34,6 +34,7 @@ class VtkLineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void DistanceAnnotationVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DistanceAnnotationVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDistanceAnnotationFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);

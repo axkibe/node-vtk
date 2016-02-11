@@ -138,7 +138,7 @@ void VtkImplicitBooleanWrap::AddFunction(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -256,7 +256,7 @@ void VtkImplicitBooleanWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -286,7 +286,7 @@ void VtkImplicitBooleanWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -336,7 +336,7 @@ void VtkImplicitBooleanWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -356,7 +356,7 @@ void VtkImplicitBooleanWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -396,7 +396,7 @@ void VtkImplicitBooleanWrap::GetFunction(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetFunction();
-		VtkImplicitFunctionCollectionWrap::InitPtpl();
+	VtkImplicitFunctionCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkImplicitBooleanWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitBooleanWrap::InitPtpl();
+	VtkImplicitBooleanWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -516,7 +516,7 @@ void VtkImplicitBooleanWrap::RemoveFunction(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +545,7 @@ void VtkImplicitBooleanWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitBooleanWrap::InitPtpl();
+		VtkImplicitBooleanWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -566,7 +566,7 @@ void VtkImplicitBooleanWrap::SetOperationType(const Nan::FunctionCallbackInfo<v8
 	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -583,7 +583,7 @@ void VtkImplicitBooleanWrap::SetOperationTypeToDifference(const Nan::FunctionCal
 {
 	VtkImplicitBooleanWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitBooleanWrap>(info.Holder());
 	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +595,7 @@ void VtkImplicitBooleanWrap::SetOperationTypeToIntersection(const Nan::FunctionC
 {
 	VtkImplicitBooleanWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitBooleanWrap>(info.Holder());
 	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +607,7 @@ void VtkImplicitBooleanWrap::SetOperationTypeToUnion(const Nan::FunctionCallback
 {
 	VtkImplicitBooleanWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitBooleanWrap>(info.Holder());
 	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -619,7 +619,7 @@ void VtkImplicitBooleanWrap::SetOperationTypeToUnionOfMagnitudes(const Nan::Func
 {
 	VtkImplicitBooleanWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitBooleanWrap>(info.Holder());
 	vtkImplicitBoolean *native = (vtkImplicitBoolean *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

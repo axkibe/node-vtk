@@ -151,7 +151,7 @@ void VtkDicerWrap::FieldDataOff(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -163,7 +163,7 @@ void VtkDicerWrap::FieldDataOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +372,7 @@ void VtkDicerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkDicerWrap::InitPtpl();
+	VtkDicerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +400,7 @@ void VtkDicerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDicerWrap::InitPtpl();
+		VtkDicerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -421,7 +421,7 @@ void VtkDicerWrap::SetDiceMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +438,7 @@ void VtkDicerWrap::SetDiceModeToMemoryLimitPerPiece(const Nan::FunctionCallbackI
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +450,7 @@ void VtkDicerWrap::SetDiceModeToNumberOfPointsPerPiece(const Nan::FunctionCallba
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -462,7 +462,7 @@ void VtkDicerWrap::SetDiceModeToSpecifiedNumberOfPieces(const Nan::FunctionCallb
 {
 	VtkDicerWrap *wrapper = ObjectWrap::Unwrap<VtkDicerWrap>(info.Holder());
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -476,7 +476,7 @@ void VtkDicerWrap::SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -495,7 +495,7 @@ void VtkDicerWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -514,7 +514,7 @@ void VtkDicerWrap::SetNumberOfPointsPerPiece(const Nan::FunctionCallbackInfo<v8:
 	vtkDicer *native = (vtkDicer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

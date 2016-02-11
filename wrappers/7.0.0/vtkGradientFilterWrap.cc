@@ -179,7 +179,7 @@ void VtkGradientFilterWrap::ComputeDivergenceOff(const Nan::FunctionCallbackInfo
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkGradientFilterWrap::ComputeDivergenceOn(const Nan::FunctionCallbackInfo<
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkGradientFilterWrap::ComputeGradientOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkGradientFilterWrap::ComputeGradientOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkGradientFilterWrap::ComputeQCriterionOff(const Nan::FunctionCallbackInfo
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkGradientFilterWrap::ComputeQCriterionOn(const Nan::FunctionCallbackInfo<
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkGradientFilterWrap::ComputeVorticityOff(const Nan::FunctionCallbackInfo<
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -263,7 +263,7 @@ void VtkGradientFilterWrap::ComputeVorticityOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkGradientFilterWrap::FasterApproximationOff(const Nan::FunctionCallbackIn
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -287,7 +287,7 @@ void VtkGradientFilterWrap::FasterApproximationOn(const Nan::FunctionCallbackInf
 {
 	VtkGradientFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGradientFilterWrap>(info.Holder());
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -468,7 +468,7 @@ void VtkGradientFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkGradientFilterWrap::InitPtpl();
+	VtkGradientFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -496,7 +496,7 @@ void VtkGradientFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGradientFilterWrap::InitPtpl();
+		VtkGradientFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -517,7 +517,7 @@ void VtkGradientFilterWrap::SetComputeDivergence(const Nan::FunctionCallbackInfo
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -536,7 +536,7 @@ void VtkGradientFilterWrap::SetComputeGradient(const Nan::FunctionCallbackInfo<v
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +555,7 @@ void VtkGradientFilterWrap::SetComputeQCriterion(const Nan::FunctionCallbackInfo
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +574,7 @@ void VtkGradientFilterWrap::SetComputeVorticity(const Nan::FunctionCallbackInfo<
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -594,7 +594,7 @@ void VtkGradientFilterWrap::SetDivergenceArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -613,7 +613,7 @@ void VtkGradientFilterWrap::SetFasterApproximation(const Nan::FunctionCallbackIn
 	vtkGradientFilter *native = (vtkGradientFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -635,7 +635,7 @@ void VtkGradientFilterWrap::SetInputScalars(const Nan::FunctionCallbackInfo<v8::
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -648,7 +648,7 @@ void VtkGradientFilterWrap::SetInputScalars(const Nan::FunctionCallbackInfo<v8::
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -670,7 +670,7 @@ void VtkGradientFilterWrap::SetQCriterionArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -690,7 +690,7 @@ void VtkGradientFilterWrap::SetResultArrayName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -710,7 +710,7 @@ void VtkGradientFilterWrap::SetVorticityArrayName(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

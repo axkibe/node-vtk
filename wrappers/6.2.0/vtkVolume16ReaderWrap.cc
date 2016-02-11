@@ -58,6 +58,9 @@ void VtkVolume16ReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataByteOrderAsString", GetDataByteOrderAsString);
 	Nan::SetPrototypeMethod(tpl, "getDataByteOrderAsString", GetDataByteOrderAsString);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataDimensions", GetDataDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDataDimensions", GetDataDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "GetHeaderSize", GetHeaderSize);
 	Nan::SetPrototypeMethod(tpl, "getHeaderSize", GetHeaderSize);
 
@@ -177,6 +180,23 @@ void VtkVolume16ReaderWrap::GetDataByteOrderAsString(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkVolume16ReaderWrap::GetDataDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
+	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkVolume16ReaderWrap::GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
@@ -206,7 +226,7 @@ void VtkVolume16ReaderWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetImage(
 			info[0]->Int32Value()
 		);
-			VtkImageDataWrap::InitPtpl();
+		VtkImageDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +266,7 @@ void VtkVolume16ReaderWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTransform();
-		VtkTransformWrap::InitPtpl();
+	VtkTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +311,7 @@ void VtkVolume16ReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolume16ReaderWrap::InitPtpl();
+	VtkVolume16ReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +339,7 @@ void VtkVolume16ReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolume16ReaderWrap::InitPtpl();
+		VtkVolume16ReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +360,7 @@ void VtkVolume16ReaderWrap::SetDataByteOrder(const Nan::FunctionCallbackInfo<v8:
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -357,7 +377,7 @@ void VtkVolume16ReaderWrap::SetDataByteOrderToBigEndian(const Nan::FunctionCallb
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -369,7 +389,7 @@ void VtkVolume16ReaderWrap::SetDataByteOrderToLittleEndian(const Nan::FunctionCa
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +411,7 @@ void VtkVolume16ReaderWrap::SetDataDimensions(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +440,7 @@ void VtkVolume16ReaderWrap::SetDataDimensions(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +454,7 @@ void VtkVolume16ReaderWrap::SetDataDimensions(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -455,7 +475,7 @@ void VtkVolume16ReaderWrap::SetHeaderSize(const Nan::FunctionCallbackInfo<v8::Va
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -474,7 +494,7 @@ void VtkVolume16ReaderWrap::SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Val
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +514,7 @@ void VtkVolume16ReaderWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTransformWrap *a0 = ObjectWrap::Unwrap<VtkTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +531,7 @@ void VtkVolume16ReaderWrap::SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -523,7 +543,7 @@ void VtkVolume16ReaderWrap::SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
 	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

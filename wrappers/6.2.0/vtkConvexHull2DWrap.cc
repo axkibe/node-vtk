@@ -168,7 +168,7 @@ void VtkConvexHull2DWrap::CalculateBoundingRectangle(const Nan::FunctionCallback
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -197,7 +197,7 @@ void VtkConvexHull2DWrap::CalculateConvexHull(const Nan::FunctionCallbackInfo<v8
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -379,7 +379,7 @@ void VtkConvexHull2DWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -438,7 +438,7 @@ void VtkConvexHull2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkConvexHull2DWrap::InitPtpl();
+	VtkConvexHull2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,7 +454,7 @@ void VtkConvexHull2DWrap::OutlineOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -466,7 +466,7 @@ void VtkConvexHull2DWrap::OutlineOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkConvexHull2DWrap *wrapper = ObjectWrap::Unwrap<VtkConvexHull2DWrap>(info.Holder());
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -490,7 +490,7 @@ void VtkConvexHull2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConvexHull2DWrap::InitPtpl();
+		VtkConvexHull2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -511,7 +511,7 @@ void VtkConvexHull2DWrap::SetHullShape(const Nan::FunctionCallbackInfo<v8::Value
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkConvexHull2DWrap::SetMinHullSizeInDisplay(const Nan::FunctionCallbackInf
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +549,7 @@ void VtkConvexHull2DWrap::SetMinHullSizeInWorld(const Nan::FunctionCallbackInfo<
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -568,7 +568,7 @@ void VtkConvexHull2DWrap::SetOutline(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +588,7 @@ void VtkConvexHull2DWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -607,7 +607,7 @@ void VtkConvexHull2DWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Val
 	vtkConvexHull2D *native = (vtkConvexHull2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

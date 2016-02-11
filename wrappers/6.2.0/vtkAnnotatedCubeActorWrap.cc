@@ -227,7 +227,7 @@ void VtkAnnotatedCubeActorWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkAnnotatedCubeActorWrap::GetAssembly(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAssembly();
-		VtkAssemblyWrap::InitPtpl();
+	VtkAssemblyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -277,7 +277,7 @@ void VtkAnnotatedCubeActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +306,7 @@ void VtkAnnotatedCubeActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +316,17 @@ void VtkAnnotatedCubeActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Va
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAnnotatedCubeActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -344,7 +354,7 @@ void VtkAnnotatedCubeActorWrap::GetCubeProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCubeProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,7 +419,7 @@ void VtkAnnotatedCubeActorWrap::GetTextEdgesProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetTextEdgesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -460,7 +470,7 @@ void VtkAnnotatedCubeActorWrap::GetXMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetXMinusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +507,7 @@ void VtkAnnotatedCubeActorWrap::GetXPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetXPlusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -548,7 +558,7 @@ void VtkAnnotatedCubeActorWrap::GetYMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetYMinusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -585,7 +595,7 @@ void VtkAnnotatedCubeActorWrap::GetYPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetYPlusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -636,7 +646,7 @@ void VtkAnnotatedCubeActorWrap::GetZMinusFaceProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetZMinusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -673,7 +683,7 @@ void VtkAnnotatedCubeActorWrap::GetZPlusFaceProperty(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetZPlusFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -746,7 +756,7 @@ void VtkAnnotatedCubeActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkAnnotatedCubeActorWrap::InitPtpl();
+	VtkAnnotatedCubeActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -765,7 +775,7 @@ void VtkAnnotatedCubeActorWrap::ReleaseGraphicsResources(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -838,7 +848,7 @@ void VtkAnnotatedCubeActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAnnotatedCubeActorWrap::InitPtpl();
+		VtkAnnotatedCubeActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -859,7 +869,7 @@ void VtkAnnotatedCubeActorWrap::SetCubeVisibility(const Nan::FunctionCallbackInf
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -878,7 +888,7 @@ void VtkAnnotatedCubeActorWrap::SetFaceTextScale(const Nan::FunctionCallbackInfo
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -897,7 +907,7 @@ void VtkAnnotatedCubeActorWrap::SetFaceTextVisibility(const Nan::FunctionCallbac
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -916,7 +926,7 @@ void VtkAnnotatedCubeActorWrap::SetTextEdgesVisibility(const Nan::FunctionCallba
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +945,7 @@ void VtkAnnotatedCubeActorWrap::SetXFaceTextRotation(const Nan::FunctionCallback
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -955,7 +965,7 @@ void VtkAnnotatedCubeActorWrap::SetXMinusFaceText(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -975,7 +985,7 @@ void VtkAnnotatedCubeActorWrap::SetXPlusFaceText(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -994,7 +1004,7 @@ void VtkAnnotatedCubeActorWrap::SetYFaceTextRotation(const Nan::FunctionCallback
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1014,7 +1024,7 @@ void VtkAnnotatedCubeActorWrap::SetYMinusFaceText(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1034,7 +1044,7 @@ void VtkAnnotatedCubeActorWrap::SetYPlusFaceText(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1053,7 +1063,7 @@ void VtkAnnotatedCubeActorWrap::SetZFaceTextRotation(const Nan::FunctionCallback
 	vtkAnnotatedCubeActor *native = (vtkAnnotatedCubeActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1073,7 +1083,7 @@ void VtkAnnotatedCubeActorWrap::SetZMinusFaceText(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1093,7 +1103,7 @@ void VtkAnnotatedCubeActorWrap::SetZPlusFaceText(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1113,7 +1123,7 @@ void VtkAnnotatedCubeActorWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

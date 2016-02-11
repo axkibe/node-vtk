@@ -107,7 +107,7 @@ void VtkConeLayoutStrategyWrap::CompressionOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
 	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -119,7 +119,7 @@ void VtkConeLayoutStrategyWrap::CompressionOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
 	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +181,7 @@ void VtkConeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkConeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkConeLayoutStrategyWrap>(info.Holder());
 	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkConeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkConeLayoutStrategyWrap::InitPtpl();
+	VtkConeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkConeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkConeLayoutStrategyWrap::InitPtpl();
+		VtkConeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkConeLayoutStrategyWrap::SetCompression(const Nan::FunctionCallbackInfo<v
 	vtkConeLayoutStrategy *native = (vtkConeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

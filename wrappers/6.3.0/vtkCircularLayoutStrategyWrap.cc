@@ -131,7 +131,7 @@ void VtkCircularLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCircularLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCircularLayoutStrategyWrap>(info.Holder());
 	vtkCircularLayoutStrategy *native = (vtkCircularLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -150,7 +150,7 @@ void VtkCircularLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkCircularLayoutStrategyWrap::InitPtpl();
+	VtkCircularLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkCircularLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCircularLayoutStrategyWrap::InitPtpl();
+		VtkCircularLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

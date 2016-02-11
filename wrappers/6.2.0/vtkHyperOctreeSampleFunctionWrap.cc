@@ -69,8 +69,14 @@ void VtkHyperOctreeSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMinLevels", GetMinLevels);
 	Nan::SetPrototypeMethod(tpl, "getMinLevels", GetMinLevels);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputScalarType", GetOutputScalarType);
 	Nan::SetPrototypeMethod(tpl, "getOutputScalarType", GetOutputScalarType);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
 
 	Nan::SetPrototypeMethod(tpl, "GetThreshold", GetThreshold);
 	Nan::SetPrototypeMethod(tpl, "getThreshold", GetThreshold);
@@ -246,7 +252,7 @@ void VtkHyperOctreeSampleFunctionWrap::GetImplicitFunction(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetImplicitFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,6 +292,23 @@ void VtkHyperOctreeSampleFunctionWrap::GetMinLevels(const Nan::FunctionCallbackI
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkHyperOctreeSampleFunctionWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
+	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkHyperOctreeSampleFunctionWrap::GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
@@ -298,6 +321,23 @@ void VtkHyperOctreeSampleFunctionWrap::GetOutputScalarType(const Nan::FunctionCa
 	}
 	r = native->GetOutputScalarType();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperOctreeSampleFunctionWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
+	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkHyperOctreeSampleFunctionWrap::GetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -361,7 +401,7 @@ void VtkHyperOctreeSampleFunctionWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeSampleFunctionWrap::InitPtpl();
+	VtkHyperOctreeSampleFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -389,7 +429,7 @@ void VtkHyperOctreeSampleFunctionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeSampleFunctionWrap::InitPtpl();
+		VtkHyperOctreeSampleFunctionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -410,7 +450,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetDepth(const Nan::FunctionCallbackInfo<
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +469,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetDimension(const Nan::FunctionCallbackI
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +488,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetHeight(const Nan::FunctionCallbackInfo
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +508,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetImplicitFunction(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +527,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetLevels(const Nan::FunctionCallbackInfo
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +546,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetMinLevels(const Nan::FunctionCallbackI
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +573,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOrigin(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -562,7 +602,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOrigin(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -578,7 +618,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOrigin(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -601,7 +641,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarType(const Nan::FunctionCa
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +658,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToChar(const Nan::Func
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +670,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToDouble(const Nan::Fu
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +682,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToFloat(const Nan::Fun
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -654,7 +694,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToInt(const Nan::Funct
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -666,7 +706,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToLong(const Nan::Func
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -678,7 +718,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToShort(const Nan::Fun
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -690,7 +730,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToUnsignedChar(const N
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -702,7 +742,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToUnsignedInt(const Na
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -714,7 +754,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToUnsignedLong(const N
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -726,7 +766,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetOutputScalarTypeToUnsignedShort(const 
 {
 	VtkHyperOctreeSampleFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSampleFunctionWrap>(info.Holder());
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +788,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetSize(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -777,7 +817,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetSize(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -793,7 +833,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetSize(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -816,7 +856,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetThreshold(const Nan::FunctionCallbackI
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -835,7 +875,7 @@ void VtkHyperOctreeSampleFunctionWrap::SetWidth(const Nan::FunctionCallbackInfo<
 	vtkHyperOctreeSampleFunction *native = (vtkHyperOctreeSampleFunction *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

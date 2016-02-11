@@ -33,8 +33,11 @@ class VtkClipClosedSurfaceWrap : public VtkPolyDataAlgorithmWrap
 		static void GenerateFacesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateOutlineOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateOutlineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetActivePlaneColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActivePlaneId(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBaseColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetClipColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -351,7 +351,7 @@ void VtkCommunity2DLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackInf
 {
 	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -399,7 +399,7 @@ void VtkCommunity2DLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCommunity2DLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkCommunity2DLayoutStrategyWrap>(info.Holder());
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +418,7 @@ void VtkCommunity2DLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkCommunity2DLayoutStrategyWrap::InitPtpl();
+	VtkCommunity2DLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -446,7 +446,7 @@ void VtkCommunity2DLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCommunity2DLayoutStrategyWrap::InitPtpl();
+		VtkCommunity2DLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -468,7 +468,7 @@ void VtkCommunity2DLayoutStrategyWrap::SetCommunityArrayName(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +487,7 @@ void VtkCommunity2DLayoutStrategyWrap::SetCoolDownRate(const Nan::FunctionCallba
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -506,7 +506,7 @@ void VtkCommunity2DLayoutStrategyWrap::SetIterationsPerLayout(const Nan::Functio
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -525,7 +525,7 @@ void VtkCommunity2DLayoutStrategyWrap::SetMaxNumberOfIterations(const Nan::Funct
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -544,7 +544,7 @@ void VtkCommunity2DLayoutStrategyWrap::SetRandomSeed(const Nan::FunctionCallback
 	vtkCommunity2DLayoutStrategy *native = (vtkCommunity2DLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -56,6 +56,9 @@ void VtkXMLStructuredDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPieces", GetNumberOfPieces);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPieces", GetNumberOfPieces);
 
+	Nan::SetPrototypeMethod(tpl, "GetWriteExtent", GetWriteExtent);
+	Nan::SetPrototypeMethod(tpl, "getWriteExtent", GetWriteExtent);
+
 	Nan::SetPrototypeMethod(tpl, "GetWritePiece", GetWritePiece);
 	Nan::SetPrototypeMethod(tpl, "getWritePiece", GetWritePiece);
 
@@ -150,6 +153,23 @@ void VtkXMLStructuredDataWriterWrap::GetNumberOfPieces(const Nan::FunctionCallba
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkXMLStructuredDataWriterWrap::GetWriteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLStructuredDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLStructuredDataWriterWrap>(info.Holder());
+	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWriteExtent();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkXMLStructuredDataWriterWrap::GetWritePiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLStructuredDataWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLStructuredDataWriterWrap>(info.Holder());
@@ -197,7 +217,7 @@ void VtkXMLStructuredDataWriterWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLStructuredDataWriterWrap::InitPtpl();
+	VtkXMLStructuredDataWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +245,7 @@ void VtkXMLStructuredDataWriterWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLStructuredDataWriterWrap::InitPtpl();
+		VtkXMLStructuredDataWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -246,7 +266,7 @@ void VtkXMLStructuredDataWriterWrap::SetGhostLevel(const Nan::FunctionCallbackIn
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -265,7 +285,7 @@ void VtkXMLStructuredDataWriterWrap::SetNumberOfPieces(const Nan::FunctionCallba
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -292,7 +312,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +341,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +363,7 @@ void VtkXMLStructuredDataWriterWrap::SetWriteExtent(const Nan::FunctionCallbackI
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -372,7 +392,7 @@ void VtkXMLStructuredDataWriterWrap::SetWritePiece(const Nan::FunctionCallbackIn
 	vtkXMLStructuredDataWriter *native = (vtkXMLStructuredDataWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

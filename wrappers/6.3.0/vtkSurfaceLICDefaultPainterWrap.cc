@@ -120,7 +120,7 @@ void VtkSurfaceLICDefaultPainterWrap::GetSurfaceLICPainter(const Nan::FunctionCa
 		return;
 	}
 	r = native->GetSurfaceLICPainter();
-		VtkSurfaceLICPainterWrap::InitPtpl();
+	VtkSurfaceLICPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -165,7 +165,7 @@ void VtkSurfaceLICDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkSurfaceLICDefaultPainterWrap::InitPtpl();
+	VtkSurfaceLICDefaultPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -193,7 +193,7 @@ void VtkSurfaceLICDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSurfaceLICDefaultPainterWrap::InitPtpl();
+		VtkSurfaceLICDefaultPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkSurfaceLICDefaultPainterWrap::SetSurfaceLICPainter(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSurfaceLICPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSurfaceLICPainterWrap *a0 = ObjectWrap::Unwrap<VtkSurfaceLICPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

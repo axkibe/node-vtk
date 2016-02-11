@@ -121,7 +121,7 @@ void VtkInitialValueProblemSolverWrap::GetFunctionSet(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetFunctionSet();
-		VtkFunctionSetWrap::InitPtpl();
+	VtkFunctionSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkInitialValueProblemSolverWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkInitialValueProblemSolverWrap::InitPtpl();
+	VtkInitialValueProblemSolverWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkInitialValueProblemSolverWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInitialValueProblemSolverWrap::InitPtpl();
+		VtkInitialValueProblemSolverWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkInitialValueProblemSolverWrap::SetFunctionSet(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFunctionSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFunctionSetWrap *a0 = ObjectWrap::Unwrap<VtkFunctionSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

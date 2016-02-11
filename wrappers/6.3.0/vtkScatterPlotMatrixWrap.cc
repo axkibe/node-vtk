@@ -227,7 +227,7 @@ void VtkScatterPlotMatrixWrap::AdvanceAnimation(const Nan::FunctionCallbackInfo<
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -261,7 +261,7 @@ void VtkScatterPlotMatrixWrap::ClearAnimationPath(const Nan::FunctionCallbackInf
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkScatterPlotMatrixWrap::GetAnnotationLink(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetAnnotationLink();
-		VtkAnnotationLinkWrap::InitPtpl();
+	VtkAnnotationLinkWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +349,7 @@ void VtkScatterPlotMatrixWrap::GetAxisLabelProperties(const Nan::FunctionCallbac
 		r = native->GetAxisLabelProperties(
 			info[0]->Int32Value()
 		);
-			VtkTextPropertyWrap::InitPtpl();
+		VtkTextPropertyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -431,7 +431,7 @@ void VtkScatterPlotMatrixWrap::GetIndexedLabels(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetIndexedLabels();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -454,7 +454,7 @@ void VtkScatterPlotMatrixWrap::GetMainChart(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetMainChart();
-		VtkChartWrap::InitPtpl();
+	VtkChartWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -544,7 +544,7 @@ void VtkScatterPlotMatrixWrap::GetTitleProperties(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetTitleProperties();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -567,7 +567,7 @@ void VtkScatterPlotMatrixWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetTooltip();
-		VtkTooltipItemWrap::InitPtpl();
+	VtkTooltipItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -632,7 +632,7 @@ void VtkScatterPlotMatrixWrap::GetVisibleColumns(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetVisibleColumns();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -677,7 +677,7 @@ void VtkScatterPlotMatrixWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkScatterPlotMatrixWrap::InitPtpl();
+	VtkScatterPlotMatrixWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -727,7 +727,7 @@ void VtkScatterPlotMatrixWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScatterPlotMatrixWrap::InitPtpl();
+		VtkScatterPlotMatrixWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -750,7 +750,7 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelNotation(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -773,7 +773,7 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelPrecision(const Nan::FunctionCallback
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -797,7 +797,7 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelProperties(const Nan::FunctionCallbac
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkTextPropertyWrap *a1 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -820,7 +820,7 @@ void VtkScatterPlotMatrixWrap::SetAxisLabelVisibility(const Nan::FunctionCallbac
 	{
 		if(info.Length() > 1 && info[1]->IsBoolean())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -841,7 +841,7 @@ void VtkScatterPlotMatrixWrap::SetColumnVisibilityAll(const Nan::FunctionCallbac
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -862,7 +862,7 @@ void VtkScatterPlotMatrixWrap::SetGridVisibility(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsBoolean())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -884,7 +884,7 @@ void VtkScatterPlotMatrixWrap::SetIndexedLabels(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -904,7 +904,7 @@ void VtkScatterPlotMatrixWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -923,7 +923,7 @@ void VtkScatterPlotMatrixWrap::SetNumberOfBins(const Nan::FunctionCallbackInfo<v
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -942,7 +942,7 @@ void VtkScatterPlotMatrixWrap::SetNumberOfFrames(const Nan::FunctionCallbackInfo
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -963,7 +963,7 @@ void VtkScatterPlotMatrixWrap::SetPlotMarkerStyle(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -985,7 +985,7 @@ void VtkScatterPlotMatrixWrap::SetScene(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkContextSceneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkContextSceneWrap *a0 = ObjectWrap::Unwrap<VtkContextSceneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1004,7 +1004,7 @@ void VtkScatterPlotMatrixWrap::SetSelectionMode(const Nan::FunctionCallbackInfo<
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1024,7 +1024,7 @@ void VtkScatterPlotMatrixWrap::SetTitleProperties(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1044,7 +1044,7 @@ void VtkScatterPlotMatrixWrap::SetTooltip(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTooltipItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTooltipItemWrap *a0 = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1065,7 +1065,7 @@ void VtkScatterPlotMatrixWrap::SetTooltipNotation(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1088,7 +1088,7 @@ void VtkScatterPlotMatrixWrap::SetTooltipPrecision(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1110,7 +1110,7 @@ void VtkScatterPlotMatrixWrap::SetVisibleColumns(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1127,7 +1127,7 @@ void VtkScatterPlotMatrixWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1141,7 +1141,7 @@ void VtkScatterPlotMatrixWrap::UpdateChartSettings(const Nan::FunctionCallbackIn
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1158,7 +1158,7 @@ void VtkScatterPlotMatrixWrap::UpdateSettings(const Nan::FunctionCallbackInfo<v8
 {
 	VtkScatterPlotMatrixWrap *wrapper = ObjectWrap::Unwrap<VtkScatterPlotMatrixWrap>(info.Holder());
 	vtkScatterPlotMatrix *native = (vtkScatterPlotMatrix *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

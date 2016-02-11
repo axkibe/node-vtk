@@ -120,7 +120,7 @@ void VtkAreaLayoutWrap::EdgeRoutingPointsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -132,7 +132,7 @@ void VtkAreaLayoutWrap::EdgeRoutingPointsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAreaLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkAreaLayoutWrap>(info.Holder());
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -193,7 +193,7 @@ void VtkAreaLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkAreaLayoutStrategyWrap::InitPtpl();
+	VtkAreaLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkAreaLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkAreaLayoutWrap::InitPtpl();
+	VtkAreaLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkAreaLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAreaLayoutWrap::InitPtpl();
+		VtkAreaLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkAreaLayoutWrap::SetAreaArrayName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkAreaLayoutWrap::SetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8:
 	vtkAreaLayout *native = (vtkAreaLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -327,7 +327,7 @@ void VtkAreaLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAreaLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAreaLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkAreaLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkAreaLayoutWrap::SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

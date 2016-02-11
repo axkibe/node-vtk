@@ -132,7 +132,7 @@ void VtkDistancePolyDataFilterWrap::ComputeSecondDistanceOff(const Nan::Function
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +144,7 @@ void VtkDistancePolyDataFilterWrap::ComputeSecondDistanceOn(const Nan::FunctionC
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkDistancePolyDataFilterWrap::GetSecondDistanceOutput(const Nan::FunctionC
 		return;
 	}
 	r = native->GetSecondDistanceOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkDistancePolyDataFilterWrap::NegateDistanceOff(const Nan::FunctionCallbac
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkDistancePolyDataFilterWrap::NegateDistanceOn(const Nan::FunctionCallback
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -288,7 +288,7 @@ void VtkDistancePolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistancePolyDataFilterWrap::InitPtpl();
+	VtkDistancePolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkDistancePolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistancePolyDataFilterWrap::InitPtpl();
+		VtkDistancePolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -337,7 +337,7 @@ void VtkDistancePolyDataFilterWrap::SetComputeSecondDistance(const Nan::Function
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -356,7 +356,7 @@ void VtkDistancePolyDataFilterWrap::SetNegateDistance(const Nan::FunctionCallbac
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -375,7 +375,7 @@ void VtkDistancePolyDataFilterWrap::SetSignedDistance(const Nan::FunctionCallbac
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -392,7 +392,7 @@ void VtkDistancePolyDataFilterWrap::SignedDistanceOff(const Nan::FunctionCallbac
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -404,7 +404,7 @@ void VtkDistancePolyDataFilterWrap::SignedDistanceOn(const Nan::FunctionCallback
 {
 	VtkDistancePolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDistancePolyDataFilterWrap>(info.Holder());
 	vtkDistancePolyDataFilter *native = (vtkDistancePolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

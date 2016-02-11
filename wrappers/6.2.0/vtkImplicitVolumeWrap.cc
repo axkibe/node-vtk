@@ -57,6 +57,9 @@ void VtkImplicitVolumeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutGradient", GetOutGradient);
+	Nan::SetPrototypeMethod(tpl, "getOutGradient", GetOutGradient);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutValue", GetOutValue);
 	Nan::SetPrototypeMethod(tpl, "getOutValue", GetOutValue);
 
@@ -215,7 +218,7 @@ void VtkImplicitVolumeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -245,7 +248,7 @@ void VtkImplicitVolumeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -295,7 +298,7 @@ void VtkImplicitVolumeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -315,7 +318,7 @@ void VtkImplicitVolumeWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -344,6 +347,23 @@ void VtkImplicitVolumeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkImplicitVolumeWrap::GetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitVolumeWrap>(info.Holder());
+	vtkImplicitVolume *native = (vtkImplicitVolume *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutGradient();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImplicitVolumeWrap::GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImplicitVolumeWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitVolumeWrap>(info.Holder());
@@ -369,7 +389,7 @@ void VtkImplicitVolumeWrap::GetVolume(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetVolume();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -414,7 +434,7 @@ void VtkImplicitVolumeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitVolumeWrap::InitPtpl();
+	VtkImplicitVolumeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,7 +462,7 @@ void VtkImplicitVolumeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitVolumeWrap::InitPtpl();
+		VtkImplicitVolumeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -471,7 +491,7 @@ void VtkImplicitVolumeWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +520,7 @@ void VtkImplicitVolumeWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -516,7 +536,7 @@ void VtkImplicitVolumeWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -539,7 +559,7 @@ void VtkImplicitVolumeWrap::SetOutValue(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImplicitVolume *native = (vtkImplicitVolume *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +579,7 @@ void VtkImplicitVolumeWrap::SetVolume(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

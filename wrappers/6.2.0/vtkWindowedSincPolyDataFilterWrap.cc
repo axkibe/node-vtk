@@ -212,7 +212,7 @@ void VtkWindowedSincPolyDataFilterWrap::BoundarySmoothingOff(const Nan::Function
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkWindowedSincPolyDataFilterWrap::BoundarySmoothingOn(const Nan::FunctionC
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkWindowedSincPolyDataFilterWrap::FeatureEdgeSmoothingOff(const Nan::Funct
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -248,7 +248,7 @@ void VtkWindowedSincPolyDataFilterWrap::FeatureEdgeSmoothingOn(const Nan::Functi
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkWindowedSincPolyDataFilterWrap::GenerateErrorScalarsOff(const Nan::Funct
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkWindowedSincPolyDataFilterWrap::GenerateErrorScalarsOn(const Nan::Functi
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkWindowedSincPolyDataFilterWrap::GenerateErrorVectorsOff(const Nan::Funct
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -296,7 +296,7 @@ void VtkWindowedSincPolyDataFilterWrap::GenerateErrorVectorsOn(const Nan::Functi
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -603,7 +603,7 @@ void VtkWindowedSincPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkWindowedSincPolyDataFilterWrap::InitPtpl();
+	VtkWindowedSincPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -619,7 +619,7 @@ void VtkWindowedSincPolyDataFilterWrap::NonManifoldSmoothingOff(const Nan::Funct
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -631,7 +631,7 @@ void VtkWindowedSincPolyDataFilterWrap::NonManifoldSmoothingOn(const Nan::Functi
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -643,7 +643,7 @@ void VtkWindowedSincPolyDataFilterWrap::NormalizeCoordinatesOff(const Nan::Funct
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -655,7 +655,7 @@ void VtkWindowedSincPolyDataFilterWrap::NormalizeCoordinatesOn(const Nan::Functi
 {
 	VtkWindowedSincPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowedSincPolyDataFilterWrap>(info.Holder());
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -679,7 +679,7 @@ void VtkWindowedSincPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWindowedSincPolyDataFilterWrap::InitPtpl();
+		VtkWindowedSincPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -700,7 +700,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetBoundarySmoothing(const Nan::Function
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +719,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetEdgeAngle(const Nan::FunctionCallback
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -738,7 +738,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetFeatureAngle(const Nan::FunctionCallb
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -757,7 +757,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetFeatureEdgeSmoothing(const Nan::Funct
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -776,7 +776,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetGenerateErrorScalars(const Nan::Funct
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -795,7 +795,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetGenerateErrorVectors(const Nan::Funct
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -814,7 +814,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetNonManifoldSmoothing(const Nan::Funct
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -833,7 +833,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetNormalizeCoordinates(const Nan::Funct
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -852,7 +852,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetNumberOfIterations(const Nan::Functio
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -871,7 +871,7 @@ void VtkWindowedSincPolyDataFilterWrap::SetPassBand(const Nan::FunctionCallbackI
 	vtkWindowedSincPolyDataFilter *native = (vtkWindowedSincPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

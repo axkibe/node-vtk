@@ -1722,7 +1722,7 @@ void VtkPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointPlacerWrap::InitPtpl();
+	VtkPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1750,7 +1750,7 @@ void VtkPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointPlacerWrap::InitPtpl();
+		VtkPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1771,7 +1771,7 @@ void VtkPointPlacerWrap::SetPixelTolerance(const Nan::FunctionCallbackInfo<v8::V
 	vtkPointPlacer *native = (vtkPointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1790,7 +1790,7 @@ void VtkPointPlacerWrap::SetWorldTolerance(const Nan::FunctionCallbackInfo<v8::V
 	vtkPointPlacer *native = (vtkPointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

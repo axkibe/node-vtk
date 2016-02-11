@@ -105,7 +105,7 @@ void VtkParallelAMRUtilitiesWrap::BlankCells(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiProcessControllerWrap *a1 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -167,7 +167,7 @@ void VtkParallelAMRUtilitiesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelAMRUtilitiesWrap::InitPtpl();
+	VtkParallelAMRUtilitiesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkParallelAMRUtilitiesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelAMRUtilitiesWrap::InitPtpl();
+		VtkParallelAMRUtilitiesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkParallelAMRUtilitiesWrap::StripGhostLayers(const Nan::FunctionCallbackIn
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkMultiProcessControllerWrap *a2 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

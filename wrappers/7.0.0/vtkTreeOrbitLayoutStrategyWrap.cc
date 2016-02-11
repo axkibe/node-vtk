@@ -225,7 +225,7 @@ void VtkTreeOrbitLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTreeOrbitLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkTreeOrbitLayoutStrategyWrap>(info.Holder());
 	vtkTreeOrbitLayoutStrategy *native = (vtkTreeOrbitLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkTreeOrbitLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
+	VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -272,7 +272,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
+		VtkTreeOrbitLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -293,7 +293,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SetChildRadiusFactor(const Nan::FunctionCal
 	vtkTreeOrbitLayoutStrategy *native = (vtkTreeOrbitLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -312,7 +312,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SetLeafSpacing(const Nan::FunctionCallbackI
 	vtkTreeOrbitLayoutStrategy *native = (vtkTreeOrbitLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -331,7 +331,7 @@ void VtkTreeOrbitLayoutStrategyWrap::SetLogSpacingValue(const Nan::FunctionCallb
 	vtkTreeOrbitLayoutStrategy *native = (vtkTreeOrbitLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

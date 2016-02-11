@@ -292,7 +292,7 @@ void VtkCellQualityWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellQualityWrap::InitPtpl();
+	VtkCellQualityWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkCellQualityWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellQualityWrap::InitPtpl();
+		VtkCellQualityWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -385,7 +385,7 @@ void VtkCellQualityWrap::SetQualityMeasure(const Nan::FunctionCallbackInfo<v8::V
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkCellQualityWrap::SetQualityMeasureToArea(const Nan::FunctionCallbackInfo
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -414,7 +414,7 @@ void VtkCellQualityWrap::SetQualityMeasureToAspectBeta(const Nan::FunctionCallba
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -426,7 +426,7 @@ void VtkCellQualityWrap::SetQualityMeasureToAspectFrobenius(const Nan::FunctionC
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -438,7 +438,7 @@ void VtkCellQualityWrap::SetQualityMeasureToAspectGamma(const Nan::FunctionCallb
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -450,7 +450,7 @@ void VtkCellQualityWrap::SetQualityMeasureToAspectRatio(const Nan::FunctionCallb
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -462,7 +462,7 @@ void VtkCellQualityWrap::SetQualityMeasureToCollapseRatio(const Nan::FunctionCal
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -474,7 +474,7 @@ void VtkCellQualityWrap::SetQualityMeasureToCondition(const Nan::FunctionCallbac
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -486,7 +486,7 @@ void VtkCellQualityWrap::SetQualityMeasureToDiagonal(const Nan::FunctionCallback
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -498,7 +498,7 @@ void VtkCellQualityWrap::SetQualityMeasureToDimension(const Nan::FunctionCallbac
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -510,7 +510,7 @@ void VtkCellQualityWrap::SetQualityMeasureToDistortion(const Nan::FunctionCallba
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -522,7 +522,7 @@ void VtkCellQualityWrap::SetQualityMeasureToJacobian(const Nan::FunctionCallback
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -534,7 +534,7 @@ void VtkCellQualityWrap::SetQualityMeasureToMaxAngle(const Nan::FunctionCallback
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -546,7 +546,7 @@ void VtkCellQualityWrap::SetQualityMeasureToMaxAspectFrobenius(const Nan::Functi
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -558,7 +558,7 @@ void VtkCellQualityWrap::SetQualityMeasureToMaxEdgeRatio(const Nan::FunctionCall
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -570,7 +570,7 @@ void VtkCellQualityWrap::SetQualityMeasureToMedAspectFrobenius(const Nan::Functi
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -582,7 +582,7 @@ void VtkCellQualityWrap::SetQualityMeasureToMinAngle(const Nan::FunctionCallback
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -594,7 +594,7 @@ void VtkCellQualityWrap::SetQualityMeasureToOddy(const Nan::FunctionCallbackInfo
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -606,7 +606,7 @@ void VtkCellQualityWrap::SetQualityMeasureToRadiusRatio(const Nan::FunctionCallb
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -618,7 +618,7 @@ void VtkCellQualityWrap::SetQualityMeasureToRelativeSizeSquared(const Nan::Funct
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +630,7 @@ void VtkCellQualityWrap::SetQualityMeasureToScaledJacobian(const Nan::FunctionCa
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -642,7 +642,7 @@ void VtkCellQualityWrap::SetQualityMeasureToShape(const Nan::FunctionCallbackInf
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -654,7 +654,7 @@ void VtkCellQualityWrap::SetQualityMeasureToShapeAndSize(const Nan::FunctionCall
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -666,7 +666,7 @@ void VtkCellQualityWrap::SetQualityMeasureToShear(const Nan::FunctionCallbackInf
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -678,7 +678,7 @@ void VtkCellQualityWrap::SetQualityMeasureToShearAndSize(const Nan::FunctionCall
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -690,7 +690,7 @@ void VtkCellQualityWrap::SetQualityMeasureToSkew(const Nan::FunctionCallbackInfo
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -702,7 +702,7 @@ void VtkCellQualityWrap::SetQualityMeasureToStretch(const Nan::FunctionCallbackI
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -714,7 +714,7 @@ void VtkCellQualityWrap::SetQualityMeasureToTaper(const Nan::FunctionCallbackInf
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -726,7 +726,7 @@ void VtkCellQualityWrap::SetQualityMeasureToVolume(const Nan::FunctionCallbackIn
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -738,7 +738,7 @@ void VtkCellQualityWrap::SetQualityMeasureToWarpage(const Nan::FunctionCallbackI
 {
 	VtkCellQualityWrap *wrapper = ObjectWrap::Unwrap<VtkCellQualityWrap>(info.Holder());
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -752,7 +752,7 @@ void VtkCellQualityWrap::SetUndefinedQuality(const Nan::FunctionCallbackInfo<v8:
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -771,7 +771,7 @@ void VtkCellQualityWrap::SetUnsupportedGeometry(const Nan::FunctionCallbackInfo<
 	vtkCellQuality *native = (vtkCellQuality *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

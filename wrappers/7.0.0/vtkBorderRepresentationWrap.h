@@ -34,10 +34,15 @@ class VtkBorderRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetActors2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBorderProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMinimumSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMoving(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPosition2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPosition2Coordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPositionCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProportionalResize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectionPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowBorderMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShowBorderMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

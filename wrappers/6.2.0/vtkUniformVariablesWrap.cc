@@ -124,7 +124,7 @@ void VtkUniformVariablesWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUniformVariablesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUniformVariablesWrap *a0 = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -208,7 +208,7 @@ void VtkUniformVariablesWrap::Merge(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUniformVariablesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUniformVariablesWrap *a0 = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -232,7 +232,7 @@ void VtkUniformVariablesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkUniformVariablesWrap::InitPtpl();
+	VtkUniformVariablesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkUniformVariablesWrap::Next(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkUniformVariablesWrap::RemoveAllUniforms(const Nan::FunctionCallbackInfo<
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -275,7 +275,7 @@ void VtkUniformVariablesWrap::RemoveUniform(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +304,7 @@ void VtkUniformVariablesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUniformVariablesWrap::InitPtpl();
+		VtkUniformVariablesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -328,7 +328,7 @@ void VtkUniformVariablesWrap::Send(const Nan::FunctionCallbackInfo<v8::Value>& i
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -349,7 +349,7 @@ void VtkUniformVariablesWrap::SendCurrentUniform(const Nan::FunctionCallbackInfo
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +366,7 @@ void VtkUniformVariablesWrap::Start(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkUniformVariablesWrap *wrapper = ObjectWrap::Unwrap<VtkUniformVariablesWrap>(info.Holder());
 	vtkUniformVariables *native = (vtkUniformVariables *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

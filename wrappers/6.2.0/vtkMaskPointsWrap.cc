@@ -170,7 +170,7 @@ void VtkMaskPointsWrap::GenerateVerticesOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkMaskPointsWrap::GenerateVerticesOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +391,7 @@ void VtkMaskPointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkMaskPointsWrap::InitPtpl();
+	VtkMaskPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -407,7 +407,7 @@ void VtkMaskPointsWrap::ProportionalMaximumNumberOfPointsOff(const Nan::Function
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -419,7 +419,7 @@ void VtkMaskPointsWrap::ProportionalMaximumNumberOfPointsOn(const Nan::FunctionC
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -431,7 +431,7 @@ void VtkMaskPointsWrap::RandomModeOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -443,7 +443,7 @@ void VtkMaskPointsWrap::RandomModeOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -467,7 +467,7 @@ void VtkMaskPointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMaskPointsWrap::InitPtpl();
+		VtkMaskPointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -488,7 +488,7 @@ void VtkMaskPointsWrap::SetGenerateVertices(const Nan::FunctionCallbackInfo<v8::
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -507,7 +507,7 @@ void VtkMaskPointsWrap::SetOnRatio(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +526,7 @@ void VtkMaskPointsWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +545,7 @@ void VtkMaskPointsWrap::SetProportionalMaximumNumberOfPoints(const Nan::Function
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -564,7 +564,7 @@ void VtkMaskPointsWrap::SetRandomMode(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -583,7 +583,7 @@ void VtkMaskPointsWrap::SetRandomModeType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +602,7 @@ void VtkMaskPointsWrap::SetSingleVertexPerCell(const Nan::FunctionCallbackInfo<v
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +619,7 @@ void VtkMaskPointsWrap::SingleVertexPerCellOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -631,7 +631,7 @@ void VtkMaskPointsWrap::SingleVertexPerCellOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkMaskPointsWrap *wrapper = ObjectWrap::Unwrap<VtkMaskPointsWrap>(info.Holder());
 	vtkMaskPoints *native = (vtkMaskPoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -65,6 +65,12 @@ void VtkPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -1079,7 +1085,7 @@ void VtkPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1109,7 +1115,7 @@ void VtkPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1159,7 +1165,7 @@ void VtkPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& 
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1179,7 +1185,7 @@ void VtkPlaneWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Value>& 
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1235,7 +1241,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1267,7 +1273,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1319,7 +1325,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1391,7 +1397,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1483,7 +1489,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1545,7 +1551,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1617,7 +1623,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1699,7 +1705,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1751,7 +1757,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1813,7 +1819,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1875,7 +1881,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1957,7 +1963,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2009,7 +2015,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2071,7 +2077,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2143,7 +2149,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2185,7 +2191,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2219,7 +2225,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2249,7 +2255,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2299,7 +2305,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2319,7 +2325,7 @@ void VtkPlaneWrap::GeneralizedProjectPoint(const Nan::FunctionCallbackInfo<v8::V
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2346,6 +2352,40 @@ void VtkPlaneWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkPlaneWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWrap>(info.Holder());
+	vtkPlane *native = (vtkPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkPlaneWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPlaneWrap *wrapper = ObjectWrap::Unwrap<VtkPlaneWrap>(info.Holder());
+	vtkPlane *native = (vtkPlane *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPlaneWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -2381,7 +2421,7 @@ void VtkPlaneWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -2434,7 +2474,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2466,7 +2506,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2518,7 +2558,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2590,7 +2630,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2682,7 +2722,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2744,7 +2784,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2816,7 +2856,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2898,7 +2938,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -2950,7 +2990,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3012,7 +3052,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3074,7 +3114,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3156,7 +3196,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3208,7 +3248,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3270,7 +3310,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3342,7 +3382,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3384,7 +3424,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3418,7 +3458,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3448,7 +3488,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3498,7 +3538,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3518,7 +3558,7 @@ void VtkPlaneWrap::ProjectPoint(const Nan::FunctionCallbackInfo<v8::Value>& info
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3574,7 +3614,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3606,7 +3646,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3658,7 +3698,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3730,7 +3770,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3822,7 +3862,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3884,7 +3924,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -3956,7 +3996,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4038,7 +4078,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4090,7 +4130,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						}
 						b3[i] = a3->Get(i)->NumberValue();
 					}
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4152,7 +4192,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4214,7 +4254,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4296,7 +4336,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4348,7 +4388,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4410,7 +4450,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4482,7 +4522,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4524,7 +4564,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 						return;
 					}
 
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -4558,7 +4598,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4588,7 +4628,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4638,7 +4678,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4658,7 +4698,7 @@ void VtkPlaneWrap::ProjectVector(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4679,7 +4719,7 @@ void VtkPlaneWrap::Push(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkPlane *native = (vtkPlane *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4708,7 +4748,7 @@ void VtkPlaneWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlaneWrap::InitPtpl();
+		VtkPlaneWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -4737,7 +4777,7 @@ void VtkPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4766,7 +4806,7 @@ void VtkPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4782,7 +4822,7 @@ void VtkPlaneWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -4813,7 +4853,7 @@ void VtkPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4842,7 +4882,7 @@ void VtkPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4858,7 +4898,7 @@ void VtkPlaneWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

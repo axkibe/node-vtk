@@ -173,7 +173,7 @@ void VtkUnstructuredGridWrap::BuildLinks(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info.Holder());
 	vtkUnstructuredGrid *native = (vtkUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkUnstructuredGridWrap::CopyStructure(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -208,7 +208,7 @@ void VtkUnstructuredGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -232,7 +232,7 @@ void VtkUnstructuredGridWrap::GetCellLinks(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetCellLinks();
-		VtkCellLinksWrap::InitPtpl();
+	VtkCellLinksWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -255,7 +255,7 @@ void VtkUnstructuredGridWrap::GetCellLocationsArray(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetCellLocationsArray();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkUnstructuredGridWrap::GetCellTypesArray(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCellTypesArray();
-		VtkUnsignedCharArrayWrap::InitPtpl();
+	VtkUnsignedCharArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -301,7 +301,7 @@ void VtkUnstructuredGridWrap::GetCells(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetCells();
-		VtkCellArrayWrap::InitPtpl();
+	VtkCellArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -346,7 +346,7 @@ void VtkUnstructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 				(vtkInformationVector *) a0->native.GetPointer(),
 				info[1]->Int32Value()
 			);
-				VtkUnstructuredGridWrap::InitPtpl();
+			VtkUnstructuredGridWrap::InitPtpl();
 			v8::Local<v8::Value> argv[1] =
 				{ Nan::New(vtkNodeJsNoWrap) };
 			v8::Local<v8::Function> cons =
@@ -371,7 +371,7 @@ void VtkUnstructuredGridWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetData(
 			(vtkInformation *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridWrap::InitPtpl();
+		VtkUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkUnstructuredGridWrap::GetFaceLocations(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetFaceLocations();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkUnstructuredGridWrap::GetFaces(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetFaces();
-		VtkIdTypeArrayWrap::InitPtpl();
+	VtkIdTypeArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -469,7 +469,7 @@ void VtkUnstructuredGridWrap::GetIdsOfCellsOfType(const Nan::FunctionCallbackInf
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkIdTypeArrayWrap *a1 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -530,7 +530,7 @@ void VtkUnstructuredGridWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info.Holder());
 	vtkUnstructuredGrid *native = (vtkUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -585,7 +585,7 @@ void VtkUnstructuredGridWrap::NewCellIterator(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewCellIterator();
-		VtkCellIteratorWrap::InitPtpl();
+	VtkCellIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,7 +608,7 @@ void VtkUnstructuredGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -624,7 +624,7 @@ void VtkUnstructuredGridWrap::RemoveGhostCells(const Nan::FunctionCallbackInfo<v
 {
 	VtkUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info.Holder());
 	vtkUnstructuredGrid *native = (vtkUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -636,7 +636,7 @@ void VtkUnstructuredGridWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info.Holder());
 	vtkUnstructuredGrid *native = (vtkUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -660,7 +660,7 @@ void VtkUnstructuredGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridWrap::InitPtpl();
+		VtkUnstructuredGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -694,7 +694,7 @@ void VtkUnstructuredGridWrap::SetCells(const Nan::FunctionCallbackInfo<v8::Value
 					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkIdTypeArrayWrap::ptpl))->HasInstance(info[4]))
 					{
 						VtkIdTypeArrayWrap *a4 = ObjectWrap::Unwrap<VtkIdTypeArrayWrap>(info[4]->ToObject());
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -709,7 +709,7 @@ void VtkUnstructuredGridWrap::SetCells(const Nan::FunctionCallbackInfo<v8::Value
 						return;
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -728,7 +728,7 @@ void VtkUnstructuredGridWrap::SetCells(const Nan::FunctionCallbackInfo<v8::Value
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkCellArrayWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkCellArrayWrap *a1 = ObjectWrap::Unwrap<VtkCellArrayWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -750,7 +750,7 @@ void VtkUnstructuredGridWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -767,7 +767,7 @@ void VtkUnstructuredGridWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkUnstructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridWrap>(info.Holder());
 	vtkUnstructuredGrid *native = (vtkUnstructuredGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

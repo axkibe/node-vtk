@@ -33,7 +33,14 @@ class VtkImageChangeInformationWrap : public VtkImageAlgorithmWrap
 		static void CenterImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenterImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetExtentTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformationInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOriginTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputExtentStart(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacingScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

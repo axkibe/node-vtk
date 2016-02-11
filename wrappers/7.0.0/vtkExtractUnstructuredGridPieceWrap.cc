@@ -104,7 +104,7 @@ void VtkExtractUnstructuredGridPieceWrap::CreateGhostCellsOff(const Nan::Functio
 {
 	VtkExtractUnstructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridPieceWrap>(info.Holder());
 	vtkExtractUnstructuredGridPiece *native = (vtkExtractUnstructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -116,7 +116,7 @@ void VtkExtractUnstructuredGridPieceWrap::CreateGhostCellsOn(const Nan::Function
 {
 	VtkExtractUnstructuredGridPieceWrap *wrapper = ObjectWrap::Unwrap<VtkExtractUnstructuredGridPieceWrap>(info.Holder());
 	vtkExtractUnstructuredGridPiece *native = (vtkExtractUnstructuredGridPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkExtractUnstructuredGridPieceWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractUnstructuredGridPieceWrap::InitPtpl();
+	VtkExtractUnstructuredGridPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkExtractUnstructuredGridPieceWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractUnstructuredGridPieceWrap::InitPtpl();
+		VtkExtractUnstructuredGridPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkExtractUnstructuredGridPieceWrap::SetCreateGhostCells(const Nan::Functio
 	vtkExtractUnstructuredGridPiece *native = (vtkExtractUnstructuredGridPiece *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -93,6 +93,9 @@ void VtkDataObjectToDataSetFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDefaultNormalize", GetDefaultNormalize);
 	Nan::SetPrototypeMethod(tpl, "getDefaultNormalize", GetDefaultNormalize);
 
+	Nan::SetPrototypeMethod(tpl, "GetDimensions", GetDimensions);
+	Nan::SetPrototypeMethod(tpl, "getDimensions", GetDimensions);
+
 	Nan::SetPrototypeMethod(tpl, "GetInput", GetInput);
 	Nan::SetPrototypeMethod(tpl, "getInput", GetInput);
 
@@ -107,6 +110,9 @@ void VtkDataObjectToDataSetFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLinesComponentMinRange", GetLinesComponentMinRange);
 	Nan::SetPrototypeMethod(tpl, "getLinesComponentMinRange", GetLinesComponentMinRange);
+
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutput", GetOutput);
 	Nan::SetPrototypeMethod(tpl, "getOutput", GetOutput);
@@ -143,6 +149,9 @@ void VtkDataObjectToDataSetFilterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetRectilinearGridOutput", GetRectilinearGridOutput);
 	Nan::SetPrototypeMethod(tpl, "getRectilinearGridOutput", GetRectilinearGridOutput);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "GetStripsComponentArrayComponent", GetStripsComponentArrayComponent);
 	Nan::SetPrototypeMethod(tpl, "getStripsComponentArrayComponent", GetStripsComponentArrayComponent);
@@ -279,7 +288,7 @@ void VtkDataObjectToDataSetFilterWrap::DefaultNormalizeOff(const Nan::FunctionCa
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +300,7 @@ void VtkDataObjectToDataSetFilterWrap::DefaultNormalizeOn(const Nan::FunctionCal
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -453,6 +462,23 @@ void VtkDataObjectToDataSetFilterWrap::GetDefaultNormalize(const Nan::FunctionCa
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDataObjectToDataSetFilterWrap::GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
+	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDataObjectToDataSetFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
@@ -464,7 +490,7 @@ void VtkDataObjectToDataSetFilterWrap::GetInput(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -532,6 +558,23 @@ void VtkDataObjectToDataSetFilterWrap::GetLinesComponentMinRange(const Nan::Func
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDataObjectToDataSetFilterWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
+	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDataObjectToDataSetFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
@@ -547,7 +590,7 @@ void VtkDataObjectToDataSetFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		r = native->GetOutput(
 			info[0]->Int32Value()
 		);
-			VtkDataSetWrap::InitPtpl();
+		VtkDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -566,7 +609,7 @@ void VtkDataObjectToDataSetFilterWrap::GetOutput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutput();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -694,7 +737,7 @@ void VtkDataObjectToDataSetFilterWrap::GetPolyDataOutput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetPolyDataOutput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -773,7 +816,7 @@ void VtkDataObjectToDataSetFilterWrap::GetRectilinearGridOutput(const Nan::Funct
 		return;
 	}
 	r = native->GetRectilinearGridOutput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -783,6 +826,23 @@ void VtkDataObjectToDataSetFilterWrap::GetRectilinearGridOutput(const Nan::Funct
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataObjectToDataSetFilterWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
+	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSpacing();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkDataObjectToDataSetFilterWrap::GetStripsComponentArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -852,7 +912,7 @@ void VtkDataObjectToDataSetFilterWrap::GetStructuredGridOutput(const Nan::Functi
 		return;
 	}
 	r = native->GetStructuredGridOutput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -875,7 +935,7 @@ void VtkDataObjectToDataSetFilterWrap::GetStructuredPointsOutput(const Nan::Func
 		return;
 	}
 	r = native->GetStructuredPointsOutput();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -898,7 +958,7 @@ void VtkDataObjectToDataSetFilterWrap::GetUnstructuredGridOutput(const Nan::Func
 		return;
 	}
 	r = native->GetUnstructuredGridOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -999,7 +1059,7 @@ void VtkDataObjectToDataSetFilterWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataObjectToDataSetFilterWrap::InitPtpl();
+	VtkDataObjectToDataSetFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1027,7 +1087,7 @@ void VtkDataObjectToDataSetFilterWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataObjectToDataSetFilterWrap::InitPtpl();
+		VtkDataObjectToDataSetFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1055,7 +1115,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellConnectivityComponent(const Nan::F
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1069,7 +1129,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellConnectivityComponent(const Nan::F
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1097,7 +1157,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellTypeComponent(const Nan::FunctionC
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1111,7 +1171,7 @@ void VtkDataObjectToDataSetFilterWrap::SetCellTypeComponent(const Nan::FunctionC
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1132,7 +1192,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetType(const Nan::FunctionCallbac
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1149,7 +1209,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetTypeToPolyData(const Nan::Funct
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1161,7 +1221,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetTypeToRectilinearGrid(const Nan
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1173,7 +1233,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetTypeToStructuredGrid(const Nan:
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1185,7 +1245,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetTypeToStructuredPoints(const Na
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1197,7 +1257,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDataSetTypeToUnstructuredGrid(const Na
 {
 	VtkDataObjectToDataSetFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectToDataSetFilterWrap>(info.Holder());
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1211,7 +1271,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDefaultNormalize(const Nan::FunctionCa
 	vtkDataObjectToDataSetFilter *native = (vtkDataObjectToDataSetFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1238,7 +1298,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensions(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1267,7 +1327,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensions(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1283,7 +1343,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensions(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1313,7 +1373,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensionsComponent(const Nan::Functio
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1327,7 +1387,7 @@ void VtkDataObjectToDataSetFilterWrap::SetDimensionsComponent(const Nan::Functio
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1355,7 +1415,7 @@ void VtkDataObjectToDataSetFilterWrap::SetLinesComponent(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1369,7 +1429,7 @@ void VtkDataObjectToDataSetFilterWrap::SetLinesComponent(const Nan::FunctionCall
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1398,7 +1458,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOrigin(const Nan::FunctionCallbackInfo
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1427,7 +1487,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOrigin(const Nan::FunctionCallbackInfo
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1443,7 +1503,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOrigin(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1473,7 +1533,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOriginComponent(const Nan::FunctionCal
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1487,7 +1547,7 @@ void VtkDataObjectToDataSetFilterWrap::SetOriginComponent(const Nan::FunctionCal
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1519,7 +1579,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPointComponent(const Nan::FunctionCall
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -1536,7 +1596,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPointComponent(const Nan::FunctionCall
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1566,7 +1626,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPolysComponent(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1580,7 +1640,7 @@ void VtkDataObjectToDataSetFilterWrap::SetPolysComponent(const Nan::FunctionCall
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1609,7 +1669,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacing(const Nan::FunctionCallbackInf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1638,7 +1698,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacing(const Nan::FunctionCallbackInf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1654,7 +1714,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacing(const Nan::FunctionCallbackInf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1684,7 +1744,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacingComponent(const Nan::FunctionCa
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1698,7 +1758,7 @@ void VtkDataObjectToDataSetFilterWrap::SetSpacingComponent(const Nan::FunctionCa
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1726,7 +1786,7 @@ void VtkDataObjectToDataSetFilterWrap::SetStripsComponent(const Nan::FunctionCal
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1740,7 +1800,7 @@ void VtkDataObjectToDataSetFilterWrap::SetStripsComponent(const Nan::FunctionCal
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1768,7 +1828,7 @@ void VtkDataObjectToDataSetFilterWrap::SetVertsComponent(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1782,7 +1842,7 @@ void VtkDataObjectToDataSetFilterWrap::SetVertsComponent(const Nan::FunctionCall
 					return;
 				}
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

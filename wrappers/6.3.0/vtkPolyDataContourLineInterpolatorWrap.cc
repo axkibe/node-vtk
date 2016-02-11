@@ -116,7 +116,7 @@ void VtkPolyDataContourLineInterpolatorWrap::GetPolys(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPolys();
-		VtkPolyDataCollectionWrap::InitPtpl();
+	VtkPolyDataCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkPolyDataContourLineInterpolatorWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
+	VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkPolyDataContourLineInterpolatorWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
+		VtkPolyDataContourLineInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -131,7 +131,7 @@ void VtkPassThroughEdgeStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkPassThroughEdgeStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughEdgeStrategyWrap>(info.Holder());
 	vtkPassThroughEdgeStrategy *native = (vtkPassThroughEdgeStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -150,7 +150,7 @@ void VtkPassThroughEdgeStrategyWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkPassThroughEdgeStrategyWrap::InitPtpl();
+	VtkPassThroughEdgeStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkPassThroughEdgeStrategyWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPassThroughEdgeStrategyWrap::InitPtpl();
+		VtkPassThroughEdgeStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

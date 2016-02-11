@@ -170,7 +170,7 @@ void VtkTemporalFractalWrap::AdaptiveSubdivisionOff(const Nan::FunctionCallbackI
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkTemporalFractalWrap::AdaptiveSubdivisionOn(const Nan::FunctionCallbackIn
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkTemporalFractalWrap::DiscreteTimeStepsOff(const Nan::FunctionCallbackInf
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkTemporalFractalWrap::DiscreteTimeStepsOn(const Nan::FunctionCallbackInfo
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -218,7 +218,7 @@ void VtkTemporalFractalWrap::GenerateRectilinearGridsOff(const Nan::FunctionCall
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +230,7 @@ void VtkTemporalFractalWrap::GenerateRectilinearGridsOn(const Nan::FunctionCallb
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkTemporalFractalWrap::GhostLevelsOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkTemporalFractalWrap::GhostLevelsOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -421,7 +421,7 @@ void VtkTemporalFractalWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalFractalWrap::InitPtpl();
+	VtkTemporalFractalWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,7 +449,7 @@ void VtkTemporalFractalWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalFractalWrap::InitPtpl();
+		VtkTemporalFractalWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -470,7 +470,7 @@ void VtkTemporalFractalWrap::SetAdaptiveSubdivision(const Nan::FunctionCallbackI
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -489,7 +489,7 @@ void VtkTemporalFractalWrap::SetAsymetric(const Nan::FunctionCallbackInfo<v8::Va
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +508,7 @@ void VtkTemporalFractalWrap::SetDimensions(const Nan::FunctionCallbackInfo<v8::V
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +527,7 @@ void VtkTemporalFractalWrap::SetDiscreteTimeSteps(const Nan::FunctionCallbackInf
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -546,7 +546,7 @@ void VtkTemporalFractalWrap::SetGenerateRectilinearGrids(const Nan::FunctionCall
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +565,7 @@ void VtkTemporalFractalWrap::SetGhostLevels(const Nan::FunctionCallbackInfo<v8::
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +584,7 @@ void VtkTemporalFractalWrap::SetMaximumLevel(const Nan::FunctionCallbackInfo<v8:
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -603,7 +603,7 @@ void VtkTemporalFractalWrap::SetTwoDimensional(const Nan::FunctionCallbackInfo<v
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +620,7 @@ void VtkTemporalFractalWrap::TwoDimensionalOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +632,7 @@ void VtkTemporalFractalWrap::TwoDimensionalOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkTemporalFractalWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalFractalWrap>(info.Holder());
 	vtkTemporalFractal *native = (vtkTemporalFractal *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

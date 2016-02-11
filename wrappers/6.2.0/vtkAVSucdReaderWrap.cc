@@ -182,7 +182,7 @@ void VtkAVSucdReaderWrap::BinaryFileOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkAVSucdReaderWrap::BinaryFileOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkAVSucdReaderWrap::DisableAllCellArrays(const Nan::FunctionCallbackInfo<v
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -218,7 +218,7 @@ void VtkAVSucdReaderWrap::DisableAllPointArrays(const Nan::FunctionCallbackInfo<
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +230,7 @@ void VtkAVSucdReaderWrap::EnableAllCellArrays(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -242,7 +242,7 @@ void VtkAVSucdReaderWrap::EnableAllPointArrays(const Nan::FunctionCallbackInfo<v
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -565,7 +565,7 @@ void VtkAVSucdReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkAVSucdReaderWrap::InitPtpl();
+	VtkAVSucdReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -593,7 +593,7 @@ void VtkAVSucdReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAVSucdReaderWrap::InitPtpl();
+		VtkAVSucdReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -614,7 +614,7 @@ void VtkAVSucdReaderWrap::SetBinaryFile(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -633,7 +633,7 @@ void VtkAVSucdReaderWrap::SetByteOrder(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkAVSucdReaderWrap::SetByteOrderToBigEndian(const Nan::FunctionCallbackInf
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -662,7 +662,7 @@ void VtkAVSucdReaderWrap::SetByteOrderToLittleEndian(const Nan::FunctionCallback
 {
 	VtkAVSucdReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAVSucdReaderWrap>(info.Holder());
 	vtkAVSucdReader *native = (vtkAVSucdReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -679,7 +679,7 @@ void VtkAVSucdReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -701,7 +701,7 @@ void VtkAVSucdReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -723,7 +723,7 @@ void VtkAVSucdReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

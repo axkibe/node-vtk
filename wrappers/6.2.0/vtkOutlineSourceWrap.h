@@ -31,8 +31,10 @@ class VtkOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 
 		static void GenerateFacesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateFacesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBoxType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCorners(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

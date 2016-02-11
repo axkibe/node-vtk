@@ -42,11 +42,13 @@ class VtkDataObjectToDataSetFilterWrap : public VtkDataSetAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDefaultNormalize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesComponentArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesComponentArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesComponentMaxRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinesComponentMinRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointComponentArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointComponentArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +61,7 @@ class VtkDataObjectToDataSetFilterWrap : public VtkDataSetAlgorithmWrap
 		static void GetPolysComponentMaxRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPolysComponentMinRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRectilinearGridOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStripsComponentArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStripsComponentArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStripsComponentMaxRange(const Nan::FunctionCallbackInfo<v8::Value>& info);

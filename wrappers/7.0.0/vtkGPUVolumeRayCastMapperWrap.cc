@@ -173,7 +173,7 @@ void VtkGPUVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOff(const Nan::Func
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkGPUVolumeRayCastMapperWrap::AutoAdjustSampleDistancesOn(const Nan::Funct
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkGPUVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::FunctionCallb
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -261,7 +261,7 @@ void VtkGPUVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::FunctionCallb
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -315,7 +315,7 @@ void VtkGPUVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::FunctionCallb
 								}
 								b5[i] = a5->Get(i)->NumberValue();
 							}
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -339,7 +339,7 @@ void VtkGPUVolumeRayCastMapperWrap::CreateCanonicalView(const Nan::FunctionCallb
 								return;
 							}
 
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -372,7 +372,7 @@ void VtkGPUVolumeRayCastMapperWrap::GPURender(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -450,7 +450,7 @@ void VtkGPUVolumeRayCastMapperWrap::GetColorImage(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +470,7 @@ void VtkGPUVolumeRayCastMapperWrap::GetDepthImage(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -494,7 +494,7 @@ void VtkGPUVolumeRayCastMapperWrap::GetMaskInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetMaskInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -608,7 +608,7 @@ void VtkGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkGPUVolumeRayCastMapperWrap::InitPtpl();
+	VtkGPUVolumeRayCastMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -627,7 +627,7 @@ void VtkGPUVolumeRayCastMapperWrap::ReleaseGraphicsResources(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkGPUVolumeRayCastMapperWrap::Render(const Nan::FunctionCallbackInfo<v8::V
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -669,7 +669,7 @@ void VtkGPUVolumeRayCastMapperWrap::RenderToImageOff(const Nan::FunctionCallback
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -681,7 +681,7 @@ void VtkGPUVolumeRayCastMapperWrap::RenderToImageOn(const Nan::FunctionCallbackI
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -705,7 +705,7 @@ void VtkGPUVolumeRayCastMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGPUVolumeRayCastMapperWrap::InitPtpl();
+		VtkGPUVolumeRayCastMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -726,7 +726,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetAutoAdjustSampleDistances(const Nan::Func
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +746,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskInput(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -765,7 +765,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskType(const Nan::FunctionCallbackInfo<
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -782,7 +782,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskTypeToBinary(const Nan::FunctionCallb
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -794,7 +794,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetMaskTypeToLabelMap(const Nan::FunctionCal
 {
 	VtkGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGPUVolumeRayCastMapperWrap>(info.Holder());
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -808,7 +808,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetRenderToImage(const Nan::FunctionCallback
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -827,7 +827,7 @@ void VtkGPUVolumeRayCastMapperWrap::SetReportProgress(const Nan::FunctionCallbac
 	vtkGPUVolumeRayCastMapper *native = (vtkGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

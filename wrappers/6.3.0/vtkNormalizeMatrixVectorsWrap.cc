@@ -175,7 +175,7 @@ void VtkNormalizeMatrixVectorsWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkNormalizeMatrixVectorsWrap::InitPtpl();
+	VtkNormalizeMatrixVectorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkNormalizeMatrixVectorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNormalizeMatrixVectorsWrap::InitPtpl();
+		VtkNormalizeMatrixVectorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkNormalizeMatrixVectorsWrap::SetPValue(const Nan::FunctionCallbackInfo<v8
 	vtkNormalizeMatrixVectors *native = (vtkNormalizeMatrixVectors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkNormalizeMatrixVectorsWrap::SetVectorDimension(const Nan::FunctionCallba
 	vtkNormalizeMatrixVectors *native = (vtkNormalizeMatrixVectors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

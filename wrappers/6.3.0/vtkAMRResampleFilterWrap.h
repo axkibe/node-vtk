@@ -31,10 +31,14 @@ class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FillOutputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDemandDrivenMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransferToNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -64,6 +64,9 @@ void VtkTemporalPathLineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaskPoints", GetMaskPoints);
 	Nan::SetPrototypeMethod(tpl, "getMaskPoints", GetMaskPoints);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxStepDistance", GetMaxStepDistance);
+	Nan::SetPrototypeMethod(tpl, "getMaxStepDistance", GetMaxStepDistance);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -124,7 +127,7 @@ void VtkTemporalPathLineFilterWrap::Flush(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,6 +191,23 @@ void VtkTemporalPathLineFilterWrap::GetMaskPoints(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTemporalPathLineFilterWrap::GetMaxStepDistance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
+	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxStepDistance();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkTemporalPathLineFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
@@ -221,7 +241,7 @@ void VtkTemporalPathLineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkTemporalPathLineFilterWrap::InitPtpl();
+	VtkTemporalPathLineFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +269,7 @@ void VtkTemporalPathLineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTemporalPathLineFilterWrap::InitPtpl();
+		VtkTemporalPathLineFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +291,7 @@ void VtkTemporalPathLineFilterWrap::SetIdChannelArray(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -290,7 +310,7 @@ void VtkTemporalPathLineFilterWrap::SetKeepDeadTrails(const Nan::FunctionCallbac
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -309,7 +329,7 @@ void VtkTemporalPathLineFilterWrap::SetMaskPoints(const Nan::FunctionCallbackInf
 	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +356,7 @@ void VtkTemporalPathLineFilterWrap::SetMaxStepDistance(const Nan::FunctionCallba
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +385,7 @@ void VtkTemporalPathLineFilterWrap::SetMaxStepDistance(const Nan::FunctionCallba
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -381,7 +401,7 @@ void VtkTemporalPathLineFilterWrap::SetMaxStepDistance(const Nan::FunctionCallba
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -405,7 +425,7 @@ void VtkTemporalPathLineFilterWrap::SetSelectionConnection(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +445,7 @@ void VtkTemporalPathLineFilterWrap::SetSelectionData(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

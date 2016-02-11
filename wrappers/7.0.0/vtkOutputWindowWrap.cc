@@ -124,7 +124,7 @@ void VtkOutputWindowWrap::DisplayDebugText(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -144,7 +144,7 @@ void VtkOutputWindowWrap::DisplayErrorText(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -164,7 +164,7 @@ void VtkOutputWindowWrap::DisplayGenericWarningText(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -184,7 +184,7 @@ void VtkOutputWindowWrap::DisplayText(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -204,7 +204,7 @@ void VtkOutputWindowWrap::DisplayWarningText(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -242,7 +242,7 @@ void VtkOutputWindowWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetInstance();
-		VtkOutputWindowWrap::InitPtpl();
+	VtkOutputWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -287,7 +287,7 @@ void VtkOutputWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkOutputWindowWrap::InitPtpl();
+	VtkOutputWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkOutputWindowWrap::PromptUserOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkOutputWindowWrap::PromptUserOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkOutputWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info.Holder());
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -339,7 +339,7 @@ void VtkOutputWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOutputWindowWrap::InitPtpl();
+		VtkOutputWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -361,7 +361,7 @@ void VtkOutputWindowWrap::SetInstance(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkOutputWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkOutputWindowWrap *a0 = ObjectWrap::Unwrap<VtkOutputWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -380,7 +380,7 @@ void VtkOutputWindowWrap::SetPromptUser(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkOutputWindow *native = (vtkOutputWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

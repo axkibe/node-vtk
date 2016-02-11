@@ -138,7 +138,7 @@ void VtkTableToGraphWrap::AddLinkEdge(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -165,7 +165,7 @@ void VtkTableToGraphWrap::AddLinkVertex(const Nan::FunctionCallbackInfo<v8::Valu
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -186,7 +186,7 @@ void VtkTableToGraphWrap::ClearLinkEdges(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -198,7 +198,7 @@ void VtkTableToGraphWrap::ClearLinkVertices(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -210,7 +210,7 @@ void VtkTableToGraphWrap::DirectedOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkTableToGraphWrap::DirectedOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkTableToGraphWrap *wrapper = ObjectWrap::Unwrap<VtkTableToGraphWrap>(info.Holder());
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkTableToGraphWrap::GetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetLinkGraph();
-		VtkMutableDirectedGraphWrap::InitPtpl();
+	VtkMutableDirectedGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkTableToGraphWrap::LinkColumnPath(const Nan::FunctionCallbackInfo<v8::Val
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkBitArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkBitArrayWrap *a2 = ObjectWrap::Unwrap<VtkBitArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -344,7 +344,7 @@ void VtkTableToGraphWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToGraphWrap::InitPtpl();
+	VtkTableToGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -372,7 +372,7 @@ void VtkTableToGraphWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToGraphWrap::InitPtpl();
+		VtkTableToGraphWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -393,7 +393,7 @@ void VtkTableToGraphWrap::SetDirected(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkTableToGraph *native = (vtkTableToGraph *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -413,7 +413,7 @@ void VtkTableToGraphWrap::SetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMutableDirectedGraphWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMutableDirectedGraphWrap *a0 = ObjectWrap::Unwrap<VtkMutableDirectedGraphWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkTableToGraphWrap::SetVertexTableConnection(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

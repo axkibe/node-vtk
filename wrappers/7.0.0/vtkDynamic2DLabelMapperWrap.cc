@@ -172,7 +172,7 @@ void VtkDynamic2DLabelMapperWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkDynamic2DLabelMapperWrap::InitPtpl();
+	VtkDynamic2DLabelMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkDynamic2DLabelMapperWrap::RenderOpaqueGeometry(const Nan::FunctionCallba
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -219,7 +219,7 @@ void VtkDynamic2DLabelMapperWrap::RenderOverlay(const Nan::FunctionCallbackInfo<
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkActor2DWrap *a1 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -238,7 +238,7 @@ void VtkDynamic2DLabelMapperWrap::ReversePriorityOff(const Nan::FunctionCallback
 {
 	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -250,7 +250,7 @@ void VtkDynamic2DLabelMapperWrap::ReversePriorityOn(const Nan::FunctionCallbackI
 {
 	VtkDynamic2DLabelMapperWrap *wrapper = ObjectWrap::Unwrap<VtkDynamic2DLabelMapperWrap>(info.Holder());
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -274,7 +274,7 @@ void VtkDynamic2DLabelMapperWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDynamic2DLabelMapperWrap::InitPtpl();
+		VtkDynamic2DLabelMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkDynamic2DLabelMapperWrap::SetPriorityArrayName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -315,7 +315,7 @@ void VtkDynamic2DLabelMapperWrap::SetReversePriority(const Nan::FunctionCallback
 	vtkDynamic2DLabelMapper *native = (vtkDynamic2DLabelMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

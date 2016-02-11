@@ -60,6 +60,9 @@ void VtkImplicitDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataSet", GetDataSet);
 	Nan::SetPrototypeMethod(tpl, "getDataSet", GetDataSet);
 
+	Nan::SetPrototypeMethod(tpl, "GetOutGradient", GetOutGradient);
+	Nan::SetPrototypeMethod(tpl, "getOutGradient", GetOutGradient);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutValue", GetOutValue);
 	Nan::SetPrototypeMethod(tpl, "getOutValue", GetOutValue);
 
@@ -215,7 +218,7 @@ void VtkImplicitDataSetWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -245,7 +248,7 @@ void VtkImplicitDataSetWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -295,7 +298,7 @@ void VtkImplicitDataSetWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -315,7 +318,7 @@ void VtkImplicitDataSetWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -355,7 +358,7 @@ void VtkImplicitDataSetWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -365,6 +368,23 @@ void VtkImplicitDataSetWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImplicitDataSetWrap::GetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImplicitDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkImplicitDataSetWrap>(info.Holder());
+	vtkImplicitDataSet *native = (vtkImplicitDataSet *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutGradient();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImplicitDataSetWrap::GetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,7 +434,7 @@ void VtkImplicitDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkImplicitDataSetWrap::InitPtpl();
+	VtkImplicitDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -442,7 +462,7 @@ void VtkImplicitDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImplicitDataSetWrap::InitPtpl();
+		VtkImplicitDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -464,7 +484,7 @@ void VtkImplicitDataSetWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +511,7 @@ void VtkImplicitDataSetWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +540,7 @@ void VtkImplicitDataSetWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -536,7 +556,7 @@ void VtkImplicitDataSetWrap::SetOutGradient(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -559,7 +579,7 @@ void VtkImplicitDataSetWrap::SetOutValue(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImplicitDataSet *native = (vtkImplicitDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

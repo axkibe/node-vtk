@@ -68,6 +68,9 @@ void VtkGraphLayoutFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCoolDownRateMinValue", GetCoolDownRateMinValue);
 	Nan::SetPrototypeMethod(tpl, "getCoolDownRateMinValue", GetCoolDownRateMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetGraphBounds", GetGraphBounds);
+	Nan::SetPrototypeMethod(tpl, "getGraphBounds", GetGraphBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaxNumberOfIterations", GetMaxNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "getMaxNumberOfIterations", GetMaxNumberOfIterations);
 
@@ -143,7 +146,7 @@ void VtkGraphLayoutFilterWrap::AutomaticBoundsComputationOff(const Nan::Function
 {
 	VtkGraphLayoutFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutFilterWrap>(info.Holder());
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -155,7 +158,7 @@ void VtkGraphLayoutFilterWrap::AutomaticBoundsComputationOn(const Nan::FunctionC
 {
 	VtkGraphLayoutFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutFilterWrap>(info.Holder());
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -231,6 +234,23 @@ void VtkGraphLayoutFilterWrap::GetCoolDownRateMinValue(const Nan::FunctionCallba
 	}
 	r = native->GetCoolDownRateMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGraphLayoutFilterWrap::GetGraphBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGraphLayoutFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutFilterWrap>(info.Holder());
+	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetGraphBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGraphLayoutFilterWrap::GetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -322,7 +342,7 @@ void VtkGraphLayoutFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphLayoutFilterWrap::InitPtpl();
+	VtkGraphLayoutFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,7 +370,7 @@ void VtkGraphLayoutFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphLayoutFilterWrap::InitPtpl();
+		VtkGraphLayoutFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -371,7 +391,7 @@ void VtkGraphLayoutFilterWrap::SetAutomaticBoundsComputation(const Nan::Function
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -390,7 +410,7 @@ void VtkGraphLayoutFilterWrap::SetCoolDownRate(const Nan::FunctionCallbackInfo<v
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -417,7 +437,7 @@ void VtkGraphLayoutFilterWrap::SetGraphBounds(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -446,7 +466,7 @@ void VtkGraphLayoutFilterWrap::SetGraphBounds(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +488,7 @@ void VtkGraphLayoutFilterWrap::SetGraphBounds(const Nan::FunctionCallbackInfo<v8
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -497,7 +517,7 @@ void VtkGraphLayoutFilterWrap::SetMaxNumberOfIterations(const Nan::FunctionCallb
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -516,7 +536,7 @@ void VtkGraphLayoutFilterWrap::SetThreeDimensionalLayout(const Nan::FunctionCall
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +553,7 @@ void VtkGraphLayoutFilterWrap::ThreeDimensionalLayoutOff(const Nan::FunctionCall
 {
 	VtkGraphLayoutFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutFilterWrap>(info.Holder());
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -545,7 +565,7 @@ void VtkGraphLayoutFilterWrap::ThreeDimensionalLayoutOn(const Nan::FunctionCallb
 {
 	VtkGraphLayoutFilterWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutFilterWrap>(info.Holder());
 	vtkGraphLayoutFilter *native = (vtkGraphLayoutFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

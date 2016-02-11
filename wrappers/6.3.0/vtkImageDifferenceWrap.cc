@@ -140,7 +140,7 @@ void VtkImageDifferenceWrap::AllowShiftOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +152,7 @@ void VtkImageDifferenceWrap::AllowShiftOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkImageDifferenceWrap::AveragingOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkImageDifferenceWrap::AveragingOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageDifferenceWrap *wrapper = ObjectWrap::Unwrap<VtkImageDifferenceWrap>(info.Holder());
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -251,7 +251,7 @@ void VtkImageDifferenceWrap::GetImage(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetImage();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkImageDifferenceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageDifferenceWrap::InitPtpl();
+	VtkImageDifferenceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +352,7 @@ void VtkImageDifferenceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageDifferenceWrap::InitPtpl();
+		VtkImageDifferenceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -373,7 +373,7 @@ void VtkImageDifferenceWrap::SetAllowShift(const Nan::FunctionCallbackInfo<v8::V
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -392,7 +392,7 @@ void VtkImageDifferenceWrap::SetAveraging(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -412,7 +412,7 @@ void VtkImageDifferenceWrap::SetImageConnection(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -432,7 +432,7 @@ void VtkImageDifferenceWrap::SetImageData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkImageDifferenceWrap::SetThreshold(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageDifference *native = (vtkImageDifference *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -153,7 +153,7 @@ void VtkAMRBaseReaderWrap::EnableCachingOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkAMRBaseReaderWrap::EnableCachingOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkAMRBaseReaderWrap::GetCellDataArraySelection(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetCellDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkAMRBaseReaderWrap::GetController(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,7 +386,7 @@ void VtkAMRBaseReaderWrap::GetPointDataArraySelection(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetPointDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +402,7 @@ void VtkAMRBaseReaderWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAMRBaseReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseReaderWrap>(info.Holder());
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -457,7 +457,7 @@ void VtkAMRBaseReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRBaseReaderWrap::InitPtpl();
+	VtkAMRBaseReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -485,7 +485,7 @@ void VtkAMRBaseReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRBaseReaderWrap::InitPtpl();
+		VtkAMRBaseReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -509,7 +509,7 @@ void VtkAMRBaseReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -531,7 +531,7 @@ void VtkAMRBaseReaderWrap::SetController(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkAMRBaseReaderWrap::SetEnableCaching(const Nan::FunctionCallbackInfo<v8::
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +569,7 @@ void VtkAMRBaseReaderWrap::SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAMRBaseReader *native = (vtkAMRBaseReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkAMRBaseReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

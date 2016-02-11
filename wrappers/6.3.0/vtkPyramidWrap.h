@@ -34,7 +34,9 @@ class VtkPyramidWrap : public VtkCell3DWrap
 		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEdgeArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFaceArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParametricCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);

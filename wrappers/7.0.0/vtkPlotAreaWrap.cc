@@ -118,7 +118,7 @@ void VtkPlotAreaWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -147,7 +147,7 @@ void VtkPlotAreaWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -207,7 +207,7 @@ void VtkPlotAreaWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotAreaWrap::InitPtpl();
+	VtkPlotAreaWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkPlotAreaWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotAreaWrap::InitPtpl();
+		VtkPlotAreaWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -282,7 +282,7 @@ void VtkPlotAreaWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -303,7 +303,7 @@ void VtkPlotAreaWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotAreaWrap *wrapper = ObjectWrap::Unwrap<VtkPlotAreaWrap>(info.Holder());
 	vtkPlotArea *native = (vtkPlotArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkPlotAreaWrap::UpdateCache(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkPlotAreaWrap *wrapper = ObjectWrap::Unwrap<VtkPlotAreaWrap>(info.Holder());
 	vtkPlotArea *native = (vtkPlotArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -81,8 +81,14 @@ void VtkImageCanvasSource2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDefaultZ", GetDefaultZ);
 	Nan::SetPrototypeMethod(tpl, "getDefaultZ", GetDefaultZ);
 
+	Nan::SetPrototypeMethod(tpl, "GetDrawColor", GetDrawColor);
+	Nan::SetPrototypeMethod(tpl, "getDrawColor", GetDrawColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfScalarComponents", GetNumberOfScalarComponents);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfScalarComponents", GetNumberOfScalarComponents);
+
+	Nan::SetPrototypeMethod(tpl, "GetRatio", GetRatio);
+	Nan::SetPrototypeMethod(tpl, "getRatio", GetRatio);
 
 	Nan::SetPrototypeMethod(tpl, "GetScalarType", GetScalarType);
 	Nan::SetPrototypeMethod(tpl, "getScalarType", GetScalarType);
@@ -186,7 +192,7 @@ void VtkImageCanvasSource2DWrap::DrawCircle(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -222,7 +228,7 @@ void VtkImageCanvasSource2DWrap::DrawImage(const Nan::FunctionCallbackInfo<v8::V
 						{
 							if(info.Length() > 6 && info[6]->IsInt32())
 							{
-								if(info.Length() != 7)
+																if(info.Length() != 7)
 								{
 									Nan::ThrowError("Too many parameters.");
 									return;
@@ -241,7 +247,7 @@ void VtkImageCanvasSource2DWrap::DrawImage(const Nan::FunctionCallbackInfo<v8::V
 						}
 					}
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -266,7 +272,7 @@ void VtkImageCanvasSource2DWrap::DrawPoint(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -293,7 +299,7 @@ void VtkImageCanvasSource2DWrap::DrawSegment(const Nan::FunctionCallbackInfo<v8:
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -328,7 +334,7 @@ void VtkImageCanvasSource2DWrap::DrawSegment3D(const Nan::FunctionCallbackInfo<v
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -363,7 +369,7 @@ void VtkImageCanvasSource2DWrap::FillBox(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -390,7 +396,7 @@ void VtkImageCanvasSource2DWrap::FillPixel(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -421,7 +427,7 @@ void VtkImageCanvasSource2DWrap::FillTriangle(const Nan::FunctionCallbackInfo<v8
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -458,7 +464,7 @@ void VtkImageCanvasSource2DWrap::FillTube(const Nan::FunctionCallbackInfo<v8::Va
 				{
 					if(info.Length() > 4 && info[4]->IsNumber())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -507,6 +513,23 @@ void VtkImageCanvasSource2DWrap::GetDefaultZ(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageCanvasSource2DWrap::GetDrawColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
+	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDrawColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkImageCanvasSource2DWrap::GetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
@@ -519,6 +542,23 @@ void VtkImageCanvasSource2DWrap::GetNumberOfScalarComponents(const Nan::Function
 	}
 	r = native->GetNumberOfScalarComponents();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageCanvasSource2DWrap::GetRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
+	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRatio();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageCanvasSource2DWrap::GetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -542,7 +582,7 @@ void VtkImageCanvasSource2DWrap::InitializeCanvasVolume(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +628,7 @@ void VtkImageCanvasSource2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageCanvasSource2DWrap::InitPtpl();
+	VtkImageCanvasSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,7 +656,7 @@ void VtkImageCanvasSource2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageCanvasSource2DWrap::InitPtpl();
+		VtkImageCanvasSource2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -637,7 +677,7 @@ void VtkImageCanvasSource2DWrap::SetDefaultZ(const Nan::FunctionCallbackInfo<v8:
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -664,7 +704,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -693,7 +733,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -711,7 +751,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -724,7 +764,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 					);
 					return;
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -736,7 +776,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 				);
 				return;
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -747,7 +787,7 @@ void VtkImageCanvasSource2DWrap::SetDrawColor(const Nan::FunctionCallbackInfo<v8
 			);
 			return;
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -776,7 +816,7 @@ void VtkImageCanvasSource2DWrap::SetExtent(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -805,7 +845,7 @@ void VtkImageCanvasSource2DWrap::SetNumberOfScalarComponents(const Nan::Function
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -832,7 +872,7 @@ void VtkImageCanvasSource2DWrap::SetRatio(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +901,7 @@ void VtkImageCanvasSource2DWrap::SetRatio(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -877,7 +917,7 @@ void VtkImageCanvasSource2DWrap::SetRatio(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -900,7 +940,7 @@ void VtkImageCanvasSource2DWrap::SetScalarType(const Nan::FunctionCallbackInfo<v
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -917,7 +957,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToChar(const Nan::FunctionCallback
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -929,7 +969,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToDouble(const Nan::FunctionCallba
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -941,7 +981,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToFloat(const Nan::FunctionCallbac
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -953,7 +993,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToInt(const Nan::FunctionCallbackI
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -965,7 +1005,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToLong(const Nan::FunctionCallback
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -977,7 +1017,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToShort(const Nan::FunctionCallbac
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -989,7 +1029,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToUnsignedChar(const Nan::Function
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1001,7 +1041,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToUnsignedInt(const Nan::FunctionC
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1013,7 +1053,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToUnsignedLong(const Nan::Function
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1025,7 +1065,7 @@ void VtkImageCanvasSource2DWrap::SetScalarTypeToUnsignedShort(const Nan::Functio
 {
 	VtkImageCanvasSource2DWrap *wrapper = ObjectWrap::Unwrap<VtkImageCanvasSource2DWrap>(info.Holder());
 	vtkImageCanvasSource2D *native = (vtkImageCanvasSource2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

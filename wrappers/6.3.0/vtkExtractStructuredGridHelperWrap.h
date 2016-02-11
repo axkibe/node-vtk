@@ -37,6 +37,7 @@ class VtkExtractStructuredGridHelperWrap : public VtkObjectWrap
 		static void GetMappedExtentValueFromIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMappedIndexFromExtentValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPartitionedOutputExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPartitionedVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);

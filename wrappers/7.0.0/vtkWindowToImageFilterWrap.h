@@ -41,6 +41,7 @@ class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 		static void GetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReadFrontBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShouldRerender(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadFrontBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);

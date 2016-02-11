@@ -388,8 +388,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-02 13:59:27.083676362 +0100
-@@ -0,0 +1,1743 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-11 12:19:56.701992363 +0100
+@@ -0,0 +1,1798 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -442,6 +442,32 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +
 +
 +/* -------------------------------------------------------------------- */
++/* Returns true if class by "name" is supported by white/blacklists */
++
++static int supportedClass(
++  const char *name
++)
++{
++  const char **cpp;
++#ifndef DO_WHITELIST
++  for(cpp = blacklist; *cpp; cpp++)
++    if (!strcmp(name, *cpp))
++      {
++      return 0;
++      }
++  return 1;
++#else
++  for(cpp = whitelist; *cpp; cpp++)
++    if (!strcmp(name, *cpp))
++      {
++      return 1;
++      }
++  return 0;
++#endif
++}
++
++
++/* -------------------------------------------------------------------- */
 +/* Check an arg to see if it is wrappable */
 +
 +static int isValueWrappable(
@@ -491,16 +517,15 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  unsigned int baseType;
 +  int j;
 +
++  baseType = val->Type & VTK_PARSE_BASE_TYPE;
++
 +  if ((flags & VTK_WRAP_RETURN))
 +    {
 +    if (vtkWrap_IsVoid(val)) return 1;
-+
-+    if (vtkWrap_IsArray(val)) return 0;
 +    }
 +
-+  baseType = val->Type & VTK_PARSE_BASE_TYPE;
 +
-+  /* go through all types that are indicated as wrappable */
++  /* goes through all types that are indicated as wrappable */
 +  for (j = 0; wrappableTypes[j]; j++)
 +    {
 +    if (baseType == wrappableTypes[j]) { break; }
@@ -518,53 +543,25 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      return 0;
 +      }
 +
-+      he = vtkParseHierarchy_FindEntry(hinfo, val->Class);
++    he = vtkParseHierarchy_FindEntry(hinfo, val->Class);
 +
-+      if (he && vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE"))
-+        {
-+        return 0;
-+        }
++    if (he && vtkParseHierarchy_GetProperty(he, "WRAP_EXCLUDE"))
++      {
++      return 0;
++      }
 +
-+#ifndef DO_WHITELIST
-+      for(cpp = blacklist; *cpp; cpp++)
-+        if (!strcmp(val->Class, *cpp))
-+          {
-+          return 0;
-+          }
-+#else
-+      for(cpp = whitelist; *cpp; cpp++)
-+        if (!strcmp(val->Class, *cpp))
-+          {
-+          break;
-+          }
-+      if (!*cpp) return 0;
-+#endif
++    return supportedClass(val->Class);
 +    }
 +
-+  if (vtkWrap_IsRef(val))
-+    {
-+    return 0;
-+    }
++  if (vtkWrap_IsRef(val)) return 0;
 +
-+  if (val->Template)
-+    {
-+    return 0;
-+    }
++  if (val->Template) return 0;
 +
-+  if (vtkWrap_IsScalar(val))
-+    {
-+    return 1;
-+    }
++  if (vtkWrap_IsScalar(val)) return 1;
 +
-+  if (vtkWrap_IsNArray(val))
-+    {
-+    return 0;
-+    }
++  if (vtkWrap_IsNArray(val)) return 0;
 +
-+  if (vtkWrap_IsArray(val))
-+    {
-+    return 1;
-+    }
++  if (vtkWrap_IsArray(val)) return 1;
 +
 +  if (vtkWrap_IsPointer(val))
 +    {
@@ -1214,42 +1211,40 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +
 +  rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
 +
-+  switch( rBaseType )
++  fputs("\t", f);
++  fputs(indent, f);
++
++  switch(rBaseType)
 +    {
-+    case VTK_PARSE_VOID :
-+      break;
-+
-+    case VTK_PARSE_BOOL :
-+      fprintf(f, "\t%sbool r;\n", indent);
-+      break;
-+
-+    case VTK_PARSE_DOUBLE :
-+      fprintf(f, "\t%sdouble r;\n", indent);
-+      break;
-+
-+    case VTK_PARSE_INT :
-+      fprintf(f, "\t%sint r;\n", indent);
-+      break;
-+
-+    case VTK_PARSE_CHAR :
-+      if (vtkWrap_IsPointer(rinfo))
-+        {
-+        fprintf(f, "\t%schar const * r;\n", indent);
-+        }
-+      else
-+        {
-+        fprintf(f, "\t%schar r;\n", indent);
-+        }
-+      break;
-+
-+    case VTK_PARSE_OBJECT :
-+      fprintf(f, "\t%s%s * r;\n", indent, rinfo->Class);
-+      break;
-+
++    case VTK_PARSE_VOID : return;
++    case VTK_PARSE_BOOL : fputs("bool ", f); break;
++    case VTK_PARSE_DOUBLE : fputs("double ", f); break;
++    case VTK_PARSE_INT : fputs("int ", f); break;
++    case VTK_PARSE_CHAR : fputs("char ", f); break;
++    case VTK_PARSE_OBJECT : fputs(rinfo->Class, f); fputs(" ", f); break;
 +    default :
 +      fprintf(stderr, "Unexpected parameter type %d for return value.\n", rBaseType );
 +      exit(1);
 +    }
++
++    if (vtkWrap_IsPointer(rinfo))
++      {
++      if(rBaseType == VTK_PARSE_CHAR)
++        {
++        fputs("const * ", f);
++        }
++        else
++        {
++        fputs("* ", f);
++        }
++      }
++
++    if (vtkWrap_IsArray(rinfo))
++      {
++      fputs("const * ", f);
++      }
++
++  fputs( "r;\n", f);
 +}
 +
 +
@@ -1264,6 +1259,103 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +{
 +  unsigned int rBaseType = (rinfo->Type & VTK_PARSE_BASE_TYPE);
 +
++  if (vtkWrap_IsPointer(rinfo))
++    {
++    switch(rBaseType)
++      {
++      case VTK_PARSE_CHAR :
++        /* a pointer to char(s) is treated as string */
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r).ToLocalChecked());\n", indent);
++        return;
++
++      case VTK_PARSE_OBJECT :
++        fprintf(f,
++          "\t%s%c%sWrap::InitPtpl();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sv8::Local<v8::Value> argv[1] =\n", indent );
++        fprintf(f, "\t%s\t{ Nan::New(vtkNodeJsNoWrap) };\n", indent);
++        fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
++        fprintf(f,
++          "\t%s\tNan::New<v8::FunctionTemplate>(%c%sWrap::ptpl)->GetFunction();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(1, argv);\n", indent );
++        fprintf(f,
++          "\t%s%c%sWrap *w = new %c%sWrap();\n",
++          indent,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1,
++          toupper(*rinfo->Class),
++          rinfo->Class + 1
++          );
++        fprintf(f, "\t%sw->native = r;\n", indent );
++        fprintf(f, "\t%sw->Wrap(wo);\n", indent);
++        fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
++        return;
++
++      default :
++
++       fprintf(stderr, "Internal fail, writeHandlerReturnSetter unexpected pointer.\n");
++       exit(1);
++       }
++    }
++
++  if (vtkWrap_IsArray(rinfo))
++    {
++    fputs("\t", f);
++    fputs(indent, f);
++    fputs("Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), ", f);
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++
++    fprintf(f, " * sizeof(%s));\n", getCPrimitive(rinfo));
++
++    fprintf(f,
++      "\t%sLocal<v8::%s> at = v8::%s::New(ab, 0, ",
++      indent,
++      getTypedArrayV8Class(rBaseType),
++      getTypedArrayV8Class(rBaseType)
++    );
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++    fputs(");\n", f);
++
++    fprintf(f,
++      "\t%smemcpy(ab->GetContents().Data(), r, ",
++      indent
++    );
++    if (rinfo->Count)
++      {
++      fprintf(f, "%d", rinfo->Count);
++      }
++    else
++      {
++      fputs(rinfo->CountHint,f);
++      }
++    fprintf(f, " * sizeof(%s));\n", getCPrimitive(rinfo));
++    fprintf(f, "\t%sinfo.GetReturnValue().Set(at);\n", indent);
++
++    return;
++    }
++
++
 +  switch( rBaseType )
 +    {
 +    case VTK_PARSE_VOID :
@@ -1276,44 +1368,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      break;
 +
 +    case VTK_PARSE_CHAR :
-+      if (vtkWrap_IsPointer(rinfo))
-+        {
-+        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r).ToLocalChecked());\n", indent);
-+        }
-+        else
-+        {
-+        fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
-+        }
-+      break;
-+
-+    case VTK_PARSE_OBJECT :
-+      fprintf(f,
-+        "\t%s\t%c%sWrap::InitPtpl();\n",
-+        indent,
-+        toupper(*rinfo->Class),
-+        rinfo->Class + 1
-+        );
-+      fprintf(f, "\t%sv8::Local<v8::Value> argv[1] =\n", indent );
-+      fprintf(f, "\t%s\t{ Nan::New(vtkNodeJsNoWrap) };\n", indent);
-+      fprintf(f, "\t%sv8::Local<v8::Function> cons =\n", indent );
-+      fprintf(f,
-+        "\t%s\tNan::New<v8::FunctionTemplate>(%c%sWrap::ptpl)->GetFunction();\n",
-+        indent,
-+        toupper(*rinfo->Class),
-+        rinfo->Class + 1
-+        );
-+      fprintf(f, "\t%sv8::Local<v8::Object> wo = cons->NewInstance(1, argv);\n", indent );
-+      fprintf(f,
-+        "\t%s%c%sWrap *w = new %c%sWrap();\n",
-+        indent,
-+        toupper(*rinfo->Class),
-+        rinfo->Class + 1,
-+        toupper(*rinfo->Class),
-+        rinfo->Class + 1
-+        );
-+      fprintf(f, "\t%sw->native = r;\n", indent );
-+      fprintf(f, "\t%sw->Wrap(wo);\n", indent);
-+      fprintf(f, "\t%sinfo.GetReturnValue().Set(wo);\n", indent);
++      fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
 +      break;
 +
 +    default :
@@ -2285,14 +2340,16 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsInit.c VTK-6.1.0/Wrapping/T
 +
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-02-01 12:37:42.878920549 +0100
-@@ -0,0 +1,47 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJsSupport.c	2016-02-11 12:33:30.197140362 +0100
+@@ -0,0 +1,52 @@
 +
 +/* used for development for a minimal vtk lib wrapper */
 +/* to quickly test stuff out */
-+/*#define DO_WHITELIST*/
++/* #define DO_WHITELIST */
 +
 +/* TODO REMOVE */
++
++#ifdef DO_WHITELIST
 +char const *whitelist[] =
 +  {
 +  "vtkViewport",
@@ -2319,18 +2376,22 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJsSupport.c VTK-6.1.0/Wrappin
 +  "vtkCubeSource",
 +  0,
 +  };
++#endif
 +
 +char const *blacklist[] =
 +  {
-+  "vtkTimeStamp",          // no vtkObjectDerivate
-+  "vtkTDxMotionEventInfo", // no vtkObjectDerivate
++  "vtkTimeStamp",
++  "vtkTDxMotionEventInfo",
++  "vtkContourRepresentationNode",
 +  "vtkVolumeRayCastDynamicInfo",
 +  "vtkShadowMapBakerPassTextures",
 +  "vtkShadowMapBakerPassLightCameras",
 +  "vtkImageComplex",
 +  "vtkVolumeRayCastStaticInfo",
 +  "vtkShaderProgram2",
++  "vtkInterpolationWeights",
 +  0,
 +  };
 +
 +// vim:set ts=2 sw=2 expandtab:
+Binary files VTK-6.1.0-org/Wrapping/Tools/.vtkWrapNodeJsSupport.c.swp and VTK-6.1.0/Wrapping/Tools/.vtkWrapNodeJsSupport.c.swp differ

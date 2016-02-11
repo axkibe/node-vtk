@@ -147,7 +147,7 @@ void VtkPickingManagerWrap::AddPicker(const Nan::FunctionCallbackInfo<v8::Value>
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -166,7 +166,7 @@ void VtkPickingManagerWrap::EnabledOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -178,7 +178,7 @@ void VtkPickingManagerWrap::EnabledOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPickingManagerWrap *wrapper = ObjectWrap::Unwrap<VtkPickingManagerWrap>(info.Holder());
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkPickingManagerWrap::GetAssemblyPath(const Nan::FunctionCallbackInfo<v8::
 								(vtkRenderer *) a4->native.GetPointer(),
 								(vtkObject *) a5->native.GetPointer()
 							);
-								VtkAssemblyPathWrap::InitPtpl();
+							VtkAssemblyPathWrap::InitPtpl();
 							v8::Local<v8::Value> argv[1] =
 								{ Nan::New(vtkNodeJsNoWrap) };
 							v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkPickingManagerWrap::GetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInteractor();
-		VtkRenderWindowInteractorWrap::InitPtpl();
+	VtkRenderWindowInteractorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +373,7 @@ void VtkPickingManagerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPickingManagerWrap::InitPtpl();
+	VtkPickingManagerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -445,7 +445,7 @@ void VtkPickingManagerWrap::RemoveObject(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkObjectWrap *a0 = ObjectWrap::Unwrap<VtkObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -468,7 +468,7 @@ void VtkPickingManagerWrap::RemovePicker(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkObjectWrap *a1 = ObjectWrap::Unwrap<VtkObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -499,7 +499,7 @@ void VtkPickingManagerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPickingManagerWrap::InitPtpl();
+		VtkPickingManagerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -520,7 +520,7 @@ void VtkPickingManagerWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +540,7 @@ void VtkPickingManagerWrap::SetInteractor(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRenderWindowInteractorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRenderWindowInteractorWrap *a0 = ObjectWrap::Unwrap<VtkRenderWindowInteractorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +559,7 @@ void VtkPickingManagerWrap::SetOptimizeOnInteractorEvents(const Nan::FunctionCal
 	vtkPickingManager *native = (vtkPickingManager *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

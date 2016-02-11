@@ -31,6 +31,7 @@ class VtkImageSinusoidSourceWrap : public VtkImageAlgorithmWrap
 
 		static void GetAmplitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPeriod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPhase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

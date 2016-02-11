@@ -198,7 +198,7 @@ void VtkJSONImageWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkJSONImageWriterWrap::InitPtpl();
+	VtkJSONImageWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -226,7 +226,7 @@ void VtkJSONImageWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkJSONImageWriterWrap::InitPtpl();
+		VtkJSONImageWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkJSONImageWriterWrap::SetArrayName(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -268,7 +268,7 @@ void VtkJSONImageWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -287,7 +287,7 @@ void VtkJSONImageWriterWrap::SetSlice(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkJSONImageWriter *native = (vtkJSONImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +304,7 @@ void VtkJSONImageWriterWrap::Write(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkJSONImageWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJSONImageWriterWrap>(info.Holder());
 	vtkJSONImageWriter *native = (vtkJSONImageWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

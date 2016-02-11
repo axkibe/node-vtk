@@ -183,7 +183,7 @@ void VtkContourGridWrap::ComputeGradientsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkContourGridWrap::ComputeGradientsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +207,7 @@ void VtkContourGridWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkContourGridWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -231,7 +231,7 @@ void VtkContourGridWrap::ComputeScalarsOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkContourGridWrap::ComputeScalarsOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +255,7 @@ void VtkContourGridWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +267,7 @@ void VtkContourGridWrap::GenerateTrianglesOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkContourGridWrap::GenerateTrianglesOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -303,7 +303,7 @@ void VtkContourGridWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Valu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -333,7 +333,7 @@ void VtkContourGridWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Valu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -348,7 +348,7 @@ void VtkContourGridWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -446,7 +446,7 @@ void VtkContourGridWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -554,7 +554,7 @@ void VtkContourGridWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkContourGridWrap::InitPtpl();
+	VtkContourGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -582,7 +582,7 @@ void VtkContourGridWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContourGridWrap::InitPtpl();
+		VtkContourGridWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -603,7 +603,7 @@ void VtkContourGridWrap::SetComputeGradients(const Nan::FunctionCallbackInfo<v8:
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -622,7 +622,7 @@ void VtkContourGridWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8::V
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -641,7 +641,7 @@ void VtkContourGridWrap::SetComputeScalars(const Nan::FunctionCallbackInfo<v8::V
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -660,7 +660,7 @@ void VtkContourGridWrap::SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -680,7 +680,7 @@ void VtkContourGridWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -699,7 +699,7 @@ void VtkContourGridWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo<v8:
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -718,7 +718,7 @@ void VtkContourGridWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInf
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +737,7 @@ void VtkContourGridWrap::SetUseScalarTree(const Nan::FunctionCallbackInfo<v8::Va
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -758,7 +758,7 @@ void VtkContourGridWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& in
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -777,7 +777,7 @@ void VtkContourGridWrap::UseScalarTreeOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -789,7 +789,7 @@ void VtkContourGridWrap::UseScalarTreeOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkContourGridWrap *wrapper = ObjectWrap::Unwrap<VtkContourGridWrap>(info.Holder());
 	vtkContourGrid *native = (vtkContourGrid *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

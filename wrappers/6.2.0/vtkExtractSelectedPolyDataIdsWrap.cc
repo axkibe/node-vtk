@@ -135,7 +135,7 @@ void VtkExtractSelectedPolyDataIdsWrap::NewInstance(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractSelectedPolyDataIdsWrap::InitPtpl();
+	VtkExtractSelectedPolyDataIdsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -163,7 +163,7 @@ void VtkExtractSelectedPolyDataIdsWrap::SafeDownCast(const Nan::FunctionCallback
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractSelectedPolyDataIdsWrap::InitPtpl();
+		VtkExtractSelectedPolyDataIdsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

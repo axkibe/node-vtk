@@ -53,6 +53,9 @@ void VtkGeoGraticuleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGeometryType", GetGeometryType);
 	Nan::SetPrototypeMethod(tpl, "getGeometryType", GetGeometryType);
 
+	Nan::SetPrototypeMethod(tpl, "GetLatitudeBounds", GetLatitudeBounds);
+	Nan::SetPrototypeMethod(tpl, "getLatitudeBounds", GetLatitudeBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetLatitudeDelta", GetLatitudeDelta);
 	Nan::SetPrototypeMethod(tpl, "getLatitudeDelta", GetLatitudeDelta);
 
@@ -64,6 +67,9 @@ void VtkGeoGraticuleWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetLatitudeLevelMinValue", GetLatitudeLevelMinValue);
 	Nan::SetPrototypeMethod(tpl, "getLatitudeLevelMinValue", GetLatitudeLevelMinValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetLongitudeBounds", GetLongitudeBounds);
+	Nan::SetPrototypeMethod(tpl, "getLongitudeBounds", GetLongitudeBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetLongitudeDelta", GetLongitudeDelta);
 	Nan::SetPrototypeMethod(tpl, "getLongitudeDelta", GetLongitudeDelta);
@@ -158,6 +164,23 @@ void VtkGeoGraticuleWrap::GetGeometryType(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGeoGraticuleWrap::GetLatitudeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoGraticuleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoGraticuleWrap>(info.Holder());
+	vtkGeoGraticule *native = (vtkGeoGraticule *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLatitudeBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGeoGraticuleWrap::GetLatitudeDelta(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoGraticuleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoGraticuleWrap>(info.Holder());
@@ -219,6 +242,23 @@ void VtkGeoGraticuleWrap::GetLatitudeLevelMinValue(const Nan::FunctionCallbackIn
 	}
 	r = native->GetLatitudeLevelMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGeoGraticuleWrap::GetLongitudeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoGraticuleWrap *wrapper = ObjectWrap::Unwrap<VtkGeoGraticuleWrap>(info.Holder());
+	vtkGeoGraticule *native = (vtkGeoGraticule *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetLongitudeBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkGeoGraticuleWrap::GetLongitudeDelta(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -317,7 +357,7 @@ void VtkGeoGraticuleWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoGraticuleWrap::InitPtpl();
+	VtkGeoGraticuleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,7 +385,7 @@ void VtkGeoGraticuleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoGraticuleWrap::InitPtpl();
+		VtkGeoGraticuleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -366,7 +406,7 @@ void VtkGeoGraticuleWrap::SetGeometryType(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGeoGraticule *native = (vtkGeoGraticule *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -393,7 +433,7 @@ void VtkGeoGraticuleWrap::SetLatitudeBounds(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +462,7 @@ void VtkGeoGraticuleWrap::SetLatitudeBounds(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -436,7 +476,7 @@ void VtkGeoGraticuleWrap::SetLatitudeBounds(const Nan::FunctionCallbackInfo<v8::
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -457,7 +497,7 @@ void VtkGeoGraticuleWrap::SetLatitudeLevel(const Nan::FunctionCallbackInfo<v8::V
 	vtkGeoGraticule *native = (vtkGeoGraticule *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +524,7 @@ void VtkGeoGraticuleWrap::SetLongitudeBounds(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +553,7 @@ void VtkGeoGraticuleWrap::SetLongitudeBounds(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -527,7 +567,7 @@ void VtkGeoGraticuleWrap::SetLongitudeBounds(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -548,7 +588,7 @@ void VtkGeoGraticuleWrap::SetLongitudeLevel(const Nan::FunctionCallbackInfo<v8::
 	vtkGeoGraticule *native = (vtkGeoGraticule *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -144,7 +144,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromExtent(const Nan::FunctionCallb
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -178,7 +178,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromExtent(const Nan::FunctionCallb
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -232,7 +232,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromExtent(const Nan::FunctionCallb
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -256,7 +256,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromExtent(const Nan::FunctionCallb
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -296,7 +296,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromPointDimensions(const Nan::Func
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -326,7 +326,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromPointDimensions(const Nan::Func
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +376,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromPointDimensions(const Nan::Func
 				}
 				b1[i] = a1->Get(i)->Int32Value();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -396,7 +396,7 @@ void VtkStructuredDataWrap::GetCellDimensionsFromPointDimensions(const Nan::Func
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -436,7 +436,7 @@ void VtkStructuredDataWrap::GetCellExtentFromPointExtent(const Nan::FunctionCall
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -470,7 +470,7 @@ void VtkStructuredDataWrap::GetCellExtentFromPointExtent(const Nan::FunctionCall
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -524,7 +524,7 @@ void VtkStructuredDataWrap::GetCellExtentFromPointExtent(const Nan::FunctionCall
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -548,7 +548,7 @@ void VtkStructuredDataWrap::GetCellExtentFromPointExtent(const Nan::FunctionCall
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -798,7 +798,7 @@ void VtkStructuredDataWrap::GetDimensionsFromExtent(const Nan::FunctionCallbackI
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -832,7 +832,7 @@ void VtkStructuredDataWrap::GetDimensionsFromExtent(const Nan::FunctionCallbackI
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -886,7 +886,7 @@ void VtkStructuredDataWrap::GetDimensionsFromExtent(const Nan::FunctionCallbackI
 			}
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -910,7 +910,7 @@ void VtkStructuredDataWrap::GetDimensionsFromExtent(const Nan::FunctionCallbackI
 
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -961,7 +961,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -996,7 +996,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1051,7 +1051,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1126,7 +1126,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1171,7 +1171,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1226,7 +1226,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1291,7 +1291,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1326,7 +1326,7 @@ void VtkStructuredDataWrap::GetGlobalStructuredCoordinates(const Nan::FunctionCa
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1379,7 +1379,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1414,7 +1414,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1469,7 +1469,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1544,7 +1544,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1589,7 +1589,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 				}
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1644,7 +1644,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1709,7 +1709,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1744,7 +1744,7 @@ void VtkStructuredDataWrap::GetLocalStructuredCoordinates(const Nan::FunctionCal
 
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1796,7 +1796,7 @@ void VtkStructuredDataWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredDataWrap::InitPtpl();
+	VtkStructuredDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1824,7 +1824,7 @@ void VtkStructuredDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredDataWrap::InitPtpl();
+		VtkStructuredDataWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

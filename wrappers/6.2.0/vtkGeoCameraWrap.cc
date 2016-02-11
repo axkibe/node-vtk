@@ -69,11 +69,17 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNodeCoverage", GetNodeCoverage);
 	Nan::SetPrototypeMethod(tpl, "getNodeCoverage", GetNodeCoverage);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetOriginLatitude", GetOriginLatitude);
 	Nan::SetPrototypeMethod(tpl, "getOriginLatitude", GetOriginLatitude);
 
 	Nan::SetPrototypeMethod(tpl, "GetOriginLongitude", GetOriginLongitude);
 	Nan::SetPrototypeMethod(tpl, "getOriginLongitude", GetOriginLongitude);
+
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
 
 	Nan::SetPrototypeMethod(tpl, "GetTilt", GetTilt);
 	Nan::SetPrototypeMethod(tpl, "getTilt", GetTilt);
@@ -261,6 +267,23 @@ void VtkGeoCameraWrap::GetNodeCoverage(const Nan::FunctionCallbackInfo<v8::Value
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGeoCameraWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
+	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGeoCameraWrap::GetOriginLatitude(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
@@ -289,6 +312,23 @@ void VtkGeoCameraWrap::GetOriginLongitude(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkGeoCameraWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
+	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkGeoCameraWrap::GetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
@@ -314,7 +354,7 @@ void VtkGeoCameraWrap::GetVTKCamera(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetVTKCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -340,7 +380,7 @@ void VtkGeoCameraWrap::InitializeNodeAnalysis(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +409,7 @@ void VtkGeoCameraWrap::InitializeNodeAnalysis(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -408,7 +448,7 @@ void VtkGeoCameraWrap::LockHeadingOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -420,7 +460,7 @@ void VtkGeoCameraWrap::LockHeadingOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkGeoCameraWrap *wrapper = ObjectWrap::Unwrap<VtkGeoCameraWrap>(info.Holder());
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -439,7 +479,7 @@ void VtkGeoCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoCameraWrap::InitPtpl();
+	VtkGeoCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -467,7 +507,7 @@ void VtkGeoCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoCameraWrap::InitPtpl();
+		VtkGeoCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -488,7 +528,7 @@ void VtkGeoCameraWrap::SetDistance(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -507,7 +547,7 @@ void VtkGeoCameraWrap::SetHeading(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -526,7 +566,7 @@ void VtkGeoCameraWrap::SetLatitude(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -545,7 +585,7 @@ void VtkGeoCameraWrap::SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -564,7 +604,7 @@ void VtkGeoCameraWrap::SetLongitude(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -587,7 +627,7 @@ void VtkGeoCameraWrap::SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -610,7 +650,7 @@ void VtkGeoCameraWrap::SetOriginLatitude(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +669,7 @@ void VtkGeoCameraWrap::SetOriginLongitude(const Nan::FunctionCallbackInfo<v8::Va
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +688,7 @@ void VtkGeoCameraWrap::SetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkGeoCamera *native = (vtkGeoCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -180,7 +180,7 @@ void VtkProp3DAxisFollowerWrap::AutoCenterOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProp3DAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DAxisFollowerWrap>(info.Holder());
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkProp3DAxisFollowerWrap::AutoCenterOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkProp3DAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DAxisFollowerWrap>(info.Holder());
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +281,7 @@ void VtkProp3DAxisFollowerWrap::ComputeMatrix(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProp3DAxisFollowerWrap *wrapper = ObjectWrap::Unwrap<VtkProp3DAxisFollowerWrap>(info.Holder());
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -314,7 +314,7 @@ void VtkProp3DAxisFollowerWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetAxis();
-		VtkAxisActorWrap::InitPtpl();
+	VtkAxisActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -477,7 +477,7 @@ void VtkProp3DAxisFollowerWrap::GetViewport(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetViewport();
-		VtkViewportWrap::InitPtpl();
+	VtkViewportWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -522,7 +522,7 @@ void VtkProp3DAxisFollowerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkProp3DAxisFollowerWrap::InitPtpl();
+	VtkProp3DAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -616,7 +616,7 @@ void VtkProp3DAxisFollowerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProp3DAxisFollowerWrap::InitPtpl();
+		VtkProp3DAxisFollowerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -637,7 +637,7 @@ void VtkProp3DAxisFollowerWrap::SetAutoCenter(const Nan::FunctionCallbackInfo<v8
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkProp3DAxisFollowerWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAxisActorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAxisActorWrap *a0 = ObjectWrap::Unwrap<VtkAxisActorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkProp3DAxisFollowerWrap::SetDistanceLODThreshold(const Nan::FunctionCallb
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +695,7 @@ void VtkProp3DAxisFollowerWrap::SetEnableDistanceLOD(const Nan::FunctionCallback
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -714,7 +714,7 @@ void VtkProp3DAxisFollowerWrap::SetEnableViewAngleLOD(const Nan::FunctionCallbac
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -733,7 +733,7 @@ void VtkProp3DAxisFollowerWrap::SetScreenOffset(const Nan::FunctionCallbackInfo<
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +752,7 @@ void VtkProp3DAxisFollowerWrap::SetViewAngleLODThreshold(const Nan::FunctionCall
 	vtkProp3DAxisFollower *native = (vtkProp3DAxisFollower *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +772,7 @@ void VtkProp3DAxisFollowerWrap::SetViewport(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -792,7 +792,7 @@ void VtkProp3DAxisFollowerWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

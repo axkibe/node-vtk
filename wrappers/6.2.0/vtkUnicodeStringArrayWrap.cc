@@ -130,7 +130,7 @@ void VtkUnicodeStringArrayWrap::ClearLookup(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -142,7 +142,7 @@ void VtkUnicodeStringArrayWrap::DataChanged(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -157,7 +157,7 @@ void VtkUnicodeStringArrayWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractArrayWrap *a0 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -230,7 +230,7 @@ void VtkUnicodeStringArrayWrap::Initialize(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +245,7 @@ void VtkUnicodeStringArrayWrap::InsertNextUTF8Value(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -271,7 +271,7 @@ void VtkUnicodeStringArrayWrap::InsertTuples(const Nan::FunctionCallbackInfo<v8:
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkAbstractArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkAbstractArrayWrap *a2 = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -335,7 +335,7 @@ void VtkUnicodeStringArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnicodeStringArrayWrap::InitPtpl();
+	VtkUnicodeStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -358,7 +358,7 @@ void VtkUnicodeStringArrayWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewIterator();
-		VtkArrayIteratorWrap::InitPtpl();
+	VtkArrayIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -386,7 +386,7 @@ void VtkUnicodeStringArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnicodeStringArrayWrap::InitPtpl();
+		VtkUnicodeStringArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -405,7 +405,7 @@ void VtkUnicodeStringArrayWrap::Squeeze(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkUnicodeStringArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnicodeStringArrayWrap>(info.Holder());
 	vtkUnicodeStringArray *native = (vtkUnicodeStringArray *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

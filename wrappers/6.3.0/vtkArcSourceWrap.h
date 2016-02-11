@@ -32,9 +32,14 @@ class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void GetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAngleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNegative(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPolarVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolutionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResolutionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

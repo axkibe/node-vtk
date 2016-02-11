@@ -104,7 +104,7 @@ void VtkExtractPolyDataPieceWrap::CreateGhostCellsOff(const Nan::FunctionCallbac
 {
 	VtkExtractPolyDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataPieceWrap>(info.Holder());
 	vtkExtractPolyDataPiece *native = (vtkExtractPolyDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -116,7 +116,7 @@ void VtkExtractPolyDataPieceWrap::CreateGhostCellsOn(const Nan::FunctionCallback
 {
 	VtkExtractPolyDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataPieceWrap>(info.Holder());
 	vtkExtractPolyDataPiece *native = (vtkExtractPolyDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkExtractPolyDataPieceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractPolyDataPieceWrap::InitPtpl();
+	VtkExtractPolyDataPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkExtractPolyDataPieceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractPolyDataPieceWrap::InitPtpl();
+		VtkExtractPolyDataPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkExtractPolyDataPieceWrap::SetCreateGhostCells(const Nan::FunctionCallbac
 	vtkExtractPolyDataPiece *native = (vtkExtractPolyDataPiece *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -126,7 +126,7 @@ void VtkBorderWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbac
 {
 	VtkBorderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBorderWidgetWrap>(info.Holder());
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -145,7 +145,7 @@ void VtkBorderWidgetWrap::GetBorderRepresentation(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetBorderRepresentation();
-		VtkBorderRepresentationWrap::InitPtpl();
+	VtkBorderRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkBorderWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkBorderWidgetWrap::InitPtpl();
+	VtkBorderWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkBorderWidgetWrap::ResizableOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkBorderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBorderWidgetWrap>(info.Holder());
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -260,7 +260,7 @@ void VtkBorderWidgetWrap::ResizableOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkBorderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBorderWidgetWrap>(info.Holder());
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -284,7 +284,7 @@ void VtkBorderWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBorderWidgetWrap::InitPtpl();
+		VtkBorderWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -303,7 +303,7 @@ void VtkBorderWidgetWrap::SelectableOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkBorderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBorderWidgetWrap>(info.Holder());
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -315,7 +315,7 @@ void VtkBorderWidgetWrap::SelectableOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkBorderWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkBorderWidgetWrap>(info.Holder());
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -330,7 +330,7 @@ void VtkBorderWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkBorderRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkBorderRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkBorderRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -349,7 +349,7 @@ void VtkBorderWidgetWrap::SetResizable(const Nan::FunctionCallbackInfo<v8::Value
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -368,7 +368,7 @@ void VtkBorderWidgetWrap::SetSelectable(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkBorderWidget *native = (vtkBorderWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

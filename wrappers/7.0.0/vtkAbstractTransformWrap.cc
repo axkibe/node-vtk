@@ -72,6 +72,15 @@ void VtkAbstractTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInverse", SetInverse);
 	Nan::SetPrototypeMethod(tpl, "setInverse", SetInverse);
 
+	Nan::SetPrototypeMethod(tpl, "TransformDoubleNormalAtPoint", TransformDoubleNormalAtPoint);
+	Nan::SetPrototypeMethod(tpl, "transformDoubleNormalAtPoint", TransformDoubleNormalAtPoint);
+
+	Nan::SetPrototypeMethod(tpl, "TransformDoublePoint", TransformDoublePoint);
+	Nan::SetPrototypeMethod(tpl, "transformDoublePoint", TransformDoublePoint);
+
+	Nan::SetPrototypeMethod(tpl, "TransformDoubleVectorAtPoint", TransformDoubleVectorAtPoint);
+	Nan::SetPrototypeMethod(tpl, "transformDoubleVectorAtPoint", TransformDoubleVectorAtPoint);
+
 	Nan::SetPrototypeMethod(tpl, "TransformNormalAtPoint", TransformNormalAtPoint);
 	Nan::SetPrototypeMethod(tpl, "transformNormalAtPoint", TransformNormalAtPoint);
 
@@ -147,7 +156,7 @@ void VtkAbstractTransformWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -185,7 +194,7 @@ void VtkAbstractTransformWrap::GetInverse(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInverse();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +239,7 @@ void VtkAbstractTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +267,7 @@ void VtkAbstractTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAbstractTransformWrap::InitPtpl();
+		VtkAbstractTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +289,7 @@ void VtkAbstractTransformWrap::SetInverse(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,6 +298,413 @@ void VtkAbstractTransformWrap::SetInverse(const Nan::FunctionCallbackInfo<v8::Va
 			(vtkAbstractTransform *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractTransformWrap::TransformDoubleNormalAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleNormalAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleNormalAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleNormalAtPoint(
+				b0,
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleNormalAtPoint(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractTransformWrap::TransformDoublePoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->TransformDoublePoint(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->TransformDoublePoint(
+			b0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				double const * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->TransformDoublePoint(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+				Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+				memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+				info.GetReturnValue().Set(at);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractTransformWrap::TransformDoubleVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
+	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleVectorAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleVectorAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleVectorAtPoint(
+				b0,
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformDoubleVectorAtPoint(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -325,7 +741,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -356,7 +772,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -407,7 +823,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -478,7 +894,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -519,7 +935,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -570,7 +986,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -631,7 +1047,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -662,7 +1078,7 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -674,6 +1090,156 @@ void VtkAbstractTransformWrap::TransformNormalAtPoint(const Nan::FunctionCallbac
 				);
 				return;
 			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformNormalAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformNormalAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformNormalAtPoint(
+				b0,
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformNormalAtPoint(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -702,7 +1268,7 @@ void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -732,7 +1298,7 @@ void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -782,7 +1348,7 @@ void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -802,7 +1368,7 @@ void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -812,6 +1378,89 @@ void VtkAbstractTransformWrap::TransformPoint(const Nan::FunctionCallbackInfo<v8
 				(double *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->TransformPoint(
+			(double *)(a0->Buffer()->GetContents().Data())
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->TransformPoint(
+			b0
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				double const * r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->TransformPoint(
+					info[0]->NumberValue(),
+					info[1]->NumberValue(),
+					info[2]->NumberValue()
+				);
+				Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+				Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+				memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+				info.GetReturnValue().Set(at);
+				return;
+			}
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -827,7 +1476,7 @@ void VtkAbstractTransformWrap::TransformPoints(const Nan::FunctionCallbackInfo<v
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkPointsWrap *a1 = ObjectWrap::Unwrap<VtkPointsWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -864,7 +1513,7 @@ void VtkAbstractTransformWrap::TransformPointsNormalsVectors(const Nan::Function
 						if(info.Length() > 5 && info[5]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[5]))
 						{
 							VtkDataArrayWrap *a5 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[5]->ToObject());
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -919,7 +1568,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -950,7 +1599,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1001,7 +1650,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1072,7 +1721,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1113,7 +1762,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1164,7 +1813,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1225,7 +1874,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1256,7 +1905,7 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1270,6 +1919,156 @@ void VtkAbstractTransformWrap::TransformVectorAtPoint(const Nan::FunctionCallbac
 			}
 		}
 	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformVectorAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformVectorAtPoint(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformVectorAtPoint(
+				b0,
+				b1
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			double const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->TransformVectorAtPoint(
+				b0,
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+			Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+			memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+			info.GetReturnValue().Set(at);
+			return;
+		}
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -1277,7 +2076,7 @@ void VtkAbstractTransformWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAbstractTransformWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info.Holder());
 	vtkAbstractTransform *native = (vtkAbstractTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -158,7 +158,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
+	VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -186,7 +186,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
+		VtkCachedStreamingDemandDrivenPipelineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -207,7 +207,7 @@ void VtkCachedStreamingDemandDrivenPipelineWrap::SetCacheSize(const Nan::Functio
 	vtkCachedStreamingDemandDrivenPipeline *native = (vtkCachedStreamingDemandDrivenPipeline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

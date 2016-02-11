@@ -272,7 +272,7 @@ void VtkMultiBlockPLOT3DReaderWrap::AddFunction(const Nan::FunctionCallbackInfo<
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkMultiBlockPLOT3DReaderWrap::AutoDetectFormatOff(const Nan::FunctionCallb
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -301,7 +301,7 @@ void VtkMultiBlockPLOT3DReaderWrap::AutoDetectFormatOn(const Nan::FunctionCallba
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -313,7 +313,7 @@ void VtkMultiBlockPLOT3DReaderWrap::BinaryFileOff(const Nan::FunctionCallbackInf
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -325,7 +325,7 @@ void VtkMultiBlockPLOT3DReaderWrap::BinaryFileOn(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -359,7 +359,7 @@ void VtkMultiBlockPLOT3DReaderWrap::DoublePrecisionOff(const Nan::FunctionCallba
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -371,7 +371,7 @@ void VtkMultiBlockPLOT3DReaderWrap::DoublePrecisionOn(const Nan::FunctionCallbac
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -383,7 +383,7 @@ void VtkMultiBlockPLOT3DReaderWrap::ForceReadOff(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,7 +395,7 @@ void VtkMultiBlockPLOT3DReaderWrap::ForceReadOn(const Nan::FunctionCallbackInfo<
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -484,7 +484,7 @@ void VtkMultiBlockPLOT3DReaderWrap::GetController(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -696,7 +696,7 @@ void VtkMultiBlockPLOT3DReaderWrap::HasByteCountOff(const Nan::FunctionCallbackI
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -708,7 +708,7 @@ void VtkMultiBlockPLOT3DReaderWrap::HasByteCountOn(const Nan::FunctionCallbackIn
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -720,7 +720,7 @@ void VtkMultiBlockPLOT3DReaderWrap::IBlankingOff(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -732,7 +732,7 @@ void VtkMultiBlockPLOT3DReaderWrap::IBlankingOn(const Nan::FunctionCallbackInfo<
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -766,7 +766,7 @@ void VtkMultiBlockPLOT3DReaderWrap::MultiGridOff(const Nan::FunctionCallbackInfo
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -778,7 +778,7 @@ void VtkMultiBlockPLOT3DReaderWrap::MultiGridOn(const Nan::FunctionCallbackInfo<
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkMultiBlockPLOT3DReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
+	VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -813,7 +813,7 @@ void VtkMultiBlockPLOT3DReaderWrap::RemoveAllFunctions(const Nan::FunctionCallba
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -827,7 +827,7 @@ void VtkMultiBlockPLOT3DReaderWrap::RemoveFunction(const Nan::FunctionCallbackIn
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +856,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
+		VtkMultiBlockPLOT3DReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -877,7 +877,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetAutoDetectFormat(const Nan::FunctionCallb
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -896,7 +896,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetBinaryFile(const Nan::FunctionCallbackInf
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -915,7 +915,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetByteOrder(const Nan::FunctionCallbackInfo
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -932,7 +932,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetByteOrderToBigEndian(const Nan::FunctionC
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -944,7 +944,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetByteOrderToLittleEndian(const Nan::Functi
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -959,7 +959,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetController(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +978,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetDoublePrecision(const Nan::FunctionCallba
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -998,7 +998,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1017,7 +1017,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetForceRead(const Nan::FunctionCallbackInfo
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1037,7 +1037,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetFunctionFileName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1056,7 +1056,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetGamma(const Nan::FunctionCallbackInfo<v8:
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1075,7 +1075,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetHasByteCount(const Nan::FunctionCallbackI
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1094,7 +1094,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetIBlanking(const Nan::FunctionCallbackInfo
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1113,7 +1113,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetMultiGrid(const Nan::FunctionCallbackInfo
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1133,7 +1133,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetQFileName(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1152,7 +1152,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetR(const Nan::FunctionCallbackInfo<v8::Val
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1171,7 +1171,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetScalarFunctionNumber(const Nan::FunctionC
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1190,7 +1190,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetTwoDimensionalGeometry(const Nan::Functio
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1209,7 +1209,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetVectorFunctionNumber(const Nan::FunctionC
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1229,7 +1229,7 @@ void VtkMultiBlockPLOT3DReaderWrap::SetXYZFileName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1246,7 +1246,7 @@ void VtkMultiBlockPLOT3DReaderWrap::TwoDimensionalGeometryOff(const Nan::Functio
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1258,7 +1258,7 @@ void VtkMultiBlockPLOT3DReaderWrap::TwoDimensionalGeometryOn(const Nan::Function
 {
 	VtkMultiBlockPLOT3DReaderWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockPLOT3DReaderWrap>(info.Holder());
 	vtkMultiBlockPLOT3DReader *native = (vtkMultiBlockPLOT3DReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

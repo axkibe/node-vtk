@@ -38,6 +38,8 @@ class VtkBalloonRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrameProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImageProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetImageSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPaddingMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPaddingMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -29,7 +29,10 @@ class VtkButtonSourceWrap : public VtkPolyDataAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShoulderTextureCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTextureDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureStyleMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureStyleMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

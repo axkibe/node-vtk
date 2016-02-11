@@ -119,7 +119,7 @@ void VtkAssemblyPathWrap::AddNode(const Nan::FunctionCallbackInfo<v8::Value>& in
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -138,7 +138,7 @@ void VtkAssemblyPathWrap::DeleteLastNode(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAssemblyPathWrap *wrapper = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info.Holder());
 	vtkAssemblyPath *native = (vtkAssemblyPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkAssemblyPathWrap::GetFirstNode(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetFirstNode();
-		VtkAssemblyNodeWrap::InitPtpl();
+	VtkAssemblyNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkAssemblyPathWrap::GetLastNode(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetLastNode();
-		VtkAssemblyNodeWrap::InitPtpl();
+	VtkAssemblyNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkAssemblyPathWrap::GetNextNode(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetNextNode();
-		VtkAssemblyNodeWrap::InitPtpl();
+	VtkAssemblyNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkAssemblyPathWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkAssemblyPathWrap::InitPtpl();
+	VtkAssemblyPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkAssemblyPathWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAssemblyPathWrap::InitPtpl();
+		VtkAssemblyPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkAssemblyPathWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAssemblyPathWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAssemblyPathWrap *a0 = ObjectWrap::Unwrap<VtkAssemblyPathWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

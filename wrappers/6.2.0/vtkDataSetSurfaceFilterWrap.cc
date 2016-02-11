@@ -328,7 +328,7 @@ void VtkDataSetSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkDataSetSurfaceFilterWrap::InitPtpl();
+	VtkDataSetSurfaceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkDataSetSurfaceFilterWrap::PassThroughCellIdsOff(const Nan::FunctionCallb
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkDataSetSurfaceFilterWrap::PassThroughCellIdsOn(const Nan::FunctionCallba
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkDataSetSurfaceFilterWrap::PassThroughPointIdsOff(const Nan::FunctionCall
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkDataSetSurfaceFilterWrap::PassThroughPointIdsOn(const Nan::FunctionCallb
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -404,7 +404,7 @@ void VtkDataSetSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDataSetSurfaceFilterWrap::InitPtpl();
+		VtkDataSetSurfaceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -425,7 +425,7 @@ void VtkDataSetSurfaceFilterWrap::SetNonlinearSubdivisionLevel(const Nan::Functi
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -445,7 +445,7 @@ void VtkDataSetSurfaceFilterWrap::SetOriginalCellIdsName(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -465,7 +465,7 @@ void VtkDataSetSurfaceFilterWrap::SetOriginalPointIdsName(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +484,7 @@ void VtkDataSetSurfaceFilterWrap::SetPassThroughCellIds(const Nan::FunctionCallb
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -503,7 +503,7 @@ void VtkDataSetSurfaceFilterWrap::SetPassThroughPointIds(const Nan::FunctionCall
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -522,7 +522,7 @@ void VtkDataSetSurfaceFilterWrap::SetPieceInvariant(const Nan::FunctionCallbackI
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -541,7 +541,7 @@ void VtkDataSetSurfaceFilterWrap::SetUseStrips(const Nan::FunctionCallbackInfo<v
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -589,7 +589,7 @@ void VtkDataSetSurfaceFilterWrap::UseStripsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -601,7 +601,7 @@ void VtkDataSetSurfaceFilterWrap::UseStripsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkDataSetSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkDataSetSurfaceFilterWrap>(info.Holder());
 	vtkDataSetSurfaceFilter *native = (vtkDataSetSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

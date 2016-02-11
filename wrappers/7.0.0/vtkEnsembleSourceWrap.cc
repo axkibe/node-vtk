@@ -111,7 +111,7 @@ void VtkEnsembleSourceWrap::AddMember(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -171,7 +171,7 @@ void VtkEnsembleSourceWrap::META_DATA(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->META_DATA();
-		VtkInformationDataObjectMetaDataKeyWrap::InitPtpl();
+	VtkInformationDataObjectMetaDataKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkEnsembleSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkEnsembleSourceWrap::InitPtpl();
+	VtkEnsembleSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkEnsembleSourceWrap::RemoveAllMembers(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkEnsembleSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEnsembleSourceWrap>(info.Holder());
 	vtkEnsembleSource *native = (vtkEnsembleSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +234,7 @@ void VtkEnsembleSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEnsembleSourceWrap::InitPtpl();
+		VtkEnsembleSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkEnsembleSourceWrap::SetMetaData(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTableWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTableWrap *a0 = ObjectWrap::Unwrap<VtkTableWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -280,7 +280,7 @@ void VtkEnsembleSourceWrap::UPDATE_MEMBER(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->UPDATE_MEMBER();
-		VtkInformationIntegerRequestKeyWrap::InitPtpl();
+	VtkInformationIntegerRequestKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

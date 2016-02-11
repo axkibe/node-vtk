@@ -60,8 +60,14 @@ void VtkFastSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMinValue", GetMinValue);
 	Nan::SetPrototypeMethod(tpl, "getMinValue", GetMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfPointsSplatted", GetNumberOfPointsSplatted);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfPointsSplatted", GetNumberOfPointsSplatted);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputDimensions", GetOutputDimensions);
+	Nan::SetPrototypeMethod(tpl, "getOutputDimensions", GetOutputDimensions);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -187,6 +193,23 @@ void VtkFastSplatterWrap::GetMinValue(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkFastSplatterWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
+	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkFastSplatterWrap::GetNumberOfPointsSplatted(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
@@ -199,6 +222,23 @@ void VtkFastSplatterWrap::GetNumberOfPointsSplatted(const Nan::FunctionCallbackI
 	}
 	r = native->GetNumberOfPointsSplatted();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkFastSplatterWrap::GetOutputDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
+	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputDimensions();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkFastSplatterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -234,7 +274,7 @@ void VtkFastSplatterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkFastSplatterWrap::InitPtpl();
+	VtkFastSplatterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +302,7 @@ void VtkFastSplatterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFastSplatterWrap::InitPtpl();
+		VtkFastSplatterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -283,7 +323,7 @@ void VtkFastSplatterWrap::SetLimitMode(const Nan::FunctionCallbackInfo<v8::Value
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +340,7 @@ void VtkFastSplatterWrap::SetLimitModeToClamp(const Nan::FunctionCallbackInfo<v8
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -312,7 +352,7 @@ void VtkFastSplatterWrap::SetLimitModeToFreezeScale(const Nan::FunctionCallbackI
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -324,7 +364,7 @@ void VtkFastSplatterWrap::SetLimitModeToNone(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -336,7 +376,7 @@ void VtkFastSplatterWrap::SetLimitModeToScale(const Nan::FunctionCallbackInfo<v8
 {
 	VtkFastSplatterWrap *wrapper = ObjectWrap::Unwrap<VtkFastSplatterWrap>(info.Holder());
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -350,7 +390,7 @@ void VtkFastSplatterWrap::SetMaxValue(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -369,7 +409,7 @@ void VtkFastSplatterWrap::SetMinValue(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkFastSplatter *native = (vtkFastSplatter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -396,7 +436,7 @@ void VtkFastSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +465,7 @@ void VtkFastSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +487,7 @@ void VtkFastSplatterWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Val
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -484,7 +524,7 @@ void VtkFastSplatterWrap::SetOutputDimensions(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -513,7 +553,7 @@ void VtkFastSplatterWrap::SetOutputDimensions(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +569,7 @@ void VtkFastSplatterWrap::SetOutputDimensions(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -553,7 +593,7 @@ void VtkFastSplatterWrap::SetSplatConnection(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

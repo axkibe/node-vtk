@@ -80,8 +80,20 @@ void VtkKdNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLeft", GetLeft);
 	Nan::SetPrototypeMethod(tpl, "getLeft", GetLeft);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxBounds", GetMaxBounds);
+	Nan::SetPrototypeMethod(tpl, "getMaxBounds", GetMaxBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaxDataBounds", GetMaxDataBounds);
+	Nan::SetPrototypeMethod(tpl, "getMaxDataBounds", GetMaxDataBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetMaxID", GetMaxID);
 	Nan::SetPrototypeMethod(tpl, "getMaxID", GetMaxID);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinBounds", GetMinBounds);
+	Nan::SetPrototypeMethod(tpl, "getMinBounds", GetMinBounds);
+
+	Nan::SetPrototypeMethod(tpl, "GetMinDataBounds", GetMinDataBounds);
+	Nan::SetPrototypeMethod(tpl, "getMinDataBounds", GetMinDataBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetMinID", GetMinID);
 	Nan::SetPrototypeMethod(tpl, "getMinID", GetMinID);
@@ -188,7 +200,7 @@ void VtkKdNodeWrap::AddChildNodes(const Nan::FunctionCallbackInfo<v8::Value>& in
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkKdNodeWrap *a1 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -285,7 +297,7 @@ void VtkKdNodeWrap::DeleteChildNodes(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -422,7 +434,7 @@ void VtkKdNodeWrap::GetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLeft();
-		VtkKdNodeWrap::InitPtpl();
+	VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -432,6 +444,40 @@ void VtkKdNodeWrap::GetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkKdNodeWrap::GetMaxBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
+	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkKdNodeWrap::GetMaxDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
+	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxDataBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkKdNodeWrap::GetMaxID(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -446,6 +492,40 @@ void VtkKdNodeWrap::GetMaxID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	r = native->GetMaxID();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkKdNodeWrap::GetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
+	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkKdNodeWrap::GetMinDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkKdNodeWrap *wrapper = ObjectWrap::Unwrap<VtkKdNodeWrap>(info.Holder());
+	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMinDataBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkKdNodeWrap::GetMinID(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -487,7 +567,7 @@ void VtkKdNodeWrap::GetRight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetRight();
-		VtkKdNodeWrap::InitPtpl();
+	VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -510,7 +590,7 @@ void VtkKdNodeWrap::GetUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetUp();
-		VtkKdNodeWrap::InitPtpl();
+	VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -663,7 +743,7 @@ void VtkKdNodeWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkKdNodeWrap::InitPtpl();
+	VtkKdNodeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -681,7 +761,7 @@ void VtkKdNodeWrap::PrintNode(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -700,7 +780,7 @@ void VtkKdNodeWrap::PrintVerboseNode(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -729,7 +809,7 @@ void VtkKdNodeWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKdNodeWrap::InitPtpl();
+		VtkKdNodeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -758,7 +838,7 @@ void VtkKdNodeWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -787,7 +867,7 @@ void VtkKdNodeWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -809,7 +889,7 @@ void VtkKdNodeWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -848,7 +928,7 @@ void VtkKdNodeWrap::SetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& in
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -877,7 +957,7 @@ void VtkKdNodeWrap::SetDim(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -896,7 +976,7 @@ void VtkKdNodeWrap::SetID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -916,7 +996,7 @@ void VtkKdNodeWrap::SetLeft(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -935,7 +1015,7 @@ void VtkKdNodeWrap::SetMaxID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -954,7 +1034,7 @@ void VtkKdNodeWrap::SetMinID(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -973,7 +1053,7 @@ void VtkKdNodeWrap::SetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkKdNode *native = (vtkKdNode *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -993,7 +1073,7 @@ void VtkKdNodeWrap::SetRight(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1013,7 +1093,7 @@ void VtkKdNodeWrap::SetUp(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkKdNodeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkKdNodeWrap *a0 = ObjectWrap::Unwrap<VtkKdNodeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

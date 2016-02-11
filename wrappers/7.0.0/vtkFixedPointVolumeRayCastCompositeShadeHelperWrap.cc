@@ -107,7 +107,7 @@ void VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::GenerateImage(const Nan
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkFixedPointVolumeRayCastMapperWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkFixedPointVolumeRayCastMapperWrap *a3 = ObjectWrap::Unwrap<VtkFixedPointVolumeRayCastMapperWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -173,7 +173,7 @@ void VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::NewInstance(const Nan::
 		return;
 	}
 	r = native->NewInstance();
-		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
+	VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -201,7 +201,7 @@ void VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::SafeDownCast(const Nan:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
+		VtkFixedPointVolumeRayCastCompositeShadeHelperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

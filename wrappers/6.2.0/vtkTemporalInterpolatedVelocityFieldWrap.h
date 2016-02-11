@@ -33,6 +33,7 @@ class VtkTemporalInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void ClearCache(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastGoodVelocity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsStatic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

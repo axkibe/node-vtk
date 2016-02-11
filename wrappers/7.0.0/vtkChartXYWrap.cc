@@ -201,7 +201,7 @@ void VtkChartXYWrap::AddPlot(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->AddPlot(
 			info[0]->Int32Value()
 		);
-			VtkPlotWrap::InitPtpl();
+		VtkPlotWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -220,7 +220,7 @@ void VtkChartXYWrap::AutoAxesOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkChartXYWrap::AutoAxesOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +244,7 @@ void VtkChartXYWrap::ClearPlots(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +256,7 @@ void VtkChartXYWrap::DrawAxesAtOriginOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +268,7 @@ void VtkChartXYWrap::DrawAxesAtOriginOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkChartXYWrap::ForceAxesToBoundsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -292,7 +292,7 @@ void VtkChartXYWrap::ForceAxesToBoundsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -329,7 +329,7 @@ void VtkChartXYWrap::GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->GetAxis(
 			info[0]->Int32Value()
 		);
-			VtkAxisWrap::InitPtpl();
+		VtkAxisWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkChartXYWrap::GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLegend();
-		VtkChartLegendWrap::InitPtpl();
+	VtkChartLegendWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -456,7 +456,7 @@ void VtkChartXYWrap::GetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetTooltip();
-		VtkTooltipItemWrap::InitPtpl();
+	VtkTooltipItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkChartXYWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkChartXYWrap::InitPtpl();
+	VtkChartXYWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -553,7 +553,7 @@ void VtkChartXYWrap::RecalculateBounds(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +577,7 @@ void VtkChartXYWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkChartXYWrap::InitPtpl();
+		VtkChartXYWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -598,7 +598,7 @@ void VtkChartXYWrap::SetAutoAxes(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -617,7 +617,7 @@ void VtkChartXYWrap::SetDrawAxesAtOrigin(const Nan::FunctionCallbackInfo<v8::Val
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -636,7 +636,7 @@ void VtkChartXYWrap::SetForceAxesToBounds(const Nan::FunctionCallbackInfo<v8::Va
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -655,7 +655,7 @@ void VtkChartXYWrap::SetHiddenAxisBorder(const Nan::FunctionCallbackInfo<v8::Val
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkChartXYWrap::SetPlotCorner(const Nan::FunctionCallbackInfo<v8::Value>& i
 		VtkPlotWrap *a0 = ObjectWrap::Unwrap<VtkPlotWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -698,7 +698,7 @@ void VtkChartXYWrap::SetSelectionMethod(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +717,7 @@ void VtkChartXYWrap::SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -737,7 +737,7 @@ void VtkChartXYWrap::SetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTooltipItemWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTooltipItemWrap *a0 = ObjectWrap::Unwrap<VtkTooltipItemWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -756,7 +756,7 @@ void VtkChartXYWrap::SetZoomWithMouseWheel(const Nan::FunctionCallbackInfo<v8::V
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -773,7 +773,7 @@ void VtkChartXYWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -785,7 +785,7 @@ void VtkChartXYWrap::ZoomWithMouseWheelOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -797,7 +797,7 @@ void VtkChartXYWrap::ZoomWithMouseWheelOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkChartXYWrap *wrapper = ObjectWrap::Unwrap<VtkChartXYWrap>(info.Holder());
 	vtkChartXY *native = (vtkChartXY *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

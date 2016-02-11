@@ -131,7 +131,7 @@ void VtkKCoreDecompositionWrap::CheckInputGraphOff(const Nan::FunctionCallbackIn
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -143,7 +143,7 @@ void VtkKCoreDecompositionWrap::CheckInputGraphOn(const Nan::FunctionCallbackInf
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkKCoreDecompositionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkKCoreDecompositionWrap::InitPtpl();
+	VtkKCoreDecompositionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +268,7 @@ void VtkKCoreDecompositionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKCoreDecompositionWrap::InitPtpl();
+		VtkKCoreDecompositionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkKCoreDecompositionWrap::SetCheckInputGraph(const Nan::FunctionCallbackIn
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -309,7 +309,7 @@ void VtkKCoreDecompositionWrap::SetOutputArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkKCoreDecompositionWrap::SetUseInDegreeNeighbors(const Nan::FunctionCallb
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkKCoreDecompositionWrap::SetUseOutDegreeNeighbors(const Nan::FunctionCall
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -364,7 +364,7 @@ void VtkKCoreDecompositionWrap::UseInDegreeNeighborsOff(const Nan::FunctionCallb
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -376,7 +376,7 @@ void VtkKCoreDecompositionWrap::UseInDegreeNeighborsOn(const Nan::FunctionCallba
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkKCoreDecompositionWrap::UseOutDegreeNeighborsOff(const Nan::FunctionCall
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +400,7 @@ void VtkKCoreDecompositionWrap::UseOutDegreeNeighborsOn(const Nan::FunctionCallb
 {
 	VtkKCoreDecompositionWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreDecompositionWrap>(info.Holder());
 	vtkKCoreDecomposition *native = (vtkKCoreDecomposition *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

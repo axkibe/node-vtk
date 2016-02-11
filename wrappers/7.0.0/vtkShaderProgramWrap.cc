@@ -152,7 +152,7 @@ void VtkShaderProgramWrap::CompiledOff(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
 	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -164,7 +164,7 @@ void VtkShaderProgramWrap::CompiledOn(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkShaderProgramWrap *wrapper = ObjectWrap::Unwrap<VtkShaderProgramWrap>(info.Holder());
 	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +255,7 @@ void VtkShaderProgramWrap::GetFragmentShader(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetFragmentShader();
-		VtkShaderWrap::InitPtpl();
+	VtkShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -278,7 +278,7 @@ void VtkShaderProgramWrap::GetGeometryShader(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetGeometryShader();
-		VtkShaderWrap::InitPtpl();
+	VtkShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkShaderProgramWrap::GetVertexShader(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetVertexShader();
-		VtkShaderWrap::InitPtpl();
+	VtkShaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -382,7 +382,7 @@ void VtkShaderProgramWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkShaderProgramWrap::InitPtpl();
+	VtkShaderProgramWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkShaderProgramWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -430,7 +430,7 @@ void VtkShaderProgramWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkShaderProgramWrap::InitPtpl();
+		VtkShaderProgramWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -451,7 +451,7 @@ void VtkShaderProgramWrap::SetCompiled(const Nan::FunctionCallbackInfo<v8::Value
 	vtkShaderProgram *native = (vtkShaderProgram *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +471,7 @@ void VtkShaderProgramWrap::SetFragmentShader(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkShaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkShaderWrap *a0 = ObjectWrap::Unwrap<VtkShaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +491,7 @@ void VtkShaderProgramWrap::SetGeometryShader(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkShaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkShaderWrap *a0 = ObjectWrap::Unwrap<VtkShaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -646,7 +646,7 @@ void VtkShaderProgramWrap::SetVertexShader(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkShaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkShaderWrap *a0 = ObjectWrap::Unwrap<VtkShaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

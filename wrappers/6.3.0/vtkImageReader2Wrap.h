@@ -36,7 +36,10 @@ class VtkImageReader2Wrap : public VtkImageAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataByteOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataByteOrderAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDescriptiveName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Value>& info);

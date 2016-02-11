@@ -66,11 +66,17 @@ void VtkVolumeOutlineSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateScalarsOn", GenerateScalarsOn);
 	Nan::SetPrototypeMethod(tpl, "generateScalarsOn", GenerateScalarsOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetActivePlaneColor", GetActivePlaneColor);
+	Nan::SetPrototypeMethod(tpl, "getActivePlaneColor", GetActivePlaneColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetActivePlaneId", GetActivePlaneId);
 	Nan::SetPrototypeMethod(tpl, "getActivePlaneId", GetActivePlaneId);
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetGenerateFaces", GetGenerateFaces);
 	Nan::SetPrototypeMethod(tpl, "getGenerateFaces", GetGenerateFaces);
@@ -147,7 +153,7 @@ void VtkVolumeOutlineSourceWrap::GenerateFacesOff(const Nan::FunctionCallbackInf
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -159,7 +165,7 @@ void VtkVolumeOutlineSourceWrap::GenerateFacesOn(const Nan::FunctionCallbackInfo
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +177,7 @@ void VtkVolumeOutlineSourceWrap::GenerateOutlineOff(const Nan::FunctionCallbackI
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -183,7 +189,7 @@ void VtkVolumeOutlineSourceWrap::GenerateOutlineOn(const Nan::FunctionCallbackIn
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +201,7 @@ void VtkVolumeOutlineSourceWrap::GenerateScalarsOff(const Nan::FunctionCallbackI
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,12 +213,29 @@ void VtkVolumeOutlineSourceWrap::GenerateScalarsOn(const Nan::FunctionCallbackIn
 {
 	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->GenerateScalarsOn();
+}
+
+void VtkVolumeOutlineSourceWrap::GetActivePlaneColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
+	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetActivePlaneColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeOutlineSourceWrap::GetActivePlaneId(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -241,6 +264,23 @@ void VtkVolumeOutlineSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkVolumeOutlineSourceWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolumeOutlineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkVolumeOutlineSourceWrap>(info.Holder());
+	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkVolumeOutlineSourceWrap::GetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -296,7 +336,7 @@ void VtkVolumeOutlineSourceWrap::GetVolumeMapper(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetVolumeMapper();
-		VtkVolumeMapperWrap::InitPtpl();
+	VtkVolumeMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,7 +381,7 @@ void VtkVolumeOutlineSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkVolumeOutlineSourceWrap::InitPtpl();
+	VtkVolumeOutlineSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -369,7 +409,7 @@ void VtkVolumeOutlineSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkVolumeOutlineSourceWrap::InitPtpl();
+		VtkVolumeOutlineSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -398,7 +438,7 @@ void VtkVolumeOutlineSourceWrap::SetActivePlaneColor(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -427,7 +467,7 @@ void VtkVolumeOutlineSourceWrap::SetActivePlaneColor(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -443,7 +483,7 @@ void VtkVolumeOutlineSourceWrap::SetActivePlaneColor(const Nan::FunctionCallback
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -466,7 +506,7 @@ void VtkVolumeOutlineSourceWrap::SetActivePlaneId(const Nan::FunctionCallbackInf
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -493,7 +533,7 @@ void VtkVolumeOutlineSourceWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Va
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -522,7 +562,7 @@ void VtkVolumeOutlineSourceWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Va
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +578,7 @@ void VtkVolumeOutlineSourceWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -561,7 +601,7 @@ void VtkVolumeOutlineSourceWrap::SetGenerateFaces(const Nan::FunctionCallbackInf
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -580,7 +620,7 @@ void VtkVolumeOutlineSourceWrap::SetGenerateOutline(const Nan::FunctionCallbackI
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -599,7 +639,7 @@ void VtkVolumeOutlineSourceWrap::SetGenerateScalars(const Nan::FunctionCallbackI
 	vtkVolumeOutlineSource *native = (vtkVolumeOutlineSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -619,7 +659,7 @@ void VtkVolumeOutlineSourceWrap::SetVolumeMapper(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkVolumeMapperWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkVolumeMapperWrap *a0 = ObjectWrap::Unwrap<VtkVolumeMapperWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

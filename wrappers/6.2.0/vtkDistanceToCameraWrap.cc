@@ -138,7 +138,7 @@ void VtkDistanceToCameraWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkDistanceToCameraWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkDistanceToCameraWrap::InitPtpl();
+	VtkDistanceToCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -239,7 +239,7 @@ void VtkDistanceToCameraWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDistanceToCameraWrap::InitPtpl();
+		VtkDistanceToCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkDistanceToCameraWrap::ScalingOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkDistanceToCameraWrap::ScalingOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkDistanceToCameraWrap *wrapper = ObjectWrap::Unwrap<VtkDistanceToCameraWrap>(info.Holder());
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -285,7 +285,7 @@ void VtkDistanceToCameraWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -304,7 +304,7 @@ void VtkDistanceToCameraWrap::SetScaling(const Nan::FunctionCallbackInfo<v8::Val
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -323,7 +323,7 @@ void VtkDistanceToCameraWrap::SetScreenSize(const Nan::FunctionCallbackInfo<v8::
 	vtkDistanceToCamera *native = (vtkDistanceToCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

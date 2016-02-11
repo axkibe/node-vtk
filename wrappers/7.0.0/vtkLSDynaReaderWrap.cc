@@ -206,6 +206,9 @@ void VtkLSDynaReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetThickShellArrayStatus", GetThickShellArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "getThickShellArrayStatus", GetThickShellArrayStatus);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetTitle", GetTitle);
 	Nan::SetPrototypeMethod(tpl, "getTitle", GetTitle);
 
@@ -333,7 +336,7 @@ void VtkLSDynaReaderWrap::DebugDump(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -345,7 +348,7 @@ void VtkLSDynaReaderWrap::DeformedMeshOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +360,7 @@ void VtkLSDynaReaderWrap::DeformedMeshOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -369,7 +372,7 @@ void VtkLSDynaReaderWrap::DeletedCellsAsGhostArrayOff(const Nan::FunctionCallbac
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -381,7 +384,7 @@ void VtkLSDynaReaderWrap::DeletedCellsAsGhostArrayOn(const Nan::FunctionCallback
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1556,6 +1559,23 @@ void VtkLSDynaReaderWrap::GetThickShellArrayStatus(const Nan::FunctionCallbackIn
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkLSDynaReaderWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
+	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkLSDynaReaderWrap::GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
@@ -1617,7 +1637,7 @@ void VtkLSDynaReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkLSDynaReaderWrap::InitPtpl();
+	VtkLSDynaReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1633,7 +1653,7 @@ void VtkLSDynaReaderWrap::RemoveDeletedCellsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1645,7 +1665,7 @@ void VtkLSDynaReaderWrap::RemoveDeletedCellsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkLSDynaReaderWrap *wrapper = ObjectWrap::Unwrap<VtkLSDynaReaderWrap>(info.Holder());
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1669,7 +1689,7 @@ void VtkLSDynaReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkLSDynaReaderWrap::InitPtpl();
+		VtkLSDynaReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1693,7 +1713,7 @@ void VtkLSDynaReaderWrap::SetBeamArrayStatus(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1709,7 +1729,7 @@ void VtkLSDynaReaderWrap::SetBeamArrayStatus(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1735,7 +1755,7 @@ void VtkLSDynaReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1752,7 +1772,7 @@ void VtkLSDynaReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1776,7 +1796,7 @@ void VtkLSDynaReaderWrap::SetDatabaseDirectory(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1795,7 +1815,7 @@ void VtkLSDynaReaderWrap::SetDeformedMesh(const Nan::FunctionCallbackInfo<v8::Va
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1814,7 +1834,7 @@ void VtkLSDynaReaderWrap::SetDeletedCellsAsGhostArray(const Nan::FunctionCallbac
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1834,7 +1854,7 @@ void VtkLSDynaReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1854,7 +1874,7 @@ void VtkLSDynaReaderWrap::SetInputDeck(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1876,7 +1896,7 @@ void VtkLSDynaReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1892,7 +1912,7 @@ void VtkLSDynaReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1916,7 +1936,7 @@ void VtkLSDynaReaderWrap::SetParticleArrayStatus(const Nan::FunctionCallbackInfo
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1932,7 +1952,7 @@ void VtkLSDynaReaderWrap::SetParticleArrayStatus(const Nan::FunctionCallbackInfo
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1956,7 +1976,7 @@ void VtkLSDynaReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1972,7 +1992,7 @@ void VtkLSDynaReaderWrap::SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1993,7 +2013,7 @@ void VtkLSDynaReaderWrap::SetRemoveDeletedCells(const Nan::FunctionCallbackInfo<
 	vtkLSDynaReader *native = (vtkLSDynaReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2015,7 +2035,7 @@ void VtkLSDynaReaderWrap::SetRigidBodyArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2031,7 +2051,7 @@ void VtkLSDynaReaderWrap::SetRigidBodyArrayStatus(const Nan::FunctionCallbackInf
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2055,7 +2075,7 @@ void VtkLSDynaReaderWrap::SetRoadSurfaceArrayStatus(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2071,7 +2091,7 @@ void VtkLSDynaReaderWrap::SetRoadSurfaceArrayStatus(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2095,7 +2115,7 @@ void VtkLSDynaReaderWrap::SetShellArrayStatus(const Nan::FunctionCallbackInfo<v8
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2111,7 +2131,7 @@ void VtkLSDynaReaderWrap::SetShellArrayStatus(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2135,7 +2155,7 @@ void VtkLSDynaReaderWrap::SetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2151,7 +2171,7 @@ void VtkLSDynaReaderWrap::SetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2175,7 +2195,7 @@ void VtkLSDynaReaderWrap::SetThickShellArrayStatus(const Nan::FunctionCallbackIn
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2191,7 +2211,7 @@ void VtkLSDynaReaderWrap::SetThickShellArrayStatus(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2220,7 +2240,7 @@ void VtkLSDynaReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2249,7 +2269,7 @@ void VtkLSDynaReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2263,7 +2283,7 @@ void VtkLSDynaReaderWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::V
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

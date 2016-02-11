@@ -88,6 +88,9 @@ void VtkXMLWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetWriteToOutputString", GetWriteToOutputString);
 	Nan::SetPrototypeMethod(tpl, "getWriteToOutputString", GetWriteToOutputString);
 
@@ -222,7 +225,7 @@ void VtkXMLWriterWrap::EncodeAppendedDataOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -234,7 +237,7 @@ void VtkXMLWriterWrap::EncodeAppendedDataOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -281,7 +284,7 @@ void VtkXMLWriterWrap::GetCompressor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetCompressor();
-		VtkDataCompressorWrap::InitPtpl();
+	VtkDataCompressorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -378,7 +381,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkDataObjectWrap::InitPtpl();
+		VtkDataObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -397,7 +400,7 @@ void VtkXMLWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -435,6 +438,23 @@ void VtkXMLWriterWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetTimeStep();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLWriterWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
+	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkXMLWriterWrap::GetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -484,7 +504,7 @@ void VtkXMLWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLWriterWrap::InitPtpl();
+	VtkXMLWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -512,7 +532,7 @@ void VtkXMLWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLWriterWrap::InitPtpl();
+		VtkXMLWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -533,7 +553,7 @@ void VtkXMLWriterWrap::SetByteOrder(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +570,7 @@ void VtkXMLWriterWrap::SetByteOrderToBigEndian(const Nan::FunctionCallbackInfo<v
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +582,7 @@ void VtkXMLWriterWrap::SetByteOrderToLittleEndian(const Nan::FunctionCallbackInf
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -577,7 +597,7 @@ void VtkXMLWriterWrap::SetCompressor(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataCompressorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataCompressorWrap *a0 = ObjectWrap::Unwrap<VtkDataCompressorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -596,7 +616,7 @@ void VtkXMLWriterWrap::SetCompressorType(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -613,7 +633,7 @@ void VtkXMLWriterWrap::SetCompressorTypeToNone(const Nan::FunctionCallbackInfo<v
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -625,7 +645,7 @@ void VtkXMLWriterWrap::SetCompressorTypeToZLib(const Nan::FunctionCallbackInfo<v
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -639,7 +659,7 @@ void VtkXMLWriterWrap::SetDataMode(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -656,7 +676,7 @@ void VtkXMLWriterWrap::SetDataModeToAppended(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -668,7 +688,7 @@ void VtkXMLWriterWrap::SetDataModeToAscii(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -680,7 +700,7 @@ void VtkXMLWriterWrap::SetDataModeToBinary(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +714,7 @@ void VtkXMLWriterWrap::SetEncodeAppendedData(const Nan::FunctionCallbackInfo<v8:
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -714,7 +734,7 @@ void VtkXMLWriterWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -733,7 +753,7 @@ void VtkXMLWriterWrap::SetHeaderType(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -750,7 +770,7 @@ void VtkXMLWriterWrap::SetHeaderTypeToUInt32(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -762,7 +782,7 @@ void VtkXMLWriterWrap::SetHeaderTypeToUInt64(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -776,7 +796,7 @@ void VtkXMLWriterWrap::SetIdType(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -793,7 +813,7 @@ void VtkXMLWriterWrap::SetIdTypeToInt32(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -805,7 +825,7 @@ void VtkXMLWriterWrap::SetIdTypeToInt64(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -820,7 +840,7 @@ void VtkXMLWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -835,7 +855,7 @@ void VtkXMLWriterWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& 
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -856,7 +876,7 @@ void VtkXMLWriterWrap::SetNumberOfTimeSteps(const Nan::FunctionCallbackInfo<v8::
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -875,7 +895,7 @@ void VtkXMLWriterWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -902,7 +922,7 @@ void VtkXMLWriterWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -931,7 +951,7 @@ void VtkXMLWriterWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -945,7 +965,7 @@ void VtkXMLWriterWrap::SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Valu
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -966,7 +986,7 @@ void VtkXMLWriterWrap::SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -983,7 +1003,7 @@ void VtkXMLWriterWrap::Start(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -995,7 +1015,7 @@ void VtkXMLWriterWrap::Stop(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1023,7 +1043,7 @@ void VtkXMLWriterWrap::WriteNextTime(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1040,7 +1060,7 @@ void VtkXMLWriterWrap::WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1052,7 +1072,7 @@ void VtkXMLWriterWrap::WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXMLWriterWrap *wrapper = ObjectWrap::Unwrap<VtkXMLWriterWrap>(info.Holder());
 	vtkXMLWriter *native = (vtkXMLWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

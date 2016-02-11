@@ -29,10 +29,12 @@ class VtkRTAnalyticSourceWrap : public VtkImageAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubsampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXFreq(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXMag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYFreq(const Nan::FunctionCallbackInfo<v8::Value>& info);

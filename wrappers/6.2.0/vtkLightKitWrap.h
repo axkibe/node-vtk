@@ -31,15 +31,22 @@ class VtkLightKitWrap : public VtkObjectWrap
 
 		static void AddLightsToRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackLightAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackLightAzimuth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackLightColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackLightElevation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackLightWarmth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFillLightAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFillLightAzimuth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFillLightColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFillLightElevation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFillLightWarmth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHeadLightColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeadLightWarmth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKeyLightAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyLightAzimuth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKeyLightColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyLightElevation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyLightIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyLightWarmth(const Nan::FunctionCallbackInfo<v8::Value>& info);

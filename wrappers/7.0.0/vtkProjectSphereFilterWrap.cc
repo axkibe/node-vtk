@@ -47,6 +47,9 @@ void VtkProjectSphereFilterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkProjectSphereFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -113,6 +116,23 @@ void VtkProjectSphereFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkProjectSphereFilterWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
+	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkProjectSphereFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -183,7 +203,7 @@ void VtkProjectSphereFilterWrap::KeepPolePointsOff(const Nan::FunctionCallbackIn
 {
 	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +215,7 @@ void VtkProjectSphereFilterWrap::KeepPolePointsOn(const Nan::FunctionCallbackInf
 {
 	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,7 +234,7 @@ void VtkProjectSphereFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkProjectSphereFilterWrap::InitPtpl();
+	VtkProjectSphereFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +262,7 @@ void VtkProjectSphereFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProjectSphereFilterWrap::InitPtpl();
+		VtkProjectSphereFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -271,7 +291,7 @@ void VtkProjectSphereFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +320,7 @@ void VtkProjectSphereFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -316,7 +336,7 @@ void VtkProjectSphereFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::V
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -339,7 +359,7 @@ void VtkProjectSphereFilterWrap::SetKeepPolePoints(const Nan::FunctionCallbackIn
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -358,7 +378,7 @@ void VtkProjectSphereFilterWrap::SetTranslateZ(const Nan::FunctionCallbackInfo<v
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -375,7 +395,7 @@ void VtkProjectSphereFilterWrap::TranslateZOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -387,7 +407,7 @@ void VtkProjectSphereFilterWrap::TranslateZOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProjectSphereFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProjectSphereFilterWrap>(info.Holder());
 	vtkProjectSphereFilter *native = (vtkProjectSphereFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

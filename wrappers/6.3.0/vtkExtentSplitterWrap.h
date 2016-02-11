@@ -35,6 +35,7 @@ class VtkExtentSplitterWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSubExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSubExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSubExtentSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

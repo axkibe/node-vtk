@@ -39,14 +39,17 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void FrontfaceCullingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FrontfaceCullingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAmbient(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAmbientColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAmbientMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAmbientMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackfaceCulling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDiffuseColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuseMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiffuseMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEdgeColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEdgeVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrontfaceCulling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -70,6 +73,7 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void GetShaderDeviceAdapter2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecular(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpecularColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecularMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecularMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSpecularPower(const Nan::FunctionCallbackInfo<v8::Value>& info);

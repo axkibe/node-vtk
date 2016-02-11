@@ -34,6 +34,7 @@ class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentCursorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentImageValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCursorDataStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);

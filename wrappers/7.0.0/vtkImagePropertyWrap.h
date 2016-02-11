@@ -38,7 +38,10 @@ class VtkImagePropertyWrap : public VtkObjectWrap
 		static void GetAmbientMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAmbientMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBacking(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackingColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCheckerboard(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCheckerboardOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCheckerboardSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);

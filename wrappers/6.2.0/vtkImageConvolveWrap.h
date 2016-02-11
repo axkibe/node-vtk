@@ -36,6 +36,7 @@ class VtkImageConvolveWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

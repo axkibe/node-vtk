@@ -44,6 +44,7 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void GetMinimumIntegrationStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRotationScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

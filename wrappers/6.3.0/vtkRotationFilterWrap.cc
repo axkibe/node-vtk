@@ -65,6 +65,9 @@ void VtkRotationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAxisMinValue", GetAxisMinValue);
 	Nan::SetPrototypeMethod(tpl, "getAxisMinValue", GetAxisMinValue);
 
+	Nan::SetPrototypeMethod(tpl, "GetCenter", GetCenter);
+	Nan::SetPrototypeMethod(tpl, "getCenter", GetCenter);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -140,7 +143,7 @@ void VtkRotationFilterWrap::CopyInputOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -152,7 +155,7 @@ void VtkRotationFilterWrap::CopyInputOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,6 +217,23 @@ void VtkRotationFilterWrap::GetAxisMinValue(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetAxisMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkRotationFilterWrap::GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
+	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCenter();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkRotationFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -291,7 +311,7 @@ void VtkRotationFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkRotationFilterWrap::InitPtpl();
+	VtkRotationFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -319,7 +339,7 @@ void VtkRotationFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRotationFilterWrap::InitPtpl();
+		VtkRotationFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -340,7 +360,7 @@ void VtkRotationFilterWrap::SetAngle(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -359,7 +379,7 @@ void VtkRotationFilterWrap::SetAxis(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -376,7 +396,7 @@ void VtkRotationFilterWrap::SetAxisToX(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +408,7 @@ void VtkRotationFilterWrap::SetAxisToY(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -400,7 +420,7 @@ void VtkRotationFilterWrap::SetAxisToZ(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkRotationFilterWrap *wrapper = ObjectWrap::Unwrap<VtkRotationFilterWrap>(info.Holder());
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -422,7 +442,7 @@ void VtkRotationFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +471,7 @@ void VtkRotationFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -467,7 +487,7 @@ void VtkRotationFilterWrap::SetCenter(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -490,7 +510,7 @@ void VtkRotationFilterWrap::SetCopyInput(const Nan::FunctionCallbackInfo<v8::Val
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +529,7 @@ void VtkRotationFilterWrap::SetNumberOfCopies(const Nan::FunctionCallbackInfo<v8
 	vtkRotationFilter *native = (vtkRotationFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

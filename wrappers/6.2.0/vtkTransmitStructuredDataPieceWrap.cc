@@ -111,7 +111,7 @@ void VtkTransmitStructuredDataPieceWrap::CreateGhostCellsOff(const Nan::Function
 {
 	VtkTransmitStructuredDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitStructuredDataPieceWrap>(info.Holder());
 	vtkTransmitStructuredDataPiece *native = (vtkTransmitStructuredDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -123,7 +123,7 @@ void VtkTransmitStructuredDataPieceWrap::CreateGhostCellsOn(const Nan::FunctionC
 {
 	VtkTransmitStructuredDataPieceWrap *wrapper = ObjectWrap::Unwrap<VtkTransmitStructuredDataPieceWrap>(info.Holder());
 	vtkTransmitStructuredDataPiece *native = (vtkTransmitStructuredDataPiece *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -156,7 +156,7 @@ void VtkTransmitStructuredDataPieceWrap::GetController(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkTransmitStructuredDataPieceWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransmitStructuredDataPieceWrap::InitPtpl();
+	VtkTransmitStructuredDataPieceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkTransmitStructuredDataPieceWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransmitStructuredDataPieceWrap::InitPtpl();
+		VtkTransmitStructuredDataPieceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -265,7 +265,7 @@ void VtkTransmitStructuredDataPieceWrap::SetController(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -284,7 +284,7 @@ void VtkTransmitStructuredDataPieceWrap::SetCreateGhostCells(const Nan::Function
 	vtkTransmitStructuredDataPiece *native = (vtkTransmitStructuredDataPiece *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

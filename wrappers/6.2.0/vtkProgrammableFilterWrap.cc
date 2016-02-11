@@ -132,7 +132,7 @@ void VtkProgrammableFilterWrap::CopyArraysOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkProgrammableFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableFilterWrap>(info.Holder());
 	vtkProgrammableFilter *native = (vtkProgrammableFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +144,7 @@ void VtkProgrammableFilterWrap::CopyArraysOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkProgrammableFilterWrap *wrapper = ObjectWrap::Unwrap<VtkProgrammableFilterWrap>(info.Holder());
 	vtkProgrammableFilter *native = (vtkProgrammableFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +191,7 @@ void VtkProgrammableFilterWrap::GetGraphInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetGraphInput();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +214,7 @@ void VtkProgrammableFilterWrap::GetPolyDataInput(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetPolyDataInput();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -237,7 +237,7 @@ void VtkProgrammableFilterWrap::GetRectilinearGridInput(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRectilinearGridInput();
-		VtkRectilinearGridWrap::InitPtpl();
+	VtkRectilinearGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,7 +260,7 @@ void VtkProgrammableFilterWrap::GetStructuredGridInput(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetStructuredGridInput();
-		VtkStructuredGridWrap::InitPtpl();
+	VtkStructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -283,7 +283,7 @@ void VtkProgrammableFilterWrap::GetStructuredPointsInput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetStructuredPointsInput();
-		VtkStructuredPointsWrap::InitPtpl();
+	VtkStructuredPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkProgrammableFilterWrap::GetTableInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTableInput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkProgrammableFilterWrap::GetUnstructuredGridInput(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetUnstructuredGridInput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -374,7 +374,7 @@ void VtkProgrammableFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkProgrammableFilterWrap::InitPtpl();
+	VtkProgrammableFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -402,7 +402,7 @@ void VtkProgrammableFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkProgrammableFilterWrap::InitPtpl();
+		VtkProgrammableFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -423,7 +423,7 @@ void VtkProgrammableFilterWrap::SetCopyArrays(const Nan::FunctionCallbackInfo<v8
 	vtkProgrammableFilter *native = (vtkProgrammableFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

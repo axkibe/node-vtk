@@ -37,6 +37,8 @@ class VtkImageShrink3DWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetMean(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMedian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetShrinkFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaximumOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MaximumOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

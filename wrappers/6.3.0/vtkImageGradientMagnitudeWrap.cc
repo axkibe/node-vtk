@@ -186,7 +186,7 @@ void VtkImageGradientMagnitudeWrap::HandleBoundariesOff(const Nan::FunctionCallb
 {
 	VtkImageGradientMagnitudeWrap *wrapper = ObjectWrap::Unwrap<VtkImageGradientMagnitudeWrap>(info.Holder());
 	vtkImageGradientMagnitude *native = (vtkImageGradientMagnitude *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -198,7 +198,7 @@ void VtkImageGradientMagnitudeWrap::HandleBoundariesOn(const Nan::FunctionCallba
 {
 	VtkImageGradientMagnitudeWrap *wrapper = ObjectWrap::Unwrap<VtkImageGradientMagnitudeWrap>(info.Holder());
 	vtkImageGradientMagnitude *native = (vtkImageGradientMagnitude *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkImageGradientMagnitudeWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageGradientMagnitudeWrap::InitPtpl();
+	VtkImageGradientMagnitudeWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkImageGradientMagnitudeWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageGradientMagnitudeWrap::InitPtpl();
+		VtkImageGradientMagnitudeWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkImageGradientMagnitudeWrap::SetDimensionality(const Nan::FunctionCallbac
 	vtkImageGradientMagnitude *native = (vtkImageGradientMagnitude *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -307,7 +307,7 @@ void VtkImageGradientMagnitudeWrap::SetHandleBoundaries(const Nan::FunctionCallb
 	vtkImageGradientMagnitude *native = (vtkImageGradientMagnitude *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

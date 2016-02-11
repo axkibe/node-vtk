@@ -117,7 +117,7 @@ void VtkExtractVectorComponentsWrap::ExtractToFieldDataOff(const Nan::FunctionCa
 {
 	VtkExtractVectorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractVectorComponentsWrap>(info.Holder());
 	vtkExtractVectorComponents *native = (vtkExtractVectorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -129,7 +129,7 @@ void VtkExtractVectorComponentsWrap::ExtractToFieldDataOn(const Nan::FunctionCal
 {
 	VtkExtractVectorComponentsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractVectorComponentsWrap>(info.Holder());
 	vtkExtractVectorComponents *native = (vtkExtractVectorComponents *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkExtractVectorComponentsWrap::GetVxComponent(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetVxComponent();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,7 +199,7 @@ void VtkExtractVectorComponentsWrap::GetVyComponent(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetVyComponent();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -222,7 +222,7 @@ void VtkExtractVectorComponentsWrap::GetVzComponent(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetVzComponent();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkExtractVectorComponentsWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractVectorComponentsWrap::InitPtpl();
+	VtkExtractVectorComponentsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkExtractVectorComponentsWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractVectorComponentsWrap::InitPtpl();
+		VtkExtractVectorComponentsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -316,7 +316,7 @@ void VtkExtractVectorComponentsWrap::SetExtractToFieldData(const Nan::FunctionCa
 	vtkExtractVectorComponents *native = (vtkExtractVectorComponents *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkExtractVectorComponentsWrap::SetInputData(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

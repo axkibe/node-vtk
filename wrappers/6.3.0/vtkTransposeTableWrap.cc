@@ -122,7 +122,7 @@ void VtkTransposeTableWrap::AddIdColumnOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +134,7 @@ void VtkTransposeTableWrap::AddIdColumnOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -231,7 +231,7 @@ void VtkTransposeTableWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransposeTableWrap::InitPtpl();
+	VtkTransposeTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkTransposeTableWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransposeTableWrap::InitPtpl();
+		VtkTransposeTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkTransposeTableWrap::SetAddIdColumn(const Nan::FunctionCallbackInfo<v8::V
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -300,7 +300,7 @@ void VtkTransposeTableWrap::SetIdColumnName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -319,7 +319,7 @@ void VtkTransposeTableWrap::SetUseIdColumn(const Nan::FunctionCallbackInfo<v8::V
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -336,7 +336,7 @@ void VtkTransposeTableWrap::UseIdColumnOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -348,7 +348,7 @@ void VtkTransposeTableWrap::UseIdColumnOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkTransposeTableWrap *wrapper = ObjectWrap::Unwrap<VtkTransposeTableWrap>(info.Holder());
 	vtkTransposeTable *native = (vtkTransposeTable *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

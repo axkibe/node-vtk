@@ -165,7 +165,7 @@ void VtkPDataSetWriterWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkPDataSetWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPDataSetWriterWrap::InitPtpl();
+	VtkPDataSetWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -322,7 +322,7 @@ void VtkPDataSetWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPDataSetWriterWrap::InitPtpl();
+		VtkPDataSetWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkPDataSetWriterWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -363,7 +363,7 @@ void VtkPDataSetWriterWrap::SetEndPiece(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkPDataSetWriterWrap::SetFilePattern(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -402,7 +402,7 @@ void VtkPDataSetWriterWrap::SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkPDataSetWriterWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +440,7 @@ void VtkPDataSetWriterWrap::SetStartPiece(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -459,7 +459,7 @@ void VtkPDataSetWriterWrap::SetUseRelativeFileNames(const Nan::FunctionCallbackI
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkPDataSetWriterWrap::UseRelativeFileNamesOff(const Nan::FunctionCallbackI
 {
 	VtkPDataSetWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPDataSetWriterWrap>(info.Holder());
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -488,7 +488,7 @@ void VtkPDataSetWriterWrap::UseRelativeFileNamesOn(const Nan::FunctionCallbackIn
 {
 	VtkPDataSetWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPDataSetWriterWrap>(info.Holder());
 	vtkPDataSetWriter *native = (vtkPDataSetWriter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

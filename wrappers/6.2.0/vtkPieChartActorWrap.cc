@@ -209,7 +209,7 @@ void VtkPieChartActorWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkPieChartActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkPieChartActorWrap::GetLegendActor(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetLegendActor();
-		VtkLegendBoxActorWrap::InitPtpl();
+	VtkLegendBoxActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -341,7 +341,7 @@ void VtkPieChartActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -407,7 +407,7 @@ void VtkPieChartActorWrap::LabelVisibilityOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -419,7 +419,7 @@ void VtkPieChartActorWrap::LabelVisibilityOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -431,7 +431,7 @@ void VtkPieChartActorWrap::LegendVisibilityOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -443,7 +443,7 @@ void VtkPieChartActorWrap::LegendVisibilityOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -462,7 +462,7 @@ void VtkPieChartActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkPieChartActorWrap::InitPtpl();
+	VtkPieChartActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -481,7 +481,7 @@ void VtkPieChartActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -576,7 +576,7 @@ void VtkPieChartActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPieChartActorWrap::InitPtpl();
+		VtkPieChartActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -598,7 +598,7 @@ void VtkPieChartActorWrap::SetInputConnection(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkPieChartActorWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +638,7 @@ void VtkPieChartActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkPieChartActorWrap::SetLabelVisibility(const Nan::FunctionCallbackInfo<v8
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkPieChartActorWrap::SetLegendVisibility(const Nan::FunctionCallbackInfo<v
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -705,7 +705,7 @@ void VtkPieChartActorWrap::SetPieceColor(const Nan::FunctionCallbackInfo<v8::Val
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -735,7 +735,7 @@ void VtkPieChartActorWrap::SetPieceColor(const Nan::FunctionCallbackInfo<v8::Val
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -752,7 +752,7 @@ void VtkPieChartActorWrap::SetPieceColor(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -780,7 +780,7 @@ void VtkPieChartActorWrap::SetPieceLabel(const Nan::FunctionCallbackInfo<v8::Val
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -802,7 +802,7 @@ void VtkPieChartActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -822,7 +822,7 @@ void VtkPieChartActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -841,7 +841,7 @@ void VtkPieChartActorWrap::SetTitleVisibility(const Nan::FunctionCallbackInfo<v8
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -858,7 +858,7 @@ void VtkPieChartActorWrap::TitleVisibilityOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -870,7 +870,7 @@ void VtkPieChartActorWrap::TitleVisibilityOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkPieChartActorWrap *wrapper = ObjectWrap::Unwrap<VtkPieChartActorWrap>(info.Holder());
 	vtkPieChartActor *native = (vtkPieChartActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

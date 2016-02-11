@@ -107,7 +107,7 @@ void VtkSCurveSplineWrap::Compute(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkSCurveSplineWrap *wrapper = ObjectWrap::Unwrap<VtkSCurveSplineWrap>(info.Holder());
 	vtkSCurveSpline *native = (vtkSCurveSpline *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -122,7 +122,7 @@ void VtkSCurveSplineWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -217,7 +217,7 @@ void VtkSCurveSplineWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSCurveSplineWrap::InitPtpl();
+	VtkSCurveSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -245,7 +245,7 @@ void VtkSCurveSplineWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSCurveSplineWrap::InitPtpl();
+		VtkSCurveSplineWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkSCurveSplineWrap::SetNodeWeight(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkSCurveSpline *native = (vtkSCurveSpline *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

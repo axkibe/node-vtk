@@ -180,7 +180,7 @@ void VtkFeatureEdgesWrap::BoundaryEdgesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -192,7 +192,7 @@ void VtkFeatureEdgesWrap::BoundaryEdgesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +204,7 @@ void VtkFeatureEdgesWrap::ColoringOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +216,7 @@ void VtkFeatureEdgesWrap::ColoringOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +228,7 @@ void VtkFeatureEdgesWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -240,7 +240,7 @@ void VtkFeatureEdgesWrap::FeatureEdgesOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +252,7 @@ void VtkFeatureEdgesWrap::FeatureEdgesOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -369,7 +369,7 @@ void VtkFeatureEdgesWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -449,7 +449,7 @@ void VtkFeatureEdgesWrap::ManifoldEdgesOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -461,7 +461,7 @@ void VtkFeatureEdgesWrap::ManifoldEdgesOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -480,7 +480,7 @@ void VtkFeatureEdgesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkFeatureEdgesWrap::InitPtpl();
+	VtkFeatureEdgesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -496,7 +496,7 @@ void VtkFeatureEdgesWrap::NonManifoldEdgesOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -508,7 +508,7 @@ void VtkFeatureEdgesWrap::NonManifoldEdgesOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFeatureEdgesWrap *wrapper = ObjectWrap::Unwrap<VtkFeatureEdgesWrap>(info.Holder());
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -532,7 +532,7 @@ void VtkFeatureEdgesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFeatureEdgesWrap::InitPtpl();
+		VtkFeatureEdgesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -553,7 +553,7 @@ void VtkFeatureEdgesWrap::SetBoundaryEdges(const Nan::FunctionCallbackInfo<v8::V
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -572,7 +572,7 @@ void VtkFeatureEdgesWrap::SetColoring(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkFeatureEdgesWrap::SetFeatureAngle(const Nan::FunctionCallbackInfo<v8::Va
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkFeatureEdgesWrap::SetFeatureEdges(const Nan::FunctionCallbackInfo<v8::Va
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkFeatureEdgesWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +649,7 @@ void VtkFeatureEdgesWrap::SetManifoldEdges(const Nan::FunctionCallbackInfo<v8::V
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +668,7 @@ void VtkFeatureEdgesWrap::SetNonManifoldEdges(const Nan::FunctionCallbackInfo<v8
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkFeatureEdgesWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackIn
 	vtkFeatureEdges *native = (vtkFeatureEdges *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

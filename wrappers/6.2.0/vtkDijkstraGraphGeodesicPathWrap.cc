@@ -160,7 +160,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetCumulativeWeights(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -184,7 +184,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetIdList(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetIdList();
-		VtkIdListWrap::InitPtpl();
+	VtkIdListWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkDijkstraGraphGeodesicPathWrap::GetRepelVertices(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetRepelVertices();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +294,7 @@ void VtkDijkstraGraphGeodesicPathWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
+	VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -310,7 +310,7 @@ void VtkDijkstraGraphGeodesicPathWrap::RepelPathFromVerticesOff(const Nan::Funct
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -322,7 +322,7 @@ void VtkDijkstraGraphGeodesicPathWrap::RepelPathFromVerticesOn(const Nan::Functi
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -346,7 +346,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
+		VtkDijkstraGraphGeodesicPathWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -367,7 +367,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SetRepelPathFromVertices(const Nan::Funct
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -387,7 +387,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SetRepelVertices(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -406,7 +406,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SetStopWhenEndReached(const Nan::Function
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -425,7 +425,7 @@ void VtkDijkstraGraphGeodesicPathWrap::SetUseScalarWeights(const Nan::FunctionCa
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -442,7 +442,7 @@ void VtkDijkstraGraphGeodesicPathWrap::StopWhenEndReachedOff(const Nan::Function
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -454,7 +454,7 @@ void VtkDijkstraGraphGeodesicPathWrap::StopWhenEndReachedOn(const Nan::FunctionC
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -466,7 +466,7 @@ void VtkDijkstraGraphGeodesicPathWrap::UseScalarWeightsOff(const Nan::FunctionCa
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -478,7 +478,7 @@ void VtkDijkstraGraphGeodesicPathWrap::UseScalarWeightsOn(const Nan::FunctionCal
 {
 	VtkDijkstraGraphGeodesicPathWrap *wrapper = ObjectWrap::Unwrap<VtkDijkstraGraphGeodesicPathWrap>(info.Holder());
 	vtkDijkstraGraphGeodesicPath *native = (vtkDijkstraGraphGeodesicPath *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

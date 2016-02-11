@@ -38,8 +38,11 @@ class VtkChartWrap : public VtkContextItemWrap
 		static void GetBackgroundBrush(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClickActionToButton(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLegend(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderEmpty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);

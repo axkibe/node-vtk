@@ -115,7 +115,7 @@ void VtkPolyDataPainterWrap::BUILD_NORMALS(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->BUILD_NORMALS();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -138,7 +138,7 @@ void VtkPolyDataPainterWrap::DATA_ARRAY_TO_VERTEX_ATTRIBUTE(const Nan::FunctionC
 		return;
 	}
 	r = native->DATA_ARRAY_TO_VERTEX_ATTRIBUTE();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -161,7 +161,7 @@ void VtkPolyDataPainterWrap::DISABLE_SCALAR_COLOR(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->DISABLE_SCALAR_COLOR();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkPolyDataPainterWrap::GetInputAsPolyData(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetInputAsPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkPolyDataPainterWrap::GetOutputAsPolyData(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetOutputAsPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -266,7 +266,7 @@ void VtkPolyDataPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyDataPainterWrap::InitPtpl();
+	VtkPolyDataPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkPolyDataPainterWrap::SHADER_DEVICE_ADAPTOR(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->SHADER_DEVICE_ADAPTOR();
-		VtkInformationObjectBaseKeyWrap::InitPtpl();
+	VtkInformationObjectBaseKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +317,7 @@ void VtkPolyDataPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyDataPainterWrap::InitPtpl();
+		VtkPolyDataPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

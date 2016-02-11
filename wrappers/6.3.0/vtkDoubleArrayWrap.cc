@@ -59,6 +59,9 @@ void VtkDoubleArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMin", GetDataTypeValueMin);
 	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMin", GetDataTypeValueMin);
 
+	Nan::SetPrototypeMethod(tpl, "GetValueRange", GetValueRange);
+	Nan::SetPrototypeMethod(tpl, "getValueRange", GetValueRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -153,6 +156,40 @@ void VtkDoubleArrayWrap::GetDataTypeValueMin(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkDoubleArrayWrap::GetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDoubleArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info.Holder());
+	vtkDoubleArray *native = (vtkDoubleArray *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetValueRange(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkDoubleArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDoubleArrayWrap *wrapper = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info.Holder());
@@ -186,7 +223,7 @@ void VtkDoubleArrayWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -214,7 +251,7 @@ void VtkDoubleArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDoubleArrayWrap::InitPtpl();
+		VtkDoubleArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

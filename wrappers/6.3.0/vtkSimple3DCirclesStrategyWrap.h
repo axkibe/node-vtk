@@ -35,6 +35,7 @@ class VtkSimple3DCirclesStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void ForceToUseUniversalStartPointsFinderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetForceToUseUniversalStartPointsFinder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHierarchicalLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,6 +44,7 @@ class VtkSimple3DCirclesStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void GetMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumDegree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMinimumRadian(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);

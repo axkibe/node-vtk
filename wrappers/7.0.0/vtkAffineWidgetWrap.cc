@@ -105,7 +105,7 @@ void VtkAffineWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCallbac
 {
 	VtkAffineWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkAffineWidgetWrap>(info.Holder());
 	vtkAffineWidget *native = (vtkAffineWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -124,7 +124,7 @@ void VtkAffineWidgetWrap::GetAffineRepresentation(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetAffineRepresentation();
-		VtkAffineRepresentationWrap::InitPtpl();
+	VtkAffineRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkAffineWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkAffineWidgetWrap::InitPtpl();
+	VtkAffineWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkAffineWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAffineWidgetWrap::InitPtpl();
+		VtkAffineWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -232,7 +232,7 @@ void VtkAffineWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAffineWidget *native = (vtkAffineWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -252,7 +252,7 @@ void VtkAffineWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAffineRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAffineRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkAffineRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

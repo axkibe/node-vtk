@@ -110,7 +110,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::AdjustCamera(const Nan::FunctionCal
 {
 	VtkInteractorStyleMultiTouchCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleMultiTouchCameraWrap>(info.Holder());
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -179,7 +179,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::NewInstance(const Nan::FunctionCall
 		return;
 	}
 	r = native->NewInstance();
-		VtkInteractorStyleMultiTouchCameraWrap::InitPtpl();
+	VtkInteractorStyleMultiTouchCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -195,7 +195,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::OnLeftButtonDown(const Nan::Functio
 {
 	VtkInteractorStyleMultiTouchCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleMultiTouchCameraWrap>(info.Holder());
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +207,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::OnLeftButtonUp(const Nan::FunctionC
 {
 	VtkInteractorStyleMultiTouchCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleMultiTouchCameraWrap>(info.Holder());
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::OnMouseMove(const Nan::FunctionCall
 {
 	VtkInteractorStyleMultiTouchCameraWrap *wrapper = ObjectWrap::Unwrap<VtkInteractorStyleMultiTouchCameraWrap>(info.Holder());
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::SafeDownCast(const Nan::FunctionCal
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkInteractorStyleMultiTouchCameraWrap::InitPtpl();
+		VtkInteractorStyleMultiTouchCameraWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkInteractorStyleMultiTouchCameraWrap::SetMotionFactor(const Nan::Function
 	vtkInteractorStyleMultiTouchCamera *native = (vtkInteractorStyleMultiTouchCamera *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

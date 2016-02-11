@@ -283,7 +283,7 @@ void VtkImageTracerWidgetWrap::AutoCloseOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkImageTracerWidgetWrap::AutoCloseOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkImageTracerWidgetWrap::GetGlyphSource(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetGlyphSource();
-		VtkGlyphSource2DWrap::InitPtpl();
+	VtkGlyphSource2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkImageTracerWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -442,7 +442,7 @@ void VtkImageTracerWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -453,6 +453,20 @@ void VtkImageTracerWidgetWrap::GetHandlePosition(const Nan::FunctionCallbackInfo
 			);
 			return;
 		}
+		double const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetHandlePosition(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+		Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+		memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+		info.GetReturnValue().Set(at);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -468,7 +482,7 @@ void VtkImageTracerWidgetWrap::GetHandleProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,7 +575,7 @@ void VtkImageTracerWidgetWrap::GetLineProperty(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -594,7 +608,7 @@ void VtkImageTracerWidgetWrap::GetPath(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +702,7 @@ void VtkImageTracerWidgetWrap::GetSelectedHandleProperty(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -711,7 +725,7 @@ void VtkImageTracerWidgetWrap::GetSelectedLineProperty(const Nan::FunctionCallba
 		return;
 	}
 	r = native->GetSelectedLineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -741,7 +755,7 @@ void VtkImageTracerWidgetWrap::HandleLeftMouseButtonOff(const Nan::FunctionCallb
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -753,7 +767,7 @@ void VtkImageTracerWidgetWrap::HandleLeftMouseButtonOn(const Nan::FunctionCallba
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -765,7 +779,7 @@ void VtkImageTracerWidgetWrap::HandleMiddleMouseButtonOff(const Nan::FunctionCal
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -777,7 +791,7 @@ void VtkImageTracerWidgetWrap::HandleMiddleMouseButtonOn(const Nan::FunctionCall
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -789,7 +803,7 @@ void VtkImageTracerWidgetWrap::HandleRightMouseButtonOff(const Nan::FunctionCall
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -801,7 +815,7 @@ void VtkImageTracerWidgetWrap::HandleRightMouseButtonOn(const Nan::FunctionCallb
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -816,7 +830,7 @@ void VtkImageTracerWidgetWrap::InitializeHandles(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -833,7 +847,7 @@ void VtkImageTracerWidgetWrap::InteractionOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -845,7 +859,7 @@ void VtkImageTracerWidgetWrap::InteractionOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -900,7 +914,7 @@ void VtkImageTracerWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageTracerWidgetWrap::InitPtpl();
+	VtkImageTracerWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -926,7 +940,7 @@ void VtkImageTracerWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::V
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -955,7 +969,7 @@ void VtkImageTracerWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::V
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -977,7 +991,7 @@ void VtkImageTracerWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::V
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -997,7 +1011,7 @@ void VtkImageTracerWidgetWrap::PlaceWidget(const Nan::FunctionCallbackInfo<v8::V
 			}
 		}
 	}
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1009,7 +1023,7 @@ void VtkImageTracerWidgetWrap::ProjectToPlaneOff(const Nan::FunctionCallbackInfo
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1021,7 +1035,7 @@ void VtkImageTracerWidgetWrap::ProjectToPlaneOn(const Nan::FunctionCallbackInfo<
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1045,7 +1059,7 @@ void VtkImageTracerWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageTracerWidgetWrap::InitPtpl();
+		VtkImageTracerWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1066,7 +1080,7 @@ void VtkImageTracerWidgetWrap::SetAutoClose(const Nan::FunctionCallbackInfo<v8::
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1085,7 +1099,7 @@ void VtkImageTracerWidgetWrap::SetCaptureRadius(const Nan::FunctionCallbackInfo<
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1104,7 +1118,7 @@ void VtkImageTracerWidgetWrap::SetEnabled(const Nan::FunctionCallbackInfo<v8::Va
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1123,7 +1137,7 @@ void VtkImageTracerWidgetWrap::SetHandleLeftMouseButton(const Nan::FunctionCallb
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1142,7 +1156,7 @@ void VtkImageTracerWidgetWrap::SetHandleMiddleMouseButton(const Nan::FunctionCal
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1171,7 +1185,7 @@ void VtkImageTracerWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1201,7 +1215,7 @@ void VtkImageTracerWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1218,7 +1232,7 @@ void VtkImageTracerWidgetWrap::SetHandlePosition(const Nan::FunctionCallbackInfo
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1244,7 +1258,7 @@ void VtkImageTracerWidgetWrap::SetHandleProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1263,7 +1277,7 @@ void VtkImageTracerWidgetWrap::SetHandleRightMouseButton(const Nan::FunctionCall
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1282,7 +1296,7 @@ void VtkImageTracerWidgetWrap::SetImageSnapType(const Nan::FunctionCallbackInfo<
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1301,7 +1315,7 @@ void VtkImageTracerWidgetWrap::SetInteraction(const Nan::FunctionCallbackInfo<v8
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1321,7 +1335,7 @@ void VtkImageTracerWidgetWrap::SetLineProperty(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1340,7 +1354,7 @@ void VtkImageTracerWidgetWrap::SetProjectToPlane(const Nan::FunctionCallbackInfo
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1359,7 +1373,7 @@ void VtkImageTracerWidgetWrap::SetProjectionNormal(const Nan::FunctionCallbackIn
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1376,7 +1390,7 @@ void VtkImageTracerWidgetWrap::SetProjectionNormalToXAxes(const Nan::FunctionCal
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1388,7 +1402,7 @@ void VtkImageTracerWidgetWrap::SetProjectionNormalToYAxes(const Nan::FunctionCal
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1400,7 +1414,7 @@ void VtkImageTracerWidgetWrap::SetProjectionNormalToZAxes(const Nan::FunctionCal
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1414,7 +1428,7 @@ void VtkImageTracerWidgetWrap::SetProjectionPosition(const Nan::FunctionCallback
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1434,7 +1448,7 @@ void VtkImageTracerWidgetWrap::SetProp(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1454,7 +1468,7 @@ void VtkImageTracerWidgetWrap::SetSelectedHandleProperty(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1474,7 +1488,7 @@ void VtkImageTracerWidgetWrap::SetSelectedLineProperty(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1493,7 +1507,7 @@ void VtkImageTracerWidgetWrap::SetSnapToImage(const Nan::FunctionCallbackInfo<v8
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1513,7 +1527,7 @@ void VtkImageTracerWidgetWrap::SetViewProp(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1530,7 +1544,7 @@ void VtkImageTracerWidgetWrap::SnapToImageOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1542,7 +1556,7 @@ void VtkImageTracerWidgetWrap::SnapToImageOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkImageTracerWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkImageTracerWidgetWrap>(info.Holder());
 	vtkImageTracerWidget *native = (vtkImageTracerWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

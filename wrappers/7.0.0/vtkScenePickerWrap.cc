@@ -114,7 +114,7 @@ void VtkScenePickerWrap::EnableVertexPickingOff(const Nan::FunctionCallbackInfo<
 {
 	VtkScenePickerWrap *wrapper = ObjectWrap::Unwrap<VtkScenePickerWrap>(info.Holder());
 	vtkScenePicker *native = (vtkScenePicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkScenePickerWrap::EnableVertexPickingOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkScenePickerWrap *wrapper = ObjectWrap::Unwrap<VtkScenePickerWrap>(info.Holder());
 	vtkScenePicker *native = (vtkScenePicker *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkScenePickerWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkScenePickerWrap::GetViewProp(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetViewProp(
 			(int *)(a0->Buffer()->GetContents().Data())
 		);
-			VtkPropWrap::InitPtpl();
+		VtkPropWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkScenePickerWrap::GetViewProp(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->GetViewProp(
 			b0
 		);
-			VtkPropWrap::InitPtpl();
+		VtkPropWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -296,7 +296,7 @@ void VtkScenePickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkScenePickerWrap::InitPtpl();
+	VtkScenePickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -324,7 +324,7 @@ void VtkScenePickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkScenePickerWrap::InitPtpl();
+		VtkScenePickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -345,7 +345,7 @@ void VtkScenePickerWrap::SetEnableVertexPicking(const Nan::FunctionCallbackInfo<
 	vtkScenePicker *native = (vtkScenePicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -365,7 +365,7 @@ void VtkScenePickerWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>&
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

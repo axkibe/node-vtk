@@ -180,7 +180,7 @@ void VtkGeoAdaptiveArcsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkGeoAdaptiveArcsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoAdaptiveArcsWrap::InitPtpl();
+	VtkGeoAdaptiveArcsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkGeoAdaptiveArcsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoAdaptiveArcsWrap::InitPtpl();
+		VtkGeoAdaptiveArcsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkGeoAdaptiveArcsWrap::SetGlobeRadius(const Nan::FunctionCallbackInfo<v8::
 	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkGeoAdaptiveArcsWrap::SetMaximumPixelSeparation(const Nan::FunctionCallba
 	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -312,7 +312,7 @@ void VtkGeoAdaptiveArcsWrap::SetMinimumPixelSeparation(const Nan::FunctionCallba
 	vtkGeoAdaptiveArcs *native = (vtkGeoAdaptiveArcs *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -332,7 +332,7 @@ void VtkGeoAdaptiveArcsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

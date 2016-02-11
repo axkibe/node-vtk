@@ -115,7 +115,7 @@ void VtkPassThroughLayoutStrategyWrap::Initialize(const Nan::FunctionCallbackInf
 {
 	VtkPassThroughLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughLayoutStrategyWrap>(info.Holder());
 	vtkPassThroughLayoutStrategy *native = (vtkPassThroughLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -163,7 +163,7 @@ void VtkPassThroughLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPassThroughLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkPassThroughLayoutStrategyWrap>(info.Holder());
 	vtkPassThroughLayoutStrategy *native = (vtkPassThroughLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkPassThroughLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkPassThroughLayoutStrategyWrap::InitPtpl();
+	VtkPassThroughLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkPassThroughLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPassThroughLayoutStrategyWrap::InitPtpl();
+		VtkPassThroughLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

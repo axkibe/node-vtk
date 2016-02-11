@@ -62,6 +62,12 @@ void VtkXOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEventPending", GetEventPending);
 	Nan::SetPrototypeMethod(tpl, "getEventPending", GetEventPending);
 
+	Nan::SetPrototypeMethod(tpl, "GetPosition", GetPosition);
+	Nan::SetPrototypeMethod(tpl, "getPosition", GetPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetScreenSize", GetScreenSize);
+	Nan::SetPrototypeMethod(tpl, "getScreenSize", GetScreenSize);
+
 	Nan::SetPrototypeMethod(tpl, "HideCursor", HideCursor);
 	Nan::SetPrototypeMethod(tpl, "hideCursor", HideCursor);
 
@@ -179,7 +185,7 @@ void VtkXOpenGLRenderWindowWrap::Finalize(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -191,7 +197,7 @@ void VtkXOpenGLRenderWindowWrap::Frame(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,11 +247,45 @@ void VtkXOpenGLRenderWindowWrap::GetEventPending(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkXOpenGLRenderWindowWrap::GetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
+	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkXOpenGLRenderWindowWrap::GetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
+	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetScreenSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkXOpenGLRenderWindowWrap::HideCursor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -257,7 +297,7 @@ void VtkXOpenGLRenderWindowWrap::Initialize(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +373,7 @@ void VtkXOpenGLRenderWindowWrap::MakeCurrent(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -352,7 +392,7 @@ void VtkXOpenGLRenderWindowWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkXOpenGLRenderWindowWrap::InitPtpl();
+	VtkXOpenGLRenderWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -368,7 +408,7 @@ void VtkXOpenGLRenderWindowWrap::PrefFullScreen(const Nan::FunctionCallbackInfo<
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +420,7 @@ void VtkXOpenGLRenderWindowWrap::Render(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -418,7 +458,7 @@ void VtkXOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXOpenGLRenderWindowWrap::InitPtpl();
+		VtkXOpenGLRenderWindowWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -439,7 +479,7 @@ void VtkXOpenGLRenderWindowWrap::SetCurrentCursor(const Nan::FunctionCallbackInf
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -456,7 +496,7 @@ void VtkXOpenGLRenderWindowWrap::SetForceMakeCurrent(const Nan::FunctionCallback
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -470,7 +510,7 @@ void VtkXOpenGLRenderWindowWrap::SetFullScreen(const Nan::FunctionCallbackInfo<v
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +530,7 @@ void VtkXOpenGLRenderWindowWrap::SetNextWindowInfo(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +549,7 @@ void VtkXOpenGLRenderWindowWrap::SetOffScreenRendering(const Nan::FunctionCallba
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +569,7 @@ void VtkXOpenGLRenderWindowWrap::SetParentInfo(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -556,7 +596,7 @@ void VtkXOpenGLRenderWindowWrap::SetPosition(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +625,7 @@ void VtkXOpenGLRenderWindowWrap::SetPosition(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -599,7 +639,7 @@ void VtkXOpenGLRenderWindowWrap::SetPosition(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -628,7 +668,7 @@ void VtkXOpenGLRenderWindowWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +697,7 @@ void VtkXOpenGLRenderWindowWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -671,7 +711,7 @@ void VtkXOpenGLRenderWindowWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -692,7 +732,7 @@ void VtkXOpenGLRenderWindowWrap::SetStereoCapableWindow(const Nan::FunctionCallb
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -712,7 +752,7 @@ void VtkXOpenGLRenderWindowWrap::SetWindowInfo(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -732,7 +772,7 @@ void VtkXOpenGLRenderWindowWrap::SetWindowName(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -749,7 +789,7 @@ void VtkXOpenGLRenderWindowWrap::ShowCursor(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -761,7 +801,7 @@ void VtkXOpenGLRenderWindowWrap::Start(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -787,7 +827,7 @@ void VtkXOpenGLRenderWindowWrap::WindowInitialize(const Nan::FunctionCallbackInf
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -799,7 +839,7 @@ void VtkXOpenGLRenderWindowWrap::WindowRemap(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkXOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkXOpenGLRenderWindowWrap>(info.Holder());
 	vtkXOpenGLRenderWindow *native = (vtkXOpenGLRenderWindow *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

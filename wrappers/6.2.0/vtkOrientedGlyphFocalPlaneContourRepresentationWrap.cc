@@ -159,7 +159,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::BuildRepresentation(co
 {
 	VtkOrientedGlyphFocalPlaneContourRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkOrientedGlyphFocalPlaneContourRepresentationWrap>(info.Holder());
 	vtkOrientedGlyphFocalPlaneContourRepresentation *native = (vtkOrientedGlyphFocalPlaneContourRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -207,7 +207,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActiveCursorShape(c
 		return;
 	}
 	r = native->GetActiveCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActiveProperty(cons
 		return;
 	}
 	r = native->GetActiveProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -249,7 +249,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetActors2D(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -299,7 +299,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourPlaneDirecti
 		r = native->GetContourPlaneDirectionCosines(
 			(double *)(a0->Buffer()->GetContents().Data())
 		);
-			VtkMatrix4x4Wrap::InitPtpl();
+		VtkMatrix4x4Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -339,7 +339,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourPlaneDirecti
 		r = native->GetContourPlaneDirectionCosines(
 			b0
 		);
-			VtkMatrix4x4Wrap::InitPtpl();
+		VtkMatrix4x4Wrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -365,7 +365,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetContourRepresentati
 		return;
 	}
 	r = native->GetContourRepresentationAsPolyData();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetCursorShape(const N
 		return;
 	}
 	r = native->GetCursorShape();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -411,7 +411,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetLinesProperty(const
 		return;
 	}
 	r = native->GetLinesProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::GetProperty(const Nan:
 		return;
 	}
 	r = native->GetProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -493,7 +493,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::NewInstance(const Nan:
 		return;
 	}
 	r = native->NewInstance();
-		VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
+	VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -512,7 +512,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::ReleaseGraphicsResourc
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -607,7 +607,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SafeDownCast(const Nan
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
+		VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -629,7 +629,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetActiveCursorShape(c
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -649,7 +649,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetCursorShape(const N
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -669,7 +669,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::SetRenderer(const Nan:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +696,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::StartWidgetInteraction
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +725,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::StartWidgetInteraction
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -752,7 +752,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::WidgetInteraction(cons
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -781,7 +781,7 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::WidgetInteraction(cons
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

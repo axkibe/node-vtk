@@ -32,6 +32,7 @@ class VtkSelectVisiblePointsWrap : public VtkPolyDataAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectInvisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

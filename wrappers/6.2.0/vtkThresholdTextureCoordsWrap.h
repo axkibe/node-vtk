@@ -30,7 +30,9 @@ class VtkThresholdTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInTextureCoord(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLowerThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutTextureCoord(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureDimensionMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureDimensionMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -102,7 +102,7 @@ void VtkTensorProbeWidgetWrap::CreateDefaultRepresentation(const Nan::FunctionCa
 {
 	VtkTensorProbeWidgetWrap *wrapper = ObjectWrap::Unwrap<VtkTensorProbeWidgetWrap>(info.Holder());
 	vtkTensorProbeWidget *native = (vtkTensorProbeWidget *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -135,7 +135,7 @@ void VtkTensorProbeWidgetWrap::GetTensorProbeRepresentation(const Nan::FunctionC
 		return;
 	}
 	r = native->GetTensorProbeRepresentation();
-		VtkTensorProbeRepresentationWrap::InitPtpl();
+	VtkTensorProbeRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -180,7 +180,7 @@ void VtkTensorProbeWidgetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkTensorProbeWidgetWrap::InitPtpl();
+	VtkTensorProbeWidgetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkTensorProbeWidgetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTensorProbeWidgetWrap::InitPtpl();
+		VtkTensorProbeWidgetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -230,7 +230,7 @@ void VtkTensorProbeWidgetWrap::SetRepresentation(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTensorProbeRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTensorProbeRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkTensorProbeRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

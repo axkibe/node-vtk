@@ -30,8 +30,10 @@ class VtkInteractorStyleRubberBand2DWrap : public VtkInteractorStyleWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEndPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnLeftButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);

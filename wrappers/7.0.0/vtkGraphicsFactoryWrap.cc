@@ -121,7 +121,7 @@ void VtkGraphicsFactoryWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::
 		r = native->CreateInstance(
 			*a0
 		);
-			VtkObjectWrap::InitPtpl();
+		VtkObjectWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -225,7 +225,7 @@ void VtkGraphicsFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphicsFactoryWrap::InitPtpl();
+	VtkGraphicsFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkGraphicsFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphicsFactoryWrap::InitPtpl();
+		VtkGraphicsFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -274,7 +274,7 @@ void VtkGraphicsFactoryWrap::SetOffScreenOnlyMode(const Nan::FunctionCallbackInf
 	vtkGraphicsFactory *native = (vtkGraphicsFactory *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkGraphicsFactoryWrap::SetUseMesaClasses(const Nan::FunctionCallbackInfo<v
 	vtkGraphicsFactory *native = (vtkGraphicsFactory *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

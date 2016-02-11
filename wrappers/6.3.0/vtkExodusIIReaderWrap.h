@@ -115,6 +115,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetMaterialArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModeShapeTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModeShapesRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeMapArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeMapArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeSetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -192,6 +193,7 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeSeriesData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVariableID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXMLFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);

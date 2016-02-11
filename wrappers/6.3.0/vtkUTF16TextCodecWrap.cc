@@ -180,7 +180,7 @@ void VtkUTF16TextCodecWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkUTF16TextCodecWrap::InitPtpl();
+	VtkUTF16TextCodecWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -208,7 +208,7 @@ void VtkUTF16TextCodecWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUTF16TextCodecWrap::InitPtpl();
+		VtkUTF16TextCodecWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -229,7 +229,7 @@ void VtkUTF16TextCodecWrap::SetBigEndian(const Nan::FunctionCallbackInfo<v8::Val
 	vtkUTF16TextCodec *native = (vtkUTF16TextCodec *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

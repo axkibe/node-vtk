@@ -161,7 +161,7 @@ void VtkCellCentersWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkCellCentersWrap::InitPtpl();
+	VtkCellCentersWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +189,7 @@ void VtkCellCentersWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCellCentersWrap::InitPtpl();
+		VtkCellCentersWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkCellCentersWrap::SetVertexCells(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkCellCenters *native = (vtkCellCenters *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -227,7 +227,7 @@ void VtkCellCentersWrap::VertexCellsOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCellCentersWrap *wrapper = ObjectWrap::Unwrap<VtkCellCentersWrap>(info.Holder());
 	vtkCellCenters *native = (vtkCellCenters *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkCellCentersWrap::VertexCellsOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkCellCentersWrap *wrapper = ObjectWrap::Unwrap<VtkCellCentersWrap>(info.Holder());
 	vtkCellCenters *native = (vtkCellCenters *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

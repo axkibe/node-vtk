@@ -79,6 +79,9 @@ void VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetReslicePlaneNormal", GetReslicePlaneNormal);
 	Nan::SetPrototypeMethod(tpl, "getReslicePlaneNormal", GetReslicePlaneNormal);
 
+	Nan::SetPrototypeMethod(tpl, "GetSliceBounds", GetSliceBounds);
+	Nan::SetPrototypeMethod(tpl, "getSliceBounds", GetSliceBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetThickSlabAxis1", GetThickSlabAxis1);
 	Nan::SetPrototypeMethod(tpl, "getThickSlabAxis1", GetThickSlabAxis1);
 
@@ -180,7 +183,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetCenterlineAxis1(const Nan::Functi
 		return;
 	}
 	r = native->GetCenterlineAxis1();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +206,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetCenterlineAxis2(const Nan::Functi
 		return;
 	}
 	r = native->GetCenterlineAxis2();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -289,7 +292,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetResliceCursor(const Nan::Function
 		return;
 	}
 	r = native->GetResliceCursor();
-		VtkResliceCursorWrap::InitPtpl();
+	VtkResliceCursorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -315,6 +318,23 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetReslicePlaneNormal(const Nan::Fun
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkResliceCursorPolyDataAlgorithmWrap::GetSliceBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
+	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSliceBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkResliceCursorPolyDataAlgorithmWrap::GetThickSlabAxis1(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
@@ -326,7 +346,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetThickSlabAxis1(const Nan::Functio
 		return;
 	}
 	r = native->GetThickSlabAxis1();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -349,7 +369,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::GetThickSlabAxis2(const Nan::Functio
 		return;
 	}
 	r = native->GetThickSlabAxis2();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -394,7 +414,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
+	VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,7 +442,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
+		VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -444,7 +464,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetResliceCursor(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkResliceCursorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkResliceCursorWrap *a0 = ObjectWrap::Unwrap<VtkResliceCursorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +483,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetReslicePlaneNormal(const Nan::Fun
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -480,7 +500,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetReslicePlaneNormalToXAxis(const N
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -492,7 +512,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetReslicePlaneNormalToYAxis(const N
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -504,7 +524,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetReslicePlaneNormalToZAxis(const N
 {
 	VtkResliceCursorPolyDataAlgorithmWrap *wrapper = ObjectWrap::Unwrap<VtkResliceCursorPolyDataAlgorithmWrap>(info.Holder());
 	vtkResliceCursorPolyDataAlgorithm *native = (vtkResliceCursorPolyDataAlgorithm *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -526,7 +546,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetSliceBounds(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -555,7 +575,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetSliceBounds(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -577,7 +597,7 @@ void VtkResliceCursorPolyDataAlgorithmWrap::SetSliceBounds(const Nan::FunctionCa
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

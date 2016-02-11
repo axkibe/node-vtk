@@ -66,8 +66,14 @@ void VtkCursor3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFocalPoint", GetFocalPoint);
+	Nan::SetPrototypeMethod(tpl, "getFocalPoint", GetFocalPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetFocus", GetFocus);
 	Nan::SetPrototypeMethod(tpl, "getFocus", GetFocus);
+
+	Nan::SetPrototypeMethod(tpl, "GetModelBounds", GetModelBounds);
+	Nan::SetPrototypeMethod(tpl, "getModelBounds", GetModelBounds);
 
 	Nan::SetPrototypeMethod(tpl, "GetOutline", GetOutline);
 	Nan::SetPrototypeMethod(tpl, "getOutline", GetOutline);
@@ -192,7 +198,7 @@ void VtkCursor3DWrap::AllOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -204,7 +210,7 @@ void VtkCursor3DWrap::AllOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -216,7 +222,7 @@ void VtkCursor3DWrap::AxesOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +234,7 @@ void VtkCursor3DWrap::AxesOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -264,6 +270,23 @@ void VtkCursor3DWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkCursor3DWrap::GetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
+	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFocalPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCursor3DWrap::GetFocus(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
@@ -275,7 +298,7 @@ void VtkCursor3DWrap::GetFocus(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetFocus();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -285,6 +308,23 @@ void VtkCursor3DWrap::GetFocus(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkCursor3DWrap::GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
+	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModelBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkCursor3DWrap::GetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -404,7 +444,7 @@ void VtkCursor3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->NewInstance();
-		VtkCursor3DWrap::InitPtpl();
+	VtkCursor3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -420,7 +460,7 @@ void VtkCursor3DWrap::OutlineOff(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +472,7 @@ void VtkCursor3DWrap::OutlineOn(const Nan::FunctionCallbackInfo<v8::Value>& info
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +496,7 @@ void VtkCursor3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCursor3DWrap::InitPtpl();
+		VtkCursor3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -477,7 +517,7 @@ void VtkCursor3DWrap::SetAxes(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -504,7 +544,7 @@ void VtkCursor3DWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -533,7 +573,7 @@ void VtkCursor3DWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -549,7 +589,7 @@ void VtkCursor3DWrap::SetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& 
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -580,7 +620,7 @@ void VtkCursor3DWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -609,7 +649,7 @@ void VtkCursor3DWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +671,7 @@ void VtkCursor3DWrap::SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>&
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -660,7 +700,7 @@ void VtkCursor3DWrap::SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -679,7 +719,7 @@ void VtkCursor3DWrap::SetTranslationMode(const Nan::FunctionCallbackInfo<v8::Val
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -698,7 +738,7 @@ void VtkCursor3DWrap::SetWrap(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -717,7 +757,7 @@ void VtkCursor3DWrap::SetXShadows(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -736,7 +776,7 @@ void VtkCursor3DWrap::SetYShadows(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -755,7 +795,7 @@ void VtkCursor3DWrap::SetZShadows(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -772,7 +812,7 @@ void VtkCursor3DWrap::TranslationModeOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -784,7 +824,7 @@ void VtkCursor3DWrap::TranslationModeOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -796,7 +836,7 @@ void VtkCursor3DWrap::WrapOff(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -808,7 +848,7 @@ void VtkCursor3DWrap::WrapOn(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -820,7 +860,7 @@ void VtkCursor3DWrap::XShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -832,7 +872,7 @@ void VtkCursor3DWrap::XShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -844,7 +884,7 @@ void VtkCursor3DWrap::YShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -856,7 +896,7 @@ void VtkCursor3DWrap::YShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -868,7 +908,7 @@ void VtkCursor3DWrap::ZShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -880,7 +920,7 @@ void VtkCursor3DWrap::ZShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkCursor3DWrap *wrapper = ObjectWrap::Unwrap<VtkCursor3DWrap>(info.Holder());
 	vtkCursor3D *native = (vtkCursor3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

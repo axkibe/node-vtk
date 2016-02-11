@@ -132,7 +132,7 @@ void VtkImageSeparableConvolutionWrap::GetXKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetXKernel();
-		VtkFloatArrayWrap::InitPtpl();
+	VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -155,7 +155,7 @@ void VtkImageSeparableConvolutionWrap::GetYKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetYKernel();
-		VtkFloatArrayWrap::InitPtpl();
+	VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -178,7 +178,7 @@ void VtkImageSeparableConvolutionWrap::GetZKernel(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetZKernel();
-		VtkFloatArrayWrap::InitPtpl();
+	VtkFloatArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -223,7 +223,7 @@ void VtkImageSeparableConvolutionWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageSeparableConvolutionWrap::InitPtpl();
+	VtkImageSeparableConvolutionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -251,7 +251,7 @@ void VtkImageSeparableConvolutionWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageSeparableConvolutionWrap::InitPtpl();
+		VtkImageSeparableConvolutionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -273,7 +273,7 @@ void VtkImageSeparableConvolutionWrap::SetXKernel(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -293,7 +293,7 @@ void VtkImageSeparableConvolutionWrap::SetYKernel(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -313,7 +313,7 @@ void VtkImageSeparableConvolutionWrap::SetZKernel(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkFloatArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkFloatArrayWrap *a0 = ObjectWrap::Unwrap<VtkFloatArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

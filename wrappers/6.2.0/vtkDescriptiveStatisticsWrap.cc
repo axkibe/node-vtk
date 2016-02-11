@@ -151,7 +151,7 @@ void VtkDescriptiveStatisticsWrap::Aggregate(const Nan::FunctionCallbackInfo<v8:
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMultiBlockDataSetWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkMultiBlockDataSetWrap *a1 = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -170,7 +170,7 @@ void VtkDescriptiveStatisticsWrap::G1SkewnessOff(const Nan::FunctionCallbackInfo
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -182,7 +182,7 @@ void VtkDescriptiveStatisticsWrap::G1SkewnessOn(const Nan::FunctionCallbackInfo<
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkDescriptiveStatisticsWrap::G2KurtosisOff(const Nan::FunctionCallbackInfo
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -206,7 +206,7 @@ void VtkDescriptiveStatisticsWrap::G2KurtosisOn(const Nan::FunctionCallbackInfo<
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +317,7 @@ void VtkDescriptiveStatisticsWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkDescriptiveStatisticsWrap::InitPtpl();
+	VtkDescriptiveStatisticsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -345,7 +345,7 @@ void VtkDescriptiveStatisticsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDescriptiveStatisticsWrap::InitPtpl();
+		VtkDescriptiveStatisticsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkDescriptiveStatisticsWrap::SetG1Skewness(const Nan::FunctionCallbackInfo
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -385,7 +385,7 @@ void VtkDescriptiveStatisticsWrap::SetG2Kurtosis(const Nan::FunctionCallbackInfo
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +404,7 @@ void VtkDescriptiveStatisticsWrap::SetSignedDeviations(const Nan::FunctionCallba
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -423,7 +423,7 @@ void VtkDescriptiveStatisticsWrap::SetUnbiasedVariance(const Nan::FunctionCallba
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -440,7 +440,7 @@ void VtkDescriptiveStatisticsWrap::SignedDeviationsOff(const Nan::FunctionCallba
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -452,7 +452,7 @@ void VtkDescriptiveStatisticsWrap::SignedDeviationsOn(const Nan::FunctionCallbac
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -464,7 +464,7 @@ void VtkDescriptiveStatisticsWrap::UnbiasedVarianceOff(const Nan::FunctionCallba
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -476,7 +476,7 @@ void VtkDescriptiveStatisticsWrap::UnbiasedVarianceOn(const Nan::FunctionCallbac
 {
 	VtkDescriptiveStatisticsWrap *wrapper = ObjectWrap::Unwrap<VtkDescriptiveStatisticsWrap>(info.Holder());
 	vtkDescriptiveStatistics *native = (vtkDescriptiveStatistics *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

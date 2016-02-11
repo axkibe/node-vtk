@@ -41,6 +41,7 @@ class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConvolutionKernel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDateAsLocale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDirectionCosine(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEchoTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEchoTrainLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExposure(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +60,7 @@ class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 		static void GetManufacturer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetManufacturerModelName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetModality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNthWindowLevelPreset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNthWindowLevelPresetComment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfWindowLevelPresets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info);

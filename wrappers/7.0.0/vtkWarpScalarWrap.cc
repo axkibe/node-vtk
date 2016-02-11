@@ -54,6 +54,9 @@ void VtkWarpScalarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNormal", GetNormal);
+	Nan::SetPrototypeMethod(tpl, "getNormal", GetNormal);
+
 	Nan::SetPrototypeMethod(tpl, "GetScaleFactor", GetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "getScaleFactor", GetScaleFactor);
 
@@ -165,6 +168,23 @@ void VtkWarpScalarWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkWarpScalarWrap::GetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
+	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNormal();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkWarpScalarWrap::GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
@@ -240,7 +260,7 @@ void VtkWarpScalarWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkWarpScalarWrap::InitPtpl();
+	VtkWarpScalarWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -268,7 +288,7 @@ void VtkWarpScalarWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWarpScalarWrap::InitPtpl();
+		VtkWarpScalarWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -297,7 +317,7 @@ void VtkWarpScalarWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +346,7 @@ void VtkWarpScalarWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +362,7 @@ void VtkWarpScalarWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& in
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -365,7 +385,7 @@ void VtkWarpScalarWrap::SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -384,7 +404,7 @@ void VtkWarpScalarWrap::SetUseNormal(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +423,7 @@ void VtkWarpScalarWrap::SetXYPlane(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -420,7 +440,7 @@ void VtkWarpScalarWrap::UseNormalOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +452,7 @@ void VtkWarpScalarWrap::UseNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -444,7 +464,7 @@ void VtkWarpScalarWrap::XYPlaneOff(const Nan::FunctionCallbackInfo<v8::Value>& i
 {
 	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -456,7 +476,7 @@ void VtkWarpScalarWrap::XYPlaneOn(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkWarpScalarWrap *wrapper = ObjectWrap::Unwrap<VtkWarpScalarWrap>(info.Holder());
 	vtkWarpScalar *native = (vtkWarpScalar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

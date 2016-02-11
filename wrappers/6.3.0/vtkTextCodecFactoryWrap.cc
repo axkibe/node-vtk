@@ -113,7 +113,7 @@ void VtkTextCodecFactoryWrap::CodecForName(const Nan::FunctionCallbackInfo<v8::V
 		r = native->CodecForName(
 			*a0
 		);
-			VtkTextCodecWrap::InitPtpl();
+		VtkTextCodecWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -146,7 +146,7 @@ void VtkTextCodecFactoryWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkTextCodecFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkTextCodecFactoryWrap>(info.Holder());
 	vtkTextCodecFactory *native = (vtkTextCodecFactory *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -187,7 +187,7 @@ void VtkTextCodecFactoryWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextCodecFactoryWrap::InitPtpl();
+	VtkTextCodecFactoryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkTextCodecFactoryWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextCodecFactoryWrap::InitPtpl();
+		VtkTextCodecFactoryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -234,7 +234,7 @@ void VtkTextCodecFactoryWrap::UnRegisterAllCreateCallbacks(const Nan::FunctionCa
 {
 	VtkTextCodecFactoryWrap *wrapper = ObjectWrap::Unwrap<VtkTextCodecFactoryWrap>(info.Holder());
 	vtkTextCodecFactory *native = (vtkTextCodecFactory *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

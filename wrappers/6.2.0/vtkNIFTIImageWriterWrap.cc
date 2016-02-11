@@ -189,7 +189,7 @@ void VtkNIFTIImageWriterWrap::GetNIFTIHeader(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetNIFTIHeader();
-		VtkNIFTIImageHeaderWrap::InitPtpl();
+	VtkNIFTIImageHeaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -240,7 +240,7 @@ void VtkNIFTIImageWriterWrap::GetQFormMatrix(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetQFormMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkNIFTIImageWriterWrap::GetSFormMatrix(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetSFormMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkNIFTIImageWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkNIFTIImageWriterWrap::InitPtpl();
+	VtkNIFTIImageWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -392,7 +392,7 @@ void VtkNIFTIImageWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNIFTIImageWriterWrap::InitPtpl();
+		VtkNIFTIImageWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -414,7 +414,7 @@ void VtkNIFTIImageWriterWrap::SetDescription(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -434,7 +434,7 @@ void VtkNIFTIImageWriterWrap::SetNIFTIHeader(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkNIFTIImageHeaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkNIFTIImageHeaderWrap *a0 = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -453,7 +453,7 @@ void VtkNIFTIImageWriterWrap::SetNIFTIVersion(const Nan::FunctionCallbackInfo<v8
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkNIFTIImageWriterWrap::SetQFac(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +492,7 @@ void VtkNIFTIImageWriterWrap::SetQFormMatrix(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkNIFTIImageWriterWrap::SetRescaleIntercept(const Nan::FunctionCallbackInf
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -530,7 +530,7 @@ void VtkNIFTIImageWriterWrap::SetRescaleSlope(const Nan::FunctionCallbackInfo<v8
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -550,7 +550,7 @@ void VtkNIFTIImageWriterWrap::SetSFormMatrix(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -569,7 +569,7 @@ void VtkNIFTIImageWriterWrap::SetTimeDimension(const Nan::FunctionCallbackInfo<v
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -588,7 +588,7 @@ void VtkNIFTIImageWriterWrap::SetTimeSpacing(const Nan::FunctionCallbackInfo<v8:
 	vtkNIFTIImageWriter *native = (vtkNIFTIImageWriter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

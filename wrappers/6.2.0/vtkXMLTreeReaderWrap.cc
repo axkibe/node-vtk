@@ -176,7 +176,7 @@ void VtkXMLTreeReaderWrap::GenerateEdgePedigreeIdsOff(const Nan::FunctionCallbac
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -188,7 +188,7 @@ void VtkXMLTreeReaderWrap::GenerateEdgePedigreeIdsOn(const Nan::FunctionCallback
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -200,7 +200,7 @@ void VtkXMLTreeReaderWrap::GenerateVertexPedigreeIdsOff(const Nan::FunctionCallb
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -212,7 +212,7 @@ void VtkXMLTreeReaderWrap::GenerateVertexPedigreeIdsOn(const Nan::FunctionCallba
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -386,7 +386,7 @@ void VtkXMLTreeReaderWrap::MaskArraysOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -398,7 +398,7 @@ void VtkXMLTreeReaderWrap::MaskArraysOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -417,7 +417,7 @@ void VtkXMLTreeReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkXMLTreeReaderWrap::InitPtpl();
+	VtkXMLTreeReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -433,7 +433,7 @@ void VtkXMLTreeReaderWrap::ReadCharDataOff(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -445,7 +445,7 @@ void VtkXMLTreeReaderWrap::ReadCharDataOn(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -457,7 +457,7 @@ void VtkXMLTreeReaderWrap::ReadTagNameOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -469,7 +469,7 @@ void VtkXMLTreeReaderWrap::ReadTagNameOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkXMLTreeReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLTreeReaderWrap>(info.Holder());
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -493,7 +493,7 @@ void VtkXMLTreeReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkXMLTreeReaderWrap::InitPtpl();
+		VtkXMLTreeReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -515,7 +515,7 @@ void VtkXMLTreeReaderWrap::SetEdgePedigreeIdArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -535,7 +535,7 @@ void VtkXMLTreeReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -554,7 +554,7 @@ void VtkXMLTreeReaderWrap::SetGenerateEdgePedigreeIds(const Nan::FunctionCallbac
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -573,7 +573,7 @@ void VtkXMLTreeReaderWrap::SetGenerateVertexPedigreeIds(const Nan::FunctionCallb
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -592,7 +592,7 @@ void VtkXMLTreeReaderWrap::SetMaskArrays(const Nan::FunctionCallbackInfo<v8::Val
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkXMLTreeReaderWrap::SetReadCharData(const Nan::FunctionCallbackInfo<v8::V
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +630,7 @@ void VtkXMLTreeReaderWrap::SetReadTagName(const Nan::FunctionCallbackInfo<v8::Va
 	vtkXMLTreeReader *native = (vtkXMLTreeReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkXMLTreeReaderWrap::SetVertexPedigreeIdArrayName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -670,7 +670,7 @@ void VtkXMLTreeReaderWrap::SetXMLString(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

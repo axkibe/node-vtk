@@ -182,7 +182,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::Layout(const Nan::FunctionCallba
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -210,7 +210,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkCirclePackFrontChainLayoutStrategyWrap::InitPtpl();
+	VtkCirclePackFrontChainLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -238,7 +238,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCirclePackFrontChainLayoutStrategyWrap::InitPtpl();
+		VtkCirclePackFrontChainLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -259,7 +259,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::SetHeight(const Nan::FunctionCal
 	vtkCirclePackFrontChainLayoutStrategy *native = (vtkCirclePackFrontChainLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -278,7 +278,7 @@ void VtkCirclePackFrontChainLayoutStrategyWrap::SetWidth(const Nan::FunctionCall
 	vtkCirclePackFrontChainLayoutStrategy *native = (vtkCirclePackFrontChainLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

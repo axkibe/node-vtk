@@ -34,6 +34,7 @@ class VtkPTSReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void GetLimitReadToBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLimitToMaxNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputDataTypeIsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LimitReadToBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LimitReadToBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

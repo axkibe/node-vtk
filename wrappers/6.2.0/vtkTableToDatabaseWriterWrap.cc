@@ -129,7 +129,7 @@ void VtkTableToDatabaseWriterWrap::GetDatabase(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetDatabase();
-		VtkSQLDatabaseWrap::InitPtpl();
+	VtkSQLDatabaseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -156,7 +156,7 @@ void VtkTableToDatabaseWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkTableWrap::InitPtpl();
+		VtkTableWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -175,7 +175,7 @@ void VtkTableToDatabaseWriterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetInput();
-		VtkTableWrap::InitPtpl();
+	VtkTableWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -220,7 +220,7 @@ void VtkTableToDatabaseWriterWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkTableToDatabaseWriterWrap::InitPtpl();
+	VtkTableToDatabaseWriterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -248,7 +248,7 @@ void VtkTableToDatabaseWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTableToDatabaseWriterWrap::InitPtpl();
+		VtkTableToDatabaseWriterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -210,7 +210,7 @@ void VtkNIFTIImageReaderWrap::GetNIFTIHeader(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetNIFTIHeader();
-		VtkNIFTIImageHeaderWrap::InitPtpl();
+	VtkNIFTIImageHeaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -247,7 +247,7 @@ void VtkNIFTIImageReaderWrap::GetQFormMatrix(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetQFormMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -298,7 +298,7 @@ void VtkNIFTIImageReaderWrap::GetSFormMatrix(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetSFormMatrix();
-		VtkMatrix4x4Wrap::InitPtpl();
+	VtkMatrix4x4Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,7 +385,7 @@ void VtkNIFTIImageReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkNIFTIImageReaderWrap::InitPtpl();
+	VtkNIFTIImageReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -413,7 +413,7 @@ void VtkNIFTIImageReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNIFTIImageReaderWrap::InitPtpl();
+		VtkNIFTIImageReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkNIFTIImageReaderWrap::SetTimeAsVector(const Nan::FunctionCallbackInfo<v8
 	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkNIFTIImageReaderWrap::TimeAsVectorOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
 	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -463,7 +463,7 @@ void VtkNIFTIImageReaderWrap::TimeAsVectorOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkNIFTIImageReaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageReaderWrap>(info.Holder());
 	vtkNIFTIImageReader *native = (vtkNIFTIImageReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

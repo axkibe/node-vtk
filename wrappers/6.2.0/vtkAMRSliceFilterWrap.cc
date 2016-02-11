@@ -148,7 +148,7 @@ void VtkAMRSliceFilterWrap::EnablePrefetchingOff(const Nan::FunctionCallbackInfo
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -160,7 +160,7 @@ void VtkAMRSliceFilterWrap::EnablePrefetchingOn(const Nan::FunctionCallbackInfo<
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -224,7 +224,7 @@ void VtkAMRSliceFilterWrap::ForwardUpstreamOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkAMRSliceFilterWrap::ForwardUpstreamOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAMRSliceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAMRSliceFilterWrap>(info.Holder());
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkAMRSliceFilterWrap::GetController(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkAMRSliceFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRSliceFilterWrap::InitPtpl();
+	VtkAMRSliceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -412,7 +412,7 @@ void VtkAMRSliceFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRSliceFilterWrap::InitPtpl();
+		VtkAMRSliceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -434,7 +434,7 @@ void VtkAMRSliceFilterWrap::SetController(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -453,7 +453,7 @@ void VtkAMRSliceFilterWrap::SetEnablePrefetching(const Nan::FunctionCallbackInfo
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -472,7 +472,7 @@ void VtkAMRSliceFilterWrap::SetForwardUpstream(const Nan::FunctionCallbackInfo<v
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +491,7 @@ void VtkAMRSliceFilterWrap::SetMaxResolution(const Nan::FunctionCallbackInfo<v8:
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -510,7 +510,7 @@ void VtkAMRSliceFilterWrap::SetNormal(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -529,7 +529,7 @@ void VtkAMRSliceFilterWrap::SetOffSetFromOrigin(const Nan::FunctionCallbackInfo<
 	vtkAMRSliceFilter *native = (vtkAMRSliceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

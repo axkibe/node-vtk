@@ -31,6 +31,7 @@ class VtkImageMagnifyWrap : public VtkThreadedImageAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InterpolateOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void InterpolateOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);

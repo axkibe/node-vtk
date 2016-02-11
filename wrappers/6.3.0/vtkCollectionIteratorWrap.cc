@@ -134,7 +134,7 @@ void VtkCollectionIteratorWrap::GetCollection(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetCollection();
-		VtkCollectionWrap::InitPtpl();
+	VtkCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -157,7 +157,7 @@ void VtkCollectionIteratorWrap::GetCurrentObject(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetCurrentObject();
-		VtkObjectWrap::InitPtpl();
+	VtkObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -173,7 +173,7 @@ void VtkCollectionIteratorWrap::GoToFirstItem(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCollectionIteratorWrap>(info.Holder());
 	vtkCollectionIterator *native = (vtkCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkCollectionIteratorWrap::GoToNextItem(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCollectionIteratorWrap>(info.Holder());
 	vtkCollectionIterator *native = (vtkCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -197,7 +197,7 @@ void VtkCollectionIteratorWrap::InitTraversal(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCollectionIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCollectionIteratorWrap>(info.Holder());
 	vtkCollectionIterator *native = (vtkCollectionIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -252,7 +252,7 @@ void VtkCollectionIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkCollectionIteratorWrap::InitPtpl();
+	VtkCollectionIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -280,7 +280,7 @@ void VtkCollectionIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCollectionIteratorWrap::InitPtpl();
+		VtkCollectionIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -302,7 +302,7 @@ void VtkCollectionIteratorWrap::SetCollection(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCollectionWrap *a0 = ObjectWrap::Unwrap<VtkCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

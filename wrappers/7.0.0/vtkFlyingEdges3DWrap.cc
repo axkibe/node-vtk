@@ -149,7 +149,7 @@ void VtkFlyingEdges3DWrap::ComputeGradientsOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -161,7 +161,7 @@ void VtkFlyingEdges3DWrap::ComputeGradientsOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -173,7 +173,7 @@ void VtkFlyingEdges3DWrap::ComputeNormalsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -185,7 +185,7 @@ void VtkFlyingEdges3DWrap::ComputeNormalsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -197,7 +197,7 @@ void VtkFlyingEdges3DWrap::ComputeScalarsOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -209,7 +209,7 @@ void VtkFlyingEdges3DWrap::ComputeScalarsOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkFlyingEdges3DWrap *wrapper = ObjectWrap::Unwrap<VtkFlyingEdges3DWrap>(info.Holder());
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -233,7 +233,7 @@ void VtkFlyingEdges3DWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -263,7 +263,7 @@ void VtkFlyingEdges3DWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -278,7 +278,7 @@ void VtkFlyingEdges3DWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Va
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -433,7 +433,7 @@ void VtkFlyingEdges3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkFlyingEdges3DWrap::InitPtpl();
+	VtkFlyingEdges3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -461,7 +461,7 @@ void VtkFlyingEdges3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFlyingEdges3DWrap::InitPtpl();
+		VtkFlyingEdges3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -482,7 +482,7 @@ void VtkFlyingEdges3DWrap::SetArrayComponent(const Nan::FunctionCallbackInfo<v8:
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -501,7 +501,7 @@ void VtkFlyingEdges3DWrap::SetComputeGradients(const Nan::FunctionCallbackInfo<v
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,7 @@ void VtkFlyingEdges3DWrap::SetComputeNormals(const Nan::FunctionCallbackInfo<v8:
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -539,7 +539,7 @@ void VtkFlyingEdges3DWrap::SetComputeScalars(const Nan::FunctionCallbackInfo<v8:
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -558,7 +558,7 @@ void VtkFlyingEdges3DWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo<v
 	vtkFlyingEdges3D *native = (vtkFlyingEdges3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -579,7 +579,7 @@ void VtkFlyingEdges3DWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& 
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

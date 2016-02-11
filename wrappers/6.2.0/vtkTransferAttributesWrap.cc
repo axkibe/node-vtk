@@ -132,7 +132,7 @@ void VtkTransferAttributesWrap::DirectMappingOff(const Nan::FunctionCallbackInfo
 {
 	VtkTransferAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkTransferAttributesWrap>(info.Holder());
 	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +144,7 @@ void VtkTransferAttributesWrap::DirectMappingOn(const Nan::FunctionCallbackInfo<
 {
 	VtkTransferAttributesWrap *wrapper = ObjectWrap::Unwrap<VtkTransferAttributesWrap>(info.Holder());
 	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -295,7 +295,7 @@ void VtkTransferAttributesWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkTransferAttributesWrap::InitPtpl();
+	VtkTransferAttributesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -323,7 +323,7 @@ void VtkTransferAttributesWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTransferAttributesWrap::InitPtpl();
+		VtkTransferAttributesWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkTransferAttributesWrap::SetDirectMapping(const Nan::FunctionCallbackInfo
 	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -364,7 +364,7 @@ void VtkTransferAttributesWrap::SetSourceArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkTransferAttributesWrap::SetSourceFieldType(const Nan::FunctionCallbackIn
 	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkTransferAttributesWrap::SetTargetArrayName(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkTransferAttributesWrap::SetTargetFieldType(const Nan::FunctionCallbackIn
 	vtkTransferAttributes *native = (vtkTransferAttributes *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

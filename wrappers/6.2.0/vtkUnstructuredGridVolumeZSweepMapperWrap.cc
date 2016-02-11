@@ -68,6 +68,15 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageInUseSize", GetImageInUseSize);
+	Nan::SetPrototypeMethod(tpl, "getImageInUseSize", GetImageInUseSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageOrigin", GetImageOrigin);
+	Nan::SetPrototypeMethod(tpl, "getImageOrigin", GetImageOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetImageViewportSize", GetImageViewportSize);
+	Nan::SetPrototypeMethod(tpl, "getImageViewportSize", GetImageViewportSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
 	Nan::SetPrototypeMethod(tpl, "getIntermixIntersectingGeometry", GetIntermixIntersectingGeometry);
 
@@ -146,7 +155,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::AutoAdjustSampleDistancesOff(con
 {
 	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -158,7 +167,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::AutoAdjustSampleDistancesOn(cons
 {
 	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -220,6 +229,57 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::GetClassName(const Nan::Function
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkUnstructuredGridVolumeZSweepMapperWrap::GetImageInUseSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageInUseSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkUnstructuredGridVolumeZSweepMapperWrap::GetImageOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageOrigin();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkUnstructuredGridVolumeZSweepMapperWrap::GetImageViewportSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
+	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageViewportSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkUnstructuredGridVolumeZSweepMapperWrap::GetIntermixIntersectingGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -289,7 +349,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::GetRayIntegrator(const Nan::Func
 		return;
 	}
 	r = native->GetRayIntegrator();
-		VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayIntegratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -305,7 +365,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::IntermixIntersectingGeometryOff(
 {
 	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -317,7 +377,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::IntermixIntersectingGeometryOn(c
 {
 	VtkUnstructuredGridVolumeZSweepMapperWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeZSweepMapperWrap>(info.Holder());
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -358,7 +418,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::NewInstance(const Nan::FunctionC
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl();
+	VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -380,7 +440,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::Render(const Nan::FunctionCallba
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkVolumeWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkVolumeWrap *a1 = ObjectWrap::Unwrap<VtkVolumeWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -411,7 +471,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SafeDownCast(const Nan::Function
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl();
+		VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -432,7 +492,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SetAutoAdjustSampleDistances(con
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +511,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SetIntermixIntersectingGeometry(
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -470,7 +530,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SetMaxPixelListSize(const Nan::F
 	vtkUnstructuredGridVolumeZSweepMapper *native = (vtkUnstructuredGridVolumeZSweepMapper *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +550,7 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::SetRayIntegrator(const Nan::Func
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkUnstructuredGridVolumeRayIntegratorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkUnstructuredGridVolumeRayIntegratorWrap *a0 = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayIntegratorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

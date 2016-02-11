@@ -344,7 +344,7 @@ void VtkRandomAttributeGeneratorWrap::AttributesConstantPerBlockOff(const Nan::F
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkRandomAttributeGeneratorWrap::AttributesConstantPerBlockOn(const Nan::Fu
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -368,7 +368,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllCellDataOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllCellDataOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -392,7 +392,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllDataOff(const Nan::FunctionCall
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -404,7 +404,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllDataOn(const Nan::FunctionCallb
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllPointDataOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -428,7 +428,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateAllPointDataOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -440,7 +440,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellArrayOff(const Nan::FunctionCa
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -452,7 +452,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellArrayOn(const Nan::FunctionCal
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -464,7 +464,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellNormalsOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -476,7 +476,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellNormalsOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -488,7 +488,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellScalarsOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -500,7 +500,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellScalarsOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -512,7 +512,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellTCoordsOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -524,7 +524,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellTCoordsOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -536,7 +536,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellTensorsOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -548,7 +548,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellTensorsOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -560,7 +560,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellVectorsOff(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -572,7 +572,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateCellVectorsOn(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -584,7 +584,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateFieldArrayOff(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -596,7 +596,7 @@ void VtkRandomAttributeGeneratorWrap::GenerateFieldArrayOn(const Nan::FunctionCa
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -608,7 +608,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointArrayOff(const Nan::FunctionC
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -620,7 +620,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointArrayOn(const Nan::FunctionCa
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -632,7 +632,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointNormalsOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -644,7 +644,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointNormalsOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -656,7 +656,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointScalarsOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -668,7 +668,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointScalarsOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -680,7 +680,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointTCoordsOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -692,7 +692,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointTCoordsOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -704,7 +704,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointTensorsOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -716,7 +716,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointTensorsOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -728,7 +728,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointVectorsOff(const Nan::Functio
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -740,7 +740,7 @@ void VtkRandomAttributeGeneratorWrap::GeneratePointVectorsOn(const Nan::Function
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1075,7 +1075,7 @@ void VtkRandomAttributeGeneratorWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkRandomAttributeGeneratorWrap::InitPtpl();
+	VtkRandomAttributeGeneratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1103,7 +1103,7 @@ void VtkRandomAttributeGeneratorWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRandomAttributeGeneratorWrap::InitPtpl();
+		VtkRandomAttributeGeneratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1124,7 +1124,7 @@ void VtkRandomAttributeGeneratorWrap::SetAttributesConstantPerBlock(const Nan::F
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1145,7 +1145,7 @@ void VtkRandomAttributeGeneratorWrap::SetComponentRange(const Nan::FunctionCallb
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1166,7 +1166,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataType(const Nan::FunctionCallbackInf
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1183,7 +1183,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToBit(const Nan::FunctionCallba
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1195,7 +1195,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToChar(const Nan::FunctionCallb
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1207,7 +1207,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToDouble(const Nan::FunctionCal
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1219,7 +1219,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToFloat(const Nan::FunctionCall
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1231,7 +1231,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToInt(const Nan::FunctionCallba
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1243,7 +1243,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToLong(const Nan::FunctionCallb
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1255,7 +1255,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToShort(const Nan::FunctionCall
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1267,7 +1267,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToUnsignedChar(const Nan::Funct
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1279,7 +1279,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToUnsignedInt(const Nan::Functi
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1291,7 +1291,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToUnsignedLong(const Nan::Funct
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1303,7 +1303,7 @@ void VtkRandomAttributeGeneratorWrap::SetDataTypeToUnsignedShort(const Nan::Func
 {
 	VtkRandomAttributeGeneratorWrap *wrapper = ObjectWrap::Unwrap<VtkRandomAttributeGeneratorWrap>(info.Holder());
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1317,7 +1317,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellArray(const Nan::FunctionCa
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1336,7 +1336,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellNormals(const Nan::Function
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1355,7 +1355,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellScalars(const Nan::Function
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1374,7 +1374,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellTCoords(const Nan::Function
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1393,7 +1393,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellTensors(const Nan::Function
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1412,7 +1412,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateCellVectors(const Nan::Function
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1431,7 +1431,7 @@ void VtkRandomAttributeGeneratorWrap::SetGenerateFieldArray(const Nan::FunctionC
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1450,7 +1450,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointArray(const Nan::FunctionC
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1469,7 +1469,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointNormals(const Nan::Functio
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1488,7 +1488,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointScalars(const Nan::Functio
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1507,7 +1507,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointTCoords(const Nan::Functio
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1526,7 +1526,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointTensors(const Nan::Functio
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1545,7 +1545,7 @@ void VtkRandomAttributeGeneratorWrap::SetGeneratePointVectors(const Nan::Functio
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1564,7 +1564,7 @@ void VtkRandomAttributeGeneratorWrap::SetMaximumComponentValue(const Nan::Functi
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1583,7 +1583,7 @@ void VtkRandomAttributeGeneratorWrap::SetMinimumComponentValue(const Nan::Functi
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1602,7 +1602,7 @@ void VtkRandomAttributeGeneratorWrap::SetNumberOfComponents(const Nan::FunctionC
 	vtkRandomAttributeGenerator *native = (vtkRandomAttributeGenerator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -181,7 +181,7 @@ void VtkCutterWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -193,7 +193,7 @@ void VtkCutterWrap::GenerateCutScalarsOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -205,7 +205,7 @@ void VtkCutterWrap::GenerateCutScalarsOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -217,7 +217,7 @@ void VtkCutterWrap::GenerateTrianglesOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -229,7 +229,7 @@ void VtkCutterWrap::GenerateTrianglesOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -253,7 +253,7 @@ void VtkCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Value>& i
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -283,7 +283,7 @@ void VtkCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Value>& i
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -298,7 +298,7 @@ void VtkCutterWrap::GenerateValues(const Nan::FunctionCallbackInfo<v8::Value>& i
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -340,7 +340,7 @@ void VtkCutterWrap::GetCutFunction(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetCutFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -391,7 +391,7 @@ void VtkCutterWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkCutterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkCutterWrap::InitPtpl();
+	VtkCutterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -597,7 +597,7 @@ void VtkCutterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCutterWrap::InitPtpl();
+		VtkCutterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -619,7 +619,7 @@ void VtkCutterWrap::SetCutFunction(const Nan::FunctionCallbackInfo<v8::Value>& i
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -638,7 +638,7 @@ void VtkCutterWrap::SetGenerateCutScalars(const Nan::FunctionCallbackInfo<v8::Va
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -657,7 +657,7 @@ void VtkCutterWrap::SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Val
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkCutterWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +696,7 @@ void VtkCutterWrap::SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +715,7 @@ void VtkCutterWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8:
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -734,7 +734,7 @@ void VtkCutterWrap::SetSortBy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -751,7 +751,7 @@ void VtkCutterWrap::SetSortByToSortByCell(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -763,7 +763,7 @@ void VtkCutterWrap::SetSortByToSortByValue(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkCutterWrap *wrapper = ObjectWrap::Unwrap<VtkCutterWrap>(info.Holder());
 	vtkCutter *native = (vtkCutter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -779,7 +779,7 @@ void VtkCutterWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

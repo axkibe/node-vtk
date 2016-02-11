@@ -33,6 +33,8 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ComputeInteractionState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandleDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);

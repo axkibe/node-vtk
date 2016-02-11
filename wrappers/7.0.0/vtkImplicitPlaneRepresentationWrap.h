@@ -36,6 +36,7 @@ class VtkImplicitPlaneRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void DrawPlaneOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EndWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBumpDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBumpDistanceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBumpDistanceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

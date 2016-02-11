@@ -247,7 +247,7 @@ void VtkArrayCalculatorWrap::AddCoordinateScalarVariable(const Nan::FunctionCall
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -275,7 +275,7 @@ void VtkArrayCalculatorWrap::AddCoordinateVectorVariable(const Nan::FunctionCall
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -303,7 +303,7 @@ void VtkArrayCalculatorWrap::AddScalarArrayName(const Nan::FunctionCallbackInfo<
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -330,7 +330,7 @@ void VtkArrayCalculatorWrap::AddScalarVariable(const Nan::FunctionCallbackInfo<v
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -360,7 +360,7 @@ void VtkArrayCalculatorWrap::AddVectorArrayName(const Nan::FunctionCallbackInfo<
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -395,7 +395,7 @@ void VtkArrayCalculatorWrap::AddVectorVariable(const Nan::FunctionCallbackInfo<v
 				{
 					if(info.Length() > 4 && info[4]->IsInt32())
 					{
-						if(info.Length() != 5)
+												if(info.Length() != 5)
 						{
 							Nan::ThrowError("Too many parameters.");
 							return;
@@ -420,7 +420,7 @@ void VtkArrayCalculatorWrap::CoordinateResultsOff(const Nan::FunctionCallbackInf
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +432,7 @@ void VtkArrayCalculatorWrap::CoordinateResultsOn(const Nan::FunctionCallbackInfo
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -760,7 +760,7 @@ void VtkArrayCalculatorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->NewInstance();
-		VtkArrayCalculatorWrap::InitPtpl();
+	VtkArrayCalculatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -776,7 +776,7 @@ void VtkArrayCalculatorWrap::RemoveAllVariables(const Nan::FunctionCallbackInfo<
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -788,7 +788,7 @@ void VtkArrayCalculatorWrap::RemoveCoordinateScalarVariables(const Nan::Function
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -800,7 +800,7 @@ void VtkArrayCalculatorWrap::RemoveCoordinateVectorVariables(const Nan::Function
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -812,7 +812,7 @@ void VtkArrayCalculatorWrap::RemoveScalarVariables(const Nan::FunctionCallbackIn
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -824,7 +824,7 @@ void VtkArrayCalculatorWrap::RemoveVectorVariables(const Nan::FunctionCallbackIn
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -836,7 +836,7 @@ void VtkArrayCalculatorWrap::ReplaceInvalidValuesOff(const Nan::FunctionCallback
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -848,7 +848,7 @@ void VtkArrayCalculatorWrap::ReplaceInvalidValuesOn(const Nan::FunctionCallbackI
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -860,7 +860,7 @@ void VtkArrayCalculatorWrap::ResultNormalsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -872,7 +872,7 @@ void VtkArrayCalculatorWrap::ResultNormalsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -884,7 +884,7 @@ void VtkArrayCalculatorWrap::ResultTCoordsOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -896,7 +896,7 @@ void VtkArrayCalculatorWrap::ResultTCoordsOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -920,7 +920,7 @@ void VtkArrayCalculatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkArrayCalculatorWrap::InitPtpl();
+		VtkArrayCalculatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -941,7 +941,7 @@ void VtkArrayCalculatorWrap::SetAttributeMode(const Nan::FunctionCallbackInfo<v8
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -958,7 +958,7 @@ void VtkArrayCalculatorWrap::SetAttributeModeToDefault(const Nan::FunctionCallba
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -970,7 +970,7 @@ void VtkArrayCalculatorWrap::SetAttributeModeToUseCellData(const Nan::FunctionCa
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -982,7 +982,7 @@ void VtkArrayCalculatorWrap::SetAttributeModeToUseEdgeData(const Nan::FunctionCa
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -994,7 +994,7 @@ void VtkArrayCalculatorWrap::SetAttributeModeToUsePointData(const Nan::FunctionC
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1006,7 +1006,7 @@ void VtkArrayCalculatorWrap::SetAttributeModeToUseVertexData(const Nan::Function
 {
 	VtkArrayCalculatorWrap *wrapper = ObjectWrap::Unwrap<VtkArrayCalculatorWrap>(info.Holder());
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1020,7 +1020,7 @@ void VtkArrayCalculatorWrap::SetCoordinateResults(const Nan::FunctionCallbackInf
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1040,7 +1040,7 @@ void VtkArrayCalculatorWrap::SetFunction(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1059,7 +1059,7 @@ void VtkArrayCalculatorWrap::SetReplaceInvalidValues(const Nan::FunctionCallback
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1078,7 +1078,7 @@ void VtkArrayCalculatorWrap::SetReplacementValue(const Nan::FunctionCallbackInfo
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1098,7 +1098,7 @@ void VtkArrayCalculatorWrap::SetResultArrayName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1117,7 +1117,7 @@ void VtkArrayCalculatorWrap::SetResultArrayType(const Nan::FunctionCallbackInfo<
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1136,7 +1136,7 @@ void VtkArrayCalculatorWrap::SetResultNormals(const Nan::FunctionCallbackInfo<v8
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1155,7 +1155,7 @@ void VtkArrayCalculatorWrap::SetResultTCoords(const Nan::FunctionCallbackInfo<v8
 	vtkArrayCalculator *native = (vtkArrayCalculator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

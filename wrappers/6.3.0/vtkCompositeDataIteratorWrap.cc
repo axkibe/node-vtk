@@ -139,7 +139,7 @@ void VtkCompositeDataIteratorWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetDataSet();
-		VtkCompositeDataSetWrap::InitPtpl();
+	VtkCompositeDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,7 +183,7 @@ void VtkCompositeDataIteratorWrap::InitReverseTraversal(const Nan::FunctionCallb
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
 	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +195,7 @@ void VtkCompositeDataIteratorWrap::InitTraversal(const Nan::FunctionCallbackInfo
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
 	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -236,7 +236,7 @@ void VtkCompositeDataIteratorWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkCompositeDataIteratorWrap::InitPtpl();
+	VtkCompositeDataIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkCompositeDataIteratorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCompositeDataIteratorWrap::InitPtpl();
+		VtkCompositeDataIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkCompositeDataIteratorWrap::SetDataSet(const Nan::FunctionCallbackInfo<v8
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositeDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositeDataSetWrap *a0 = ObjectWrap::Unwrap<VtkCompositeDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -305,7 +305,7 @@ void VtkCompositeDataIteratorWrap::SetSkipEmptyNodes(const Nan::FunctionCallback
 	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -322,7 +322,7 @@ void VtkCompositeDataIteratorWrap::SkipEmptyNodesOff(const Nan::FunctionCallback
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
 	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -334,7 +334,7 @@ void VtkCompositeDataIteratorWrap::SkipEmptyNodesOn(const Nan::FunctionCallbackI
 {
 	VtkCompositeDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkCompositeDataIteratorWrap>(info.Holder());
 	vtkCompositeDataIterator *native = (vtkCompositeDataIterator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

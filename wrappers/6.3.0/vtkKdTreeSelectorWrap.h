@@ -32,6 +32,7 @@ class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKdTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSelectionFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSingleSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSingleSelectionThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);

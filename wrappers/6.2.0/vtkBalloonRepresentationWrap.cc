@@ -79,6 +79,12 @@ void VtkBalloonRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetImageProperty", GetImageProperty);
 	Nan::SetPrototypeMethod(tpl, "getImageProperty", GetImageProperty);
 
+	Nan::SetPrototypeMethod(tpl, "GetImageSize", GetImageSize);
+	Nan::SetPrototypeMethod(tpl, "getImageSize", GetImageSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetOffset", GetOffset);
+	Nan::SetPrototypeMethod(tpl, "getOffset", GetOffset);
+
 	Nan::SetPrototypeMethod(tpl, "GetPadding", GetPadding);
 	Nan::SetPrototypeMethod(tpl, "getPadding", GetPadding);
 
@@ -193,7 +199,7 @@ void VtkBalloonRepresentationWrap::BuildRepresentation(const Nan::FunctionCallba
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +250,7 @@ void VtkBalloonRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallb
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -273,7 +279,7 @@ void VtkBalloonRepresentationWrap::EndWidgetInteraction(const Nan::FunctionCallb
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -297,7 +303,7 @@ void VtkBalloonRepresentationWrap::GetBalloonImage(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetBalloonImage();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -362,7 +368,7 @@ void VtkBalloonRepresentationWrap::GetFrameProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetFrameProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -385,7 +391,7 @@ void VtkBalloonRepresentationWrap::GetImageProperty(const Nan::FunctionCallbackI
 		return;
 	}
 	r = native->GetImageProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -395,6 +401,40 @@ void VtkBalloonRepresentationWrap::GetImageProperty(const Nan::FunctionCallbackI
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkBalloonRepresentationWrap::GetImageSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
+	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetImageSize();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkBalloonRepresentationWrap::GetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
+	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOffset();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkBalloonRepresentationWrap::GetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -450,7 +490,7 @@ void VtkBalloonRepresentationWrap::GetTextProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -495,7 +535,7 @@ void VtkBalloonRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkBalloonRepresentationWrap::InitPtpl();
+	VtkBalloonRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -514,7 +554,7 @@ void VtkBalloonRepresentationWrap::ReleaseGraphicsResources(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -565,7 +605,7 @@ void VtkBalloonRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBalloonRepresentationWrap::InitPtpl();
+		VtkBalloonRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -587,7 +627,7 @@ void VtkBalloonRepresentationWrap::SetBalloonImage(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -606,7 +646,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayout(const Nan::FunctionCallbackI
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -623,7 +663,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToImageBottom(const Nan::Func
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -635,7 +675,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToImageLeft(const Nan::Functi
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -647,7 +687,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToImageRight(const Nan::Funct
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -659,7 +699,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToImageTop(const Nan::Functio
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -671,7 +711,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToTextBottom(const Nan::Funct
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -683,7 +723,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToTextLeft(const Nan::Functio
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -695,7 +735,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToTextRight(const Nan::Functi
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -707,7 +747,7 @@ void VtkBalloonRepresentationWrap::SetBalloonLayoutToTextTop(const Nan::Function
 {
 	VtkBalloonRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkBalloonRepresentationWrap>(info.Holder());
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -722,7 +762,7 @@ void VtkBalloonRepresentationWrap::SetBalloonText(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -742,7 +782,7 @@ void VtkBalloonRepresentationWrap::SetFrameProperty(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -762,7 +802,7 @@ void VtkBalloonRepresentationWrap::SetImageProperty(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkProperty2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkProperty2DWrap *a0 = ObjectWrap::Unwrap<VtkProperty2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -789,7 +829,7 @@ void VtkBalloonRepresentationWrap::SetImageSize(const Nan::FunctionCallbackInfo<
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -818,7 +858,7 @@ void VtkBalloonRepresentationWrap::SetImageSize(const Nan::FunctionCallbackInfo<
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -832,7 +872,7 @@ void VtkBalloonRepresentationWrap::SetImageSize(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -861,7 +901,7 @@ void VtkBalloonRepresentationWrap::SetOffset(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -890,7 +930,7 @@ void VtkBalloonRepresentationWrap::SetOffset(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -904,7 +944,7 @@ void VtkBalloonRepresentationWrap::SetOffset(const Nan::FunctionCallbackInfo<v8:
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -925,7 +965,7 @@ void VtkBalloonRepresentationWrap::SetPadding(const Nan::FunctionCallbackInfo<v8
 	vtkBalloonRepresentation *native = (vtkBalloonRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -945,7 +985,7 @@ void VtkBalloonRepresentationWrap::SetTextProperty(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -972,7 +1012,7 @@ void VtkBalloonRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCal
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1001,7 +1041,7 @@ void VtkBalloonRepresentationWrap::StartWidgetInteraction(const Nan::FunctionCal
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

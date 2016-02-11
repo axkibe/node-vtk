@@ -125,7 +125,7 @@ void VtkValuePassWrap::ARRAY_COMPONENT(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->ARRAY_COMPONENT();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -148,7 +148,7 @@ void VtkValuePassWrap::ARRAY_ID(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->ARRAY_ID();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -171,7 +171,7 @@ void VtkValuePassWrap::ARRAY_MODE(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->ARRAY_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkValuePassWrap::ARRAY_NAME(const Nan::FunctionCallbackInfo<v8::Value>& in
 		return;
 	}
 	r = native->ARRAY_NAME();
-		VtkInformationStringKeyWrap::InitPtpl();
+	VtkInformationStringKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -253,7 +253,7 @@ void VtkValuePassWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkValuePassWrap::InitPtpl();
+	VtkValuePassWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -276,7 +276,7 @@ void VtkValuePassWrap::RENDER_VALUES(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->RENDER_VALUES();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -299,7 +299,7 @@ void VtkValuePassWrap::SCALAR_MODE(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->SCALAR_MODE();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -322,7 +322,7 @@ void VtkValuePassWrap::SCALAR_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->SCALAR_RANGE();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -350,7 +350,7 @@ void VtkValuePassWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkValuePassWrap::InitPtpl();
+		VtkValuePassWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -374,7 +374,7 @@ void VtkValuePassWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 		if(info.Length() > 1 && info[1]->IsString())
 		{
 			Nan::Utf8String a1(info[1]);
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -387,7 +387,7 @@ void VtkValuePassWrap::SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8
 		}
 		else if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -408,7 +408,7 @@ void VtkValuePassWrap::SetInputComponentToProcess(const Nan::FunctionCallbackInf
 	vtkValuePass *native = (vtkValuePass *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +429,7 @@ void VtkValuePassWrap::SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

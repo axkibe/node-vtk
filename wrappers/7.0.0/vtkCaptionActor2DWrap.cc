@@ -70,6 +70,9 @@ void VtkCaptionActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetAttachEdgeOnly", GetAttachEdgeOnly);
 	Nan::SetPrototypeMethod(tpl, "getAttachEdgeOnly", GetAttachEdgeOnly);
 
+	Nan::SetPrototypeMethod(tpl, "GetAttachmentPoint", GetAttachmentPoint);
+	Nan::SetPrototypeMethod(tpl, "getAttachmentPoint", GetAttachmentPoint);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttachmentPointCoordinate", GetAttachmentPointCoordinate);
 	Nan::SetPrototypeMethod(tpl, "getAttachmentPointCoordinate", GetAttachmentPointCoordinate);
 
@@ -232,7 +235,7 @@ void VtkCaptionActor2DWrap::AttachEdgeOnlyOff(const Nan::FunctionCallbackInfo<v8
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -244,7 +247,7 @@ void VtkCaptionActor2DWrap::AttachEdgeOnlyOn(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -256,7 +259,7 @@ void VtkCaptionActor2DWrap::BorderOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -268,7 +271,7 @@ void VtkCaptionActor2DWrap::BorderOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -290,6 +293,23 @@ void VtkCaptionActor2DWrap::GetAttachEdgeOnly(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkCaptionActor2DWrap::GetAttachmentPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
+	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAttachmentPoint();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkCaptionActor2DWrap::GetAttachmentPointCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
@@ -301,7 +321,7 @@ void VtkCaptionActor2DWrap::GetAttachmentPointCoordinate(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetAttachmentPointCoordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -352,7 +372,7 @@ void VtkCaptionActor2DWrap::GetCaptionTextProperty(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetCaptionTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -403,7 +423,7 @@ void VtkCaptionActor2DWrap::GetLeaderGlyph(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLeaderGlyph();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -552,7 +572,7 @@ void VtkCaptionActor2DWrap::GetTextActor(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetTextActor();
-		VtkTextActorWrap::InitPtpl();
+	VtkTextActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -618,7 +638,7 @@ void VtkCaptionActor2DWrap::LeaderOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -630,7 +650,7 @@ void VtkCaptionActor2DWrap::LeaderOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -649,7 +669,7 @@ void VtkCaptionActor2DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkCaptionActor2DWrap::InitPtpl();
+	VtkCaptionActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -668,7 +688,7 @@ void VtkCaptionActor2DWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -763,7 +783,7 @@ void VtkCaptionActor2DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCaptionActor2DWrap::InitPtpl();
+		VtkCaptionActor2DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -784,7 +804,7 @@ void VtkCaptionActor2DWrap::SetAttachEdgeOnly(const Nan::FunctionCallbackInfo<v8
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -811,7 +831,7 @@ void VtkCaptionActor2DWrap::SetAttachmentPoint(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -840,7 +860,7 @@ void VtkCaptionActor2DWrap::SetAttachmentPoint(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -856,7 +876,7 @@ void VtkCaptionActor2DWrap::SetAttachmentPoint(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -879,7 +899,7 @@ void VtkCaptionActor2DWrap::SetBorder(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -899,7 +919,7 @@ void VtkCaptionActor2DWrap::SetCaption(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -919,7 +939,7 @@ void VtkCaptionActor2DWrap::SetCaptionTextProperty(const Nan::FunctionCallbackIn
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -938,7 +958,7 @@ void VtkCaptionActor2DWrap::SetLeader(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -958,7 +978,7 @@ void VtkCaptionActor2DWrap::SetLeaderGlyphConnection(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +998,7 @@ void VtkCaptionActor2DWrap::SetLeaderGlyphData(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -997,7 +1017,7 @@ void VtkCaptionActor2DWrap::SetLeaderGlyphSize(const Nan::FunctionCallbackInfo<v
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1016,7 +1036,7 @@ void VtkCaptionActor2DWrap::SetMaximumLeaderGlyphSize(const Nan::FunctionCallbac
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1035,7 +1055,7 @@ void VtkCaptionActor2DWrap::SetPadding(const Nan::FunctionCallbackInfo<v8::Value
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1074,7 @@ void VtkCaptionActor2DWrap::SetThreeDimensionalLeader(const Nan::FunctionCallbac
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1074,7 +1094,7 @@ void VtkCaptionActor2DWrap::ShallowCopy(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1091,7 +1111,7 @@ void VtkCaptionActor2DWrap::ThreeDimensionalLeaderOff(const Nan::FunctionCallbac
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1103,7 +1123,7 @@ void VtkCaptionActor2DWrap::ThreeDimensionalLeaderOn(const Nan::FunctionCallback
 {
 	VtkCaptionActor2DWrap *wrapper = ObjectWrap::Unwrap<VtkCaptionActor2DWrap>(info.Holder());
 	vtkCaptionActor2D *native = (vtkCaptionActor2D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

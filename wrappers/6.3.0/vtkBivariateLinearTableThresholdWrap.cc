@@ -60,6 +60,9 @@ void VtkBivariateLinearTableThresholdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColumnRanges", GetColumnRanges);
+	Nan::SetPrototypeMethod(tpl, "getColumnRanges", GetColumnRanges);
+
 	Nan::SetPrototypeMethod(tpl, "GetDistanceThreshold", GetDistanceThreshold);
 	Nan::SetPrototypeMethod(tpl, "getDistanceThreshold", GetDistanceThreshold);
 
@@ -162,7 +165,7 @@ void VtkBivariateLinearTableThresholdWrap::AddLineEquation(const Nan::FunctionCa
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -183,7 +186,7 @@ void VtkBivariateLinearTableThresholdWrap::ClearColumnsToThreshold(const Nan::Fu
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -195,7 +198,7 @@ void VtkBivariateLinearTableThresholdWrap::ClearLineEquations(const Nan::Functio
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,6 +218,23 @@ void VtkBivariateLinearTableThresholdWrap::GetClassName(const Nan::FunctionCallb
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkBivariateLinearTableThresholdWrap::GetColumnRanges(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
+	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetColumnRanges();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkBivariateLinearTableThresholdWrap::GetDistanceThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,7 +308,7 @@ void VtkBivariateLinearTableThresholdWrap::GetSelectedRowIds(const Nan::Function
 		r = native->GetSelectedRowIds(
 			info[0]->Int32Value()
 		);
-			VtkIdTypeArrayWrap::InitPtpl();
+		VtkIdTypeArrayWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +341,7 @@ void VtkBivariateLinearTableThresholdWrap::Initialize(const Nan::FunctionCallbac
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -362,7 +382,7 @@ void VtkBivariateLinearTableThresholdWrap::NewInstance(const Nan::FunctionCallba
 		return;
 	}
 	r = native->NewInstance();
-		VtkBivariateLinearTableThresholdWrap::InitPtpl();
+	VtkBivariateLinearTableThresholdWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -390,7 +410,7 @@ void VtkBivariateLinearTableThresholdWrap::SafeDownCast(const Nan::FunctionCallb
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBivariateLinearTableThresholdWrap::InitPtpl();
+		VtkBivariateLinearTableThresholdWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -419,7 +439,7 @@ void VtkBivariateLinearTableThresholdWrap::SetColumnRanges(const Nan::FunctionCa
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -448,7 +468,7 @@ void VtkBivariateLinearTableThresholdWrap::SetColumnRanges(const Nan::FunctionCa
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -462,7 +482,7 @@ void VtkBivariateLinearTableThresholdWrap::SetColumnRanges(const Nan::FunctionCa
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -483,7 +503,7 @@ void VtkBivariateLinearTableThresholdWrap::SetDistanceThreshold(const Nan::Funct
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -502,7 +522,7 @@ void VtkBivariateLinearTableThresholdWrap::SetInclusive(const Nan::FunctionCallb
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -521,7 +541,7 @@ void VtkBivariateLinearTableThresholdWrap::SetLinearThresholdType(const Nan::Fun
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -538,7 +558,7 @@ void VtkBivariateLinearTableThresholdWrap::SetLinearThresholdTypeToAbove(const N
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -550,7 +570,7 @@ void VtkBivariateLinearTableThresholdWrap::SetLinearThresholdTypeToBelow(const N
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -562,7 +582,7 @@ void VtkBivariateLinearTableThresholdWrap::SetLinearThresholdTypeToBetween(const
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -574,7 +594,7 @@ void VtkBivariateLinearTableThresholdWrap::SetLinearThresholdTypeToNear(const Na
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -588,7 +608,7 @@ void VtkBivariateLinearTableThresholdWrap::SetUseNormalizedDistance(const Nan::F
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -605,7 +625,7 @@ void VtkBivariateLinearTableThresholdWrap::UseNormalizedDistanceOff(const Nan::F
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -617,7 +637,7 @@ void VtkBivariateLinearTableThresholdWrap::UseNormalizedDistanceOn(const Nan::Fu
 {
 	VtkBivariateLinearTableThresholdWrap *wrapper = ObjectWrap::Unwrap<VtkBivariateLinearTableThresholdWrap>(info.Holder());
 	vtkBivariateLinearTableThreshold *native = (vtkBivariateLinearTableThreshold *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

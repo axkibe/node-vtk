@@ -156,7 +156,7 @@ void VtkPlotBarWrap::CreateDefaultLookupTable(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -194,7 +194,7 @@ void VtkPlotBarWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 
 		if(info.Length() > 1 && info[1]->IsBoolean())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -227,7 +227,7 @@ void VtkPlotBarWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		if(info.Length() > 1 && info[1]->IsBoolean())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -248,7 +248,7 @@ void VtkPlotBarWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -277,7 +277,7 @@ void VtkPlotBarWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -318,7 +318,7 @@ void VtkPlotBarWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkPlotBarWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -371,7 +371,7 @@ void VtkPlotBarWrap::GetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetColorSeries();
-		VtkColorSeriesWrap::InitPtpl();
+	VtkColorSeriesWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -397,7 +397,7 @@ void VtkPlotBarWrap::GetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +426,7 @@ void VtkPlotBarWrap::GetDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& i
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -450,7 +450,7 @@ void VtkPlotBarWrap::GetLabels(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetLabels();
-		VtkStringArrayWrap::InitPtpl();
+	VtkStringArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -473,7 +473,7 @@ void VtkPlotBarWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -527,7 +527,7 @@ void VtkPlotBarWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -556,7 +556,7 @@ void VtkPlotBarWrap::GetUnscaledInputBounds(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -602,7 +602,7 @@ void VtkPlotBarWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlotBarWrap::InitPtpl();
+	VtkPlotBarWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -652,7 +652,7 @@ void VtkPlotBarWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& in
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlotBarWrap::InitPtpl();
+		VtkPlotBarWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -671,7 +671,7 @@ void VtkPlotBarWrap::ScalarVisibilityOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -683,7 +683,7 @@ void VtkPlotBarWrap::ScalarVisibilityOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -701,7 +701,7 @@ void VtkPlotBarWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -725,7 +725,7 @@ void VtkPlotBarWrap::SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkColorSeriesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkColorSeriesWrap *a0 = ObjectWrap::Unwrap<VtkColorSeriesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -745,7 +745,7 @@ void VtkPlotBarWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -764,7 +764,7 @@ void VtkPlotBarWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -783,7 +783,7 @@ void VtkPlotBarWrap::SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Val
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -800,7 +800,7 @@ void VtkPlotBarWrap::Update(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -66,6 +66,9 @@ void VtkParallelopipedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetBoundingPlanes", GetBoundingPlanes);
 	Nan::SetPrototypeMethod(tpl, "getBoundingPlanes", GetBoundingPlanes);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -186,7 +189,7 @@ void VtkParallelopipedRepresentationWrap::BuildRepresentation(const Nan::Functio
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -230,7 +233,7 @@ void VtkParallelopipedRepresentationWrap::GetActors(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -250,7 +253,7 @@ void VtkParallelopipedRepresentationWrap::GetBoundingPlanes(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -261,6 +264,23 @@ void VtkParallelopipedRepresentationWrap::GetBoundingPlanes(const Nan::FunctionC
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkParallelopipedRepresentationWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
+	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkParallelopipedRepresentationWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -288,7 +308,7 @@ void VtkParallelopipedRepresentationWrap::GetFaceProperty(const Nan::FunctionCal
 		return;
 	}
 	r = native->GetFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +331,7 @@ void VtkParallelopipedRepresentationWrap::GetHandleProperty(const Nan::FunctionC
 		return;
 	}
 	r = native->GetHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,7 +358,7 @@ void VtkParallelopipedRepresentationWrap::GetHandleRepresentation(const Nan::Fun
 		r = native->GetHandleRepresentation(
 			info[0]->Int32Value()
 		);
-			VtkHandleRepresentationWrap::InitPtpl();
+		VtkHandleRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +384,7 @@ void VtkParallelopipedRepresentationWrap::GetHoveredHandleProperty(const Nan::Fu
 		return;
 	}
 	r = native->GetHoveredHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -401,7 +421,7 @@ void VtkParallelopipedRepresentationWrap::GetOutlineProperty(const Nan::Function
 		return;
 	}
 	r = native->GetOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -420,7 +440,7 @@ void VtkParallelopipedRepresentationWrap::GetPolyData(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -444,7 +464,7 @@ void VtkParallelopipedRepresentationWrap::GetSelectedFaceProperty(const Nan::Fun
 		return;
 	}
 	r = native->GetSelectedFaceProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -467,7 +487,7 @@ void VtkParallelopipedRepresentationWrap::GetSelectedHandleProperty(const Nan::F
 		return;
 	}
 	r = native->GetSelectedHandleProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -490,7 +510,7 @@ void VtkParallelopipedRepresentationWrap::GetSelectedOutlineProperty(const Nan::
 		return;
 	}
 	r = native->GetSelectedOutlineProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -506,7 +526,7 @@ void VtkParallelopipedRepresentationWrap::HandlesOff(const Nan::FunctionCallback
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -518,7 +538,7 @@ void VtkParallelopipedRepresentationWrap::HandlesOn(const Nan::FunctionCallbackI
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -559,7 +579,7 @@ void VtkParallelopipedRepresentationWrap::NewInstance(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelopipedRepresentationWrap::InitPtpl();
+	VtkParallelopipedRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -585,7 +605,7 @@ void VtkParallelopipedRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -614,7 +634,7 @@ void VtkParallelopipedRepresentationWrap::PlaceWidget(const Nan::FunctionCallbac
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +651,7 @@ void VtkParallelopipedRepresentationWrap::PositionHandles(const Nan::FunctionCal
 {
 	VtkParallelopipedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkParallelopipedRepresentationWrap>(info.Holder());
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -646,7 +666,7 @@ void VtkParallelopipedRepresentationWrap::ReleaseGraphicsResources(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -719,7 +739,7 @@ void VtkParallelopipedRepresentationWrap::SafeDownCast(const Nan::FunctionCallba
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelopipedRepresentationWrap::InitPtpl();
+		VtkParallelopipedRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -742,7 +762,7 @@ void VtkParallelopipedRepresentationWrap::Scale(const Nan::FunctionCallbackInfo<
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -764,7 +784,7 @@ void VtkParallelopipedRepresentationWrap::SetHandleProperty(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -784,7 +804,7 @@ void VtkParallelopipedRepresentationWrap::SetHandleRepresentation(const Nan::Fun
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -804,7 +824,7 @@ void VtkParallelopipedRepresentationWrap::SetHoveredHandleProperty(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -823,7 +843,7 @@ void VtkParallelopipedRepresentationWrap::SetInteractionState(const Nan::Functio
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -842,7 +862,7 @@ void VtkParallelopipedRepresentationWrap::SetMinimumThickness(const Nan::Functio
 	vtkParallelopipedRepresentation *native = (vtkParallelopipedRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -862,7 +882,7 @@ void VtkParallelopipedRepresentationWrap::SetSelectedHandleProperty(const Nan::F
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -889,7 +909,7 @@ void VtkParallelopipedRepresentationWrap::Translate(const Nan::FunctionCallbackI
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -918,7 +938,7 @@ void VtkParallelopipedRepresentationWrap::Translate(const Nan::FunctionCallbackI
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -932,7 +952,7 @@ void VtkParallelopipedRepresentationWrap::Translate(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

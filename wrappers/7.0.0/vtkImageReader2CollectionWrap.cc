@@ -102,7 +102,7 @@ void VtkImageReader2CollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageReader2Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageReader2Wrap *a0 = ObjectWrap::Unwrap<VtkImageReader2Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -140,7 +140,7 @@ void VtkImageReader2CollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetNextItem();
-		VtkImageReader2Wrap::InitPtpl();
+	VtkImageReader2Wrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -185,7 +185,7 @@ void VtkImageReader2CollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageReader2CollectionWrap::InitPtpl();
+	VtkImageReader2CollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -213,7 +213,7 @@ void VtkImageReader2CollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageReader2CollectionWrap::InitPtpl();
+		VtkImageReader2CollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

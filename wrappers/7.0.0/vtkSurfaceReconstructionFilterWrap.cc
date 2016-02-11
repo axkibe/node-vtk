@@ -175,7 +175,7 @@ void VtkSurfaceReconstructionFilterWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkSurfaceReconstructionFilterWrap::InitPtpl();
+	VtkSurfaceReconstructionFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -203,7 +203,7 @@ void VtkSurfaceReconstructionFilterWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSurfaceReconstructionFilterWrap::InitPtpl();
+		VtkSurfaceReconstructionFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -224,7 +224,7 @@ void VtkSurfaceReconstructionFilterWrap::SetNeighborhoodSize(const Nan::Function
 	vtkSurfaceReconstructionFilter *native = (vtkSurfaceReconstructionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -243,7 +243,7 @@ void VtkSurfaceReconstructionFilterWrap::SetSampleSpacing(const Nan::FunctionCal
 	vtkSurfaceReconstructionFilter *native = (vtkSurfaceReconstructionFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -148,7 +148,7 @@ void VtkGraphLayoutWrap::GetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLayoutStrategy();
-		VtkGraphLayoutStrategyWrap::InitPtpl();
+	VtkGraphLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -171,7 +171,7 @@ void VtkGraphLayoutWrap::GetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkGraphLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkGraphLayoutWrap::InitPtpl();
+	VtkGraphLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -286,7 +286,7 @@ void VtkGraphLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGraphLayoutWrap::InitPtpl();
+		VtkGraphLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -308,7 +308,7 @@ void VtkGraphLayoutWrap::SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkGraphLayoutStrategyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkGraphLayoutStrategyWrap *a0 = ObjectWrap::Unwrap<VtkGraphLayoutStrategyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -328,7 +328,7 @@ void VtkGraphLayoutWrap::SetTransform(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAbstractTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAbstractTransformWrap *a0 = ObjectWrap::Unwrap<VtkAbstractTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -347,7 +347,7 @@ void VtkGraphLayoutWrap::SetUseTransform(const Nan::FunctionCallbackInfo<v8::Val
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -366,7 +366,7 @@ void VtkGraphLayoutWrap::SetZRange(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkGraphLayoutWrap::UseTransformOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -395,7 +395,7 @@ void VtkGraphLayoutWrap::UseTransformOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkGraphLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkGraphLayoutWrap>(info.Holder());
 	vtkGraphLayout *native = (vtkGraphLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

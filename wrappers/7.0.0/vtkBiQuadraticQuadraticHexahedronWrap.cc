@@ -259,7 +259,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::GetEdge(const Nan::FunctionCallbackI
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -289,7 +289,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::GetFace(const Nan::FunctionCallbackI
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -355,7 +355,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -385,7 +385,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -435,7 +435,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -455,7 +455,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateDerivs(const Nan::Functio
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -493,7 +493,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -523,7 +523,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -573,7 +573,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -593,7 +593,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolateFunctions(const Nan::Func
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -631,7 +631,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -661,7 +661,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -711,7 +711,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -731,7 +731,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationDerivs(const Nan::Funct
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -769,7 +769,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -799,7 +799,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -849,7 +849,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -869,7 +869,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::InterpolationFunctions(const Nan::Fu
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -917,7 +917,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::NewInstance(const Nan::FunctionCallb
 		return;
 	}
 	r = native->NewInstance();
-		VtkBiQuadraticQuadraticHexahedronWrap::InitPtpl();
+	VtkBiQuadraticQuadraticHexahedronWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -945,7 +945,7 @@ void VtkBiQuadraticQuadraticHexahedronWrap::SafeDownCast(const Nan::FunctionCall
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkBiQuadraticQuadraticHexahedronWrap::InitPtpl();
+		VtkBiQuadraticQuadraticHexahedronWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

@@ -152,7 +152,7 @@ void VtkAppendFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		r = native->GetInput(
 			info[0]->Int32Value()
 		);
-			VtkDataSetWrap::InitPtpl();
+		VtkDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -171,7 +171,7 @@ void VtkAppendFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetInput();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -194,7 +194,7 @@ void VtkAppendFilterWrap::GetInputList(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetInputList();
-		VtkDataSetCollectionWrap::InitPtpl();
+	VtkDataSetCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -288,7 +288,7 @@ void VtkAppendFilterWrap::MergePointsOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAppendFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAppendFilterWrap>(info.Holder());
 	vtkAppendFilter *native = (vtkAppendFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -300,7 +300,7 @@ void VtkAppendFilterWrap::MergePointsOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAppendFilterWrap *wrapper = ObjectWrap::Unwrap<VtkAppendFilterWrap>(info.Holder());
 	vtkAppendFilter *native = (vtkAppendFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkAppendFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkAppendFilterWrap::InitPtpl();
+	VtkAppendFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkAppendFilterWrap::RemoveInputData(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataSetWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDataSetWrap *a0 = ObjectWrap::Unwrap<VtkDataSetWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -367,7 +367,7 @@ void VtkAppendFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAppendFilterWrap::InitPtpl();
+		VtkAppendFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkAppendFilterWrap::SetMergePoints(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAppendFilter *native = (vtkAppendFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -407,7 +407,7 @@ void VtkAppendFilterWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackIn
 	vtkAppendFilter *native = (vtkAppendFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

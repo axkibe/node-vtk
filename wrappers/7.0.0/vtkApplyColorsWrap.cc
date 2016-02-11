@@ -57,8 +57,14 @@ void VtkApplyColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDefaultCellColor", GetDefaultCellColor);
+	Nan::SetPrototypeMethod(tpl, "getDefaultCellColor", GetDefaultCellColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetDefaultCellOpacity", GetDefaultCellOpacity);
 	Nan::SetPrototypeMethod(tpl, "getDefaultCellOpacity", GetDefaultCellOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "GetDefaultPointColor", GetDefaultPointColor);
+	Nan::SetPrototypeMethod(tpl, "getDefaultPointColor", GetDefaultPointColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetDefaultPointOpacity", GetDefaultPointOpacity);
 	Nan::SetPrototypeMethod(tpl, "getDefaultPointOpacity", GetDefaultPointOpacity);
@@ -75,8 +81,14 @@ void VtkApplyColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetScalePointLookupTable", GetScalePointLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getScalePointLookupTable", GetScalePointLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetSelectedCellColor", GetSelectedCellColor);
+	Nan::SetPrototypeMethod(tpl, "getSelectedCellColor", GetSelectedCellColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectedCellOpacity", GetSelectedCellOpacity);
 	Nan::SetPrototypeMethod(tpl, "getSelectedCellOpacity", GetSelectedCellOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "GetSelectedPointColor", GetSelectedPointColor);
+	Nan::SetPrototypeMethod(tpl, "getSelectedPointColor", GetSelectedPointColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetSelectedPointOpacity", GetSelectedPointOpacity);
 	Nan::SetPrototypeMethod(tpl, "getSelectedPointOpacity", GetSelectedPointOpacity);
@@ -234,7 +246,7 @@ void VtkApplyColorsWrap::GetCellLookupTable(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetCellLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -260,6 +272,23 @@ void VtkApplyColorsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkApplyColorsWrap::GetDefaultCellColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
+	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDefaultCellColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkApplyColorsWrap::GetDefaultCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
@@ -272,6 +301,23 @@ void VtkApplyColorsWrap::GetDefaultCellOpacity(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetDefaultCellOpacity();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkApplyColorsWrap::GetDefaultPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
+	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDefaultPointColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkApplyColorsWrap::GetDefaultPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -313,7 +359,7 @@ void VtkApplyColorsWrap::GetPointLookupTable(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetPointLookupTable();
-		VtkScalarsToColorsWrap::InitPtpl();
+	VtkScalarsToColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -353,6 +399,23 @@ void VtkApplyColorsWrap::GetScalePointLookupTable(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkApplyColorsWrap::GetSelectedCellColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
+	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectedCellColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkApplyColorsWrap::GetSelectedCellOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
@@ -365,6 +428,23 @@ void VtkApplyColorsWrap::GetSelectedCellOpacity(const Nan::FunctionCallbackInfo<
 	}
 	r = native->GetSelectedCellOpacity();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkApplyColorsWrap::GetSelectedPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
+	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectedPointColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkApplyColorsWrap::GetSelectedPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -456,7 +536,7 @@ void VtkApplyColorsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkApplyColorsWrap::InitPtpl();
+	VtkApplyColorsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -484,7 +564,7 @@ void VtkApplyColorsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkApplyColorsWrap::InitPtpl();
+		VtkApplyColorsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -503,7 +583,7 @@ void VtkApplyColorsWrap::ScaleCellLookupTableOff(const Nan::FunctionCallbackInfo
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -515,7 +595,7 @@ void VtkApplyColorsWrap::ScaleCellLookupTableOn(const Nan::FunctionCallbackInfo<
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -527,7 +607,7 @@ void VtkApplyColorsWrap::ScalePointLookupTableOff(const Nan::FunctionCallbackInf
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -539,7 +619,7 @@ void VtkApplyColorsWrap::ScalePointLookupTableOn(const Nan::FunctionCallbackInfo
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -554,7 +634,7 @@ void VtkApplyColorsWrap::SetCellColorOutputArrayName(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -574,7 +654,7 @@ void VtkApplyColorsWrap::SetCellLookupTable(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -601,7 +681,7 @@ void VtkApplyColorsWrap::SetDefaultCellColor(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -630,7 +710,7 @@ void VtkApplyColorsWrap::SetDefaultCellColor(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -646,7 +726,7 @@ void VtkApplyColorsWrap::SetDefaultCellColor(const Nan::FunctionCallbackInfo<v8:
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -669,7 +749,7 @@ void VtkApplyColorsWrap::SetDefaultCellOpacity(const Nan::FunctionCallbackInfo<v
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +776,7 @@ void VtkApplyColorsWrap::SetDefaultPointColor(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +805,7 @@ void VtkApplyColorsWrap::SetDefaultPointColor(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -741,7 +821,7 @@ void VtkApplyColorsWrap::SetDefaultPointColor(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -764,7 +844,7 @@ void VtkApplyColorsWrap::SetDefaultPointOpacity(const Nan::FunctionCallbackInfo<
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -784,7 +864,7 @@ void VtkApplyColorsWrap::SetPointColorOutputArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -804,7 +884,7 @@ void VtkApplyColorsWrap::SetPointLookupTable(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -823,7 +903,7 @@ void VtkApplyColorsWrap::SetScaleCellLookupTable(const Nan::FunctionCallbackInfo
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -842,7 +922,7 @@ void VtkApplyColorsWrap::SetScalePointLookupTable(const Nan::FunctionCallbackInf
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -869,7 +949,7 @@ void VtkApplyColorsWrap::SetSelectedCellColor(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -898,7 +978,7 @@ void VtkApplyColorsWrap::SetSelectedCellColor(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -914,7 +994,7 @@ void VtkApplyColorsWrap::SetSelectedCellColor(const Nan::FunctionCallbackInfo<v8
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -937,7 +1017,7 @@ void VtkApplyColorsWrap::SetSelectedCellOpacity(const Nan::FunctionCallbackInfo<
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -964,7 +1044,7 @@ void VtkApplyColorsWrap::SetSelectedPointColor(const Nan::FunctionCallbackInfo<v
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -993,7 +1073,7 @@ void VtkApplyColorsWrap::SetSelectedPointColor(const Nan::FunctionCallbackInfo<v
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1009,7 +1089,7 @@ void VtkApplyColorsWrap::SetSelectedPointColor(const Nan::FunctionCallbackInfo<v
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1032,7 +1112,7 @@ void VtkApplyColorsWrap::SetSelectedPointOpacity(const Nan::FunctionCallbackInfo
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1051,7 +1131,7 @@ void VtkApplyColorsWrap::SetUseCellLookupTable(const Nan::FunctionCallbackInfo<v
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1070,7 +1150,7 @@ void VtkApplyColorsWrap::SetUseCurrentAnnotationColor(const Nan::FunctionCallbac
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1089,7 +1169,7 @@ void VtkApplyColorsWrap::SetUsePointLookupTable(const Nan::FunctionCallbackInfo<
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1106,7 +1186,7 @@ void VtkApplyColorsWrap::UseCellLookupTableOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1118,7 +1198,7 @@ void VtkApplyColorsWrap::UseCellLookupTableOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1130,7 +1210,7 @@ void VtkApplyColorsWrap::UseCurrentAnnotationColorOff(const Nan::FunctionCallbac
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1142,7 +1222,7 @@ void VtkApplyColorsWrap::UseCurrentAnnotationColorOn(const Nan::FunctionCallback
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1154,7 +1234,7 @@ void VtkApplyColorsWrap::UsePointLookupTableOff(const Nan::FunctionCallbackInfo<
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1166,7 +1246,7 @@ void VtkApplyColorsWrap::UsePointLookupTableOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkApplyColorsWrap *wrapper = ObjectWrap::Unwrap<VtkApplyColorsWrap>(info.Holder());
 	vtkApplyColors *native = (vtkApplyColors *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

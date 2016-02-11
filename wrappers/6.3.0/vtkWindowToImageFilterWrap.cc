@@ -85,6 +85,9 @@ void VtkWindowToImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetShouldRerender", GetShouldRerender);
 	Nan::SetPrototypeMethod(tpl, "getShouldRerender", GetShouldRerender);
 
+	Nan::SetPrototypeMethod(tpl, "GetViewport", GetViewport);
+	Nan::SetPrototypeMethod(tpl, "getViewport", GetViewport);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -169,7 +172,7 @@ void VtkWindowToImageFilterWrap::FixBoundaryOff(const Nan::FunctionCallbackInfo<
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -181,7 +184,7 @@ void VtkWindowToImageFilterWrap::FixBoundaryOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -228,7 +231,7 @@ void VtkWindowToImageFilterWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetInput();
-		VtkWindowWrap::InitPtpl();
+	VtkWindowWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,7 +310,7 @@ void VtkWindowToImageFilterWrap::GetOutput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetOutput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -347,6 +350,23 @@ void VtkWindowToImageFilterWrap::GetShouldRerender(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkWindowToImageFilterWrap::GetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
+	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetViewport();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkWindowToImageFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
@@ -380,7 +400,7 @@ void VtkWindowToImageFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkWindowToImageFilterWrap::InitPtpl();
+	VtkWindowToImageFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -396,7 +416,7 @@ void VtkWindowToImageFilterWrap::ReadFrontBufferOff(const Nan::FunctionCallbackI
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -408,7 +428,7 @@ void VtkWindowToImageFilterWrap::ReadFrontBufferOn(const Nan::FunctionCallbackIn
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -432,7 +452,7 @@ void VtkWindowToImageFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkWindowToImageFilterWrap::InitPtpl();
+		VtkWindowToImageFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -453,7 +473,7 @@ void VtkWindowToImageFilterWrap::SetFixBoundary(const Nan::FunctionCallbackInfo<
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -473,7 +493,7 @@ void VtkWindowToImageFilterWrap::SetInput(const Nan::FunctionCallbackInfo<v8::Va
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +512,7 @@ void VtkWindowToImageFilterWrap::SetInputBufferType(const Nan::FunctionCallbackI
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +529,7 @@ void VtkWindowToImageFilterWrap::SetInputBufferTypeToRGB(const Nan::FunctionCall
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -521,7 +541,7 @@ void VtkWindowToImageFilterWrap::SetInputBufferTypeToRGBA(const Nan::FunctionCal
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -533,7 +553,7 @@ void VtkWindowToImageFilterWrap::SetInputBufferTypeToZBuffer(const Nan::Function
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -547,7 +567,7 @@ void VtkWindowToImageFilterWrap::SetMagnification(const Nan::FunctionCallbackInf
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -566,7 +586,7 @@ void VtkWindowToImageFilterWrap::SetReadFrontBuffer(const Nan::FunctionCallbackI
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -585,7 +605,7 @@ void VtkWindowToImageFilterWrap::SetShouldRerender(const Nan::FunctionCallbackIn
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -612,7 +632,7 @@ void VtkWindowToImageFilterWrap::SetViewport(const Nan::FunctionCallbackInfo<v8:
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -641,7 +661,7 @@ void VtkWindowToImageFilterWrap::SetViewport(const Nan::FunctionCallbackInfo<v8:
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -659,7 +679,7 @@ void VtkWindowToImageFilterWrap::SetViewport(const Nan::FunctionCallbackInfo<v8:
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -682,7 +702,7 @@ void VtkWindowToImageFilterWrap::ShouldRerenderOff(const Nan::FunctionCallbackIn
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -694,7 +714,7 @@ void VtkWindowToImageFilterWrap::ShouldRerenderOn(const Nan::FunctionCallbackInf
 {
 	VtkWindowToImageFilterWrap *wrapper = ObjectWrap::Unwrap<VtkWindowToImageFilterWrap>(info.Holder());
 	vtkWindowToImageFilter *native = (vtkWindowToImageFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

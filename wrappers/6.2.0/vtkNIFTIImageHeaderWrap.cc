@@ -118,6 +118,15 @@ void VtkNIFTIImageHeaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSFormCode", GetSFormCode);
 	Nan::SetPrototypeMethod(tpl, "getSFormCode", GetSFormCode);
 
+	Nan::SetPrototypeMethod(tpl, "GetSRowX", GetSRowX);
+	Nan::SetPrototypeMethod(tpl, "getSRowX", GetSRowX);
+
+	Nan::SetPrototypeMethod(tpl, "GetSRowY", GetSRowY);
+	Nan::SetPrototypeMethod(tpl, "getSRowY", GetSRowY);
+
+	Nan::SetPrototypeMethod(tpl, "GetSRowZ", GetSRowZ);
+	Nan::SetPrototypeMethod(tpl, "getSRowZ", GetSRowZ);
+
 	Nan::SetPrototypeMethod(tpl, "GetSclInter", GetSclInter);
 	Nan::SetPrototypeMethod(tpl, "getSclInter", GetSclInter);
 
@@ -265,7 +274,7 @@ void VtkNIFTIImageHeaderWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkNIFTIImageHeaderWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkNIFTIImageHeaderWrap *a0 = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -607,6 +616,57 @@ void VtkNIFTIImageHeaderWrap::GetSFormCode(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkNIFTIImageHeaderWrap::GetSRowX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
+	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSRowX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkNIFTIImageHeaderWrap::GetSRowY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
+	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSRowY();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkNIFTIImageHeaderWrap::GetSRowZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
+	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSRowZ();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkNIFTIImageHeaderWrap::GetSclInter(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
@@ -695,7 +755,7 @@ void VtkNIFTIImageHeaderWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkNIFTIImageHeaderWrap *wrapper = ObjectWrap::Unwrap<VtkNIFTIImageHeaderWrap>(info.Holder());
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +796,7 @@ void VtkNIFTIImageHeaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkNIFTIImageHeaderWrap::InitPtpl();
+	VtkNIFTIImageHeaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -764,7 +824,7 @@ void VtkNIFTIImageHeaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkNIFTIImageHeaderWrap::InitPtpl();
+		VtkNIFTIImageHeaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -786,7 +846,7 @@ void VtkNIFTIImageHeaderWrap::SetAuxFile(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -805,7 +865,7 @@ void VtkNIFTIImageHeaderWrap::SetCalMax(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -824,7 +884,7 @@ void VtkNIFTIImageHeaderWrap::SetCalMin(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -844,7 +904,7 @@ void VtkNIFTIImageHeaderWrap::SetDescrip(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -863,7 +923,7 @@ void VtkNIFTIImageHeaderWrap::SetDimInfo(const Nan::FunctionCallbackInfo<v8::Val
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -882,7 +942,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentCode(const Nan::FunctionCallbackInfo<v8::
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -902,7 +962,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentName(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -921,7 +981,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentP1(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -940,7 +1000,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentP2(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -959,7 +1019,7 @@ void VtkNIFTIImageHeaderWrap::SetIntentP3(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -978,7 +1038,7 @@ void VtkNIFTIImageHeaderWrap::SetQFormCode(const Nan::FunctionCallbackInfo<v8::V
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -997,7 +1057,7 @@ void VtkNIFTIImageHeaderWrap::SetQOffsetX(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1016,7 +1076,7 @@ void VtkNIFTIImageHeaderWrap::SetQOffsetY(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1035,7 +1095,7 @@ void VtkNIFTIImageHeaderWrap::SetQOffsetZ(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1054,7 +1114,7 @@ void VtkNIFTIImageHeaderWrap::SetQuaternB(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1073,7 +1133,7 @@ void VtkNIFTIImageHeaderWrap::SetQuaternC(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1092,7 +1152,7 @@ void VtkNIFTIImageHeaderWrap::SetQuaternD(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1111,7 +1171,7 @@ void VtkNIFTIImageHeaderWrap::SetSFormCode(const Nan::FunctionCallbackInfo<v8::V
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1138,7 +1198,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowX(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1167,7 +1227,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowX(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1185,7 +1245,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowX(const Nan::FunctionCallbackInfo<v8::Value
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1218,7 +1278,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowY(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1247,7 +1307,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowY(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1265,7 +1325,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowY(const Nan::FunctionCallbackInfo<v8::Value
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1298,7 +1358,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowZ(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1327,7 +1387,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowZ(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1345,7 +1405,7 @@ void VtkNIFTIImageHeaderWrap::SetSRowZ(const Nan::FunctionCallbackInfo<v8::Value
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -1370,7 +1430,7 @@ void VtkNIFTIImageHeaderWrap::SetSclInter(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1389,7 +1449,7 @@ void VtkNIFTIImageHeaderWrap::SetSclSlope(const Nan::FunctionCallbackInfo<v8::Va
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1408,7 +1468,7 @@ void VtkNIFTIImageHeaderWrap::SetSliceCode(const Nan::FunctionCallbackInfo<v8::V
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1427,7 +1487,7 @@ void VtkNIFTIImageHeaderWrap::SetSliceDuration(const Nan::FunctionCallbackInfo<v
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1446,7 +1506,7 @@ void VtkNIFTIImageHeaderWrap::SetTOffset(const Nan::FunctionCallbackInfo<v8::Val
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1465,7 +1525,7 @@ void VtkNIFTIImageHeaderWrap::SetXYZTUnits(const Nan::FunctionCallbackInfo<v8::V
 	vtkNIFTIImageHeader *native = (vtkNIFTIImageHeader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

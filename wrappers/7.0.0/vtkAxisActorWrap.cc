@@ -107,6 +107,15 @@ void VtkAxisActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DrawInnerGridlinesOn", DrawInnerGridlinesOn);
 	Nan::SetPrototypeMethod(tpl, "drawInnerGridlinesOn", DrawInnerGridlinesOn);
 
+	Nan::SetPrototypeMethod(tpl, "GetAxisBaseForX", GetAxisBaseForX);
+	Nan::SetPrototypeMethod(tpl, "getAxisBaseForX", GetAxisBaseForX);
+
+	Nan::SetPrototypeMethod(tpl, "GetAxisBaseForY", GetAxisBaseForY);
+	Nan::SetPrototypeMethod(tpl, "getAxisBaseForY", GetAxisBaseForY);
+
+	Nan::SetPrototypeMethod(tpl, "GetAxisBaseForZ", GetAxisBaseForZ);
+	Nan::SetPrototypeMethod(tpl, "getAxisBaseForZ", GetAxisBaseForZ);
+
 	Nan::SetPrototypeMethod(tpl, "GetAxisLinesProperty", GetAxisLinesProperty);
 	Nan::SetPrototypeMethod(tpl, "getAxisLinesProperty", GetAxisLinesProperty);
 
@@ -238,6 +247,9 @@ void VtkAxisActorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetPoint2Coordinate", GetPoint2Coordinate);
 	Nan::SetPrototypeMethod(tpl, "getPoint2Coordinate", GetPoint2Coordinate);
+
+	Nan::SetPrototypeMethod(tpl, "GetRange", GetRange);
+	Nan::SetPrototypeMethod(tpl, "getRange", GetRange);
 
 	Nan::SetPrototypeMethod(tpl, "GetSaveTitlePosition", GetSaveTitlePosition);
 	Nan::SetPrototypeMethod(tpl, "getSaveTitlePosition", GetSaveTitlePosition);
@@ -566,7 +578,7 @@ void VtkAxisActorWrap::AxisVisibilityOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -578,7 +590,7 @@ void VtkAxisActorWrap::AxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -595,7 +607,7 @@ void VtkAxisActorWrap::BuildAxis(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
 		if(info.Length() > 1 && info[1]->IsBoolean())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -614,7 +626,7 @@ void VtkAxisActorWrap::CalculateLabelOffsetOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -626,7 +638,7 @@ void VtkAxisActorWrap::CalculateLabelOffsetOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -638,7 +650,7 @@ void VtkAxisActorWrap::CalculateTitleOffsetOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -650,7 +662,7 @@ void VtkAxisActorWrap::CalculateTitleOffsetOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -782,7 +794,7 @@ void VtkAxisActorWrap::DrawGridlinesOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -794,7 +806,7 @@ void VtkAxisActorWrap::DrawGridlinesOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -806,7 +818,7 @@ void VtkAxisActorWrap::DrawGridlinesOnlyOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -818,7 +830,7 @@ void VtkAxisActorWrap::DrawGridlinesOnlyOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -830,7 +842,7 @@ void VtkAxisActorWrap::DrawGridpolysOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -842,7 +854,7 @@ void VtkAxisActorWrap::DrawGridpolysOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -854,7 +866,7 @@ void VtkAxisActorWrap::DrawInnerGridlinesOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -866,12 +878,63 @@ void VtkAxisActorWrap::DrawInnerGridlinesOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
 	}
 	native->DrawInnerGridlinesOn();
+}
+
+void VtkAxisActorWrap::GetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
+	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisBaseForX();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkAxisActorWrap::GetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
+	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisBaseForY();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkAxisActorWrap::GetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
+	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetAxisBaseForZ();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAxisActorWrap::GetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -885,7 +948,7 @@ void VtkAxisActorWrap::GetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetAxisLinesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1023,7 +1086,7 @@ void VtkAxisActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1052,7 +1115,7 @@ void VtkAxisActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1062,7 +1125,17 @@ void VtkAxisActorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		);
 		return;
 	}
-	Nan::ThrowError("Parameter mismatch");
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 6 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 6);
+	memcpy(ab->GetContents().Data(), r, 6 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAxisActorWrap::GetCalculateLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1104,7 +1177,7 @@ void VtkAxisActorWrap::GetCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		return;
 	}
 	r = native->GetCamera();
-		VtkCameraWrap::InitPtpl();
+	VtkCameraWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1316,7 +1389,7 @@ void VtkAxisActorWrap::GetGridlinesProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGridlinesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1339,7 +1412,7 @@ void VtkAxisActorWrap::GetGridpolysProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetGridpolysProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1376,7 +1449,7 @@ void VtkAxisActorWrap::GetInnerGridlinesProperty(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetInnerGridlinesProperty();
-		VtkPropertyWrap::InitPtpl();
+	VtkPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1427,7 +1500,7 @@ void VtkAxisActorWrap::GetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetLabelTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1583,7 +1656,7 @@ void VtkAxisActorWrap::GetPoint1Coordinate(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPoint1Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1606,7 +1679,7 @@ void VtkAxisActorWrap::GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetPoint2Coordinate();
-		VtkCoordinateWrap::InitPtpl();
+	VtkCoordinateWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1616,6 +1689,23 @@ void VtkAxisActorWrap::GetPoint2Coordinate(const Nan::FunctionCallbackInfo<v8::V
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAxisActorWrap::GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
+	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkAxisActorWrap::GetSaveTitlePosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1727,7 +1817,7 @@ void VtkAxisActorWrap::GetTitleActor(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->GetTitleActor();
-		VtkAxisFollowerWrap::InitPtpl();
+	VtkAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1764,7 +1854,7 @@ void VtkAxisActorWrap::GetTitleProp3D(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetTitleProp3D();
-		VtkProp3DAxisFollowerWrap::InitPtpl();
+	VtkProp3DAxisFollowerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1787,7 +1877,7 @@ void VtkAxisActorWrap::GetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetTitleTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1895,7 +1985,7 @@ void VtkAxisActorWrap::LabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1907,7 +1997,7 @@ void VtkAxisActorWrap::LabelVisibilityOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1919,7 +2009,7 @@ void VtkAxisActorWrap::MinorTicksVisibleOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1931,7 +2021,7 @@ void VtkAxisActorWrap::MinorTicksVisibleOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1950,7 +2040,7 @@ void VtkAxisActorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->NewInstance();
-		VtkAxisActorWrap::InitPtpl();
+	VtkAxisActorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1969,7 +2059,7 @@ void VtkAxisActorWrap::ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2086,7 +2176,7 @@ void VtkAxisActorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& 
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAxisActorWrap::InitPtpl();
+		VtkAxisActorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -2115,7 +2205,7 @@ void VtkAxisActorWrap::SetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2144,7 +2234,7 @@ void VtkAxisActorWrap::SetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2160,7 +2250,7 @@ void VtkAxisActorWrap::SetAxisBaseForX(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2191,7 +2281,7 @@ void VtkAxisActorWrap::SetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2220,7 +2310,7 @@ void VtkAxisActorWrap::SetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2236,7 +2326,7 @@ void VtkAxisActorWrap::SetAxisBaseForY(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2267,7 +2357,7 @@ void VtkAxisActorWrap::SetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2296,7 +2386,7 @@ void VtkAxisActorWrap::SetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2312,7 +2402,7 @@ void VtkAxisActorWrap::SetAxisBaseForZ(const Nan::FunctionCallbackInfo<v8::Value
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -2336,7 +2426,7 @@ void VtkAxisActorWrap::SetAxisLinesProperty(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2355,7 +2445,7 @@ void VtkAxisActorWrap::SetAxisOnOrigin(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2374,7 +2464,7 @@ void VtkAxisActorWrap::SetAxisPosition(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2391,7 +2481,7 @@ void VtkAxisActorWrap::SetAxisPositionToMaxMax(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2403,7 +2493,7 @@ void VtkAxisActorWrap::SetAxisPositionToMaxMin(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2415,7 +2505,7 @@ void VtkAxisActorWrap::SetAxisPositionToMinMax(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2427,7 +2517,7 @@ void VtkAxisActorWrap::SetAxisPositionToMinMin(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2441,7 +2531,7 @@ void VtkAxisActorWrap::SetAxisType(const Nan::FunctionCallbackInfo<v8::Value>& i
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2458,7 +2548,7 @@ void VtkAxisActorWrap::SetAxisTypeToX(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2470,7 +2560,7 @@ void VtkAxisActorWrap::SetAxisTypeToY(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2482,7 +2572,7 @@ void VtkAxisActorWrap::SetAxisTypeToZ(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2496,7 +2586,7 @@ void VtkAxisActorWrap::SetAxisVisibility(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2523,7 +2613,7 @@ void VtkAxisActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2552,7 +2642,7 @@ void VtkAxisActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2574,7 +2664,7 @@ void VtkAxisActorWrap::SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& inf
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -2603,7 +2693,7 @@ void VtkAxisActorWrap::SetCalculateLabelOffset(const Nan::FunctionCallbackInfo<v
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2622,7 +2712,7 @@ void VtkAxisActorWrap::SetCalculateTitleOffset(const Nan::FunctionCallbackInfo<v
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2642,7 +2732,7 @@ void VtkAxisActorWrap::SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCameraWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCameraWrap *a0 = ObjectWrap::Unwrap<VtkCameraWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2663,7 +2753,7 @@ void VtkAxisActorWrap::SetDeltaMajor(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -2684,7 +2774,7 @@ void VtkAxisActorWrap::SetDeltaMinor(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2703,7 +2793,7 @@ void VtkAxisActorWrap::SetDeltaRangeMajor(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2722,7 +2812,7 @@ void VtkAxisActorWrap::SetDeltaRangeMinor(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2741,7 +2831,7 @@ void VtkAxisActorWrap::SetDrawGridlines(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2760,7 +2850,7 @@ void VtkAxisActorWrap::SetDrawGridlinesLocation(const Nan::FunctionCallbackInfo<
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2779,7 +2869,7 @@ void VtkAxisActorWrap::SetDrawGridlinesOnly(const Nan::FunctionCallbackInfo<v8::
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2798,7 +2888,7 @@ void VtkAxisActorWrap::SetDrawGridpolys(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2817,7 +2907,7 @@ void VtkAxisActorWrap::SetDrawInnerGridlines(const Nan::FunctionCallbackInfo<v8:
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2836,7 +2926,7 @@ void VtkAxisActorWrap::SetGridlineXLength(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2855,7 +2945,7 @@ void VtkAxisActorWrap::SetGridlineYLength(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2874,7 +2964,7 @@ void VtkAxisActorWrap::SetGridlineZLength(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2894,7 +2984,7 @@ void VtkAxisActorWrap::SetGridlinesProperty(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2914,7 +3004,7 @@ void VtkAxisActorWrap::SetGridpolysProperty(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2933,7 +3023,7 @@ void VtkAxisActorWrap::SetHorizontalOffsetYTitle2D(const Nan::FunctionCallbackIn
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2953,7 +3043,7 @@ void VtkAxisActorWrap::SetInnerGridlinesProperty(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropertyWrap *a0 = ObjectWrap::Unwrap<VtkPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2973,7 +3063,7 @@ void VtkAxisActorWrap::SetLabelFormat(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -2992,7 +3082,7 @@ void VtkAxisActorWrap::SetLabelOffset(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3011,7 +3101,7 @@ void VtkAxisActorWrap::SetLabelScale(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3025,7 +3115,7 @@ void VtkAxisActorWrap::SetLabelScale(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3047,7 +3137,7 @@ void VtkAxisActorWrap::SetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3066,7 +3156,7 @@ void VtkAxisActorWrap::SetLabelVisibility(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3086,7 +3176,7 @@ void VtkAxisActorWrap::SetLabels(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkStringArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkStringArrayWrap *a0 = ObjectWrap::Unwrap<VtkStringArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3105,7 +3195,7 @@ void VtkAxisActorWrap::SetMajorRangeStart(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3126,7 +3216,7 @@ void VtkAxisActorWrap::SetMajorStart(const Nan::FunctionCallbackInfo<v8::Value>&
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3147,7 +3237,7 @@ void VtkAxisActorWrap::SetMajorTickSize(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3166,7 +3256,7 @@ void VtkAxisActorWrap::SetMinorRangeStart(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3185,7 +3275,7 @@ void VtkAxisActorWrap::SetMinorStart(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3204,7 +3294,7 @@ void VtkAxisActorWrap::SetMinorTickSize(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3223,7 +3313,7 @@ void VtkAxisActorWrap::SetMinorTicksVisible(const Nan::FunctionCallbackInfo<v8::
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3250,7 +3340,7 @@ void VtkAxisActorWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3279,7 +3369,7 @@ void VtkAxisActorWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3295,7 +3385,7 @@ void VtkAxisActorWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3326,7 +3416,7 @@ void VtkAxisActorWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3355,7 +3445,7 @@ void VtkAxisActorWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3371,7 +3461,7 @@ void VtkAxisActorWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -3402,7 +3492,7 @@ void VtkAxisActorWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& info
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3431,7 +3521,7 @@ void VtkAxisActorWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& info
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3445,7 +3535,7 @@ void VtkAxisActorWrap::SetRange(const Nan::FunctionCallbackInfo<v8::Value>& info
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -3466,7 +3556,7 @@ void VtkAxisActorWrap::SetSaveTitlePosition(const Nan::FunctionCallbackInfo<v8::
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3485,7 +3575,7 @@ void VtkAxisActorWrap::SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3504,7 +3594,7 @@ void VtkAxisActorWrap::SetTickLocation(const Nan::FunctionCallbackInfo<v8::Value
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3521,7 +3611,7 @@ void VtkAxisActorWrap::SetTickLocationToBoth(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3533,7 +3623,7 @@ void VtkAxisActorWrap::SetTickLocationToInside(const Nan::FunctionCallbackInfo<v
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3545,7 +3635,7 @@ void VtkAxisActorWrap::SetTickLocationToOutside(const Nan::FunctionCallbackInfo<
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3559,7 +3649,7 @@ void VtkAxisActorWrap::SetTickVisibility(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3579,7 +3669,7 @@ void VtkAxisActorWrap::SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3598,7 +3688,7 @@ void VtkAxisActorWrap::SetTitleOffset(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3617,7 +3707,7 @@ void VtkAxisActorWrap::SetTitleScale(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3637,7 +3727,7 @@ void VtkAxisActorWrap::SetTitleTextProperty(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3656,7 +3746,7 @@ void VtkAxisActorWrap::SetTitleVisibility(const Nan::FunctionCallbackInfo<v8::Va
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3675,7 +3765,7 @@ void VtkAxisActorWrap::SetUse2DMode(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3694,7 +3784,7 @@ void VtkAxisActorWrap::SetUseTextActor3D(const Nan::FunctionCallbackInfo<v8::Val
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3713,7 +3803,7 @@ void VtkAxisActorWrap::SetVerticalOffsetXTitle2D(const Nan::FunctionCallbackInfo
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -3730,7 +3820,7 @@ void VtkAxisActorWrap::TickVisibilityOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3742,7 +3832,7 @@ void VtkAxisActorWrap::TickVisibilityOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3754,7 +3844,7 @@ void VtkAxisActorWrap::TitleVisibilityOff(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3766,7 +3856,7 @@ void VtkAxisActorWrap::TitleVisibilityOn(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkAxisActorWrap *wrapper = ObjectWrap::Unwrap<VtkAxisActorWrap>(info.Holder());
 	vtkAxisActor *native = (vtkAxisActor *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

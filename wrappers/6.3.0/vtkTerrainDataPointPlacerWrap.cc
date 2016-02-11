@@ -122,7 +122,7 @@ void VtkTerrainDataPointPlacerWrap::AddProp(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropWrap *a0 = ObjectWrap::Unwrap<VtkPropWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1638,7 +1638,7 @@ void VtkTerrainDataPointPlacerWrap::GetPropPicker(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetPropPicker();
-		VtkPropPickerWrap::InitPtpl();
+	VtkPropPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1683,7 +1683,7 @@ void VtkTerrainDataPointPlacerWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkTerrainDataPointPlacerWrap::InitPtpl();
+	VtkTerrainDataPointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1699,7 +1699,7 @@ void VtkTerrainDataPointPlacerWrap::RemoveAllProps(const Nan::FunctionCallbackIn
 {
 	VtkTerrainDataPointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkTerrainDataPointPlacerWrap>(info.Holder());
 	vtkTerrainDataPointPlacer *native = (vtkTerrainDataPointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1723,7 +1723,7 @@ void VtkTerrainDataPointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTerrainDataPointPlacerWrap::InitPtpl();
+		VtkTerrainDataPointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1744,7 +1744,7 @@ void VtkTerrainDataPointPlacerWrap::SetHeightOffset(const Nan::FunctionCallbackI
 	vtkTerrainDataPointPlacer *native = (vtkTerrainDataPointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

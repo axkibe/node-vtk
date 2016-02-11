@@ -114,7 +114,7 @@ void VtkStructuredGridClipWrap::ClipDataOff(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkStructuredGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridClipWrap>(info.Holder());
 	vtkStructuredGridClip *native = (vtkStructuredGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -126,7 +126,7 @@ void VtkStructuredGridClipWrap::ClipDataOn(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkStructuredGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridClipWrap>(info.Holder());
 	vtkStructuredGridClip *native = (vtkStructuredGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -176,7 +176,7 @@ void VtkStructuredGridClipWrap::GetOutputWholeExtent(const Nan::FunctionCallback
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -205,7 +205,7 @@ void VtkStructuredGridClipWrap::GetOutputWholeExtent(const Nan::FunctionCallback
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -251,7 +251,7 @@ void VtkStructuredGridClipWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkStructuredGridClipWrap::InitPtpl();
+	VtkStructuredGridClipWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkStructuredGridClipWrap::ResetOutputWholeExtent(const Nan::FunctionCallba
 {
 	VtkStructuredGridClipWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridClipWrap>(info.Holder());
 	vtkStructuredGridClip *native = (vtkStructuredGridClip *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +291,7 @@ void VtkStructuredGridClipWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStructuredGridClipWrap::InitPtpl();
+		VtkStructuredGridClipWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -312,7 +312,7 @@ void VtkStructuredGridClipWrap::SetClipData(const Nan::FunctionCallbackInfo<v8::
 	vtkStructuredGridClip *native = (vtkStructuredGridClip *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -342,7 +342,7 @@ void VtkStructuredGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -376,7 +376,7 @@ void VtkStructuredGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkInformationWrap::ptpl))->HasInstance(info[1]))
 		{
 			VtkInformationWrap *a1 = ObjectWrap::Unwrap<VtkInformationWrap>(info[1]->ToObject());
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -400,7 +400,7 @@ void VtkStructuredGridClipWrap::SetOutputWholeExtent(const Nan::FunctionCallback
 					{
 						if(info.Length() > 5 && info[5]->IsInt32())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;

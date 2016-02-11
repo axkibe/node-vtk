@@ -35,6 +35,8 @@ class VtkCursor2DWrap : public VtkPolyDataAlgorithmWrap
 		static void AxesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFocalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);

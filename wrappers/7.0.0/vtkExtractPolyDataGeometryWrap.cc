@@ -135,7 +135,7 @@ void VtkExtractPolyDataGeometryWrap::ExtractBoundaryCellsOff(const Nan::Function
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -147,7 +147,7 @@ void VtkExtractPolyDataGeometryWrap::ExtractBoundaryCellsOn(const Nan::FunctionC
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -159,7 +159,7 @@ void VtkExtractPolyDataGeometryWrap::ExtractInsideOff(const Nan::FunctionCallbac
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -171,7 +171,7 @@ void VtkExtractPolyDataGeometryWrap::ExtractInsideOn(const Nan::FunctionCallback
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -232,7 +232,7 @@ void VtkExtractPolyDataGeometryWrap::GetImplicitFunction(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetImplicitFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -291,7 +291,7 @@ void VtkExtractPolyDataGeometryWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkExtractPolyDataGeometryWrap::InitPtpl();
+	VtkExtractPolyDataGeometryWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -307,7 +307,7 @@ void VtkExtractPolyDataGeometryWrap::PassPointsOff(const Nan::FunctionCallbackIn
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -319,7 +319,7 @@ void VtkExtractPolyDataGeometryWrap::PassPointsOn(const Nan::FunctionCallbackInf
 {
 	VtkExtractPolyDataGeometryWrap *wrapper = ObjectWrap::Unwrap<VtkExtractPolyDataGeometryWrap>(info.Holder());
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -343,7 +343,7 @@ void VtkExtractPolyDataGeometryWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExtractPolyDataGeometryWrap::InitPtpl();
+		VtkExtractPolyDataGeometryWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkExtractPolyDataGeometryWrap::SetExtractBoundaryCells(const Nan::Function
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -383,7 +383,7 @@ void VtkExtractPolyDataGeometryWrap::SetExtractInside(const Nan::FunctionCallbac
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -403,7 +403,7 @@ void VtkExtractPolyDataGeometryWrap::SetImplicitFunction(const Nan::FunctionCall
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkExtractPolyDataGeometryWrap::SetPassPoints(const Nan::FunctionCallbackIn
 	vtkExtractPolyDataGeometry *native = (vtkExtractPolyDataGeometry *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

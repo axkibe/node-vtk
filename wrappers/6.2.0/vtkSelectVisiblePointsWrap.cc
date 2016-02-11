@@ -57,6 +57,9 @@ void VtkSelectVisiblePointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetSelectInvisible", GetSelectInvisible);
 	Nan::SetPrototypeMethod(tpl, "getSelectInvisible", GetSelectInvisible);
 
+	Nan::SetPrototypeMethod(tpl, "GetSelection", GetSelection);
+	Nan::SetPrototypeMethod(tpl, "getSelection", GetSelection);
+
 	Nan::SetPrototypeMethod(tpl, "GetSelectionWindow", GetSelectionWindow);
 	Nan::SetPrototypeMethod(tpl, "getSelectionWindow", GetSelectionWindow);
 
@@ -159,7 +162,7 @@ void VtkSelectVisiblePointsWrap::GetRenderer(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->GetRenderer();
-		VtkRendererWrap::InitPtpl();
+	VtkRendererWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -183,6 +186,23 @@ void VtkSelectVisiblePointsWrap::GetSelectInvisible(const Nan::FunctionCallbackI
 	}
 	r = native->GetSelectInvisible();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSelectVisiblePointsWrap::GetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
+	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelection();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkSelectVisiblePointsWrap::GetSelectionWindow(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -274,7 +294,7 @@ void VtkSelectVisiblePointsWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkSelectVisiblePointsWrap::InitPtpl();
+	VtkSelectVisiblePointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -302,7 +322,7 @@ void VtkSelectVisiblePointsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSelectVisiblePointsWrap::InitPtpl();
+		VtkSelectVisiblePointsWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -321,7 +341,7 @@ void VtkSelectVisiblePointsWrap::SelectInvisibleOff(const Nan::FunctionCallbackI
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -333,7 +353,7 @@ void VtkSelectVisiblePointsWrap::SelectInvisibleOn(const Nan::FunctionCallbackIn
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -345,7 +365,7 @@ void VtkSelectVisiblePointsWrap::SelectionWindowOff(const Nan::FunctionCallbackI
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +377,7 @@ void VtkSelectVisiblePointsWrap::SelectionWindowOn(const Nan::FunctionCallbackIn
 {
 	VtkSelectVisiblePointsWrap *wrapper = ObjectWrap::Unwrap<VtkSelectVisiblePointsWrap>(info.Holder());
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -372,7 +392,7 @@ void VtkSelectVisiblePointsWrap::SetRenderer(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRendererWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRendererWrap *a0 = ObjectWrap::Unwrap<VtkRendererWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -391,7 +411,7 @@ void VtkSelectVisiblePointsWrap::SetSelectInvisible(const Nan::FunctionCallbackI
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -418,7 +438,7 @@ void VtkSelectVisiblePointsWrap::SetSelection(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -447,7 +467,7 @@ void VtkSelectVisiblePointsWrap::SetSelection(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -465,7 +485,7 @@ void VtkSelectVisiblePointsWrap::SetSelection(const Nan::FunctionCallbackInfo<v8
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -490,7 +510,7 @@ void VtkSelectVisiblePointsWrap::SetSelectionWindow(const Nan::FunctionCallbackI
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +529,7 @@ void VtkSelectVisiblePointsWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8
 	vtkSelectVisiblePoints *native = (vtkSelectVisiblePoints *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

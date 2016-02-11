@@ -59,6 +59,12 @@ void VtkPerlinNoiseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetFrequency", GetFrequency);
+	Nan::SetPrototypeMethod(tpl, "getFrequency", GetFrequency);
+
+	Nan::SetPrototypeMethod(tpl, "GetPhase", GetPhase);
+	Nan::SetPrototypeMethod(tpl, "getPhase", GetPhase);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -211,7 +217,7 @@ void VtkPerlinNoiseWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -241,7 +247,7 @@ void VtkPerlinNoiseWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -291,7 +297,7 @@ void VtkPerlinNoiseWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -311,7 +317,7 @@ void VtkPerlinNoiseWrap::EvaluateGradient(const Nan::FunctionCallbackInfo<v8::Va
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -354,6 +360,40 @@ void VtkPerlinNoiseWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkPerlinNoiseWrap::GetFrequency(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPerlinNoiseWrap *wrapper = ObjectWrap::Unwrap<VtkPerlinNoiseWrap>(info.Holder());
+	vtkPerlinNoise *native = (vtkPerlinNoise *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrequency();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkPerlinNoiseWrap::GetPhase(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPerlinNoiseWrap *wrapper = ObjectWrap::Unwrap<VtkPerlinNoiseWrap>(info.Holder());
+	vtkPerlinNoise *native = (vtkPerlinNoise *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPhase();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkPerlinNoiseWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPerlinNoiseWrap *wrapper = ObjectWrap::Unwrap<VtkPerlinNoiseWrap>(info.Holder());
@@ -387,7 +427,7 @@ void VtkPerlinNoiseWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkPerlinNoiseWrap::InitPtpl();
+	VtkPerlinNoiseWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -415,7 +455,7 @@ void VtkPerlinNoiseWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPerlinNoiseWrap::InitPtpl();
+		VtkPerlinNoiseWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -436,7 +476,7 @@ void VtkPerlinNoiseWrap::SetAmplitude(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkPerlinNoise *native = (vtkPerlinNoise *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -463,7 +503,7 @@ void VtkPerlinNoiseWrap::SetFrequency(const Nan::FunctionCallbackInfo<v8::Value>
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -492,7 +532,7 @@ void VtkPerlinNoiseWrap::SetFrequency(const Nan::FunctionCallbackInfo<v8::Value>
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -508,7 +548,7 @@ void VtkPerlinNoiseWrap::SetFrequency(const Nan::FunctionCallbackInfo<v8::Value>
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -539,7 +579,7 @@ void VtkPerlinNoiseWrap::SetPhase(const Nan::FunctionCallbackInfo<v8::Value>& in
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -568,7 +608,7 @@ void VtkPerlinNoiseWrap::SetPhase(const Nan::FunctionCallbackInfo<v8::Value>& in
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -584,7 +624,7 @@ void VtkPerlinNoiseWrap::SetPhase(const Nan::FunctionCallbackInfo<v8::Value>& in
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

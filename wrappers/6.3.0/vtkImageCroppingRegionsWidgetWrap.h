@@ -35,6 +35,7 @@ class VtkImageCroppingRegionsWidgetWrap : public Vtk3DWidgetWrap
 		static void GetLine2Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLine3Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLine4Color(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPlanePositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVolumeMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);

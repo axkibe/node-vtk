@@ -56,10 +56,13 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetDolly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEventPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetEventSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInitialized(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeyCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetLastEventPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLightFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFlyFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfFlyFramesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -71,6 +74,7 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRepeatCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetShiftKey(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStillUpdateRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStillUpdateRateMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStillUpdateRateMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);

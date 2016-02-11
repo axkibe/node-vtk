@@ -31,6 +31,8 @@ class VtkImageGaussianSmoothWrap : public VtkThreadedImageAlgorithmWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRadiusFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStandardDeviations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);

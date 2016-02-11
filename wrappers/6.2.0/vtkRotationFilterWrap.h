@@ -35,6 +35,7 @@ class VtkRotationFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAxisMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCopyInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfCopies(const Nan::FunctionCallbackInfo<v8::Value>& info);

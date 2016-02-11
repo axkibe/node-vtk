@@ -135,7 +135,7 @@ void VtkSeedRepresentationWrap::BuildRepresentation(const Nan::FunctionCallbackI
 {
 	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -271,7 +271,7 @@ void VtkSeedRepresentationWrap::GetHandleRepresentation(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetHandleRepresentation();
-		VtkHandleRepresentationWrap::InitPtpl();
+	VtkHandleRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -372,7 +372,7 @@ void VtkSeedRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->NewInstance();
-		VtkSeedRepresentationWrap::InitPtpl();
+	VtkSeedRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -388,7 +388,7 @@ void VtkSeedRepresentationWrap::RemoveActiveHandle(const Nan::FunctionCallbackIn
 {
 	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -402,7 +402,7 @@ void VtkSeedRepresentationWrap::RemoveHandle(const Nan::FunctionCallbackInfo<v8:
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -419,7 +419,7 @@ void VtkSeedRepresentationWrap::RemoveLastHandle(const Nan::FunctionCallbackInfo
 {
 	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -443,7 +443,7 @@ void VtkSeedRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8:
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSeedRepresentationWrap::InitPtpl();
+		VtkSeedRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -465,7 +465,7 @@ void VtkSeedRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHandleRepresentationWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHandleRepresentationWrap *a0 = ObjectWrap::Unwrap<VtkHandleRepresentationWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -484,7 +484,7 @@ void VtkSeedRepresentationWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8:
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

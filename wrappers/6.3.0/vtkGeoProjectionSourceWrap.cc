@@ -217,7 +217,7 @@ void VtkGeoProjectionSourceWrap::GetTransform(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -262,7 +262,7 @@ void VtkGeoProjectionSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkGeoProjectionSourceWrap::InitPtpl();
+	VtkGeoProjectionSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkGeoProjectionSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkGeoProjectionSourceWrap::InitPtpl();
+		VtkGeoProjectionSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkGeoProjectionSourceWrap::SetMinCellsPerNode(const Nan::FunctionCallbackI
 	vtkGeoProjectionSource *native = (vtkGeoProjectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -330,7 +330,7 @@ void VtkGeoProjectionSourceWrap::SetProjection(const Nan::FunctionCallbackInfo<v
 	vtkGeoProjectionSource *native = (vtkGeoProjectionSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

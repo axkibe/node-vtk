@@ -37,6 +37,8 @@ class VtkLinearTransformWrap : public VtkHomogeneousTransformWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformDoubleNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void TransformDoubleVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);

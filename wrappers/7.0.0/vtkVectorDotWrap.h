@@ -29,8 +29,10 @@ class VtkVectorDotWrap : public VtkDataSetAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetActualRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MapScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);

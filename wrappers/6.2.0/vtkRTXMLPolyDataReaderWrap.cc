@@ -195,7 +195,7 @@ void VtkRTXMLPolyDataReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	r = native->NewInstance();
-		VtkRTXMLPolyDataReaderWrap::InitPtpl();
+	VtkRTXMLPolyDataReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -211,7 +211,7 @@ void VtkRTXMLPolyDataReaderWrap::ResetReader(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkRTXMLPolyDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkRTXMLPolyDataReaderWrap>(info.Holder());
 	vtkRTXMLPolyDataReader *native = (vtkRTXMLPolyDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -235,7 +235,7 @@ void VtkRTXMLPolyDataReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkRTXMLPolyDataReaderWrap::InitPtpl();
+		VtkRTXMLPolyDataReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkRTXMLPolyDataReaderWrap::SetLocation(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -274,7 +274,7 @@ void VtkRTXMLPolyDataReaderWrap::UpdateToNextFile(const Nan::FunctionCallbackInf
 {
 	VtkRTXMLPolyDataReaderWrap *wrapper = ObjectWrap::Unwrap<VtkRTXMLPolyDataReaderWrap>(info.Holder());
 	vtkRTXMLPolyDataReader *native = (vtkRTXMLPolyDataReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -197,7 +197,7 @@ void VtkPerspectiveTransformWrap::AdjustViewport(const Nan::FunctionCallbackInfo
 							{
 								if(info.Length() > 7 && info[7]->IsNumber())
 								{
-									if(info.Length() != 8)
+																		if(info.Length() != 8)
 									{
 										Nan::ThrowError("Too many parameters.");
 										return;
@@ -236,7 +236,7 @@ void VtkPerspectiveTransformWrap::AdjustZBuffer(const Nan::FunctionCallbackInfo<
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -291,7 +291,7 @@ void VtkPerspectiveTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -320,7 +320,7 @@ void VtkPerspectiveTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -333,7 +333,7 @@ void VtkPerspectiveTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -346,7 +346,7 @@ void VtkPerspectiveTransformWrap::Concatenate(const Nan::FunctionCallbackInfo<v8
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -375,7 +375,7 @@ void VtkPerspectiveTransformWrap::Frustum(const Nan::FunctionCallbackInfo<v8::Va
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -427,7 +427,7 @@ void VtkPerspectiveTransformWrap::GetConcatenatedTransform(const Nan::FunctionCa
 		r = native->GetConcatenatedTransform(
 			info[0]->Int32Value()
 		);
-			VtkHomogeneousTransformWrap::InitPtpl();
+		VtkHomogeneousTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -453,7 +453,7 @@ void VtkPerspectiveTransformWrap::GetInput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetInput();
-		VtkHomogeneousTransformWrap::InitPtpl();
+	VtkHomogeneousTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -497,7 +497,7 @@ void VtkPerspectiveTransformWrap::Identity(const Nan::FunctionCallbackInfo<v8::V
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -509,7 +509,7 @@ void VtkPerspectiveTransformWrap::Inverse(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -550,7 +550,7 @@ void VtkPerspectiveTransformWrap::MakeTransform(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->MakeTransform();
-		VtkAbstractTransformWrap::InitPtpl();
+	VtkAbstractTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -573,7 +573,7 @@ void VtkPerspectiveTransformWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkPerspectiveTransformWrap::InitPtpl();
+	VtkPerspectiveTransformWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -601,7 +601,7 @@ void VtkPerspectiveTransformWrap::Ortho(const Nan::FunctionCallbackInfo<v8::Valu
 					{
 						if(info.Length() > 5 && info[5]->IsNumber())
 						{
-							if(info.Length() != 6)
+														if(info.Length() != 6)
 							{
 								Nan::ThrowError("Too many parameters.");
 								return;
@@ -636,7 +636,7 @@ void VtkPerspectiveTransformWrap::Perspective(const Nan::FunctionCallbackInfo<v8
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -659,7 +659,7 @@ void VtkPerspectiveTransformWrap::Pop(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -671,7 +671,7 @@ void VtkPerspectiveTransformWrap::PostMultiply(const Nan::FunctionCallbackInfo<v
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -683,7 +683,7 @@ void VtkPerspectiveTransformWrap::PreMultiply(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -695,7 +695,7 @@ void VtkPerspectiveTransformWrap::Push(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkPerspectiveTransformWrap *wrapper = ObjectWrap::Unwrap<VtkPerspectiveTransformWrap>(info.Holder());
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -719,7 +719,7 @@ void VtkPerspectiveTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8:
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -749,7 +749,7 @@ void VtkPerspectiveTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8:
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -766,7 +766,7 @@ void VtkPerspectiveTransformWrap::RotateWXYZ(const Nan::FunctionCallbackInfo<v8:
 			{
 				if(info.Length() > 3 && info[3]->IsNumber())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -791,7 +791,7 @@ void VtkPerspectiveTransformWrap::RotateX(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -810,7 +810,7 @@ void VtkPerspectiveTransformWrap::RotateY(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -829,7 +829,7 @@ void VtkPerspectiveTransformWrap::RotateZ(const Nan::FunctionCallbackInfo<v8::Va
 	vtkPerspectiveTransform *native = (vtkPerspectiveTransform *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -858,7 +858,7 @@ void VtkPerspectiveTransformWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPerspectiveTransformWrap::InitPtpl();
+		VtkPerspectiveTransformWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -887,7 +887,7 @@ void VtkPerspectiveTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Valu
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -916,7 +916,7 @@ void VtkPerspectiveTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Valu
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -932,7 +932,7 @@ void VtkPerspectiveTransformWrap::Scale(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -956,7 +956,7 @@ void VtkPerspectiveTransformWrap::SetInput(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkHomogeneousTransformWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkHomogeneousTransformWrap *a0 = ObjectWrap::Unwrap<VtkHomogeneousTransformWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -983,7 +983,7 @@ void VtkPerspectiveTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1012,7 +1012,7 @@ void VtkPerspectiveTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1025,7 +1025,7 @@ void VtkPerspectiveTransformWrap::SetMatrix(const Nan::FunctionCallbackInfo<v8::
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1070,7 +1070,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1101,7 +1101,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1152,7 +1152,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1223,7 +1223,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1264,7 +1264,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1315,7 +1315,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1376,7 +1376,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1407,7 +1407,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1439,7 +1439,7 @@ void VtkPerspectiveTransformWrap::SetupCamera(const Nan::FunctionCallbackInfo<v8
 								{
 									if(info.Length() > 8 && info[8]->IsNumber())
 									{
-										if(info.Length() != 9)
+																				if(info.Length() != 9)
 										{
 											Nan::ThrowError("Too many parameters.");
 											return;
@@ -1478,7 +1478,7 @@ void VtkPerspectiveTransformWrap::Shear(const Nan::FunctionCallbackInfo<v8::Valu
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1503,7 +1503,7 @@ void VtkPerspectiveTransformWrap::Stereo(const Nan::FunctionCallbackInfo<v8::Val
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -1532,7 +1532,7 @@ void VtkPerspectiveTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1561,7 +1561,7 @@ void VtkPerspectiveTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1577,7 +1577,7 @@ void VtkPerspectiveTransformWrap::Translate(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;

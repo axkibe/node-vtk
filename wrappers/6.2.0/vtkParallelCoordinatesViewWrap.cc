@@ -159,7 +159,7 @@ void VtkParallelCoordinatesViewWrap::ApplyViewTheme(const Nan::FunctionCallbackI
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewThemeWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewThemeWrap *a0 = ObjectWrap::Unwrap<VtkViewThemeWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -289,7 +289,7 @@ void VtkParallelCoordinatesViewWrap::NewInstance(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->NewInstance();
-		VtkParallelCoordinatesViewWrap::InitPtpl();
+	VtkParallelCoordinatesViewWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -317,7 +317,7 @@ void VtkParallelCoordinatesViewWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParallelCoordinatesViewWrap::InitPtpl();
+		VtkParallelCoordinatesViewWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -338,7 +338,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushMode(const Nan::FunctionCallbackInf
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -355,7 +355,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushModeToAngle(const Nan::FunctionCall
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -367,7 +367,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushModeToAxisThreshold(const Nan::Func
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -379,7 +379,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushModeToFunction(const Nan::FunctionC
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -391,7 +391,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushModeToLasso(const Nan::FunctionCall
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -405,7 +405,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushOperator(const Nan::FunctionCallbac
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +422,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushOperatorToAdd(const Nan::FunctionCa
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -434,7 +434,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushOperatorToIntersect(const Nan::Func
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -446,7 +446,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushOperatorToReplace(const Nan::Functi
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -458,7 +458,7 @@ void VtkParallelCoordinatesViewWrap::SetBrushOperatorToSubtract(const Nan::Funct
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -472,7 +472,7 @@ void VtkParallelCoordinatesViewWrap::SetCurrentBrushClass(const Nan::FunctionCal
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -489,7 +489,7 @@ void VtkParallelCoordinatesViewWrap::SetInpsectModeToSelectData(const Nan::Funct
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -503,7 +503,7 @@ void VtkParallelCoordinatesViewWrap::SetInspectMode(const Nan::FunctionCallbackI
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,7 @@ void VtkParallelCoordinatesViewWrap::SetInspectModeToManipulateAxes(const Nan::F
 {
 	VtkParallelCoordinatesViewWrap *wrapper = ObjectWrap::Unwrap<VtkParallelCoordinatesViewWrap>(info.Holder());
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -534,7 +534,7 @@ void VtkParallelCoordinatesViewWrap::SetMaximumNumberOfBrushPoints(const Nan::Fu
 	vtkParallelCoordinatesView *native = (vtkParallelCoordinatesView *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

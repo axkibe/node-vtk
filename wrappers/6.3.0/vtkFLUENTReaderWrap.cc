@@ -134,7 +134,7 @@ void VtkFLUENTReaderWrap::DisableAllCellArrays(const Nan::FunctionCallbackInfo<v
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -146,7 +146,7 @@ void VtkFLUENTReaderWrap::EnableAllCellArrays(const Nan::FunctionCallbackInfo<v8
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -314,7 +314,7 @@ void VtkFLUENTReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkFLUENTReaderWrap::InitPtpl();
+	VtkFLUENTReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -342,7 +342,7 @@ void VtkFLUENTReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkFLUENTReaderWrap::InitPtpl();
+		VtkFLUENTReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -366,7 +366,7 @@ void VtkFLUENTReaderWrap::SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8:
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -387,7 +387,7 @@ void VtkFLUENTReaderWrap::SetDataByteOrder(const Nan::FunctionCallbackInfo<v8::V
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +404,7 @@ void VtkFLUENTReaderWrap::SetDataByteOrderToBigEndian(const Nan::FunctionCallbac
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -416,7 +416,7 @@ void VtkFLUENTReaderWrap::SetDataByteOrderToLittleEndian(const Nan::FunctionCall
 {
 	VtkFLUENTReaderWrap *wrapper = ObjectWrap::Unwrap<VtkFLUENTReaderWrap>(info.Holder());
 	vtkFLUENTReader *native = (vtkFLUENTReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -431,7 +431,7 @@ void VtkFLUENTReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

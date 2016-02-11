@@ -151,7 +151,7 @@ void VtkKCoreLayoutWrap::CartesianOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -163,7 +163,7 @@ void VtkKCoreLayoutWrap::CartesianOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -328,7 +328,7 @@ void VtkKCoreLayoutWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkKCoreLayoutWrap::InitPtpl();
+	VtkKCoreLayoutWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -344,7 +344,7 @@ void VtkKCoreLayoutWrap::PolarOff(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -356,7 +356,7 @@ void VtkKCoreLayoutWrap::PolarOn(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkKCoreLayoutWrap *wrapper = ObjectWrap::Unwrap<VtkKCoreLayoutWrap>(info.Holder());
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -380,7 +380,7 @@ void VtkKCoreLayoutWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkKCoreLayoutWrap::InitPtpl();
+		VtkKCoreLayoutWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkKCoreLayoutWrap::SetCartesian(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkKCoreLayoutWrap::SetCartesianCoordsXArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkKCoreLayoutWrap::SetCartesianCoordsYArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -461,7 +461,7 @@ void VtkKCoreLayoutWrap::SetGraphConnection(const Nan::FunctionCallbackInfo<v8::
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkAlgorithmOutputWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkAlgorithmOutputWrap *a0 = ObjectWrap::Unwrap<VtkAlgorithmOutputWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -481,7 +481,7 @@ void VtkKCoreLayoutWrap::SetKCoreLabelArrayName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +500,7 @@ void VtkKCoreLayoutWrap::SetPolar(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkKCoreLayout *native = (vtkKCoreLayout *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,7 @@ void VtkKCoreLayoutWrap::SetPolarCoordsAngleArrayName(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -540,7 +540,7 @@ void VtkKCoreLayoutWrap::SetPolarCoordsRadiusArrayName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

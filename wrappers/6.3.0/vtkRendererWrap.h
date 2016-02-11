@@ -49,6 +49,7 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void GetActiveCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAllocatedRenderTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAmbient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutomaticLightCreation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackgroundTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBackingStore(const Nan::FunctionCallbackInfo<v8::Value>& info);

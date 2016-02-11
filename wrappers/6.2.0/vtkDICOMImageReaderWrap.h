@@ -39,6 +39,7 @@ class VtkDICOMImageReaderWrap : public VtkImageReader2Wrap
 		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPatientName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPixelRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPixelSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyUID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransferSyntaxUID(const Nan::FunctionCallbackInfo<v8::Value>& info);

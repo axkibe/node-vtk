@@ -146,7 +146,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::NewInstance(const Nan::Function
 		return;
 	}
 	r = native->NewInstance();
-		VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
+	VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -169,7 +169,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_FACES(const Nan:
 		return;
 	}
 	r = native->POLYGON_OFFSET_FACES();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -192,7 +192,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::POLYGON_OFFSET_PARAMETERS(const
 		return;
 	}
 	r = native->POLYGON_OFFSET_PARAMETERS();
-		VtkInformationDoubleVectorKeyWrap::InitPtpl();
+	VtkInformationDoubleVectorKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::RESOLVE_COINCIDENT_TOPOLOGY(con
 		return;
 	}
 	r = native->RESOLVE_COINCIDENT_TOPOLOGY();
-		VtkInformationIntegerKeyWrap::InitPtpl();
+	VtkInformationIntegerKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::SafeDownCast(const Nan::Functio
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
+		VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -269,7 +269,7 @@ void VtkCoincidentTopologyResolutionPainterWrap::Z_SHIFT(const Nan::FunctionCall
 		return;
 	}
 	r = native->Z_SHIFT();
-		VtkInformationDoubleKeyWrap::InitPtpl();
+	VtkInformationDoubleKeyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =

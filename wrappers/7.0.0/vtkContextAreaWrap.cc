@@ -132,7 +132,7 @@ void VtkContextAreaWrap::FillViewportOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -144,7 +144,7 @@ void VtkContextAreaWrap::FillViewportOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -177,7 +177,7 @@ void VtkContextAreaWrap::GetDrawAreaItem(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetDrawAreaItem();
-		VtkAbstractContextItemWrap::InitPtpl();
+	VtkAbstractContextItemWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -217,7 +217,7 @@ void VtkContextAreaWrap::GetFixedMarginsArray(const Nan::FunctionCallbackInfo<v8
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -246,7 +246,7 @@ void VtkContextAreaWrap::GetFixedMarginsArray(const Nan::FunctionCallbackInfo<v8
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -306,7 +306,7 @@ void VtkContextAreaWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkContextAreaWrap::InitPtpl();
+	VtkContextAreaWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +356,7 @@ void VtkContextAreaWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkContextAreaWrap::InitPtpl();
+		VtkContextAreaWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -377,7 +377,7 @@ void VtkContextAreaWrap::SetFillViewport(const Nan::FunctionCallbackInfo<v8::Val
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -404,7 +404,7 @@ void VtkContextAreaWrap::SetFixedMargins(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -433,7 +433,7 @@ void VtkContextAreaWrap::SetFixedMargins(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->Int32Value();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -451,7 +451,7 @@ void VtkContextAreaWrap::SetFixedMargins(const Nan::FunctionCallbackInfo<v8::Val
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -482,7 +482,7 @@ void VtkContextAreaWrap::SetFixedRect(const Nan::FunctionCallbackInfo<v8::Value>
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -507,7 +507,7 @@ void VtkContextAreaWrap::SetShowGrid(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -524,7 +524,7 @@ void VtkContextAreaWrap::ShowGridOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -536,7 +536,7 @@ void VtkContextAreaWrap::ShowGridOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkContextAreaWrap *wrapper = ObjectWrap::Unwrap<VtkContextAreaWrap>(info.Holder());
 	vtkContextArea *native = (vtkContextArea *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

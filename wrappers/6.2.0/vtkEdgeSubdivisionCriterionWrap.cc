@@ -210,7 +210,7 @@ void VtkEdgeSubdivisionCriterionWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkEdgeSubdivisionCriterionWrap::InitPtpl();
+	VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -256,7 +256,7 @@ void VtkEdgeSubdivisionCriterionWrap::ResetFieldList(const Nan::FunctionCallback
 {
 	VtkEdgeSubdivisionCriterionWrap *wrapper = ObjectWrap::Unwrap<VtkEdgeSubdivisionCriterionWrap>(info.Holder());
 	vtkEdgeSubdivisionCriterion *native = (vtkEdgeSubdivisionCriterion *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -280,7 +280,7 @@ void VtkEdgeSubdivisionCriterionWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEdgeSubdivisionCriterionWrap::InitPtpl();
+		VtkEdgeSubdivisionCriterionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

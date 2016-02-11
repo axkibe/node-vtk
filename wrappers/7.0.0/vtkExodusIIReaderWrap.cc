@@ -308,6 +308,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetModeShapeTime", GetModeShapeTime);
 	Nan::SetPrototypeMethod(tpl, "getModeShapeTime", GetModeShapeTime);
 
+	Nan::SetPrototypeMethod(tpl, "GetModeShapesRange", GetModeShapesRange);
+	Nan::SetPrototypeMethod(tpl, "getModeShapesRange", GetModeShapesRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetNodeMapArrayName", GetNodeMapArrayName);
 	Nan::SetPrototypeMethod(tpl, "getNodeMapArrayName", GetNodeMapArrayName);
 
@@ -539,6 +542,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStepRange", GetTimeStepRange);
+	Nan::SetPrototypeMethod(tpl, "getTimeStepRange", GetTimeStepRange);
+
 	Nan::SetPrototypeMethod(tpl, "GetTitle", GetTitle);
 	Nan::SetPrototypeMethod(tpl, "getTitle", GetTitle);
 
@@ -752,7 +758,7 @@ void VtkExodusIIReaderWrap::AnimateModeShapesOff(const Nan::FunctionCallbackInfo
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -764,7 +770,7 @@ void VtkExodusIIReaderWrap::AnimateModeShapesOn(const Nan::FunctionCallbackInfo<
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -776,7 +782,7 @@ void VtkExodusIIReaderWrap::ApplyDisplacementsOff(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -788,7 +794,7 @@ void VtkExodusIIReaderWrap::ApplyDisplacementsOn(const Nan::FunctionCallbackInfo
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -822,7 +828,7 @@ void VtkExodusIIReaderWrap::Dump(const Nan::FunctionCallbackInfo<v8::Value>& inf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -834,7 +840,7 @@ void VtkExodusIIReaderWrap::GenerateFileIdArrayOff(const Nan::FunctionCallbackIn
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -846,7 +852,7 @@ void VtkExodusIIReaderWrap::GenerateFileIdArrayOn(const Nan::FunctionCallbackInf
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -858,7 +864,7 @@ void VtkExodusIIReaderWrap::GenerateGlobalElementIdArrayOff(const Nan::FunctionC
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -870,7 +876,7 @@ void VtkExodusIIReaderWrap::GenerateGlobalElementIdArrayOn(const Nan::FunctionCa
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -882,7 +888,7 @@ void VtkExodusIIReaderWrap::GenerateGlobalNodeIdArrayOff(const Nan::FunctionCall
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -894,7 +900,7 @@ void VtkExodusIIReaderWrap::GenerateGlobalNodeIdArrayOn(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -906,7 +912,7 @@ void VtkExodusIIReaderWrap::GenerateImplicitElementIdArrayOff(const Nan::Functio
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -918,7 +924,7 @@ void VtkExodusIIReaderWrap::GenerateImplicitElementIdArrayOn(const Nan::Function
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -930,7 +936,7 @@ void VtkExodusIIReaderWrap::GenerateImplicitNodeIdArrayOff(const Nan::FunctionCa
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -942,7 +948,7 @@ void VtkExodusIIReaderWrap::GenerateImplicitNodeIdArrayOn(const Nan::FunctionCal
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -954,7 +960,7 @@ void VtkExodusIIReaderWrap::GenerateObjectIdCellArrayOff(const Nan::FunctionCall
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -966,7 +972,7 @@ void VtkExodusIIReaderWrap::GenerateObjectIdCellArrayOn(const Nan::FunctionCallb
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -2381,6 +2387,23 @@ void VtkExodusIIReaderWrap::GetModeShapeTime(const Nan::FunctionCallbackInfo<v8:
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExodusIIReaderWrap::GetModeShapesRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetModeShapesRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExodusIIReaderWrap::GetNodeMapArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
@@ -3671,7 +3694,7 @@ void VtkExodusIIReaderWrap::GetSIL(const Nan::FunctionCallbackInfo<v8::Value>& i
 		return;
 	}
 	r = native->GetSIL();
-		VtkGraphWrap::InitPtpl();
+	VtkGraphWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -3875,6 +3898,23 @@ void VtkExodusIIReaderWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkExodusIIReaderWrap::GetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
+	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
+	int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStepRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(int));
+	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
+	info.GetReturnValue().Set(at);
+}
+
 void VtkExodusIIReaderWrap::GetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
@@ -3934,7 +3974,7 @@ void VtkExodusIIReaderWrap::HasModeShapesOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -3946,7 +3986,7 @@ void VtkExodusIIReaderWrap::HasModeShapesOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4014,7 +4054,7 @@ void VtkExodusIIReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkExodusIIReaderWrap::InitPtpl();
+	VtkExodusIIReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -4030,7 +4070,7 @@ void VtkExodusIIReaderWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& in
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4042,7 +4082,7 @@ void VtkExodusIIReaderWrap::ResetCache(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4054,7 +4094,7 @@ void VtkExodusIIReaderWrap::ResetSettings(const Nan::FunctionCallbackInfo<v8::Va
 {
 	VtkExodusIIReaderWrap *wrapper = ObjectWrap::Unwrap<VtkExodusIIReaderWrap>(info.Holder());
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -4078,7 +4118,7 @@ void VtkExodusIIReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkExodusIIReaderWrap::InitPtpl();
+		VtkExodusIIReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -4101,7 +4141,7 @@ void VtkExodusIIReaderWrap::SetAllArrayStatus(const Nan::FunctionCallbackInfo<v8
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4122,7 +4162,7 @@ void VtkExodusIIReaderWrap::SetAnimateModeShapes(const Nan::FunctionCallbackInfo
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4141,7 +4181,7 @@ void VtkExodusIIReaderWrap::SetApplyDisplacements(const Nan::FunctionCallbackInf
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4163,7 +4203,7 @@ void VtkExodusIIReaderWrap::SetAssemblyArrayStatus(const Nan::FunctionCallbackIn
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4179,7 +4219,7 @@ void VtkExodusIIReaderWrap::SetAssemblyArrayStatus(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4200,7 +4240,7 @@ void VtkExodusIIReaderWrap::SetCacheSize(const Nan::FunctionCallbackInfo<v8::Val
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4219,7 +4259,7 @@ void VtkExodusIIReaderWrap::SetDisplayType(const Nan::FunctionCallbackInfo<v8::V
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4241,7 +4281,7 @@ void VtkExodusIIReaderWrap::SetEdgeBlockArrayStatus(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4265,7 +4305,7 @@ void VtkExodusIIReaderWrap::SetEdgeMapArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4289,7 +4329,7 @@ void VtkExodusIIReaderWrap::SetEdgeResultArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4313,7 +4353,7 @@ void VtkExodusIIReaderWrap::SetEdgeSetArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4337,7 +4377,7 @@ void VtkExodusIIReaderWrap::SetEdgeSetResultArrayStatus(const Nan::FunctionCallb
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4361,7 +4401,7 @@ void VtkExodusIIReaderWrap::SetElementBlockArrayStatus(const Nan::FunctionCallba
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4385,7 +4425,7 @@ void VtkExodusIIReaderWrap::SetElementMapArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4409,7 +4449,7 @@ void VtkExodusIIReaderWrap::SetElementResultArrayStatus(const Nan::FunctionCallb
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4433,7 +4473,7 @@ void VtkExodusIIReaderWrap::SetElementSetArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4457,7 +4497,7 @@ void VtkExodusIIReaderWrap::SetElementSetResultArrayStatus(const Nan::FunctionCa
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4481,7 +4521,7 @@ void VtkExodusIIReaderWrap::SetFaceBlockArrayStatus(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4505,7 +4545,7 @@ void VtkExodusIIReaderWrap::SetFaceMapArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4529,7 +4569,7 @@ void VtkExodusIIReaderWrap::SetFaceResultArrayStatus(const Nan::FunctionCallback
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4553,7 +4593,7 @@ void VtkExodusIIReaderWrap::SetFaceSetArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4577,7 +4617,7 @@ void VtkExodusIIReaderWrap::SetFaceSetResultArrayStatus(const Nan::FunctionCallb
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4598,7 +4638,7 @@ void VtkExodusIIReaderWrap::SetFileId(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4618,7 +4658,7 @@ void VtkExodusIIReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4637,7 +4677,7 @@ void VtkExodusIIReaderWrap::SetGenerateFileIdArray(const Nan::FunctionCallbackIn
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4656,7 +4696,7 @@ void VtkExodusIIReaderWrap::SetGenerateGlobalElementIdArray(const Nan::FunctionC
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4675,7 +4715,7 @@ void VtkExodusIIReaderWrap::SetGenerateGlobalNodeIdArray(const Nan::FunctionCall
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4694,7 +4734,7 @@ void VtkExodusIIReaderWrap::SetGenerateImplicitElementIdArray(const Nan::Functio
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4713,7 +4753,7 @@ void VtkExodusIIReaderWrap::SetGenerateImplicitNodeIdArray(const Nan::FunctionCa
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4732,7 +4772,7 @@ void VtkExodusIIReaderWrap::SetGenerateObjectIdCellArray(const Nan::FunctionCall
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4754,7 +4794,7 @@ void VtkExodusIIReaderWrap::SetGlobalResultArrayStatus(const Nan::FunctionCallba
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4775,7 +4815,7 @@ void VtkExodusIIReaderWrap::SetHasModeShapes(const Nan::FunctionCallbackInfo<v8:
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4797,7 +4837,7 @@ void VtkExodusIIReaderWrap::SetHierarchyArrayStatus(const Nan::FunctionCallbackI
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4813,7 +4853,7 @@ void VtkExodusIIReaderWrap::SetHierarchyArrayStatus(const Nan::FunctionCallbackI
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4837,7 +4877,7 @@ void VtkExodusIIReaderWrap::SetMaterialArrayStatus(const Nan::FunctionCallbackIn
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4853,7 +4893,7 @@ void VtkExodusIIReaderWrap::SetMaterialArrayStatus(const Nan::FunctionCallbackIn
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4874,7 +4914,7 @@ void VtkExodusIIReaderWrap::SetModeShape(const Nan::FunctionCallbackInfo<v8::Val
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4893,7 +4933,7 @@ void VtkExodusIIReaderWrap::SetModeShapeTime(const Nan::FunctionCallbackInfo<v8:
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -4915,7 +4955,7 @@ void VtkExodusIIReaderWrap::SetNodeMapArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4939,7 +4979,7 @@ void VtkExodusIIReaderWrap::SetNodeSetArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4963,7 +5003,7 @@ void VtkExodusIIReaderWrap::SetNodeSetResultArrayStatus(const Nan::FunctionCallb
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -4989,7 +5029,7 @@ void VtkExodusIIReaderWrap::SetObjectArrayStatus(const Nan::FunctionCallbackInfo
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -5006,7 +5046,7 @@ void VtkExodusIIReaderWrap::SetObjectArrayStatus(const Nan::FunctionCallbackInfo
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -5036,7 +5076,7 @@ void VtkExodusIIReaderWrap::SetObjectAttributeStatus(const Nan::FunctionCallback
 				Nan::Utf8String a2(info[2]);
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5054,7 +5094,7 @@ void VtkExodusIIReaderWrap::SetObjectAttributeStatus(const Nan::FunctionCallback
 			{
 				if(info.Length() > 3 && info[3]->IsInt32())
 				{
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -5084,7 +5124,7 @@ void VtkExodusIIReaderWrap::SetObjectStatus(const Nan::FunctionCallbackInfo<v8::
 			Nan::Utf8String a1(info[1]);
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -5101,7 +5141,7 @@ void VtkExodusIIReaderWrap::SetObjectStatus(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsInt32())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -5127,7 +5167,7 @@ void VtkExodusIIReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5143,7 +5183,7 @@ void VtkExodusIIReaderWrap::SetPartArrayStatus(const Nan::FunctionCallbackInfo<v
 	{
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5167,7 +5207,7 @@ void VtkExodusIIReaderWrap::SetPointResultArrayStatus(const Nan::FunctionCallbac
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5191,7 +5231,7 @@ void VtkExodusIIReaderWrap::SetSideSetArrayStatus(const Nan::FunctionCallbackInf
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5215,7 +5255,7 @@ void VtkExodusIIReaderWrap::SetSideSetResultArrayStatus(const Nan::FunctionCallb
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -5236,7 +5276,7 @@ void VtkExodusIIReaderWrap::SetSqueezePoints(const Nan::FunctionCallbackInfo<v8:
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -5255,7 +5295,7 @@ void VtkExodusIIReaderWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkExodusIIReader *native = (vtkExodusIIReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -5275,7 +5315,7 @@ void VtkExodusIIReaderWrap::SetXMLFileName(const Nan::FunctionCallbackInfo<v8::V
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

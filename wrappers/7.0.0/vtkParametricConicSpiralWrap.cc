@@ -153,7 +153,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -184,7 +184,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -235,7 +235,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -306,7 +306,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -347,7 +347,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -398,7 +398,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -459,7 +459,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -490,7 +490,7 @@ void VtkParametricConicSpiralWrap::Evaluate(const Nan::FunctionCallbackInfo<v8::
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -1026,7 +1026,7 @@ void VtkParametricConicSpiralWrap::NewInstance(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->NewInstance();
-		VtkParametricConicSpiralWrap::InitPtpl();
+	VtkParametricConicSpiralWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1054,7 +1054,7 @@ void VtkParametricConicSpiralWrap::SafeDownCast(const Nan::FunctionCallbackInfo<
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkParametricConicSpiralWrap::InitPtpl();
+		VtkParametricConicSpiralWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1075,7 +1075,7 @@ void VtkParametricConicSpiralWrap::SetA(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParametricConicSpiral *native = (vtkParametricConicSpiral *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1094,7 +1094,7 @@ void VtkParametricConicSpiralWrap::SetB(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParametricConicSpiral *native = (vtkParametricConicSpiral *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1113,7 +1113,7 @@ void VtkParametricConicSpiralWrap::SetC(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParametricConicSpiral *native = (vtkParametricConicSpiral *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1132,7 +1132,7 @@ void VtkParametricConicSpiralWrap::SetN(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkParametricConicSpiral *native = (vtkParametricConicSpiral *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

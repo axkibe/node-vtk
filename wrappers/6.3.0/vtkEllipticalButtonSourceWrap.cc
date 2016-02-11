@@ -533,7 +533,7 @@ void VtkEllipticalButtonSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkEllipticalButtonSourceWrap::InitPtpl();
+	VtkEllipticalButtonSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -561,7 +561,7 @@ void VtkEllipticalButtonSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkEllipticalButtonSourceWrap::InitPtpl();
+		VtkEllipticalButtonSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -582,7 +582,7 @@ void VtkEllipticalButtonSourceWrap::SetCircumferentialResolution(const Nan::Func
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -601,7 +601,7 @@ void VtkEllipticalButtonSourceWrap::SetDepth(const Nan::FunctionCallbackInfo<v8:
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -620,7 +620,7 @@ void VtkEllipticalButtonSourceWrap::SetHeight(const Nan::FunctionCallbackInfo<v8
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -639,7 +639,7 @@ void VtkEllipticalButtonSourceWrap::SetOutputPointsPrecision(const Nan::Function
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -658,7 +658,7 @@ void VtkEllipticalButtonSourceWrap::SetRadialRatio(const Nan::FunctionCallbackIn
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -677,7 +677,7 @@ void VtkEllipticalButtonSourceWrap::SetShoulderResolution(const Nan::FunctionCal
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -696,7 +696,7 @@ void VtkEllipticalButtonSourceWrap::SetTextureResolution(const Nan::FunctionCall
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +715,7 @@ void VtkEllipticalButtonSourceWrap::SetWidth(const Nan::FunctionCallbackInfo<v8:
 	vtkEllipticalButtonSource *native = (vtkEllipticalButtonSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

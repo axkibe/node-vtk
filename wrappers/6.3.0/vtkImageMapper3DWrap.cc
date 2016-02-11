@@ -186,7 +186,7 @@ void VtkImageMapper3DWrap::BackgroundOff(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -198,7 +198,7 @@ void VtkImageMapper3DWrap::BackgroundOn(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -210,7 +210,7 @@ void VtkImageMapper3DWrap::BorderOff(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkImageMapper3DWrap::BorderOn(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -283,7 +283,7 @@ void VtkImageMapper3DWrap::GetDataObjectInput(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetDataObjectInput();
-		VtkDataObjectWrap::InitPtpl();
+	VtkDataObjectWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -306,7 +306,7 @@ void VtkImageMapper3DWrap::GetDataSetInput(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetDataSetInput();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -329,7 +329,7 @@ void VtkImageMapper3DWrap::GetInput(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetInput();
-		VtkImageDataWrap::InitPtpl();
+	VtkImageDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -422,7 +422,7 @@ void VtkImageMapper3DWrap::GetSlicePlane(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetSlicePlane();
-		VtkPlaneWrap::InitPtpl();
+	VtkPlaneWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -451,7 +451,7 @@ void VtkImageMapper3DWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallback
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -481,7 +481,7 @@ void VtkImageMapper3DWrap::GetSlicePlaneInDataCoords(const Nan::FunctionCallback
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -543,7 +543,7 @@ void VtkImageMapper3DWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageMapper3DWrap::InitPtpl();
+	VtkImageMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -571,7 +571,7 @@ void VtkImageMapper3DWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageMapper3DWrap::InitPtpl();
+		VtkImageMapper3DWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -592,7 +592,7 @@ void VtkImageMapper3DWrap::SetBackground(const Nan::FunctionCallbackInfo<v8::Val
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -611,7 +611,7 @@ void VtkImageMapper3DWrap::SetBorder(const Nan::FunctionCallbackInfo<v8::Value>&
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -631,7 +631,7 @@ void VtkImageMapper3DWrap::SetInputData(const Nan::FunctionCallbackInfo<v8::Valu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImageDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImageDataWrap *a0 = ObjectWrap::Unwrap<VtkImageDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -650,7 +650,7 @@ void VtkImageMapper3DWrap::SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -669,7 +669,7 @@ void VtkImageMapper3DWrap::SetSliceAtFocalPoint(const Nan::FunctionCallbackInfo<
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -688,7 +688,7 @@ void VtkImageMapper3DWrap::SetSliceFacesCamera(const Nan::FunctionCallbackInfo<v
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -707,7 +707,7 @@ void VtkImageMapper3DWrap::SetStreaming(const Nan::FunctionCallbackInfo<v8::Valu
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -724,7 +724,7 @@ void VtkImageMapper3DWrap::SliceAtFocalPointOff(const Nan::FunctionCallbackInfo<
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -736,7 +736,7 @@ void VtkImageMapper3DWrap::SliceAtFocalPointOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -748,7 +748,7 @@ void VtkImageMapper3DWrap::SliceFacesCameraOff(const Nan::FunctionCallbackInfo<v
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -760,7 +760,7 @@ void VtkImageMapper3DWrap::SliceFacesCameraOn(const Nan::FunctionCallbackInfo<v8
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -772,7 +772,7 @@ void VtkImageMapper3DWrap::StreamingOff(const Nan::FunctionCallbackInfo<v8::Valu
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -784,7 +784,7 @@ void VtkImageMapper3DWrap::StreamingOn(const Nan::FunctionCallbackInfo<v8::Value
 {
 	VtkImageMapper3DWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapper3DWrap>(info.Holder());
 	vtkImageMapper3D *native = (vtkImageMapper3D *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

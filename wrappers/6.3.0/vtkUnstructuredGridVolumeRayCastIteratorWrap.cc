@@ -46,6 +46,9 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkUnstructuredGridVolumeRayCastIteratorWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
+	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -87,6 +90,23 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::New(const Nan::FunctionCallba
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkUnstructuredGridVolumeRayCastIteratorWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnstructuredGridVolumeRayCastIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUnstructuredGridVolumeRayCastIteratorWrap>(info.Holder());
+	vtkUnstructuredGridVolumeRayCastIterator *native = (vtkUnstructuredGridVolumeRayCastIterator *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBounds();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkUnstructuredGridVolumeRayCastIteratorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -136,7 +156,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::NewInstance(const Nan::Functi
 		return;
 	}
 	r = native->NewInstance();
-		VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
+	VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -164,7 +184,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SafeDownCast(const Nan::Funct
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
+		VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -193,7 +213,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SetBounds(const Nan::Function
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -222,7 +242,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SetBounds(const Nan::Function
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -236,7 +256,7 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::SetBounds(const Nan::Function
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

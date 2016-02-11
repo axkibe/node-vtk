@@ -175,7 +175,7 @@ void VtkDefaultPainterWrap::GetClipPlanesPainter(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetClipPlanesPainter();
-		VtkClipPlanesPainterWrap::InitPtpl();
+	VtkClipPlanesPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -198,7 +198,7 @@ void VtkDefaultPainterWrap::GetCoincidentTopologyResolutionPainter(const Nan::Fu
 		return;
 	}
 	r = native->GetCoincidentTopologyResolutionPainter();
-		VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
+	VtkCoincidentTopologyResolutionPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -221,7 +221,7 @@ void VtkDefaultPainterWrap::GetCompositePainter(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetCompositePainter();
-		VtkCompositePainterWrap::InitPtpl();
+	VtkCompositePainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkDefaultPainterWrap::GetDelegatePainter(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetDelegatePainter();
-		VtkPainterWrap::InitPtpl();
+	VtkPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -267,7 +267,7 @@ void VtkDefaultPainterWrap::GetDisplayListPainter(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetDisplayListPainter();
-		VtkDisplayListPainterWrap::InitPtpl();
+	VtkDisplayListPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -290,7 +290,7 @@ void VtkDefaultPainterWrap::GetLightingPainter(const Nan::FunctionCallbackInfo<v
 		return;
 	}
 	r = native->GetLightingPainter();
-		VtkLightingPainterWrap::InitPtpl();
+	VtkLightingPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -313,7 +313,7 @@ void VtkDefaultPainterWrap::GetRepresentationPainter(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetRepresentationPainter();
-		VtkRepresentationPainterWrap::InitPtpl();
+	VtkRepresentationPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -336,7 +336,7 @@ void VtkDefaultPainterWrap::GetScalarsToColorsPainter(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetScalarsToColorsPainter();
-		VtkScalarsToColorsPainterWrap::InitPtpl();
+	VtkScalarsToColorsPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -381,7 +381,7 @@ void VtkDefaultPainterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkDefaultPainterWrap::InitPtpl();
+	VtkDefaultPainterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -400,7 +400,7 @@ void VtkDefaultPainterWrap::ReleaseGraphicsResources(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -429,7 +429,7 @@ void VtkDefaultPainterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDefaultPainterWrap::InitPtpl();
+		VtkDefaultPainterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -451,7 +451,7 @@ void VtkDefaultPainterWrap::SetClipPlanesPainter(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkClipPlanesPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkClipPlanesPainterWrap *a0 = ObjectWrap::Unwrap<VtkClipPlanesPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +471,7 @@ void VtkDefaultPainterWrap::SetCoincidentTopologyResolutionPainter(const Nan::Fu
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCoincidentTopologyResolutionPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCoincidentTopologyResolutionPainterWrap *a0 = ObjectWrap::Unwrap<VtkCoincidentTopologyResolutionPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -491,7 +491,7 @@ void VtkDefaultPainterWrap::SetCompositePainter(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkCompositePainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkCompositePainterWrap *a0 = ObjectWrap::Unwrap<VtkCompositePainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -511,7 +511,7 @@ void VtkDefaultPainterWrap::SetDelegatePainter(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPainterWrap *a0 = ObjectWrap::Unwrap<VtkPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -531,7 +531,7 @@ void VtkDefaultPainterWrap::SetDisplayListPainter(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDisplayListPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDisplayListPainterWrap *a0 = ObjectWrap::Unwrap<VtkDisplayListPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -551,7 +551,7 @@ void VtkDefaultPainterWrap::SetLightingPainter(const Nan::FunctionCallbackInfo<v
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkLightingPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkLightingPainterWrap *a0 = ObjectWrap::Unwrap<VtkLightingPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -571,7 +571,7 @@ void VtkDefaultPainterWrap::SetRepresentationPainter(const Nan::FunctionCallback
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkRepresentationPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkRepresentationPainterWrap *a0 = ObjectWrap::Unwrap<VtkRepresentationPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -591,7 +591,7 @@ void VtkDefaultPainterWrap::SetScalarsToColorsPainter(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkScalarsToColorsPainterWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkScalarsToColorsPainterWrap *a0 = ObjectWrap::Unwrap<VtkScalarsToColorsPainterWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -618,7 +618,7 @@ void VtkDefaultPainterWrap::UpdateBounds(const Nan::FunctionCallbackInfo<v8::Val
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -647,7 +647,7 @@ void VtkDefaultPainterWrap::UpdateBounds(const Nan::FunctionCallbackInfo<v8::Val
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

@@ -59,6 +59,12 @@ void VtkTextureMapToCylinderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetPoint1", GetPoint1);
+	Nan::SetPrototypeMethod(tpl, "getPoint1", GetPoint1);
+
+	Nan::SetPrototypeMethod(tpl, "GetPoint2", GetPoint2);
+	Nan::SetPrototypeMethod(tpl, "getPoint2", GetPoint2);
+
 	Nan::SetPrototypeMethod(tpl, "GetPreventSeam", GetPreventSeam);
 	Nan::SetPrototypeMethod(tpl, "getPreventSeam", GetPreventSeam);
 
@@ -122,7 +128,7 @@ void VtkTextureMapToCylinderWrap::AutomaticCylinderGenerationOff(const Nan::Func
 {
 	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -134,7 +140,7 @@ void VtkTextureMapToCylinderWrap::AutomaticCylinderGenerationOn(const Nan::Funct
 {
 	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -168,6 +174,40 @@ void VtkTextureMapToCylinderWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTextureMapToCylinderWrap::GetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
+	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint1();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
+}
+
+void VtkTextureMapToCylinderWrap::GetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
+	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPoint2();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkTextureMapToCylinderWrap::GetPreventSeam(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -217,7 +257,7 @@ void VtkTextureMapToCylinderWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkTextureMapToCylinderWrap::InitPtpl();
+	VtkTextureMapToCylinderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -233,7 +273,7 @@ void VtkTextureMapToCylinderWrap::PreventSeamOff(const Nan::FunctionCallbackInfo
 {
 	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -245,7 +285,7 @@ void VtkTextureMapToCylinderWrap::PreventSeamOn(const Nan::FunctionCallbackInfo<
 {
 	VtkTextureMapToCylinderWrap *wrapper = ObjectWrap::Unwrap<VtkTextureMapToCylinderWrap>(info.Holder());
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +309,7 @@ void VtkTextureMapToCylinderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkTextureMapToCylinderWrap::InitPtpl();
+		VtkTextureMapToCylinderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -290,7 +330,7 @@ void VtkTextureMapToCylinderWrap::SetAutomaticCylinderGeneration(const Nan::Func
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -317,7 +357,7 @@ void VtkTextureMapToCylinderWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -346,7 +386,7 @@ void VtkTextureMapToCylinderWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -362,7 +402,7 @@ void VtkTextureMapToCylinderWrap::SetPoint1(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -393,7 +433,7 @@ void VtkTextureMapToCylinderWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -422,7 +462,7 @@ void VtkTextureMapToCylinderWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +478,7 @@ void VtkTextureMapToCylinderWrap::SetPoint2(const Nan::FunctionCallbackInfo<v8::
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -461,7 +501,7 @@ void VtkTextureMapToCylinderWrap::SetPreventSeam(const Nan::FunctionCallbackInfo
 	vtkTextureMapToCylinder *native = (vtkTextureMapToCylinder *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

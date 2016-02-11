@@ -174,7 +174,7 @@ void VtkHeapWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->NewInstance();
-		VtkHeapWrap::InitPtpl();
+	VtkHeapWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -190,7 +190,7 @@ void VtkHeapWrap::Reset(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHeapWrap *wrapper = ObjectWrap::Unwrap<VtkHeapWrap>(info.Holder());
 	vtkHeap *native = (vtkHeap *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -214,7 +214,7 @@ void VtkHeapWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHeapWrap::InitPtpl();
+		VtkHeapWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =

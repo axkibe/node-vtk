@@ -45,6 +45,7 @@ class VtkGlyph3DWrap : public VtkPolyDataAlgorithmWrap
 		static void GetIndexModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointIdsName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -215,7 +215,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::NewInstance(const Nan::FunctionCallback
 		return;
 	}
 	r = native->NewInstance();
-		VtkPiecewiseFunctionShiftScaleWrap::InitPtpl();
+	VtkPiecewiseFunctionShiftScaleWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SafeDownCast(const Nan::FunctionCallbac
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPiecewiseFunctionShiftScaleWrap::InitPtpl();
+		VtkPiecewiseFunctionShiftScaleWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SetPositionScale(const Nan::FunctionCal
 	vtkPiecewiseFunctionShiftScale *native = (vtkPiecewiseFunctionShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -283,7 +283,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SetPositionShift(const Nan::FunctionCal
 	vtkPiecewiseFunctionShiftScale *native = (vtkPiecewiseFunctionShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -302,7 +302,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SetValueScale(const Nan::FunctionCallba
 	vtkPiecewiseFunctionShiftScale *native = (vtkPiecewiseFunctionShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -321,7 +321,7 @@ void VtkPiecewiseFunctionShiftScaleWrap::SetValueShift(const Nan::FunctionCallba
 	vtkPiecewiseFunctionShiftScale *native = (vtkPiecewiseFunctionShiftScale *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

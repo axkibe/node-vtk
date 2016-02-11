@@ -141,7 +141,7 @@ void VtkPlaybackRepresentationWrap::BackwardOneFrame(const Nan::FunctionCallback
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -153,7 +153,7 @@ void VtkPlaybackRepresentationWrap::BuildRepresentation(const Nan::FunctionCallb
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -165,7 +165,7 @@ void VtkPlaybackRepresentationWrap::ForwardOneFrame(const Nan::FunctionCallbackI
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -180,7 +180,7 @@ void VtkPlaybackRepresentationWrap::GetActors2D(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPropCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPropCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPropCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -218,7 +218,7 @@ void VtkPlaybackRepresentationWrap::GetProperty(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->GetProperty();
-		VtkProperty2DWrap::InitPtpl();
+	VtkProperty2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -244,7 +244,7 @@ void VtkPlaybackRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::
 			return;
 		}
 
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -273,7 +273,7 @@ void VtkPlaybackRepresentationWrap::GetSize(const Nan::FunctionCallbackInfo<v8::
 			}
 			b0[i] = a0->Get(i)->NumberValue();
 		}
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -326,7 +326,7 @@ void VtkPlaybackRepresentationWrap::JumpToBeginning(const Nan::FunctionCallbackI
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -338,7 +338,7 @@ void VtkPlaybackRepresentationWrap::JumpToEnd(const Nan::FunctionCallbackInfo<v8
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -357,7 +357,7 @@ void VtkPlaybackRepresentationWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkPlaybackRepresentationWrap::InitPtpl();
+	VtkPlaybackRepresentationWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -373,7 +373,7 @@ void VtkPlaybackRepresentationWrap::Play(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkPlaybackRepresentationWrap::ReleaseGraphicsResources(const Nan::Function
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkWindowWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkWindowWrap *a0 = ObjectWrap::Unwrap<VtkWindowWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -483,7 +483,7 @@ void VtkPlaybackRepresentationWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPlaybackRepresentationWrap::InitPtpl();
+		VtkPlaybackRepresentationWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -502,7 +502,7 @@ void VtkPlaybackRepresentationWrap::Stop(const Nan::FunctionCallbackInfo<v8::Val
 {
 	VtkPlaybackRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkPlaybackRepresentationWrap>(info.Holder());
 	vtkPlaybackRepresentation *native = (vtkPlaybackRepresentation *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

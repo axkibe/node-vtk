@@ -121,7 +121,7 @@ void VtkActor2DCollectionWrap::AddItem(const Nan::FunctionCallbackInfo<v8::Value
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkActor2DWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkActor2DWrap *a0 = ObjectWrap::Unwrap<VtkActor2DWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -159,7 +159,7 @@ void VtkActor2DCollectionWrap::GetLastActor2D(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetLastActor2D();
-		VtkActor2DWrap::InitPtpl();
+	VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -182,7 +182,7 @@ void VtkActor2DCollectionWrap::GetLastItem(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetLastItem();
-		VtkActor2DWrap::InitPtpl();
+	VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -205,7 +205,7 @@ void VtkActor2DCollectionWrap::GetNextActor2D(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->GetNextActor2D();
-		VtkActor2DWrap::InitPtpl();
+	VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -228,7 +228,7 @@ void VtkActor2DCollectionWrap::GetNextItem(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->GetNextItem();
-		VtkActor2DWrap::InitPtpl();
+	VtkActor2DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkActor2DCollectionWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	r = native->NewInstance();
-		VtkActor2DCollectionWrap::InitPtpl();
+	VtkActor2DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -314,7 +314,7 @@ void VtkActor2DCollectionWrap::RenderOverlay(const Nan::FunctionCallbackInfo<v8:
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkViewportWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkViewportWrap *a0 = ObjectWrap::Unwrap<VtkViewportWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -343,7 +343,7 @@ void VtkActor2DCollectionWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkActor2DCollectionWrap::InitPtpl();
+		VtkActor2DCollectionWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -362,7 +362,7 @@ void VtkActor2DCollectionWrap::Sort(const Nan::FunctionCallbackInfo<v8::Value>& 
 {
 	VtkActor2DCollectionWrap *wrapper = ObjectWrap::Unwrap<VtkActor2DCollectionWrap>(info.Holder());
 	vtkActor2DCollection *native = (vtkActor2DCollection *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

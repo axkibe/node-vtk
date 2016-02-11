@@ -111,7 +111,7 @@ void VtkPolyLineSourceWrap::ClosedOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkPolyLineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineSourceWrap>(info.Holder());
 	vtkPolyLineSource *native = (vtkPolyLineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -123,7 +123,7 @@ void VtkPolyLineSourceWrap::ClosedOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkPolyLineSourceWrap *wrapper = ObjectWrap::Unwrap<VtkPolyLineSourceWrap>(info.Holder());
 	vtkPolyLineSource *native = (vtkPolyLineSource *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -170,7 +170,7 @@ void VtkPolyLineSourceWrap::GetPoints(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetPoints();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -215,7 +215,7 @@ void VtkPolyLineSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->NewInstance();
-		VtkPolyLineSourceWrap::InitPtpl();
+	VtkPolyLineSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -243,7 +243,7 @@ void VtkPolyLineSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPolyLineSourceWrap::InitPtpl();
+		VtkPolyLineSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -264,7 +264,7 @@ void VtkPolyLineSourceWrap::SetClosed(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkPolyLineSource *native = (vtkPolyLineSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -284,7 +284,7 @@ void VtkPolyLineSourceWrap::SetPoints(const Nan::FunctionCallbackInfo<v8::Value>
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPointsWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPointsWrap *a0 = ObjectWrap::Unwrap<VtkPointsWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

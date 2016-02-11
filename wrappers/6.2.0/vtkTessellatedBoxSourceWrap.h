@@ -31,6 +31,7 @@ class VtkTessellatedBoxSourceWrap : public VtkPolyDataAlgorithmWrap
 
 		static void DuplicateSharedPointsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DuplicateSharedPointsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDuplicateSharedPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -191,7 +191,7 @@ void VtkClipDataSetWrap::CreateDefaultLocator(const Nan::FunctionCallbackInfo<v8
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -203,7 +203,7 @@ void VtkClipDataSetWrap::GenerateClipScalarsOff(const Nan::FunctionCallbackInfo<
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -215,7 +215,7 @@ void VtkClipDataSetWrap::GenerateClipScalarsOn(const Nan::FunctionCallbackInfo<v
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -227,7 +227,7 @@ void VtkClipDataSetWrap::GenerateClippedOutputOff(const Nan::FunctionCallbackInf
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -239,7 +239,7 @@ void VtkClipDataSetWrap::GenerateClippedOutputOn(const Nan::FunctionCallbackInfo
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -272,7 +272,7 @@ void VtkClipDataSetWrap::GetClipFunction(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetClipFunction();
-		VtkImplicitFunctionWrap::InitPtpl();
+	VtkImplicitFunctionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -295,7 +295,7 @@ void VtkClipDataSetWrap::GetClippedOutput(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->GetClippedOutput();
-		VtkUnstructuredGridWrap::InitPtpl();
+	VtkUnstructuredGridWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -360,7 +360,7 @@ void VtkClipDataSetWrap::GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -488,7 +488,7 @@ void VtkClipDataSetWrap::InsideOutOff(const Nan::FunctionCallbackInfo<v8::Value>
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -500,7 +500,7 @@ void VtkClipDataSetWrap::InsideOutOn(const Nan::FunctionCallbackInfo<v8::Value>&
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -541,7 +541,7 @@ void VtkClipDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	r = native->NewInstance();
-		VtkClipDataSetWrap::InitPtpl();
+	VtkClipDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkClipDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClipDataSetWrap::InitPtpl();
+		VtkClipDataSetWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -591,7 +591,7 @@ void VtkClipDataSetWrap::SetClipFunction(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkImplicitFunctionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkImplicitFunctionWrap *a0 = ObjectWrap::Unwrap<VtkImplicitFunctionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -610,7 +610,7 @@ void VtkClipDataSetWrap::SetGenerateClipScalars(const Nan::FunctionCallbackInfo<
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -629,7 +629,7 @@ void VtkClipDataSetWrap::SetGenerateClippedOutput(const Nan::FunctionCallbackInf
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -648,7 +648,7 @@ void VtkClipDataSetWrap::SetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -668,7 +668,7 @@ void VtkClipDataSetWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -687,7 +687,7 @@ void VtkClipDataSetWrap::SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::V
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -706,7 +706,7 @@ void VtkClipDataSetWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInf
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -725,7 +725,7 @@ void VtkClipDataSetWrap::SetUseValueAsOffset(const Nan::FunctionCallbackInfo<v8:
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -744,7 +744,7 @@ void VtkClipDataSetWrap::SetValue(const Nan::FunctionCallbackInfo<v8::Value>& in
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -761,7 +761,7 @@ void VtkClipDataSetWrap::UseValueAsOffsetOff(const Nan::FunctionCallbackInfo<v8:
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -773,7 +773,7 @@ void VtkClipDataSetWrap::UseValueAsOffsetOn(const Nan::FunctionCallbackInfo<v8::
 {
 	VtkClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkClipDataSetWrap>(info.Holder());
 	vtkClipDataSet *native = (vtkClipDataSet *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

@@ -371,7 +371,7 @@ void VtkDiskSourceWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->NewInstance();
-		VtkDiskSourceWrap::InitPtpl();
+	VtkDiskSourceWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -399,7 +399,7 @@ void VtkDiskSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkDiskSourceWrap::InitPtpl();
+		VtkDiskSourceWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -420,7 +420,7 @@ void VtkDiskSourceWrap::SetCircumferentialResolution(const Nan::FunctionCallback
 	vtkDiskSource *native = (vtkDiskSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -439,7 +439,7 @@ void VtkDiskSourceWrap::SetInnerRadius(const Nan::FunctionCallbackInfo<v8::Value
 	vtkDiskSource *native = (vtkDiskSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -458,7 +458,7 @@ void VtkDiskSourceWrap::SetOuterRadius(const Nan::FunctionCallbackInfo<v8::Value
 	vtkDiskSource *native = (vtkDiskSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -477,7 +477,7 @@ void VtkDiskSourceWrap::SetOutputPointsPrecision(const Nan::FunctionCallbackInfo
 	vtkDiskSource *native = (vtkDiskSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -496,7 +496,7 @@ void VtkDiskSourceWrap::SetRadialResolution(const Nan::FunctionCallbackInfo<v8::
 	vtkDiskSource *native = (vtkDiskSource *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

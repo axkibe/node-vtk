@@ -398,7 +398,7 @@ void VtkSplineFilterWrap::GetSpline(const Nan::FunctionCallbackInfo<v8::Value>& 
 		return;
 	}
 	r = native->GetSpline();
-		VtkSplineWrap::InitPtpl();
+	VtkSplineWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -541,7 +541,7 @@ void VtkSplineFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->NewInstance();
-		VtkSplineFilterWrap::InitPtpl();
+	VtkSplineFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -569,7 +569,7 @@ void VtkSplineFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSplineFilterWrap::InitPtpl();
+		VtkSplineFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -590,7 +590,7 @@ void VtkSplineFilterWrap::SetGenerateTCoords(const Nan::FunctionCallbackInfo<v8:
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -607,7 +607,7 @@ void VtkSplineFilterWrap::SetGenerateTCoordsToNormalizedLength(const Nan::Functi
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -619,7 +619,7 @@ void VtkSplineFilterWrap::SetGenerateTCoordsToOff(const Nan::FunctionCallbackInf
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -631,7 +631,7 @@ void VtkSplineFilterWrap::SetGenerateTCoordsToUseLength(const Nan::FunctionCallb
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -643,7 +643,7 @@ void VtkSplineFilterWrap::SetGenerateTCoordsToUseScalars(const Nan::FunctionCall
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -657,7 +657,7 @@ void VtkSplineFilterWrap::SetLength(const Nan::FunctionCallbackInfo<v8::Value>& 
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -676,7 +676,7 @@ void VtkSplineFilterWrap::SetMaximumNumberOfSubdivisions(const Nan::FunctionCall
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -695,7 +695,7 @@ void VtkSplineFilterWrap::SetNumberOfSubdivisions(const Nan::FunctionCallbackInf
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -715,7 +715,7 @@ void VtkSplineFilterWrap::SetSpline(const Nan::FunctionCallbackInfo<v8::Value>& 
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkSplineWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkSplineWrap *a0 = ObjectWrap::Unwrap<VtkSplineWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -734,7 +734,7 @@ void VtkSplineFilterWrap::SetSubdivide(const Nan::FunctionCallbackInfo<v8::Value
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -751,7 +751,7 @@ void VtkSplineFilterWrap::SetSubdivideToLength(const Nan::FunctionCallbackInfo<v
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -763,7 +763,7 @@ void VtkSplineFilterWrap::SetSubdivideToSpecified(const Nan::FunctionCallbackInf
 {
 	VtkSplineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSplineFilterWrap>(info.Holder());
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -777,7 +777,7 @@ void VtkSplineFilterWrap::SetTextureLength(const Nan::FunctionCallbackInfo<v8::V
 	vtkSplineFilter *native = (vtkSplineFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

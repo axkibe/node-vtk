@@ -132,7 +132,7 @@ void VtkClosedSurfacePointPlacerWrap::AddBoundingPlane(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1620,7 +1620,7 @@ void VtkClosedSurfacePointPlacerWrap::GetBoundingPlanes(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetBoundingPlanes();
-		VtkPlaneCollectionWrap::InitPtpl();
+	VtkPlaneCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1721,7 +1721,7 @@ void VtkClosedSurfacePointPlacerWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkClosedSurfacePointPlacerWrap::InitPtpl();
+	VtkClosedSurfacePointPlacerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -1737,7 +1737,7 @@ void VtkClosedSurfacePointPlacerWrap::RemoveAllBoundingPlanes(const Nan::Functio
 {
 	VtkClosedSurfacePointPlacerWrap *wrapper = ObjectWrap::Unwrap<VtkClosedSurfacePointPlacerWrap>(info.Holder());
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -1752,7 +1752,7 @@ void VtkClosedSurfacePointPlacerWrap::RemoveBoundingPlane(const Nan::FunctionCal
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneWrap *a0 = ObjectWrap::Unwrap<VtkPlaneWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1781,7 +1781,7 @@ void VtkClosedSurfacePointPlacerWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkClosedSurfacePointPlacerWrap::InitPtpl();
+		VtkClosedSurfacePointPlacerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -1803,7 +1803,7 @@ void VtkClosedSurfacePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlanesWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlanesWrap *a0 = ObjectWrap::Unwrap<VtkPlanesWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1816,7 +1816,7 @@ void VtkClosedSurfacePointPlacerWrap::SetBoundingPlanes(const Nan::FunctionCallb
 	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPlaneCollectionWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPlaneCollectionWrap *a0 = ObjectWrap::Unwrap<VtkPlaneCollectionWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -1835,7 +1835,7 @@ void VtkClosedSurfacePointPlacerWrap::SetMinimumDistance(const Nan::FunctionCall
 	vtkClosedSurfacePointPlacer *native = (vtkClosedSurfacePointPlacer *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

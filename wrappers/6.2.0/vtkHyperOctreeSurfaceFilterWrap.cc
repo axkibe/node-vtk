@@ -144,7 +144,7 @@ void VtkHyperOctreeSurfaceFilterWrap::GetLocator(const Nan::FunctionCallbackInfo
 		return;
 	}
 	r = native->GetLocator();
-		VtkIncrementalPointLocatorWrap::InitPtpl();
+	VtkIncrementalPointLocatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -210,7 +210,7 @@ void VtkHyperOctreeSurfaceFilterWrap::MergingOff(const Nan::FunctionCallbackInfo
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -222,7 +222,7 @@ void VtkHyperOctreeSurfaceFilterWrap::MergingOn(const Nan::FunctionCallbackInfo<
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -241,7 +241,7 @@ void VtkHyperOctreeSurfaceFilterWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
+	VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -257,7 +257,7 @@ void VtkHyperOctreeSurfaceFilterWrap::PassThroughCellIdsOff(const Nan::FunctionC
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -269,7 +269,7 @@ void VtkHyperOctreeSurfaceFilterWrap::PassThroughCellIdsOn(const Nan::FunctionCa
 {
 	VtkHyperOctreeSurfaceFilterWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeSurfaceFilterWrap>(info.Holder());
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -293,7 +293,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
+		VtkHyperOctreeSurfaceFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SetLocator(const Nan::FunctionCallbackInfo
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkIncrementalPointLocatorWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkIncrementalPointLocatorWrap *a0 = ObjectWrap::Unwrap<VtkIncrementalPointLocatorWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -334,7 +334,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SetMerging(const Nan::FunctionCallbackInfo
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -353,7 +353,7 @@ void VtkHyperOctreeSurfaceFilterWrap::SetPassThroughCellIds(const Nan::FunctionC
 	vtkHyperOctreeSurfaceFilter *native = (vtkHyperOctreeSurfaceFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

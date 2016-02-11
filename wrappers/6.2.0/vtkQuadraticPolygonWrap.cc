@@ -229,7 +229,7 @@ void VtkQuadraticPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8
 					return;
 				}
 
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -260,7 +260,7 @@ void VtkQuadraticPolygonWrap::ComputeCentroid(const Nan::FunctionCallbackInfo<v8
 					}
 					b2[i] = a2->Get(i)->NumberValue();
 				}
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -334,7 +334,7 @@ void VtkQuadraticPolygonWrap::GetEdge(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetEdge(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -364,7 +364,7 @@ void VtkQuadraticPolygonWrap::GetFace(const Nan::FunctionCallbackInfo<v8::Value>
 		r = native->GetFace(
 			info[0]->Int32Value()
 		);
-			VtkCellWrap::InitPtpl();
+		VtkCellWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -637,7 +637,7 @@ void VtkQuadraticPolygonWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuadraticPolygonWrap::InitPtpl();
+	VtkQuadraticPolygonWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -687,7 +687,7 @@ void VtkQuadraticPolygonWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuadraticPolygonWrap::InitPtpl();
+		VtkQuadraticPolygonWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -708,7 +708,7 @@ void VtkQuadraticPolygonWrap::SetUseMVCInterpolation(const Nan::FunctionCallback
 	vtkQuadraticPolygon *native = (vtkQuadraticPolygon *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

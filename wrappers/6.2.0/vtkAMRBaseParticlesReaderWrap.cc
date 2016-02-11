@@ -144,7 +144,7 @@ void VtkAMRBaseParticlesReaderWrap::FilterLocationOff(const Nan::FunctionCallbac
 {
 	VtkAMRBaseParticlesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseParticlesReaderWrap>(info.Holder());
 	vtkAMRBaseParticlesReader *native = (vtkAMRBaseParticlesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -156,7 +156,7 @@ void VtkAMRBaseParticlesReaderWrap::FilterLocationOn(const Nan::FunctionCallback
 {
 	VtkAMRBaseParticlesReaderWrap *wrapper = ObjectWrap::Unwrap<VtkAMRBaseParticlesReaderWrap>(info.Holder());
 	vtkAMRBaseParticlesReader *native = (vtkAMRBaseParticlesReader *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -189,7 +189,7 @@ void VtkAMRBaseParticlesReaderWrap::GetController(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->GetController();
-		VtkMultiProcessControllerWrap::InitPtpl();
+	VtkMultiProcessControllerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -311,7 +311,7 @@ void VtkAMRBaseParticlesReaderWrap::GetParticleDataArraySelection(const Nan::Fun
 		return;
 	}
 	r = native->GetParticleDataArraySelection();
-		VtkDataArraySelectionWrap::InitPtpl();
+	VtkDataArraySelectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -356,7 +356,7 @@ void VtkAMRBaseParticlesReaderWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkAMRBaseParticlesReaderWrap::InitPtpl();
+	VtkAMRBaseParticlesReaderWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -384,7 +384,7 @@ void VtkAMRBaseParticlesReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkAMRBaseParticlesReaderWrap::InitPtpl();
+		VtkAMRBaseParticlesReaderWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -406,7 +406,7 @@ void VtkAMRBaseParticlesReaderWrap::SetController(const Nan::FunctionCallbackInf
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMultiProcessControllerWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkMultiProcessControllerWrap *a0 = ObjectWrap::Unwrap<VtkMultiProcessControllerWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -426,7 +426,7 @@ void VtkAMRBaseParticlesReaderWrap::SetFileName(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -445,7 +445,7 @@ void VtkAMRBaseParticlesReaderWrap::SetFilterLocation(const Nan::FunctionCallbac
 	vtkAMRBaseParticlesReader *native = (vtkAMRBaseParticlesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -464,7 +464,7 @@ void VtkAMRBaseParticlesReaderWrap::SetFrequency(const Nan::FunctionCallbackInfo
 	vtkAMRBaseParticlesReader *native = (vtkAMRBaseParticlesReader *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -487,7 +487,7 @@ void VtkAMRBaseParticlesReaderWrap::SetMaxLocation(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -514,7 +514,7 @@ void VtkAMRBaseParticlesReaderWrap::SetMinLocation(const Nan::FunctionCallbackIn
 		{
 			if(info.Length() > 2 && info[2]->IsNumber())
 			{
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -540,7 +540,7 @@ void VtkAMRBaseParticlesReaderWrap::SetParticleArrayStatus(const Nan::FunctionCa
 		Nan::Utf8String a0(info[0]);
 		if(info.Length() > 1 && info[1]->IsInt32())
 		{
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;

@@ -292,7 +292,7 @@ void VtkPointSetToLabelHierarchyWrap::GetTextProperty(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetTextProperty();
-		VtkTextPropertyWrap::InitPtpl();
+	VtkTextPropertyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -351,7 +351,7 @@ void VtkPointSetToLabelHierarchyWrap::NewInstance(const Nan::FunctionCallbackInf
 		return;
 	}
 	r = native->NewInstance();
-		VtkPointSetToLabelHierarchyWrap::InitPtpl();
+	VtkPointSetToLabelHierarchyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -379,7 +379,7 @@ void VtkPointSetToLabelHierarchyWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPointSetToLabelHierarchyWrap::InitPtpl();
+		VtkPointSetToLabelHierarchyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -401,7 +401,7 @@ void VtkPointSetToLabelHierarchyWrap::SetBoundedSizeArrayName(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -421,7 +421,7 @@ void VtkPointSetToLabelHierarchyWrap::SetIconIndexArrayName(const Nan::FunctionC
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -441,7 +441,7 @@ void VtkPointSetToLabelHierarchyWrap::SetLabelArrayName(const Nan::FunctionCallb
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -460,7 +460,7 @@ void VtkPointSetToLabelHierarchyWrap::SetMaximumDepth(const Nan::FunctionCallbac
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -480,7 +480,7 @@ void VtkPointSetToLabelHierarchyWrap::SetOrientationArrayName(const Nan::Functio
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -500,7 +500,7 @@ void VtkPointSetToLabelHierarchyWrap::SetPriorityArrayName(const Nan::FunctionCa
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -520,7 +520,7 @@ void VtkPointSetToLabelHierarchyWrap::SetSizeArrayName(const Nan::FunctionCallba
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -539,7 +539,7 @@ void VtkPointSetToLabelHierarchyWrap::SetTargetLabelCount(const Nan::FunctionCal
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -559,7 +559,7 @@ void VtkPointSetToLabelHierarchyWrap::SetTextProperty(const Nan::FunctionCallbac
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkTextPropertyWrap *a0 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -578,7 +578,7 @@ void VtkPointSetToLabelHierarchyWrap::SetUseUnicodeStrings(const Nan::FunctionCa
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -595,7 +595,7 @@ void VtkPointSetToLabelHierarchyWrap::UseUnicodeStringsOff(const Nan::FunctionCa
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -607,7 +607,7 @@ void VtkPointSetToLabelHierarchyWrap::UseUnicodeStringsOn(const Nan::FunctionCal
 {
 	VtkPointSetToLabelHierarchyWrap *wrapper = ObjectWrap::Unwrap<VtkPointSetToLabelHierarchyWrap>(info.Holder());
 	vtkPointSetToLabelHierarchy *native = (vtkPointSetToLabelHierarchy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

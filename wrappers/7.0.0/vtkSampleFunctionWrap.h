@@ -38,8 +38,10 @@ class VtkSampleFunctionWrap : public VtkImageAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNormalArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);

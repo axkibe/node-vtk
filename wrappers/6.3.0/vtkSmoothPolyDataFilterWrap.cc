@@ -207,7 +207,7 @@ void VtkSmoothPolyDataFilterWrap::BoundarySmoothingOff(const Nan::FunctionCallba
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -219,7 +219,7 @@ void VtkSmoothPolyDataFilterWrap::BoundarySmoothingOn(const Nan::FunctionCallbac
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -231,7 +231,7 @@ void VtkSmoothPolyDataFilterWrap::FeatureEdgeSmoothingOff(const Nan::FunctionCal
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -243,7 +243,7 @@ void VtkSmoothPolyDataFilterWrap::FeatureEdgeSmoothingOn(const Nan::FunctionCall
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -255,7 +255,7 @@ void VtkSmoothPolyDataFilterWrap::GenerateErrorScalarsOff(const Nan::FunctionCal
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -267,7 +267,7 @@ void VtkSmoothPolyDataFilterWrap::GenerateErrorScalarsOn(const Nan::FunctionCall
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -279,7 +279,7 @@ void VtkSmoothPolyDataFilterWrap::GenerateErrorVectorsOff(const Nan::FunctionCal
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -291,7 +291,7 @@ void VtkSmoothPolyDataFilterWrap::GenerateErrorVectorsOn(const Nan::FunctionCall
 {
 	VtkSmoothPolyDataFilterWrap *wrapper = ObjectWrap::Unwrap<VtkSmoothPolyDataFilterWrap>(info.Holder());
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -576,7 +576,7 @@ void VtkSmoothPolyDataFilterWrap::GetSource(const Nan::FunctionCallbackInfo<v8::
 		return;
 	}
 	r = native->GetSource();
-		VtkPolyDataWrap::InitPtpl();
+	VtkPolyDataWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -621,7 +621,7 @@ void VtkSmoothPolyDataFilterWrap::NewInstance(const Nan::FunctionCallbackInfo<v8
 		return;
 	}
 	r = native->NewInstance();
-		VtkSmoothPolyDataFilterWrap::InitPtpl();
+	VtkSmoothPolyDataFilterWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -649,7 +649,7 @@ void VtkSmoothPolyDataFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkSmoothPolyDataFilterWrap::InitPtpl();
+		VtkSmoothPolyDataFilterWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -670,7 +670,7 @@ void VtkSmoothPolyDataFilterWrap::SetBoundarySmoothing(const Nan::FunctionCallba
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -689,7 +689,7 @@ void VtkSmoothPolyDataFilterWrap::SetConvergence(const Nan::FunctionCallbackInfo
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -708,7 +708,7 @@ void VtkSmoothPolyDataFilterWrap::SetEdgeAngle(const Nan::FunctionCallbackInfo<v
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -727,7 +727,7 @@ void VtkSmoothPolyDataFilterWrap::SetFeatureAngle(const Nan::FunctionCallbackInf
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -746,7 +746,7 @@ void VtkSmoothPolyDataFilterWrap::SetFeatureEdgeSmoothing(const Nan::FunctionCal
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -765,7 +765,7 @@ void VtkSmoothPolyDataFilterWrap::SetGenerateErrorScalars(const Nan::FunctionCal
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -784,7 +784,7 @@ void VtkSmoothPolyDataFilterWrap::SetGenerateErrorVectors(const Nan::FunctionCal
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -803,7 +803,7 @@ void VtkSmoothPolyDataFilterWrap::SetNumberOfIterations(const Nan::FunctionCallb
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -822,7 +822,7 @@ void VtkSmoothPolyDataFilterWrap::SetOutputPointsPrecision(const Nan::FunctionCa
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -841,7 +841,7 @@ void VtkSmoothPolyDataFilterWrap::SetRelaxationFactor(const Nan::FunctionCallbac
 	vtkSmoothPolyDataFilter *native = (vtkSmoothPolyDataFilter *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -861,7 +861,7 @@ void VtkSmoothPolyDataFilterWrap::SetSourceData(const Nan::FunctionCallbackInfo<
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPolyDataWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkPolyDataWrap *a0 = ObjectWrap::Unwrap<VtkPolyDataWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

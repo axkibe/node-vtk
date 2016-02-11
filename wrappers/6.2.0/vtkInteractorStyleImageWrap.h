@@ -37,6 +37,14 @@ class VtkInteractorStyleImageWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void GetInteractionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractionModeMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWindowLevelCurrentPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWindowLevelStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetXViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetYViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZViewRightVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetZViewUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnChar(const Nan::FunctionCallbackInfo<v8::Value>& info);

@@ -53,6 +53,9 @@ class VtkNIFTIImageHeaderWrap : public VtkObjectWrap
 		static void GetQuaternC(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetQuaternD(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSFormCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSRowX(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSRowY(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSRowZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSclInter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSclSlope(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceCode(const Nan::FunctionCallbackInfo<v8::Value>& info);

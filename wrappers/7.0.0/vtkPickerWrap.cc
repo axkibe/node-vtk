@@ -65,6 +65,9 @@ void VtkPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMapper", GetMapper);
 	Nan::SetPrototypeMethod(tpl, "getMapper", GetMapper);
 
+	Nan::SetPrototypeMethod(tpl, "GetMapperPosition", GetMapperPosition);
+	Nan::SetPrototypeMethod(tpl, "getMapperPosition", GetMapperPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetPickedPositions", GetPickedPositions);
 	Nan::SetPrototypeMethod(tpl, "getPickedPositions", GetPickedPositions);
 
@@ -129,7 +132,7 @@ void VtkPickerWrap::GetActors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetActors();
-		VtkActorCollectionWrap::InitPtpl();
+	VtkActorCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -166,7 +169,7 @@ void VtkPickerWrap::GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetDataSet();
-		VtkDataSetWrap::InitPtpl();
+	VtkDataSetWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -189,7 +192,7 @@ void VtkPickerWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetMapper();
-		VtkAbstractMapper3DWrap::InitPtpl();
+	VtkAbstractMapper3DWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -199,6 +202,23 @@ void VtkPickerWrap::GetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPickerWrap::GetMapperPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPickerWrap *wrapper = ObjectWrap::Unwrap<VtkPickerWrap>(info.Holder());
+	vtkPicker *native = (vtkPicker *)wrapper->native.GetPointer();
+	double const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMapperPosition();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(double));
+	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkPickerWrap::GetPickedPositions(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -212,7 +232,7 @@ void VtkPickerWrap::GetPickedPositions(const Nan::FunctionCallbackInfo<v8::Value
 		return;
 	}
 	r = native->GetPickedPositions();
-		VtkPointsWrap::InitPtpl();
+	VtkPointsWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -235,7 +255,7 @@ void VtkPickerWrap::GetProp3Ds(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	r = native->GetProp3Ds();
-		VtkProp3DCollectionWrap::InitPtpl();
+	VtkProp3DCollectionWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -294,7 +314,7 @@ void VtkPickerWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info
 		return;
 	}
 	r = native->NewInstance();
-		VtkPickerWrap::InitPtpl();
+	VtkPickerWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -419,7 +439,7 @@ void VtkPickerWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkPickerWrap::InitPtpl();
+		VtkPickerWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -440,7 +460,7 @@ void VtkPickerWrap::SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	vtkPicker *native = (vtkPicker *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;

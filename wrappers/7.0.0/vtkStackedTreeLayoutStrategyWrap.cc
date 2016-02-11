@@ -297,7 +297,7 @@ void VtkStackedTreeLayoutStrategyWrap::Layout(const Nan::FunctionCallbackInfo<v8
 			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[2]))
 			{
 				VtkDataArrayWrap *a2 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[2]->ToObject());
-				if(info.Length() != 3)
+								if(info.Length() != 3)
 				{
 					Nan::ThrowError("Too many parameters.");
 					return;
@@ -330,7 +330,7 @@ void VtkStackedTreeLayoutStrategyWrap::LayoutEdgePoints(const Nan::FunctionCallb
 				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkTreeWrap::ptpl))->HasInstance(info[3]))
 				{
 					VtkTreeWrap *a3 = ObjectWrap::Unwrap<VtkTreeWrap>(info[3]->ToObject());
-					if(info.Length() != 4)
+										if(info.Length() != 4)
 					{
 						Nan::ThrowError("Too many parameters.");
 						return;
@@ -360,7 +360,7 @@ void VtkStackedTreeLayoutStrategyWrap::NewInstance(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->NewInstance();
-		VtkStackedTreeLayoutStrategyWrap::InitPtpl();
+	VtkStackedTreeLayoutStrategyWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -376,7 +376,7 @@ void VtkStackedTreeLayoutStrategyWrap::ReverseOff(const Nan::FunctionCallbackInf
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -388,7 +388,7 @@ void VtkStackedTreeLayoutStrategyWrap::ReverseOn(const Nan::FunctionCallbackInfo
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -412,7 +412,7 @@ void VtkStackedTreeLayoutStrategyWrap::SafeDownCast(const Nan::FunctionCallbackI
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkStackedTreeLayoutStrategyWrap::InitPtpl();
+		VtkStackedTreeLayoutStrategyWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -433,7 +433,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetInteriorLogSpacingValue(const Nan::Fun
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -452,7 +452,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetInteriorRadius(const Nan::FunctionCall
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -471,7 +471,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetReverse(const Nan::FunctionCallbackInf
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -490,7 +490,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetRingThickness(const Nan::FunctionCallb
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -509,7 +509,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetRootEndAngle(const Nan::FunctionCallba
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -528,7 +528,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetRootStartAngle(const Nan::FunctionCall
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -547,7 +547,7 @@ void VtkStackedTreeLayoutStrategyWrap::SetUseRectangularCoordinates(const Nan::F
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsBoolean())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -564,7 +564,7 @@ void VtkStackedTreeLayoutStrategyWrap::UseRectangularCoordinatesOff(const Nan::F
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -576,7 +576,7 @@ void VtkStackedTreeLayoutStrategyWrap::UseRectangularCoordinatesOn(const Nan::Fu
 {
 	VtkStackedTreeLayoutStrategyWrap *wrapper = ObjectWrap::Unwrap<VtkStackedTreeLayoutStrategyWrap>(info.Holder());
 	vtkStackedTreeLayoutStrategy *native = (vtkStackedTreeLayoutStrategy *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

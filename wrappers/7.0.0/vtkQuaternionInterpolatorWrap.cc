@@ -142,7 +142,7 @@ void VtkQuaternionInterpolatorWrap::AddQuaternion(const Nan::FunctionCallbackInf
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -172,7 +172,7 @@ void VtkQuaternionInterpolatorWrap::AddQuaternion(const Nan::FunctionCallbackInf
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -289,7 +289,7 @@ void VtkQuaternionInterpolatorWrap::Initialize(const Nan::FunctionCallbackInfo<v
 {
 	VtkQuaternionInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info.Holder());
 	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -313,7 +313,7 @@ void VtkQuaternionInterpolatorWrap::InterpolateQuaternion(const Nan::FunctionCal
 				return;
 			}
 
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -343,7 +343,7 @@ void VtkQuaternionInterpolatorWrap::InterpolateQuaternion(const Nan::FunctionCal
 				}
 				b1[i] = a1->Get(i)->NumberValue();
 			}
-			if(info.Length() != 2)
+						if(info.Length() != 2)
 			{
 				Nan::ThrowError("Too many parameters.");
 				return;
@@ -391,7 +391,7 @@ void VtkQuaternionInterpolatorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	r = native->NewInstance();
-		VtkQuaternionInterpolatorWrap::InitPtpl();
+	VtkQuaternionInterpolatorWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -409,7 +409,7 @@ void VtkQuaternionInterpolatorWrap::RemoveQuaternion(const Nan::FunctionCallback
 	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsNumber())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -438,7 +438,7 @@ void VtkQuaternionInterpolatorWrap::SafeDownCast(const Nan::FunctionCallbackInfo
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkQuaternionInterpolatorWrap::InitPtpl();
+		VtkQuaternionInterpolatorWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -459,7 +459,7 @@ void VtkQuaternionInterpolatorWrap::SetInterpolationType(const Nan::FunctionCall
 	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -476,7 +476,7 @@ void VtkQuaternionInterpolatorWrap::SetInterpolationTypeToLinear(const Nan::Func
 {
 	VtkQuaternionInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info.Holder());
 	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -488,7 +488,7 @@ void VtkQuaternionInterpolatorWrap::SetInterpolationTypeToSpline(const Nan::Func
 {
 	VtkQuaternionInterpolatorWrap *wrapper = ObjectWrap::Unwrap<VtkQuaternionInterpolatorWrap>(info.Holder());
 	vtkQuaternionInterpolator *native = (vtkQuaternionInterpolator *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;

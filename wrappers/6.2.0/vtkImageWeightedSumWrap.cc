@@ -197,7 +197,7 @@ void VtkImageWeightedSumWrap::GetWeights(const Nan::FunctionCallbackInfo<v8::Val
 		return;
 	}
 	r = native->GetWeights();
-		VtkDoubleArrayWrap::InitPtpl();
+	VtkDoubleArrayWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -242,7 +242,7 @@ void VtkImageWeightedSumWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	r = native->NewInstance();
-		VtkImageWeightedSumWrap::InitPtpl();
+	VtkImageWeightedSumWrap::InitPtpl();
 	v8::Local<v8::Value> argv[1] =
 		{ Nan::New(vtkNodeJsNoWrap) };
 	v8::Local<v8::Function> cons =
@@ -258,7 +258,7 @@ void VtkImageWeightedSumWrap::NormalizeByWeightOff(const Nan::FunctionCallbackIn
 {
 	VtkImageWeightedSumWrap *wrapper = ObjectWrap::Unwrap<VtkImageWeightedSumWrap>(info.Holder());
 	vtkImageWeightedSum *native = (vtkImageWeightedSum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -270,7 +270,7 @@ void VtkImageWeightedSumWrap::NormalizeByWeightOn(const Nan::FunctionCallbackInf
 {
 	VtkImageWeightedSumWrap *wrapper = ObjectWrap::Unwrap<VtkImageWeightedSumWrap>(info.Holder());
 	vtkImageWeightedSum *native = (vtkImageWeightedSum *)wrapper->native.GetPointer();
-	if(info.Length() != 0)
+		if(info.Length() != 0)
 	{
 		Nan::ThrowError("Too many parameters.");
 		return;
@@ -294,7 +294,7 @@ void VtkImageWeightedSumWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::V
 		r = native->SafeDownCast(
 			(vtkObject *) a0->native.GetPointer()
 		);
-			VtkImageWeightedSumWrap::InitPtpl();
+		VtkImageWeightedSumWrap::InitPtpl();
 		v8::Local<v8::Value> argv[1] =
 			{ Nan::New(vtkNodeJsNoWrap) };
 		v8::Local<v8::Function> cons =
@@ -315,7 +315,7 @@ void VtkImageWeightedSumWrap::SetNormalizeByWeight(const Nan::FunctionCallbackIn
 	vtkImageWeightedSum *native = (vtkImageWeightedSum *)wrapper->native.GetPointer();
 	if(info.Length() > 0 && info[0]->IsInt32())
 	{
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
@@ -335,7 +335,7 @@ void VtkImageWeightedSumWrap::SetWeights(const Nan::FunctionCallbackInfo<v8::Val
 	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDoubleArrayWrap::ptpl))->HasInstance(info[0]))
 	{
 		VtkDoubleArrayWrap *a0 = ObjectWrap::Unwrap<VtkDoubleArrayWrap>(info[0]->ToObject());
-		if(info.Length() != 1)
+				if(info.Length() != 1)
 		{
 			Nan::ThrowError("Too many parameters.");
 			return;
