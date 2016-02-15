@@ -14,7 +14,6 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkIdTypeArrayWrap.h"
-#include "vtkSmartPointer<vtkDataObject>Wrap.h"
 
 using namespace v8;
 
@@ -493,39 +492,7 @@ void VtkMultiProcessControllerWrap::GatherV(const Nan::FunctionCallbackInfo<v8::
 					}
 				}
 			}
-		}
-	}
-	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkDataObjectWrap *a0 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkSmartPointer<vtkDataObject>Wrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkSmartPointer<vtkDataObject>Wrap *a1 = ObjectWrap::Unwrap<VtkSmartPointer<vtkDataObject>Wrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsInt32())
-			{
-				int r;
-				if(info.Length() != 3)
-				{
-					Nan::ThrowError("Too many parameters.");
-					return;
-				}
-				r = native->GatherV(
-					(vtkDataObject *) a0->native.GetPointer(),
-					(vtkSmartPointer<vtkDataObject> *) a1->native.GetPointer(),
-					info[2]->Int32Value()
-				);
-				info.GetReturnValue().Set(Nan::New(r));
-				return;
-			}
-		}
-	}
-	else if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkDataArrayWrap *a0 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataArrayWrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkDataArrayWrap *a1 = ObjectWrap::Unwrap<VtkDataArrayWrap>(info[1]->ToObject());
-			if(info.Length() > 2 && info[2]->IsInt32())
+			else if(info.Length() > 2 && info[2]->IsInt32())
 			{
 				int r;
 				if(info.Length() != 3)

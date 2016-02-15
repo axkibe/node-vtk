@@ -388,8 +388,8 @@ diff -urBN VTK-7.0.0-org/Wrapping/Tools/CMakeLists.txt VTK-7.0.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-7.0.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-7.0.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-7.0.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-7.0.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-11 14:13:04.961203301 +0100
-@@ -0,0 +1,1798 @@
++++ VTK-7.0.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-15 09:54:58.632645805 +0100
+@@ -0,0 +1,1799 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -536,6 +536,13 @@ diff -urBN VTK-7.0.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-7.0.0/Wrapping/Tools
 +    return 0;
 +    }
 +
++  if (vtkWrap_IsRef(val)) return 0;
++
++//  if (val->Template) return 0;
++  if (val->Class && strchr(val->Class, '<')) return 0;
++
++  if (vtkWrap_IsNArray(val)) return 0;
++
 +  if (baseType == VTK_PARSE_OBJECT)
 +    {
 +    if (!vtkWrap_IsPointer(val))
@@ -553,13 +560,7 @@ diff -urBN VTK-7.0.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-7.0.0/Wrapping/Tools
 +    return supportedClass(val->Class);
 +    }
 +
-+  if (vtkWrap_IsRef(val)) return 0;
-+
-+  if (val->Template) return 0;
-+
 +  if (vtkWrap_IsScalar(val)) return 1;
-+
-+  if (vtkWrap_IsNArray(val)) return 0;
 +
 +  if (vtkWrap_IsArray(val)) return 1;
 +

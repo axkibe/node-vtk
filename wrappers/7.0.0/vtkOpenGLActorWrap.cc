@@ -52,9 +52,6 @@ void VtkOpenGLActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
-	Nan::SetPrototypeMethod(tpl, "GetKeyMatrices", GetKeyMatrices);
-	Nan::SetPrototypeMethod(tpl, "getKeyMatrices", GetKeyMatrices);
-
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -108,31 +105,6 @@ void VtkOpenGLActorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
-}
-
-void VtkOpenGLActorWrap::GetKeyMatrices(const Nan::FunctionCallbackInfo<v8::Value>& info)
-{
-	VtkOpenGLActorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLActorWrap>(info.Holder());
-	vtkOpenGLActor *native = (vtkOpenGLActor *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[0]))
-	{
-		VtkMatrix4x4Wrap *a0 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[0]->ToObject());
-		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix3x3Wrap::ptpl))->HasInstance(info[1]))
-		{
-			VtkMatrix3x3Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix3x3Wrap>(info[1]->ToObject());
-						if(info.Length() != 2)
-			{
-				Nan::ThrowError("Too many parameters.");
-				return;
-			}
-			native->GetKeyMatrices(
-				(vtkMatrix4x4 *) a0->native.GetPointer(),
-				(vtkMatrix3x3 *) a1->native.GetPointer()
-			);
-			return;
-		}
-	}
-	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLActorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
