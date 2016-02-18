@@ -10,6 +10,7 @@
 #include <vtkMergeDataObjectFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeDataObjectFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkMergeDataObjectFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetOutputFieldToCellDataField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFieldToDataObjectField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFieldToPointDataField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGEDATAOBJECTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGEDATAOBJECTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkUGFacetReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUGFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -35,6 +36,7 @@ class VtkUGFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfParts(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPartColorIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPartNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MergingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,6 +47,10 @@ class VtkUGFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPartNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUGFACETREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUGFACETREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

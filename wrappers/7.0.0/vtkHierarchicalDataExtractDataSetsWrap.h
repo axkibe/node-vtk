@@ -10,6 +10,7 @@
 #include <vtkHierarchicalDataExtractDataSets.h>
 
 #include "vtkExtractDataSetsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalDataExtractDataSetsWrap : public VtkExtractDataSetsWrap
 {
@@ -33,6 +34,10 @@ class VtkHierarchicalDataExtractDataSetsWrap : public VtkExtractDataSetsWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALDATAEXTRACTDATASETSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALDATAEXTRACTDATASETSWRAP_CLASSDEF
+#endif
 };
 
 #endif

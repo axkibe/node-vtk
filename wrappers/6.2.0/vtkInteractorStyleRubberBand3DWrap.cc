@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkInteractorStyleRubberBand3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkInteractorStyleRubberBand3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderOnMouseMove", SetRenderOnMouseMove);
 	Nan::SetPrototypeMethod(tpl, "setRenderOnMouseMove", SetRenderOnMouseMove);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

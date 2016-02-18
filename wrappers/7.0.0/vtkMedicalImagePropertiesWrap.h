@@ -10,6 +10,7 @@
 #include <vtkMedicalImageProperties.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 {
@@ -62,6 +63,7 @@ class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 		static void GetModality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNthWindowLevelPreset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNthWindowLevelPresetComment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfUserDefinedValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfWindowLevelPresets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPatientAge(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -82,11 +84,14 @@ class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 		static void GetSliceThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSliceThicknessAsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStationName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetStringFromOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyDate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStudyTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserDefinedNameByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUserDefinedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUserDefinedValueByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWindowLevelPresetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXRayTubeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasWindowLevelPreset(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -131,6 +136,10 @@ class VtkMedicalImagePropertiesWrap : public VtkObjectWrap
 		static void SetStudyID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStudyTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXRayTubeCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMEDICALIMAGEPROPERTIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMEDICALIMAGEPROPERTIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

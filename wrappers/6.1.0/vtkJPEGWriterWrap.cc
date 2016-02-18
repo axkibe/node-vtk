@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageWriterWrap.h"
 #include "vtkJPEGWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -51,6 +51,9 @@ void VtkJPEGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetProgressive", GetProgressive);
+	Nan::SetPrototypeMethod(tpl, "getProgressive", GetProgressive);
+
 	Nan::SetPrototypeMethod(tpl, "GetQuality", GetQuality);
 	Nan::SetPrototypeMethod(tpl, "getQuality", GetQuality);
 
@@ -62,6 +65,9 @@ void VtkJPEGWriterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetResult", GetResult);
 	Nan::SetPrototypeMethod(tpl, "getResult", GetResult);
+
+	Nan::SetPrototypeMethod(tpl, "GetWriteToMemory", GetWriteToMemory);
+	Nan::SetPrototypeMethod(tpl, "getWriteToMemory", GetWriteToMemory);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -78,11 +84,17 @@ void VtkJPEGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetProgressive", SetProgressive);
+	Nan::SetPrototypeMethod(tpl, "setProgressive", SetProgressive);
+
 	Nan::SetPrototypeMethod(tpl, "SetQuality", SetQuality);
 	Nan::SetPrototypeMethod(tpl, "setQuality", SetQuality);
 
 	Nan::SetPrototypeMethod(tpl, "SetResult", SetResult);
 	Nan::SetPrototypeMethod(tpl, "setResult", SetResult);
+
+	Nan::SetPrototypeMethod(tpl, "SetWriteToMemory", SetWriteToMemory);
+	Nan::SetPrototypeMethod(tpl, "setWriteToMemory", SetWriteToMemory);
 
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
@@ -93,6 +105,9 @@ void VtkJPEGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteToMemoryOn", WriteToMemoryOn);
 	Nan::SetPrototypeMethod(tpl, "writeToMemoryOn", WriteToMemoryOn);
 
+#ifdef VTK_NODE_PLUS_VTKJPEGWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKJPEGWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -134,6 +149,20 @@ void VtkJPEGWriterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>&
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkJPEGWriterWrap::GetProgressive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
+	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetProgressive();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkJPEGWriterWrap::GetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -199,6 +228,20 @@ void VtkJPEGWriterWrap::GetResult(const Nan::FunctionCallbackInfo<v8::Value>& in
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkJPEGWriterWrap::GetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
+	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWriteToMemory();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkJPEGWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -301,6 +344,25 @@ void VtkJPEGWriterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkJPEGWriterWrap::SetProgressive(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
+	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetProgressive(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkJPEGWriterWrap::SetQuality(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
@@ -334,6 +396,25 @@ void VtkJPEGWriterWrap::SetResult(const Nan::FunctionCallbackInfo<v8::Value>& in
 		}
 		native->SetResult(
 			(vtkUnsignedCharArray *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkJPEGWriterWrap::SetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkJPEGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkJPEGWriterWrap>(info.Holder());
+	vtkJPEGWriter *native = (vtkJPEGWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWriteToMemory(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

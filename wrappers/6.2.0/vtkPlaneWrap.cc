@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkPlaneWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOrigin", SetOrigin);
 	Nan::SetPrototypeMethod(tpl, "setOrigin", SetOrigin);
 
+#ifdef VTK_NODE_PLUS_VTKPLANEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLANEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

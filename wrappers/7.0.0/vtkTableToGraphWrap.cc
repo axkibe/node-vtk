@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkTableToGraphWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkStringArrayWrap.h"
 #include "vtkBitArrayWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkTableToGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexTableConnection", SetVertexTableConnection);
 	Nan::SetPrototypeMethod(tpl, "setVertexTableConnection", SetVertexTableConnection);
 
+#ifdef VTK_NODE_PLUS_VTKTABLETOGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLETOGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

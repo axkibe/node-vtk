@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDefaultPassWrap.h"
 #include "vtkValuePassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationStringKeyWrap.h"
 #include "vtkInformationDoubleVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkValuePassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+#ifdef VTK_NODE_PLUS_VTKVALUEPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVALUEPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

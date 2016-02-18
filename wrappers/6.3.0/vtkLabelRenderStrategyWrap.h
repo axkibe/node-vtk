@@ -10,6 +10,7 @@
 #include <vtkLabelRenderStrategy.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelRenderStrategyWrap : public VtkObjectWrap
 {
@@ -42,6 +43,10 @@ class VtkLabelRenderStrategyWrap : public VtkObjectWrap
 		static void StartFrame(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELRENDERSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELRENDERSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkXMLWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataCompressorWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -181,6 +181,9 @@ void VtkXMLWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteNextTime", WriteNextTime);
 	Nan::SetPrototypeMethod(tpl, "writeNextTime", WriteNextTime);
 
+#ifdef VTK_NODE_PLUS_VTKXMLWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

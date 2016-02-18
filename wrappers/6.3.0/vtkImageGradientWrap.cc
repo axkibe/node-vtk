@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageGradientWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkImageGradientWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHandleBoundaries", SetHandleBoundaries);
 	Nan::SetPrototypeMethod(tpl, "setHandleBoundaries", SetHandleBoundaries);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEGRADIENTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEGRADIENTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

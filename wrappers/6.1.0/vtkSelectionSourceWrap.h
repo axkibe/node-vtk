@@ -10,6 +10,7 @@
 #include <vtkSelectionSource.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSelectionSourceWrap : public VtkSelectionAlgorithmWrap
 {
@@ -60,6 +61,10 @@ class VtkSelectionSourceWrap : public VtkSelectionAlgorithmWrap
 		static void SetHierarchicalLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQueryString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSELECTIONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSELECTIONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

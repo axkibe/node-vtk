@@ -10,6 +10,7 @@
 #include <vtkAMRUtilities.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRUtilitiesWrap : public VtkObjectWrap
 {
@@ -36,6 +37,10 @@ class VtkAMRUtilitiesWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRUTILITIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRUTILITIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkDataObjectGenerator.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataObjectGeneratorWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkDataObjectGeneratorWrap : public VtkDataObjectAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProgram(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTGENERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAOBJECTGENERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

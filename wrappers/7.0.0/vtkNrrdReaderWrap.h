@@ -10,6 +10,7 @@
 #include <vtkNrrdReader.h>
 
 #include "vtkImageReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNrrdReaderWrap : public VtkImageReaderWrap
 {
@@ -34,6 +35,10 @@ class VtkNrrdReaderWrap : public VtkImageReaderWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNRRDREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNRRDREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

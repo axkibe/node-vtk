@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkResliceCursorRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkImageMapToColorsWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkPlaneSourceWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -204,6 +204,9 @@ void VtkResliceCursorRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseImageActorOn", UseImageActorOn);
 	Nan::SetPrototypeMethod(tpl, "useImageActorOn", UseImageActorOn);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICECURSORREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

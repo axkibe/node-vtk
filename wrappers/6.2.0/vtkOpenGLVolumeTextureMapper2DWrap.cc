@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeTextureMapper2DWrap.h"
 #include "vtkOpenGLVolumeTextureMapper2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkOpenGLVolumeTextureMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLVOLUMETEXTUREMAPPER2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLVOLUMETEXTUREMAPPER2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

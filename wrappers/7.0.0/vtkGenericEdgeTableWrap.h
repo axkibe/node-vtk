@@ -10,6 +10,7 @@
 #include <vtkGenericEdgeTable.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericEdgeTableWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkGenericEdgeTableWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICEDGETABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICEDGETABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

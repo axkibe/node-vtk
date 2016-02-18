@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkTextureObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkPixelBufferObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -48,6 +48,21 @@ void VtkTextureObjectWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkTextureObjectWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Activate", Activate);
+	Nan::SetPrototypeMethod(tpl, "activate", Activate);
+
+	Nan::SetPrototypeMethod(tpl, "Allocate1D", Allocate1D);
+	Nan::SetPrototypeMethod(tpl, "allocate1D", Allocate1D);
+
+	Nan::SetPrototypeMethod(tpl, "Allocate2D", Allocate2D);
+	Nan::SetPrototypeMethod(tpl, "allocate2D", Allocate2D);
+
+	Nan::SetPrototypeMethod(tpl, "Allocate3D", Allocate3D);
+	Nan::SetPrototypeMethod(tpl, "allocate3D", Allocate3D);
+
+	Nan::SetPrototypeMethod(tpl, "AllocateDepth", AllocateDepth);
+	Nan::SetPrototypeMethod(tpl, "allocateDepth", AllocateDepth);
+
 	Nan::SetPrototypeMethod(tpl, "Bind", Bind);
 	Nan::SetPrototypeMethod(tpl, "bind", Bind);
 
@@ -59,6 +74,18 @@ void VtkTextureObjectWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Create1D", Create1D);
 	Nan::SetPrototypeMethod(tpl, "create1D", Create1D);
+
+	Nan::SetPrototypeMethod(tpl, "Create2D", Create2D);
+	Nan::SetPrototypeMethod(tpl, "create2D", Create2D);
+
+	Nan::SetPrototypeMethod(tpl, "Create3D", Create3D);
+	Nan::SetPrototypeMethod(tpl, "create3D", Create3D);
+
+	Nan::SetPrototypeMethod(tpl, "CreateDepth", CreateDepth);
+	Nan::SetPrototypeMethod(tpl, "createDepth", CreateDepth);
+
+	Nan::SetPrototypeMethod(tpl, "Deactivate", Deactivate);
+	Nan::SetPrototypeMethod(tpl, "deactivate", Deactivate);
 
 	Nan::SetPrototypeMethod(tpl, "Download", Download);
 	Nan::SetPrototypeMethod(tpl, "download", Download);
@@ -81,6 +108,9 @@ void VtkTextureObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDepth", GetDepth);
+	Nan::SetPrototypeMethod(tpl, "getDepth", GetDepth);
+
 	Nan::SetPrototypeMethod(tpl, "GetDepthTextureCompare", GetDepthTextureCompare);
 	Nan::SetPrototypeMethod(tpl, "getDepthTextureCompare", GetDepthTextureCompare);
 
@@ -90,8 +120,20 @@ void VtkTextureObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDepthTextureMode", GetDepthTextureMode);
 	Nan::SetPrototypeMethod(tpl, "getDepthTextureMode", GetDepthTextureMode);
 
+	Nan::SetPrototypeMethod(tpl, "GetFormat", GetFormat);
+	Nan::SetPrototypeMethod(tpl, "getFormat", GetFormat);
+
 	Nan::SetPrototypeMethod(tpl, "GetGenerateMipmap", GetGenerateMipmap);
 	Nan::SetPrototypeMethod(tpl, "getGenerateMipmap", GetGenerateMipmap);
+
+	Nan::SetPrototypeMethod(tpl, "GetHandle", GetHandle);
+	Nan::SetPrototypeMethod(tpl, "getHandle", GetHandle);
+
+	Nan::SetPrototypeMethod(tpl, "GetHeight", GetHeight);
+	Nan::SetPrototypeMethod(tpl, "getHeight", GetHeight);
+
+	Nan::SetPrototypeMethod(tpl, "GetInternalFormat", GetInternalFormat);
+	Nan::SetPrototypeMethod(tpl, "getInternalFormat", GetInternalFormat);
 
 	Nan::SetPrototypeMethod(tpl, "GetLinearMagnification", GetLinearMagnification);
 	Nan::SetPrototypeMethod(tpl, "getLinearMagnification", GetLinearMagnification);
@@ -125,6 +167,15 @@ void VtkTextureObjectWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetSupportsTextureInteger", GetSupportsTextureInteger);
 	Nan::SetPrototypeMethod(tpl, "getSupportsTextureInteger", GetSupportsTextureInteger);
+
+	Nan::SetPrototypeMethod(tpl, "GetTarget", GetTarget);
+	Nan::SetPrototypeMethod(tpl, "getTarget", GetTarget);
+
+	Nan::SetPrototypeMethod(tpl, "GetTuples", GetTuples);
+	Nan::SetPrototypeMethod(tpl, "getTuples", GetTuples);
+
+	Nan::SetPrototypeMethod(tpl, "GetWidth", GetWidth);
+	Nan::SetPrototypeMethod(tpl, "getWidth", GetWidth);
 
 	Nan::SetPrototypeMethod(tpl, "GetWrapR", GetWrapR);
 	Nan::SetPrototypeMethod(tpl, "getWrapR", GetWrapR);
@@ -207,6 +258,9 @@ void VtkTextureObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnBind", UnBind);
 	Nan::SetPrototypeMethod(tpl, "unBind", UnBind);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREOBJECTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREOBJECTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -234,6 +288,153 @@ void VtkTextureObjectWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTextureObjectWrap::Activate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Activate(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::Allocate1D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->Allocate1D(
+					info[0]->Uint32Value(),
+					info[1]->Int32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::Allocate2D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					bool r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->Allocate2D(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Int32Value(),
+						info[3]->Int32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::Allocate3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsInt32())
+					{
+						bool r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->Allocate3D(
+							info[0]->Uint32Value(),
+							info[1]->Uint32Value(),
+							info[2]->Uint32Value(),
+							info[3]->Int32Value(),
+							info[4]->Int32Value()
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::AllocateDepth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				bool r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->AllocateDepth(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Int32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTextureObjectWrap::Bind(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -364,6 +565,182 @@ void VtkTextureObjectWrap::Create1D(const Nan::FunctionCallbackInfo<v8::Value>& 
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkTextureObjectWrap::Create2D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkPixelBufferObjectWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkPixelBufferObjectWrap *a3 = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info[3]->ToObject());
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						bool r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->Create2D(
+							info[0]->Uint32Value(),
+							info[1]->Uint32Value(),
+							info[2]->Int32Value(),
+							(vtkPixelBufferObject *) a3->native.GetPointer(),
+							info[4]->BooleanValue()
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsBoolean())
+					{
+						bool r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->Create2D(
+							info[0]->Uint32Value(),
+							info[1]->Uint32Value(),
+							info[2]->Int32Value(),
+							info[3]->Int32Value(),
+							info[4]->BooleanValue()
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::Create3D(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsObject() && (Nan::New(VtkPixelBufferObjectWrap::ptpl))->HasInstance(info[4]))
+					{
+						VtkPixelBufferObjectWrap *a4 = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info[4]->ToObject());
+						if(info.Length() > 5 && info[5]->IsBoolean())
+						{
+							bool r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->Create3D(
+								info[0]->Uint32Value(),
+								info[1]->Uint32Value(),
+								info[2]->Uint32Value(),
+								info[3]->Int32Value(),
+								(vtkPixelBufferObject *) a4->native.GetPointer(),
+								info[5]->BooleanValue()
+							);
+							info.GetReturnValue().Set(Nan::New(r));
+							return;
+						}
+					}
+					else if(info.Length() > 4 && info[4]->IsInt32())
+					{
+						if(info.Length() > 5 && info[5]->IsBoolean())
+						{
+							bool r;
+							if(info.Length() != 6)
+							{
+								Nan::ThrowError("Too many parameters.");
+								return;
+							}
+							r = native->Create3D(
+								info[0]->Uint32Value(),
+								info[1]->Uint32Value(),
+								info[2]->Uint32Value(),
+								info[3]->Int32Value(),
+								info[4]->Int32Value(),
+								info[5]->BooleanValue()
+							);
+							info.GetReturnValue().Set(Nan::New(r));
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::CreateDepth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsObject() && (Nan::New(VtkPixelBufferObjectWrap::ptpl))->HasInstance(info[3]))
+				{
+					VtkPixelBufferObjectWrap *a3 = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info[3]->ToObject());
+					bool r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->CreateDepth(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Int32Value(),
+						(vtkPixelBufferObject *) a3->native.GetPointer()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTextureObjectWrap::Deactivate(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Deactivate(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextureObjectWrap::Download(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
@@ -480,6 +857,20 @@ void VtkTextureObjectWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTextureObjectWrap::GetDepth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDepth();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkTextureObjectWrap::GetDepthTextureCompare(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
@@ -522,6 +913,35 @@ void VtkTextureObjectWrap::GetDepthTextureMode(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkTextureObjectWrap::GetFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				unsigned int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetFormat(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					info[2]->BooleanValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkTextureObjectWrap::GetGenerateMipmap(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
@@ -534,6 +954,63 @@ void VtkTextureObjectWrap::GetGenerateMipmap(const Nan::FunctionCallbackInfo<v8:
 	}
 	r = native->GetGenerateMipmap();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHandle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHeight();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetInternalFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			if(info.Length() > 2 && info[2]->IsBoolean())
+			{
+				unsigned int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->GetInternalFormat(
+					info[0]->Int32Value(),
+					info[1]->Int32Value(),
+					info[2]->BooleanValue()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTextureObjectWrap::GetLinearMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -687,6 +1164,48 @@ void VtkTextureObjectWrap::GetSupportsTextureInteger(const Nan::FunctionCallback
 		return;
 	}
 	r = native->GetSupportsTextureInteger();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetTarget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTarget();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetTuples(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTuples();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTextureObjectWrap::GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTextureObjectWrap *wrapper = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info.Holder());
+	vtkTextureObject *native = (vtkTextureObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWidth();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

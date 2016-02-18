@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetWriterWrap.h"
 #include "vtkSimplePointsWriterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkSimplePointsWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDecimalPrecision", SetDecimalPrecision);
 	Nan::SetPrototypeMethod(tpl, "setDecimalPrecision", SetDecimalPrecision);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLEPOINTSWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLEPOINTSWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

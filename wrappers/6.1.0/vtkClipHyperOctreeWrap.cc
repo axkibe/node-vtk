@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkClipHyperOctreeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkClipHyperOctreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+#ifdef VTK_NODE_PLUS_VTKCLIPHYPEROCTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCLIPHYPEROCTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

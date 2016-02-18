@@ -10,6 +10,7 @@
 #include <vtkPlotBar.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotBarWrap : public VtkPlotWrap
 {
@@ -43,6 +44,10 @@ class VtkPlotBarWrap : public VtkPlotWrap
 		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTBARWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTBARWRAP_CLASSDEF
+#endif
 };
 
 #endif

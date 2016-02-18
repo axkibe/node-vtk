@@ -10,6 +10,7 @@
 #include <vtkVisibilitySort.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVisibilitySortWrap : public VtkObjectWrap
 {
@@ -48,6 +49,10 @@ class VtkVisibilitySortWrap : public VtkObjectWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxCellsReturned(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModelTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVISIBILITYSORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVISIBILITYSORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

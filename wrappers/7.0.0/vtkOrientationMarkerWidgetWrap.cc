@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtkOrientationMarkerWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkOrientationMarkerWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+#ifdef VTK_NODE_PLUS_VTKORIENTATIONMARKERWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKORIENTATIONMARKERWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

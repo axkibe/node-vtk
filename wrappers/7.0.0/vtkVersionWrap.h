@@ -10,6 +10,7 @@
 #include <vtkVersion.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVersionWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkVersionWrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVERSIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVERSIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageDataLIC2DExtentTranslator.h>
 
 #include "vtkExtentTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataLIC2DExtentTranslatorWrap : public VtkExtentTranslatorWrap
 {
@@ -39,6 +40,10 @@ class VtkImageDataLIC2DExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		static void SetAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputExtentTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATALIC2DEXTENTTRANSLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATALIC2DEXTENTTRANSLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

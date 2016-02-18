@@ -10,6 +10,7 @@
 #include <vtkHandleWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHandleWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -45,6 +46,10 @@ class VtkHandleWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetAllowHandleResize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableAxisConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHANDLEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHANDLEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

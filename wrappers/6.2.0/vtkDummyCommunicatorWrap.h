@@ -10,6 +10,7 @@
 #include <vtkDummyCommunicator.h>
 
 #include "vtkCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDummyCommunicatorWrap : public VtkCommunicatorWrap
 {
@@ -33,6 +34,10 @@ class VtkDummyCommunicatorWrap : public VtkCommunicatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDUMMYCOMMUNICATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDUMMYCOMMUNICATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

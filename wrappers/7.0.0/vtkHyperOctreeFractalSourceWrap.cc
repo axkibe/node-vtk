@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHyperOctreeAlgorithmWrap.h"
 #include "vtkHyperOctreeFractalSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,15 @@ void VtkHyperOctreeFractalSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaximumLevel", GetMaximumLevel);
 	Nan::SetPrototypeMethod(tpl, "getMaximumLevel", GetMaximumLevel);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterations", GetMaximumNumberOfIterations);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterations", GetMaximumNumberOfIterations);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterationsMaxValue", GetMaximumNumberOfIterationsMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterationsMaxValue", GetMaximumNumberOfIterationsMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterationsMinValue", GetMaximumNumberOfIterationsMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterationsMinValue", GetMaximumNumberOfIterationsMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetMinimumLevel", GetMinimumLevel);
 	Nan::SetPrototypeMethod(tpl, "getMinimumLevel", GetMinimumLevel);
 
@@ -92,6 +101,9 @@ void VtkHyperOctreeFractalSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumLevel", SetMaximumLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaximumLevel", SetMaximumLevel);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfIterations", SetMaximumNumberOfIterations);
+	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfIterations", SetMaximumNumberOfIterations);
+
 	Nan::SetPrototypeMethod(tpl, "SetMinimumLevel", SetMinimumLevel);
 	Nan::SetPrototypeMethod(tpl, "setMinimumLevel", SetMinimumLevel);
 
@@ -107,6 +119,9 @@ void VtkHyperOctreeFractalSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpanThreshold", SetSpanThreshold);
 	Nan::SetPrototypeMethod(tpl, "setSpanThreshold", SetSpanThreshold);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEFRACTALSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREEFRACTALSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -203,6 +218,48 @@ void VtkHyperOctreeFractalSourceWrap::GetMaximumLevel(const Nan::FunctionCallbac
 		return;
 	}
 	r = native->GetMaximumLevel();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperOctreeFractalSourceWrap::GetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterations();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperOctreeFractalSourceWrap::GetMaximumNumberOfIterationsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterationsMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkHyperOctreeFractalSourceWrap::GetMaximumNumberOfIterationsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterationsMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -393,6 +450,25 @@ void VtkHyperOctreeFractalSourceWrap::SetMaximumLevel(const Nan::FunctionCallbac
 		}
 		native->SetMaximumLevel(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHyperOctreeFractalSourceWrap::SetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperOctreeFractalSourceWrap *wrapper = ObjectWrap::Unwrap<VtkHyperOctreeFractalSourceWrap>(info.Holder());
+	vtkHyperOctreeFractalSource *native = (vtkHyperOctreeFractalSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumNumberOfIterations(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

@@ -10,6 +10,7 @@
 #include <vtkGeodesicPath.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeodesicPathWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkGeodesicPathWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEODESICPATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEODESICPATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

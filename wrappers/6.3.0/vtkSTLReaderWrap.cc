@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractPolyDataReaderWrap.h"
 #include "vtkSTLReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkSTLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarTags", SetScalarTags);
 	Nan::SetPrototypeMethod(tpl, "setScalarTags", SetScalarTags);
 
+#ifdef VTK_NODE_PLUS_VTKSTLREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTLREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

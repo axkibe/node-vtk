@@ -10,6 +10,7 @@
 #include <vtkPlotStacked.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotStackedWrap : public VtkPlotWrap
 {
@@ -42,6 +43,10 @@ class VtkPlotStackedWrap : public VtkPlotWrap
 		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTSTACKEDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTSTACKEDWRAP_CLASSDEF
+#endif
 };
 
 #endif

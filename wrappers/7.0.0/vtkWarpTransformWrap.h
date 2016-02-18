@@ -10,6 +10,7 @@
 #include <vtkWarpTransform.h>
 
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWarpTransformWrap : public VtkAbstractTransformWrap
 {
@@ -42,6 +43,10 @@ class VtkWarpTransformWrap : public VtkAbstractTransformWrap
 		static void SetInverseTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TemplateTransformInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TemplateTransformPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWARPTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWARPTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

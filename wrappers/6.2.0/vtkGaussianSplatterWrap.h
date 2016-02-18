@@ -10,6 +10,7 @@
 #include <vtkGaussianSplatter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGaussianSplatterWrap : public VtkImageAlgorithmWrap
 {
@@ -76,6 +77,10 @@ class VtkGaussianSplatterWrap : public VtkImageAlgorithmWrap
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGAUSSIANSPLATTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGAUSSIANSPLATTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

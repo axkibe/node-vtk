@@ -10,6 +10,7 @@
 #include <vtkTupleInterpolator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTupleInterpolatorWrap : public VtkObjectWrap
 {
@@ -46,6 +47,10 @@ class VtkTupleInterpolatorWrap : public VtkObjectWrap
 		static void SetInterpolationTypeToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationTypeToSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTUPLEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTUPLEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

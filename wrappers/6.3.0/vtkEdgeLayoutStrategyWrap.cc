@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkEdgeLayoutStrategyWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkEdgeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+#ifdef VTK_NODE_PLUS_VTKEDGELAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEDGELAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMedicalImagePropertiesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -145,6 +145,9 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNthWindowLevelPresetComment", GetNthWindowLevelPresetComment);
 	Nan::SetPrototypeMethod(tpl, "getNthWindowLevelPresetComment", GetNthWindowLevelPresetComment);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfUserDefinedValues", GetNumberOfUserDefinedValues);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfUserDefinedValues", GetNumberOfUserDefinedValues);
+
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfWindowLevelPresets", GetNumberOfWindowLevelPresets);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfWindowLevelPresets", GetNumberOfWindowLevelPresets);
 
@@ -205,6 +208,9 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetStationName", GetStationName);
 	Nan::SetPrototypeMethod(tpl, "getStationName", GetStationName);
 
+	Nan::SetPrototypeMethod(tpl, "GetStringFromOrientationType", GetStringFromOrientationType);
+	Nan::SetPrototypeMethod(tpl, "getStringFromOrientationType", GetStringFromOrientationType);
+
 	Nan::SetPrototypeMethod(tpl, "GetStudyDate", GetStudyDate);
 	Nan::SetPrototypeMethod(tpl, "getStudyDate", GetStudyDate);
 
@@ -217,8 +223,14 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetStudyTime", GetStudyTime);
 	Nan::SetPrototypeMethod(tpl, "getStudyTime", GetStudyTime);
 
+	Nan::SetPrototypeMethod(tpl, "GetUserDefinedNameByIndex", GetUserDefinedNameByIndex);
+	Nan::SetPrototypeMethod(tpl, "getUserDefinedNameByIndex", GetUserDefinedNameByIndex);
+
 	Nan::SetPrototypeMethod(tpl, "GetUserDefinedValue", GetUserDefinedValue);
 	Nan::SetPrototypeMethod(tpl, "getUserDefinedValue", GetUserDefinedValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetUserDefinedValueByIndex", GetUserDefinedValueByIndex);
+	Nan::SetPrototypeMethod(tpl, "getUserDefinedValueByIndex", GetUserDefinedValueByIndex);
 
 	Nan::SetPrototypeMethod(tpl, "GetWindowLevelPresetIndex", GetWindowLevelPresetIndex);
 	Nan::SetPrototypeMethod(tpl, "getWindowLevelPresetIndex", GetWindowLevelPresetIndex);
@@ -352,6 +364,9 @@ void VtkMedicalImagePropertiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXRayTubeCurrent", SetXRayTubeCurrent);
 	Nan::SetPrototypeMethod(tpl, "setXRayTubeCurrent", SetXRayTubeCurrent);
 
+#ifdef VTK_NODE_PLUS_VTKMEDICALIMAGEPROPERTIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMEDICALIMAGEPROPERTIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -913,6 +928,20 @@ void VtkMedicalImagePropertiesWrap::GetNthWindowLevelPresetComment(const Nan::Fu
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkMedicalImagePropertiesWrap::GetNumberOfUserDefinedValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfUserDefinedValues();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkMedicalImagePropertiesWrap::GetNumberOfWindowLevelPresets(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
@@ -1200,6 +1229,27 @@ void VtkMedicalImagePropertiesWrap::GetStationName(const Nan::FunctionCallbackIn
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkMedicalImagePropertiesWrap::GetStringFromOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetStringFromOrientationType(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkMedicalImagePropertiesWrap::GetStudyDate(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
@@ -1256,6 +1306,27 @@ void VtkMedicalImagePropertiesWrap::GetStudyTime(const Nan::FunctionCallbackInfo
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkMedicalImagePropertiesWrap::GetUserDefinedNameByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetUserDefinedNameByIndex(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkMedicalImagePropertiesWrap::GetUserDefinedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
@@ -1271,6 +1342,27 @@ void VtkMedicalImagePropertiesWrap::GetUserDefinedValue(const Nan::FunctionCallb
 		}
 		r = native->GetUserDefinedValue(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMedicalImagePropertiesWrap::GetUserDefinedValueByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMedicalImagePropertiesWrap *wrapper = ObjectWrap::Unwrap<VtkMedicalImagePropertiesWrap>(info.Holder());
+	vtkMedicalImageProperties *native = (vtkMedicalImageProperties *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetUserDefinedValueByIndex(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 		return;

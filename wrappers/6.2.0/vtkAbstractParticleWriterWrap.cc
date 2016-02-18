@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkAbstractParticleWriterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkAbstractParticleWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteModeToIndependent", SetWriteModeToIndependent);
 	Nan::SetPrototypeMethod(tpl, "setWriteModeToIndependent", SetWriteModeToIndependent);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPARTICLEWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTPARTICLEWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkImageStencilData.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageStencilDataWrap : public VtkDataObjectWrap
 {
@@ -58,6 +59,10 @@ class VtkImageStencilDataWrap : public VtkDataObjectWrap
 		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Subtract(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESTENCILDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

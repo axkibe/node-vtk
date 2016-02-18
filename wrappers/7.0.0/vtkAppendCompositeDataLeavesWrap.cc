@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCompositeDataSetAlgorithmWrap.h"
 #include "vtkAppendCompositeDataLeavesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkAppendCompositeDataLeavesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAppendFieldData", SetAppendFieldData);
 	Nan::SetPrototypeMethod(tpl, "setAppendFieldData", SetAppendFieldData);
 
+#ifdef VTK_NODE_PLUS_VTKAPPENDCOMPOSITEDATALEAVESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPENDCOMPOSITEDATALEAVESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

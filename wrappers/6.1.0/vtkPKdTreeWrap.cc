@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkKdTreeWrap.h"
 #include "vtkPKdTreeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -124,6 +124,9 @@ void VtkPKdTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ViewOrderAllProcessesInDirection", ViewOrderAllProcessesInDirection);
 	Nan::SetPrototypeMethod(tpl, "viewOrderAllProcessesInDirection", ViewOrderAllProcessesInDirection);
 
+#ifdef VTK_NODE_PLUS_VTKPKDTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPKDTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

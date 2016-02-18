@@ -10,6 +10,7 @@
 #include <vtkPDataSetWriter.h>
 
 #include "vtkDataSetWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPDataSetWriterWrap : public VtkDataSetWriterWrap
 {
@@ -50,6 +51,10 @@ class VtkPDataSetWriterWrap : public VtkDataSetWriterWrap
 		static void UseRelativeFileNamesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRelativeFileNamesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPDATASETWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPDATASETWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

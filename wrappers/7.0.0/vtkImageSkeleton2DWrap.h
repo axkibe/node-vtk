@@ -10,6 +10,7 @@
 #include <vtkImageSkeleton2D.h>
 
 #include "vtkImageIterateFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSkeleton2DWrap : public VtkImageIterateFilterWrap
 {
@@ -38,6 +39,10 @@ class VtkImageSkeleton2DWrap : public VtkImageIterateFilterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPrune(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESKELETON2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESKELETON2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageResample.h>
 
 #include "vtkImageResliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageResampleWrap : public VtkImageResliceWrap
 {
@@ -38,6 +39,10 @@ class VtkImageResampleWrap : public VtkImageResliceWrap
 		static void SetAxisMagnificationFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAxisOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERESAMPLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERESAMPLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

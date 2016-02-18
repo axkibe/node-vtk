@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSliceCubesWrap.h"
 #include "vtkVolumeReaderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkSliceCubesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+#ifdef VTK_NODE_PLUS_VTKSLICECUBESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSLICECUBESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

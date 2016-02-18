@@ -10,6 +10,7 @@
 #include <vtkChart.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartWrap : public VtkContextItemWrap
 {
@@ -71,6 +72,10 @@ class VtkChartWrap : public VtkContextItemWrap
 		static void SetSelectionMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTopBorder(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTWRAP_CLASSDEF
+#endif
 };
 
 #endif

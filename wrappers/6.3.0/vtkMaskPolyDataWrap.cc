@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMaskPolyDataWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkMaskPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOnRatio", SetOnRatio);
 	Nan::SetPrototypeMethod(tpl, "setOnRatio", SetOnRatio);
 
+#ifdef VTK_NODE_PLUS_VTKMASKPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMASKPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

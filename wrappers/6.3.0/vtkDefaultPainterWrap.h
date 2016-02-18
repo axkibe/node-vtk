@@ -10,6 +10,7 @@
 #include <vtkDefaultPainter.h>
 
 #include "vtkPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDefaultPainterWrap : public VtkPainterWrap
 {
@@ -51,6 +52,10 @@ class VtkDefaultPainterWrap : public VtkPainterWrap
 		static void SetRepresentationPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarsToColorsPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEFAULTPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEFAULTPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

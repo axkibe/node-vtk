@@ -10,6 +10,7 @@
 #include <vtkISIReader.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkISIReaderWrap : public VtkTableAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkISIReaderWrap : public VtkTableAlgorithmWrap
 		static void SetDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxRecords(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKISIREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKISIREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

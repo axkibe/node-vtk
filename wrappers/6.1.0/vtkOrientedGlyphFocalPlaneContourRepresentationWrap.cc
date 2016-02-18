@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkFocalPlaneContourRepresentationWrap.h"
 #include "vtkOrientedGlyphFocalPlaneContourRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkOrientedGlyphFocalPlaneContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+#ifdef VTK_NODE_PLUS_VTKORIENTEDGLYPHFOCALPLANECONTOURREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKORIENTEDGLYPHFOCALPLANECONTOURREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

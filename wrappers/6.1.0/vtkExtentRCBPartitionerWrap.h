@@ -10,6 +10,7 @@
 #include <vtkExtentRCBPartitioner.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtentRCBPartitionerWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkExtentRCBPartitionerWrap : public VtkObjectWrap
 		static void SetGlobalExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTENTRCBPARTITIONERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTENTRCBPARTITIONERWRAP_CLASSDEF
+#endif
 };
 
 #endif

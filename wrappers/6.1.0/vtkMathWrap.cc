@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMathWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -227,6 +227,9 @@ void VtkMathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "XYZToRGB", XYZToRGB);
 	Nan::SetPrototypeMethod(tpl, "xYZToRGB", XYZToRGB);
 
+#ifdef VTK_NODE_PLUS_VTKMATHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMATHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

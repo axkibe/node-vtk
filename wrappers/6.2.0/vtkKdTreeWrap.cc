@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLocatorWrap.h"
 #include "vtkKdTreeWrap.h"
 #include "vtkObjectWrap.h"
@@ -19,6 +18,7 @@
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkKdNodeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -255,6 +255,9 @@ void VtkKdTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ViewOrderRegionsInDirection", ViewOrderRegionsInDirection);
 	Nan::SetPrototypeMethod(tpl, "viewOrderRegionsInDirection", ViewOrderRegionsInDirection);
 
+#ifdef VTK_NODE_PLUS_VTKKDTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKDTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

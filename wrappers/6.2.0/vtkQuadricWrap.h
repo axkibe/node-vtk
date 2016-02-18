@@ -10,6 +10,7 @@
 #include <vtkQuadric.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadricWrap : public VtkImplicitFunctionWrap
 {
@@ -37,6 +38,10 @@ class VtkQuadricWrap : public VtkImplicitFunctionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCoefficients(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRICWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTriangleFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkTriangleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassVerts", SetPassVerts);
 	Nan::SetPrototypeMethod(tpl, "setPassVerts", SetPassVerts);
 
+#ifdef VTK_NODE_PLUS_VTKTRIANGLEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRIANGLEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

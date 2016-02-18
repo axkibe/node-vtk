@@ -10,6 +10,7 @@
 #include <vtkAMRInformation.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRInformationWrap : public VtkObjectWrap
 {
@@ -36,14 +37,27 @@ class VtkAMRInformationWrap : public VtkObjectWrap
 		static void GetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTotalNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PrintParentChildInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRINFORMATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRINFORMATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

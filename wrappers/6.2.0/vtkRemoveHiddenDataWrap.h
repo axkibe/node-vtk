@@ -10,6 +10,7 @@
 #include <vtkRemoveHiddenData.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRemoveHiddenDataWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkRemoveHiddenDataWrap : public VtkPassInputTypeAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREMOVEHIDDENDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREMOVEHIDDENDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

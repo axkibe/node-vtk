@@ -10,6 +10,7 @@
 #include <vtkPointDataToCellData.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointDataToCellDataWrap : public VtkDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkPointDataToCellDataWrap : public VtkDataSetAlgorithmWrap
 		static void PassPointDataOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTDATATOCELLDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTDATATOCELLDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

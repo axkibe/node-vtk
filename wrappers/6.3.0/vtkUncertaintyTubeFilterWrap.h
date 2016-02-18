@@ -10,6 +10,7 @@
 #include <vtkUncertaintyTubeFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUncertaintyTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkUncertaintyTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSides(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNCERTAINTYTUBEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNCERTAINTYTUBEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

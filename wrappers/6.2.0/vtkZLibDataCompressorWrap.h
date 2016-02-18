@@ -10,6 +10,7 @@
 #include <vtkZLibDataCompressor.h>
 
 #include "vtkDataCompressorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkZLibDataCompressorWrap : public VtkDataCompressorWrap
 {
@@ -37,6 +38,10 @@ class VtkZLibDataCompressorWrap : public VtkDataCompressorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressionLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKZLIBDATACOMPRESSORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKZLIBDATACOMPRESSORWRAP_CLASSDEF
+#endif
 };
 
 #endif

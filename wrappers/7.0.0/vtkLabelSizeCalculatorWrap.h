@@ -10,6 +10,7 @@
 #include <vtkLabelSizeCalculator.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelSizeCalculatorWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkLabelSizeCalculatorWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetDPI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFontProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELSIZECALCULATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELSIZECALCULATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

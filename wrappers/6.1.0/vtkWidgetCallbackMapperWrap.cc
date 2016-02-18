@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkWidgetCallbackMapperWrap.h"
 #include "vtkWidgetEventTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkWidgetCallbackMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEventTranslator", SetEventTranslator);
 	Nan::SetPrototypeMethod(tpl, "setEventTranslator", SetEventTranslator);
 
+#ifdef VTK_NODE_PLUS_VTKWIDGETCALLBACKMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWIDGETCALLBACKMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMINCImageAttributesWrap.h"
 #include "vtkStringArrayWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkDoubleArrayWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -164,6 +164,9 @@ void VtkMINCImageAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ValidateAttributesOn", ValidateAttributesOn);
 	Nan::SetPrototypeMethod(tpl, "validateAttributesOn", ValidateAttributesOn);
 
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEATTRIBUTESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMINCIMAGEATTRIBUTESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

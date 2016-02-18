@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkThresholdPointsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkThresholdPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThresholdByUpper", ThresholdByUpper);
 	Nan::SetPrototypeMethod(tpl, "thresholdByUpper", ThresholdByUpper);
 
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHRESHOLDPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

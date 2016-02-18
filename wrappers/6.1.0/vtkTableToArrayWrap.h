@@ -10,6 +10,7 @@
 #include <vtkTableToArray.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableToArrayWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkTableToArrayWrap : public VtkArrayDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLETOARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLETOARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

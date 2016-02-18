@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkStructuredVisibilityConstraintWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkStructuredVisibilityConstraintWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
+	Nan::SetPrototypeMethod(tpl, "IsConstrained", IsConstrained);
+	Nan::SetPrototypeMethod(tpl, "isConstrained", IsConstrained);
+
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
@@ -80,6 +83,9 @@ void VtkStructuredVisibilityConstraintWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDVISIBILITYCONSTRAINTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDVISIBILITYCONSTRAINTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -271,6 +277,20 @@ void VtkStructuredVisibilityConstraintWrap::IsA(const Nan::FunctionCallbackInfo<
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredVisibilityConstraintWrap::IsConstrained(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredVisibilityConstraintWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredVisibilityConstraintWrap>(info.Holder());
+	vtkStructuredVisibilityConstraint *native = (vtkStructuredVisibilityConstraint *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->IsConstrained();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStructuredVisibilityConstraintWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

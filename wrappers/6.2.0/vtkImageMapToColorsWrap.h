@@ -10,6 +10,7 @@
 #include <vtkImageMapToColors.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -32,6 +33,7 @@ class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 		static void GetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPassAlphaToOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,12 +43,17 @@ class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToLuminance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToLuminanceAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGBA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassAlphaToOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

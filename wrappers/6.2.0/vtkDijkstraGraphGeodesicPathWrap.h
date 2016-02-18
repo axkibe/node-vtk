@@ -10,6 +10,7 @@
 #include <vtkDijkstraGraphGeodesicPath.h>
 
 #include "vtkGraphGeodesicPathWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDijkstraGraphGeodesicPathWrap : public VtkGraphGeodesicPathWrap
 {
@@ -49,6 +50,10 @@ class VtkDijkstraGraphGeodesicPathWrap : public VtkGraphGeodesicPathWrap
 		static void StopWhenEndReachedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarWeightsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarWeightsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIJKSTRAGRAPHGEODESICPATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIJKSTRAGRAPHGEODESICPATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

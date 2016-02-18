@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkDataSetWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -326,6 +326,9 @@ void VtkMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
+#ifdef VTK_NODE_PLUS_VTKMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

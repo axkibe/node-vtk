@@ -10,6 +10,7 @@
 #include <vtkImageVariance3D.h>
 
 #include "vtkImageSpatialAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageVariance3DWrap : public VtkImageSpatialAlgorithmWrap
 {
@@ -34,6 +35,10 @@ class VtkImageVariance3DWrap : public VtkImageSpatialAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEVARIANCE3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEVARIANCE3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

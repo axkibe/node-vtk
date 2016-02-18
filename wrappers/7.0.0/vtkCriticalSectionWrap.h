@@ -10,6 +10,7 @@
 #include <vtkCriticalSection.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCriticalSectionWrap : public VtkObjectWrap
 {
@@ -35,6 +36,10 @@ class VtkCriticalSectionWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Unlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCRITICALSECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCRITICALSECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

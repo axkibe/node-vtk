@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectBaseWrap.h"
 #include "vtkInformationKeyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkGarbageCollectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -91,6 +91,9 @@ void VtkInformationKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StoreMetaData", StoreMetaData);
 	Nan::SetPrototypeMethod(tpl, "storeMetaData", StoreMetaData);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONKEYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONKEYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

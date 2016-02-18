@@ -10,6 +10,7 @@
 #include <vtkAxes.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkAxesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSymmetric(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SymmetricOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SymmetricOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXESWRAP_CLASSDEF
+#endif
 };
 
 #endif

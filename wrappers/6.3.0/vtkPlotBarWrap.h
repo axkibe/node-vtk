@@ -10,6 +10,7 @@
 #include <vtkPlotBar.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotBarWrap : public VtkPlotWrap
 {
@@ -53,6 +54,10 @@ class VtkPlotBarWrap : public VtkPlotWrap
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTBARWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTBARWRAP_CLASSDEF
+#endif
 };
 
 #endif

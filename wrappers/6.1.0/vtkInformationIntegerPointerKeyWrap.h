@@ -10,6 +10,7 @@
 #include <vtkInformationIntegerPointerKey.h>
 
 #include "vtkInformationKeyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationIntegerPointerKeyWrap : public VtkInformationKeyWrap
 {
@@ -35,6 +36,10 @@ class VtkInformationIntegerPointerKeyWrap : public VtkInformationKeyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONINTEGERPOINTERKEYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONINTEGERPOINTERKEYWRAP_CLASSDEF
+#endif
 };
 
 #endif

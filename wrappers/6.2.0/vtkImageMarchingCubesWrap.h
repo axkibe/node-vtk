@@ -10,6 +10,7 @@
 #include <vtkImageMarchingCubes.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMarchingCubesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkImageMarchingCubesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMARCHINGCUBESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMARCHINGCUBESWRAP_CLASSDEF
+#endif
 };
 
 #endif

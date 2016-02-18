@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkSampleFunctionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarArrayName", SetScalarArrayName);
 	Nan::SetPrototypeMethod(tpl, "setScalarArrayName", SetScalarArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKSAMPLEFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSAMPLEFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

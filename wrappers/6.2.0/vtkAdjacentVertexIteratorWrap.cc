@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAdjacentVertexIteratorWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkAdjacentVertexIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKADJACENTVERTEXITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKADJACENTVERTEXITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

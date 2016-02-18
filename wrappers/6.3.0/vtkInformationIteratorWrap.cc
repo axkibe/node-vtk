@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkInformationIteratorWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkInformationIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInformationWeak", SetInformationWeak);
 	Nan::SetPrototypeMethod(tpl, "setInformationWeak", SetInformationWeak);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

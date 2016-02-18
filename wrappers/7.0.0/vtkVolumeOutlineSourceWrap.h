@@ -10,6 +10,7 @@
 #include <vtkVolumeOutlineSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkVolumeOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetGenerateOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolumeMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMEOUTLINESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMEOUTLINESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

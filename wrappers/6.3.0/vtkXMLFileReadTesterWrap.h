@@ -10,6 +10,7 @@
 #include <vtkXMLFileReadTester.h>
 
 #include "vtkXMLParserWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLFileReadTesterWrap : public VtkXMLParserWrap
 {
@@ -38,6 +39,10 @@ class VtkXMLFileReadTesterWrap : public VtkXMLParserWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TestReadFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLFILEREADTESTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLFILEREADTESTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

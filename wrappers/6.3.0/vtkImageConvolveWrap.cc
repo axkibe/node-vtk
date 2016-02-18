@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageConvolveWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkImageConvolveWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetKernel7x7x7", SetKernel7x7x7);
 	Nan::SetPrototypeMethod(tpl, "setKernel7x7x7", SetKernel7x7x7);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECONVOLVEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECONVOLVEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

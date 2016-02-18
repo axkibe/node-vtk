@@ -10,6 +10,7 @@
 #include <vtkRectilinearGrid.h>
 
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridWrap : public VtkDataSetWrap
 {
@@ -56,6 +57,10 @@ class VtkRectilinearGridWrap : public VtkDataSetWrap
 		static void SetYCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAbstractCellLocator.h>
 
 #include "vtkLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractCellLocatorWrap : public VtkLocatorWrap
 {
@@ -55,6 +56,10 @@ class VtkAbstractCellLocatorWrap : public VtkLocatorWrap
 		static void SetUseExistingSearchStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseExistingSearchStructureOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseExistingSearchStructureOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTCELLLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTCELLLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

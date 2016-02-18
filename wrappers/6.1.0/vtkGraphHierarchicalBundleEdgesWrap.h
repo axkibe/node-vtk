@@ -10,6 +10,7 @@
 #include <vtkGraphHierarchicalBundleEdges.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphHierarchicalBundleEdgesWrap : public VtkGraphAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkGraphHierarchicalBundleEdgesWrap : public VtkGraphAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBundlingStrength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDirectMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHHIERARCHICALBUNDLEEDGESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHHIERARCHICALBUNDLEEDGESWRAP_CLASSDEF
+#endif
 };
 
 #endif

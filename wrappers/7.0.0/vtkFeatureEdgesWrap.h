@@ -10,6 +10,7 @@
 #include <vtkFeatureEdges.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFeatureEdgesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -62,6 +63,10 @@ class VtkFeatureEdgesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetManifoldEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNonManifoldEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFEATUREEDGESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFEATUREEDGESWRAP_CLASSDEF
+#endif
 };
 
 #endif

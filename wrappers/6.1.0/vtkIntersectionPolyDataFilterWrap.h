@@ -10,6 +10,7 @@
 #include <vtkIntersectionPolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIntersectionPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkIntersectionPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SplitFirstOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitSecondOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitSecondOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERSECTIONPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERSECTIONPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

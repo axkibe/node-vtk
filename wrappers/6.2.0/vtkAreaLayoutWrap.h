@@ -10,6 +10,7 @@
 #include <vtkAreaLayout.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAreaLayoutWrap : public VtkTreeAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkAreaLayoutWrap : public VtkTreeAlgorithmWrap
 		static void SetEdgeRoutingPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAREALAYOUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAREALAYOUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

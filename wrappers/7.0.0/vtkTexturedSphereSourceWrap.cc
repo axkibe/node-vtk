@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTexturedSphereSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkTexturedSphereSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetThetaResolution", SetThetaResolution);
 	Nan::SetPrototypeMethod(tpl, "setThetaResolution", SetThetaResolution);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREDSPHERESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREDSPHERESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

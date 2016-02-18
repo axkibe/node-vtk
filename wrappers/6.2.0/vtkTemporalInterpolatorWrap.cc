@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiTimeStepAlgorithmWrap.h"
 #include "vtkTemporalInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkTemporalInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResampleFactor", SetResampleFactor);
 	Nan::SetPrototypeMethod(tpl, "setResampleFactor", SetResampleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

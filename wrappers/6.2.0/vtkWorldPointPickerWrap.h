@@ -10,6 +10,7 @@
 #include <vtkWorldPointPicker.h>
 
 #include "vtkAbstractPickerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWorldPointPickerWrap : public VtkAbstractPickerWrap
 {
@@ -34,6 +35,10 @@ class VtkWorldPointPickerWrap : public VtkAbstractPickerWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Pick(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWORLDPOINTPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWORLDPOINTPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

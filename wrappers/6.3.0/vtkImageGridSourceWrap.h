@@ -10,6 +10,7 @@
 #include <vtkImageGridSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageGridSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkImageGridSourceWrap : public VtkImageAlgorithmWrap
 		static void SetGridOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGridSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEGRIDSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEGRIDSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

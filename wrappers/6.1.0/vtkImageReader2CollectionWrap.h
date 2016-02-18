@@ -10,6 +10,7 @@
 #include <vtkImageReader2Collection.h>
 
 #include "vtkCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageReader2CollectionWrap : public VtkCollectionWrap
 {
@@ -35,6 +36,10 @@ class VtkImageReader2CollectionWrap : public VtkCollectionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEREADER2COLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEREADER2COLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

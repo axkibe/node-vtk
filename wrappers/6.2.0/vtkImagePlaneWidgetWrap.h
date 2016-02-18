@@ -10,6 +10,7 @@
 #include <vtkImagePlaneWidget.h>
 
 #include "vtkPolyDataSourceWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 {
@@ -152,6 +153,10 @@ class VtkImagePlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void UseContinuousCursorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserControlledLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserControlledLookupTableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEPLANEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEPLANEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCubeSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCubeSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkCubeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetXLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCUBESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCUBESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

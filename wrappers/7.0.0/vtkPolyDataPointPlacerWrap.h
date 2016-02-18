@@ -10,6 +10,7 @@
 #include <vtkPolyDataPointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataPointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -42,6 +43,10 @@ class VtkPolyDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATAPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

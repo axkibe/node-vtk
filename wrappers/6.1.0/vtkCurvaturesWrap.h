@@ -10,6 +10,7 @@
 #include <vtkCurvatures.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCurvaturesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkCurvaturesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetCurvatureTypeToMean(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurvatureTypeToMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInvertMeanCurvature(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCURVATURESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCURVATURESWRAP_CLASSDEF
+#endif
 };
 
 #endif

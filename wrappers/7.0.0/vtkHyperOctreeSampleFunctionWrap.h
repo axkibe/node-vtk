@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeSampleFunction.h>
 
 #include "vtkHyperOctreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeSampleFunctionWrap : public VtkHyperOctreeAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkHyperOctreeSampleFunctionWrap : public VtkHyperOctreeAlgorithmWrap
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREESAMPLEFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREESAMPLEFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

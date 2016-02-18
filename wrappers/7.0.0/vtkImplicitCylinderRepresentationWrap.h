@@ -10,6 +10,7 @@
 #include <vtkImplicitCylinderRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitCylinderRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -116,6 +117,10 @@ class VtkImplicitCylinderRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void TubingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePlacement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITCYLINDERREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITCYLINDERREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkLSDynaReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLSDynaReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -107,6 +108,10 @@ class VtkLSDynaReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetSolidArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThickShellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLSDYNAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLSDYNAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

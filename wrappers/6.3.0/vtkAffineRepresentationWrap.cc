@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkAffineRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkAffineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKAFFINEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAFFINEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

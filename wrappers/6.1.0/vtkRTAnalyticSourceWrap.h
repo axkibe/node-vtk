@@ -10,6 +10,7 @@
 #include <vtkRTAnalyticSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRTAnalyticSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkRTAnalyticSourceWrap : public VtkImageAlgorithmWrap
 		static void SetYMag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZFreq(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZMag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRTANALYTICSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRTANALYTICSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

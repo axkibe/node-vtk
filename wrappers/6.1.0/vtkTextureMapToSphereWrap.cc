@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkTextureMapToSphereWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkTextureMapToSphereWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreventSeam", SetPreventSeam);
 	Nan::SetPrototypeMethod(tpl, "setPreventSeam", SetPreventSeam);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREMAPTOSPHEREWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREMAPTOSPHEREWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

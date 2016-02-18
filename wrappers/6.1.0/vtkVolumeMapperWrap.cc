@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractVolumeMapperWrap.h"
 #include "vtkVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

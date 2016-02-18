@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImplicitModellerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -225,6 +225,9 @@ void VtkImplicitModellerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartAppend", StartAppend);
 	Nan::SetPrototypeMethod(tpl, "startAppend", StartAppend);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITMODELLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITMODELLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

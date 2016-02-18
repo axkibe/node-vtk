@@ -10,6 +10,7 @@
 #include <vtkHoverWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHoverWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -39,6 +40,10 @@ class VtkHoverWidgetWrap : public VtkAbstractWidgetWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimerDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHOVERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHOVERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkVolumeRayCastSpaceLeapingImageFilter.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -54,6 +55,10 @@ class VtkVolumeRayCastSpaceLeapingImageFilterWrap : public VtkThreadedImageAlgor
 		static void SetUpdateGradientOpacityFlags(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateGradientOpacityFlagsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateGradientOpacityFlagsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTSPACELEAPINGIMAGEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMERAYCASTSPACELEAPINGIMAGEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

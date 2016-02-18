@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkAMRBaseParticlesReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkDataArraySelectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -112,6 +112,9 @@ void VtkAMRBaseParticlesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleArrayStatus", SetParticleArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setParticleArrayStatus", SetParticleArrayStatus);
 
+#ifdef VTK_NODE_PLUS_VTKAMRBASEPARTICLESREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRBASEPARTICLESREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

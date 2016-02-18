@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContinuousValueWidgetRepresentationWrap.h"
 #include "vtkCompassRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -150,6 +150,9 @@ void VtkCompassRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPASSREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPASSREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

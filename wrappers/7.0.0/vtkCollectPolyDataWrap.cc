@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCollectPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkSocketControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkCollectPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSocketController", SetSocketController);
 	Nan::SetPrototypeMethod(tpl, "setSocketController", SetSocketController);
 
+#ifdef VTK_NODE_PLUS_VTKCOLLECTPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLLECTPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

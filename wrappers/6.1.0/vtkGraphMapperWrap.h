@@ -10,6 +10,7 @@
 #include <vtkGraphMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphMapperWrap : public VtkMapperWrap
 {
@@ -85,6 +86,10 @@ class VtkGraphMapperWrap : public VtkMapperWrap
 		static void SetScaledGlyphs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalingArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

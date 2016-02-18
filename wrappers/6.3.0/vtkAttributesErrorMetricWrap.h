@@ -10,6 +10,7 @@
 #include <vtkAttributesErrorMetric.h>
 
 #include "vtkGenericSubdivisionErrorMetricWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAttributesErrorMetricWrap : public VtkGenericSubdivisionErrorMetricWrap
 {
@@ -37,6 +38,10 @@ class VtkAttributesErrorMetricWrap : public VtkGenericSubdivisionErrorMetricWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAbsoluteAttributeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKATTRIBUTESERRORMETRICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKATTRIBUTESERRORMETRICWRAP_CLASSDEF
+#endif
 };
 
 #endif

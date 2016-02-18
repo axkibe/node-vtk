@@ -10,6 +10,7 @@
 #include <vtkHeatmapItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHeatmapItemWrap : public VtkContextItemWrap
 {
@@ -45,6 +46,10 @@ class VtkHeatmapItemWrap : public VtkContextItemWrap
 		static void SetCellWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHEATMAPITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHEATMAPITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

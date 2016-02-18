@@ -10,6 +10,7 @@
 #include <vtkExodusIICache.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExodusIICacheWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkExodusIICacheWrap : public VtkObjectWrap
 		static void ReduceToSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheCapacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXODUSIICACHEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXODUSIICACHEWRAP_CLASSDEF
+#endif
 };
 
 #endif

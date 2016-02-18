@@ -10,6 +10,7 @@
 #include <vtkColorTransferFunction.h>
 
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 {
@@ -90,6 +91,10 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void UseAboveRangeColorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBelowRangeColorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBelowRangeColorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

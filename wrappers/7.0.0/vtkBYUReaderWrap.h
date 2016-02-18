@@ -10,6 +10,7 @@
 #include <vtkBYUReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBYUReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -60,6 +61,10 @@ class VtkBYUReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void SetReadTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBYUREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBYUREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

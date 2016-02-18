@@ -10,6 +10,7 @@
 #include <vtkRectilinearWipeRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearWipeRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -52,6 +53,10 @@ class VtkRectilinearWipeRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARWIPEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARWIPEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

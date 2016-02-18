@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLReaderWrap.h"
 #include "vtkPhyloXMLTreeReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTreeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkPhyloXMLTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKPHYLOXMLTREEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPHYLOXMLTREEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImagePadFilterWrap.h"
 #include "vtkImageConstantPadWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkImageConstantPadWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetConstant", SetConstant);
 	Nan::SetPrototypeMethod(tpl, "setConstant", SetConstant);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECONSTANTPADWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECONSTANTPADWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridVolumeRayCastMapper.h>
 
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridVolumeRayCastMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 {
@@ -57,6 +58,10 @@ class VtkUnstructuredGridVolumeRayCastMapperWrap : public VtkUnstructuredGridVol
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRayCastFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRayIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

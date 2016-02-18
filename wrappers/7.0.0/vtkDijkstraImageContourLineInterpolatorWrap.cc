@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContourLineInterpolatorWrap.h"
 #include "vtkDijkstraImageContourLineInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkContourRepresentationWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDijkstraImageGeodesicPathWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkDijkstraImageContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCostImage", SetCostImage);
 	Nan::SetPrototypeMethod(tpl, "setCostImage", SetCostImage);
 
+#ifdef VTK_NODE_PLUS_VTKDIJKSTRAIMAGECONTOURLINEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDIJKSTRAIMAGECONTOURLINEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

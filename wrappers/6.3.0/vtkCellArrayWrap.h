@@ -10,6 +10,7 @@
 #include <vtkCellArray.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellArrayWrap : public VtkObjectWrap
 {
@@ -42,6 +43,10 @@ class VtkCellArrayWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateCellCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

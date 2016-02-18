@@ -10,6 +10,7 @@
 #include <vtkPolyDataStreamer.h>
 
 #include "vtkStreamerBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataStreamerWrap : public VtkStreamerBaseWrap
 {
@@ -39,6 +40,10 @@ class VtkPolyDataStreamerWrap : public VtkStreamerBaseWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorByPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfStreamDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATASTREAMERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATASTREAMERWRAP_CLASSDEF
+#endif
 };
 
 #endif

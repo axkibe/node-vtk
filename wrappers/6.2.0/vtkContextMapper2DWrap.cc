@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkContextMapper2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataArrayWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkContextMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTMAPPER2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTMAPPER2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkTessellatorFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTessellatorFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkTessellatorFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetOutputDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSubdivider(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTessellator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTESSELLATORFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTESSELLATORFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

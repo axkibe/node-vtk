@@ -10,6 +10,7 @@
 #include <vtkCameraInterpolator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraInterpolatorWrap : public VtkObjectWrap
 {
@@ -59,6 +60,10 @@ class VtkCameraInterpolatorWrap : public VtkObjectWrap
 		static void SetPositionInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewAngleInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewUpInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

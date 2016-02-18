@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLinearTransformWrap.h"
 #include "vtkIterativeClosestPointTransformWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkCellLocatorWrap.h"
 #include "vtkLandmarkTransformWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -159,6 +159,9 @@ void VtkIterativeClosestPointTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartByMatchingCentroidsOn", StartByMatchingCentroidsOn);
 	Nan::SetPrototypeMethod(tpl, "startByMatchingCentroidsOn", StartByMatchingCentroidsOn);
 
+#ifdef VTK_NODE_PLUS_VTKITERATIVECLOSESTPOINTTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKITERATIVECLOSESTPOINTTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

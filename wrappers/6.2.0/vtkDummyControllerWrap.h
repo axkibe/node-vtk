@@ -10,6 +10,7 @@
 #include <vtkDummyController.h>
 
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDummyControllerWrap : public VtkMultiProcessControllerWrap
 {
@@ -42,6 +43,10 @@ class VtkDummyControllerWrap : public VtkMultiProcessControllerWrap
 		static void SetCommunicator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRMICommunicator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDUMMYCONTROLLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDUMMYCONTROLLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

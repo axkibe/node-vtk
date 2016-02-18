@@ -10,6 +10,7 @@
 #include <vtkRepresentationPainter.h>
 
 #include "vtkPolyDataPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRepresentationPainterWrap : public VtkPolyDataPainterWrap
 {
@@ -33,6 +34,10 @@ class VtkRepresentationPainterWrap : public VtkPolyDataPainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREPRESENTATIONPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREPRESENTATIONPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCirclePackLayout.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCirclePackLayoutWrap : public VtkTreeAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkCirclePackLayoutWrap : public VtkTreeAlgorithmWrap
 		static void SetCirclesFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCIRCLEPACKLAYOUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCIRCLEPACKLAYOUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

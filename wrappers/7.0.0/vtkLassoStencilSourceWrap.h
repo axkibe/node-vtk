@@ -10,6 +10,7 @@
 #include <vtkLassoStencilSource.h>
 
 #include "vtkImageStencilSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLassoStencilSourceWrap : public VtkImageStencilSourceWrap
 {
@@ -49,6 +50,10 @@ class VtkLassoStencilSourceWrap : public VtkImageStencilSourceWrap
 		static void SetShapeToSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSliceOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlicePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLASSOSTENCILSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLASSOSTENCILSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

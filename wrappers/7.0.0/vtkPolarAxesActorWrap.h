@@ -10,6 +10,7 @@
 #include <vtkPolarAxesActor.h>
 
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolarAxesActorWrap : public VtkActorWrap
 {
@@ -116,6 +117,10 @@ class VtkPolarAxesActorWrap : public VtkActorWrap
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSmallestVisiblePolarAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewAngleLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLARAXESACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLARAXESACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkTransmitRectilinearGridPiece.h>
 
 #include "vtkRectilinearGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransmitRectilinearGridPieceWrap : public VtkRectilinearGridAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkTransmitRectilinearGridPieceWrap : public VtkRectilinearGridAlgorithmWr
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSMITRECTILINEARGRIDPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSMITRECTILINEARGRIDPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

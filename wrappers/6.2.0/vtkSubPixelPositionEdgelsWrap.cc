@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSubPixelPositionEdgelsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkStructuredPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkSubPixelPositionEdgelsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TargetFlagOn", TargetFlagOn);
 	Nan::SetPrototypeMethod(tpl, "targetFlagOn", TargetFlagOn);
 
+#ifdef VTK_NODE_PLUS_VTKSUBPIXELPOSITIONEDGELSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSUBPIXELPOSITIONEDGELSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

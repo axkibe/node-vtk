@@ -10,6 +10,7 @@
 #include <vtkImageMaskBits.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMaskBitsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -30,16 +31,23 @@ class VtkImageMaskBitsWrap : public VtkThreadedImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMasks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOperation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMasks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToAnd(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToNand(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToNor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToOr(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToXor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMASKBITSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMASKBITSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkTextureMapToPlaneWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkTextureMapToPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTRange", SetTRange);
 	Nan::SetPrototypeMethod(tpl, "setTRange", SetTRange);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREMAPTOPLANEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREMAPTOPLANEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeDepth.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeDepthWrap : public VtkDataSetAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkHyperOctreeDepthWrap : public VtkDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEDEPTHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREEDEPTHWRAP_CLASSDEF
+#endif
 };
 
 #endif

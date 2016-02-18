@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricEllipsoidWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkParametricEllipsoidWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZRadius", SetZRadius);
 	Nan::SetPrototypeMethod(tpl, "setZRadius", SetZRadius);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICELLIPSOIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICELLIPSOIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

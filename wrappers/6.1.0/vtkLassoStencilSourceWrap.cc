@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageStencilSourceWrap.h"
 #include "vtkLassoStencilSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkLassoStencilSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSlicePoints", SetSlicePoints);
 	Nan::SetPrototypeMethod(tpl, "setSlicePoints", SetSlicePoints);
 
+#ifdef VTK_NODE_PLUS_VTKLASSOSTENCILSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLASSOSTENCILSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

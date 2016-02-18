@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkImageMapper3DWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkPlaneWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -154,6 +154,9 @@ void VtkImageMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StreamingOn", StreamingOn);
 	Nan::SetPrototypeMethod(tpl, "streamingOn", StreamingOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPPER3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMAPPER3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

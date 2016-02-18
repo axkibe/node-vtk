@@ -10,6 +10,7 @@
 #include <vtkSequencePass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSequencePassWrap : public VtkRenderPassWrap
 {
@@ -36,6 +37,10 @@ class VtkSequencePassWrap : public VtkRenderPassWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPasses(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSEQUENCEPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSEQUENCEPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

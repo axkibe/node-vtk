@@ -10,6 +10,7 @@
 #include <vtkPSphereSource.h>
 
 #include "vtkSphereSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPSphereSourceWrap : public VtkSphereSourceWrap
 {
@@ -33,6 +34,10 @@ class VtkPSphereSourceWrap : public VtkSphereSourceWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPSPHERESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPSPHERESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

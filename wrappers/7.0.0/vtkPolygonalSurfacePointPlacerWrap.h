@@ -10,6 +10,7 @@
 #include <vtkPolygonalSurfacePointPlacer.h>
 
 #include "vtkPolyDataPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolygonalSurfacePointPlacerWrap : public VtkPolyDataPointPlacerWrap
 {
@@ -47,6 +48,10 @@ class VtkPolygonalSurfacePointPlacerWrap : public VtkPolyDataPointPlacerWrap
 		static void SnapToClosestPointOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYGONALSURFACEPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYGONALSURFACEPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

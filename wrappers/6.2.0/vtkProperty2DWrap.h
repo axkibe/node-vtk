@@ -10,6 +10,7 @@
 #include <vtkProperty2D.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProperty2DWrap : public VtkObjectWrap
 {
@@ -51,6 +52,10 @@ class VtkProperty2DWrap : public VtkObjectWrap
 		static void SetLineStipplePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLineStippleRepeatFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROPERTY2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROPERTY2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

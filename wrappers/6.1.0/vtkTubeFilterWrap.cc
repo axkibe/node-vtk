@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTubeFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -227,6 +227,9 @@ void VtkTubeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseDefaultNormalOn", UseDefaultNormalOn);
 	Nan::SetPrototypeMethod(tpl, "useDefaultNormalOn", UseDefaultNormalOn);
 
+#ifdef VTK_NODE_PLUS_VTKTUBEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTUBEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

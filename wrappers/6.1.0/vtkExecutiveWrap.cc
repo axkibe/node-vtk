@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExecutiveWrap.h"
 #include "vtkAlgorithmWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkInformationExecutivePortVectorKeyWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationKeyVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkExecutiveWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateInformation", UpdateInformation);
 	Nan::SetPrototypeMethod(tpl, "updateInformation", UpdateInformation);
 
+#ifdef VTK_NODE_PLUS_VTKEXECUTIVEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXECUTIVEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

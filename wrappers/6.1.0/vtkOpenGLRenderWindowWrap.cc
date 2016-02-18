@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderWindowWrap.h"
 #include "vtkOpenGLRenderWindowWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkFloatArrayWrap.h"
 #include "vtkOpenGLExtensionManagerWrap.h"
 #include "vtkOpenGLHardwareSupportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -54,6 +54,15 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "CheckGraphicError", CheckGraphicError);
 	Nan::SetPrototypeMethod(tpl, "checkGraphicError", CheckGraphicError);
 
+	Nan::SetPrototypeMethod(tpl, "GetBackBuffer", GetBackBuffer);
+	Nan::SetPrototypeMethod(tpl, "getBackBuffer", GetBackBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackLeftBuffer", GetBackLeftBuffer);
+	Nan::SetPrototypeMethod(tpl, "getBackLeftBuffer", GetBackLeftBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetBackRightBuffer", GetBackRightBuffer);
+	Nan::SetPrototypeMethod(tpl, "getBackRightBuffer", GetBackRightBuffer);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +71,15 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetExtensionManager", GetExtensionManager);
 	Nan::SetPrototypeMethod(tpl, "getExtensionManager", GetExtensionManager);
+
+	Nan::SetPrototypeMethod(tpl, "GetFrontBuffer", GetFrontBuffer);
+	Nan::SetPrototypeMethod(tpl, "getFrontBuffer", GetFrontBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetFrontLeftBuffer", GetFrontLeftBuffer);
+	Nan::SetPrototypeMethod(tpl, "getFrontLeftBuffer", GetFrontLeftBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "GetFrontRightBuffer", GetFrontRightBuffer);
+	Nan::SetPrototypeMethod(tpl, "getFrontRightBuffer", GetFrontRightBuffer);
 
 	Nan::SetPrototypeMethod(tpl, "GetGlobalMaximumNumberOfMultiSamples", GetGlobalMaximumNumberOfMultiSamples);
 	Nan::SetPrototypeMethod(tpl, "getGlobalMaximumNumberOfMultiSamples", GetGlobalMaximumNumberOfMultiSamples);
@@ -126,6 +144,9 @@ void VtkOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForCompletion", WaitForCompletion);
 	Nan::SetPrototypeMethod(tpl, "waitForCompletion", WaitForCompletion);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLRENDERWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLRENDERWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -164,6 +185,48 @@ void VtkOpenGLRenderWindowWrap::CheckGraphicError(const Nan::FunctionCallbackInf
 		return;
 	}
 	native->CheckGraphicError();
+}
+
+void VtkOpenGLRenderWindowWrap::GetBackBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLRenderWindowWrap::GetBackLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackLeftBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLRenderWindowWrap::GetBackRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBackRightBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOpenGLRenderWindowWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -215,6 +278,48 @@ void VtkOpenGLRenderWindowWrap::GetExtensionManager(const Nan::FunctionCallbackI
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkOpenGLRenderWindowWrap::GetFrontBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrontBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLRenderWindowWrap::GetFrontLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrontLeftBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkOpenGLRenderWindowWrap::GetFrontRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info.Holder());
+	vtkOpenGLRenderWindow *native = (vtkOpenGLRenderWindow *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetFrontRightBuffer();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkOpenGLRenderWindowWrap::GetGlobalMaximumNumberOfMultiSamples(const Nan::FunctionCallbackInfo<v8::Value>& info)

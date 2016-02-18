@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContextTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkTransform2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -142,6 +142,9 @@ void VtkContextTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZoomOnMouseWheelOn", ZoomOnMouseWheelOn);
 	Nan::SetPrototypeMethod(tpl, "zoomOnMouseWheelOn", ZoomOnMouseWheelOn);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

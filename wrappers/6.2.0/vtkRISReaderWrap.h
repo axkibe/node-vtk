@@ -10,6 +10,7 @@
 #include <vtkRISReader.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRISReaderWrap : public VtkTableAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkRISReaderWrap : public VtkTableAlgorithmWrap
 		static void SetDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxRecords(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRISREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRISREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

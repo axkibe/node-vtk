@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStandardPolyDataPainterWrap.h"
 #include "vtkHardwareSelectionPolyDataPainterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkHardwareSelectionPolyDataPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProcessIdArrayName", SetProcessIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setProcessIdArrayName", SetProcessIdArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKHARDWARESELECTIONPOLYDATAPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHARDWARESELECTIONPOLYDATAPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

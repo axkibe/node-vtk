@@ -10,6 +10,7 @@
 #include <vtkBrush.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBrushWrap : public VtkObjectWrap
 {
@@ -31,17 +32,25 @@ class VtkBrushWrap : public VtkObjectWrap
 
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTextureProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureProperties(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBRUSHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBRUSHWRAP_CLASSDEF
+#endif
 };
 
 #endif

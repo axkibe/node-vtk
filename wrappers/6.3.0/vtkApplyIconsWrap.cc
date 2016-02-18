@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkApplyIconsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkApplyIconsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableOn", UseLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableOn", UseLookupTableOn);
 
+#ifdef VTK_NODE_PLUS_VTKAPPLYICONSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPLYICONSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

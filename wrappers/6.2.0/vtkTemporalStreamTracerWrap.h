@@ -10,6 +10,7 @@
 #include <vtkTemporalStreamTracer.h>
 
 #include "vtkStreamTracerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalStreamTracerWrap : public VtkStreamTracerWrap
 {
@@ -42,6 +43,7 @@ class VtkTemporalStreamTracerWrap : public VtkStreamTracerWrap
 		static void GetStaticSeeds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminationTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTerminationTimeUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTimeStepResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnorePipelineTimeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IgnorePipelineTimeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,11 +62,16 @@ class VtkTemporalStreamTracerWrap : public VtkStreamTracerWrap
 		static void SetTerminationTimeUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminationTimeUnitToStepUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminationTimeUnitToTimeUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStepResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticMeshOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticMeshOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticSeedsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticSeedsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSTREAMTRACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALSTREAMTRACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

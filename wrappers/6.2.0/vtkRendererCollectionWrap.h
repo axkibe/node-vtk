@@ -10,6 +10,7 @@
 #include <vtkRendererCollection.h>
 
 #include "vtkCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRendererCollectionWrap : public VtkCollectionWrap
 {
@@ -37,6 +38,10 @@ class VtkRendererCollectionWrap : public VtkCollectionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERERCOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERERCOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

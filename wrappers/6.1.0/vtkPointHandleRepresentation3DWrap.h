@@ -10,6 +10,7 @@
 #include <vtkPointHandleRepresentation3D.h>
 
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointHandleRepresentation3DWrap : public VtkHandleRepresentationWrap
 {
@@ -84,6 +85,10 @@ class VtkPointHandleRepresentation3DWrap : public VtkHandleRepresentationWrap
 		static void YShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTHANDLEREPRESENTATION3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTHANDLEREPRESENTATION3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

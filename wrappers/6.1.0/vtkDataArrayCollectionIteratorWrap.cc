@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCollectionIteratorWrap.h"
 #include "vtkDataArrayCollectionIteratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkDataArrayCollectionWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkDataArrayCollectionIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCollection", SetCollection);
 	Nan::SetPrototypeMethod(tpl, "setCollection", SetCollection);
 
+#ifdef VTK_NODE_PLUS_VTKDATAARRAYCOLLECTIONITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAARRAYCOLLECTIONITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

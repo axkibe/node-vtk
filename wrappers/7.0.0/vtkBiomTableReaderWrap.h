@@ -10,6 +10,7 @@
 #include <vtkBiomTableReader.h>
 
 #include "vtkTableReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBiomTableReaderWrap : public VtkTableReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkBiomTableReaderWrap : public VtkTableReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBIOMTABLEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBIOMTABLEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

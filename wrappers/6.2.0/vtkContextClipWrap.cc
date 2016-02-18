@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContextClipWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkContextClipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTCLIPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTCLIPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

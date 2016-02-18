@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapper2DWrap.h"
 #include "vtkLabeledDataMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkActor2DWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -171,6 +171,9 @@ void VtkLabeledDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+#ifdef VTK_NODE_PLUS_VTKLABELEDDATAMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELEDDATAMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

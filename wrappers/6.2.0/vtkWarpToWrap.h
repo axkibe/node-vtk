@@ -10,6 +10,7 @@
 #include <vtkWarpTo.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWarpToWrap : public VtkPointSetAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkWarpToWrap : public VtkPointSetAlgorithmWrap
 		static void SetAbsolute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWARPTOWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWARPTOWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPlotGrid.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotGridWrap : public VtkContextItemWrap
 {
@@ -36,6 +37,10 @@ class VtkPlotGridWrap : public VtkContextItemWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

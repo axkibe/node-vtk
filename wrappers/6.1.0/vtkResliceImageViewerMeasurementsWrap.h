@@ -10,6 +10,7 @@
 #include <vtkResliceImageViewerMeasurements.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceImageViewerMeasurementsWrap : public VtkObjectWrap
 {
@@ -48,6 +49,10 @@ class VtkResliceImageViewerMeasurementsWrap : public VtkObjectWrap
 		static void SetResliceImageViewer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERMEASUREMENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERMEASUREMENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

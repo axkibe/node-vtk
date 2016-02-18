@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkCameraPassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkCameraPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDelegatePass", SetDelegatePass);
 	Nan::SetPrototypeMethod(tpl, "setDelegatePass", SetDelegatePass);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

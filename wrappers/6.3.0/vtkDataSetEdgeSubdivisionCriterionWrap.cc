@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkEdgeSubdivisionCriterionWrap.h"
 #include "vtkDataSetEdgeSubdivisionCriterionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkDataSetEdgeSubdivisionCriterionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMesh", SetMesh);
 	Nan::SetPrototypeMethod(tpl, "setMesh", SetMesh);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETEDGESUBDIVISIONCRITERIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETEDGESUBDIVISIONCRITERIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

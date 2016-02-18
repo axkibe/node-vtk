@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGarbageCollectorWrap.h"
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkGarbageCollectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGlobalDebugFlag", SetGlobalDebugFlag);
 	Nan::SetPrototypeMethod(tpl, "setGlobalDebugFlag", SetGlobalDebugFlag);
 
+#ifdef VTK_NODE_PLUS_VTKGARBAGECOLLECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGARBAGECOLLECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

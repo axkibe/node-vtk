@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkDataReaderWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkRectilinearGridWrap.h"
 #include "vtkAbstractArrayWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -340,6 +340,9 @@ void VtkDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorsName", SetVectorsName);
 	Nan::SetPrototypeMethod(tpl, "setVectorsName", SetVectorsName);
 
+#ifdef VTK_NODE_PLUS_VTKDATAREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -1479,7 +1482,7 @@ void VtkDataReaderWrap::ReadLine(const Nan::FunctionCallbackInfo<v8::Value>& inf
 				Nan::ThrowError("Array contents invalid.");
 				return;
 			}
-			b0[i] = a0->Get(i)->NumberValue();
+			b0[i] = a0->Get(i)->Int32Value();
 		}
 		int r;
 		if(info.Length() != 1)
@@ -1658,7 +1661,7 @@ void VtkDataReaderWrap::ReadString(const Nan::FunctionCallbackInfo<v8::Value>& i
 				Nan::ThrowError("Array contents invalid.");
 				return;
 			}
-			b0[i] = a0->Get(i)->NumberValue();
+			b0[i] = a0->Get(i)->Int32Value();
 		}
 		int r;
 		if(info.Length() != 1)

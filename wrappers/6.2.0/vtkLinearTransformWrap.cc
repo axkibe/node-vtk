@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHomogeneousTransformWrap.h"
 #include "vtkLinearTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkLinearTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TransformVectors", TransformVectors);
 	Nan::SetPrototypeMethod(tpl, "transformVectors", TransformVectors);
 
+#ifdef VTK_NODE_PLUS_VTKLINEARTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLINEARTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

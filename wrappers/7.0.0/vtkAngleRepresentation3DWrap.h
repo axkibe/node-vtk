@@ -10,6 +10,7 @@
 #include <vtkAngleRepresentation3D.h>
 
 #include "vtkAngleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAngleRepresentation3DWrap : public VtkAngleRepresentationWrap
 {
@@ -56,6 +57,10 @@ class VtkAngleRepresentation3DWrap : public VtkAngleRepresentationWrap
 		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint2WorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextActorScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANGLEREPRESENTATION3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANGLEREPRESENTATION3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

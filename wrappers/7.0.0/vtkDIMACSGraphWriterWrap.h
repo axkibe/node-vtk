@@ -10,6 +10,7 @@
 #include <vtkDIMACSGraphWriter.h>
 
 #include "vtkDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDIMACSGraphWriterWrap : public VtkDataWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkDIMACSGraphWriterWrap : public VtkDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIMACSGRAPHWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIMACSGRAPHWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

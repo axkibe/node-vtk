@@ -10,6 +10,7 @@
 #include <vtkLegendScaleActor.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLegendScaleActorWrap : public VtkPropWrap
 {
@@ -94,6 +95,10 @@ class VtkLegendScaleActorWrap : public VtkPropWrap
 		static void SetTopBorderOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopAxisVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopAxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLEGENDSCALEACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLEGENDSCALEACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkHyperOctreeDualGridContourFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkHyperOctreeDualGridContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEDUALGRIDCONTOURFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREEDUALGRIDCONTOURFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

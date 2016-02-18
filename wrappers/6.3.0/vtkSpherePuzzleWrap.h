@@ -10,6 +10,7 @@
 #include <vtkSpherePuzzle.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSpherePuzzleWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkSpherePuzzleWrap : public VtkPolyDataAlgorithmWrap
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHEREPUZZLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHEREPUZZLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

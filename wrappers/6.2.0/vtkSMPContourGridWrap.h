@@ -10,6 +10,7 @@
 #include <vtkSMPContourGrid.h>
 
 #include "vtkContourGridWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSMPContourGridWrap : public VtkContourGridWrap
 {
@@ -37,6 +38,10 @@ class VtkSMPContourGridWrap : public VtkContourGridWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergePieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMPCONTOURGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMPCONTOURGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

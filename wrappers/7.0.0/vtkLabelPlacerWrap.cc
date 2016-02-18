@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkLabelPlacerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkCoordinateWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -172,6 +172,9 @@ void VtkLabelPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
+#ifdef VTK_NODE_PLUS_VTKLABELPLACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELPLACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

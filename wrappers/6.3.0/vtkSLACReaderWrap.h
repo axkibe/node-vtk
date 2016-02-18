@@ -10,6 +10,7 @@
 #include <vtkSLACReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSLACReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -34,6 +35,8 @@ class VtkSLACReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFrequencyScales(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMeshFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetModeFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfModeFileNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfVariableArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPhaseShifts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReadExternalSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -64,6 +67,10 @@ class VtkSLACReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetReadInternalVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadMidpoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariableArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLACREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLACREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

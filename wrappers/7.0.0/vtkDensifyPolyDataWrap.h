@@ -10,6 +10,7 @@
 #include <vtkDensifyPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDensifyPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -30,9 +31,15 @@ class VtkDensifyPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDENSIFYPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDENSIFYPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

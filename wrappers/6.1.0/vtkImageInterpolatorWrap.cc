@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractImageInterpolatorWrap.h"
 #include "vtkImageInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkImageInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationModeToNearest", SetInterpolationModeToNearest);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationModeToNearest", SetInterpolationModeToNearest);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

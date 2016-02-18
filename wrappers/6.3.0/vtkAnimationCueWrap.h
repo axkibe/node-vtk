@@ -10,6 +10,7 @@
 #include <vtkAnimationCue.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAnimationCueWrap : public VtkObjectWrap
 {
@@ -47,6 +48,10 @@ class VtkAnimationCueWrap : public VtkObjectWrap
 		static void SetTimeModeToNormalized(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeModeToRelative(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Tick(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANIMATIONCUEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANIMATIONCUEWRAP_CLASSDEF
+#endif
 };
 
 #endif

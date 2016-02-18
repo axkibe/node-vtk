@@ -10,6 +10,7 @@
 #include <vtkThreadedImageAlgorithm.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThreadedImageAlgorithmWrap : public VtkImageAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkThreadedImageAlgorithmWrap : public VtkImageAlgorithmWrap
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHREADEDIMAGEALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHREADEDIMAGEALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

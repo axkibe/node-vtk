@@ -10,6 +10,7 @@
 #include <vtkPiecewiseFunction.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 {
@@ -58,6 +59,10 @@ class VtkPiecewiseFunctionWrap : public VtkDataObjectWrap
 		static void SetClamping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

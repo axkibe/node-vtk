@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapperWrap.h"
 #include "vtkLabeledContourMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkTextPropertyWrap.h"
 #include "vtkTextPropertyCollectionWrap.h"
 #include "vtkPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -101,6 +101,9 @@ void VtkLabeledContourMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
 
+#ifdef VTK_NODE_PLUS_VTKLABELEDCONTOURMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELEDCONTOURMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

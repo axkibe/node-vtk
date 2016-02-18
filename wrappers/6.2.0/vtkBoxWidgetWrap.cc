@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkBoxWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkTransformWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -177,6 +177,9 @@ void VtkBoxWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslationEnabledOn", TranslationEnabledOn);
 	Nan::SetPrototypeMethod(tpl, "translationEnabledOn", TranslationEnabledOn);
 
+#ifdef VTK_NODE_PLUS_VTKBOXWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBOXWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

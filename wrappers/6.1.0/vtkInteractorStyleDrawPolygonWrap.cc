@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleDrawPolygonWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkInteractorStyleDrawPolygonWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDrawPolygonPixels", SetDrawPolygonPixels);
 	Nan::SetPrototypeMethod(tpl, "setDrawPolygonPixels", SetDrawPolygonPixels);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEDRAWPOLYGONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEDRAWPOLYGONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

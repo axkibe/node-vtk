@@ -10,6 +10,7 @@
 #include <vtkShaderProgram.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkShaderProgramWrap : public VtkObjectWrap
 {
@@ -47,11 +48,18 @@ class VtkShaderProgramWrap : public VtkObjectWrap
 		static void SetCompiled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFragmentShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGeometryShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniform2i(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniform3uc(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUniform4uc(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformi(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void isBound(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSHADERPROGRAMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSHADERPROGRAMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAnimationCueWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkAnimationCueWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Tick", Tick);
 	Nan::SetPrototypeMethod(tpl, "tick", Tick);
 
+#ifdef VTK_NODE_PLUS_VTKANIMATIONCUEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANIMATIONCUEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

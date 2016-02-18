@@ -10,6 +10,7 @@
 #include <vtkFixedPointRayCastImage.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFixedPointRayCastImageWrap : public VtkObjectWrap
 {
@@ -54,6 +55,10 @@ class VtkFixedPointRayCastImageWrap : public VtkObjectWrap
 		static void SetZBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseZBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseZBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIXEDPOINTRAYCASTIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIXEDPOINTRAYCASTIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

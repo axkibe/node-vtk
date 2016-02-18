@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkGraphLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWeightEdges", SetWeightEdges);
 	Nan::SetPrototypeMethod(tpl, "setWeightEdges", SetWeightEdges);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHLAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

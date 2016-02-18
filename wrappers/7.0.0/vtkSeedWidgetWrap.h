@@ -10,6 +10,7 @@
 #include <vtkSeedWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSeedWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -46,6 +47,10 @@ class VtkSeedWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSEEDWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSEEDWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

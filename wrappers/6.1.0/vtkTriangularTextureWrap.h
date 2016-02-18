@@ -10,6 +10,7 @@
 #include <vtkTriangularTexture.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTriangularTextureWrap : public VtkImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkTriangularTextureWrap : public VtkImageAlgorithmWrap
 		static void SetTexturePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRIANGULARTEXTUREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRIANGULARTEXTUREWRAP_CLASSDEF
+#endif
 };
 
 #endif

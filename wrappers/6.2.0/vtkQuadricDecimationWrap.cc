@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkQuadricDecimationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -176,6 +176,9 @@ void VtkQuadricDecimationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VectorsAttributeOn", VectorsAttributeOn);
 	Nan::SetPrototypeMethod(tpl, "vectorsAttributeOn", VectorsAttributeOn);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRICDECIMATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRICDECIMATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

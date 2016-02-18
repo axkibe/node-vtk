@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapper2DWrap.h"
 #include "vtkTextMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkTextPropertyWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

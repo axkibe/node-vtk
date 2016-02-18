@@ -10,6 +10,7 @@
 #include <vtkPiecewiseFunctionShiftScale.h>
 
 #include "vtkPiecewiseFunctionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewiseFunctionShiftScaleWrap : public VtkPiecewiseFunctionAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkPiecewiseFunctionShiftScaleWrap : public VtkPiecewiseFunctionAlgorithmW
 		static void SetPositionShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValueScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValueShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONSHIFTSCALEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONSHIFTSCALEWRAP_CLASSDEF
+#endif
 };
 
 #endif

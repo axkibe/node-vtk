@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtk3DWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkProp3DWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void Vtk3DWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProp3D", SetProp3D);
 	Nan::SetPrototypeMethod(tpl, "setProp3D", SetProp3D);
 
+#ifdef VTK_NODE_PLUS_VTK3DWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTK3DWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

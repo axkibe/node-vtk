@@ -10,6 +10,7 @@
 #include <vtkGlyph3DMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGlyph3DMapperWrap : public VtkMapperWrap
 {
@@ -46,6 +47,7 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void GetScaleMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSelectionColorId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSourceIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -81,6 +83,7 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void SetScaleModeToScaleByVectorComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSelectionColorId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionIdArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -91,6 +94,10 @@ class VtkGlyph3DMapperWrap : public VtkMapperWrap
 		static void SourceIndexingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseSelectionIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseSelectionIdsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLYPH3DMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLYPH3DMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

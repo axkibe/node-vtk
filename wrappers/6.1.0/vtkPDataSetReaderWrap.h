@@ -10,6 +10,7 @@
 #include <vtkPDataSetReader.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPDataSetReaderWrap : public VtkDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkPDataSetReaderWrap : public VtkDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPDATASETREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPDATASETREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

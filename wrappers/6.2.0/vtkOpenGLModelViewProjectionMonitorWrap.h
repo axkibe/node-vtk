@@ -10,6 +10,7 @@
 #include <vtkOpenGLModelViewProjectionMonitor.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLModelViewProjectionMonitorWrap : public VtkObjectWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLModelViewProjectionMonitorWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StateChanged(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLMODELVIEWPROJECTIONMONITORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLMODELVIEWPROJECTIONMONITORWRAP_CLASSDEF
+#endif
 };
 
 #endif

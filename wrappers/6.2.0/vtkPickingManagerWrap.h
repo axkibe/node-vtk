@@ -10,6 +10,7 @@
 #include <vtkPickingManager.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPickingManagerWrap : public VtkObjectWrap
 {
@@ -48,6 +49,10 @@ class VtkPickingManagerWrap : public VtkObjectWrap
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOptimizeOnInteractorEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPICKINGMANAGERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPICKINGMANAGERWRAP_CLASSDEF
+#endif
 };
 
 #endif

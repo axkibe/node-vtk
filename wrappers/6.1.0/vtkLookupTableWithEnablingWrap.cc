@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLookupTableWrap.h"
 #include "vtkLookupTableWithEnablingWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkLookupTableWithEnablingWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEnabledArray", SetEnabledArray);
 	Nan::SetPrototypeMethod(tpl, "setEnabledArray", SetEnabledArray);
 
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEWITHENABLINGWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLOOKUPTABLEWITHENABLINGWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

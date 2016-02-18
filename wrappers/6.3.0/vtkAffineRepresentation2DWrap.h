@@ -10,6 +10,7 @@
 #include <vtkAffineRepresentation2D.h>
 
 #include "vtkAffineRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 {
@@ -68,6 +69,10 @@ class VtkAffineRepresentation2DWrap : public VtkAffineRepresentationWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAFFINEREPRESENTATION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAFFINEREPRESENTATION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

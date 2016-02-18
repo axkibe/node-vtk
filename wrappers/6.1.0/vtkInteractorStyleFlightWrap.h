@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleFlight.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 {
@@ -69,6 +70,10 @@ class VtkInteractorStyleFlightWrap : public VtkInteractorStyleWrap
 		static void SetRestoreUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartForwardFly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartReverseFly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEFLIGHTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEFLIGHTWRAP_CLASSDEF
+#endif
 };
 
 #endif

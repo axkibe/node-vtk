@@ -10,6 +10,7 @@
 #include <vtkCollapseGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCollapseGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkCollapseGraphWrap : public VtkGraphAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLLAPSEGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLLAPSEGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

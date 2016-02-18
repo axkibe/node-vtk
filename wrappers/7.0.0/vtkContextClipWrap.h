@@ -10,6 +10,7 @@
 #include <vtkContextClip.h>
 
 #include "vtkAbstractContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextClipWrap : public VtkAbstractContextItemWrap
 {
@@ -35,6 +36,10 @@ class VtkContextClipWrap : public VtkAbstractContextItemWrap
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTCLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTCLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

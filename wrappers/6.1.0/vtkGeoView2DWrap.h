@@ -10,6 +10,7 @@
 #include <vtkGeoView2D.h>
 
 #include "vtkRenderViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoView2DWrap : public VtkRenderViewWrap
 {
@@ -38,6 +39,10 @@ class VtkGeoView2DWrap : public VtkRenderViewWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOVIEW2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOVIEW2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

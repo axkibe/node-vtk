@@ -10,6 +10,7 @@
 #include <vtkImageMapToColors.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkImageMapToColorsWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOutputFormatToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGBA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassAlphaToOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

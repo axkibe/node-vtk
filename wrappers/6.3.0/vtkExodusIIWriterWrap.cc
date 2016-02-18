@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkExodusIIWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkModelMetadataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -138,6 +138,9 @@ void VtkExodusIIWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteOutGlobalNodeIdArrayOn", WriteOutGlobalNodeIdArrayOn);
 	Nan::SetPrototypeMethod(tpl, "writeOutGlobalNodeIdArrayOn", WriteOutGlobalNodeIdArrayOn);
 
+#ifdef VTK_NODE_PLUS_VTKEXODUSIIWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXODUSIIWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

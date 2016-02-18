@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridLinearRayIntegrator.h>
 
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridLinearRayIntegratorWrap : public VtkUnstructuredGridVolumeRayIntegratorWrap
 {
@@ -34,6 +35,10 @@ class VtkUnstructuredGridLinearRayIntegratorWrap : public VtkUnstructuredGridVol
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDLINEARRAYINTEGRATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDLINEARRAYINTEGRATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

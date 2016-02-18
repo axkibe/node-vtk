@@ -10,6 +10,7 @@
 #include <vtkOpenGLSphereMapper.h>
 
 #include "vtkOpenGLPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLSphereMapperWrap : public VtkOpenGLPolyDataMapperWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLSphereMapperWrap : public VtkOpenGLPolyDataMapperWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLSPHEREMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLSPHEREMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

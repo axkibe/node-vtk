@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExodusIICacheWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkExodusIICacheWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCacheCapacity", SetCacheCapacity);
 	Nan::SetPrototypeMethod(tpl, "setCacheCapacity", SetCacheCapacity);
 
+#ifdef VTK_NODE_PLUS_VTKEXODUSIICACHEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXODUSIICACHEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

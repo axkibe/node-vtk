@@ -10,6 +10,7 @@
 #include <vtkKdNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKdNodeWrap : public VtkObjectWrap
 {
@@ -67,6 +68,10 @@ class VtkKdNodeWrap : public VtkObjectWrap
 		static void SetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKDNODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKDNODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

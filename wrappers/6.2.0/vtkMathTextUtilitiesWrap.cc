@@ -5,9 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMathTextUtilitiesWrap.h"
+#include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -49,6 +50,9 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetConstrainedFontSize", GetConstrainedFontSize);
+	Nan::SetPrototypeMethod(tpl, "getConstrainedFontSize", GetConstrainedFontSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetInstance", GetInstance);
 	Nan::SetPrototypeMethod(tpl, "getInstance", GetInstance);
 
@@ -64,6 +68,9 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInstance", SetInstance);
 	Nan::SetPrototypeMethod(tpl, "setInstance", SetInstance);
 
+#ifdef VTK_NODE_PLUS_VTKMATHTEXTUTILITIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMATHTEXTUTILITIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -105,6 +112,45 @@ void VtkMathTextUtilitiesWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMathTextUtilitiesWrap::GetConstrainedFontSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMathTextUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkMathTextUtilitiesWrap>(info.Holder());
+	vtkMathTextUtilities *native = (vtkMathTextUtilities *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextPropertyWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkTextPropertyWrap *a1 = ObjectWrap::Unwrap<VtkTextPropertyWrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+				if(info.Length() > 3 && info[3]->IsInt32())
+				{
+					if(info.Length() > 4 && info[4]->IsUint32())
+					{
+						int r;
+						if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						r = native->GetConstrainedFontSize(
+							*a0,
+							(vtkTextProperty *) a1->native.GetPointer(),
+							info[2]->Int32Value(),
+							info[3]->Int32Value(),
+							info[4]->Uint32Value()
+						);
+						info.GetReturnValue().Set(Nan::New(r));
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMathTextUtilitiesWrap::GetInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)

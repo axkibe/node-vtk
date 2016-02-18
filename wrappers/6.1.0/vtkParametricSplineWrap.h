@@ -10,6 +10,7 @@
 #include <vtkParametricSpline.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricSplineWrap : public VtkParametricFunctionWrap
 {
@@ -64,6 +65,10 @@ class VtkParametricSplineWrap : public VtkParametricFunctionWrap
 		static void SetXSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICSPLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICSPLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkImplicitPlaneWidget2Wrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitPlaneRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkImplicitPlaneWidget2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPLANEWIDGET2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITPLANEWIDGET2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

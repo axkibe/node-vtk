@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUniformGridAMRWrap.h"
 #include "vtkOverlappingAMRWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkAMRInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -58,6 +58,9 @@ void VtkOverlappingAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateParentChildInformation", GenerateParentChildInformation);
 	Nan::SetPrototypeMethod(tpl, "generateParentChildInformation", GenerateParentChildInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetAMRBlockSourceIndex", GetAMRBlockSourceIndex);
+	Nan::SetPrototypeMethod(tpl, "getAMRBlockSourceIndex", GetAMRBlockSourceIndex);
+
 	Nan::SetPrototypeMethod(tpl, "GetAMRInfo", GetAMRInfo);
 	Nan::SetPrototypeMethod(tpl, "getAMRInfo", GetAMRInfo);
 
@@ -73,8 +76,14 @@ void VtkOverlappingAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataObjectType", GetDataObjectType);
 	Nan::SetPrototypeMethod(tpl, "getDataObjectType", GetDataObjectType);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
+	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
 	Nan::SetPrototypeMethod(tpl, "GetRefinementRatio", GetRefinementRatio);
 	Nan::SetPrototypeMethod(tpl, "getRefinementRatio", GetRefinementRatio);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
 
 	Nan::SetPrototypeMethod(tpl, "HasChildrenInformation", HasChildrenInformation);
 	Nan::SetPrototypeMethod(tpl, "hasChildrenInformation", HasChildrenInformation);
@@ -90,12 +99,27 @@ void VtkOverlappingAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewIterator", NewIterator);
 	Nan::SetPrototypeMethod(tpl, "newIterator", NewIterator);
 
+	Nan::SetPrototypeMethod(tpl, "PrintParentChildInfo", PrintParentChildInfo);
+	Nan::SetPrototypeMethod(tpl, "printParentChildInfo", PrintParentChildInfo);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetAMRBlockSourceIndex", SetAMRBlockSourceIndex);
+	Nan::SetPrototypeMethod(tpl, "setAMRBlockSourceIndex", SetAMRBlockSourceIndex);
 
 	Nan::SetPrototypeMethod(tpl, "SetAMRInfo", SetAMRInfo);
 	Nan::SetPrototypeMethod(tpl, "setAMRInfo", SetAMRInfo);
 
+	Nan::SetPrototypeMethod(tpl, "SetRefinementRatio", SetRefinementRatio);
+	Nan::SetPrototypeMethod(tpl, "setRefinementRatio", SetRefinementRatio);
+
+	Nan::SetPrototypeMethod(tpl, "SetSpacing", SetSpacing);
+	Nan::SetPrototypeMethod(tpl, "setSpacing", SetSpacing);
+
+#ifdef VTK_NODE_PLUS_VTKOVERLAPPINGAMRWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOVERLAPPINGAMRWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -147,6 +171,31 @@ void VtkOverlappingAMRWrap::GenerateParentChildInformation(const Nan::FunctionCa
 		return;
 	}
 	native->GenerateParentChildInformation();
+}
+
+void VtkOverlappingAMRWrap::GetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetAMRBlockSourceIndex(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOverlappingAMRWrap::GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -315,6 +364,72 @@ void VtkOverlappingAMRWrap::GetDataObjectType(const Nan::FunctionCallbackInfo<v8
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkOverlappingAMRWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetOrigin(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					(double *)(a2->Buffer()->GetContents().Data())
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->GetOrigin(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					b2
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkOverlappingAMRWrap::GetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
@@ -333,6 +448,81 @@ void VtkOverlappingAMRWrap::GetRefinementRatio(const Nan::FunctionCallbackInfo<v
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetRefinementRatio(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOverlappingAMRWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSpacing(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSpacing(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }
@@ -442,6 +632,29 @@ void VtkOverlappingAMRWrap::NewIterator(const Nan::FunctionCallbackInfo<v8::Valu
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkOverlappingAMRWrap::PrintParentChildInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->PrintParentChildInfo(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
@@ -473,6 +686,33 @@ void VtkOverlappingAMRWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkOverlappingAMRWrap::SetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetAMRBlockSourceIndex(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkOverlappingAMRWrap::SetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
@@ -489,6 +729,90 @@ void VtkOverlappingAMRWrap::SetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value
 			(vtkAMRInformation *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOverlappingAMRWrap::SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetRefinementRatio(
+				info[0]->Uint32Value(),
+				info[1]->Int32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOverlappingAMRWrap::SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOverlappingAMRWrap *wrapper = ObjectWrap::Unwrap<VtkOverlappingAMRWrap>(info.Holder());
+	vtkOverlappingAMR *native = (vtkOverlappingAMR *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetSpacing(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetSpacing(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

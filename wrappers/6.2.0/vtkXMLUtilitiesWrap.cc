@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkXMLUtilitiesWrap.h"
 #include "vtkXMLDataElementWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkXMLUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnFactorElements", UnFactorElements);
 	Nan::SetPrototypeMethod(tpl, "unFactorElements", UnFactorElements);
 
+#ifdef VTK_NODE_PLUS_VTKXMLUTILITIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLUTILITIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

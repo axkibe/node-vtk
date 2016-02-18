@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataContourLineInterpolatorWrap.h"
 #include "vtkPolygonalSurfaceContourLineInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkContourRepresentationWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkPolygonalSurfaceContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDistanceOffset", SetDistanceOffset);
 	Nan::SetPrototypeMethod(tpl, "setDistanceOffset", SetDistanceOffset);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYGONALSURFACECONTOURLINEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYGONALSURFACECONTOURLINEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

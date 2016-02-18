@@ -10,6 +10,7 @@
 #include <vtkStringToNumeric.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStringToNumericWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -69,6 +70,10 @@ class VtkStringToNumericWrap : public VtkDataObjectAlgorithmWrap
 		static void SetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TrimWhitespacePriorToNumericConversionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TrimWhitespacePriorToNumericConversionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRINGTONUMERICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRINGTONUMERICWRAP_CLASSDEF
+#endif
 };
 
 #endif

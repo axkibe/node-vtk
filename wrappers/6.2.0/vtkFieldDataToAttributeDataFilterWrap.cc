@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkFieldDataToAttributeDataFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkFieldDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -193,6 +193,9 @@ void VtkFieldDataToAttributeDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorComponent", SetVectorComponent);
 	Nan::SetPrototypeMethod(tpl, "setVectorComponent", SetVectorComponent);
 
+#ifdef VTK_NODE_PLUS_VTKFIELDDATATOATTRIBUTEDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFIELDDATATOATTRIBUTEDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

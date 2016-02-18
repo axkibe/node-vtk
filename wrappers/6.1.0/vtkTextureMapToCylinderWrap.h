@@ -10,6 +10,7 @@
 #include <vtkTextureMapToCylinder.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextureMapToCylinderWrap : public VtkDataSetAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTextureMapToCylinderWrap : public VtkDataSetAlgorithmWrap
 		static void SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreventSeam(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREMAPTOCYLINDERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREMAPTOCYLINDERWRAP_CLASSDEF
+#endif
 };
 
 #endif

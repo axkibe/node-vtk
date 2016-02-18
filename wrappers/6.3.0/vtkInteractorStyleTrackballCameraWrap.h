@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleTrackballCameraWrap : public VtkInteractorStyleWrap
 {
@@ -48,6 +49,10 @@ class VtkInteractorStyleTrackballCameraWrap : public VtkInteractorStyleWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Spin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

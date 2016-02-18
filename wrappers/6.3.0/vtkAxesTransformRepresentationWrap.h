@@ -10,6 +10,7 @@
 #include <vtkAxesTransformRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxesTransformRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -57,6 +58,10 @@ class VtkAxesTransformRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXESTRANSFORMREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXESTRANSFORMREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

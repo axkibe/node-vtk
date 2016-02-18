@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkPassArraysWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkPassArraysWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseFieldTypesOn", UseFieldTypesOn);
 	Nan::SetPrototypeMethod(tpl, "useFieldTypesOn", UseFieldTypesOn);
 
+#ifdef VTK_NODE_PLUS_VTKPASSARRAYSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPASSARRAYSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

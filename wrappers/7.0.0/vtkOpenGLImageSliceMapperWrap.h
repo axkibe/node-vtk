@@ -10,6 +10,7 @@
 #include <vtkOpenGLImageSliceMapper.h>
 
 #include "vtkImageSliceMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLImageSliceMapperWrap : public VtkImageSliceMapperWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLImageSliceMapperWrap : public VtkImageSliceMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLIMAGESLICEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLIMAGESLICEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

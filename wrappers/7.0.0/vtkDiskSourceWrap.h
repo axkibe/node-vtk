@@ -10,6 +10,7 @@
 #include <vtkDiskSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDiskSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkDiskSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOuterRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadialResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDISKSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDISKSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

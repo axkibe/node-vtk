@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetWrap.h"
 #include "vtkLabelHierarchyWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkAbstractArrayWrap.h"
 #include "vtkIntArrayWrap.h"
 #include "vtkCoincidentPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkLabelHierarchyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextProperty", SetTextProperty);
 	Nan::SetPrototypeMethod(tpl, "setTextProperty", SetTextProperty);
 
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELHIERARCHYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

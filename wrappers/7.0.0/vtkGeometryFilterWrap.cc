@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGeometryFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
+#ifdef VTK_NODE_PLUS_VTKGEOMETRYFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOMETRYFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

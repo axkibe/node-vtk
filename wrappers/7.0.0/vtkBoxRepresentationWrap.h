@@ -10,6 +10,7 @@
 #include <vtkBoxRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoxRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -68,6 +69,10 @@ class VtkBoxRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOXREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOXREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

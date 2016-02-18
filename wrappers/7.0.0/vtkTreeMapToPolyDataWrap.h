@@ -10,6 +10,7 @@
 #include <vtkTreeMapToPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeMapToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkTreeMapToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLevelArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelDeltaZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRectanglesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEMAPTOPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEMAPTOPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

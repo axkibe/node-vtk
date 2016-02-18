@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkInterpolateDataSetAttributesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkInterpolateDataSetAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetT", SetT);
 	Nan::SetPrototypeMethod(tpl, "setT", SetT);
 
+#ifdef VTK_NODE_PLUS_VTKINTERPOLATEDATASETATTRIBUTESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERPOLATEDATASETATTRIBUTESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

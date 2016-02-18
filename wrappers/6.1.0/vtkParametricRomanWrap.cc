@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricRomanWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkParametricRomanWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICROMANWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICROMANWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

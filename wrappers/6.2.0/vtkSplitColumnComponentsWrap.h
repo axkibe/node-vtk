@@ -10,6 +10,7 @@
 #include <vtkSplitColumnComponents.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplitColumnComponentsWrap : public VtkTableAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkSplitColumnComponentsWrap : public VtkTableAlgorithmWrap
 		static void SetNamingModeToNamesWithUnderscores(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNamingModeToNumberWithParens(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNamingModeToNumberWithUnderscores(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLITCOLUMNCOMPONENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLITCOLUMNCOMPONENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

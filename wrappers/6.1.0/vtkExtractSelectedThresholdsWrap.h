@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedThresholds.h>
 
 #include "vtkExtractSelectionBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedThresholdsWrap : public VtkExtractSelectionBaseWrap
 {
@@ -33,6 +34,10 @@ class VtkExtractSelectedThresholdsWrap : public VtkExtractSelectionBaseWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDTHRESHOLDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDTHRESHOLDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

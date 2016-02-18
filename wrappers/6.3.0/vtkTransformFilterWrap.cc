@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkTransformFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractTransformWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkTransformFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFORMFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

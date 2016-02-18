@@ -10,6 +10,7 @@
 #include <vtkBrokenLineWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBrokenLineWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -75,6 +76,10 @@ class VtkBrokenLineWidgetWrap : public Vtk3DWidgetWrap
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBROKENLINEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBROKENLINEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDefaultPainterWrap.h"
 #include "vtkSurfaceLICDefaultPainterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSurfaceLICPainterWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkSurfaceLICDefaultPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSurfaceLICPainter", SetSurfaceLICPainter);
 	Nan::SetPrototypeMethod(tpl, "setSurfaceLICPainter", SetSurfaceLICPainter);
 
+#ifdef VTK_NODE_PLUS_VTKSURFACELICDEFAULTPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSURFACELICDEFAULTPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

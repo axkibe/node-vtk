@@ -10,6 +10,7 @@
 #include <vtkExtractBlock.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractBlockWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -29,6 +30,7 @@ class VtkExtractBlockWrap : public VtkMultiBlockDataSetAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaintainStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPruneOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,9 +41,14 @@ class VtkExtractBlockWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void PruneOutputOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PruneOutputOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllIndices(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaintainStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPruneOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTBLOCKWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTBLOCKWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkValuePass.h>
 
 #include "vtkDefaultPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkValuePassWrap : public VtkDefaultPassWrap
 {
@@ -43,6 +44,10 @@ class VtkValuePassWrap : public VtkDefaultPassWrap
 		static void SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputComponentToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVALUEPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVALUEPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

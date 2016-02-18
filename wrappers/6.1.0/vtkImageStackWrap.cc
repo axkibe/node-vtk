@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageSliceWrap.h"
 #include "vtkImageStackWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkAssemblyPathWrap.h"
 #include "vtkAssemblyPathsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -128,6 +128,9 @@ void VtkImageStackWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESTACKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESTACKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPOutlineFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPOutlineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+#ifdef VTK_NODE_PLUS_VTKPOUTLINEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOUTLINEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

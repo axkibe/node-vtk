@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkPassThroughWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkPassThroughWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDeepCopyInput", SetDeepCopyInput);
 	Nan::SetPrototypeMethod(tpl, "setDeepCopyInput", SetDeepCopyInput);
 
+#ifdef VTK_NODE_PLUS_VTKPASSTHROUGHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPASSTHROUGHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkVolumeTextureMapper3D.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeTextureMapper3DWrap : public VtkVolumeMapperWrap
 {
@@ -46,6 +47,10 @@ class VtkVolumeTextureMapper3DWrap : public VtkVolumeMapperWrap
 		static void SetPreferredMethodToNVidia(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreferredRenderMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseCompressedTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

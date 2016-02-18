@@ -10,6 +10,7 @@
 #include <vtkCirclePackFrontChainLayoutStrategy.h>
 
 #include "vtkCirclePackLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCirclePackFrontChainLayoutStrategyWrap : public VtkCirclePackLayoutStrategyWrap
 {
@@ -38,6 +39,10 @@ class VtkCirclePackFrontChainLayoutStrategyWrap : public VtkCirclePackLayoutStra
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCIRCLEPACKFRONTCHAINLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCIRCLEPACKFRONTCHAINLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

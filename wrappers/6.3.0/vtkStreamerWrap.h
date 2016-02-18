@@ -10,6 +10,7 @@
 #include <vtkStreamer.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamerWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -78,6 +79,10 @@ class VtkStreamerWrap : public VtkPolyDataAlgorithmWrap
 		static void SpeedScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VorticityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VorticityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMERWRAP_CLASSDEF
+#endif
 };
 
 #endif

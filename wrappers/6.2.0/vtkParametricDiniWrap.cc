@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricDiniWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkParametricDiniWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetB", SetB);
 	Nan::SetPrototypeMethod(tpl, "setB", SetB);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICDINIWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICDINIWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

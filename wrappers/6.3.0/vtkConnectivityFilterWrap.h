@@ -10,6 +10,7 @@
 #include <vtkConnectivityFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConnectivityFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkConnectivityFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarConnectivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONNECTIVITYFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONNECTIVITYFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAbstractGridConnectivity.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractGridConnectivityWrap : public VtkObjectWrap
 {
@@ -35,9 +36,16 @@ class VtkAbstractGridConnectivityWrap : public VtkObjectWrap
 		static void GetGhostedGridPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostedPointGhostArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGhostedPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfGrids(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTGRIDCONNECTIVITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTGRIDCONNECTIVITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

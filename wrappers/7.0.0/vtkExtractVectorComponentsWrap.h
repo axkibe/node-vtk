@@ -10,6 +10,7 @@
 #include <vtkExtractVectorComponents.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractVectorComponentsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractVectorComponentsWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtractToFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTVECTORCOMPONENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTVECTORCOMPONENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

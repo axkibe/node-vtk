@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkSuperquadricWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkSuperquadricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToroidalOn", ToroidalOn);
 	Nan::SetPrototypeMethod(tpl, "toroidalOn", ToroidalOn);
 
+#ifdef VTK_NODE_PLUS_VTKSUPERQUADRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSUPERQUADRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

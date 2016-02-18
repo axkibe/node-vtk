@@ -10,6 +10,7 @@
 #include <vtkTreeDifferenceFilter.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeDifferenceFilterWrap : public VtkGraphAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkTreeDifferenceFilterWrap : public VtkGraphAlgorithmWrap
 		static void SetComparisonArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEDIFFERENCEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEDIFFERENCEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

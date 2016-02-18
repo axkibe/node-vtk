@@ -10,6 +10,7 @@
 #include <vtkLabelHierarchyAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelHierarchyAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkLabelHierarchyAlgorithmWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELHIERARCHYALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

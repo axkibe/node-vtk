@@ -10,6 +10,7 @@
 #include <vtkGenericCell.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericCellWrap : public VtkCellWrap
 {
@@ -88,6 +89,10 @@ class VtkGenericCellWrap : public VtkCellWrap
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICCELLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICCELLWRAP_CLASSDEF
+#endif
 };
 
 #endif

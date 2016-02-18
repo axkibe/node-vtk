@@ -10,6 +10,7 @@
 #include <vtkGeoTreeNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTreeNodeWrap : public VtkObjectWrap
 {
@@ -54,6 +55,10 @@ class VtkGeoTreeNodeWrap : public VtkObjectWrap
 		static void SetOlder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTREENODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTREENODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

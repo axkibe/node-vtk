@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkRotationalExtrusionFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -101,6 +101,9 @@ void VtkRotationalExtrusionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
+#ifdef VTK_NODE_PLUS_VTKROTATIONALEXTRUSIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKROTATIONALEXTRUSIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

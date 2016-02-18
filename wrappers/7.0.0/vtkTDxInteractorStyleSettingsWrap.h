@@ -10,6 +10,7 @@
 #include <vtkTDxInteractorStyleSettings.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTDxInteractorStyleSettingsWrap : public VtkObjectWrap
 {
@@ -47,6 +48,10 @@ class VtkTDxInteractorStyleSettingsWrap : public VtkObjectWrap
 		static void SetUseRotationX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseRotationY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseRotationZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTDXINTERACTORSTYLESETTINGSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTDXINTERACTORSTYLESETTINGSWRAP_CLASSDEF
+#endif
 };
 
 #endif

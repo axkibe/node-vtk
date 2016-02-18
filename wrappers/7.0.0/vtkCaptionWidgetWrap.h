@@ -10,6 +10,7 @@
 #include <vtkCaptionWidget.h>
 
 #include "vtkBorderWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCaptionWidgetWrap : public VtkBorderWidgetWrap
 {
@@ -38,6 +39,10 @@ class VtkCaptionWidgetWrap : public VtkBorderWidgetWrap
 		static void SetCaptionActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAPTIONWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAPTIONWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

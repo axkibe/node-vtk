@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTextSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkTextSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetText", SetText);
 	Nan::SetPrototypeMethod(tpl, "setText", SetText);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGenericEnSightReaderWrap.h"
 #include "vtkEnSightMasterServerReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkEnSightMasterServerReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCurrentPiece", SetCurrentPiece);
 	Nan::SetPrototypeMethod(tpl, "setCurrentPiece", SetCurrentPiece);
 
+#ifdef VTK_NODE_PLUS_VTKENSIGHTMASTERSERVERREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENSIGHTMASTERSERVERREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

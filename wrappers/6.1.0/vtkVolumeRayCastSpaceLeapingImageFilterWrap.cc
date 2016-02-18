@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkVolumeRayCastSpaceLeapingImageFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -124,6 +124,9 @@ void VtkVolumeRayCastSpaceLeapingImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 	Nan::SetPrototypeMethod(tpl, "updateGradientOpacityFlagsOn", UpdateGradientOpacityFlagsOn);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTSPACELEAPINGIMAGEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMERAYCASTSPACELEAPINGIMAGEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkExtractRectilinearGrid.h>
 
 #include "vtkRectilinearGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractRectilinearGridWrap : public VtkRectilinearGridAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractRectilinearGridWrap : public VtkRectilinearGridAlgorithmWrap
 		static void SetIncludeBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTRECTILINEARGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTRECTILINEARGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

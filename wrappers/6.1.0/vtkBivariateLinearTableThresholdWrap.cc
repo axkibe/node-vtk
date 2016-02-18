@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkBivariateLinearTableThresholdWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkBivariateLinearTableThresholdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseNormalizedDistanceOn", UseNormalizedDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "useNormalizedDistanceOn", UseNormalizedDistanceOn);
 
+#ifdef VTK_NODE_PLUS_VTKBIVARIATELINEARTABLETHRESHOLDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBIVARIATELINEARTABLETHRESHOLDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

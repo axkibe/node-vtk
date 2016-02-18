@@ -10,6 +10,7 @@
 #include <vtkOpenGLImageMapper.h>
 
 #include "vtkImageMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLImageMapperWrap : public VtkImageMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLImageMapperWrap : public VtkImageMapperWrap
 		static void RenderData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLIMAGEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLIMAGEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

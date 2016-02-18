@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkGaussianSplatterWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkImageDataWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkCompositeDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -195,6 +195,9 @@ void VtkGaussianSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKGAUSSIANSPLATTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGAUSSIANSPLATTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

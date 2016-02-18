@@ -10,6 +10,7 @@
 #include <vtkGeoTreeNodeCache.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTreeNodeCacheWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkGeoTreeNodeCacheWrap : public VtkObjectWrap
 		static void SendToFront(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheMaximumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheMinimumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTREENODECACHEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTREENODECACHEWRAP_CLASSDEF
+#endif
 };
 
 #endif

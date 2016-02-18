@@ -5,11 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkFrameBufferObject2Wrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "vtkTextureObjectWrap.h"
+#include "vtkRenderbufferWrap.h"
 #include "vtkPixelBufferObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,6 +49,42 @@ void VtkFrameBufferObject2Wrap::InitPtpl()
 	tpl->Inherit(Nan::New<FunctionTemplate>(VtkObjectWrap::ptpl));
 	tpl->SetClassName(Nan::New("VtkFrameBufferObject2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	Nan::SetPrototypeMethod(tpl, "ActivateDrawBuffer", ActivateDrawBuffer);
+	Nan::SetPrototypeMethod(tpl, "activateDrawBuffer", ActivateDrawBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "ActivateDrawBuffers", ActivateDrawBuffers);
+	Nan::SetPrototypeMethod(tpl, "activateDrawBuffers", ActivateDrawBuffers);
+
+	Nan::SetPrototypeMethod(tpl, "ActivateReadBuffer", ActivateReadBuffer);
+	Nan::SetPrototypeMethod(tpl, "activateReadBuffer", ActivateReadBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "AddColorAttachment", AddColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "addColorAttachment", AddColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "AddDepthAttachment", AddDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "addDepthAttachment", AddDepthAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "AddRenColorAttachment", AddRenColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "addRenColorAttachment", AddRenColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "AddRenDepthAttachment", AddRenDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "addRenDepthAttachment", AddRenDepthAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "AddTexColorAttachment", AddTexColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "addTexColorAttachment", AddTexColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "AddTexDepthAttachment", AddTexDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "addTexDepthAttachment", AddTexDepthAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "Bind", Bind);
+	Nan::SetPrototypeMethod(tpl, "bind", Bind);
+
+	Nan::SetPrototypeMethod(tpl, "Blit", Blit);
+	Nan::SetPrototypeMethod(tpl, "blit", Blit);
+
+	Nan::SetPrototypeMethod(tpl, "CheckFrameBufferStatus", CheckFrameBufferStatus);
+	Nan::SetPrototypeMethod(tpl, "checkFrameBufferStatus", CheckFrameBufferStatus);
 
 	Nan::SetPrototypeMethod(tpl, "DeactivateDrawBuffers", DeactivateDrawBuffers);
 	Nan::SetPrototypeMethod(tpl, "deactivateDrawBuffers", DeactivateDrawBuffers);
@@ -87,6 +125,27 @@ void VtkFrameBufferObject2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveRenColorAttachment", RemoveRenColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "removeRenColorAttachment", RemoveRenColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveRenColorAttachments", RemoveRenColorAttachments);
+	Nan::SetPrototypeMethod(tpl, "removeRenColorAttachments", RemoveRenColorAttachments);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveRenDepthAttachment", RemoveRenDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "removeRenDepthAttachment", RemoveRenDepthAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveTexColorAttachment", RemoveTexColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "removeTexColorAttachment", RemoveTexColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveTexColorAttachments", RemoveTexColorAttachments);
+	Nan::SetPrototypeMethod(tpl, "removeTexColorAttachments", RemoveTexColorAttachments);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveTexDepthAttachment", RemoveTexDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "removeTexDepthAttachment", RemoveTexDepthAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "RestorePreviousBuffers", RestorePreviousBuffers);
+	Nan::SetPrototypeMethod(tpl, "restorePreviousBuffers", RestorePreviousBuffers);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -99,6 +158,12 @@ void VtkFrameBufferObject2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
+	Nan::SetPrototypeMethod(tpl, "UnBind", UnBind);
+	Nan::SetPrototypeMethod(tpl, "unBind", UnBind);
+
+#ifdef VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECT2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECT2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -126,6 +191,462 @@ void VtkFrameBufferObject2Wrap::New(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkFrameBufferObject2Wrap::ActivateDrawBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ActivateDrawBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::ActivateDrawBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ActivateDrawBuffers(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::ActivateReadBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->ActivateReadBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkRenderbufferWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkRenderbufferWrap *a2 = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info[2]->ToObject());
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddColorAttachment(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					(vtkRenderbuffer *) a2->native.GetPointer()
+				);
+				return;
+			}
+			else if(info.Length() > 2 && info[2]->IsObject() && (Nan::New(VtkTextureObjectWrap::ptpl))->HasInstance(info[2]))
+			{
+				VtkTextureObjectWrap *a2 = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info[2]->ToObject());
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddColorAttachment(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					(vtkTextureObject *) a2->native.GetPointer()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkRenderbufferWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkRenderbufferWrap *a1 = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddDepthAttachment(
+				info[0]->Uint32Value(),
+				(vtkRenderbuffer *) a1->native.GetPointer()
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkTextureObjectWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkTextureObjectWrap *a1 = ObjectWrap::Unwrap<VtkTextureObjectWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddDepthAttachment(
+				info[0]->Uint32Value(),
+				(vtkTextureObject *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddRenColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddRenColorAttachment(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddRenDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddRenDepthAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddTexColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->AddTexColorAttachment(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::AddTexDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddTexDepthAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::Bind(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->Bind(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::Blit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsInt32Array())
+	{
+		v8::Local<v8::Int32Array>a0(v8::Local<v8::Int32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->Blit(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						(int *)(a1->Buffer()->GetContents().Data()),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->Blit(
+						(int *)(a0->Buffer()->GetContents().Data()),
+						b1,
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsInt32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Int32Value();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			int b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsInt32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Int32Value();
+			}
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->Blit(
+						b0,
+						b1,
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32Array())
+		{
+			v8::Local<v8::Int32Array>a1(v8::Local<v8::Int32Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+					int r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->Blit(
+						b0,
+						(int *)(a1->Buffer()->GetContents().Data()),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					info.GetReturnValue().Set(Nan::New(r));
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::CheckFrameBufferStatus(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->CheckFrameBufferStatus(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkFrameBufferObject2Wrap::DeactivateDrawBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -831,6 +1352,155 @@ void VtkFrameBufferObject2Wrap::NewInstance(const Nan::FunctionCallbackInfo<v8::
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkFrameBufferObject2Wrap::RemoveRenColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveRenColorAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RemoveRenColorAttachments(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveRenColorAttachments(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RemoveRenDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveRenDepthAttachment(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RemoveTexColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveTexColorAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RemoveTexColorAttachments(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->RemoveTexColorAttachments(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RemoveTexDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveTexDepthAttachment(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::RestorePreviousBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RestorePreviousBuffers(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkFrameBufferObject2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
@@ -900,6 +1570,25 @@ void VtkFrameBufferObject2Wrap::SetContext(const Nan::FunctionCallbackInfo<v8::V
 		}
 		native->SetContext(
 			(vtkRenderWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkFrameBufferObject2Wrap::UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkFrameBufferObject2Wrap *wrapper = ObjectWrap::Unwrap<VtkFrameBufferObject2Wrap>(info.Holder());
+	vtkFrameBufferObject2 *native = (vtkFrameBufferObject2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->UnBind(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

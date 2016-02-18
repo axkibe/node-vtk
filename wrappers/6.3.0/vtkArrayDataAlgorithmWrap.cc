@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkArrayDataAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkArrayDataWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,6 +67,9 @@ void VtkArrayDataAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKARRAYDATAALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARRAYDATAALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

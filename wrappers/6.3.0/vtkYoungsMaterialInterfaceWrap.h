@@ -10,6 +10,7 @@
 #include <vtkYoungsMaterialInterface.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkYoungsMaterialInterfaceWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -73,6 +74,10 @@ class VtkYoungsMaterialInterfaceWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void UseAllBlocksOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFractionAsDistanceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFractionAsDistanceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKYOUNGSMATERIALINTERFACEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKYOUNGSMATERIALINTERFACEWRAP_CLASSDEF
+#endif
 };
 
 #endif

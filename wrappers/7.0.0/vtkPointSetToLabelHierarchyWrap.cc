@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLabelHierarchyAlgorithmWrap.h"
 #include "vtkPointSetToLabelHierarchyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkPointSetToLabelHierarchyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseUnicodeStringsOn", UseUnicodeStringsOn);
 	Nan::SetPrototypeMethod(tpl, "useUnicodeStringsOn", UseUnicodeStringsOn);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTSETTOLABELHIERARCHYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTSETTOLABELHIERARCHYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSplineRepresentation.h>
 
 #include "vtkCurveRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineRepresentationWrap : public VtkCurveRepresentationWrap
 {
@@ -43,6 +44,10 @@ class VtkSplineRepresentationWrap : public VtkCurveRepresentationWrap
 		static void SetNumberOfHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParametricSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeClipCutPointsGrabber.h>
 
 #include "vtkHyperOctreePointsGrabberWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeClipCutPointsGrabberWrap : public VtkHyperOctreePointsGrabberWrap
 {
@@ -38,6 +39,10 @@ class VtkHyperOctreeClipCutPointsGrabberWrap : public VtkHyperOctreePointsGrabbe
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREECLIPCUTPOINTSGRABBERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREECLIPCUTPOINTSGRABBERWRAP_CLASSDEF
+#endif
 };
 
 #endif

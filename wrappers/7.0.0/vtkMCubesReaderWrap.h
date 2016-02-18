@@ -10,6 +10,7 @@
 #include <vtkMCubesReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMCubesReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkMCubesReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMCUBESREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMCUBESREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

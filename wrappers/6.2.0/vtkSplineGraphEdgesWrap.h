@@ -10,6 +10,7 @@
 #include <vtkSplineGraphEdges.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineGraphEdgesWrap : public VtkGraphAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkSplineGraphEdgesWrap : public VtkGraphAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEGRAPHEDGESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEGRAPHEDGESWRAP_CLASSDEF
+#endif
 };
 
 #endif

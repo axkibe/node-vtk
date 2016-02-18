@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLabeledDataMapperWrap.h"
 #include "vtkLabeledTreeMapDataMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkActor2DWrap.h"
 #include "vtkTreeWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkLabeledTreeMapDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRectanglesArrayName", SetRectanglesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setRectanglesArrayName", SetRectanglesArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKLABELEDTREEMAPDATAMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELEDTREEMAPDATAMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

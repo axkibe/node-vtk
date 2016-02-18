@@ -10,6 +10,7 @@
 #include <vtkStructuredGridGeometryFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkStructuredGridGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDGEOMETRYFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDGEOMETRYFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkThreadedImageAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
 	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
+#ifdef VTK_NODE_PLUS_VTKTHREADEDIMAGEALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHREADEDIMAGEALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

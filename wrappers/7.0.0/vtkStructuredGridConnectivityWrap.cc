@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractGridConnectivityWrap.h"
 #include "vtkStructuredGridConnectivityWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPointDataWrap.h"
 #include "vtkCellDataWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,9 +93,15 @@ void VtkStructuredGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGhostedGridExtent", SetGhostedGridExtent);
 	Nan::SetPrototypeMethod(tpl, "setGhostedGridExtent", SetGhostedGridExtent);
 
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfGrids", SetNumberOfGrids);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfGrids", SetNumberOfGrids);
+
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCONNECTIVITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCONNECTIVITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -617,6 +623,25 @@ void VtkStructuredGridConnectivityWrap::SetGhostedGridExtent(const Nan::Function
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridConnectivityWrap::SetNumberOfGrids(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridConnectivityWrap>(info.Holder());
+	vtkStructuredGridConnectivity *native = (vtkStructuredGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfGrids(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

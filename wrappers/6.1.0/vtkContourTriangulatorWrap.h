@@ -10,6 +10,7 @@
 #include <vtkContourTriangulator.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContourTriangulatorWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkContourTriangulatorWrap : public VtkPolyDataAlgorithmWrap
 		static void TriangulatePolygon(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangulationErrorDisplayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangulationErrorDisplayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTOURTRIANGULATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTOURTRIANGULATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

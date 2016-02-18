@@ -10,6 +10,7 @@
 #include <vtkSubCommunicator.h>
 
 #include "vtkCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSubCommunicatorWrap : public VtkCommunicatorWrap
 {
@@ -35,6 +36,10 @@ class VtkSubCommunicatorWrap : public VtkCommunicatorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGroup(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUBCOMMUNICATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUBCOMMUNICATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkXMLUnstructuredDataWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUnstructuredDataWriterWrap : public VtkXMLWriterWrap
 {
@@ -39,6 +40,10 @@ class VtkXMLUnstructuredDataWriterWrap : public VtkXMLWriterWrap
 		static void SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWritePiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

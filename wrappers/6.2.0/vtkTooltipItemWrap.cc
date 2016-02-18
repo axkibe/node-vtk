@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkTooltipItemWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkBrushWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkTooltipItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKTOOLTIPITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTOOLTIPITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

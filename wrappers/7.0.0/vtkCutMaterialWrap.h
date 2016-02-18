@@ -10,6 +10,7 @@
 #include <vtkCutMaterial.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCutMaterialWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkCutMaterialWrap : public VtkPolyDataAlgorithmWrap
 		static void SetMaterial(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaterialArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCUTMATERIALWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCUTMATERIALWRAP_CLASSDEF
+#endif
 };
 
 #endif

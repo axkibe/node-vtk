@@ -10,6 +10,7 @@
 #include <vtkKdTreeSelector.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkKdTreeSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void SetSingleSelectionThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleSelectionOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleSelectionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKDTREESELECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKDTREESELECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

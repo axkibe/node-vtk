@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkDummyControllerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkDummyControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleMethodExecute", SingleMethodExecute);
 	Nan::SetPrototypeMethod(tpl, "singleMethodExecute", SingleMethodExecute);
 
+#ifdef VTK_NODE_PLUS_VTKDUMMYCONTROLLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDUMMYCONTROLLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

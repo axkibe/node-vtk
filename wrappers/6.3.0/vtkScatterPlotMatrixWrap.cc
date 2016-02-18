@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkChartMatrixWrap.h"
 #include "vtkScatterPlotMatrixWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkTooltipItemWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkChartWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -194,6 +194,9 @@ void VtkScatterPlotMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateSettings", UpdateSettings);
 	Nan::SetPrototypeMethod(tpl, "updateSettings", UpdateSettings);
 
+#ifdef VTK_NODE_PLUS_VTKSCATTERPLOTMATRIXWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCATTERPLOTMATRIXWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

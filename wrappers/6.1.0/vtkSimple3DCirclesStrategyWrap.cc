@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkSimple3DCirclesStrategyWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkIntArrayWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -153,6 +153,9 @@ void VtkSimple3DCirclesStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLE3DCIRCLESSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLE3DCIRCLESSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

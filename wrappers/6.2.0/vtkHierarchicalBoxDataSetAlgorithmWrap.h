@@ -10,6 +10,7 @@
 #include <vtkHierarchicalBoxDataSetAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalBoxDataSetAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkHierarchicalBoxDataSetAlgorithmWrap : public VtkAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALBOXDATASETALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALBOXDATASETALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOctreePointLocatorNodeWrap.h"
 #include "vtkPlanesIntersectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkOctreePointLocatorNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPoints", SetNumberOfPoints);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPoints", SetNumberOfPoints);
 
+#ifdef VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORNODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORNODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

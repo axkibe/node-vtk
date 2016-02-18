@@ -10,6 +10,7 @@
 #include <vtkEllipticalButtonSource.h>
 
 #include "vtkButtonSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEllipticalButtonSourceWrap : public VtkButtonSourceWrap
 {
@@ -63,6 +64,10 @@ class VtkEllipticalButtonSourceWrap : public VtkButtonSourceWrap
 		static void SetShoulderResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKELLIPTICALBUTTONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKELLIPTICALBUTTONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

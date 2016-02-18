@@ -10,6 +10,7 @@
 #include <vtkGeoTransform.h>
 
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTransformWrap : public VtkAbstractTransformWrap
 {
@@ -41,6 +42,10 @@ class VtkGeoTransformWrap : public VtkAbstractTransformWrap
 		static void SetDestinationProjection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceProjection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCornerAnnotation.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCornerAnnotationWrap : public VtkActor2DWrap
 {
@@ -66,6 +67,10 @@ class VtkCornerAnnotationWrap : public VtkActor2DWrap
 		static void SetWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSliceAndImageOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSliceAndImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCORNERANNOTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCORNERANNOTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

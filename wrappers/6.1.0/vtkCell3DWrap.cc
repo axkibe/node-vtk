@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCellWrap.h"
 #include "vtkCell3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkCell3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMergeTolerance", SetMergeTolerance);
 	Nan::SetPrototypeMethod(tpl, "setMergeTolerance", SetMergeTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKCELL3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELL3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

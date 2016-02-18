@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderWidgetWrap.h"
 #include "vtkTextWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTextRepresentationWrap.h"
 #include "vtkTextActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkTextWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextActor", SetTextActor);
 	Nan::SetPrototypeMethod(tpl, "setTextActor", SetTextActor);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

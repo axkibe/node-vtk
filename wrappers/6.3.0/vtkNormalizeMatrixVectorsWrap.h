@@ -10,6 +10,7 @@
 #include <vtkNormalizeMatrixVectors.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNormalizeMatrixVectorsWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkNormalizeMatrixVectorsWrap : public VtkArrayDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNORMALIZEMATRIXVECTORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNORMALIZEMATRIXVECTORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkColorLegend.h>
 
 #include "vtkChartLegendWrap.h"
+#include "../../plus/plus.h"
 
 class VtkColorLegendWrap : public VtkChartLegendWrap
 {
@@ -44,6 +45,10 @@ class VtkColorLegendWrap : public VtkChartLegendWrap
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLORLEGENDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLORLEGENDWRAP_CLASSDEF
+#endif
 };
 
 #endif

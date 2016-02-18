@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkDataSetGradientWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkDataSetGradientWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResultArrayName", SetResultArrayName);
 	Nan::SetPrototypeMethod(tpl, "setResultArrayName", SetResultArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETGRADIENTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETGRADIENTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

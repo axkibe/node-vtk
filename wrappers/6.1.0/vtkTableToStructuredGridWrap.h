@@ -10,6 +10,7 @@
 #include <vtkTableToStructuredGrid.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableToStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkTableToStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 		static void SetYComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLETOSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLETOSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

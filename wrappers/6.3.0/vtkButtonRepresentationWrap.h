@@ -10,6 +10,7 @@
 #include <vtkButtonRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkButtonRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -43,6 +44,10 @@ class VtkButtonRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetNumberOfStates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBUTTONREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBUTTONREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

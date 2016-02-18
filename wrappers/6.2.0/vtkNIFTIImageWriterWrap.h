@@ -10,6 +10,7 @@
 #include <vtkNIFTIImageWriter.h>
 
 #include "vtkImageWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNIFTIImageWriterWrap : public VtkImageWriterWrap
 {
@@ -53,6 +54,10 @@ class VtkNIFTIImageWriterWrap : public VtkImageWriterWrap
 		static void SetSFormMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNIFTIIMAGEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkExtractPolyDataGeometry.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractPolyDataGeometryWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkExtractPolyDataGeometryWrap : public VtkPolyDataAlgorithmWrap
 		static void SetExtractBoundaryCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtractInside(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTPOLYDATAGEOMETRYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTPOLYDATAGEOMETRYWRAP_CLASSDEF
+#endif
 };
 
 #endif

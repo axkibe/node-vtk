@@ -10,6 +10,7 @@
 #include <vtkControlPointsItem.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkControlPointsItemWrap : public VtkPlotWrap
 {
@@ -60,6 +61,10 @@ class VtkControlPointsItemWrap : public VtkPlotWrap
 		static void SetSwitchPointsMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUserBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValidBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

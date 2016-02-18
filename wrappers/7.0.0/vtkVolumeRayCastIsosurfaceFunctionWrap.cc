@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeRayCastFunctionWrap.h"
 #include "vtkVolumeRayCastIsosurfaceFunctionWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkVolumeRayCastIsosurfaceFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIsoValue", SetIsoValue);
 	Nan::SetPrototypeMethod(tpl, "setIsoValue", SetIsoValue);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTISOSURFACEFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMERAYCASTISOSURFACEFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

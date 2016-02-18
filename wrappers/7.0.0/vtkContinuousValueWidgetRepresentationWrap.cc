@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkContinuousValueWidgetRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkContinuousValueWidgetRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+#ifdef VTK_NODE_PLUS_VTKCONTINUOUSVALUEWIDGETREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTINUOUSVALUEWIDGETREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

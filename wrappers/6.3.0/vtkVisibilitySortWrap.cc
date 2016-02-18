@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkVisibilitySortWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -106,6 +106,9 @@ void VtkVisibilitySortWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetModelTransform", SetModelTransform);
 	Nan::SetPrototypeMethod(tpl, "setModelTransform", SetModelTransform);
 
+#ifdef VTK_NODE_PLUS_VTKVISIBILITYSORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVISIBILITYSORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

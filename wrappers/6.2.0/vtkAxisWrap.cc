@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkDoubleArrayWrap.h"
 #include "vtkFloatArrayWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -257,6 +257,9 @@ void VtkAxisWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKAXISWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXISWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

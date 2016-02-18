@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSQLDatabaseWrap.h"
 #include "vtkSQLDatabaseSchemaWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkSQLDatabaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnRegisterAllCreateFromURLCallbacks", UnRegisterAllCreateFromURLCallbacks);
 	Nan::SetPrototypeMethod(tpl, "unRegisterAllCreateFromURLCallbacks", UnRegisterAllCreateFromURLCallbacks);
 
+#ifdef VTK_NODE_PLUS_VTKSQLDATABASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSQLDATABASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

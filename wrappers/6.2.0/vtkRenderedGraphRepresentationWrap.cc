@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderedRepresentationWrap.h"
 #include "vtkRenderedGraphRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkEdgeLayoutStrategyWrap.h"
 #include "vtkViewThemeWrap.h"
 #include "vtkScalarBarWidgetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -496,6 +496,9 @@ void VtkRenderedGraphRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VertexLabelVisibilityOn", VertexLabelVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "vertexLabelVisibilityOn", VertexLabelVisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKRENDEREDGRAPHREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDEREDGRAPHREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

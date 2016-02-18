@@ -10,6 +10,7 @@
 #include <vtkXMLMultiBlockDataWriter.h>
 
 #include "vtkXMLCompositeDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLMultiBlockDataWriterWrap : public VtkXMLCompositeDataWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkXMLMultiBlockDataWriterWrap : public VtkXMLCompositeDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLMULTIBLOCKDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLMULTIBLOCKDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

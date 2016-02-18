@@ -10,6 +10,7 @@
 #include <vtkOverrideInformation.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOverrideInformationWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkOverrideInformationWrap : public VtkObjectWrap
 		static void SetClassOverrideName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClassOverrideWithName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOVERRIDEINFORMATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOVERRIDEINFORMATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

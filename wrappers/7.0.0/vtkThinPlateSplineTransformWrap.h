@@ -10,6 +10,7 @@
 #include <vtkThinPlateSplineTransform.h>
 
 #include "vtkWarpTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThinPlateSplineTransformWrap : public VtkWarpTransformWrap
 {
@@ -45,6 +46,10 @@ class VtkThinPlateSplineTransformWrap : public VtkWarpTransformWrap
 		static void SetSigma(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHINPLATESPLINETRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHINPLATESPLINETRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

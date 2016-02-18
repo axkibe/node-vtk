@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkMultiBlockPLOT3DReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -237,6 +237,9 @@ void VtkMultiBlockPLOT3DReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalGeometryOn", TwoDimensionalGeometryOn);
 
+#ifdef VTK_NODE_PLUS_VTKMULTIBLOCKPLOT3DREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTIBLOCKPLOT3DREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

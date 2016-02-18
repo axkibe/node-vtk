@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkControlPointsItemWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkPenWrap.h"
 #include "vtkBrushWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -144,6 +144,9 @@ void VtkControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValidBounds", SetValidBounds);
 	Nan::SetPrototypeMethod(tpl, "setValidBounds", SetValidBounds);
 
+#ifdef VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTROLPOINTSITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

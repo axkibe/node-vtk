@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPeriodicTableWrap.h"
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,11 +47,23 @@ void VtkPeriodicTableWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPeriodicTableWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetAtomicNumber", GetAtomicNumber);
+	Nan::SetPrototypeMethod(tpl, "getAtomicNumber", GetAtomicNumber);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetDefaultLUT", GetDefaultLUT);
 	Nan::SetPrototypeMethod(tpl, "getDefaultLUT", GetDefaultLUT);
+
+	Nan::SetPrototypeMethod(tpl, "GetElementName", GetElementName);
+	Nan::SetPrototypeMethod(tpl, "getElementName", GetElementName);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfElements", GetNumberOfElements);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfElements", GetNumberOfElements);
+
+	Nan::SetPrototypeMethod(tpl, "GetSymbol", GetSymbol);
+	Nan::SetPrototypeMethod(tpl, "getSymbol", GetSymbol);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -62,6 +74,9 @@ void VtkPeriodicTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKPERIODICTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPERIODICTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -89,6 +104,28 @@ void VtkPeriodicTableWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkPeriodicTableWrap::GetAtomicNumber(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicTableWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicTableWrap>(info.Holder());
+	vtkPeriodicTable *native = (vtkPeriodicTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		unsigned short r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetAtomicNumber(
+			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPeriodicTableWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -120,6 +157,62 @@ void VtkPeriodicTableWrap::GetDefaultLUT(const Nan::FunctionCallbackInfo<v8::Val
 		native->GetDefaultLUT(
 			(vtkLookupTable *) a0->native.GetPointer()
 		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPeriodicTableWrap::GetElementName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicTableWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicTableWrap>(info.Holder());
+	vtkPeriodicTable *native = (vtkPeriodicTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetElementName(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPeriodicTableWrap::GetNumberOfElements(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicTableWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicTableWrap>(info.Holder());
+	vtkPeriodicTable *native = (vtkPeriodicTable *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfElements();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPeriodicTableWrap::GetSymbol(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicTableWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicTableWrap>(info.Holder());
+	vtkPeriodicTable *native = (vtkPeriodicTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetSymbol(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -10,6 +10,7 @@
 #include <vtkPiecewiseControlPointsItem.h>
 
 #include "vtkControlPointsItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewiseControlPointsItemWrap : public VtkControlPointsItemWrap
 {
@@ -36,6 +37,10 @@ class VtkPiecewiseControlPointsItemWrap : public VtkControlPointsItemWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiecewiseFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStrokeMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISECONTROLPOINTSITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISECONTROLPOINTSITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

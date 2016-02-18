@@ -10,6 +10,7 @@
 #include <vtkTIFFWriter.h>
 
 #include "vtkImageWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTIFFWriterWrap : public VtkImageWriterWrap
 {
@@ -42,6 +43,10 @@ class VtkTIFFWriterWrap : public VtkImageWriterWrap
 		static void SetCompressionToLZW(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressionToNoCompression(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressionToPackBits(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTIFFWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTIFFWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

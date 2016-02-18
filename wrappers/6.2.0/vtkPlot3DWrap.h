@@ -10,6 +10,7 @@
 #include <vtkPlot3D.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlot3DWrap : public VtkContextItemWrap
 {
@@ -43,6 +44,10 @@ class VtkPlot3DWrap : public VtkContextItemWrap
 		static void SetPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOT3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOT3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

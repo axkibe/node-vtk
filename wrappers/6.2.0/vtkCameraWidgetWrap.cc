@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderWidgetWrap.h"
 #include "vtkCameraWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCameraRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkCameraWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

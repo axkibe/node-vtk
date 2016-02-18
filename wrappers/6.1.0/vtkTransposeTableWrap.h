@@ -10,6 +10,7 @@
 #include <vtkTransposeTable.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransposeTableWrap : public VtkTableAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkTransposeTableWrap : public VtkTableAlgorithmWrap
 		static void SetUseIdColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIdColumnOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIdColumnOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSPOSETABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSPOSETABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

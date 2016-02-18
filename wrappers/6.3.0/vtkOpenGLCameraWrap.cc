@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCameraWrap.h"
 #include "vtkOpenGLCameraWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkOpenGLCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateViewport", UpdateViewport);
 	Nan::SetPrototypeMethod(tpl, "updateViewport", UpdateViewport);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLCAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLCAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

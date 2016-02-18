@@ -10,6 +10,7 @@
 #include <vtkKdTreePointLocator.h>
 
 #include "vtkAbstractPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKdTreePointLocatorWrap : public VtkAbstractPointLocatorWrap
 {
@@ -38,6 +39,10 @@ class VtkKdTreePointLocatorWrap : public VtkAbstractPointLocatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKDTREEPOINTLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKDTREEPOINTLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

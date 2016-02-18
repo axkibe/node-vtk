@@ -10,6 +10,7 @@
 #include <vtkBoxMuellerRandomSequence.h>
 
 #include "vtkGaussianRandomSequenceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoxMuellerRandomSequenceWrap : public VtkGaussianRandomSequenceWrap
 {
@@ -37,6 +38,10 @@ class VtkBoxMuellerRandomSequenceWrap : public VtkGaussianRandomSequenceWrap
 		static void Next(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUniformSequence(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOXMUELLERRANDOMSEQUENCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOXMUELLERRANDOMSEQUENCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

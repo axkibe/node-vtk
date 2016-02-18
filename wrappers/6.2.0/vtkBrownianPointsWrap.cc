@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkBrownianPointsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkBrownianPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinimumSpeed", SetMinimumSpeed);
 	Nan::SetPrototypeMethod(tpl, "setMinimumSpeed", SetMinimumSpeed);
 
+#ifdef VTK_NODE_PLUS_VTKBROWNIANPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBROWNIANPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

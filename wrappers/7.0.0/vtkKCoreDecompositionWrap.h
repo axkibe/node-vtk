@@ -10,6 +10,7 @@
 #include <vtkKCoreDecomposition.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKCoreDecompositionWrap : public VtkGraphAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkKCoreDecompositionWrap : public VtkGraphAlgorithmWrap
 		static void UseInDegreeNeighborsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseOutDegreeNeighborsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseOutDegreeNeighborsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKCOREDECOMPOSITIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKCOREDECOMPOSITIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

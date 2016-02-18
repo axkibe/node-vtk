@@ -10,6 +10,7 @@
 #include <vtkLabeledDataMapper.h>
 
 #include "vtkMapper2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabeledDataMapperWrap : public VtkMapper2DWrap
 {
@@ -68,6 +69,10 @@ class VtkLabeledDataMapperWrap : public VtkMapper2DWrap
 		static void SetLabelTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabeledComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELEDDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELEDDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

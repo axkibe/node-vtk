@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkSelectionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSelectionNodeWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,12 @@ void VtkSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataObjectType", GetDataObjectType);
 	Nan::SetPrototypeMethod(tpl, "getDataObjectType", GetDataObjectType);
 
+	Nan::SetPrototypeMethod(tpl, "GetNode", GetNode);
+	Nan::SetPrototypeMethod(tpl, "getNode", GetNode);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfNodes", GetNumberOfNodes);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfNodes", GetNumberOfNodes);
+
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
 
@@ -95,6 +101,9 @@ void VtkSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Union", Union);
 	Nan::SetPrototypeMethod(tpl, "union", Union);
 
+#ifdef VTK_NODE_PLUS_VTKSELECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSELECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -263,6 +272,50 @@ void VtkSelectionWrap::GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Val
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkSelectionWrap::GetNode(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
+	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkSelectionNode * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetNode(
+			info[0]->Uint32Value()
+		);
+		VtkSelectionNodeWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkSelectionNodeWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkSelectionNodeWrap *w = new VtkSelectionNodeWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSelectionWrap::GetNumberOfNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
+	vtkSelection *native = (vtkSelection *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfNodes();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkSelectionWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkSelectionWrap *wrapper = ObjectWrap::Unwrap<VtkSelectionWrap>(info.Holder());
@@ -346,6 +399,18 @@ void VtkSelectionWrap::RemoveNode(const Nan::FunctionCallbackInfo<v8::Value>& in
 		}
 		native->RemoveNode(
 			(vtkSelectionNode *) a0->native.GetPointer()
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveNode(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

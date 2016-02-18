@@ -10,6 +10,7 @@
 #include <vtkTableBasedClipDataSet.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkTableBasedClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseValueAsOffsetOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseValueAsOffsetOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLEBASEDCLIPDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLEBASEDCLIPDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

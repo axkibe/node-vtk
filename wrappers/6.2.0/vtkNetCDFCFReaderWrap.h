@@ -10,6 +10,7 @@
 #include <vtkNetCDFCFReader.h>
 
 #include "vtkNetCDFReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNetCDFCFReaderWrap : public VtkNetCDFReaderWrap
 {
@@ -49,6 +50,10 @@ class VtkNetCDFCFReaderWrap : public VtkNetCDFReaderWrap
 		static void SetVerticalScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SphericalCoordinatesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SphericalCoordinatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNETCDFCFREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNETCDFCFREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

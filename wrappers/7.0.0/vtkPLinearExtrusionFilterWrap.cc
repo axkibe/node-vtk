@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLinearExtrusionFilterWrap.h"
 #include "vtkPLinearExtrusionFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkPLinearExtrusionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPieceInvariant", SetPieceInvariant);
 	Nan::SetPrototypeMethod(tpl, "setPieceInvariant", SetPieceInvariant);
 
+#ifdef VTK_NODE_PLUS_VTKPLINEAREXTRUSIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLINEAREXTRUSIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

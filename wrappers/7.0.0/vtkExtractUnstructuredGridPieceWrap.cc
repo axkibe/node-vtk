@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkExtractUnstructuredGridPieceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkExtractUnstructuredGridPieceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDPIECEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDPIECEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridBase.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridBaseWrap : public VtkPointSetWrap
 {
@@ -36,6 +37,10 @@ class VtkUnstructuredGridBaseWrap : public VtkPointSetWrap
 		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

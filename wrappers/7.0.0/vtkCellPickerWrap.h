@@ -10,6 +10,7 @@
 #include <vtkCellPicker.h>
 
 #include "vtkPickerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellPickerWrap : public VtkPickerWrap
 {
@@ -59,6 +60,10 @@ class VtkCellPickerWrap : public VtkPickerWrap
 		static void SetVolumeOpacityIsovalue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseVolumeGradientOpacityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseVolumeGradientOpacityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

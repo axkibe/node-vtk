@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkCellDerivativesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkCellDerivativesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToPassVectors", SetVectorModeToPassVectors);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToPassVectors", SetVectorModeToPassVectors);
 
+#ifdef VTK_NODE_PLUS_VTKCELLDERIVATIVESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLDERIVATIVESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

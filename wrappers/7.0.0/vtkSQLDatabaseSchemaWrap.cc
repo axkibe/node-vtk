@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSQLDatabaseSchemaWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -178,6 +178,9 @@ void VtkSQLDatabaseSchemaWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetName", SetName);
 	Nan::SetPrototypeMethod(tpl, "setName", SetName);
 
+#ifdef VTK_NODE_PLUS_VTKSQLDATABASESCHEMAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSQLDATABASESCHEMAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

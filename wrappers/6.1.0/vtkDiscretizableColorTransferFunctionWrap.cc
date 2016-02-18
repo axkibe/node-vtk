@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkColorTransferFunctionWrap.h"
 #include "vtkDiscretizableColorTransferFunctionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetEnableOpacityMapping", GetEnableOpacityMapping);
 	Nan::SetPrototypeMethod(tpl, "getEnableOpacityMapping", GetEnableOpacityMapping);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfIndexedColors", GetNumberOfIndexedColors);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfIndexedColors", GetNumberOfIndexedColors);
+
 	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
 	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
@@ -110,8 +113,14 @@ void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEnableOpacityMapping", SetEnableOpacityMapping);
 	Nan::SetPrototypeMethod(tpl, "setEnableOpacityMapping", SetEnableOpacityMapping);
 
+	Nan::SetPrototypeMethod(tpl, "SetIndexedColor", SetIndexedColor);
+	Nan::SetPrototypeMethod(tpl, "setIndexedColor", SetIndexedColor);
+
 	Nan::SetPrototypeMethod(tpl, "SetNanColor", SetNanColor);
 	Nan::SetPrototypeMethod(tpl, "setNanColor", SetNanColor);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfIndexedColors", SetNumberOfIndexedColors);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfIndexedColors", SetNumberOfIndexedColors);
 
 	Nan::SetPrototypeMethod(tpl, "SetScalarOpacityFunction", SetScalarOpacityFunction);
 	Nan::SetPrototypeMethod(tpl, "setScalarOpacityFunction", SetScalarOpacityFunction);
@@ -122,6 +131,9 @@ void VtkDiscretizableColorTransferFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+#ifdef VTK_NODE_PLUS_VTKDISCRETIZABLECOLORTRANSFERFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDISCRETIZABLECOLORTRANSFERFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -311,6 +323,20 @@ void VtkDiscretizableColorTransferFunctionWrap::GetEnableOpacityMapping(const Na
 		return;
 	}
 	r = native->GetEnableOpacityMapping();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDiscretizableColorTransferFunctionWrap::GetNumberOfIndexedColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
+	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfIndexedColors();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -558,6 +584,88 @@ void VtkDiscretizableColorTransferFunctionWrap::SetEnableOpacityMapping(const Na
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkDiscretizableColorTransferFunctionWrap::SetIndexedColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
+	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetIndexedColor(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetIndexedColor(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetIndexedColor(
+						info[0]->Uint32Value(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkDiscretizableColorTransferFunctionWrap::SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
@@ -630,6 +738,25 @@ void VtkDiscretizableColorTransferFunctionWrap::SetNanColor(const Nan::FunctionC
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDiscretizableColorTransferFunctionWrap::SetNumberOfIndexedColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDiscretizableColorTransferFunctionWrap *wrapper = ObjectWrap::Unwrap<VtkDiscretizableColorTransferFunctionWrap>(info.Holder());
+	vtkDiscretizableColorTransferFunction *native = (vtkDiscretizableColorTransferFunction *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfIndexedColors(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

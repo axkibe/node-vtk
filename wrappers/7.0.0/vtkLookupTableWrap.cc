@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkLookupTableWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkLookupTableWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
 	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
+
+	Nan::SetPrototypeMethod(tpl, "GetColorAsUnsignedChars", GetColorAsUnsignedChars);
+	Nan::SetPrototypeMethod(tpl, "getColorAsUnsignedChars", GetColorAsUnsignedChars);
 
 	Nan::SetPrototypeMethod(tpl, "GetHueRange", GetHueRange);
 	Nan::SetPrototypeMethod(tpl, "getHueRange", GetHueRange);
@@ -201,6 +204,9 @@ void VtkLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -571,6 +577,144 @@ void VtkLookupTableWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& in
 			native->GetColor(
 				info[0]->NumberValue(),
 				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkLookupTableWrap::GetColorAsUnsignedChars(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkLookupTableWrap *wrapper = ObjectWrap::Unwrap<VtkLookupTableWrap>(info.Holder());
+	vtkLookupTable *native = (vtkLookupTable *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsFloat64Array())
+	{
+		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		if(info.Length() > 1 && info[1]->IsUint8Array())
+		{
+			v8::Local<v8::Uint8Array>a1(v8::Local<v8::Uint8Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColorAsUnsignedChars(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				(unsigned char *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned char b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColorAsUnsignedChars(
+				(double *)(a0->Buffer()->GetContents().Data()),
+				b1
+			);
+			return;
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		double b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsNumber() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->NumberValue();
+		}
+		if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			unsigned char b1[4];
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 4; i++ )
+			{
+				if( !a1->Get(i)->IsUint32() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->Uint32Value();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColorAsUnsignedChars(
+				b0,
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsUint8Array())
+		{
+			v8::Local<v8::Uint8Array>a1(v8::Local<v8::Uint8Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 4 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetColorAsUnsignedChars(
+				b0,
+				(unsigned char *)(a1->Buffer()->GetContents().Data())
 			);
 			return;
 		}

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDepthImageProcessingPassWrap.h"
 #include "vtkDepthOfFieldPassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkDepthOfFieldPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutomaticFocalDistance", SetAutomaticFocalDistance);
 	Nan::SetPrototypeMethod(tpl, "setAutomaticFocalDistance", SetAutomaticFocalDistance);
 
+#ifdef VTK_NODE_PLUS_VTKDEPTHOFFIELDPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEPTHOFFIELDPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

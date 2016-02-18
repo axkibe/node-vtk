@@ -10,6 +10,7 @@
 #include <vtkParametricDini.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricDiniWrap : public VtkParametricFunctionWrap
 {
@@ -40,6 +41,10 @@ class VtkParametricDiniWrap : public VtkParametricFunctionWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetB(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICDINIWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICDINIWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkAlgorithmOutputWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProducer", SetProducer);
 	Nan::SetPrototypeMethod(tpl, "setProducer", SetProducer);
 
+#ifdef VTK_NODE_PLUS_VTKALGORITHMOUTPUTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKALGORITHMOUTPUTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

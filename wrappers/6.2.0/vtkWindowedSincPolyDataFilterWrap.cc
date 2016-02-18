@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkWindowedSincPolyDataFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -179,6 +179,9 @@ void VtkWindowedSincPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassBand", SetPassBand);
 	Nan::SetPrototypeMethod(tpl, "setPassBand", SetPassBand);
 
+#ifdef VTK_NODE_PLUS_VTKWINDOWEDSINCPOLYDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWINDOWEDSINCPOLYDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

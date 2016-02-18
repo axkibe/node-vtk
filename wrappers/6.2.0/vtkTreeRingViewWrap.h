@@ -10,6 +10,7 @@
 #include <vtkTreeRingView.h>
 
 #include "vtkTreeAreaViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeRingViewWrap : public VtkTreeAreaViewWrap
 {
@@ -44,6 +45,10 @@ class VtkTreeRingViewWrap : public VtkTreeAreaViewWrap
 		static void SetLayerThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootAngles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRootAtCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREERINGVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREERINGVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

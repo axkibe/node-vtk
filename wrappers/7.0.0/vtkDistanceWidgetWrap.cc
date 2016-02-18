@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkDistanceWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDistanceRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkDistanceWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
+#ifdef VTK_NODE_PLUS_VTKDISTANCEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDISTANCEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

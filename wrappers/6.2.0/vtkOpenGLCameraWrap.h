@@ -10,6 +10,7 @@
 #include <vtkOpenGLCamera.h>
 
 #include "vtkCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLCameraWrap : public VtkCameraWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLCameraWrap : public VtkCameraWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

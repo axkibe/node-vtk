@@ -10,6 +10,7 @@
 #include <vtkPLinearExtrusionFilter.h>
 
 #include "vtkLinearExtrusionFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPLinearExtrusionFilterWrap : public VtkLinearExtrusionFilterWrap
 {
@@ -37,6 +38,10 @@ class VtkPLinearExtrusionFilterWrap : public VtkLinearExtrusionFilterWrap
 		static void PieceInvariantOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLINEAREXTRUSIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLINEAREXTRUSIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

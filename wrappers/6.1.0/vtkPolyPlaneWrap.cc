@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkPolyPlaneWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyLineWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkPolyPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPolyLine", SetPolyLine);
 	Nan::SetPrototypeMethod(tpl, "setPolyLine", SetPolyLine);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYPLANEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYPLANEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkMapper.h>
 
 #include "vtkAbstractMapper3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMapperWrap : public VtkAbstractMapper3DWrap
 {
@@ -120,6 +121,10 @@ class VtkMapperWrap : public VtkAbstractMapper3DWrap
 		static void StaticOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableScalarRangeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableScalarRangeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

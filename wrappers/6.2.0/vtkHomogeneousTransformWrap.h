@@ -10,6 +10,7 @@
 #include <vtkHomogeneousTransform.h>
 
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHomogeneousTransformWrap : public VtkAbstractTransformWrap
 {
@@ -38,6 +39,10 @@ class VtkHomogeneousTransformWrap : public VtkAbstractTransformWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHOMOGENEOUSTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHOMOGENEOUSTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

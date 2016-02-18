@@ -10,6 +10,7 @@
 #include <vtkWidgetEventTranslator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWidgetEventTranslatorWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkWidgetEventTranslatorWrap : public VtkObjectWrap
 		static void RemoveTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWIDGETEVENTTRANSLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWIDGETEVENTTRANSLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

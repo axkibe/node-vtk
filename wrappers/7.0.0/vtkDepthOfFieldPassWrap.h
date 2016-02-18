@@ -10,6 +10,7 @@
 #include <vtkDepthOfFieldPass.h>
 
 #include "vtkDepthImageProcessingPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDepthOfFieldPassWrap : public VtkDepthImageProcessingPassWrap
 {
@@ -38,6 +39,10 @@ class VtkDepthOfFieldPassWrap : public VtkDepthImageProcessingPassWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutomaticFocalDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEPTHOFFIELDPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEPTHOFFIELDPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

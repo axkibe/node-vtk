@@ -10,6 +10,7 @@
 #include <vtkAbstractParticleWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractParticleWriterWrap : public VtkWriterWrap
 {
@@ -43,6 +44,10 @@ class VtkAbstractParticleWriterWrap : public VtkWriterWrap
 		static void SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteModeToCollective(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteModeToIndependent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPARTICLEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTPARTICLEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

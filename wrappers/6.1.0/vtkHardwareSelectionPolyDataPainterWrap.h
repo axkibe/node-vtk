@@ -10,6 +10,7 @@
 #include <vtkHardwareSelectionPolyDataPainter.h>
 
 #include "vtkStandardPolyDataPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHardwareSelectionPolyDataPainterWrap : public VtkStandardPolyDataPainterWrap
 {
@@ -45,6 +46,10 @@ class VtkHardwareSelectionPolyDataPainterWrap : public VtkStandardPolyDataPainte
 		static void SetEnableSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHARDWARESELECTIONPOLYDATAPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHARDWARESELECTIONPOLYDATAPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

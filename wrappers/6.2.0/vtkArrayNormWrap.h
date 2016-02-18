@@ -10,6 +10,7 @@
 #include <vtkArrayNorm.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArrayNormWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkArrayNormWrap : public VtkArrayDataAlgorithmWrap
 		static void SetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInvert(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetL(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARRAYNORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARRAYNORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

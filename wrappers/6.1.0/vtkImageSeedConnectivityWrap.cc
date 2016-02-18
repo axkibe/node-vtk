@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageSeedConnectivityWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageConnectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,6 +93,9 @@ void VtkImageSeedConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputUnconnectedValue", SetOutputUnconnectedValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputUnconnectedValue", SetOutputUnconnectedValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

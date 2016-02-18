@@ -10,6 +10,7 @@
 #include <vtkImageItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageItemWrap : public VtkContextItemWrap
 {
@@ -36,6 +37,10 @@ class VtkImageItemWrap : public VtkContextItemWrap
 		static void Paint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

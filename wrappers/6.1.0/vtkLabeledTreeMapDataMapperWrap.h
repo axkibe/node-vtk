@@ -10,6 +10,7 @@
 #include <vtkLabeledTreeMapDataMapper.h>
 
 #include "vtkLabeledDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabeledTreeMapDataMapperWrap : public VtkLabeledDataMapperWrap
 {
@@ -48,6 +49,10 @@ class VtkLabeledTreeMapDataMapperWrap : public VtkLabeledDataMapperWrap
 		static void SetFontSizeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevelRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRectanglesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELEDTREEMAPDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELEDTREEMAPDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

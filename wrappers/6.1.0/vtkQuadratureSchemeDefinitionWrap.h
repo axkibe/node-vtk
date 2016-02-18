@@ -10,6 +10,7 @@
 #include <vtkQuadratureSchemeDefinition.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadratureSchemeDefinitionWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkQuadratureSchemeDefinitionWrap : public VtkObjectWrap
 		static void RestoreState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SaveState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRATURESCHEMEDEFINITIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRATURESCHEMEDEFINITIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

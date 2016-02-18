@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkUGFacetReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkUGFacetReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfParts", GetNumberOfParts);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfParts", GetNumberOfParts);
 
+	Nan::SetPrototypeMethod(tpl, "GetPartColorIndex", GetPartColorIndex);
+	Nan::SetPrototypeMethod(tpl, "getPartColorIndex", GetPartColorIndex);
+
 	Nan::SetPrototypeMethod(tpl, "GetPartNumber", GetPartNumber);
 	Nan::SetPrototypeMethod(tpl, "getPartNumber", GetPartNumber);
 
@@ -96,6 +99,9 @@ void VtkUGFacetReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPartNumber", SetPartNumber);
 	Nan::SetPrototypeMethod(tpl, "setPartNumber", SetPartNumber);
 
+#ifdef VTK_NODE_PLUS_VTKUGFACETREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUGFACETREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -214,6 +220,27 @@ void VtkUGFacetReaderWrap::GetNumberOfParts(const Nan::FunctionCallbackInfo<v8::
 	}
 	r = native->GetNumberOfParts();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUGFacetReaderWrap::GetPartColorIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUGFacetReaderWrap *wrapper = ObjectWrap::Unwrap<VtkUGFacetReaderWrap>(info.Holder());
+	vtkUGFacetReader *native = (vtkUGFacetReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		short r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetPartColorIndex(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkUGFacetReaderWrap::GetPartNumber(const Nan::FunctionCallbackInfo<v8::Value>& info)

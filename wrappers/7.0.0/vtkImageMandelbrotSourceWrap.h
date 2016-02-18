@@ -10,6 +10,7 @@
 #include <vtkImageMandelbrotSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMandelbrotSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -34,6 +35,9 @@ class VtkImageMandelbrotSourceWrap : public VtkImageAlgorithmWrap
 		static void CopyOriginAndSample(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConstantSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumNumberOfIterationsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumNumberOfIterationsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSampleCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +51,7 @@ class VtkImageMandelbrotSourceWrap : public VtkImageAlgorithmWrap
 		static void Pan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetConstantSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOriginCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjectionAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleCX(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -54,6 +59,10 @@ class VtkImageMandelbrotSourceWrap : public VtkImageAlgorithmWrap
 		static void SetSubsampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Zoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMANDELBROTSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMANDELBROTSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

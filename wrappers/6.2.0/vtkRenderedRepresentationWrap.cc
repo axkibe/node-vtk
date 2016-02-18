@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataRepresentationWrap.h"
 #include "vtkRenderedRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkRenderedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelRenderMode", SetLabelRenderMode);
 	Nan::SetPrototypeMethod(tpl, "setLabelRenderMode", SetLabelRenderMode);
 
+#ifdef VTK_NODE_PLUS_VTKRENDEREDREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDEREDREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

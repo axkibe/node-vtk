@@ -10,6 +10,7 @@
 #include <vtkImageViewer2.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageViewer2Wrap : public VtkObjectWrap
 {
@@ -67,6 +68,10 @@ class VtkImageViewer2Wrap : public VtkObjectWrap
 		static void SetSliceOrientationToYZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetupInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateDisplayExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEVIEWER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEVIEWER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkExtractDataSets.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractDataSetsWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -29,11 +30,16 @@ class VtkExtractDataSetsWrap : public VtkMultiBlockDataSetAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearDataSetList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTDATASETSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTDATASETSWRAP_CLASSDEF
+#endif
 };
 
 #endif

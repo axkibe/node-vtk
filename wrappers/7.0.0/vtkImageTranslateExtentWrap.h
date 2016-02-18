@@ -10,6 +10,7 @@
 #include <vtkImageTranslateExtent.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageTranslateExtentWrap : public VtkImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkImageTranslateExtentWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETRANSLATEEXTENTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETRANSLATEEXTENTWRAP_CLASSDEF
+#endif
 };
 
 #endif

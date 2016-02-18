@@ -10,6 +10,7 @@
 #include <vtkOpenGLPainterDeviceAdapter.h>
 
 #include "vtkPainterDeviceAdapterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLPainterDeviceAdapterWrap : public VtkPainterDeviceAdapterWrap
 {
@@ -47,6 +48,10 @@ class VtkOpenGLPainterDeviceAdapterWrap : public VtkPainterDeviceAdapterWrap
 		static void QueryMultisampling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPAINTERDEVICEADAPTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLPAINTERDEVICEADAPTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkOrderStatistics.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOrderStatisticsWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkOrderStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuantileDefinition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuantize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKORDERSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKORDERSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

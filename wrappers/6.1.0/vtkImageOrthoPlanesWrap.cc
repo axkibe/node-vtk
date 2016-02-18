@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkImageOrthoPlanesWrap.h"
 #include "vtkImagePlaneWidgetWrap.h"
 #include "vtkTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkImageOrthoPlanesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlane", SetPlane);
 	Nan::SetPrototypeMethod(tpl, "setPlane", SetPlane);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEORTHOPLANESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEORTHOPLANESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

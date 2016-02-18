@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLStructuredDataWriterWrap.h"
 #include "vtkXMLRectilinearGridWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRectilinearGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkXMLRectilinearGridWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKXMLRECTILINEARGRIDWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLRECTILINEARGRIDWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

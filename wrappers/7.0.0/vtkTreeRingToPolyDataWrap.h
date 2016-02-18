@@ -10,6 +10,7 @@
 #include <vtkTreeRingToPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeRingToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkTreeRingToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSectorsArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShrinkPercentage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREERINGTOPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREERINGTOPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

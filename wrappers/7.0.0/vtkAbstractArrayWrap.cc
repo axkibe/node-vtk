@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAbstractArrayWrap.h"
 #include "vtkIdListWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkInformationInformationVectorKeyWrap.h"
 #include "vtkInformationVariantVectorKeyWrap.h"
 #include "vtkInformationDoubleVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkAbstractArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetInformation", GetInformation);
 	Nan::SetPrototypeMethod(tpl, "getInformation", GetInformation);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxDiscreteValues", GetMaxDiscreteValues);
+	Nan::SetPrototypeMethod(tpl, "getMaxDiscreteValues", GetMaxDiscreteValues);
+
 	Nan::SetPrototypeMethod(tpl, "GetName", GetName);
 	Nan::SetPrototypeMethod(tpl, "getName", GetName);
 
@@ -127,12 +130,18 @@ void VtkAbstractArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaxDiscreteValues", SetMaxDiscreteValues);
+	Nan::SetPrototypeMethod(tpl, "setMaxDiscreteValues", SetMaxDiscreteValues);
+
 	Nan::SetPrototypeMethod(tpl, "SetName", SetName);
 	Nan::SetPrototypeMethod(tpl, "setName", SetName);
 
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -414,6 +423,20 @@ void VtkAbstractArrayWrap::GetInformation(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkAbstractArrayWrap::GetMaxDiscreteValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
+	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxDiscreteValues();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAbstractArrayWrap::GetName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
@@ -675,6 +698,25 @@ void VtkAbstractArrayWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractArrayWrap::SetMaxDiscreteValues(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractArrayWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractArrayWrap>(info.Holder());
+	vtkAbstractArray *native = (vtkAbstractArray *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxDiscreteValues(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

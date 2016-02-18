@@ -10,6 +10,7 @@
 #include <vtkImageToAMR.h>
 
 #include "vtkOverlappingAMRAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageToAMRWrap : public VtkOverlappingAMRAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkImageToAMRWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void SetMaximumNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETOAMRWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETOAMRWRAP_CLASSDEF
+#endif
 };
 
 #endif

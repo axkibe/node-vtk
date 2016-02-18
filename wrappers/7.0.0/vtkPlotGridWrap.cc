@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkPlotGridWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAxisWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkPlotGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYAxis", SetYAxis);
 	Nan::SetPrototypeMethod(tpl, "setYAxis", SetYAxis);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

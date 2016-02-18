@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricRandomHillsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -131,6 +131,9 @@ void VtkParametricRandomHillsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYVarianceScaleFactor", SetYVarianceScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setYVarianceScaleFactor", SetYVarianceScaleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICRANDOMHILLSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICRANDOMHILLSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

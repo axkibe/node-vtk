@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkDataObjectToTableWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkDataObjectToTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFieldType", SetFieldType);
 	Nan::SetPrototypeMethod(tpl, "setFieldType", SetFieldType);
 
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTTOTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAOBJECTTOTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

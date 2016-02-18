@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataMapperWrap.h"
 #include "vtkPainterPolyDataMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkActorWrap.h"
 #include "vtkPainterWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkPainterPolyDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionPainter", SetSelectionPainter);
 	Nan::SetPrototypeMethod(tpl, "setSelectionPainter", SetSelectionPainter);
 
+#ifdef VTK_NODE_PLUS_VTKPAINTERPOLYDATAMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPAINTERPOLYDATAMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkShadowMapBakerPassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkLightWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkShadowMapBakerPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetOpaqueSequence", GetOpaqueSequence);
 	Nan::SetPrototypeMethod(tpl, "getOpaqueSequence", GetOpaqueSequence);
 
+	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
+	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -85,9 +88,15 @@ void VtkShadowMapBakerPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpaqueSequence", SetOpaqueSequence);
 	Nan::SetPrototypeMethod(tpl, "setOpaqueSequence", SetOpaqueSequence);
 
+	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
+	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
+
 	Nan::SetPrototypeMethod(tpl, "SetUpToDate", SetUpToDate);
 	Nan::SetPrototypeMethod(tpl, "setUpToDate", SetUpToDate);
 
+#ifdef VTK_NODE_PLUS_VTKSHADOWMAPBAKERPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHADOWMAPBAKERPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -203,6 +212,20 @@ void VtkShadowMapBakerPassWrap::GetOpaqueSequence(const Nan::FunctionCallbackInf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkShadowMapBakerPassWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
+	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolution();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkShadowMapBakerPassWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -357,6 +380,25 @@ void VtkShadowMapBakerPassWrap::SetOpaqueSequence(const Nan::FunctionCallbackInf
 		}
 		native->SetOpaqueSequence(
 			(vtkRenderPass *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkShadowMapBakerPassWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShadowMapBakerPassWrap *wrapper = ObjectWrap::Unwrap<VtkShadowMapBakerPassWrap>(info.Holder());
+	vtkShadowMapBakerPass *native = (vtkShadowMapBakerPass *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResolution(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

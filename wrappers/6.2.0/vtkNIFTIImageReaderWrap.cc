@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReader2Wrap.h"
 #include "vtkNIFTIImageReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkNIFTIImageHeaderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -106,6 +106,9 @@ void VtkNIFTIImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TimeAsVectorOn", TimeAsVectorOn);
 	Nan::SetPrototypeMethod(tpl, "timeAsVectorOn", TimeAsVectorOn);
 
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNIFTIIMAGEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

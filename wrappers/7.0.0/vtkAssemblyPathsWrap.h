@@ -10,6 +10,7 @@
 #include <vtkAssemblyPaths.h>
 
 #include "vtkCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAssemblyPathsWrap : public VtkCollectionWrap
 {
@@ -37,6 +38,10 @@ class VtkAssemblyPathsWrap : public VtkCollectionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKASSEMBLYPATHSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKASSEMBLYPATHSWRAP_CLASSDEF
+#endif
 };
 
 #endif

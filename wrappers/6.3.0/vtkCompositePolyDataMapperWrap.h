@@ -10,6 +10,7 @@
 #include <vtkCompositePolyDataMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositePolyDataMapperWrap : public VtkMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkCompositePolyDataMapperWrap : public VtkMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

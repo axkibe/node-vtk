@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOutEdgeIteratorWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkGraphEdgeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkOutEdgeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOUTEDGEITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOUTEDGEITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

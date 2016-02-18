@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkVolumePropertyWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
 #include "vtkColorTransferFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -195,6 +195,9 @@ void VtkVolumePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateMTimes", UpdateMTimes);
 	Nan::SetPrototypeMethod(tpl, "updateMTimes", UpdateMTimes);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMEPROPERTYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMEPROPERTYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

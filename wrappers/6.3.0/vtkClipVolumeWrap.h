@@ -10,6 +10,7 @@
 #include <vtkClipVolume.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClipVolumeWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkClipVolumeWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMixed3DCellGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLIPVOLUMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLIPVOLUMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

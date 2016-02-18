@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkInteractorStyleRubberBandPickWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkInteractorStyleRubberBandPickWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartSelect", StartSelect);
 	Nan::SetPrototypeMethod(tpl, "startSelect", StartSelect);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBANDPICKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBANDPICKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

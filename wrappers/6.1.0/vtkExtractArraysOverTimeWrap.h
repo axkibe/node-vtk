@@ -10,6 +10,7 @@
 #include <vtkExtractArraysOverTime.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractArraysOverTimeWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractArraysOverTimeWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetReportStatisticsOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionExtractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTARRAYSOVERTIMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTARRAYSOVERTIMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

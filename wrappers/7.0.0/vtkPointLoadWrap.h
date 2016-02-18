@@ -10,6 +10,7 @@
 #include <vtkPointLoad.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointLoadWrap : public VtkImageAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkPointLoadWrap : public VtkImageAlgorithmWrap
 		static void SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoissonsRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTLOADWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTLOADWRAP_CLASSDEF
+#endif
 };
 
 #endif

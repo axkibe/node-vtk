@@ -10,6 +10,7 @@
 #include <vtkXMLPDataWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPDataWriterWrap : public VtkXMLWriterWrap
 {
@@ -45,6 +46,10 @@ class VtkXMLPDataWriterWrap : public VtkXMLWriterWrap
 		static void SetWriteSummaryFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteSummaryFileOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteSummaryFileOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

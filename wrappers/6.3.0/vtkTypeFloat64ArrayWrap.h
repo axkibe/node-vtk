@@ -10,6 +10,7 @@
 #include <vtkTypeFloat64Array.h>
 
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTypeFloat64ArrayWrap : public VtkDoubleArrayWrap
 {
@@ -33,6 +34,10 @@ class VtkTypeFloat64ArrayWrap : public VtkDoubleArrayWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTYPEFLOAT64ARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTYPEFLOAT64ARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

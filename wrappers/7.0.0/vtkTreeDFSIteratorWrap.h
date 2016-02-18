@@ -10,6 +10,7 @@
 #include <vtkTreeDFSIterator.h>
 
 #include "vtkTreeIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeDFSIteratorWrap : public VtkTreeIteratorWrap
 {
@@ -35,6 +36,10 @@ class VtkTreeDFSIteratorWrap : public VtkTreeIteratorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEDFSITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEDFSITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

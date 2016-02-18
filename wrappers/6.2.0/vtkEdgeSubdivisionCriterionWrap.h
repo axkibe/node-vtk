@@ -10,6 +10,7 @@
 #include <vtkEdgeSubdivisionCriterion.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEdgeSubdivisionCriterionWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkEdgeSubdivisionCriterionWrap : public VtkObjectWrap
 		static void PassField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ResetFieldList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEDGESUBDIVISIONCRITERIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEDGESUBDIVISIONCRITERIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

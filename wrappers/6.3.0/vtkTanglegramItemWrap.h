@@ -10,6 +10,7 @@
 #include <vtkTanglegramItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTanglegramItemWrap : public VtkContextItemWrap
 {
@@ -47,6 +48,10 @@ class VtkTanglegramItemWrap : public VtkContextItemWrap
 		static void SetTree1Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree2Label(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

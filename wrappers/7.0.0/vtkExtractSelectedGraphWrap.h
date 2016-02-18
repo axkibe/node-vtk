@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkExtractSelectedGraphWrap : public VtkGraphAlgorithmWrap
 		static void SetAnnotationLayersConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRemoveIsolatedVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

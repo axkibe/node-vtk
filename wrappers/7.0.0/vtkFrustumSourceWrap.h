@@ -10,6 +10,7 @@
 #include <vtkFrustumSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFrustumSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkFrustumSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetShowLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowLinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowLinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFRUSTUMSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFRUSTUMSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

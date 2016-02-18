@@ -10,6 +10,7 @@
 #include <vtkCutter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCutterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -62,6 +63,10 @@ class VtkCutterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSortByToSortByCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSortByToSortByValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCUTTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCUTTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

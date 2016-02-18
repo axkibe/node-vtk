@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkExtractDataOverTimeWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkExtractDataOverTimeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointIndex", SetPointIndex);
 	Nan::SetPrototypeMethod(tpl, "setPointIndex", SetPointIndex);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTDATAOVERTIMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTDATAOVERTIMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

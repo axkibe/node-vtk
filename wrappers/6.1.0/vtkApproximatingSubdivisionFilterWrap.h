@@ -10,6 +10,7 @@
 #include <vtkApproximatingSubdivisionFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkApproximatingSubdivisionFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkApproximatingSubdivisionFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPROXIMATINGSUBDIVISIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPROXIMATINGSUBDIVISIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

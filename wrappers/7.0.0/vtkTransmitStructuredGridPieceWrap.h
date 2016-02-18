@@ -10,6 +10,7 @@
 #include <vtkTransmitStructuredGridPiece.h>
 
 #include "vtkTransmitStructuredDataPieceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransmitStructuredGridPieceWrap : public VtkTransmitStructuredDataPieceWrap
 {
@@ -33,6 +34,10 @@ class VtkTransmitStructuredGridPieceWrap : public VtkTransmitStructuredDataPiece
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSMITSTRUCTUREDGRIDPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSMITSTRUCTUREDGRIDPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

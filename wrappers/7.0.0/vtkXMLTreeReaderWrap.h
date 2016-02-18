@@ -10,6 +10,7 @@
 #include <vtkXMLTreeReader.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLTreeReaderWrap : public VtkTreeAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkXMLTreeReaderWrap : public VtkTreeAlgorithmWrap
 		static void SetReadTagName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMLString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLTREEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLTREEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

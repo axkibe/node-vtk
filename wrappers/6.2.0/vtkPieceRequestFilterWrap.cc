@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkPieceRequestFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkPieceRequestFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
 	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
 
+#ifdef VTK_NODE_PLUS_VTKPIECEREQUESTFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIECEREQUESTFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

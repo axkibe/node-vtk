@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractPolygonalHandleRepresentation3DWrap.h"
 #include "vtkPolygonalHandleRepresentation3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkPolygonalHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWorldPosition", SetWorldPosition);
 	Nan::SetPrototypeMethod(tpl, "setWorldPosition", SetWorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYGONALHANDLEREPRESENTATION3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYGONALHANDLEREPRESENTATION3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

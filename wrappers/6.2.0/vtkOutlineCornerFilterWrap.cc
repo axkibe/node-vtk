@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkOutlineCornerFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkOutlineCornerFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCornerFactor", SetCornerFactor);
 	Nan::SetPrototypeMethod(tpl, "setCornerFactor", SetCornerFactor);
 
+#ifdef VTK_NODE_PLUS_VTKOUTLINECORNERFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOUTLINECORNERFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

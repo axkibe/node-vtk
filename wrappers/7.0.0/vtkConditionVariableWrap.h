@@ -10,6 +10,7 @@
 #include <vtkConditionVariable.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConditionVariableWrap : public VtkObjectWrap
 {
@@ -36,6 +37,10 @@ class VtkConditionVariableWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Signal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Wait(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONDITIONVARIABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONDITIONVARIABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

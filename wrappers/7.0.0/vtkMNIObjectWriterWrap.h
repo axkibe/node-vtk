@@ -10,6 +10,7 @@
 #include <vtkMNIObjectWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMNIObjectWriterWrap : public VtkWriterWrap
 {
@@ -50,6 +51,10 @@ class VtkMNIObjectWriterWrap : public VtkWriterWrap
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMNIOBJECTWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMNIOBJECTWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

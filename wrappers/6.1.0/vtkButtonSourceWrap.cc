@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkButtonSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkButtonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwoSidedOn", TwoSidedOn);
 	Nan::SetPrototypeMethod(tpl, "twoSidedOn", TwoSidedOn);
 
+#ifdef VTK_NODE_PLUS_VTKBUTTONSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBUTTONSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

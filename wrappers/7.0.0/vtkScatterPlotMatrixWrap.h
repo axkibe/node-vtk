@@ -10,6 +10,7 @@
 #include <vtkScatterPlotMatrix.h>
 
 #include "vtkChartMatrixWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScatterPlotMatrixWrap : public VtkChartMatrixWrap
 {
@@ -75,6 +76,10 @@ class VtkScatterPlotMatrixWrap : public VtkChartMatrixWrap
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateChartSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCATTERPLOTMATRIXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCATTERPLOTMATRIXWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCompositeDataIteratorWrap.h"
 #include "vtkUniformGridAMRDataIteratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -55,6 +55,15 @@ void VtkUniformGridAMRDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCurrentDataObject", GetCurrentDataObject);
 	Nan::SetPrototypeMethod(tpl, "getCurrentDataObject", GetCurrentDataObject);
 
+	Nan::SetPrototypeMethod(tpl, "GetCurrentFlatIndex", GetCurrentFlatIndex);
+	Nan::SetPrototypeMethod(tpl, "getCurrentFlatIndex", GetCurrentFlatIndex);
+
+	Nan::SetPrototypeMethod(tpl, "GetCurrentIndex", GetCurrentIndex);
+	Nan::SetPrototypeMethod(tpl, "getCurrentIndex", GetCurrentIndex);
+
+	Nan::SetPrototypeMethod(tpl, "GetCurrentLevel", GetCurrentLevel);
+	Nan::SetPrototypeMethod(tpl, "getCurrentLevel", GetCurrentLevel);
+
 	Nan::SetPrototypeMethod(tpl, "GetCurrentMetaData", GetCurrentMetaData);
 	Nan::SetPrototypeMethod(tpl, "getCurrentMetaData", GetCurrentMetaData);
 
@@ -79,6 +88,9 @@ void VtkUniformGridAMRDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDAMRDATAITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNIFORMGRIDAMRDATAITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -143,6 +155,48 @@ void VtkUniformGridAMRDataIteratorWrap::GetCurrentDataObject(const Nan::Function
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkUniformGridAMRDataIteratorWrap::GetCurrentFlatIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
+	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentFlatIndex();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridAMRDataIteratorWrap::GetCurrentIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
+	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentIndex();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridAMRDataIteratorWrap::GetCurrentLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridAMRDataIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridAMRDataIteratorWrap>(info.Holder());
+	vtkUniformGridAMRDataIterator *native = (vtkUniformGridAMRDataIterator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentLevel();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkUniformGridAMRDataIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)

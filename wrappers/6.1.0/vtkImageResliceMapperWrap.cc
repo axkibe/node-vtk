@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageMapper3DWrap.h"
 #include "vtkImageResliceMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkImageSliceWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -184,6 +184,9 @@ void VtkImageResliceMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSlicePlane", SetSlicePlane);
 	Nan::SetPrototypeMethod(tpl, "setSlicePlane", SetSlicePlane);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGERESLICEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

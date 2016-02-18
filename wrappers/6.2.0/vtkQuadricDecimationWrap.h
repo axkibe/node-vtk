@@ -10,6 +10,7 @@
 #include <vtkQuadricDecimation.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadricDecimationWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -72,6 +73,10 @@ class VtkQuadricDecimationWrap : public VtkPolyDataAlgorithmWrap
 		static void TensorsAttributeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VectorsAttributeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VectorsAttributeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRICDECIMATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRICDECIMATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

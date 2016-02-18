@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExecutionTimerWrap.h"
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkExecutionTimerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFilter", SetFilter);
 	Nan::SetPrototypeMethod(tpl, "setFilter", SetFilter);
 
+#ifdef VTK_NODE_PLUS_VTKEXECUTIONTIMERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXECUTIONTIMERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

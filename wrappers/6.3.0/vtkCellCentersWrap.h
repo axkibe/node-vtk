@@ -10,6 +10,7 @@
 #include <vtkCellCenters.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellCentersWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkCellCentersWrap : public VtkPolyDataAlgorithmWrap
 		static void SetVertexCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VertexCellsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VertexCellsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLCENTERSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLCENTERSWRAP_CLASSDEF
+#endif
 };
 
 #endif

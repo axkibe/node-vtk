@@ -10,6 +10,7 @@
 #include <vtkTransform2D.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransform2DWrap : public VtkObjectWrap
 {
@@ -47,6 +48,10 @@ class VtkTransform2DWrap : public VtkObjectWrap
 		static void SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

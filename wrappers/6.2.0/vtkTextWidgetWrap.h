@@ -10,6 +10,7 @@
 #include <vtkTextWidget.h>
 
 #include "vtkBorderWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextWidgetWrap : public VtkBorderWidgetWrap
 {
@@ -37,6 +38,10 @@ class VtkTextWidgetWrap : public VtkBorderWidgetWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

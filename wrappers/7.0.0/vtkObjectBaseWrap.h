@@ -9,6 +9,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkObjectBase.h>
 
+#include "../../plus/plus.h"
 
 class VtkObjectBaseWrap : public Nan::ObjectWrap
 {
@@ -33,6 +34,10 @@ class VtkObjectBaseWrap : public Nan::ObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsTypeOf(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJECTBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJECTBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

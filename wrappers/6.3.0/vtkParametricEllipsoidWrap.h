@@ -10,6 +10,7 @@
 #include <vtkParametricEllipsoid.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricEllipsoidWrap : public VtkParametricFunctionWrap
 {
@@ -42,6 +43,10 @@ class VtkParametricEllipsoidWrap : public VtkParametricFunctionWrap
 		static void SetXRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICELLIPSOIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICELLIPSOIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

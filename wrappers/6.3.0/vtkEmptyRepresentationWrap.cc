@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataRepresentationWrap.h"
 #include "vtkEmptyRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkEmptyRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKEMPTYREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEMPTYREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

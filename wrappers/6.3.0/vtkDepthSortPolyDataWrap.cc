@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDepthSortPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -127,6 +127,9 @@ void VtkDepthSortPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SortScalarsOn", SortScalarsOn);
 	Nan::SetPrototypeMethod(tpl, "sortScalarsOn", SortScalarsOn);
 
+#ifdef VTK_NODE_PLUS_VTKDEPTHSORTPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEPTHSORTPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

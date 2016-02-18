@@ -10,6 +10,7 @@
 #include <vtkProbeFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProbeFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkProbeFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetValidPointMaskArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SpatialMatchOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SpatialMatchOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROBEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROBEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

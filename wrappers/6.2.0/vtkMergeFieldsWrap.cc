@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkMergeFieldsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkMergeFieldsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputField", SetOutputField);
 	Nan::SetPrototypeMethod(tpl, "setOutputField", SetOutputField);
 
+#ifdef VTK_NODE_PLUS_VTKMERGEFIELDSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGEFIELDSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

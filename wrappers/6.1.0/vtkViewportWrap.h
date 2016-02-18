@@ -10,6 +10,7 @@
 #include <vtkViewport.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkViewportWrap : public VtkObjectWrap
 {
@@ -83,6 +84,10 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void ViewToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIEWPORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIEWPORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

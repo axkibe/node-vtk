@@ -10,6 +10,7 @@
 #include <vtkPieceRequestFilter.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPieceRequestFilterWrap : public VtkAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkPieceRequestFilterWrap : public VtkAlgorithmWrap
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEREQUESTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEREQUESTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

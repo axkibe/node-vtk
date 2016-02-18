@@ -10,6 +10,7 @@
 #include <vtkImageYIQToRGB.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageYIQToRGBWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkImageYIQToRGBWrap : public VtkThreadedImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEYIQTORGBWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEYIQTORGBWRAP_CLASSDEF
+#endif
 };
 
 #endif

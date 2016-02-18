@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkCaptionActor2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkPropWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -202,6 +202,9 @@ void VtkCaptionActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLeaderOn", ThreeDimensionalLeaderOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLeaderOn", ThreeDimensionalLeaderOn);
 
+#ifdef VTK_NODE_PLUS_VTKCAPTIONACTOR2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAPTIONACTOR2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDistancePolyDataFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkDistancePolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SignedDistanceOn", SignedDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "signedDistanceOn", SignedDistanceOn);
 
+#ifdef VTK_NODE_PLUS_VTKDISTANCEPOLYDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDISTANCEPOLYDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

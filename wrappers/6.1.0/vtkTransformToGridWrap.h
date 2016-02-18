@@ -10,6 +10,7 @@
 #include <vtkTransformToGrid.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformToGridWrap : public VtkAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkTransformToGridWrap : public VtkAlgorithmWrap
 		static void SetGridScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGridSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMTOGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMTOGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkNetCDFReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -111,6 +111,9 @@ void VtkNetCDFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateMetaData", UpdateMetaData);
 	Nan::SetPrototypeMethod(tpl, "updateMetaData", UpdateMetaData);
 
+#ifdef VTK_NODE_PLUS_VTKNETCDFREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNETCDFREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

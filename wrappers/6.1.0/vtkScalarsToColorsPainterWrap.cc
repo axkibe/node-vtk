@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPainterWrap.h"
 #include "vtkScalarsToColorsPainterWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkInformationStringKeyWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -105,6 +105,9 @@ void VtkScalarsToColorsPainterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "USE_LOOKUP_TABLE_SCALAR_RANGE", USE_LOOKUP_TABLE_SCALAR_RANGE);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARSTOCOLORSPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

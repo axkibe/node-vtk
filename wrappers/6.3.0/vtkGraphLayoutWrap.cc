@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkGraphLayoutWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkGraphLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseTransformOn", UseTransformOn);
 	Nan::SetPrototypeMethod(tpl, "useTransformOn", UseTransformOn);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHLAYOUTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

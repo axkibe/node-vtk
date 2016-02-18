@@ -10,6 +10,7 @@
 #include <vtkGlyph2D.h>
 
 #include "vtkGlyph3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGlyph2DWrap : public VtkGlyph3DWrap
 {
@@ -33,6 +34,10 @@ class VtkGlyph2DWrap : public VtkGlyph3DWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLYPH2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLYPH2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

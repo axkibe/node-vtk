@@ -10,6 +10,7 @@
 #include <vtkSMPContourGridManyPieces.h>
 
 #include "vtkContourGridWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSMPContourGridManyPiecesWrap : public VtkContourGridWrap
 {
@@ -33,6 +34,10 @@ class VtkSMPContourGridManyPiecesWrap : public VtkContourGridWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMPCONTOURGRIDMANYPIECESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMPCONTOURGRIDMANYPIECESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCurveRepresentationWrap.h"
 #include "vtkSplineRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkParametricSplineWrap.h"
 #include "vtkDoubleArrayWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,6 +93,9 @@ void VtkSplineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+#ifdef VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

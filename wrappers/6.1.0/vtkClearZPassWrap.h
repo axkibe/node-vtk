@@ -10,6 +10,7 @@
 #include <vtkClearZPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClearZPassWrap : public VtkRenderPassWrap
 {
@@ -37,6 +38,10 @@ class VtkClearZPassWrap : public VtkRenderPassWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLEARZPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLEARZPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

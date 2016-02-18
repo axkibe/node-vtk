@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDuplicatePolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkSocketControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkDuplicatePolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SynchronousOn", SynchronousOn);
 	Nan::SetPrototypeMethod(tpl, "synchronousOn", SynchronousOn);
 
+#ifdef VTK_NODE_PLUS_VTKDUPLICATEPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDUPLICATEPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

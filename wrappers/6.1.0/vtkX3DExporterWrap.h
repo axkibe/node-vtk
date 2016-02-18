@@ -10,6 +10,7 @@
 #include <vtkX3DExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkX3DExporterWrap : public VtkExporterWrap
 {
@@ -56,6 +57,10 @@ class VtkX3DExporterWrap : public VtkExporterWrap
 		static void SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKX3DEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKX3DEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

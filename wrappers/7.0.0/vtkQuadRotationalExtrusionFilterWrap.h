@@ -10,6 +10,7 @@
 #include <vtkQuadRotationalExtrusionFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadRotationalExtrusionFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkQuadRotationalExtrusionFilterWrap : public VtkMultiBlockDataSetAlgorith
 		static void SetDeltaRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADROTATIONALEXTRUSIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADROTATIONALEXTRUSIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

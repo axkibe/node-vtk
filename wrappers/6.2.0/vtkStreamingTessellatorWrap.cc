@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkStreamingTessellatorWrap.h"
 #include "vtkEdgeSubdivisionCriterionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkStreamingTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 	Nan::SetPrototypeMethod(tpl, "setSubdivisionAlgorithm", SetSubdivisionAlgorithm);
 
+#ifdef VTK_NODE_PLUS_VTKSTREAMINGTESSELLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTREAMINGTESSELLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

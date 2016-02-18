@@ -10,6 +10,7 @@
 #include <vtkExtractSelection.h>
 
 #include "vtkExtractSelectionBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectionWrap : public VtkExtractSelectionBaseWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractSelectionWrap : public VtkExtractSelectionBaseWrap
 		static void ShowBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseProbeForLocationsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseProbeForLocationsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

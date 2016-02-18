@@ -10,6 +10,7 @@
 #include <vtkFocalPlaneContourRepresentation.h>
 
 #include "vtkContourRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFocalPlaneContourRepresentationWrap : public VtkContourRepresentationWrap
 {
@@ -40,6 +41,10 @@ class VtkFocalPlaneContourRepresentationWrap : public VtkContourRepresentationWr
 		static void UpdateContour(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateContourWorldPositionsBasedOnDisplayPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFOCALPLANECONTOURREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFOCALPLANECONTOURREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

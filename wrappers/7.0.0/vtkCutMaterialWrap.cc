@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCutMaterialWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkCutMaterialWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpVector", SetUpVector);
 	Nan::SetPrototypeMethod(tpl, "setUpVector", SetUpVector);
 
+#ifdef VTK_NODE_PLUS_VTKCUTMATERIALWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCUTMATERIALWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

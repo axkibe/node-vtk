@@ -10,6 +10,7 @@
 #include <vtkAppendFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAppendFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkAppendFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPENDFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPENDFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

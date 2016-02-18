@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMoleculeAlgorithmWrap.h"
 #include "vtkCMLMoleculeReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMoleculeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkCMLMoleculeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+#ifdef VTK_NODE_PLUS_VTKCMLMOLECULEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCMLMOLECULEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

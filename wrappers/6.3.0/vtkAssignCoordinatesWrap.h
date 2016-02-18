@@ -10,6 +10,7 @@
 #include <vtkAssignCoordinates.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetXCoordArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYCoordArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCoordArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKASSIGNCOORDINATESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKASSIGNCOORDINATESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAngleRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAngleRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -61,6 +62,10 @@ class VtkAngleRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANGLEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANGLEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

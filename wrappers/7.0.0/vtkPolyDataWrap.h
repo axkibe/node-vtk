@@ -10,6 +10,7 @@
 #include <vtkPolyData.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataWrap : public VtkPointSetWrap
 {
@@ -63,6 +64,10 @@ class VtkPolyDataWrap : public VtkPointSetWrap
 		static void SetVerts(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkAbstractArrayWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -152,6 +152,9 @@ void VtkScalarsToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARSTOCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGenericSubdivisionErrorMetricWrap.h"
 #include "vtkViewDependentErrorMetricWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkViewDependentErrorMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+#ifdef VTK_NODE_PLUS_VTKVIEWDEPENDENTERRORMETRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIEWDEPENDENTERRORMETRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

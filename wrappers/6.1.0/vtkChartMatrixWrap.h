@@ -10,6 +10,7 @@
 #include <vtkChartMatrix.h>
 
 #include "vtkAbstractContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartMatrixWrap : public VtkAbstractContextItemWrap
 {
@@ -38,6 +39,10 @@ class VtkChartMatrixWrap : public VtkAbstractContextItemWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBorders(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTMATRIXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTMATRIXWRAP_CLASSDEF
+#endif
 };
 
 #endif

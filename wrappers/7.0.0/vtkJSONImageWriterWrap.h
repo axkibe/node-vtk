@@ -10,6 +10,7 @@
 #include <vtkJSONImageWriter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkJSONImageWriterWrap : public VtkImageAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkJSONImageWriterWrap : public VtkImageAlgorithmWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKJSONIMAGEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKJSONIMAGEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

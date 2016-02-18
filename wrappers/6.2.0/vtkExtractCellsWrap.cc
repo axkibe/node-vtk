@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkExtractCellsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkExtractCellsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCellList", SetCellList);
 	Nan::SetPrototypeMethod(tpl, "setCellList", SetCellList);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTCELLSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTCELLSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

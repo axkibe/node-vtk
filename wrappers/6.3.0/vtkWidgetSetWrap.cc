@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkWidgetSetWrap.h"
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,12 @@ void VtkWidgetSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNthWidget", GetNthWidget);
+	Nan::SetPrototypeMethod(tpl, "getNthWidget", GetNthWidget);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfWidgets", GetNumberOfWidgets);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfWidgets", GetNumberOfWidgets);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -74,6 +80,9 @@ void VtkWidgetSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetEnabled", SetEnabled);
 	Nan::SetPrototypeMethod(tpl, "setEnabled", SetEnabled);
 
+#ifdef VTK_NODE_PLUS_VTKWIDGETSETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWIDGETSETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -159,6 +168,50 @@ void VtkWidgetSetWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkWidgetSetWrap::GetNthWidget(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetSetWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetSetWrap>(info.Holder());
+	vtkWidgetSet *native = (vtkWidgetSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkAbstractWidget * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetNthWidget(
+			info[0]->Uint32Value()
+		);
+		VtkAbstractWidgetWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkAbstractWidgetWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkAbstractWidgetWrap *w = new VtkAbstractWidgetWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkWidgetSetWrap::GetNumberOfWidgets(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkWidgetSetWrap *wrapper = ObjectWrap::Unwrap<VtkWidgetSetWrap>(info.Holder());
+	vtkWidgetSet *native = (vtkWidgetSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfWidgets();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkWidgetSetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

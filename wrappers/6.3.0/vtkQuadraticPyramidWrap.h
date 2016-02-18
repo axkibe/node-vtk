@@ -10,6 +10,7 @@
 #include <vtkQuadraticPyramid.h>
 
 #include "vtkNonLinearCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadraticPyramidWrap : public VtkNonLinearCellWrap
 {
@@ -46,6 +47,10 @@ class VtkQuadraticPyramidWrap : public VtkNonLinearCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRATICPYRAMIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRATICPYRAMIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

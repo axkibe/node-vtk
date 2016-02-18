@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGrid.h>
 
 #include "vtkUnstructuredGridBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridWrap : public VtkUnstructuredGridBaseWrap
 {
@@ -57,6 +58,10 @@ class VtkUnstructuredGridWrap : public VtkUnstructuredGridBaseWrap
 		static void SetCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageSeedConnectivity.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSeedConnectivityWrap : public VtkImageAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkImageSeedConnectivityWrap : public VtkImageAlgorithmWrap
 		static void SetInputConnectValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

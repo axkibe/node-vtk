@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkDSPFilterDefinitionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -106,6 +106,9 @@ void VtkDSPFilterDefinitionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputVariableName", SetOutputVariableName);
 	Nan::SetPrototypeMethod(tpl, "setOutputVariableName", SetOutputVariableName);
 
+#ifdef VTK_NODE_PLUS_VTKDSPFILTERDEFINITIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDSPFILTERDEFINITIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

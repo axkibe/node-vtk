@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkScalarsToColorsItemWrap.h"
 #include "vtkPiecewiseFunctionItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPiecewiseFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiecewiseFunction", SetPiecewiseFunction);
 	Nan::SetPrototypeMethod(tpl, "setPiecewiseFunction", SetPiecewiseFunction);
 
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

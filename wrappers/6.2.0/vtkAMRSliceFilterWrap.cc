@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOverlappingAMRAlgorithmWrap.h"
 #include "vtkAMRSliceFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -115,6 +115,9 @@ void VtkAMRSliceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOffSetFromOrigin", SetOffSetFromOrigin);
 	Nan::SetPrototypeMethod(tpl, "setOffSetFromOrigin", SetOffSetFromOrigin);
 
+#ifdef VTK_NODE_PLUS_VTKAMRSLICEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRSLICEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

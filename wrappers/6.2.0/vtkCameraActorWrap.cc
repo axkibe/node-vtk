@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkCameraActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkCameraActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidthByHeightRatio", SetWidthByHeightRatio);
 	Nan::SetPrototypeMethod(tpl, "setWidthByHeightRatio", SetWidthByHeightRatio);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

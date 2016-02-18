@@ -10,6 +10,7 @@
 #include <vtkTensorProbeWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTensorProbeWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -36,6 +37,10 @@ class VtkTensorProbeWidgetWrap : public VtkAbstractWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTENSORPROBEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTENSORPROBEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

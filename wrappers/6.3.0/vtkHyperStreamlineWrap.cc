@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkHyperStreamlineWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -200,6 +200,9 @@ void VtkHyperStreamlineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminalEigenvalue", SetTerminalEigenvalue);
 	Nan::SetPrototypeMethod(tpl, "setTerminalEigenvalue", SetTerminalEigenvalue);
 
+#ifdef VTK_NODE_PLUS_VTKHYPERSTREAMLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPERSTREAMLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

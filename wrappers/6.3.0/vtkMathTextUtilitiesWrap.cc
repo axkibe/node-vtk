@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMathTextUtilitiesWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkMathTextUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInstance", SetInstance);
 	Nan::SetPrototypeMethod(tpl, "setInstance", SetInstance);
 
+#ifdef VTK_NODE_PLUS_VTKMATHTEXTUTILITIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMATHTEXTUTILITIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

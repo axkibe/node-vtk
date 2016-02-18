@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedPolyDataIds.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedPolyDataIdsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkExtractSelectedPolyDataIdsWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDPOLYDATAIDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDPOLYDATAIDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

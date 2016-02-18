@@ -10,6 +10,7 @@
 #include <vtkImageThreshold.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageThresholdWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkImageThresholdWrap : public VtkThreadedImageAlgorithmWrap
 		static void ThresholdBetween(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByLower(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByUpper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETHRESHOLDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETHRESHOLDWRAP_CLASSDEF
+#endif
 };
 
 #endif

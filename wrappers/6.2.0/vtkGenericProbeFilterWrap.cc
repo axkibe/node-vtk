@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkGenericProbeFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGenericDataSetWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkGenericProbeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICPROBEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICPROBEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkShrinkPolyDataWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkShrinkPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkFactor", SetShrinkFactor);
 	Nan::SetPrototypeMethod(tpl, "setShrinkFactor", SetShrinkFactor);
 
+#ifdef VTK_NODE_PLUS_VTKSHRINKPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHRINKPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

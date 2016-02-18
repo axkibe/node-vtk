@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamerWrap.h"
 #include "vtkStreamLineWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkStreamLineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStepLength", SetStepLength);
 	Nan::SetPrototypeMethod(tpl, "setStepLength", SetStepLength);
 
+#ifdef VTK_NODE_PLUS_VTKSTREAMLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTREAMLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

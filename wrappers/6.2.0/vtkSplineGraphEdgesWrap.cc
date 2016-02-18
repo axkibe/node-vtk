@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkSplineGraphEdgesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSplineWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkSplineGraphEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineType", SetSplineType);
 	Nan::SetPrototypeMethod(tpl, "setSplineType", SetSplineType);
 
+#ifdef VTK_NODE_PLUS_VTKSPLINEGRAPHEDGESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLINEGRAPHEDGESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkImageShrink3D.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageShrink3DWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkImageShrink3DWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShrinkFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESHRINK3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESHRINK3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActorWrap.h"
 #include "vtkPolarAxesActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -313,6 +313,9 @@ void VtkPolarAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewAngleLODThreshold", SetViewAngleLODThreshold);
 	Nan::SetPrototypeMethod(tpl, "setViewAngleLODThreshold", SetViewAngleLODThreshold);
 
+#ifdef VTK_NODE_PLUS_VTKPOLARAXESACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLARAXESACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

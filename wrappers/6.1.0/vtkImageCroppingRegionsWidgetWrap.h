@@ -10,6 +10,7 @@
 #include <vtkImageCroppingRegionsWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCroppingRegionsWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -64,6 +65,10 @@ class VtkImageCroppingRegionsWidgetWrap : public Vtk3DWidgetWrap
 		static void SetVolumeMapper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateAccordingToInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateCursorIcon(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECROPPINGREGIONSWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECROPPINGREGIONSWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

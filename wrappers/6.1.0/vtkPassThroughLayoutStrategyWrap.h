@@ -10,6 +10,7 @@
 #include <vtkPassThroughLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPassThroughLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -36,6 +37,10 @@ class VtkPassThroughLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPASSTHROUGHLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPASSTHROUGHLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

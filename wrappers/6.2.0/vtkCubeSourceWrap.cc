@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCubeSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkCubeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZLength", SetZLength);
 	Nan::SetPrototypeMethod(tpl, "setZLength", SetZLength);
 
+#ifdef VTK_NODE_PLUS_VTKCUBESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCUBESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

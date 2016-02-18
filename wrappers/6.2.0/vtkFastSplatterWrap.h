@@ -10,6 +10,7 @@
 #include <vtkFastSplatter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFastSplatterWrap : public VtkImageAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkFastSplatterWrap : public VtkImageAlgorithmWrap
 		static void SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplatConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFASTSPLATTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFASTSPLATTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

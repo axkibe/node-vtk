@@ -10,6 +10,7 @@
 #include <vtkXRenderWindowInteractor.h>
 
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXRenderWindowInteractorWrap : public VtkRenderWindowInteractorWrap
 {
@@ -43,6 +44,10 @@ class VtkXRenderWindowInteractorWrap : public VtkRenderWindowInteractorWrap
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TerminateApp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXRENDERWINDOWINTERACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXRENDERWINDOWINTERACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

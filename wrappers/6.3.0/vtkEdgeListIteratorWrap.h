@@ -10,6 +10,7 @@
 #include <vtkEdgeListIterator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEdgeListIteratorWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkEdgeListIteratorWrap : public VtkObjectWrap
 		static void NextGraphEdge(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEDGELISTITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEDGELISTITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

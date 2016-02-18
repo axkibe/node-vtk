@@ -10,6 +10,7 @@
 #include <vtkLODActor.h>
 
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLODActorWrap : public VtkActorWrap
 {
@@ -46,6 +47,10 @@ class VtkLODActorWrap : public VtkActorWrap
 		static void SetMediumResFilter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfCloudPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLODACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLODACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

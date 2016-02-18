@@ -10,6 +10,7 @@
 #include <vtkGeoAdaptiveArcs.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoAdaptiveArcsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkGeoAdaptiveArcsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetMaximumPixelSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumPixelSeparation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOADAPTIVEARCSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOADAPTIVEARCSWRAP_CLASSDEF
+#endif
 };
 
 #endif

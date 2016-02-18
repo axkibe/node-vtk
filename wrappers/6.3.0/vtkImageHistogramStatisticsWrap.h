@@ -10,6 +10,7 @@
 #include <vtkImageHistogramStatistics.h>
 
 #include "vtkImageHistogramWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageHistogramStatisticsWrap : public VtkImageHistogramWrap
 {
@@ -43,6 +44,10 @@ class VtkImageHistogramStatisticsWrap : public VtkImageHistogramWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoRangeExpansionFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAutoRangePercentiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEHISTOGRAMSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEHISTOGRAMSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

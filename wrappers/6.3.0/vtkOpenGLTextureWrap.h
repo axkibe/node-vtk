@@ -10,6 +10,7 @@
 #include <vtkOpenGLTexture.h>
 
 #include "vtkTextureWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLTextureWrap : public VtkTextureWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLTextureWrap : public VtkTextureWrap
 		static void PostRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLTEXTUREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLTEXTUREWRAP_CLASSDEF
+#endif
 };
 
 #endif

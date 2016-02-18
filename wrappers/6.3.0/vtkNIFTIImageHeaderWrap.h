@@ -10,6 +10,7 @@
 #include <vtkNIFTIImageHeader.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNIFTIImageHeaderWrap : public VtkObjectWrap
 {
@@ -93,6 +94,10 @@ class VtkNIFTIImageHeaderWrap : public VtkObjectWrap
 		static void SetSliceDuration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXYZTUnits(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEHEADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNIFTIIMAGEHEADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

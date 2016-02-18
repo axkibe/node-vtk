@@ -10,6 +10,7 @@
 #include <vtkInformationUnsignedLongKey.h>
 
 #include "vtkInformationKeyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationUnsignedLongKeyWrap : public VtkInformationKeyWrap
 {
@@ -35,6 +36,10 @@ class VtkInformationUnsignedLongKeyWrap : public VtkInformationKeyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONUNSIGNEDLONGKEYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONUNSIGNEDLONGKEYWRAP_CLASSDEF
+#endif
 };
 
 #endif

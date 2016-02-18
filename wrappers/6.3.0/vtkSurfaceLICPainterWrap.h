@@ -10,6 +10,7 @@
 #include <vtkSurfaceLICPainter.h>
 
 #include "vtkPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSurfaceLICPainterWrap : public VtkPainterWrap
 {
@@ -108,6 +109,10 @@ class VtkSurfaceLICPainterWrap : public VtkPainterWrap
 		static void SetNumberOfSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteTimerLog(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSURFACELICPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSURFACELICPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

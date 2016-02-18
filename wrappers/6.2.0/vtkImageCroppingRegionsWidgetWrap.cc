@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkImageCroppingRegionsWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -153,6 +153,9 @@ void VtkImageCroppingRegionsWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateCursorIcon", UpdateCursorIcon);
 	Nan::SetPrototypeMethod(tpl, "updateCursorIcon", UpdateCursorIcon);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECROPPINGREGIONSWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECROPPINGREGIONSWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

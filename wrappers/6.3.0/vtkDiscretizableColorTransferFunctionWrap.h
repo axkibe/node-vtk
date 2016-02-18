@@ -10,6 +10,7 @@
 #include <vtkDiscretizableColorTransferFunction.h>
 
 #include "vtkColorTransferFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctionWrap
 {
@@ -38,6 +39,7 @@ class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctio
 		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDiscretize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfIndexedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScalarOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUseLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -49,10 +51,16 @@ class VtkDiscretizableColorTransferFunctionWrap : public VtkColorTransferFunctio
 		static void SetAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiscretize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableOpacityMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetIndexedColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfIndexedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsingLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDISCRETIZABLECOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDISCRETIZABLECOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

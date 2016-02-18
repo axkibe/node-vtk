@@ -10,6 +10,7 @@
 #include <vtkElevationFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkElevationFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkElevationFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetHighPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLowPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKELEVATIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKELEVATIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

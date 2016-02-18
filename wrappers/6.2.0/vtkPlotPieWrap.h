@@ -10,6 +10,7 @@
 #include <vtkPlotPie.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotPieWrap : public VtkPlotWrap
 {
@@ -38,6 +39,10 @@ class VtkPlotPieWrap : public VtkPlotWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTPIEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTPIEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkXMLUtilities.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUtilitiesWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkXMLUtilitiesWrap : public VtkObjectWrap
 		static void ReadElementFromString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnFactorElements(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUTILITIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUTILITIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

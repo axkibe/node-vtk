@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkGenericRenderWindowInteractorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkGenericRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TimerEventResetsTimerOn", TimerEventResetsTimerOn);
 	Nan::SetPrototypeMethod(tpl, "timerEventResetsTimerOn", TimerEventResetsTimerOn);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICRENDERWINDOWINTERACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICRENDERWINDOWINTERACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

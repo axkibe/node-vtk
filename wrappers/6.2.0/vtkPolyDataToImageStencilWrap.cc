@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageStencilSourceWrap.h"
 #include "vtkPolyDataToImageStencilWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkPolyDataToImageStencilWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATATOIMAGESTENCILWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATATOIMAGESTENCILWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

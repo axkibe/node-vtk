@@ -10,6 +10,7 @@
 #include <vtkDijkstraImageGeodesicPath.h>
 
 #include "vtkDijkstraGraphGeodesicPathWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDijkstraImageGeodesicPathWrap : public VtkDijkstraGraphGeodesicPathWrap
 {
@@ -43,6 +44,10 @@ class VtkDijkstraImageGeodesicPathWrap : public VtkDijkstraGraphGeodesicPathWrap
 		static void SetEdgeLengthWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImageWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIJKSTRAIMAGEGEODESICPATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIJKSTRAIMAGEGEODESICPATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

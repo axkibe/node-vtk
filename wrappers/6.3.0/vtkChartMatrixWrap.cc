@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkChartMatrixWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkChartMatrixWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKCHARTMATRIXWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHARTMATRIXWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

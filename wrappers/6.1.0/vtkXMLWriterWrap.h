@@ -10,6 +10,7 @@
 #include <vtkXMLWriter.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLWriterWrap : public VtkAlgorithmWrap
 {
@@ -73,6 +74,10 @@ class VtkXMLWriterWrap : public VtkAlgorithmWrap
 		static void Stop(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteNextTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkTensorProbeRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPolyDataWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTrajectory", SetTrajectory);
 	Nan::SetPrototypeMethod(tpl, "setTrajectory", SetTrajectory);
 
+#ifdef VTK_NODE_PLUS_VTKTENSORPROBEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTENSORPROBEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

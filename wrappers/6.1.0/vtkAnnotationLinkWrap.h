@@ -10,6 +10,7 @@
 #include <vtkAnnotationLink.h>
 
 #include "vtkAnnotationLayersAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAnnotationLinkWrap : public VtkAnnotationLayersAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkAnnotationLinkWrap : public VtkAnnotationLayersAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANNOTATIONLINKWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANNOTATIONLINKWRAP_CLASSDEF
+#endif
 };
 
 #endif

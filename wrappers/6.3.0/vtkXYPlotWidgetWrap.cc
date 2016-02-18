@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtkXYPlotWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkXYPlotActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkXYPlotWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXYPlotActor", SetXYPlotActor);
 	Nan::SetPrototypeMethod(tpl, "setXYPlotActor", SetXYPlotActor);
 
+#ifdef VTK_NODE_PLUS_VTKXYPLOTWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXYPLOTWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageWriterWrap.h"
 #include "vtkNIFTIImageWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkNIFTIImageHeaderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkNIFTIImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeSpacing", SetTimeSpacing);
 	Nan::SetPrototypeMethod(tpl, "setTimeSpacing", SetTimeSpacing);
 
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNIFTIIMAGEWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

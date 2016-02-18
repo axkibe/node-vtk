@@ -10,6 +10,7 @@
 #include <vtkXMLStructuredDataReader.h>
 
 #include "vtkXMLDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLStructuredDataReaderWrap : public VtkXMLDataReaderWrap
 {
@@ -38,6 +39,10 @@ class VtkXMLStructuredDataReaderWrap : public VtkXMLDataReaderWrap
 		static void SetWholeSlices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WholeSlicesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WholeSlicesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLSTRUCTUREDDATAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLSTRUCTUREDDATAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

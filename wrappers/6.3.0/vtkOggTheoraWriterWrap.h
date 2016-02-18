@@ -10,6 +10,7 @@
 #include <vtkOggTheoraWriter.h>
 
 #include "vtkGenericMovieWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOggTheoraWriterWrap : public VtkGenericMovieWriterWrap
 {
@@ -48,6 +49,10 @@ class VtkOggTheoraWriterWrap : public VtkGenericMovieWriterWrap
 		static void SubsamplingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SubsamplingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOGGTHEORAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOGGTHEORAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

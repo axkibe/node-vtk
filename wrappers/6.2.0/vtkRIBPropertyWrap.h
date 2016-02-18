@@ -10,6 +10,7 @@
 #include <vtkRIBProperty.h>
 
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRIBPropertyWrap : public VtkPropertyWrap
 {
@@ -43,6 +44,10 @@ class VtkRIBPropertyWrap : public VtkPropertyWrap
 		static void SetParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSurfaceShader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRIBPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRIBPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

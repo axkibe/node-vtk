@@ -10,6 +10,7 @@
 #include <vtkPlaneSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlaneSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkPlaneSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLANESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLANESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

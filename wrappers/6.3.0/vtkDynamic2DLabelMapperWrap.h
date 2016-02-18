@@ -10,6 +10,7 @@
 #include <vtkDynamic2DLabelMapper.h>
 
 #include "vtkLabeledDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDynamic2DLabelMapperWrap : public VtkLabeledDataMapperWrap
 {
@@ -40,6 +41,10 @@ class VtkDynamic2DLabelMapperWrap : public VtkLabeledDataMapperWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPriorityArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReversePriority(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDYNAMIC2DLABELMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDYNAMIC2DLABELMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

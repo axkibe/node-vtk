@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkThresholdGraphWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkThresholdGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUpperThreshold", SetUpperThreshold);
 	Nan::SetPrototypeMethod(tpl, "setUpperThreshold", SetUpperThreshold);
 
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHRESHOLDGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectBaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCommandWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGlobalWarningDisplay", SetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "setGlobalWarningDisplay", SetGlobalWarningDisplay);
 
+#ifdef VTK_NODE_PLUS_VTKOBJECTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBJECTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

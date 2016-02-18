@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCriticalSectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkCriticalSectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Unlock", Unlock);
 	Nan::SetPrototypeMethod(tpl, "unlock", Unlock);
 
+#ifdef VTK_NODE_PLUS_VTKCRITICALSECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCRITICALSECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

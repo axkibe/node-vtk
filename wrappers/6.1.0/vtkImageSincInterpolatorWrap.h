@@ -10,6 +10,7 @@
 #include <vtkImageSincInterpolator.h>
 
 #include "vtkAbstractImageInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSincInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 {
@@ -67,6 +68,10 @@ class VtkImageSincInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		static void SetWindowParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseWindowParameterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseWindowParameterOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESINCINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESINCINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkShadowMapBakerPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkShadowMapBakerPassWrap : public VtkRenderPassWrap
 {
@@ -34,6 +35,7 @@ class VtkShadowMapBakerPassWrap : public VtkRenderPassWrap
 		static void GetHasShadows(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNeedUpdate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetOpaqueSequence(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void LightCreatesShadow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -41,7 +43,12 @@ class VtkShadowMapBakerPassWrap : public VtkRenderPassWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompositeZPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpaqueSequence(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpToDate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSHADOWMAPBAKERPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSHADOWMAPBAKERPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

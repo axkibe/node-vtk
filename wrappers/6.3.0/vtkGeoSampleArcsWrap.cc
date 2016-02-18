@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGeoSampleArcsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkGeoSampleArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputCoordinateSystemToSpherical", SetOutputCoordinateSystemToSpherical);
 	Nan::SetPrototypeMethod(tpl, "setOutputCoordinateSystemToSpherical", SetOutputCoordinateSystemToSpherical);
 
+#ifdef VTK_NODE_PLUS_VTKGEOSAMPLEARCSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOSAMPLEARCSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

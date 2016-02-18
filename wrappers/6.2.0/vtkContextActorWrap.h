@@ -10,6 +10,7 @@
 #include <vtkContextActor.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextActorWrap : public VtkPropWrap
 {
@@ -38,6 +39,10 @@ class VtkContextActorWrap : public VtkPropWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

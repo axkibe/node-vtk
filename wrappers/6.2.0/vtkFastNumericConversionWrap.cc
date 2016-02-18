@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkFastNumericConversionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -79,6 +79,9 @@ void VtkFastNumericConversionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TestSafeFloor", TestSafeFloor);
 	Nan::SetPrototypeMethod(tpl, "testSafeFloor", TestSafeFloor);
 
+#ifdef VTK_NODE_PLUS_VTKFASTNUMERICCONVERSIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFASTNUMERICCONVERSIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

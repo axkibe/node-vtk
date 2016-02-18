@@ -10,6 +10,7 @@
 #include <vtkImageNoiseSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageNoiseSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkImageNoiseSourceWrap : public VtkImageAlgorithmWrap
 		static void SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGENOISESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGENOISESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

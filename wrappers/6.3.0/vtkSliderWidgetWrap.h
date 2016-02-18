@@ -10,6 +10,7 @@
 #include <vtkSliderWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSliderWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -47,6 +48,10 @@ class VtkSliderWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetAnimationModeToOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfAnimationSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLIDERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLIDERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

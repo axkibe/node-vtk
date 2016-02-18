@@ -10,6 +10,7 @@
 #include <vtkSimplePointsWriter.h>
 
 #include "vtkDataSetWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimplePointsWriterWrap : public VtkDataSetWriterWrap
 {
@@ -35,6 +36,10 @@ class VtkSimplePointsWriterWrap : public VtkDataSetWriterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDecimalPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLEPOINTSWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLEPOINTSWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

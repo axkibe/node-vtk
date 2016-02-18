@@ -10,6 +10,7 @@
 #include <vtkChartXY.h>
 
 #include "vtkChartWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartXYWrap : public VtkChartWrap
 {
@@ -60,6 +61,10 @@ class VtkChartXYWrap : public VtkChartWrap
 		static void SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTXYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTXYWRAP_CLASSDEF
+#endif
 };
 
 #endif

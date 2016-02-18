@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkCompassWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCompassRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkCompassWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTilt", SetTilt);
 	Nan::SetPrototypeMethod(tpl, "setTilt", SetTilt);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPASSWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPASSWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

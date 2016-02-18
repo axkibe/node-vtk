@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTessellatedBoxSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -101,6 +101,9 @@ void VtkTessellatedBoxSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQuads", SetQuads);
 	Nan::SetPrototypeMethod(tpl, "setQuads", SetQuads);
 
+#ifdef VTK_NODE_PLUS_VTKTESSELLATEDBOXSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTESSELLATEDBOXSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

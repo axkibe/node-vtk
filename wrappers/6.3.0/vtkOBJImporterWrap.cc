@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImporterWrap.h"
 #include "vtkOBJImporterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkOBJImporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTexturePath", SetTexturePath);
 	Nan::SetPrototypeMethod(tpl, "setTexturePath", SetTexturePath);
 
+#ifdef VTK_NODE_PLUS_VTKOBJIMPORTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBJIMPORTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

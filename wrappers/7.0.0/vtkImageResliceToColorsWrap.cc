@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageResliceWrap.h"
 #include "vtkImageResliceToColorsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkImageResliceToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputFormatToRGBA", SetOutputFormatToRGBA);
 	Nan::SetPrototypeMethod(tpl, "setOutputFormatToRGBA", SetOutputFormatToRGBA);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICETOCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGERESLICETOCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

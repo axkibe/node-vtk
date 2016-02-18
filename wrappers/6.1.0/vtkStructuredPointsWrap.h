@@ -10,6 +10,7 @@
 #include <vtkStructuredPoints.h>
 
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredPointsWrap : public VtkImageDataWrap
 {
@@ -34,6 +35,10 @@ class VtkStructuredPointsWrap : public VtkImageDataWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

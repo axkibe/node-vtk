@@ -10,6 +10,7 @@
 #include <vtkVectorNorm.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVectorNormWrap : public VtkDataSetAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkVectorNormWrap : public VtkDataSetAlgorithmWrap
 		static void SetAttributeModeToUseCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributeModeToUsePointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVECTORNORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVECTORNORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

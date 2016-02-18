@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderedRepresentationWrap.h"
 #include "vtkRenderedSurfaceRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewThemeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkRenderedSurfaceRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCellColorArrayName", SetCellColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCellColorArrayName", SetCellColorArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKRENDEREDSURFACEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDEREDSURFACEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

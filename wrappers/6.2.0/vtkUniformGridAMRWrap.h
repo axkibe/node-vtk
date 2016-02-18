@@ -10,6 +10,7 @@
 #include <vtkUniformGridAMR.h>
 
 #include "vtkCompositeDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformGridAMRWrap : public VtkCompositeDataSetWrap
 {
@@ -33,12 +34,16 @@ class VtkUniformGridAMRWrap : public VtkCompositeDataSetWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCompositeIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTotalNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +52,10 @@ class VtkUniformGridAMRWrap : public VtkCompositeDataSetWrap
 		static void SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDAMRWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMGRIDAMRWRAP_CLASSDEF
+#endif
 };
 
 #endif

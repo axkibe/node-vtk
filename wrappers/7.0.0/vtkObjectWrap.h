@@ -10,6 +10,7 @@
 #include <vtkObject.h>
 
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkObjectWrap : public VtkObjectBaseWrap
 {
@@ -48,6 +49,10 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

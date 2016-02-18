@@ -10,6 +10,7 @@
 #include <vtkContourGrid.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContourGridWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkContourGridWrap : public VtkPolyDataAlgorithmWrap
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarTreeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarTreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTOURGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTOURGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

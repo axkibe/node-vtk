@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkThresholdWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -170,6 +170,9 @@ void VtkThresholdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseContinuousCellRangeOn", UseContinuousCellRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useContinuousCellRangeOn", UseContinuousCellRangeOn);
 
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHRESHOLDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOverlappingAMRAlgorithmWrap.h"
 #include "vtkImageToAMRWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkImageToAMRWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRefinementRatio", SetRefinementRatio);
 	Nan::SetPrototypeMethod(tpl, "setRefinementRatio", SetRefinementRatio);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGETOAMRWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGETOAMRWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

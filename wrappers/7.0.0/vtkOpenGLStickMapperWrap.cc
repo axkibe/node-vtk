@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOpenGLPolyDataMapperWrap.h"
 #include "vtkOpenGLStickMapperWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkOpenGLStickMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionIdArray", SetSelectionIdArray);
 	Nan::SetPrototypeMethod(tpl, "setSelectionIdArray", SetSelectionIdArray);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLSTICKMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLSTICKMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSelectionAlgorithmWrap.h"
 #include "vtkConvertSelectionWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkGraphWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -152,6 +152,9 @@ void VtkConvertSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToValueSelection", ToValueSelection);
 	Nan::SetPrototypeMethod(tpl, "toValueSelection", ToValueSelection);
 
+#ifdef VTK_NODE_PLUS_VTKCONVERTSELECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONVERTSELECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

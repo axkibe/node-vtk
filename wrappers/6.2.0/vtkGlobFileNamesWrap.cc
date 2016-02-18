@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGlobFileNamesWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkGlobFileNamesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRecurse", SetRecurse);
 	Nan::SetPrototypeMethod(tpl, "setRecurse", SetRecurse);
 
+#ifdef VTK_NODE_PLUS_VTKGLOBFILENAMESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGLOBFILENAMESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

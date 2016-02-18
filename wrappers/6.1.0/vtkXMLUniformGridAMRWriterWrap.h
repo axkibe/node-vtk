@@ -10,6 +10,7 @@
 #include <vtkXMLUniformGridAMRWriter.h>
 
 #include "vtkXMLCompositeDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUniformGridAMRWriterWrap : public VtkXMLCompositeDataWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkXMLUniformGridAMRWriterWrap : public VtkXMLCompositeDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkTextRepresentation.h>
 
 #include "vtkBorderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextRepresentationWrap : public VtkBorderRepresentationWrap
 {
@@ -48,6 +49,10 @@ class VtkTextRepresentationWrap : public VtkBorderRepresentationWrap
 		static void SetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

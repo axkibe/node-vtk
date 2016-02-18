@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOutlineSourceWrap.h"
 #include "vtkOutlineCornerSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkOutlineCornerSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
+#ifdef VTK_NODE_PLUS_VTKOUTLINECORNERSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOUTLINECORNERSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

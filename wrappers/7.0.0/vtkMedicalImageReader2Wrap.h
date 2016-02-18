@@ -10,6 +10,7 @@
 #include <vtkMedicalImageReader2.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkMedicalImageReader2Wrap : public VtkImageReader2Wrap
 {
@@ -48,6 +49,10 @@ class VtkMedicalImageReader2Wrap : public VtkImageReader2Wrap
 		static void SetPatientName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStudy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMEDICALIMAGEREADER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMEDICALIMAGEREADER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

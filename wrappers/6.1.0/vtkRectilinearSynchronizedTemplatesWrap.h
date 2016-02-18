@@ -10,6 +10,7 @@
 #include <vtkRectilinearSynchronizedTemplates.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearSynchronizedTemplatesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkRectilinearSynchronizedTemplatesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARSYNCHRONIZEDTEMPLATESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARSYNCHRONIZEDTEMPLATESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkAxesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkAxesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SymmetricOn", SymmetricOn);
 	Nan::SetPrototypeMethod(tpl, "symmetricOn", SymmetricOn);
 
+#ifdef VTK_NODE_PLUS_VTKAXESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

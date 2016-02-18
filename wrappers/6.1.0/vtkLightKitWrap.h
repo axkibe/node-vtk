@@ -10,6 +10,7 @@
 #include <vtkLightKit.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLightKitWrap : public VtkObjectWrap
 {
@@ -89,6 +90,10 @@ class VtkLightKitWrap : public VtkObjectWrap
 		static void SetKeyToHeadRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaintainLuminance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLIGHTKITWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLIGHTKITWRAP_CLASSDEF
+#endif
 };
 
 #endif

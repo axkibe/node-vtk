@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageMapToColorsWrap.h"
 #include "vtkImageMapToWindowLevelColorsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkImageMapToWindowLevelColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindow", SetWindow);
 	Nan::SetPrototypeMethod(tpl, "setWindow", SetWindow);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOWINDOWLEVELCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMAPTOWINDOWLEVELCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkKdTree.h>
 
 #include "vtkLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKdTreeWrap : public VtkLocatorWrap
 {
@@ -95,6 +96,10 @@ class VtkKdTreeWrap : public VtkLocatorWrap
 		static void ViewOrderAllRegionsInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewOrderRegionsFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewOrderRegionsInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKDTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKDTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

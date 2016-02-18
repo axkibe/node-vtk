@@ -10,6 +10,7 @@
 #include <vtkImageToStructuredPoints.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageToStructuredPointsWrap : public VtkImageAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkImageToStructuredPointsWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETOSTRUCTUREDPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETOSTRUCTUREDPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

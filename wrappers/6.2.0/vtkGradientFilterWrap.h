@@ -10,6 +10,7 @@
 #include <vtkGradientFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGradientFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkGradientFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetQCriterionArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVorticityArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRADIENTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRADIENTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

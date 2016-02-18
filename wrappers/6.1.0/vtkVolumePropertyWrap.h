@@ -10,6 +10,7 @@
 #include <vtkVolumeProperty.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumePropertyWrap : public VtkObjectWrap
 {
@@ -77,6 +78,10 @@ class VtkVolumePropertyWrap : public VtkObjectWrap
 		static void ShadeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateMTimes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMEPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMEPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

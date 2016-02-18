@@ -10,6 +10,7 @@
 #include <vtkStatisticsAlgorithm.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStatisticsAlgorithmWrap : public VtkTableAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkStatisticsAlgorithmWrap : public VtkTableAlgorithmWrap
 		static void SetLearnOptionParameterConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLearnOptionParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTestOption(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTATISTICSALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTATISTICSALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedFrustum.h>
 
 #include "vtkExtractSelectionBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedFrustumWrap : public VtkExtractSelectionBaseWrap
 {
@@ -49,6 +50,10 @@ class VtkExtractSelectedFrustumWrap : public VtkExtractSelectionBaseWrap
 		static void SetShowBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDFRUSTUMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDFRUSTUMWRAP_CLASSDEF
+#endif
 };
 
 #endif

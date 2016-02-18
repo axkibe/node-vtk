@@ -10,6 +10,7 @@
 #include <vtkOrientedGlyphContourRepresentation.h>
 
 #include "vtkContourRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOrientedGlyphContourRepresentationWrap : public VtkContourRepresentationWrap
 {
@@ -58,6 +59,10 @@ class VtkOrientedGlyphContourRepresentationWrap : public VtkContourRepresentatio
 		static void SetShowSelectedNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKORIENTEDGLYPHCONTOURREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKORIENTEDGLYPHCONTOURREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

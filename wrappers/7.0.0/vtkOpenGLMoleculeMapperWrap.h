@@ -10,6 +10,7 @@
 #include <vtkOpenGLMoleculeMapper.h>
 
 #include "vtkMoleculeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLMoleculeMapperWrap : public VtkMoleculeMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLMoleculeMapperWrap : public VtkMoleculeMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLMOLECULEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLMOLECULEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

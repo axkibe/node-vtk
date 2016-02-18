@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkGenerateIndexArrayWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkGenerateIndexArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReferenceArrayName", SetReferenceArrayName);
 	Nan::SetPrototypeMethod(tpl, "setReferenceArrayName", SetReferenceArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKGENERATEINDEXARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERATEINDEXARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

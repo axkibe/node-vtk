@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkTreeDifferenceFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkTreeDifferenceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputArrayName", SetOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "setOutputArrayName", SetOutputArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKTREEDIFFERENCEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEDIFFERENCEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

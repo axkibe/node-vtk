@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContextAreaWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkContextAreaWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowGridOn", ShowGridOn);
 	Nan::SetPrototypeMethod(tpl, "showGridOn", ShowGridOn);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTAREAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTAREAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkDataSetAttributes.h>
 
 #include "vtkFieldDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetAttributesWrap : public VtkFieldDataWrap
 {
@@ -100,6 +101,10 @@ class VtkDataSetAttributesWrap : public VtkFieldDataWrap
 		static void SetVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETATTRIBUTESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETATTRIBUTESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAppendCompositeDataLeaves.h>
 
 #include "vtkCompositeDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAppendCompositeDataLeavesWrap : public VtkCompositeDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkAppendCompositeDataLeavesWrap : public VtkCompositeDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAppendFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPENDCOMPOSITEDATALEAVESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPENDCOMPOSITEDATALEAVESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAdjacencyMatrixToEdgeTable.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAdjacencyMatrixToEdgeTableWrap : public VtkTableAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkAdjacencyMatrixToEdgeTableWrap : public VtkTableAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValueArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKADJACENCYMATRIXTOEDGETABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKADJACENCYMATRIXTOEDGETABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

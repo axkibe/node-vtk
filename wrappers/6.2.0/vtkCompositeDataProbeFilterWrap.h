@@ -10,6 +10,7 @@
 #include <vtkCompositeDataProbeFilter.h>
 
 #include "vtkProbeFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeDataProbeFilterWrap : public VtkProbeFilterWrap
 {
@@ -37,6 +38,10 @@ class VtkCompositeDataProbeFilterWrap : public VtkProbeFilterWrap
 		static void PassPartialArraysOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassPartialArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAPROBEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEDATAPROBEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

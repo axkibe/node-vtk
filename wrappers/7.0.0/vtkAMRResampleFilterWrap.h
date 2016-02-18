@@ -10,6 +10,7 @@
 #include <vtkAMRResampleFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkAMRResampleFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferToNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseBiasVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRRESAMPLEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRRESAMPLEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

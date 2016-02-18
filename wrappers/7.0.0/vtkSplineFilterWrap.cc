@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSplineFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSplineWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -162,6 +162,9 @@ void VtkSplineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureLength", SetTextureLength);
 	Nan::SetPrototypeMethod(tpl, "setTextureLength", SetTextureLength);
 
+#ifdef VTK_NODE_PLUS_VTKSPLINEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLINEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

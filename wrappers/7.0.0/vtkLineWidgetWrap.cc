@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkLineWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -136,6 +136,9 @@ void VtkLineWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+#ifdef VTK_NODE_PLUS_VTKLINEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLINEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

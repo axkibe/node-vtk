@@ -10,6 +10,7 @@
 #include <vtkSplineFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -67,6 +68,10 @@ class VtkSplineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSubdivideToLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSubdivideToSpecified(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

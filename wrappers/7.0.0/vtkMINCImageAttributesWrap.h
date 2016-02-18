@@ -10,6 +10,7 @@
 #include <vtkMINCImageAttributes.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMINCImageAttributesWrap : public VtkObjectWrap
 {
@@ -67,6 +68,10 @@ class VtkMINCImageAttributesWrap : public VtkObjectWrap
 		static void ValidateAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateAttributesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateAttributesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEATTRIBUTESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMINCIMAGEATTRIBUTESWRAP_CLASSDEF
+#endif
 };
 
 #endif

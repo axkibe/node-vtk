@@ -10,6 +10,7 @@
 #include <vtkBalloonRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBalloonRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -67,6 +68,10 @@ class VtkBalloonRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBALLOONREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBALLOONREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

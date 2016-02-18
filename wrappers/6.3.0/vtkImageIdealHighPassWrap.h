@@ -10,6 +10,7 @@
 #include <vtkImageIdealHighPass.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageIdealHighPassWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkImageIdealHighPassWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetXCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEIDEALHIGHPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEIDEALHIGHPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

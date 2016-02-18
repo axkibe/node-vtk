@@ -10,6 +10,7 @@
 #include <vtkDiagonalMatrixSource.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDiagonalMatrixSourceWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkDiagonalMatrixSourceWrap : public VtkArrayDataAlgorithmWrap
 		static void SetRowLabel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSubDiagonal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSuperDiagonal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIAGONALMATRIXSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIAGONALMATRIXSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

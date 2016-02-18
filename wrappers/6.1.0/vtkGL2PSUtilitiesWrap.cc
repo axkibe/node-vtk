@@ -5,11 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGL2PSUtilitiesWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "vtkPathWrap.h"
+#include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -48,6 +50,9 @@ void VtkGL2PSUtilitiesWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkGL2PSUtilitiesWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Draw3DPath", Draw3DPath);
+	Nan::SetPrototypeMethod(tpl, "draw3DPath", Draw3DPath);
+
 	Nan::SetPrototypeMethod(tpl, "DrawString", DrawString);
 	Nan::SetPrototypeMethod(tpl, "drawString", DrawString);
 
@@ -75,6 +80,9 @@ void VtkGL2PSUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TextPropertyToPSFontName", TextPropertyToPSFontName);
 	Nan::SetPrototypeMethod(tpl, "textPropertyToPSFontName", TextPropertyToPSFontName);
 
+#ifdef VTK_NODE_PLUS_VTKGL2PSUTILITIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGL2PSUTILITIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -102,6 +110,180 @@ void VtkGL2PSUtilitiesWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkGL2PSUtilitiesWrap::Draw3DPath(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGL2PSUtilitiesWrap *wrapper = ObjectWrap::Unwrap<VtkGL2PSUtilitiesWrap>(info.Holder());
+	vtkGL2PSUtilities *native = (vtkGL2PSUtilities *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsObject() && (Nan::New(VtkPathWrap::ptpl))->HasInstance(info[0]))
+	{
+		VtkPathWrap *a0 = ObjectWrap::Unwrap<VtkPathWrap>(info[0]->ToObject());
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkMatrix4x4Wrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkMatrix4x4Wrap *a1 = ObjectWrap::Unwrap<VtkMatrix4x4Wrap>(info[1]->ToObject());
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsUint8Array())
+				{
+					v8::Local<v8::Uint8Array>a3(v8::Local<v8::Uint8Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->Draw3DPath(
+							(vtkPath *) a0->native.GetPointer(),
+							(vtkMatrix4x4 *) a1->native.GetPointer(),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							(unsigned char *)(a3->Buffer()->GetContents().Data()),
+							*a4
+						);
+						return;
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					unsigned char b3[4];
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 4; i++ )
+					{
+						if( !a3->Get(i)->IsUint32() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->Uint32Value();
+					}
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->Draw3DPath(
+							(vtkPath *) a0->native.GetPointer(),
+							(vtkMatrix4x4 *) a1->native.GetPointer(),
+							(double *)(a2->Buffer()->GetContents().Data()),
+							b3,
+							*a4
+						);
+						return;
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsArray())
+				{
+					v8::Local<v8::Array>a3(v8::Local<v8::Array>::Cast(info[3]->ToObject()));
+					unsigned char b3[4];
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					for( i = 0; i < 4; i++ )
+					{
+						if( !a3->Get(i)->IsUint32() )
+						{
+							Nan::ThrowError("Array contents invalid.");
+							return;
+						}
+						b3[i] = a3->Get(i)->Uint32Value();
+					}
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->Draw3DPath(
+							(vtkPath *) a0->native.GetPointer(),
+							(vtkMatrix4x4 *) a1->native.GetPointer(),
+							b2,
+							b3,
+							*a4
+						);
+						return;
+					}
+				}
+				else if(info.Length() > 3 && info[3]->IsUint8Array())
+				{
+					v8::Local<v8::Uint8Array>a3(v8::Local<v8::Uint8Array>::Cast(info[3]->ToObject()));
+					if( a3->Length() < 4 )
+					{
+						Nan::ThrowError("Array too short.");
+						return;
+					}
+
+					if(info.Length() > 4 && info[4]->IsString())
+					{
+						Nan::Utf8String a4(info[4]);
+												if(info.Length() != 5)
+						{
+							Nan::ThrowError("Too many parameters.");
+							return;
+						}
+						native->Draw3DPath(
+							(vtkPath *) a0->native.GetPointer(),
+							(vtkMatrix4x4 *) a1->native.GetPointer(),
+							b2,
+							(unsigned char *)(a3->Buffer()->GetContents().Data()),
+							*a4
+						);
+						return;
+					}
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGL2PSUtilitiesWrap::DrawString(const Nan::FunctionCallbackInfo<v8::Value>& info)

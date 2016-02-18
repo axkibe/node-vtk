@@ -10,6 +10,7 @@
 #include <vtkTemporalShiftScale.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalShiftScaleWrap : public VtkAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkTemporalShiftScaleWrap : public VtkAlgorithmWrap
 		static void SetPostShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSHIFTSCALEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALSHIFTSCALEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUndirectedGraphWrap.h"
 #include "vtkMoleculeWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkUnsignedShortArrayWrap.h"
 #include "vtkAbstractElectronicDataWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkMoleculeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopyStructure", ShallowCopyStructure);
 	Nan::SetPrototypeMethod(tpl, "shallowCopyStructure", ShallowCopyStructure);
 
+#ifdef VTK_NODE_PLUS_VTKMOLECULEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMOLECULEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGeoAdaptiveArcsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkGeoAdaptiveArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+#ifdef VTK_NODE_PLUS_VTKGEOADAPTIVEARCSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOADAPTIVEARCSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkVolumeRayCastCompositeFunction.h>
 
 #include "vtkVolumeRayCastFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeRayCastCompositeFunctionWrap : public VtkVolumeRayCastFunctionWrap
 {
@@ -40,6 +41,10 @@ class VtkVolumeRayCastCompositeFunctionWrap : public VtkVolumeRayCastFunctionWra
 		static void SetCompositeMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompositeMethodToClassifyFirst(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompositeMethodToInterpolateFirst(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTCOMPOSITEFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMERAYCASTCOMPOSITEFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkEdgeLayoutStrategy.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEdgeLayoutStrategyWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkEdgeLayoutStrategyWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeWeightArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEDGELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEDGELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

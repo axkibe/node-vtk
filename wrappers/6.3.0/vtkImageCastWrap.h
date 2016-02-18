@@ -10,6 +10,7 @@
 #include <vtkImageCast.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCastWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkImageCastWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOutputScalarTypeToUnsignedInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputScalarTypeToUnsignedLong(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECASTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECASTWRAP_CLASSDEF
+#endif
 };
 
 #endif

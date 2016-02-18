@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWindowWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkCollectionWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkPainterDeviceAdapterWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -394,6 +394,9 @@ void VtkRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBuffersOn", SwapBuffersOn);
 	Nan::SetPrototypeMethod(tpl, "swapBuffersOn", SwapBuffersOn);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

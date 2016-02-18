@@ -10,6 +10,7 @@
 #include <vtkExpandSelectedGraph.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExpandSelectedGraphWrap : public VtkSelectionAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkExpandSelectedGraphWrap : public VtkSelectionAlgorithmWrap
 		static void SetUseDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDomainOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDomainOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXPANDSELECTEDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXPANDSELECTEDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

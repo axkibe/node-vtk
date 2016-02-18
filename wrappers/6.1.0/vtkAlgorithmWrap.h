@@ -10,6 +10,7 @@
 #include <vtkAlgorithm.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAlgorithmWrap : public VtkObjectWrap
 {
@@ -107,6 +108,10 @@ class VtkAlgorithmWrap : public VtkObjectWrap
 		static void UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

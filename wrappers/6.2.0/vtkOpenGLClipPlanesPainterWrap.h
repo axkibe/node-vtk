@@ -10,6 +10,7 @@
 #include <vtkOpenGLClipPlanesPainter.h>
 
 #include "vtkClipPlanesPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLClipPlanesPainterWrap : public VtkClipPlanesPainterWrap
 {
@@ -33,6 +34,10 @@ class VtkOpenGLClipPlanesPainterWrap : public VtkClipPlanesPainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLCLIPPLANESPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLCLIPPLANESPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

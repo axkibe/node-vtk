@@ -10,6 +10,7 @@
 #include <vtkPolyDataSilhouette.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataSilhouetteWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkPolyDataSilhouetteWrap : public VtkPolyDataAlgorithmWrap
 		static void SetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATASILHOUETTEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATASILHOUETTEWRAP_CLASSDEF
+#endif
 };
 
 #endif

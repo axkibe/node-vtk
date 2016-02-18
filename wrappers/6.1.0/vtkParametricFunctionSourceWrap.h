@@ -10,6 +10,7 @@
 #include <vtkParametricFunctionSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricFunctionSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkParametricFunctionSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetUResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

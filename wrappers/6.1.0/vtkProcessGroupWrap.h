@@ -10,6 +10,7 @@
 #include <vtkProcessGroup.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProcessGroupWrap : public VtkObjectWrap
 {
@@ -44,6 +45,10 @@ class VtkProcessGroupWrap : public VtkObjectWrap
 		static void RemoveProcessId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCommunicator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROCESSGROUPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROCESSGROUPWRAP_CLASSDEF
+#endif
 };
 
 #endif

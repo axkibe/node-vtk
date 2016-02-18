@@ -10,6 +10,7 @@
 #include <vtkInteractorEventRecorder.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorEventRecorderWrap : public VtkInteractorObserverWrap
 {
@@ -47,6 +48,10 @@ class VtkInteractorEventRecorderWrap : public VtkInteractorObserverWrap
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stop(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTOREVENTRECORDERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTOREVENTRECORDERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkRectangularButtonSource.h>
 
 #include "vtkButtonSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectangularButtonSourceWrap : public VtkButtonSourceWrap
 {
@@ -59,6 +60,10 @@ class VtkRectangularButtonSourceWrap : public VtkButtonSourceWrap
 		static void SetTextureHeightRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTANGULARBUTTONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTANGULARBUTTONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkCollapseVerticesByArrayWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkCollapseVerticesByArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVerticesCollapsedArray", SetVerticesCollapsedArray);
 	Nan::SetPrototypeMethod(tpl, "setVerticesCollapsedArray", SetVerticesCollapsedArray);
 
+#ifdef VTK_NODE_PLUS_VTKCOLLAPSEVERTICESBYARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLLAPSEVERTICESBYARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

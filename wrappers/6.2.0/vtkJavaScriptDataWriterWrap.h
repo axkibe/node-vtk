@@ -10,6 +10,7 @@
 #include <vtkJavaScriptDataWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkJavaScriptDataWriterWrap : public VtkWriterWrap
 {
@@ -39,6 +40,10 @@ class VtkJavaScriptDataWriterWrap : public VtkWriterWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIncludeFieldNames(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKJAVASCRIPTDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKJAVASCRIPTDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

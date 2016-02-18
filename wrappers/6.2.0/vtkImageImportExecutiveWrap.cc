@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamingDemandDrivenPipelineWrap.h"
 #include "vtkImageImportExecutiveWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,9 @@ void VtkImageImportExecutiveWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEIMPORTEXECUTIVEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEIMPORTEXECUTIVEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

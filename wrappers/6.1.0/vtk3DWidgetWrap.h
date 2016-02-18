@@ -10,6 +10,7 @@
 #include <vtk3DWidget.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class Vtk3DWidgetWrap : public VtkInteractorObserverWrap
 {
@@ -47,6 +48,10 @@ class Vtk3DWidgetWrap : public VtkInteractorObserverWrap
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlaceFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTK3DWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTK3DWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkFacetWriter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFacetWriterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkFacetWriterWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFACETWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFACETWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

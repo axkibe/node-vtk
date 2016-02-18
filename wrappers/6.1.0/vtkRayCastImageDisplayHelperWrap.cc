@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkRayCastImageDisplayHelperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkRayCastImageDisplayHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreMultipliedColors", SetPreMultipliedColors);
 	Nan::SetPrototypeMethod(tpl, "setPreMultipliedColors", SetPreMultipliedColors);
 
+#ifdef VTK_NODE_PLUS_VTKRAYCASTIMAGEDISPLAYHELPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRAYCASTIMAGEDISPLAYHELPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

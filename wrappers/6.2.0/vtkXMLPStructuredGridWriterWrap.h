@@ -10,6 +10,7 @@
 #include <vtkXMLPStructuredGridWriter.h>
 
 #include "vtkXMLPStructuredDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPStructuredGridWriterWrap : public VtkXMLPStructuredDataWriterWrap
 {
@@ -35,6 +36,10 @@ class VtkXMLPStructuredGridWriterWrap : public VtkXMLPStructuredDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPSTRUCTUREDGRIDWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPSTRUCTUREDGRIDWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

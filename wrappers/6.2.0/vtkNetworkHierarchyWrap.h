@@ -10,6 +10,7 @@
 #include <vtkNetworkHierarchy.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNetworkHierarchyWrap : public VtkTreeAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkNetworkHierarchyWrap : public VtkTreeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIPArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNETWORKHIERARCHYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNETWORKHIERARCHYWRAP_CLASSDEF
+#endif
 };
 
 #endif

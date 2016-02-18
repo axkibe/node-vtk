@@ -10,6 +10,7 @@
 #include <vtkSMPMergePoints.h>
 
 #include "vtkMergePointsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSMPMergePointsWrap : public VtkMergePointsWrap
 {
@@ -35,6 +36,10 @@ class VtkSMPMergePointsWrap : public VtkMergePointsWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMPMERGEPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMPMERGEPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

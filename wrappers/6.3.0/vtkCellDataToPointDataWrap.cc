@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkCellDataToPointDataWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkCellDataToPointDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassCellData", SetPassCellData);
 	Nan::SetPrototypeMethod(tpl, "setPassCellData", SetPassCellData);
 
+#ifdef VTK_NODE_PLUS_VTKCELLDATATOPOINTDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLDATATOPOINTDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

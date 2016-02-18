@@ -10,6 +10,7 @@
 #include <vtkConstrainedPointHandleRepresentation.h>
 
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentationWrap
 {
@@ -74,6 +75,10 @@ class VtkConstrainedPointHandleRepresentationWrap : public VtkHandleRepresentati
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONSTRAINEDPOINTHANDLEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONSTRAINEDPOINTHANDLEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

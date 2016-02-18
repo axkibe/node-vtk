@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkHyperOctreeLimiterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkHyperOctreeLimiterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumLevel", SetMaximumLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaximumLevel", SetMaximumLevel);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREELIMITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREELIMITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

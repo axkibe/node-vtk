@@ -10,6 +10,7 @@
 #include <vtkLSDynaSummaryParser.h>
 
 #include "vtkXMLParserWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLSDynaSummaryParserWrap : public VtkXMLParserWrap
 {
@@ -33,6 +34,10 @@ class VtkLSDynaSummaryParserWrap : public VtkXMLParserWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLSDYNASUMMARYPARSERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLSDYNASUMMARYPARSERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkConditionVariableWrap.h"
 #include "vtkMutexLockWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkConditionVariableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Wait", Wait);
 	Nan::SetPrototypeMethod(tpl, "wait", Wait);
 
+#ifdef VTK_NODE_PLUS_VTKCONDITIONVARIABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONDITIONVARIABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

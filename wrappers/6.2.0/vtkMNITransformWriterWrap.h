@@ -10,6 +10,7 @@
 #include <vtkMNITransformWriter.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMNITransformWriterWrap : public VtkAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkMNITransformWriterWrap : public VtkAlgorithmWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMNITRANSFORMWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMNITRANSFORMWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

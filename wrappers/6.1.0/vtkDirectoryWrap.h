@@ -10,6 +10,7 @@
 #include <vtkDirectory.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDirectoryWrap : public VtkObjectWrap
 {
@@ -32,6 +33,7 @@ class VtkDirectoryWrap : public VtkObjectWrap
 		static void DeleteDirectory(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void FileIsDirectory(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentWorkingDirectory(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetFiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MakeDirectory(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +41,10 @@ class VtkDirectoryWrap : public VtkObjectWrap
 		static void Open(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Rename(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIRECTORYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIRECTORYWRAP_CLASSDEF
+#endif
 };
 
 #endif

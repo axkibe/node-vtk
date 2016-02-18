@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkObjectFactoryWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkObjectFactoryCollectionWrap.h"
 #include "vtkOverrideInformationCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkObjectFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnRegisterFactory", UnRegisterFactory);
 	Nan::SetPrototypeMethod(tpl, "unRegisterFactory", UnRegisterFactory);
 
+#ifdef VTK_NODE_PLUS_VTKOBJECTFACTORYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBJECTFACTORYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

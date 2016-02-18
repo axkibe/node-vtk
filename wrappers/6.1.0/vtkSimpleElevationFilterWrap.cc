@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkSimpleElevationFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkSimpleElevationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVector", SetVector);
 	Nan::SetPrototypeMethod(tpl, "setVector", SetVector);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLEELEVATIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLEELEVATIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

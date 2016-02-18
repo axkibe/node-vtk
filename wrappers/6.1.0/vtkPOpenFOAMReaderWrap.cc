@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOpenFOAMReaderWrap.h"
 #include "vtkPOpenFOAMReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkPOpenFOAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+#ifdef VTK_NODE_PLUS_VTKPOPENFOAMREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOPENFOAMREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

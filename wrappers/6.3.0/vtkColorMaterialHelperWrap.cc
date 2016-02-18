@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkColorMaterialHelperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,6 +67,9 @@ void VtkColorMaterialHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUniformVariables", SetUniformVariables);
 	Nan::SetPrototypeMethod(tpl, "setUniformVariables", SetUniformVariables);
 
+#ifdef VTK_NODE_PLUS_VTKCOLORMATERIALHELPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLORMATERIALHELPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

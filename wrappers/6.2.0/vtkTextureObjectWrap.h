@@ -10,6 +10,7 @@
 #include <vtkTextureObject.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextureObjectWrap : public VtkObjectWrap
 {
@@ -29,10 +30,19 @@ class VtkTextureObjectWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Activate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Allocate1D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Allocate2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Allocate3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AllocateDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Bind(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyFromFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyToFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Create1D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Create2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Create3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CreateDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Deactivate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Download(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBaseLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -40,10 +50,15 @@ class VtkTextureObjectWrap : public VtkObjectWrap
 		static void GetComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthTextureCompare(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthTextureCompareFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthTextureMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGenerateMipmap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInternalFormat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLinearMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMagnificationFilter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,6 +70,9 @@ class VtkTextureObjectWrap : public VtkObjectWrap
 		static void GetSupportsDepthBufferFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsTextureFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSupportsTextureInteger(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTarget(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTuples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWrapR(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWrapS(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetWrapT(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -82,6 +100,10 @@ class VtkTextureObjectWrap : public VtkObjectWrap
 		static void SetWrapS(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWrapT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREOBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREOBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

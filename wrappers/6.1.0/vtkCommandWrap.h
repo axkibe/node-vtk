@@ -10,6 +10,7 @@
 #include <vtkCommand.h>
 
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCommandWrap : public VtkObjectBaseWrap
 {
@@ -41,6 +42,10 @@ class VtkCommandWrap : public VtkObjectBaseWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAbortFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassiveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMMANDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMMANDWRAP_CLASSDEF
+#endif
 };
 
 #endif

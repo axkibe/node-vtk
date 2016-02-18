@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGlobeSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -170,6 +170,9 @@ void VtkGlobeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStartLongitude", SetStartLongitude);
 	Nan::SetPrototypeMethod(tpl, "setStartLongitude", SetStartLongitude);
 
+#ifdef VTK_NODE_PLUS_VTKGLOBESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGLOBESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

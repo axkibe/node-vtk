@@ -10,6 +10,7 @@
 #include <vtkImageEuclideanDistance.h>
 
 #include "vtkImageDecomposeFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageEuclideanDistanceWrap : public VtkImageDecomposeFilterWrap
 {
@@ -48,6 +49,10 @@ class VtkImageEuclideanDistanceWrap : public VtkImageDecomposeFilterWrap
 		static void SetInitialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEEUCLIDEANDISTANCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEEUCLIDEANDISTANCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

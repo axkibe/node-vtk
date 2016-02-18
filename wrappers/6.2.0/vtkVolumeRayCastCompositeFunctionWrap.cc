@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeRayCastFunctionWrap.h"
 #include "vtkVolumeRayCastCompositeFunctionWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkVolumeRayCastCompositeFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 	Nan::SetPrototypeMethod(tpl, "setCompositeMethodToInterpolateFirst", SetCompositeMethodToInterpolateFirst);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTCOMPOSITEFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMERAYCASTCOMPOSITEFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSQLDatabaseSchema.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSQLDatabaseSchemaWrap : public VtkObjectWrap
 {
@@ -73,6 +74,10 @@ class VtkSQLDatabaseSchemaWrap : public VtkObjectWrap
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSQLDATABASESCHEMAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSQLDATABASESCHEMAWRAP_CLASSDEF
+#endif
 };
 
 #endif

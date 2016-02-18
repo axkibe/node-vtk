@@ -10,6 +10,7 @@
 #include <vtkImageSeparableConvolution.h>
 
 #include "vtkImageDecomposeFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSeparableConvolutionWrap : public VtkImageDecomposeFilterWrap
 {
@@ -39,6 +40,10 @@ class VtkImageSeparableConvolutionWrap : public VtkImageDecomposeFilterWrap
 		static void SetXKernel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYKernel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZKernel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESEPARABLECONVOLUTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESEPARABLECONVOLUTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

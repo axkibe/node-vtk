@@ -10,6 +10,7 @@
 #include <vtkCellQuality.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellQualityWrap : public VtkDataSetAlgorithmWrap
 {
@@ -71,6 +72,10 @@ class VtkCellQualityWrap : public VtkDataSetAlgorithmWrap
 		static void SetUndefinedQuality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnsupportedGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangleStripArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLQUALITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLQUALITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

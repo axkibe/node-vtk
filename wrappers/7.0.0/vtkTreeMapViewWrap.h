@@ -10,6 +10,7 @@
 #include <vtkTreeMapView.h>
 
 #include "vtkTreeAreaViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeMapViewWrap : public VtkTreeAreaViewWrap
 {
@@ -39,6 +40,10 @@ class VtkTreeMapViewWrap : public VtkTreeAreaViewWrap
 		static void SetLayoutStrategyToBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayoutStrategyToSliceAndDice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLayoutStrategyToSquarify(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEMAPVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEMAPVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

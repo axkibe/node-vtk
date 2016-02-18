@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkProgrammableFilterWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkRectilinearGridWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkProgrammableFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCopyArrays", SetCopyArrays);
 	Nan::SetPrototypeMethod(tpl, "setCopyArrays", SetCopyArrays);
 
+#ifdef VTK_NODE_PLUS_VTKPROGRAMMABLEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROGRAMMABLEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

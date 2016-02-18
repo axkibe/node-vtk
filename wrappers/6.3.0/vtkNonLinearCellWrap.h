@@ -10,6 +10,7 @@
 #include <vtkNonLinearCell.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNonLinearCellWrap : public VtkCellWrap
 {
@@ -34,6 +35,10 @@ class VtkNonLinearCellWrap : public VtkCellWrap
 		static void IsLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNONLINEARCELLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNONLINEARCELLWRAP_CLASSDEF
+#endif
 };
 
 #endif

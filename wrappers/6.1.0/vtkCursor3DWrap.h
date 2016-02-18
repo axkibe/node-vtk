@@ -10,6 +10,7 @@
 #include <vtkCursor3D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCursor3DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -68,6 +69,10 @@ class VtkCursor3DWrap : public VtkPolyDataAlgorithmWrap
 		static void YShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCURSOR3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCURSOR3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

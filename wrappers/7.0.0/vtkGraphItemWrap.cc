@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkGraphItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkIncrementalForceLayoutWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkGraphItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateLayout", UpdateLayout);
 	Nan::SetPrototypeMethod(tpl, "updateLayout", UpdateLayout);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

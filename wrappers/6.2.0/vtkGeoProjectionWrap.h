@@ -10,6 +10,7 @@
 #include <vtkGeoProjection.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoProjectionWrap : public VtkObjectWrap
 {
@@ -48,6 +49,10 @@ class VtkGeoProjectionWrap : public VtkObjectWrap
 		static void SetCentralMeridian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOptionalParameter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOPROJECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOPROJECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

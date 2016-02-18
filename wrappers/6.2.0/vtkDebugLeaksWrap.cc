@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkDebugLeaksWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkDebugLeaksWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExitError", SetExitError);
 	Nan::SetPrototypeMethod(tpl, "setExitError", SetExitError);
 
+#ifdef VTK_NODE_PLUS_VTKDEBUGLEAKSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEBUGLEAKSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

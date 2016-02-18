@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOpenGLRenderWindowWrap.h"
 #include "vtkXOpenGLRenderWindowWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -152,6 +152,9 @@ void VtkXOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
 	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
+#ifdef VTK_NODE_PLUS_VTKXOPENGLRENDERWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXOPENGLRENDERWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

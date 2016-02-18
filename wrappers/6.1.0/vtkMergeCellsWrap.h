@@ -10,6 +10,7 @@
 #include <vtkMergeCells.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeCellsWrap : public VtkObjectWrap
 {
@@ -47,6 +48,10 @@ class VtkMergeCellsWrap : public VtkObjectWrap
 		static void SetUnstructuredGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseGlobalCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseGlobalIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGECELLSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGECELLSWRAP_CLASSDEF
+#endif
 };
 
 #endif

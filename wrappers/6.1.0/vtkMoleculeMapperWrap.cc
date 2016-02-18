@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapperWrap.h"
 #include "vtkMoleculeMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkActorWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetAtomicRadiusTypeAsString", GetAtomicRadiusTypeAsString);
 	Nan::SetPrototypeMethod(tpl, "getAtomicRadiusTypeAsString", GetAtomicRadiusTypeAsString);
+
+	Nan::SetPrototypeMethod(tpl, "GetBondColor", GetBondColor);
+	Nan::SetPrototypeMethod(tpl, "getBondColor", GetBondColor);
 
 	Nan::SetPrototypeMethod(tpl, "GetBondColorMode", GetBondColorMode);
 	Nan::SetPrototypeMethod(tpl, "getBondColorMode", GetBondColorMode);
@@ -138,6 +141,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAtomicRadiusTypeToVDWRadius", SetAtomicRadiusTypeToVDWRadius);
 	Nan::SetPrototypeMethod(tpl, "setAtomicRadiusTypeToVDWRadius", SetAtomicRadiusTypeToVDWRadius);
 
+	Nan::SetPrototypeMethod(tpl, "SetBondColor", SetBondColor);
+	Nan::SetPrototypeMethod(tpl, "setBondColor", SetBondColor);
+
 	Nan::SetPrototypeMethod(tpl, "SetBondColorMode", SetBondColorMode);
 	Nan::SetPrototypeMethod(tpl, "setBondColorMode", SetBondColorMode);
 
@@ -177,6 +183,9 @@ void VtkMoleculeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseVDWSpheresSettings", UseVDWSpheresSettings);
 	Nan::SetPrototypeMethod(tpl, "useVDWSpheresSettings", UseVDWSpheresSettings);
 
+#ifdef VTK_NODE_PLUS_VTKMOLECULEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMOLECULEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -258,6 +267,23 @@ void VtkMoleculeMapperWrap::GetAtomicRadiusTypeAsString(const Nan::FunctionCallb
 	}
 	r = native->GetAtomicRadiusTypeAsString();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkMoleculeMapperWrap::GetBondColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	unsigned char const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetBondColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 3 * sizeof(unsigned char));
+	Local<v8::Uint8Array> at = v8::Uint8Array::New(ab, 0, 3);
+	memcpy(ab->GetContents().Data(), r, 3 * sizeof(unsigned char));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkMoleculeMapperWrap::GetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -739,6 +765,82 @@ void VtkMoleculeMapperWrap::SetAtomicRadiusTypeToVDWRadius(const Nan::FunctionCa
 		return;
 	}
 	native->SetAtomicRadiusTypeToVDWRadius();
+}
+
+void VtkMoleculeMapperWrap::SetBondColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMoleculeMapperWrap *wrapper = ObjectWrap::Unwrap<VtkMoleculeMapperWrap>(info.Holder());
+	vtkMoleculeMapper *native = (vtkMoleculeMapper *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint8Array())
+	{
+		v8::Local<v8::Uint8Array>a0(v8::Local<v8::Uint8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBondColor(
+			(unsigned char *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned char b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBondColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetBondColor(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMoleculeMapperWrap::SetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info)

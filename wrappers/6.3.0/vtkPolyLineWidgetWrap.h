@@ -10,6 +10,7 @@
 #include <vtkPolyLineWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyLineWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -35,6 +36,10 @@ class VtkPolyLineWidgetWrap : public VtkAbstractWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYLINEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYLINEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

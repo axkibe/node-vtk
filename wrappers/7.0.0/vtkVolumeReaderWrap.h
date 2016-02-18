@@ -10,6 +10,7 @@
 #include <vtkVolumeReader.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeReaderWrap : public VtkImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkVolumeReaderWrap : public VtkImageAlgorithmWrap
 		static void SetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImageRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

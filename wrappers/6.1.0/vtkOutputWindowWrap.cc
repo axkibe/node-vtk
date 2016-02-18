@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOutputWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkOutputWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPromptUser", SetPromptUser);
 	Nan::SetPrototypeMethod(tpl, "setPromptUser", SetPromptUser);
 
+#ifdef VTK_NODE_PLUS_VTKOUTPUTWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOUTPUTWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

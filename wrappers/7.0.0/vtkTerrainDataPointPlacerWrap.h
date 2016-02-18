@@ -10,6 +10,7 @@
 #include <vtkTerrainDataPointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTerrainDataPointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -41,6 +42,10 @@ class VtkTerrainDataPointPlacerWrap : public VtkPointPlacerWrap
 		static void SetHeightOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTERRAINDATAPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTERRAINDATAPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

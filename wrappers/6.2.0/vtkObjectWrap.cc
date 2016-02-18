@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectBaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCommandWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,9 @@ void VtkObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetDebug", GetDebug);
+	Nan::SetPrototypeMethod(tpl, "getDebug", GetDebug);
+
 	Nan::SetPrototypeMethod(tpl, "GetGlobalWarningDisplay", GetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "getGlobalWarningDisplay", GetGlobalWarningDisplay);
 
@@ -95,9 +98,15 @@ void VtkObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetDebug", SetDebug);
+	Nan::SetPrototypeMethod(tpl, "setDebug", SetDebug);
+
 	Nan::SetPrototypeMethod(tpl, "SetGlobalWarningDisplay", SetGlobalWarningDisplay);
 	Nan::SetPrototypeMethod(tpl, "setGlobalWarningDisplay", SetGlobalWarningDisplay);
 
+#ifdef VTK_NODE_PLUS_VTKOBJECTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBJECTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -175,6 +184,20 @@ void VtkObjectWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkObjectWrap::GetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDebug();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkObjectWrap::GetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -424,6 +447,25 @@ void VtkObjectWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkObjectWrap::SetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkObjectWrap *wrapper = ObjectWrap::Unwrap<VtkObjectWrap>(info.Holder());
+	vtkObject *native = (vtkObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDebug(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -10,6 +10,7 @@
 #include <vtkParallelCoordinatesInteractorStyle.h>
 
 #include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelCoordinatesInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 {
@@ -54,6 +55,10 @@ class VtkParallelCoordinatesInteractorStyleWrap : public VtkInteractorStyleTrack
 		static void StartPan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartZoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Zoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESINTERACTORSTYLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELCOORDINATESINTERACTORSTYLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

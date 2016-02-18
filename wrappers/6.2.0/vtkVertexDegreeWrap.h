@@ -10,6 +10,7 @@
 #include <vtkVertexDegree.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVertexDegreeWrap : public VtkGraphAlgorithmWrap
 {
@@ -34,6 +35,10 @@ class VtkVertexDegreeWrap : public VtkGraphAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVERTEXDEGREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVERTEXDEGREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

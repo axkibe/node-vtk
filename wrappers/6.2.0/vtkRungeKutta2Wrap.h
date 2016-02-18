@@ -10,6 +10,7 @@
 #include <vtkRungeKutta2.h>
 
 #include "vtkInitialValueProblemSolverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRungeKutta2Wrap : public VtkInitialValueProblemSolverWrap
 {
@@ -33,6 +34,10 @@ class VtkRungeKutta2Wrap : public VtkInitialValueProblemSolverWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRUNGEKUTTA2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRUNGEKUTTA2WRAP_CLASSDEF
+#endif
 };
 
 #endif

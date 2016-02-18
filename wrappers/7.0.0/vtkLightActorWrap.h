@@ -10,6 +10,7 @@
 #include <vtkLightActor.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLightActorWrap : public VtkProp3DWrap
 {
@@ -40,6 +41,10 @@ class VtkLightActorWrap : public VtkProp3DWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClippingRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLIGHTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLIGHTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

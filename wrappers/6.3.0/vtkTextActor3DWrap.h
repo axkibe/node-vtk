@@ -10,6 +10,7 @@
 #include <vtkTextActor3D.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextActor3DWrap : public VtkProp3DWrap
 {
@@ -46,6 +47,10 @@ class VtkTextActor3DWrap : public VtkProp3DWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTACTOR3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTACTOR3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

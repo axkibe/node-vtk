@@ -10,6 +10,7 @@
 #include <vtkViewTheme.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkViewThemeWrap : public VtkObjectWrap
 {
@@ -100,6 +101,10 @@ class VtkViewThemeWrap : public VtkObjectWrap
 		static void SetSelectedPointColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedPointOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexLabelColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIEWTHEMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIEWTHEMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

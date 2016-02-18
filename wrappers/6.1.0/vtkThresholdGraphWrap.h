@@ -10,6 +10,7 @@
 #include <vtkThresholdGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThresholdGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkThresholdGraphWrap : public VtkGraphAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLowerThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpperThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHRESHOLDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

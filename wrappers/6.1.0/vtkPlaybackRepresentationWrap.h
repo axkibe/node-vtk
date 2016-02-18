@@ -10,6 +10,7 @@
 #include <vtkPlaybackRepresentation.h>
 
 #include "vtkBorderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlaybackRepresentationWrap : public VtkBorderRepresentationWrap
 {
@@ -48,6 +49,10 @@ class VtkPlaybackRepresentationWrap : public VtkBorderRepresentationWrap
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stop(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLAYBACKREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLAYBACKREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

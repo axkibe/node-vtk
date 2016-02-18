@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkIdListWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+#ifdef VTK_NODE_PLUS_VTKIDLISTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIDLISTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

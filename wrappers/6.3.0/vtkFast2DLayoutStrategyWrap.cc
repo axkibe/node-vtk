@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkFast2DLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkFast2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRandomSeed", SetRandomSeed);
 	Nan::SetPrototypeMethod(tpl, "setRandomSeed", SetRandomSeed);
 
+#ifdef VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkAMRToMultiBlockFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRToMultiBlockFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkAMRToMultiBlockFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRTOMULTIBLOCKFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRTOMULTIBLOCKFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

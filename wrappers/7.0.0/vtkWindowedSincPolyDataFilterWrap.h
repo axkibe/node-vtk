@@ -10,6 +10,7 @@
 #include <vtkWindowedSincPolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWindowedSincPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -73,6 +74,10 @@ class VtkWindowedSincPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetNormalizeCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassBand(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWINDOWEDSINCPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWINDOWEDSINCPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

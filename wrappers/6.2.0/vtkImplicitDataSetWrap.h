@@ -10,6 +10,7 @@
 #include <vtkImplicitDataSet.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitDataSetWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkImplicitDataSetWrap : public VtkImplicitFunctionWrap
 		static void SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkImplicitPlaneRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -298,6 +298,9 @@ void VtkImplicitPlaneRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPLANEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITPLANEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

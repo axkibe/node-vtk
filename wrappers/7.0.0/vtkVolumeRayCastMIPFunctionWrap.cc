@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeRayCastFunctionWrap.h"
 #include "vtkVolumeRayCastMIPFunctionWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkVolumeRayCastMIPFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 	Nan::SetPrototypeMethod(tpl, "setMaximizeMethodToScalarValue", SetMaximizeMethodToScalarValue);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTMIPFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMERAYCASTMIPFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkGAMBITReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGAMBITReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkGAMBITReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGAMBITREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGAMBITREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

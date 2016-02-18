@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkModelMetadataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -193,6 +193,9 @@ void VtkModelMetadataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTitle", SetTitle);
 	Nan::SetPrototypeMethod(tpl, "setTitle", SetTitle);
 
+#ifdef VTK_NODE_PLUS_VTKMODELMETADATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMODELMETADATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

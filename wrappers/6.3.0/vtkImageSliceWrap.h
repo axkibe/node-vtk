@@ -10,6 +10,7 @@
 #include <vtkImageSlice.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSliceWrap : public VtkProp3DWrap
 {
@@ -54,6 +55,10 @@ class VtkImageSliceWrap : public VtkProp3DWrap
 		static void SetStackedImagePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESLICEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESLICEWRAP_CLASSDEF
+#endif
 };
 
 #endif

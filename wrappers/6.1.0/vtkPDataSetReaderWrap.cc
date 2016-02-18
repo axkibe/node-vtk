@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkPDataSetReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkPDataSetReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+#ifdef VTK_NODE_PLUS_VTKPDATASETREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPDATASETREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

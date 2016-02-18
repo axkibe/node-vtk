@@ -10,6 +10,7 @@
 #include <vtkUniformGridPartitioner.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkUniformGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDPARTITIONERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMGRIDPARTITIONERWRAP_CLASSDEF
+#endif
 };
 
 #endif

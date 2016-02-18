@@ -10,6 +10,7 @@
 #include <vtkPerlinNoise.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPerlinNoiseWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkPerlinNoiseWrap : public VtkImplicitFunctionWrap
 		static void SetAmplitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFrequency(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPhase(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPERLINNOISEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPERLINNOISEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPCellDataToPointData.h>
 
 #include "vtkCellDataToPointDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPCellDataToPointDataWrap : public VtkCellDataToPointDataWrap
 {
@@ -37,6 +38,10 @@ class VtkPCellDataToPointDataWrap : public VtkCellDataToPointDataWrap
 		static void PieceInvariantOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPieceInvariant(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPCELLDATATOPOINTDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPCELLDATATOPOINTDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

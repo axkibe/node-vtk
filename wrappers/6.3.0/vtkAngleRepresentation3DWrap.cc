@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAngleRepresentationWrap.h"
 #include "vtkAngleRepresentation3DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkFollowerWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -132,6 +132,9 @@ void VtkAngleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextActorScale", SetTextActorScale);
 	Nan::SetPrototypeMethod(tpl, "setTextActorScale", SetTextActorScale);
 
+#ifdef VTK_NODE_PLUS_VTKANGLEREPRESENTATION3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANGLEREPRESENTATION3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

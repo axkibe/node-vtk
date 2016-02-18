@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkReverseSenseWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkReverseSenseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReverseNormals", SetReverseNormals);
 	Nan::SetPrototypeMethod(tpl, "setReverseNormals", SetReverseNormals);
 
+#ifdef VTK_NODE_PLUS_VTKREVERSESENSEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKREVERSESENSEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

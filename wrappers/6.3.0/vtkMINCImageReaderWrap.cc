@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReader2Wrap.h"
 #include "vtkMINCImageReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkMINCImageAttributesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkMINCImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMINCIMAGEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

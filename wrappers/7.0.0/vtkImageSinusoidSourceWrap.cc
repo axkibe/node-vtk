@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageSinusoidSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkImageSinusoidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESINUSOIDSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESINUSOIDSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

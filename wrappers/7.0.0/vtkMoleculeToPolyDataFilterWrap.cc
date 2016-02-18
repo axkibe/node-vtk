@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMoleculeToPolyDataFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMoleculeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkMoleculeToPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKMOLECULETOPOLYDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMOLECULETOPOLYDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

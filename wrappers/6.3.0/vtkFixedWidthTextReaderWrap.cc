@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkFixedWidthTextReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkFixedWidthTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StripWhiteSpaceOn", StripWhiteSpaceOn);
 	Nan::SetPrototypeMethod(tpl, "stripWhiteSpaceOn", StripWhiteSpaceOn);
 
+#ifdef VTK_NODE_PLUS_VTKFIXEDWIDTHTEXTREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFIXEDWIDTHTEXTREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

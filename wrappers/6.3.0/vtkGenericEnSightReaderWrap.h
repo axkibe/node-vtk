@@ -10,6 +10,7 @@
 #include <vtkGenericEnSightReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericEnSightReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -84,6 +85,10 @@ class VtkGenericEnSightReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetParticleCoordinatesByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadAllVariables(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

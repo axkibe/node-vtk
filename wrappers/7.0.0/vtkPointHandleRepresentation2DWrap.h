@@ -10,6 +10,7 @@
 #include <vtkPointHandleRepresentation2D.h>
 
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointHandleRepresentation2DWrap : public VtkHandleRepresentationWrap
 {
@@ -52,6 +53,10 @@ class VtkPointHandleRepresentation2DWrap : public VtkHandleRepresentationWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTHANDLEREPRESENTATION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTHANDLEREPRESENTATION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

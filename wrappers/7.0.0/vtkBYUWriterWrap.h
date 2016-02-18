@@ -10,6 +10,7 @@
 #include <vtkBYUWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBYUWriterWrap : public VtkWriterWrap
 {
@@ -54,6 +55,10 @@ class VtkBYUWriterWrap : public VtkWriterWrap
 		static void WriteScalarOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteTextureOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteTextureOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBYUWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBYUWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

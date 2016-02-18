@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMutableDirectedGraphWrap.h"
 #include "vtkReebGraphWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkReebGraphSimplificationMetricWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkReebGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Simplify", Simplify);
 	Nan::SetPrototypeMethod(tpl, "simplify", Simplify);
 
+#ifdef VTK_NODE_PLUS_VTKREEBGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKREEBGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

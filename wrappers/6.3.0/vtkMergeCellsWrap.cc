@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMergeCellsWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkMergeCellsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseGlobalIds", SetUseGlobalIds);
 	Nan::SetPrototypeMethod(tpl, "setUseGlobalIds", SetUseGlobalIds);
 
+#ifdef VTK_NODE_PLUS_VTKMERGECELLSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGECELLSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

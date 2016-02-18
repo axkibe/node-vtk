@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderedGraphRepresentationWrap.h"
 #include "vtkRenderedHierarchyRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -128,6 +128,9 @@ void VtkRenderedHierarchyRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraphVisibility", SetGraphVisibility);
 	Nan::SetPrototypeMethod(tpl, "setGraphVisibility", SetGraphVisibility);
 
+#ifdef VTK_NODE_PLUS_VTKRENDEREDHIERARCHYREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDEREDHIERARCHYREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

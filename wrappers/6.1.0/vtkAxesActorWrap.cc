@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkAxesActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
 #include "vtkCaptionActor2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -285,6 +285,9 @@ void VtkAxesActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKAXESACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXESACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

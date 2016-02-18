@@ -10,6 +10,7 @@
 #include <vtkImplicitVolume.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitVolumeWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkImplicitVolumeWrap : public VtkImplicitFunctionWrap
 		static void SetOutGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITVOLUMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITVOLUMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

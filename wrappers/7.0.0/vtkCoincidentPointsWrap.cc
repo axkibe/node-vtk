@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCoincidentPointsWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkCoincidentPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKCOINCIDENTPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOINCIDENTPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

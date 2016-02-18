@@ -10,6 +10,7 @@
 #include <vtkDataWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataWriterWrap : public VtkWriterWrap
 {
@@ -70,6 +71,10 @@ class VtkDataWriterWrap : public VtkWriterWrap
 		static void SetWriteToOutputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

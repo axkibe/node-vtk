@@ -10,6 +10,7 @@
 #include <vtkStructuredExtent.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredExtentWrap : public VtkObjectWrap
 {
@@ -39,6 +40,10 @@ class VtkStructuredExtentWrap : public VtkObjectWrap
 		static void Smaller(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StrictlySmaller(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Transform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDEXTENTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDEXTENTWRAP_CLASSDEF
+#endif
 };
 
 #endif

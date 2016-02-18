@@ -10,6 +10,7 @@
 #include <vtkGraphAnnotationLayersFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphAnnotationLayersFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkGraphAnnotationLayersFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHANNOTATIONLAYERSFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHANNOTATIONLAYERSFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

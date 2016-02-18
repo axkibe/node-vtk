@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataMapperWrap.h"
 #include "vtkPointGaussianMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -120,6 +120,9 @@ void VtkPointGaussianMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplatShaderCode", SetSplatShaderCode);
 	Nan::SetPrototypeMethod(tpl, "setSplatShaderCode", SetSplatShaderCode);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

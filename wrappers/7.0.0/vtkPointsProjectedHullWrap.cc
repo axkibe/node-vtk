@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointsWrap.h"
 #include "vtkPointsProjectedHullWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkPointsProjectedHullWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTSPROJECTEDHULLWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTSPROJECTEDHULLWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

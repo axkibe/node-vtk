@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkStatisticsAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTestOption", SetTestOption);
 	Nan::SetPrototypeMethod(tpl, "setTestOption", SetTestOption);
 
+#ifdef VTK_NODE_PLUS_VTKSTATISTICSALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTATISTICSALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

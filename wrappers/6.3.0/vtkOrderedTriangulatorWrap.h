@@ -10,6 +10,7 @@
 #include <vtkOrderedTriangulator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOrderedTriangulatorWrap : public VtkObjectWrap
 {
@@ -51,6 +52,10 @@ class VtkOrderedTriangulatorWrap : public VtkObjectWrap
 		static void UseTemplatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseTwoSortIdsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseTwoSortIdsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKORDEREDTRIANGULATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKORDEREDTRIANGULATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

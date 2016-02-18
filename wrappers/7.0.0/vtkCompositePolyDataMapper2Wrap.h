@@ -10,6 +10,7 @@
 #include <vtkCompositePolyDataMapper2.h>
 
 #include "vtkGenericCompositePolyDataMapper2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositePolyDataMapper2Wrap : public VtkGenericCompositePolyDataMapper2Wrap
 {
@@ -37,6 +38,10 @@ class VtkCompositePolyDataMapper2Wrap : public VtkGenericCompositePolyDataMapper
 		static void RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderPieceDraw(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

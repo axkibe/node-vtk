@@ -10,6 +10,7 @@
 #include <vtkAppendPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAppendPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkAppendPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetUserManagedInputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserManagedInputsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserManagedInputsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPENDPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPENDPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

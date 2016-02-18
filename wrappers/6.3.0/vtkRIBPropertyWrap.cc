@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropertyWrap.h"
 #include "vtkRIBPropertyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkRIBPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SurfaceShaderUsesDefaultParametersOn", SurfaceShaderUsesDefaultParametersOn);
 	Nan::SetPrototypeMethod(tpl, "surfaceShaderUsesDefaultParametersOn", SurfaceShaderUsesDefaultParametersOn);
 
+#ifdef VTK_NODE_PLUS_VTKRIBPROPERTYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRIBPROPERTYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

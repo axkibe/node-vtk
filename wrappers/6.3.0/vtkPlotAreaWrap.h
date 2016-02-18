@@ -10,6 +10,7 @@
 #include <vtkPlotArea.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotAreaWrap : public VtkPlotWrap
 {
@@ -38,6 +39,10 @@ class VtkPlotAreaWrap : public VtkPlotWrap
 		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateCache(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTAREAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTAREAWRAP_CLASSDEF
+#endif
 };
 
 #endif

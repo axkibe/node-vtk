@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkPerturbCoincidentVerticesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkPerturbCoincidentVerticesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPerturbFactor", SetPerturbFactor);
 	Nan::SetPrototypeMethod(tpl, "setPerturbFactor", SetPerturbFactor);
 
+#ifdef VTK_NODE_PLUS_VTKPERTURBCOINCIDENTVERTICESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPERTURBCOINCIDENTVERTICESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

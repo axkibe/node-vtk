@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkConeSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -131,6 +131,9 @@ void VtkConeSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+#ifdef VTK_NODE_PLUS_VTKCONESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

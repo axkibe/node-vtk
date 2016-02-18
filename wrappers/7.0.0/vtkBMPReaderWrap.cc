@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReaderWrap.h"
 #include "vtkBMPReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkBMPReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAllow8BitBMP", SetAllow8BitBMP);
 	Nan::SetPrototypeMethod(tpl, "setAllow8BitBMP", SetAllow8BitBMP);
 
+#ifdef VTK_NODE_PLUS_VTKBMPREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBMPREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

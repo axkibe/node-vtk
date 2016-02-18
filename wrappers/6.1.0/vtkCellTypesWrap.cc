@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCellTypesWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -57,6 +57,9 @@ void VtkCellTypesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetCellLocation", GetCellLocation);
 	Nan::SetPrototypeMethod(tpl, "getCellLocation", GetCellLocation);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellType", GetCellType);
+	Nan::SetPrototypeMethod(tpl, "getCellType", GetCellType);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -69,8 +72,23 @@ void VtkCellTypesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTypeIdFromClassName", GetTypeIdFromClassName);
 	Nan::SetPrototypeMethod(tpl, "getTypeIdFromClassName", GetTypeIdFromClassName);
 
+	Nan::SetPrototypeMethod(tpl, "InsertCell", InsertCell);
+	Nan::SetPrototypeMethod(tpl, "insertCell", InsertCell);
+
+	Nan::SetPrototypeMethod(tpl, "InsertNextCell", InsertNextCell);
+	Nan::SetPrototypeMethod(tpl, "insertNextCell", InsertNextCell);
+
+	Nan::SetPrototypeMethod(tpl, "InsertNextType", InsertNextType);
+	Nan::SetPrototypeMethod(tpl, "insertNextType", InsertNextType);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
+
+	Nan::SetPrototypeMethod(tpl, "IsLinear", IsLinear);
+	Nan::SetPrototypeMethod(tpl, "isLinear", IsLinear);
+
+	Nan::SetPrototypeMethod(tpl, "IsType", IsType);
+	Nan::SetPrototypeMethod(tpl, "isType", IsType);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
@@ -87,6 +105,9 @@ void VtkCellTypesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+#ifdef VTK_NODE_PLUS_VTKCELLTYPESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLTYPESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -182,6 +203,27 @@ void VtkCellTypesWrap::GetCellLocation(const Nan::FunctionCallbackInfo<v8::Value
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCellTypesWrap::GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		unsigned char r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetCellType(
+			info[0]->Int32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCellTypesWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
@@ -253,6 +295,79 @@ void VtkCellTypesWrap::GetTypeIdFromClassName(const Nan::FunctionCallbackInfo<v8
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkCellTypesWrap::InsertCell(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->InsertCell(
+					info[0]->Int32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellTypesWrap::InsertNextCell(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->InsertNextCell(
+				info[0]->Uint32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellTypesWrap::InsertNextType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->InsertNextType(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCellTypesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
@@ -268,6 +383,48 @@ void VtkCellTypesWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		}
 		r = native->IsA(
 			*a0
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellTypesWrap::IsLinear(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsLinear(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCellTypesWrap::IsType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCellTypesWrap *wrapper = ObjectWrap::Unwrap<VtkCellTypesWrap>(info.Holder());
+	vtkCellTypes *native = (vtkCellTypes *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->IsType(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;

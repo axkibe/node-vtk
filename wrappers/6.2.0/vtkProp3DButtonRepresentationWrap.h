@@ -10,6 +10,7 @@
 #include <vtkProp3DButtonRepresentation.h>
 
 #include "vtkButtonRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProp3DButtonRepresentationWrap : public VtkButtonRepresentationWrap
 {
@@ -50,6 +51,10 @@ class VtkProp3DButtonRepresentationWrap : public VtkButtonRepresentationWrap
 		static void SetFollowCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROP3DBUTTONREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROP3DBUTTONREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

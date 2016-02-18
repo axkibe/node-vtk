@@ -10,6 +10,7 @@
 #include <vtkImageAppendComponents.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageAppendComponentsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkImageAppendComponentsWrap : public VtkThreadedImageAlgorithmWrap
 		static void ReplaceNthInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEAPPENDCOMPONENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEAPPENDCOMPONENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

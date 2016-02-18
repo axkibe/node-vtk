@@ -10,6 +10,7 @@
 #include <vtkGeoEdgeStrategy.h>
 
 #include "vtkEdgeLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoEdgeStrategyWrap : public VtkEdgeLayoutStrategyWrap
 {
@@ -40,6 +41,10 @@ class VtkGeoEdgeStrategyWrap : public VtkEdgeLayoutStrategyWrap
 		static void SetExplodeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOEDGESTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOEDGESTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

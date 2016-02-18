@@ -10,6 +10,7 @@
 #include <vtkDuplicatePolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDuplicatePolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkDuplicatePolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSynchronous(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SynchronousOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SynchronousOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDUPLICATEPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDUPLICATEPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

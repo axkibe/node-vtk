@@ -10,6 +10,7 @@
 #include <vtkFileOutputWindow.h>
 
 #include "vtkOutputWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFileOutputWindowWrap : public VtkOutputWindowWrap
 {
@@ -44,6 +45,10 @@ class VtkFileOutputWindowWrap : public VtkOutputWindowWrap
 		static void SetAppend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFlush(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFILEOUTPUTWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFILEOUTPUTWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

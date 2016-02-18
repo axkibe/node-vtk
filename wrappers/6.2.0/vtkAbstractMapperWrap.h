@@ -10,6 +10,7 @@
 #include <vtkAbstractMapper.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractMapperWrap : public VtkAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkAbstractMapperWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClippingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

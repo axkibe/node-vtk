@@ -10,6 +10,7 @@
 #include <vtkImageNonMaximumSuppression.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageNonMaximumSuppressionWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImageNonMaximumSuppressionWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetHandleBoundaries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMagnitudeInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGENONMAXIMUMSUPPRESSIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGENONMAXIMUMSUPPRESSIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

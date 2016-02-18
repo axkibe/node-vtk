@@ -10,6 +10,7 @@
 #include <vtkTableToDatabaseWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableToDatabaseWriterWrap : public VtkWriterWrap
 {
@@ -38,6 +39,10 @@ class VtkTableToDatabaseWriterWrap : public VtkWriterWrap
 		static void SetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TableNameIsNew(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLETODATABASEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLETODATABASEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

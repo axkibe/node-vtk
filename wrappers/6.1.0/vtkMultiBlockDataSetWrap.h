@@ -10,6 +10,7 @@
 #include <vtkMultiBlockDataSet.h>
 
 #include "vtkDataObjectTreeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiBlockDataSetWrap : public VtkDataObjectTreeWrap
 {
@@ -29,14 +30,23 @@ class VtkMultiBlockDataSetWrap : public VtkDataObjectTreeWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIBLOCKDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTIBLOCKDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

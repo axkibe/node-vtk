@@ -10,6 +10,7 @@
 #include <vtkDistanceToCamera.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDistanceToCameraWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkDistanceToCameraWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDISTANCETOCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDISTANCETOCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

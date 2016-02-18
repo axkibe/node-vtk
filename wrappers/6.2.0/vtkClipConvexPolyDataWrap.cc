@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkClipConvexPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlaneCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkClipConvexPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlanes", SetPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPlanes", SetPlanes);
 
+#ifdef VTK_NODE_PLUS_VTKCLIPCONVEXPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCLIPCONVEXPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

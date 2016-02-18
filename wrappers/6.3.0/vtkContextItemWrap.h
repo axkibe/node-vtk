@@ -10,6 +10,7 @@
 #include <vtkContextItem.h>
 
 #include "vtkAbstractContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextItemWrap : public VtkAbstractContextItemWrap
 {
@@ -35,6 +36,10 @@ class VtkContextItemWrap : public VtkAbstractContextItemWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkMergeGraphsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMutableGraphHelperWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkMergeGraphsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseEdgeWindowOn", UseEdgeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "useEdgeWindowOn", UseEdgeWindowOn);
 
+#ifdef VTK_NODE_PLUS_VTKMERGEGRAPHSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGEGRAPHSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

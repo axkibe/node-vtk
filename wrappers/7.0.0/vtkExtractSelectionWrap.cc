@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExtractSelectionBaseWrap.h"
 #include "vtkExtractSelectionWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkExtractSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseProbeForLocationsOn", UseProbeForLocationsOn);
 	Nan::SetPrototypeMethod(tpl, "useProbeForLocationsOn", UseProbeForLocationsOn);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTSELECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

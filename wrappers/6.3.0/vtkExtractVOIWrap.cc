@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkExtractVOIWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkExtractVOIWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVOI", SetVOI);
 	Nan::SetPrototypeMethod(tpl, "setVOI", SetVOI);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTVOIWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTVOIWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

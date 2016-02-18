@@ -10,6 +10,7 @@
 #include <vtkFast2DLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFast2DLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -52,6 +53,10 @@ class VtkFast2DLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetIterationsPerLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFAST2DLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

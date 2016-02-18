@@ -10,6 +10,7 @@
 #include <vtkMapper2D.h>
 
 #include "vtkAbstractMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMapper2DWrap : public VtkAbstractMapperWrap
 {
@@ -37,6 +38,10 @@ class VtkMapper2DWrap : public VtkAbstractMapperWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderTranslucentPolygonalGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMAPPER2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMAPPER2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkOpenGLHAVSVolumeMapper.h>
 
 #include "vtkHAVSVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLHAVSVolumeMapperWrap : public VtkHAVSVolumeMapperWrap
 {
@@ -37,6 +38,10 @@ class VtkOpenGLHAVSVolumeMapperWrap : public VtkHAVSVolumeMapperWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGPUDataStructures(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLHAVSVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLHAVSVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

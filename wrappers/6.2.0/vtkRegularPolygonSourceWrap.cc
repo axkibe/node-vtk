@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkRegularPolygonSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkRegularPolygonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+#ifdef VTK_NODE_PLUS_VTKREGULARPOLYGONSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKREGULARPOLYGONSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

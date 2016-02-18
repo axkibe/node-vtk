@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkAMRCutPlaneWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkAMRCutPlaneWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseNativeCutterOn", UseNativeCutterOn);
 	Nan::SetPrototypeMethod(tpl, "useNativeCutterOn", UseNativeCutterOn);
 
+#ifdef VTK_NODE_PLUS_VTKAMRCUTPLANEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRCUTPLANEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkEnsembleSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkInformationDataObjectMetaDataKeyWrap.h"
 #include "vtkInformationIntegerRequestKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -56,6 +56,12 @@ void VtkEnsembleSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCurrentMember", GetCurrentMember);
+	Nan::SetPrototypeMethod(tpl, "getCurrentMember", GetCurrentMember);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfMembers", GetNumberOfMembers);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfMembers", GetNumberOfMembers);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -70,11 +76,17 @@ void VtkEnsembleSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetCurrentMember", SetCurrentMember);
+	Nan::SetPrototypeMethod(tpl, "setCurrentMember", SetCurrentMember);
+
 	Nan::SetPrototypeMethod(tpl, "SetMetaData", SetMetaData);
 	Nan::SetPrototypeMethod(tpl, "setMetaData", SetMetaData);
 
 	Nan::SetPrototypeMethod(tpl, "UPDATE_MEMBER", UPDATE_MEMBER);
 
+#ifdef VTK_NODE_PLUS_VTKENSEMBLESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENSEMBLESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -136,6 +148,34 @@ void VtkEnsembleSourceWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkEnsembleSourceWrap::GetCurrentMember(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEnsembleSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEnsembleSourceWrap>(info.Holder());
+	vtkEnsembleSource *native = (vtkEnsembleSource *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentMember();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkEnsembleSourceWrap::GetNumberOfMembers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEnsembleSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEnsembleSourceWrap>(info.Holder());
+	vtkEnsembleSource *native = (vtkEnsembleSource *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfMembers();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkEnsembleSourceWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -244,6 +284,25 @@ void VtkEnsembleSourceWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkEnsembleSourceWrap::SetCurrentMember(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkEnsembleSourceWrap *wrapper = ObjectWrap::Unwrap<VtkEnsembleSourceWrap>(info.Holder());
+	vtkEnsembleSource *native = (vtkEnsembleSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCurrentMember(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

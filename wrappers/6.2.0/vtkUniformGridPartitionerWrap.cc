@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkUniformGridPartitionerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkUniformGridPartitionerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPartitions", SetNumberOfPartitions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPartitions", SetNumberOfPartitions);
 
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDPARTITIONERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNIFORMGRIDPARTITIONERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkCollectGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCollectGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkCollectGraphWrap : public VtkGraphAlgorithmWrap
 		static void SetOutputType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThrough(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSocketController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLLECTGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLLECTGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

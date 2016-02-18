@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageSliceWrap.h"
 #include "vtkImageActorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkImageActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZSlice", SetZSlice);
 	Nan::SetPrototypeMethod(tpl, "setZSlice", SetZSlice);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

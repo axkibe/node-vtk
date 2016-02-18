@@ -10,6 +10,7 @@
 #include <vtkBoxClipDataSet.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoxClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -40,6 +41,7 @@ class VtkBoxClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void GetGenerateClippedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfOutputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +49,11 @@ class VtkBoxClipDataSetWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetGenerateClipScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateClippedOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOXCLIPDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOXCLIPDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

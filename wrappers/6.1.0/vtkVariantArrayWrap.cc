@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractArrayWrap.h"
 #include "vtkVariantArrayWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkArrayIteratorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkVariantArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+#ifdef VTK_NODE_PLUS_VTKVARIANTARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVARIANTARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

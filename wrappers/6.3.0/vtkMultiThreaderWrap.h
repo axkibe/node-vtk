@@ -10,6 +10,7 @@
 #include <vtkMultiThreader.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiThreaderWrap : public VtkObjectWrap
 {
@@ -45,6 +46,10 @@ class VtkMultiThreaderWrap : public VtkObjectWrap
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleMethodExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TerminateThread(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTITHREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTITHREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

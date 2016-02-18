@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkScalarsToColorsItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkPenWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkScalarsToColorsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUserBounds", SetUserBounds);
 	Nan::SetPrototypeMethod(tpl, "setUserBounds", SetUserBounds);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARSTOCOLORSITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHardwareSelectorWrap.h"
 #include "vtkOpenGLHardwareSelectorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,9 +62,18 @@ void VtkOpenGLHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RenderCompositeIndex", RenderCompositeIndex);
+	Nan::SetPrototypeMethod(tpl, "renderCompositeIndex", RenderCompositeIndex);
+
+	Nan::SetPrototypeMethod(tpl, "RenderProcessId", RenderProcessId);
+	Nan::SetPrototypeMethod(tpl, "renderProcessId", RenderProcessId);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLHARDWARESELECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLHARDWARESELECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -175,6 +184,44 @@ void VtkOpenGLHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkOpenGLHardwareSelectorWrap::RenderCompositeIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSelectorWrap>(info.Holder());
+	vtkOpenGLHardwareSelector *native = (vtkOpenGLHardwareSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RenderCompositeIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLHardwareSelectorWrap::RenderProcessId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLHardwareSelectorWrap>(info.Holder());
+	vtkOpenGLHardwareSelector *native = (vtkOpenGLHardwareSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RenderProcessId(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

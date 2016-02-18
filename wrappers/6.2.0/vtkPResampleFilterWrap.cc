@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkPResampleFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkPResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseInputBoundsOn", UseInputBoundsOn);
 	Nan::SetPrototypeMethod(tpl, "useInputBoundsOn", UseInputBoundsOn);
 
+#ifdef VTK_NODE_PLUS_VTKPRESAMPLEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPRESAMPLEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSuperquadric.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSuperquadricWrap : public VtkImplicitFunctionWrap
 {
@@ -53,6 +54,10 @@ class VtkSuperquadricWrap : public VtkImplicitFunctionWrap
 		static void SetToroidal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToroidalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToroidalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUPERQUADRICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUPERQUADRICWRAP_CLASSDEF
+#endif
 };
 
 #endif

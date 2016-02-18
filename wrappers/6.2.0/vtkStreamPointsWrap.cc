@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamerWrap.h"
 #include "vtkStreamPointsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkStreamPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeIncrement", SetTimeIncrement);
 	Nan::SetPrototypeMethod(tpl, "setTimeIncrement", SetTimeIncrement);
 
+#ifdef VTK_NODE_PLUS_VTKSTREAMPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTREAMPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

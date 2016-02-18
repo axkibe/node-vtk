@@ -10,6 +10,7 @@
 #include <vtkSubPixelPositionEdgels.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSubPixelPositionEdgelsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkSubPixelPositionEdgelsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTargetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TargetFlagOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TargetFlagOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUBPIXELPOSITIONEDGELSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUBPIXELPOSITIONEDGELSWRAP_CLASSDEF
+#endif
 };
 
 #endif

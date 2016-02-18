@@ -10,6 +10,7 @@
 #include <vtkAmoebaMinimizer.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAmoebaMinimizerWrap : public VtkObjectWrap
 {
@@ -61,6 +62,10 @@ class VtkAmoebaMinimizerWrap : public VtkObjectWrap
 		static void SetParameterTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParameterValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMOEBAMINIMIZERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMOEBAMINIMIZERWRAP_CLASSDEF
+#endif
 };
 
 #endif

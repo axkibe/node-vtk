@@ -10,6 +10,7 @@
 #include <vtkSimpleScalarTree.h>
 
 #include "vtkScalarTreeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimpleScalarTreeWrap : public VtkScalarTreeWrap
 {
@@ -45,6 +46,10 @@ class VtkSimpleScalarTreeWrap : public VtkScalarTreeWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBranchingFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLESCALARTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLESCALARTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLightWrap.h"
 #include "vtkRIBLightWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkRIBLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShadowsOn", ShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "shadowsOn", ShadowsOn);
 
+#ifdef VTK_NODE_PLUS_VTKRIBLIGHTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRIBLIGHTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSliceCubes.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSliceCubesWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkSliceCubesWrap : public VtkObjectWrap
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLICECUBESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLICECUBESWRAP_CLASSDEF
+#endif
 };
 
 #endif

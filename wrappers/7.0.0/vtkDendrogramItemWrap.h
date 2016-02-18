@@ -10,6 +10,7 @@
 #include <vtkDendrogramItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDendrogramItemWrap : public VtkContextItemWrap
 {
@@ -29,6 +30,7 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CollapseToNumberOfLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ComputeLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayNumberOfCollapsedLeafNodesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayNumberOfCollapsedLeafNodesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -59,6 +61,10 @@ class VtkDendrogramItemWrap : public VtkContextItemWrap
 		static void SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDENDROGRAMITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDENDROGRAMITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

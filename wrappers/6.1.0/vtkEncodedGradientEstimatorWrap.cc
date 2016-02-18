@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkEncodedGradientEstimatorWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDirectionEncoderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -162,6 +162,9 @@ void VtkEncodedGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZeroPadOn", ZeroPadOn);
 	Nan::SetPrototypeMethod(tpl, "zeroPadOn", ZeroPadOn);
 
+#ifdef VTK_NODE_PLUS_VTKENCODEDGRADIENTESTIMATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENCODEDGRADIENTESTIMATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

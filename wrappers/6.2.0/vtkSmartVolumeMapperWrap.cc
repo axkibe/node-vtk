@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeMapperWrap.h"
 #include "vtkSmartVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkVolumeWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkSmartVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRequestedRenderModeToRayCastAndTexture", SetRequestedRenderModeToRayCastAndTexture);
 	Nan::SetPrototypeMethod(tpl, "setRequestedRenderModeToRayCastAndTexture", SetRequestedRenderModeToRayCastAndTexture);
 
+#ifdef VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

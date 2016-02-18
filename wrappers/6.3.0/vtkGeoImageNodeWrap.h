@@ -10,6 +10,7 @@
 #include <vtkGeoImageNode.h>
 
 #include "vtkGeoTreeNodeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoImageNodeWrap : public VtkGeoTreeNodeWrap
 {
@@ -44,6 +45,10 @@ class VtkGeoImageNodeWrap : public VtkGeoTreeNodeWrap
 		static void SetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOIMAGENODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOIMAGENODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

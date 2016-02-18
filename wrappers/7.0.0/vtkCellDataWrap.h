@@ -10,6 +10,7 @@
 #include <vtkCellData.h>
 
 #include "vtkDataSetAttributesWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellDataWrap : public VtkDataSetAttributesWrap
 {
@@ -33,6 +34,10 @@ class VtkCellDataWrap : public VtkDataSetAttributesWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

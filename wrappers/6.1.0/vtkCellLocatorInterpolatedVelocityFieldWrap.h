@@ -10,6 +10,7 @@
 #include <vtkCellLocatorInterpolatedVelocityField.h>
 
 #include "vtkCompositeInterpolatedVelocityFieldWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellLocatorInterpolatedVelocityFieldWrap : public VtkCompositeInterpolatedVelocityFieldWrap
 {
@@ -38,6 +39,10 @@ class VtkCellLocatorInterpolatedVelocityFieldWrap : public VtkCompositeInterpola
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellLocatorPrototype(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLLOCATORINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLLOCATORINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

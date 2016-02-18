@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkBoxWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkBoxWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXMin", SetXMin);
 	Nan::SetPrototypeMethod(tpl, "setXMin", SetXMin);
 
+#ifdef VTK_NODE_PLUS_VTKBOXWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBOXWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

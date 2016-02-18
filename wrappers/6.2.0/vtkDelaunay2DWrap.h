@@ -10,6 +10,7 @@
 #include <vtkDelaunay2D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDelaunay2DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -58,6 +59,10 @@ class VtkDelaunay2DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDELAUNAY2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDELAUNAY2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

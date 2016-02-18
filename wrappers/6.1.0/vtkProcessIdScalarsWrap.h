@@ -10,6 +10,7 @@
 #include <vtkProcessIdScalars.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProcessIdScalarsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkProcessIdScalarsWrap : public VtkDataSetAlgorithmWrap
 		static void SetRandomMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROCESSIDSCALARSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROCESSIDSCALARSWRAP_CLASSDEF
+#endif
 };
 
 #endif

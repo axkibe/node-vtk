@@ -10,6 +10,7 @@
 #include <vtkUTF16TextCodec.h>
 
 #include "vtkTextCodecWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUTF16TextCodecWrap : public VtkTextCodecWrap
 {
@@ -36,6 +37,10 @@ class VtkUTF16TextCodecWrap : public VtkTextCodecWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBigEndian(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUTF16TEXTCODECWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUTF16TEXTCODECWRAP_CLASSDEF
+#endif
 };
 
 #endif

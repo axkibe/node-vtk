@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCellArrayWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkCellArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateCellCount", UpdateCellCount);
 	Nan::SetPrototypeMethod(tpl, "updateCellCount", UpdateCellCount);
 
+#ifdef VTK_NODE_PLUS_VTKCELLARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

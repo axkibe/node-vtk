@@ -10,6 +10,7 @@
 #include <vtkXMLFileOutputWindow.h>
 
 #include "vtkFileOutputWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLFileOutputWindowWrap : public VtkFileOutputWindowWrap
 {
@@ -39,6 +40,10 @@ class VtkXMLFileOutputWindowWrap : public VtkFileOutputWindowWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLFILEOUTPUTWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLFILEOUTPUTWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

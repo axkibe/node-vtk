@@ -10,6 +10,7 @@
 #include <vtkNetCDFPOPReader.h>
 
 #include "vtkRectilinearGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNetCDFPOPReaderWrap : public VtkRectilinearGridAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkNetCDFPOPReaderWrap : public VtkRectilinearGridAlgorithmWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStride(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariableArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNETCDFPOPREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNETCDFPOPREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

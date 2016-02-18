@@ -10,6 +10,7 @@
 #include <vtkInteractorObserver.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorObserverWrap : public VtkObjectWrap
 {
@@ -60,6 +61,10 @@ class VtkInteractorObserverWrap : public VtkObjectWrap
 		static void SetKeyPressActivation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKeyPressActivationValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickingManaged(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPlane.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlaneWrap : public VtkImplicitFunctionWrap
 {
@@ -45,6 +46,10 @@ class VtkPlaneWrap : public VtkImplicitFunctionWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLANEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLANEWRAP_CLASSDEF
+#endif
 };
 
 #endif

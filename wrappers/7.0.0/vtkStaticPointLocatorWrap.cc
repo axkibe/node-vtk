@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractPointLocatorWrap.h"
 #include "vtkStaticPointLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkStaticPointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPointsPerBucket", SetNumberOfPointsPerBucket);
 
+#ifdef VTK_NODE_PLUS_VTKSTATICPOINTLOCATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTATICPOINTLOCATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

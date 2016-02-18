@@ -10,6 +10,7 @@
 #include <vtkResliceCursorThickLineRepresentation.h>
 
 #include "vtkResliceCursorLineRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorThickLineRepresentationWrap : public VtkResliceCursorLineRepresentationWrap
 {
@@ -35,6 +36,10 @@ class VtkResliceCursorThickLineRepresentationWrap : public VtkResliceCursorLineR
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResliceParameters(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORTHICKLINEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORTHICKLINEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkDepthPeelingPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDepthPeelingPassWrap : public VtkRenderPassWrap
 {
@@ -45,6 +46,10 @@ class VtkDepthPeelingPassWrap : public VtkRenderPassWrap
 		static void SetOcclusionRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslucentPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslucentZTextureUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEPTHPEELINGPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEPTHPEELINGPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

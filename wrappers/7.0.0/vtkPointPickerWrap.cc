@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPickerWrap.h"
 #include "vtkPointPickerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkPointPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseCellsOn", UseCellsOn);
 	Nan::SetPrototypeMethod(tpl, "useCellsOn", UseCellsOn);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

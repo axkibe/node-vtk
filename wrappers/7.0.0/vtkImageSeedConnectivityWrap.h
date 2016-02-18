@@ -10,6 +10,7 @@
 #include <vtkImageSeedConnectivity.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSeedConnectivityWrap : public VtkImageAlgorithmWrap
 {
@@ -33,11 +34,21 @@ class VtkImageSeedConnectivityWrap : public VtkImageAlgorithmWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetConnector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInputConnectValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutputUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllSeeds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInputConnectValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutputConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutputUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

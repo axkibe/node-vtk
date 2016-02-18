@@ -10,6 +10,7 @@
 #include <vtkOrientedPolygonalHandleRepresentation3D.h>
 
 #include "vtkAbstractPolygonalHandleRepresentation3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOrientedPolygonalHandleRepresentation3DWrap : public VtkAbstractPolygonalHandleRepresentation3DWrap
 {
@@ -33,6 +34,10 @@ class VtkOrientedPolygonalHandleRepresentation3DWrap : public VtkAbstractPolygon
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKORIENTEDPOLYGONALHANDLEREPRESENTATION3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKORIENTEDPOLYGONALHANDLEREPRESENTATION3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

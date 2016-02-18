@@ -10,6 +10,7 @@
 #include <vtkOBJExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOBJExporterWrap : public VtkExporterWrap
 {
@@ -35,6 +36,10 @@ class VtkOBJExporterWrap : public VtkExporterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

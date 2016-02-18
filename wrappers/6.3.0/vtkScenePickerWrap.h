@@ -10,6 +10,7 @@
 #include <vtkScenePicker.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScenePickerWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkScenePickerWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnableVertexPicking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCENEPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCENEPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

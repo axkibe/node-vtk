@@ -10,6 +10,7 @@
 #include <vtkImageSpatialAlgorithm.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSpatialAlgorithmWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkImageSpatialAlgorithmWrap : public VtkThreadedImageAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESPATIALALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESPATIALALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

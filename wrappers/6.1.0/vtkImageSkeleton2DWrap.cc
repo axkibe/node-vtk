@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageIterateFilterWrap.h"
 #include "vtkImageSkeleton2DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkImageSkeleton2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPrune", SetPrune);
 	Nan::SetPrototypeMethod(tpl, "setPrune", SetPrune);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESKELETON2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESKELETON2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

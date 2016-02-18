@@ -10,6 +10,7 @@
 #include <vtkLabelHierarchyCompositeIterator.h>
 
 #include "vtkLabelHierarchyIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelHierarchyCompositeIteratorWrap : public VtkLabelHierarchyIteratorWrap
 {
@@ -41,6 +42,10 @@ class VtkLabelHierarchyCompositeIteratorWrap : public VtkLabelHierarchyIteratorW
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Next(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYCOMPOSITEITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELHIERARCHYCOMPOSITEITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

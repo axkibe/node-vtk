@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkActor2DCollectionWrap.h"
 #include "vtkAssemblyPathWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -212,6 +212,9 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
+#ifdef VTK_NODE_PLUS_VTKVIEWPORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIEWPORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkScalarBarActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkPropWrap.h"
 #include "vtkTexturedActor2DWrap.h"
 #include "vtkProperty2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -366,6 +366,9 @@ void VtkScalarBarActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseOpacityOn", UseOpacityOn);
 	Nan::SetPrototypeMethod(tpl, "useOpacityOn", UseOpacityOn);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARBARACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARBARACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

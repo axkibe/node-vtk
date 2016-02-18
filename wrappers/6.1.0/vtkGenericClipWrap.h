@@ -10,6 +10,7 @@
 #include <vtkGenericClip.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericClipWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -60,6 +61,10 @@ class VtkGenericClipWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICCLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICCLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

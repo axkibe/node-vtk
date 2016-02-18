@@ -10,6 +10,7 @@
 #include <vtkDecimatePolylineFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDecimatePolylineFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkDecimatePolylineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetReduction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDECIMATEPOLYLINEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDECIMATEPOLYLINEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

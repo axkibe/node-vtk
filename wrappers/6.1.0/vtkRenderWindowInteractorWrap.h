@@ -10,6 +10,7 @@
 #include <vtkRenderWindowInteractor.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 {
@@ -140,6 +141,10 @@ class VtkRenderWindowInteractorWrap : public VtkObjectWrap
 		static void TerminateApp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserCallback(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERWINDOWINTERACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERWINDOWINTERACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

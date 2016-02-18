@@ -10,6 +10,7 @@
 #include <vtkRenderStepsPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderStepsPassWrap : public VtkRenderPassWrap
 {
@@ -48,6 +49,10 @@ class VtkRenderStepsPassWrap : public VtkRenderPassWrap
 		static void SetPostProcessPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslucentPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolumetricPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERSTEPSPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERSTEPSPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

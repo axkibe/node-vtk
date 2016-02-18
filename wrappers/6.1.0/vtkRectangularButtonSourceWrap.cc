@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkButtonSourceWrap.h"
 #include "vtkRectangularButtonSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkRectangularButtonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+#ifdef VTK_NODE_PLUS_VTKRECTANGULARBUTTONSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTANGULARBUTTONSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

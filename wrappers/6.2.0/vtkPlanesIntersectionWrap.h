@@ -10,6 +10,7 @@
 #include <vtkPlanesIntersection.h>
 
 #include "vtkPlanesWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlanesIntersectionWrap : public VtkPlanesWrap
 {
@@ -34,6 +35,10 @@ class VtkPlanesIntersectionWrap : public VtkPlanesWrap
 		static void IntersectsRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PolygonIntersectsBBox(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRegionVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLANESINTERSECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLANESINTERSECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

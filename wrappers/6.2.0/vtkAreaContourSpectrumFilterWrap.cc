@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkAreaContourSpectrumFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkAreaContourSpectrumFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSamples", SetNumberOfSamples);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSamples", SetNumberOfSamples);
 
+#ifdef VTK_NODE_PLUS_VTKAREACONTOURSPECTRUMFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAREACONTOURSPECTRUMFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

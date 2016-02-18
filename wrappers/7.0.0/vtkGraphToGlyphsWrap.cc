@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGraphToGlyphsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkGraphToGlyphsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScreenSize", SetScreenSize);
 	Nan::SetPrototypeMethod(tpl, "setScreenSize", SetScreenSize);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHTOGLYPHSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHTOGLYPHSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkGenericVertexAttributeMapping.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericVertexAttributeMappingWrap : public VtkObjectWrap
 {
@@ -30,12 +31,22 @@ class VtkGenericVertexAttributeMappingWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void AddMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAttributeName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFieldAssociation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfMappings(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetTextureUnit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllMappings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveMapping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICVERTEXATTRIBUTEMAPPINGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICVERTEXATTRIBUTEMAPPINGWRAP_CLASSDEF
+#endif
 };
 
 #endif

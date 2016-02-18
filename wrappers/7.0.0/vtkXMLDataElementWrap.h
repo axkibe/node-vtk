@@ -10,6 +10,7 @@
 #include <vtkXMLDataElement.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLDataElementWrap : public VtkObjectWrap
 {
@@ -71,6 +72,10 @@ class VtkXMLDataElementWrap : public VtkObjectWrap
 		static void SetIntAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_CLASSDEF
+#endif
 };
 
 #endif

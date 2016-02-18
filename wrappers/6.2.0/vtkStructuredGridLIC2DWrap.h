@@ -10,6 +10,7 @@
 #include <vtkStructuredGridLIC2D.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridLIC2DWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkStructuredGridLIC2DWrap : public VtkStructuredGridAlgorithmWrap
 		static void SetMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDLIC2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDLIC2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

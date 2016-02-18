@@ -10,6 +10,7 @@
 #include <vtkImageConstantPad.h>
 
 #include "vtkImagePadFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageConstantPadWrap : public VtkImagePadFilterWrap
 {
@@ -35,6 +36,10 @@ class VtkImageConstantPadWrap : public VtkImagePadFilterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetConstant(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECONSTANTPADWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECONSTANTPADWRAP_CLASSDEF
+#endif
 };
 
 #endif

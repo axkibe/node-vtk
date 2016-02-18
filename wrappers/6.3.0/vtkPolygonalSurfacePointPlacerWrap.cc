@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataPointPlacerWrap.h"
 #include "vtkPolygonalSurfacePointPlacerWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkCellPickerWrap.h"
 #include "vtkPolyDataCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -105,6 +105,9 @@ void VtkPolygonalSurfacePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ValidateWorldPosition", ValidateWorldPosition);
 	Nan::SetPrototypeMethod(tpl, "validateWorldPosition", ValidateWorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYGONALSURFACEPOINTPLACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYGONALSURFACEPOINTPLACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

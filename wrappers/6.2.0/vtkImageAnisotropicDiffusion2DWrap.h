@@ -10,6 +10,7 @@
 #include <vtkImageAnisotropicDiffusion2D.h>
 
 #include "vtkImageSpatialAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageAnisotropicDiffusion2DWrap : public VtkImageSpatialAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkImageAnisotropicDiffusion2DWrap : public VtkImageSpatialAlgorithmWrap
 		static void SetFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGradientMagnitudeThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEANISOTROPICDIFFUSION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEANISOTROPICDIFFUSION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeDualGridContourFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeDualGridContourFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkHyperOctreeDualGridContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEDUALGRIDCONTOURFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREEDUALGRIDCONTOURFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

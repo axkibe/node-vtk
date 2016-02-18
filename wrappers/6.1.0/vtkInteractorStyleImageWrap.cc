@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkInteractorStyleImageWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImagePropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -180,6 +180,9 @@ void VtkInteractorStyleImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WindowLevel", WindowLevel);
 	Nan::SetPrototypeMethod(tpl, "windowLevel", WindowLevel);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEIMAGEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEIMAGEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

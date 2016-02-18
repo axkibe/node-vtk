@@ -10,6 +10,7 @@
 #include <vtkVolumeContourSpectrumFilter.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeContourSpectrumFilterWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkVolumeContourSpectrumFilterWrap : public VtkDataObjectAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMECONTOURSPECTRUMFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMECONTOURSPECTRUMFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

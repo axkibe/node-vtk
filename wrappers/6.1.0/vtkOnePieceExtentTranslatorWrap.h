@@ -10,6 +10,7 @@
 #include <vtkOnePieceExtentTranslator.h>
 
 #include "vtkExtentTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOnePieceExtentTranslatorWrap : public VtkExtentTranslatorWrap
 {
@@ -33,6 +34,10 @@ class VtkOnePieceExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKONEPIECEEXTENTTRANSLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKONEPIECEEXTENTTRANSLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

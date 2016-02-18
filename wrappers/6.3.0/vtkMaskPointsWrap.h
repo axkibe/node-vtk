@@ -10,6 +10,7 @@
 #include <vtkMaskPoints.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMaskPointsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkMaskPointsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSingleVertexPerCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleVertexPerCellOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleVertexPerCellOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMASKPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMASKPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

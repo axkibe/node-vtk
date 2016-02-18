@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOutputWindowWrap.h"
 #include "vtkFileOutputWindowWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkFileOutputWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFlush", SetFlush);
 	Nan::SetPrototypeMethod(tpl, "setFlush", SetFlush);
 
+#ifdef VTK_NODE_PLUS_VTKFILEOUTPUTWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFILEOUTPUTWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

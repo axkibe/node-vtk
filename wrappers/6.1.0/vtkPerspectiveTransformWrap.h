@@ -10,6 +10,7 @@
 #include <vtkPerspectiveTransform.h>
 
 #include "vtkHomogeneousTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPerspectiveTransformWrap : public VtkHomogeneousTransformWrap
 {
@@ -62,6 +63,10 @@ class VtkPerspectiveTransformWrap : public VtkHomogeneousTransformWrap
 		static void Shear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stereo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPERSPECTIVETRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPERSPECTIVETRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

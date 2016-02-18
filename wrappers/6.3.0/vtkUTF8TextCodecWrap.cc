@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTextCodecWrap.h"
 #include "vtkUTF8TextCodecWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkUTF8TextCodecWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKUTF8TEXTCODECWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUTF8TEXTCODECWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

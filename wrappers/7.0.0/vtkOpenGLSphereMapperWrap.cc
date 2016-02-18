@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOpenGLPolyDataMapperWrap.h"
 #include "vtkOpenGLSphereMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,6 +67,9 @@ void VtkOpenGLSphereMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleArray", SetScaleArray);
 	Nan::SetPrototypeMethod(tpl, "setScaleArray", SetScaleArray);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLSPHEREMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLSPHEREMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

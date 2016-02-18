@@ -10,6 +10,7 @@
 #include <vtkImageTracerWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageTracerWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -94,6 +95,10 @@ class VtkImageTracerWidgetWrap : public Vtk3DWidgetWrap
 		static void SetViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SnapToImageOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SnapToImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETRACERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETRACERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

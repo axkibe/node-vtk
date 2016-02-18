@@ -10,6 +10,7 @@
 #include <vtkParallelCoordinatesRepresentation.h>
 
 #include "vtkRenderedRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentationWrap
 {
@@ -69,6 +70,10 @@ class VtkParallelCoordinatesRepresentationWrap : public VtkRenderedRepresentatio
 		static void SwapAxisPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCurvesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCurvesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELCOORDINATESREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGenericEdgeTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkGenericEdgeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICEDGETABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICEDGETABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

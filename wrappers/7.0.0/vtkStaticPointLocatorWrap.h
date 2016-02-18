@@ -10,6 +10,7 @@
 #include <vtkStaticPointLocator.h>
 
 #include "vtkAbstractPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStaticPointLocatorWrap : public VtkAbstractPointLocatorWrap
 {
@@ -45,6 +46,10 @@ class VtkStaticPointLocatorWrap : public VtkAbstractPointLocatorWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPointsPerBucket(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTATICPOINTLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTATICPOINTLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPolyDataMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataMapperWrap : public VtkMapperWrap
 {
@@ -51,6 +52,10 @@ class VtkPolyDataMapperWrap : public VtkMapperWrap
 		static void SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

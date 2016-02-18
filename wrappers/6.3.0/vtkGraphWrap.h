@@ -10,6 +10,7 @@
 #include <vtkGraph.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphWrap : public VtkDataObjectWrap
 {
@@ -61,6 +62,10 @@ class VtkGraphWrap : public VtkDataObjectWrap
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToDirectedGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToUndirectedGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

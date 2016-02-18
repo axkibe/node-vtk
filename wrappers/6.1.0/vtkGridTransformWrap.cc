@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWarpTransformWrap.h"
 #include "vtkGridTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkGridTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationModeToNearestNeighbor", SetInterpolationModeToNearestNeighbor);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationModeToNearestNeighbor", SetInterpolationModeToNearestNeighbor);
 
+#ifdef VTK_NODE_PLUS_VTKGRIDTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRIDTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

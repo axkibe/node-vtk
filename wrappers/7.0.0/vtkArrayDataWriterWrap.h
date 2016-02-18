@@ -10,6 +10,7 @@
 #include <vtkArrayDataWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArrayDataWriterWrap : public VtkWriterWrap
 {
@@ -44,6 +45,10 @@ class VtkArrayDataWriterWrap : public VtkWriterWrap
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToOutputStringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARRAYDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARRAYDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

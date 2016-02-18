@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageViewer2Wrap.h"
 #include "vtkResliceImageViewerWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkBoundedPlanePointPlacerWrap.h"
 #include "vtkResliceImageViewerMeasurementsWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -142,6 +142,9 @@ void VtkResliceImageViewerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SliceScrollOnMouseWheelOn", SliceScrollOnMouseWheelOn);
 	Nan::SetPrototypeMethod(tpl, "sliceScrollOnMouseWheelOn", SliceScrollOnMouseWheelOn);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

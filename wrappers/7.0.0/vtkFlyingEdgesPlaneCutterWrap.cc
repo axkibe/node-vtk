@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkFlyingEdgesPlaneCutterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlaneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkFlyingEdgesPlaneCutterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPlane", SetPlane);
 	Nan::SetPrototypeMethod(tpl, "setPlane", SetPlane);
 
+#ifdef VTK_NODE_PLUS_VTKFLYINGEDGESPLANECUTTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFLYINGEDGESPLANECUTTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkImageStencil.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageStencilWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkImageStencilWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetReverseStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStencilConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStencilData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESTENCILWRAP_CLASSDEF
+#endif
 };
 
 #endif

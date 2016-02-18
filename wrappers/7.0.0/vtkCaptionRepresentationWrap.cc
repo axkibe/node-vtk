@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderRepresentationWrap.h"
 #include "vtkCaptionRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkCaptionRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFontFactor", SetFontFactor);
 	Nan::SetPrototypeMethod(tpl, "setFontFactor", SetFontFactor);
 
+#ifdef VTK_NODE_PLUS_VTKCAPTIONREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAPTIONREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

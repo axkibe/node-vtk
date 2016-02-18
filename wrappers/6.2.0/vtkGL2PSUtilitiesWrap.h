@@ -10,6 +10,7 @@
 #include <vtkGL2PSUtilities.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGL2PSUtilitiesWrap : public VtkObjectWrap
 {
@@ -29,6 +30,7 @@ class VtkGL2PSUtilitiesWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void Draw3DPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DrawString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -38,6 +40,10 @@ class VtkGL2PSUtilitiesWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TextPropertyToGL2PSAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TextPropertyToPSFontName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGL2PSUTILITIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGL2PSUTILITIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

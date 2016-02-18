@@ -10,6 +10,7 @@
 #include <vtkAnnotatedCubeActor.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAnnotatedCubeActorWrap : public VtkProp3DWrap
 {
@@ -75,6 +76,10 @@ class VtkAnnotatedCubeActorWrap : public VtkProp3DWrap
 		static void SetZMinusFaceText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZPlusFaceText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANNOTATEDCUBEACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANNOTATEDCUBEACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

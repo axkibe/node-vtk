@@ -10,6 +10,7 @@
 #include <vtkBMPReader.h>
 
 #include "vtkImageReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBMPReaderWrap : public VtkImageReaderWrap
 {
@@ -42,6 +43,10 @@ class VtkBMPReaderWrap : public VtkImageReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAllow8BitBMP(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBMPREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBMPREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

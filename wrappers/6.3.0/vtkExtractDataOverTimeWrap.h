@@ -10,6 +10,7 @@
 #include <vtkExtractDataOverTime.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractDataOverTimeWrap : public VtkPointSetAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkExtractDataOverTimeWrap : public VtkPointSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTDATAOVERTIMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTDATAOVERTIMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

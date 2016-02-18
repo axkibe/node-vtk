@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkKMeansDistanceFunctorWrap.h"
 #include "vtkKMeansDistanceFunctorCalculatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkFunctionParserWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkKMeansDistanceFunctorCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFunctionParser", SetFunctionParser);
 	Nan::SetPrototypeMethod(tpl, "setFunctionParser", SetFunctionParser);
 
+#ifdef VTK_NODE_PLUS_VTKKMEANSDISTANCEFUNCTORCALCULATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKMEANSDISTANCEFUNCTORCALCULATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

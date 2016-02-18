@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGeoTreeNodeCacheWrap.h"
 #include "vtkGeoTreeNodeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkGeoTreeNodeCacheWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCacheMinimumLimit", SetCacheMinimumLimit);
 	Nan::SetPrototypeMethod(tpl, "setCacheMinimumLimit", SetCacheMinimumLimit);
 
+#ifdef VTK_NODE_PLUS_VTKGEOTREENODECACHEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOTREENODECACHEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

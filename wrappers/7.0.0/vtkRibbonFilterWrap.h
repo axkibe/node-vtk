@@ -10,6 +10,7 @@
 #include <vtkRibbonFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRibbonFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -66,6 +67,10 @@ class VtkRibbonFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void UseDefaultNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VaryWidthOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VaryWidthOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRIBBONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRIBBONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

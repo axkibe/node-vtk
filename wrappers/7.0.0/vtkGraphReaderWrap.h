@@ -10,6 +10,7 @@
 #include <vtkGraphReader.h>
 
 #include "vtkDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphReaderWrap : public VtkDataReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkGraphReaderWrap : public VtkDataReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

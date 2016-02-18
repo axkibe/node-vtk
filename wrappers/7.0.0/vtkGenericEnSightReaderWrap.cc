@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkGenericEnSightReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataArrayCollectionWrap.h"
 #include "vtkDataArraySelectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -214,6 +214,9 @@ void VtkGenericEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReadAllVariables", SetReadAllVariables);
 	Nan::SetPrototypeMethod(tpl, "setReadAllVariables", SetReadAllVariables);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICENSIGHTREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

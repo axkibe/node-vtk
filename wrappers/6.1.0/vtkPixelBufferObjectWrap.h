@@ -10,6 +10,7 @@
 #include <vtkPixelBufferObject.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPixelBufferObjectWrap : public VtkObjectWrap
 {
@@ -34,6 +35,8 @@ class VtkPixelBufferObjectWrap : public VtkObjectWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUsage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,11 +46,16 @@ class VtkPixelBufferObjectWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUsage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnmapPackedBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnmapUnpackedBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIXELBUFFEROBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIXELBUFFEROBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

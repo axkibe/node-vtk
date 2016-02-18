@@ -10,6 +10,7 @@
 #include <vtkArrayCalculator.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArrayCalculatorWrap : public VtkDataSetAlgorithmWrap
 {
@@ -83,6 +84,10 @@ class VtkArrayCalculatorWrap : public VtkDataSetAlgorithmWrap
 		static void SetResultArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultTCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARRAYCALCULATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARRAYCALCULATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

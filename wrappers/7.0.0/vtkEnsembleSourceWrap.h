@@ -10,6 +10,7 @@
 #include <vtkEnsembleSource.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEnsembleSourceWrap : public VtkAlgorithmWrap
 {
@@ -31,13 +32,20 @@ class VtkEnsembleSourceWrap : public VtkAlgorithmWrap
 
 		static void AddMember(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentMember(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfMembers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void META_DATA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllMembers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCurrentMember(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UPDATE_MEMBER(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKENSEMBLESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKENSEMBLESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

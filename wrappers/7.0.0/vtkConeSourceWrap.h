@@ -10,6 +10,7 @@
 #include <vtkConeSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConeSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkConeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

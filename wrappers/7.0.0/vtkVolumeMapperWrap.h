@@ -10,6 +10,7 @@
 #include <vtkVolumeMapper.h>
 
 #include "vtkAbstractVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 {
@@ -60,6 +61,10 @@ class VtkVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 		static void SetCroppingRegionFlagsToSubVolume(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCroppingRegionPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

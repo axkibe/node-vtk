@@ -10,6 +10,7 @@
 #include <vtkCaptionActor2D.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCaptionActor2DWrap : public VtkActor2DWrap
 {
@@ -78,6 +79,10 @@ class VtkCaptionActor2DWrap : public VtkActor2DWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLeaderOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLeaderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAPTIONACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAPTIONACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

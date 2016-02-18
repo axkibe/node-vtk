@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageResliceWrap.h"
 #include "vtkImagePermuteWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkImagePermuteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFilteredAxes", SetFilteredAxes);
 	Nan::SetPrototypeMethod(tpl, "setFilteredAxes", SetFilteredAxes);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEPERMUTEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEPERMUTEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

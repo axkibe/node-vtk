@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExporterWrap.h"
 #include "vtkGL2PSExporterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPropCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -267,6 +267,9 @@ void VtkGL2PSExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 	Nan::SetPrototypeMethod(tpl, "write3DPropsAsRasterImageOn", Write3DPropsAsRasterImageOn);
 
+#ifdef VTK_NODE_PLUS_VTKGL2PSEXPORTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGL2PSEXPORTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

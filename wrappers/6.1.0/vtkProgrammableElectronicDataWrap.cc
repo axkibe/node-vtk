@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractElectronicDataWrap.h"
 #include "vtkProgrammableElectronicDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkProgrammableElectronicDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPadding", SetPadding);
 	Nan::SetPrototypeMethod(tpl, "setPadding", SetPadding);
 
+#ifdef VTK_NODE_PLUS_VTKPROGRAMMABLEELECTRONICDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROGRAMMABLEELECTRONICDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

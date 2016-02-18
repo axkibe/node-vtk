@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPeriodicFilterWrap.h"
 #include "vtkAngularPeriodicFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkAngularPeriodicFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRotationModeToDirectAngle", SetRotationModeToDirectAngle);
 	Nan::SetPrototypeMethod(tpl, "setRotationModeToDirectAngle", SetRotationModeToDirectAngle);
 
+#ifdef VTK_NODE_PLUS_VTKANGULARPERIODICFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANGULARPERIODICFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

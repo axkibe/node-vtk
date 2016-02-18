@@ -10,6 +10,7 @@
 #include <vtkGeoFileTerrainSource.h>
 
 #include "vtkGeoSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoFileTerrainSourceWrap : public VtkGeoSourceWrap
 {
@@ -37,6 +38,10 @@ class VtkGeoFileTerrainSourceWrap : public VtkGeoSourceWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOFILETERRAINSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOFILETERRAINSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

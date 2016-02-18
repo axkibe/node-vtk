@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPoints2DWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -129,6 +129,9 @@ void VtkPoints2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTS2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTS2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

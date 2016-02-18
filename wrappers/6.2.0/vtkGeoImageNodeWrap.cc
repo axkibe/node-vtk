@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGeoTreeNodeWrap.h"
 #include "vtkGeoImageNodeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkTextureWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkGeoImageNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKGEOIMAGENODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOIMAGENODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

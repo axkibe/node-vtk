@@ -10,6 +10,7 @@
 #include <vtkTypeInt64Array.h>
 
 #include "vtkLongLongArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTypeInt64ArrayWrap : public VtkLongLongArrayWrap
 {
@@ -33,6 +34,10 @@ class VtkTypeInt64ArrayWrap : public VtkLongLongArrayWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTYPEINT64ARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTYPEINT64ARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

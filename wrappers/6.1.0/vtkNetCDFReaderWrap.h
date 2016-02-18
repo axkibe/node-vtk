@@ -10,6 +10,7 @@
 #include <vtkNetCDFReader.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNetCDFReaderWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkNetCDFReaderWrap : public VtkDataObjectAlgorithmWrap
 		static void SetReplaceFillValueWithNan(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVariableArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNETCDFREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNETCDFREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

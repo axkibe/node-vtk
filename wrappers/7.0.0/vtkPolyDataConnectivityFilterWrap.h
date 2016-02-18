@@ -10,6 +10,7 @@
 #include <vtkPolyDataConnectivityFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataConnectivityFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -75,6 +76,10 @@ class VtkPolyDataConnectivityFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarConnectivity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATACONNECTIVITYFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATACONNECTIVITYFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

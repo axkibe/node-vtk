@@ -10,6 +10,7 @@
 #include <vtkClearRGBPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClearRGBPassWrap : public VtkRenderPassWrap
 {
@@ -35,6 +36,10 @@ class VtkClearRGBPassWrap : public VtkRenderPassWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLEARRGBPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLEARRGBPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

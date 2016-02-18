@@ -10,6 +10,7 @@
 #include <vtkSubGroup.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSubGroupWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkSubGroupWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void getLocalRank(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void setGatherPattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUBGROUPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUBGROUPWRAP_CLASSDEF
+#endif
 };
 
 #endif

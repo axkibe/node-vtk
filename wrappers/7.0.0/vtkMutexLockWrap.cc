@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMutexLockWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkMutexLockWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Unlock", Unlock);
 	Nan::SetPrototypeMethod(tpl, "unlock", Unlock);
 
+#ifdef VTK_NODE_PLUS_VTKMUTEXLOCKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMUTEXLOCKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkCenteredSliderWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSliderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkCenteredSliderWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKCENTEREDSLIDERWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCENTEREDSLIDERWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

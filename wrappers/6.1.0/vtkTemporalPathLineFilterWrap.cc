@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTemporalPathLineFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,6 +67,9 @@ void VtkTemporalPathLineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMaxStepDistance", GetMaxStepDistance);
 	Nan::SetPrototypeMethod(tpl, "getMaxStepDistance", GetMaxStepDistance);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaxTrackLength", GetMaxTrackLength);
+	Nan::SetPrototypeMethod(tpl, "getMaxTrackLength", GetMaxTrackLength);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -88,12 +91,18 @@ void VtkTemporalPathLineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxStepDistance", SetMaxStepDistance);
 	Nan::SetPrototypeMethod(tpl, "setMaxStepDistance", SetMaxStepDistance);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaxTrackLength", SetMaxTrackLength);
+	Nan::SetPrototypeMethod(tpl, "setMaxTrackLength", SetMaxTrackLength);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
 	Nan::SetPrototypeMethod(tpl, "SetSelectionData", SetSelectionData);
 	Nan::SetPrototypeMethod(tpl, "setSelectionData", SetSelectionData);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALPATHLINEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALPATHLINEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -206,6 +215,20 @@ void VtkTemporalPathLineFilterWrap::GetMaxStepDistance(const Nan::FunctionCallba
 	Local<v8::Float64Array> at = v8::Float64Array::New(ab, 0, 3);
 	memcpy(ab->GetContents().Data(), r, 3 * sizeof(double));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkTemporalPathLineFilterWrap::GetMaxTrackLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
+	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaxTrackLength();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTemporalPathLineFilterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -414,6 +437,25 @@ void VtkTemporalPathLineFilterWrap::SetMaxStepDistance(const Nan::FunctionCallba
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTemporalPathLineFilterWrap::SetMaxTrackLength(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalPathLineFilterWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalPathLineFilterWrap>(info.Holder());
+	vtkTemporalPathLineFilter *native = (vtkTemporalPathLineFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaxTrackLength(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

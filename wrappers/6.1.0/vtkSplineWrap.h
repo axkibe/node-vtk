@@ -10,6 +10,7 @@
 #include <vtkSpline.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineWrap : public VtkObjectWrap
 {
@@ -60,6 +61,10 @@ class VtkSplineWrap : public VtkObjectWrap
 		static void SetParametricRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRightConstraint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRightValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

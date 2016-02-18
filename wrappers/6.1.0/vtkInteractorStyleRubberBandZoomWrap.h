@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleRubberBandZoom.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleRubberBandZoomWrap : public VtkInteractorStyleWrap
 {
@@ -36,6 +37,10 @@ class VtkInteractorStyleRubberBandZoomWrap : public VtkInteractorStyleWrap
 		static void OnLeftButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBANDZOOMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBANDZOOMWRAP_CLASSDEF
+#endif
 };
 
 #endif

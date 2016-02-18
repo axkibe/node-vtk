@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGenericContourFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkGenericContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfContours", SetNumberOfContours);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfContours", SetNumberOfContours);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

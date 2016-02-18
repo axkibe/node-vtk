@@ -10,6 +10,7 @@
 #include <vtkOpenGLDisplayListPainter.h>
 
 #include "vtkDisplayListPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLDisplayListPainterWrap : public VtkDisplayListPainterWrap
 {
@@ -34,6 +35,10 @@ class VtkOpenGLDisplayListPainterWrap : public VtkDisplayListPainterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLDISPLAYLISTPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLDISPLAYLISTPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

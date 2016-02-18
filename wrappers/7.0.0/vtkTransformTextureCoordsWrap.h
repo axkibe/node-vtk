@@ -10,6 +10,7 @@
 #include <vtkTransformTextureCoords.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkTransformTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMTEXTURECOORDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMTEXTURECOORDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

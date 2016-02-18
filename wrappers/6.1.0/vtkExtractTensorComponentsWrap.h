@@ -10,6 +10,7 @@
 #include <vtkExtractTensorComponents.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractTensorComponentsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -77,6 +78,10 @@ class VtkExtractTensorComponentsWrap : public VtkDataSetAlgorithmWrap
 		static void SetScalarModeToEffectiveStress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTCoordComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTTENSORCOMPONENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTTENSORCOMPONENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleTerrain.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleTerrainWrap : public VtkInteractorStyleWrap
 {
@@ -48,6 +49,10 @@ class VtkInteractorStyleTerrainWrap : public VtkInteractorStyleWrap
 		static void Rotate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLatLongLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETERRAINWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLETERRAINWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkEncodedGradientEstimatorWrap.h"
 #include "vtkFiniteDifferenceGradientEstimatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkFiniteDifferenceGradientEstimatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSampleSpacingInVoxels", SetSampleSpacingInVoxels);
 	Nan::SetPrototypeMethod(tpl, "setSampleSpacingInVoxels", SetSampleSpacingInVoxels);
 
+#ifdef VTK_NODE_PLUS_VTKFINITEDIFFERENCEGRADIENTESTIMATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFINITEDIFFERENCEGRADIENTESTIMATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

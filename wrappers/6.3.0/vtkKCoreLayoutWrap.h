@@ -10,6 +10,7 @@
 #include <vtkKCoreLayout.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKCoreLayoutWrap : public VtkGraphAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkKCoreLayoutWrap : public VtkGraphAlgorithmWrap
 		static void SetPolar(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolarCoordsAngleArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolarCoordsRadiusArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

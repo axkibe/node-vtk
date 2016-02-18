@@ -10,6 +10,7 @@
 #include <vtkImageExport.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageExportWrap : public VtkImageAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkImageExportWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImageLowerLeft(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEEXPORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEEXPORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

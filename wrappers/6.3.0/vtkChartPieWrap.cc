@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkChartWrap.h"
 #include "vtkChartPieWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPlotWrap.h"
 #include "vtkChartLegendWrap.h"
 #include "vtkContextSceneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkChartPieWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKCHARTPIEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHARTPIEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

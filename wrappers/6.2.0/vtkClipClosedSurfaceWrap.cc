@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkClipClosedSurfaceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlaneCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -168,6 +168,9 @@ void VtkClipClosedSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TriangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 	Nan::SetPrototypeMethod(tpl, "triangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 
+#ifdef VTK_NODE_PLUS_VTKCLIPCLOSEDSURFACEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCLIPCLOSEDSURFACEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

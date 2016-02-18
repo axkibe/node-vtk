@@ -10,6 +10,7 @@
 #include <vtkPerturbCoincidentVertices.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPerturbCoincidentVerticesWrap : public VtkGraphAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkPerturbCoincidentVerticesWrap : public VtkGraphAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPerturbFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPERTURBCOINCIDENTVERTICESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPERTURBCOINCIDENTVERTICESWRAP_CLASSDEF
+#endif
 };
 
 #endif

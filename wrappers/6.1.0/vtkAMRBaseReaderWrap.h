@@ -10,6 +10,7 @@
 #include <vtkAMRBaseReader.h>
 
 #include "vtkOverlappingAMRAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkAMRBaseReaderWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void SetEnableCaching(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRBASEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRBASEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

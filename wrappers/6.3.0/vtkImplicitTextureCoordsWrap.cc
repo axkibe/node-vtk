@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkImplicitTextureCoordsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkImplicitTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTFunction", SetTFunction);
 	Nan::SetPrototypeMethod(tpl, "setTFunction", SetTFunction);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITTEXTURECOORDSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITTEXTURECOORDSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -388,8 +388,8 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/CMakeLists.txt VTK-6.1.0/Wrapping/Tools/
    target_link_libraries(vtkParseJava vtkWrappingTools)
 diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c
 --- VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c	1970-01-01 01:00:00.000000000 +0100
-+++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-15 09:54:47.268884469 +0100
-@@ -0,0 +1,1799 @@
++++ VTK-6.1.0/Wrapping/Tools/vtkWrapNodeJs.c	2016-02-18 13:33:26.898856470 +0100
+@@ -0,0 +1,1859 @@
 +/*=========================================================================
 +
 +  Program:   Visualization Toolkit
@@ -483,12 +483,12 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +//  VTK_PARSE_FLOAT,
 +    VTK_PARSE_DOUBLE,
 +    VTK_PARSE_CHAR,
-+//  VTK_PARSE_UNSIGNED_CHAR,
-+//  VTK_PARSE_SIGNED_CHAR,
++    VTK_PARSE_UNSIGNED_CHAR,
++    VTK_PARSE_SIGNED_CHAR,
 +    VTK_PARSE_INT,
-+//  VTK_PARSE_UNSIGNED_INT,
-+//  VTK_PARSE_SHORT,
-+//  VTK_PARSE_UNSIGNED_SHORT,
++    VTK_PARSE_UNSIGNED_INT,
++    VTK_PARSE_SHORT,
++    VTK_PARSE_UNSIGNED_SHORT,
 +//  VTK_PARSE_LONG,
 +//  VTK_PARSE_UNSIGNED_LONG,
 +//  VTK_PARSE_ID_TYPE,
@@ -826,6 +826,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +{
 +  char const *lastName;
 +  char const *sname;
++  char *upperName, *c;
 +  struct MethodInfo *m;
 +
 +  if(he->NumberOfSuperClasses > 1 )
@@ -908,8 +909,15 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    fprintf(f, "\n");
 +    }
 +
-+	fprintf(f, "\tptpl.Reset( tpl );\n");
-+  fprintf(f, "}\n");
++  upperName = strdup(name);
++  for(c = upperName; *c; c++) *c = toupper(*c);
++	fprintf(f, "#ifdef VTK_NODE_PLUS_%sWRAP_INITPTPL\n", upperName );
++	fprintf(f, "\tVTK_NODE_PLUS_%sWRAP_INITPTPL\n", upperName );
++  fputs("#endif\n", f);
++  free(upperName);
++
++	fputs("\tptpl.Reset( tpl );\n", f);
++  fputs("}\n", f);
 +}
 +
 +
@@ -977,9 +985,19 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +
 +    case VTK_PARSE_INT : return "IsInt32";
 +
++    case VTK_PARSE_SHORT : return "IsInt32";
++
++    case VTK_PARSE_UNSIGNED_INT : return "IsUint32";
++
++    case VTK_PARSE_UNSIGNED_SHORT : return "IsUint32";
++
 +    case VTK_PARSE_CHAR :
 +      if(vtkWrap_IsPointer(vinfo)) return "IsString";
 +      else return "IsInt32";
++
++    case VTK_PARSE_SIGNED_CHAR : return "IsInt32";
++
++    case VTK_PARSE_UNSIGNED_CHAR : return "IsUint32";
 +
 +    default :
 +      fprintf(stderr,
@@ -1002,7 +1020,12 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    {
 +    case VTK_PARSE_BOOL : return "bool";
 +    case VTK_PARSE_CHAR : return "char";
++    case VTK_PARSE_SIGNED_CHAR : return "signed char";
++    case VTK_PARSE_UNSIGNED_CHAR : return "unsigned char";
 +    case VTK_PARSE_INT : return "int";
++    case VTK_PARSE_UNSIGNED_INT : return "unsigned int";
++    case VTK_PARSE_SHORT : return "short";
++    case VTK_PARSE_UNSIGNED_SHORT : return "unsigned short";
 +    case VTK_PARSE_DOUBLE : return "double";
 +    default :
 +      fputs("unknown primitive!\n", stderr);
@@ -1020,9 +1043,14 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +{
 +  switch(baseType)
 +  {
-+  case VTK_PARSE_CHAR   : return "Int8Array";
-+  case VTK_PARSE_DOUBLE : return "Float64Array";
-+  case VTK_PARSE_INT    : return "Int32Array";
++  case VTK_PARSE_CHAR            : return "Int8Array";
++  case VTK_PARSE_SIGNED_CHAR     : return "Int8Array";
++  case VTK_PARSE_UNSIGNED_CHAR   : return "Uint8Array";
++  case VTK_PARSE_DOUBLE          : return "Float64Array";
++  case VTK_PARSE_INT             : return "Int32Array";
++  case VTK_PARSE_UNSIGNED_INT    : return "Uint32Array";
++  case VTK_PARSE_SHORT           : return "Int16Array";
++  case VTK_PARSE_UNSIGNED_SHORT  : return "Uint16Array";
 +
 +  default :
 +    fprintf(stderr, "Unknown base type for typed array %d\n", baseType);
@@ -1168,8 +1196,16 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      fprintf(f, "info[%d]->NumberValue()", p);
 +      break;
 +
++    case VTK_PARSE_SIGNED_CHAR :
++    case VTK_PARSE_SHORT :
 +    case VTK_PARSE_INT :
 +      fprintf(f, "info[%d]->Int32Value()", p);
++      break;
++
++    case VTK_PARSE_UNSIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_SHORT :
++    case VTK_PARSE_UNSIGNED_INT :
++      fprintf(f, "info[%d]->Uint32Value()", p);
 +      break;
 +
 +    case VTK_PARSE_CHAR :
@@ -1221,6 +1257,11 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    case VTK_PARSE_BOOL : fputs("bool ", f); break;
 +    case VTK_PARSE_DOUBLE : fputs("double ", f); break;
 +    case VTK_PARSE_INT : fputs("int ", f); break;
++    case VTK_PARSE_UNSIGNED_INT : fputs("unsigned int ", f); break;
++    case VTK_PARSE_SHORT : fputs("short ", f); break;
++    case VTK_PARSE_UNSIGNED_SHORT : fputs("unsigned short ", f); break;
++    case VTK_PARSE_SIGNED_CHAR : fputs("signed char ", f); break;
++    case VTK_PARSE_UNSIGNED_CHAR : fputs("unsigned char ", f); break;
 +    case VTK_PARSE_CHAR : fputs("char ", f); break;
 +    case VTK_PARSE_OBJECT : fputs(rinfo->Class, f); fputs(" ", f); break;
 +    default :
@@ -1365,6 +1406,11 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    case VTK_PARSE_BOOL :
 +    case VTK_PARSE_DOUBLE :
 +    case VTK_PARSE_INT :
++    case VTK_PARSE_SHORT :
++    case VTK_PARSE_SIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_CHAR :
++    case VTK_PARSE_UNSIGNED_SHORT :
++    case VTK_PARSE_UNSIGNED_INT :
 +      fprintf(f, "\t%sinfo.GetReturnValue().Set(Nan::New(r));\n", indent);
 +      break;
 +
@@ -1463,13 +1509,21 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->BooleanValue();\n", indent, p, p );
 +      break;
 +
-+    case VTK_PARSE_CHAR:
 +    case VTK_PARSE_DOUBLE:
 +      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->NumberValue();\n", indent, p, p );
 +      break;
 +
++    case VTK_PARSE_CHAR:
++    case VTK_PARSE_SIGNED_CHAR:
 +    case VTK_PARSE_INT:
++    case VTK_PARSE_SHORT:
 +      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->Int32Value();\n", indent, p, p );
++      break;
++
++    case VTK_PARSE_UNSIGNED_CHAR:
++    case VTK_PARSE_UNSIGNED_SHORT:
++    case VTK_PARSE_UNSIGNED_INT:
++      fprintf(f, "\t%s\tb%d[i] = a%d->Get(i)->Uint32Value();\n", indent, p, p );
 +      break;
 +
 +    default:
@@ -1828,7 +1882,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +  strncpy(hFilename, cxxFilename, k);
 +  strcat(hFilename, ".h");
 +
-+  f = fopen( hFilename, "w" );
++  f = fopen(hFilename, "w");
 +
 +  if (!f)
 +    {
@@ -1836,7 +1890,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    exit(1);
 +    }
 +
-+  upperName = strdup( name );
++  upperName = strdup(name);
 +  for(c = upperName; *c; c++) *c = toupper(*c);
 +
 +  fputs("/* this file has been autogenerated by vtkNodeJsWrap */\n", f);
@@ -1864,6 +1918,7 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +    writeClassInclude(f, sname);
 +    }
 +
++  fputs("#include \"../../plus/plus.h\"\n", f);
 +  fputs("\n", f);
 +
 +  if( he->NumberOfSuperClasses )
@@ -1920,6 +1975,10 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      finfo->Name
 +      );
 +    }
++  fputs("\n", f);
++	fprintf(f, "#ifdef VTK_NODE_PLUS_%sWRAP_CLASSDEF\n", upperName );
++	fprintf(f, "\t\tVTK_NODE_PLUS_%sWRAP_CLASSDEF\n", upperName );
++  fputs("#endif\n", f);
 +
 +  fputs("};\n", f);
 +  fputs("\n", f);
@@ -1978,7 +2037,6 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +
 +  fputs("#include <nan.h>\n", f);
 +  fputs("\n", f);
-+  fputs("\n",f );
 +
 +  for (a = 0; a < he->NumberOfSuperClasses; a++)
 +    {
@@ -2040,9 +2098,11 @@ diff -urBN VTK-6.1.0-org/Wrapping/Tools/vtkWrapNodeJs.c VTK-6.1.0/Wrapping/Tools
 +      }
 +    }
 +
-+  fprintf(f, "\n");
-+  fprintf(f, "using namespace v8;\n" );
-+  fprintf(f, "\n");
++  fputs("#include \"../../plus/plus.h\"\n", f);
++
++  fputs("\n", f);
++  fputs("using namespace v8;\n", f);
++  fputs("\n", f);
 +
 +  fprintf(f, "extern Nan::Persistent<v8::Object> vtkNodeJsNoWrap;");
 +  fprintf(f, "\n");

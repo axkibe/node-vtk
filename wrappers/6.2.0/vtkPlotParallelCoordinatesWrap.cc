@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotParallelCoordinatesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkPlotParallelCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTPARALLELCOORDINATESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTPARALLELCOORDINATESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkPointGaussianMapper.h>
 
 #include "vtkPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointGaussianMapperWrap : public VtkPolyDataMapperWrap
 {
@@ -53,6 +54,10 @@ class VtkPointGaussianMapperWrap : public VtkPolyDataMapperWrap
 		static void SetScaleFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplatShaderCode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTGAUSSIANMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

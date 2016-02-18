@@ -10,6 +10,7 @@
 #include <vtkReverseSense.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkReverseSenseWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkReverseSenseWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverseCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverseNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREVERSESENSEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREVERSESENSEWRAP_CLASSDEF
+#endif
 };
 
 #endif

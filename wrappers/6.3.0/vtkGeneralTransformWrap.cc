@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractTransformWrap.h"
 #include "vtkGeneralTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkGeneralTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+#ifdef VTK_NODE_PLUS_VTKGENERALTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERALTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkStructuredGrid.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridWrap : public VtkPointSetWrap
 {
@@ -31,6 +32,7 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellDims(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,6 +44,7 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +55,10 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 		static void SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

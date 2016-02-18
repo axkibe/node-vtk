@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageResliceWrap.h"
 #include "vtkImageFlipWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkImageFlipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreserveImageExtent", SetPreserveImageExtent);
 	Nan::SetPrototypeMethod(tpl, "setPreserveImageExtent", SetPreserveImageExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEFLIPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEFLIPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

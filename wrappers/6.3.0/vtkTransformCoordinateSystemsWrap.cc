@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkTransformCoordinateSystemsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkTransformCoordinateSystemsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewport", SetViewport);
 	Nan::SetPrototypeMethod(tpl, "setViewport", SetViewport);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMCOORDINATESYSTEMSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFORMCOORDINATESYSTEMSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

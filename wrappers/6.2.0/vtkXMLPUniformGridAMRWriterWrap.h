@@ -10,6 +10,7 @@
 #include <vtkXMLPUniformGridAMRWriter.h>
 
 #include "vtkXMLUniformGridAMRWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPUniformGridAMRWriterWrap : public VtkXMLUniformGridAMRWriterWrap
 {
@@ -36,6 +37,10 @@ class VtkXMLPUniformGridAMRWriterWrap : public VtkXMLUniformGridAMRWriterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteMetaFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPUNIFORMGRIDAMRWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPUNIFORMGRIDAMRWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

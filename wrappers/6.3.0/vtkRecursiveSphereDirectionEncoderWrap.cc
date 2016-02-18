@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDirectionEncoderWrap.h"
 #include "vtkRecursiveSphereDirectionEncoderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkRecursiveSphereDirectionEncoderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRecursionDepth", SetRecursionDepth);
 	Nan::SetPrototypeMethod(tpl, "setRecursionDepth", SetRecursionDepth);
 
+#ifdef VTK_NODE_PLUS_VTKRECURSIVESPHEREDIRECTIONENCODERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECURSIVESPHEREDIRECTIONENCODERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

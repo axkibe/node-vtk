@@ -10,6 +10,7 @@
 #include <vtkMINCImageWriter.h>
 
 #include "vtkImageWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMINCImageWriterWrap : public VtkImageWriterWrap
 {
@@ -51,6 +52,10 @@ class VtkMINCImageWriterWrap : public VtkImageWriterWrap
 		static void StrictValidationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StrictValidationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMINCIMAGEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

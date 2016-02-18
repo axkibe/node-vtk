@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDirectedGraphAlgorithmWrap.h"
 #include "vtkPolyDataToReebGraphFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkReebGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkPolyDataToReebGraphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFieldId", SetFieldId);
 	Nan::SetPrototypeMethod(tpl, "setFieldId", SetFieldId);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATATOREEBGRAPHFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATATOREEBGRAPHFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

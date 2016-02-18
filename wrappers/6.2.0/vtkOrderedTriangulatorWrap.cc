@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOrderedTriangulatorWrap.h"
 #include "vtkTetraWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -115,6 +115,9 @@ void VtkOrderedTriangulatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseTwoSortIdsOn", UseTwoSortIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useTwoSortIdsOn", UseTwoSortIdsOn);
 
+#ifdef VTK_NODE_PLUS_VTKORDEREDTRIANGULATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKORDEREDTRIANGULATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

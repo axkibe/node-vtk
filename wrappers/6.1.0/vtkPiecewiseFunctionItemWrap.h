@@ -10,6 +10,7 @@
 #include <vtkPiecewiseFunctionItem.h>
 
 #include "vtkScalarsToColorsItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewiseFunctionItemWrap : public VtkScalarsToColorsItemWrap
 {
@@ -35,6 +36,10 @@ class VtkPiecewiseFunctionItemWrap : public VtkScalarsToColorsItemWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiecewiseFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

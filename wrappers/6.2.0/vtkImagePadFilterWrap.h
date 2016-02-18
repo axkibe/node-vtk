@@ -10,6 +10,7 @@
 #include <vtkImagePadFilter.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImagePadFilterWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkImagePadFilterWrap : public VtkThreadedImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEPADFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEPADFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSelectVisiblePointsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkSelectVisiblePointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKSELECTVISIBLEPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSELECTVISIBLEPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkTransform2DWrap.h"
 #include "vtkMatrix3x3Wrap.h"
 #include "vtkPoints2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkTransform2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFORM2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFORM2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkGenericMovieWriter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericMovieWriterWrap : public VtkImageAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkGenericMovieWriterWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICMOVIEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICMOVIEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

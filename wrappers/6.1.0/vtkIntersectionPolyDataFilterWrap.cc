@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkIntersectionPolyDataFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkIntersectionPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplitSecondOutputOn", SplitSecondOutputOn);
 	Nan::SetPrototypeMethod(tpl, "splitSecondOutputOn", SplitSecondOutputOn);
 
+#ifdef VTK_NODE_PLUS_VTKINTERSECTIONPOLYDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERSECTIONPOLYDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

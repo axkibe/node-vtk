@@ -10,6 +10,7 @@
 #include <vtkXOpenGLRenderWindow.h>
 
 #include "vtkOpenGLRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 {
@@ -62,6 +63,10 @@ class VtkXOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void SupportsOpenGL(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WindowInitialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WindowRemap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXOPENGLRENDERWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXOPENGLRENDERWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

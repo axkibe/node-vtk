@@ -10,6 +10,7 @@
 #include <vtkImageBSplineInterpolator.h>
 
 #include "vtkAbstractImageInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageBSplineInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 {
@@ -39,6 +40,10 @@ class VtkImageBSplineInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplineDegree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEBSPLINEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEBSPLINEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

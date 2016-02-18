@@ -10,6 +10,7 @@
 #include <vtkGeoSampleArcs.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoSampleArcsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkGeoSampleArcsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutputCoordinateSystem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputCoordinateSystemToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputCoordinateSystemToSpherical(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOSAMPLEARCSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOSAMPLEARCSWRAP_CLASSDEF
+#endif
 };
 
 #endif

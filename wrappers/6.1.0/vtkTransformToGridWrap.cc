@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkTransformToGridWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractTransformWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkTransformToGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMTOGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFORMTOGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeReaderWrap.h"
 #include "vtkVolume16ReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTransformWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -61,6 +61,9 @@ void VtkVolume16ReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataDimensions", GetDataDimensions);
 	Nan::SetPrototypeMethod(tpl, "getDataDimensions", GetDataDimensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataMask", GetDataMask);
+	Nan::SetPrototypeMethod(tpl, "getDataMask", GetDataMask);
+
 	Nan::SetPrototypeMethod(tpl, "GetHeaderSize", GetHeaderSize);
 	Nan::SetPrototypeMethod(tpl, "getHeaderSize", GetHeaderSize);
 
@@ -94,6 +97,9 @@ void VtkVolume16ReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataDimensions", SetDataDimensions);
 	Nan::SetPrototypeMethod(tpl, "setDataDimensions", SetDataDimensions);
 
+	Nan::SetPrototypeMethod(tpl, "SetDataMask", SetDataMask);
+	Nan::SetPrototypeMethod(tpl, "setDataMask", SetDataMask);
+
 	Nan::SetPrototypeMethod(tpl, "SetHeaderSize", SetHeaderSize);
 	Nan::SetPrototypeMethod(tpl, "setHeaderSize", SetHeaderSize);
 
@@ -109,6 +115,9 @@ void VtkVolume16ReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUME16READERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUME16READERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -195,6 +204,20 @@ void VtkVolume16ReaderWrap::GetDataDimensions(const Nan::FunctionCallbackInfo<v8
 	Local<v8::Int32Array> at = v8::Int32Array::New(ab, 0, 2);
 	memcpy(ab->GetContents().Data(), r, 2 * sizeof(int));
 	info.GetReturnValue().Set(at);
+}
+
+void VtkVolume16ReaderWrap::GetDataMask(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
+	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataMask();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkVolume16ReaderWrap::GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -465,6 +488,25 @@ void VtkVolume16ReaderWrap::SetDataDimensions(const Nan::FunctionCallbackInfo<v8
 			);
 			return;
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkVolume16ReaderWrap::SetDataMask(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkVolume16ReaderWrap *wrapper = ObjectWrap::Unwrap<VtkVolume16ReaderWrap>(info.Holder());
+	vtkVolume16Reader *native = (vtkVolume16Reader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetDataMask(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageOpenClose3DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDilateErode3DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkImageOpenClose3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpenValue", SetOpenValue);
 	Nan::SetPrototypeMethod(tpl, "setOpenValue", SetOpenValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEOPENCLOSE3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEOPENCLOSE3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

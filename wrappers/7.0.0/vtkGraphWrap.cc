@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkObjectWrap.h"
@@ -21,6 +20,7 @@
 #include "vtkFieldDataWrap.h"
 #include "vtkDirectedGraphWrap.h"
 #include "vtkUndirectedGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -155,6 +155,9 @@ void VtkGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToUndirectedGraph", ToUndirectedGraph);
 	Nan::SetPrototypeMethod(tpl, "toUndirectedGraph", ToUndirectedGraph);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

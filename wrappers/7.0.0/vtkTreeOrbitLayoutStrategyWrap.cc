@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkTreeOrbitLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkTreeOrbitLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLogSpacingValue", SetLogSpacingValue);
 	Nan::SetPrototypeMethod(tpl, "setLogSpacingValue", SetLogSpacingValue);
 
+#ifdef VTK_NODE_PLUS_VTKTREEORBITLAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEORBITLAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

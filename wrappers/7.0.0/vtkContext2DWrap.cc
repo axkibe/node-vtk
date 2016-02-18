@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkAbstractContextBufferIdWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkBrushWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkTransform2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -150,6 +150,9 @@ void VtkContext2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXT2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXT2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

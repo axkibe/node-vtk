@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkGenericDataSetTessellatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,6 +93,9 @@ void VtkGenericDataSetTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMerging", SetMerging);
 	Nan::SetPrototypeMethod(tpl, "setMerging", SetMerging);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICDATASETTESSELLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICDATASETTESSELLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

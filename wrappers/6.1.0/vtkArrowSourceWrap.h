@@ -10,6 +10,7 @@
 #include <vtkArrowSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArrowSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkArrowSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTipLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTipRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTipResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARROWSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARROWSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

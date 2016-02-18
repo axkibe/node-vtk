@@ -10,6 +10,7 @@
 #include <vtkImageStencilSource.h>
 
 #include "vtkImageStencilAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageStencilSourceWrap : public VtkImageStencilAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkImageStencilSourceWrap : public VtkImageStencilAlgorithmWrap
 		static void SetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESTENCILSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

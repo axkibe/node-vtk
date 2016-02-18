@@ -10,6 +10,7 @@
 #include <vtkContextArea.h>
 
 #include "vtkAbstractContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextAreaWrap : public VtkAbstractContextItemWrap
 {
@@ -46,6 +47,10 @@ class VtkContextAreaWrap : public VtkAbstractContextItemWrap
 		static void SetShowGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowGridOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowGridOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTAREAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTAREAWRAP_CLASSDEF
+#endif
 };
 
 #endif

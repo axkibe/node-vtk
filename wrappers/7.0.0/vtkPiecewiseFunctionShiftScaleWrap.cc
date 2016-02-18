@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPiecewiseFunctionAlgorithmWrap.h"
 #include "vtkPiecewiseFunctionShiftScaleWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkPiecewiseFunctionShiftScaleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValueShift", SetValueShift);
 	Nan::SetPrototypeMethod(tpl, "setValueShift", SetValueShift);
 
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONSHIFTSCALEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONSHIFTSCALEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

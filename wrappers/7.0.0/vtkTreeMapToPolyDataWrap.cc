@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTreeMapToPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkTreeMapToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRectanglesArrayName", SetRectanglesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setRectanglesArrayName", SetRectanglesArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKTREEMAPTOPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEMAPTOPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

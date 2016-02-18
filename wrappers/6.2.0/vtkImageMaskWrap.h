@@ -10,6 +10,7 @@
 #include <vtkImageMask.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMaskWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkImageMaskWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetMaskInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskedOutputValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNotMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMASKWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMASKWRAP_CLASSDEF
+#endif
 };
 
 #endif

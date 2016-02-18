@@ -10,6 +10,7 @@
 #include <vtkXMLUnstructuredGridWriter.h>
 
 #include "vtkXMLUnstructuredDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUnstructuredGridWriterWrap : public VtkXMLUnstructuredDataWriterWrap
 {
@@ -35,6 +36,10 @@ class VtkXMLUnstructuredGridWriterWrap : public VtkXMLUnstructuredDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDGRIDWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDGRIDWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

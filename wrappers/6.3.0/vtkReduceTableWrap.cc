@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkReduceTableWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkReduceTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumericalReductionMethod", SetNumericalReductionMethod);
 	Nan::SetPrototypeMethod(tpl, "setNumericalReductionMethod", SetNumericalReductionMethod);
 
+#ifdef VTK_NODE_PLUS_VTKREDUCETABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKREDUCETABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

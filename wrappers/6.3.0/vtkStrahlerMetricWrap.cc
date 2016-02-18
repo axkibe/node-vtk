@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAlgorithmWrap.h"
 #include "vtkStrahlerMetricWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkStrahlerMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormalize", SetNormalize);
 	Nan::SetPrototypeMethod(tpl, "setNormalize", SetNormalize);
 
+#ifdef VTK_NODE_PLUS_VTKSTRAHLERMETRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRAHLERMETRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

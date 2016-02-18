@@ -10,6 +10,7 @@
 #include <vtkParallelopipedRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelopipedRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -63,6 +64,10 @@ class VtkParallelopipedRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetMinimumThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELOPIPEDREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELOPIPEDREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

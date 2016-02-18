@@ -10,6 +10,7 @@
 #include <vtkXMLDataParser.h>
 
 #include "vtkXMLParserWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLDataParserWrap : public VtkXMLParserWrap
 {
@@ -44,6 +45,10 @@ class VtkXMLDataParserWrap : public VtkXMLParserWrap
 		static void SetAbort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributesEncoding(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_CLASSDEF
+#endif
 };
 
 #endif

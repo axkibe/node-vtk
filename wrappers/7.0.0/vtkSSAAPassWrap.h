@@ -10,6 +10,7 @@
 #include <vtkSSAAPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSSAAPassWrap : public VtkRenderPassWrap
 {
@@ -36,6 +37,10 @@ class VtkSSAAPassWrap : public VtkRenderPassWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDelegatePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSSAAPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSSAAPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

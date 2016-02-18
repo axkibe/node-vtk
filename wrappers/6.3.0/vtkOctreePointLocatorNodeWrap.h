@@ -10,6 +10,7 @@
 #include <vtkOctreePointLocatorNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOctreePointLocatorNodeWrap : public VtkObjectWrap
 {
@@ -50,6 +51,10 @@ class VtkOctreePointLocatorNodeWrap : public VtkObjectWrap
 		static void SetMinBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORNODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORNODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

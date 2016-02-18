@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageCastWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkImageCastWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputScalarTypeToUnsignedShort", SetOutputScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setOutputScalarTypeToUnsignedShort", SetOutputScalarTypeToUnsignedShort);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECASTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECASTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

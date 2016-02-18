@@ -10,6 +10,7 @@
 #include <vtkPlatonicSolidSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlatonicSolidSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkPlatonicSolidSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSolidTypeToIcosahedron(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSolidTypeToOctahedron(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSolidTypeToTetrahedron(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLATONICSOLIDSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLATONICSOLIDSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

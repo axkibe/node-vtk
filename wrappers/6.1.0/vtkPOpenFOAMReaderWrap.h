@@ -10,6 +10,7 @@
 #include <vtkPOpenFOAMReader.h>
 
 #include "vtkOpenFOAMReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPOpenFOAMReaderWrap : public VtkOpenFOAMReaderWrap
 {
@@ -36,6 +37,10 @@ class VtkPOpenFOAMReaderWrap : public VtkOpenFOAMReaderWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCaseType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOPENFOAMREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOPENFOAMREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

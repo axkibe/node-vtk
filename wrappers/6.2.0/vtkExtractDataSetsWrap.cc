@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExtractDataSetsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,6 +47,9 @@ void VtkExtractDataSetsWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkExtractDataSetsWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddDataSet", AddDataSet);
+	Nan::SetPrototypeMethod(tpl, "addDataSet", AddDataSet);
+
 	Nan::SetPrototypeMethod(tpl, "ClearDataSetList", ClearDataSetList);
 	Nan::SetPrototypeMethod(tpl, "clearDataSetList", ClearDataSetList);
 
@@ -62,6 +65,9 @@ void VtkExtractDataSetsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTDATASETSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTDATASETSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -89,6 +95,29 @@ void VtkExtractDataSetsWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkExtractDataSetsWrap::AddDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractDataSetsWrap *wrapper = ObjectWrap::Unwrap<VtkExtractDataSetsWrap>(info.Holder());
+	vtkExtractDataSets *native = (vtkExtractDataSets *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->AddDataSet(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractDataSetsWrap::ClearDataSetList(const Nan::FunctionCallbackInfo<v8::Value>& info)

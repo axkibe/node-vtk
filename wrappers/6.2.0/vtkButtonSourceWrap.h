@@ -10,6 +10,7 @@
 #include <vtkButtonSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkButtonSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkButtonSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTwoSided(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoSidedOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoSidedOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBUTTONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBUTTONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkParallelCoordinatesInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkParallelCoordinatesInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESINTERACTORSTYLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARALLELCOORDINATESINTERACTORSTYLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

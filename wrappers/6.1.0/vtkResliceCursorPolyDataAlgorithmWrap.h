@@ -10,6 +10,7 @@
 #include <vtkResliceCursorPolyDataAlgorithm.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorPolyDataAlgorithmWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkResliceCursorPolyDataAlgorithmWrap : public VtkPolyDataAlgorithmWrap
 		static void SetReslicePlaneNormalToYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReslicePlaneNormalToZAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSliceBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORPOLYDATAALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORPOLYDATAALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

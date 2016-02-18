@@ -10,6 +10,7 @@
 #include <vtkIdFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIdFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkIdFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIdsArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIDFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIDFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

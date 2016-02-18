@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkVolumeReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkVolumeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImageRange", SetImageRange);
 	Nan::SetPrototypeMethod(tpl, "setImageRange", SetImageRange);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

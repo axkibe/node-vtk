@@ -10,6 +10,7 @@
 #include <vtkAMRBaseParticlesReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRBaseParticlesReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkAMRBaseParticlesReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetMaxLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParticleArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRBASEPARTICLESREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRBASEPARTICLESREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

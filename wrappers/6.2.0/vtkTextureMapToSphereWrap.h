@@ -10,6 +10,7 @@
 #include <vtkTextureMapToSphere.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextureMapToSphereWrap : public VtkDataSetAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkTextureMapToSphereWrap : public VtkDataSetAlgorithmWrap
 		static void SetAutomaticSphereGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreventSeam(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREMAPTOSPHEREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREMAPTOSPHEREWRAP_CLASSDEF
+#endif
 };
 
 #endif

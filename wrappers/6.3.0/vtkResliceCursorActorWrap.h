@@ -10,6 +10,7 @@
 #include <vtkResliceCursorActor.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorActorWrap : public VtkProp3DWrap
 {
@@ -41,6 +42,10 @@ class VtkResliceCursorActorWrap : public VtkProp3DWrap
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

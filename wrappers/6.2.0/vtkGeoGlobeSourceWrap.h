@@ -10,6 +10,7 @@
 #include <vtkGeoGlobeSource.h>
 
 #include "vtkGeoSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoGlobeSourceWrap : public VtkGeoSourceWrap
 {
@@ -35,6 +36,10 @@ class VtkGeoGlobeSourceWrap : public VtkGeoSourceWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOGLOBESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOGLOBESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

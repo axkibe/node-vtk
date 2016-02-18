@@ -10,6 +10,7 @@
 #include <vtkImplicitWindowFunction.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitWindowFunctionWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkImplicitWindowFunctionWrap : public VtkImplicitFunctionWrap
 		static void SetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITWINDOWFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITWINDOWFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

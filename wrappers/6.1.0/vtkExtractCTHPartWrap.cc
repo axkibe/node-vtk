@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExtractCTHPartWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkPlaneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -133,6 +133,9 @@ void VtkExtractCTHPartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 	Nan::SetPrototypeMethod(tpl, "setVolumeFractionSurfaceValue", SetVolumeFractionSurfaceValue);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTCTHPARTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTCTHPARTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

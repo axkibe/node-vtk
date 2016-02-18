@@ -10,6 +10,7 @@
 #include <vtkPolyDataSourceWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataSourceWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -34,6 +35,10 @@ class VtkPolyDataSourceWidgetWrap : public Vtk3DWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PlaceWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATASOURCEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATASOURCEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

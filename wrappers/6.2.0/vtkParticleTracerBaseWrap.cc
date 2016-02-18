@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkParticleTracerBaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInitialValueProblemSolverWrap.h"
 #include "vtkAbstractParticleWriterWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -179,6 +179,9 @@ void VtkParticleTracerBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminationTime", SetTerminationTime);
 	Nan::SetPrototypeMethod(tpl, "setTerminationTime", SetTerminationTime);
 
+#ifdef VTK_NODE_PLUS_VTKPARTICLETRACERBASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARTICLETRACERBASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

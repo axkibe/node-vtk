@@ -10,6 +10,7 @@
 #include <vtkRenderedHierarchyRepresentation.h>
 
 #include "vtkRenderedGraphRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderedHierarchyRepresentationWrap : public VtkRenderedGraphRepresentationWrap
 {
@@ -56,6 +57,10 @@ class VtkRenderedHierarchyRepresentationWrap : public VtkRenderedGraphRepresenta
 		static void SetGraphEdgeLabelVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphSplineType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDEREDHIERARCHYREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDEREDHIERARCHYREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

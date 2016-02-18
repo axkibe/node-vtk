@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageNonMaximumSuppressionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkImageNonMaximumSuppressionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorInputData", SetVectorInputData);
 	Nan::SetPrototypeMethod(tpl, "setVectorInputData", SetVectorInputData);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGENONMAXIMUMSUPPRESSIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGENONMAXIMUMSUPPRESSIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

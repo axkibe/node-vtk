@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtkInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkActor2DWrap.h"
 #include "vtkProp3DWrap.h"
 #include "vtkTDxInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -274,6 +274,9 @@ void VtkInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

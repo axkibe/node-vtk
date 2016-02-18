@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkFunctionSetWrap.h"
 #include "vtkCachingInterpolatedVelocityFieldWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkAbstractCellLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkCachingInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
 	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
 
+#ifdef VTK_NODE_PLUS_VTKCACHINGINTERPOLATEDVELOCITYFIELDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCACHINGINTERPOLATEDVELOCITYFIELDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSimpleImageToImageFilter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimpleImageToImageFilterWrap : public VtkImageAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkSimpleImageToImageFilterWrap : public VtkImageAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLEIMAGETOIMAGEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLEIMAGETOIMAGEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

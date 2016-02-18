@@ -10,6 +10,7 @@
 #include <vtkExtractEdges.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractEdgesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkExtractEdgesWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTEDGESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTEDGESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkStreamingDemandDrivenPipeline.h>
 
 #include "vtkDemandDrivenPipelineWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamingDemandDrivenPipelineWrap : public VtkDemandDrivenPipelineWrap
 {
@@ -100,6 +101,10 @@ class VtkStreamingDemandDrivenPipelineWrap : public VtkDemandDrivenPipelineWrap
 		static void UpdateWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WHOLE_BOUNDING_BOX(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WHOLE_EXTENT(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMINGDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMINGDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

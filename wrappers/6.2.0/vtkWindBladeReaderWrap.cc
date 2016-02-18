@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStructuredGridAlgorithmWrap.h"
 #include "vtkWindBladeReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkStructuredGridWrap.h"
 #include "vtkUnstructuredGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -106,6 +106,9 @@ void VtkWindBladeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKWINDBLADEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWINDBLADEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkAMRFlashReader.h>
 
 #include "vtkAMRBaseReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRFlashReaderWrap : public VtkAMRBaseReaderWrap
 {
@@ -36,6 +37,10 @@ class VtkAMRFlashReaderWrap : public VtkAMRBaseReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRFLASHREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRFLASHREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

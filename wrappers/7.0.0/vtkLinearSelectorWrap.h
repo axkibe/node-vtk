@@ -10,6 +10,7 @@
 #include <vtkLinearSelector.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLinearSelectorWrap : public VtkSelectionAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkLinearSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void SetStartPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexEliminationTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEARSELECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEARSELECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExtentTranslatorWrap.h"
 #include "vtkImageDataLIC2DExtentTranslatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataLIC2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkImageDataLIC2DExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputWholeExtent", SetInputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setInputWholeExtent", SetInputWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATALIC2DEXTENTTRANSLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEDATALIC2DEXTENTTRANSLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

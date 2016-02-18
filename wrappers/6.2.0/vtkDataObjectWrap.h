@@ -10,6 +10,7 @@
 #include <vtkDataObject.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataObjectWrap : public VtkObjectWrap
 {
@@ -90,6 +91,10 @@ class VtkDataObjectWrap : public VtkObjectWrap
 		static void SetPointDataActiveScalarInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VERTEX_DATA_VECTOR(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAOBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

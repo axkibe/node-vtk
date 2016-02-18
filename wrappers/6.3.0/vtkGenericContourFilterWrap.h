@@ -10,6 +10,7 @@
 #include <vtkGenericContourFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericContourFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -54,6 +55,10 @@ class VtkGenericContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICCONTOURFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

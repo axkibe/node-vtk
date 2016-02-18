@@ -10,6 +10,7 @@
 #include <vtkImagePermute.h>
 
 #include "vtkImageResliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImagePermuteWrap : public VtkImageResliceWrap
 {
@@ -35,6 +36,10 @@ class VtkImagePermuteWrap : public VtkImageResliceWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilteredAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEPERMUTEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEPERMUTEWRAP_CLASSDEF
+#endif
 };
 
 #endif

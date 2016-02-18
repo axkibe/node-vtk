@@ -10,6 +10,7 @@
 #include <vtkUnsignedLongLongArray.h>
 
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnsignedLongLongArrayWrap : public VtkDataArrayWrap
 {
@@ -34,6 +35,10 @@ class VtkUnsignedLongLongArrayWrap : public VtkDataArrayWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSIGNEDLONGLONGARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSIGNEDLONGLONGARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

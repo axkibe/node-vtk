@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkRibbonFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -158,6 +158,9 @@ void VtkRibbonFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VaryWidthOn", VaryWidthOn);
 	Nan::SetPrototypeMethod(tpl, "varyWidthOn", VaryWidthOn);
 
+#ifdef VTK_NODE_PLUS_VTKRIBBONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRIBBONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkMapperCollection.h>
 
 #include "vtkCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMapperCollectionWrap : public VtkCollectionWrap
 {
@@ -36,6 +37,10 @@ class VtkMapperCollectionWrap : public VtkCollectionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMAPPERCOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMAPPERCOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

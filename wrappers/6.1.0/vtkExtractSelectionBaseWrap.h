@@ -10,6 +10,7 @@
 #include <vtkExtractSelectionBase.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectionBaseWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkExtractSelectionBaseWrap : public VtkDataObjectAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreserveTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTIONBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTIONBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

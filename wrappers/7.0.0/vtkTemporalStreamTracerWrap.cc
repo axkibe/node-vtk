@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamTracerWrap.h"
 #include "vtkTemporalStreamTracerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractParticleWriterWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkTemporalStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetTerminationTimeUnit", GetTerminationTimeUnit);
 	Nan::SetPrototypeMethod(tpl, "getTerminationTimeUnit", GetTerminationTimeUnit);
 
+	Nan::SetPrototypeMethod(tpl, "GetTimeStep", GetTimeStep);
+	Nan::SetPrototypeMethod(tpl, "getTimeStep", GetTimeStep);
+
 	Nan::SetPrototypeMethod(tpl, "GetTimeStepResolution", GetTimeStepResolution);
 	Nan::SetPrototypeMethod(tpl, "getTimeStepResolution", GetTimeStepResolution);
 
@@ -142,6 +145,9 @@ void VtkTemporalStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminationTimeUnitToTimeUnit", SetTerminationTimeUnitToTimeUnit);
 	Nan::SetPrototypeMethod(tpl, "setTerminationTimeUnitToTimeUnit", SetTerminationTimeUnitToTimeUnit);
 
+	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
+	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
+
 	Nan::SetPrototypeMethod(tpl, "SetTimeStepResolution", SetTimeStepResolution);
 	Nan::SetPrototypeMethod(tpl, "setTimeStepResolution", SetTimeStepResolution);
 
@@ -157,6 +163,9 @@ void VtkTemporalStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StaticSeedsOn", StaticSeedsOn);
 	Nan::SetPrototypeMethod(tpl, "staticSeedsOn", StaticSeedsOn);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSTREAMTRACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALSTREAMTRACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -376,6 +385,20 @@ void VtkTemporalStreamTracerWrap::GetTerminationTimeUnit(const Nan::FunctionCall
 		return;
 	}
 	r = native->GetTerminationTimeUnit();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkTemporalStreamTracerWrap::GetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
+	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTimeStep();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -700,6 +723,25 @@ void VtkTemporalStreamTracerWrap::SetTerminationTimeUnitToTimeUnit(const Nan::Fu
 		return;
 	}
 	native->SetTerminationTimeUnitToTimeUnit();
+}
+
+void VtkTemporalStreamTracerWrap::SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTemporalStreamTracerWrap *wrapper = ObjectWrap::Unwrap<VtkTemporalStreamTracerWrap>(info.Holder());
+	vtkTemporalStreamTracer *native = (vtkTemporalStreamTracer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetTimeStep(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTemporalStreamTracerWrap::SetTimeStepResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)

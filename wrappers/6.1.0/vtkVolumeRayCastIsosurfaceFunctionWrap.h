@@ -10,6 +10,7 @@
 #include <vtkVolumeRayCastIsosurfaceFunction.h>
 
 #include "vtkVolumeRayCastFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeRayCastIsosurfaceFunctionWrap : public VtkVolumeRayCastFunctionWrap
 {
@@ -35,6 +36,10 @@ class VtkVolumeRayCastIsosurfaceFunctionWrap : public VtkVolumeRayCastFunctionWr
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIsoValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTISOSURFACEFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMERAYCASTISOSURFACEFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

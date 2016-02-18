@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkContourRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointPlacerWrap.h"
 #include "vtkContourLineInterpolatorWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -233,6 +233,9 @@ void VtkContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToggleActiveNodeSelected", ToggleActiveNodeSelected);
 	Nan::SetPrototypeMethod(tpl, "toggleActiveNodeSelected", ToggleActiveNodeSelected);
 
+#ifdef VTK_NODE_PLUS_VTKCONTOURREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTOURREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

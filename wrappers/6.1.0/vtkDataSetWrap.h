@@ -10,6 +10,7 @@
 #include <vtkDataSet.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetWrap : public VtkDataObjectWrap
 {
@@ -51,6 +52,10 @@ class VtkDataSetWrap : public VtkDataObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

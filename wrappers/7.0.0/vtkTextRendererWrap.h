@@ -10,6 +10,7 @@
 #include <vtkTextRenderer.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextRendererWrap : public VtkObjectWrap
 {
@@ -39,6 +40,10 @@ class VtkTextRendererWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDefaultBackend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTRENDERERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTRENDERERWRAP_CLASSDEF
+#endif
 };
 
 #endif

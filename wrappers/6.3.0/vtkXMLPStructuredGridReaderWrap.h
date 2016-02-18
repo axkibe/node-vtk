@@ -10,6 +10,7 @@
 #include <vtkXMLPStructuredGridReader.h>
 
 #include "vtkXMLPStructuredDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPStructuredGridReaderWrap : public VtkXMLPStructuredDataReaderWrap
 {
@@ -34,6 +35,10 @@ class VtkXMLPStructuredGridReaderWrap : public VtkXMLPStructuredDataReaderWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPSTRUCTUREDGRIDREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPSTRUCTUREDGRIDREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReader2Wrap.h"
 #include "vtkMedicalImageReader2Wrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMedicalImagePropertiesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -105,6 +105,9 @@ void VtkMedicalImageReader2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStudy", SetStudy);
 	Nan::SetPrototypeMethod(tpl, "setStudy", SetStudy);
 
+#ifdef VTK_NODE_PLUS_VTKMEDICALIMAGEREADER2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMEDICALIMAGEREADER2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

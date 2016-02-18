@@ -10,6 +10,7 @@
 #include <vtkFixedPointVolumeRayCastMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 {
@@ -32,8 +33,12 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void AbortRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoAdjustSampleDistancesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void AutoAdjustSampleDistancesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckIfCropped(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckMIPMinMaxVolumeFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckMinMaxVolumeFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CreateCanonicalView(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DisplayRenderedImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void FixedPointIncrement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistances(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistancesMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAutoAdjustSampleDistancesMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -76,7 +81,12 @@ class VtkFixedPointVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void SetLockSampleDistanceToInputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRayCastImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ShiftVectorDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShouldUseNearestNeighborInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

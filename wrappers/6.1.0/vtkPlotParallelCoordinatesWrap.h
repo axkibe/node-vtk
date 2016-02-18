@@ -10,6 +10,7 @@
 #include <vtkPlotParallelCoordinates.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotParallelCoordinatesWrap : public VtkPlotWrap
 {
@@ -45,6 +46,10 @@ class VtkPlotParallelCoordinatesWrap : public VtkPlotWrap
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTPARALLELCOORDINATESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTPARALLELCOORDINATESWRAP_CLASSDEF
+#endif
 };
 
 #endif

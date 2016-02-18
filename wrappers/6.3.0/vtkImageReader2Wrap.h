@@ -10,6 +10,7 @@
 #include <vtkImageReader2.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageReader2Wrap : public VtkImageAlgorithmWrap
 {
@@ -86,6 +87,10 @@ class VtkImageReader2Wrap : public VtkImageAlgorithmWrap
 		static void SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEREADER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEREADER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

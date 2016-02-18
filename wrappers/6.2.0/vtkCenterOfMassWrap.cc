@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkCenterOfMassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkCenterOfMassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseScalarsAsWeights", SetUseScalarsAsWeights);
 	Nan::SetPrototypeMethod(tpl, "setUseScalarsAsWeights", SetUseScalarsAsWeights);
 
+#ifdef VTK_NODE_PLUS_VTKCENTEROFMASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCENTEROFMASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

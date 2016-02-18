@@ -10,6 +10,7 @@
 #include <vtkPolygon.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolygonWrap : public VtkCellWrap
 {
@@ -49,6 +50,10 @@ class VtkPolygonWrap : public VtkCellWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYGONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYGONWRAP_CLASSDEF
+#endif
 };
 
 #endif

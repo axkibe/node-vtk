@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTexturedActor2DWrap.h"
 #include "vtkTextActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkTextPropertyWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkTextActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseBorderAlignOn", UseBorderAlignOn);
 	Nan::SetPrototypeMethod(tpl, "useBorderAlignOn", UseBorderAlignOn);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

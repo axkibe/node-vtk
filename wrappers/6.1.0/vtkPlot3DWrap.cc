@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkPlot3DWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkDataArrayWrap.h"
 #include "vtkChartXYZWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkPlot3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelection", SetSelection);
 	Nan::SetPrototypeMethod(tpl, "setSelection", SetSelection);
 
+#ifdef VTK_NODE_PLUS_VTKPLOT3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOT3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

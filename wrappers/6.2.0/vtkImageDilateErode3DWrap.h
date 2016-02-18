@@ -10,6 +10,7 @@
 #include <vtkImageDilateErode3D.h>
 
 #include "vtkImageSpatialAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDilateErode3DWrap : public VtkImageSpatialAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkImageDilateErode3DWrap : public VtkImageSpatialAlgorithmWrap
 		static void SetDilateValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetErodeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDILATEERODE3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDILATEERODE3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

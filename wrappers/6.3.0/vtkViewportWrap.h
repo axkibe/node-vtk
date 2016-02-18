@@ -10,6 +10,7 @@
 #include <vtkViewport.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkViewportWrap : public VtkObjectWrap
 {
@@ -40,6 +41,7 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void GetBackground2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentPickId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsPicking(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -73,6 +75,7 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void SetAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetCurrentPickId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGradientBackground(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPixelAspect(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -83,6 +86,10 @@ class VtkViewportWrap : public VtkObjectWrap
 		static void ViewToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIEWPORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIEWPORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

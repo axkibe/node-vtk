@@ -10,6 +10,7 @@
 #include <vtkDataArrayCollectionIterator.h>
 
 #include "vtkCollectionIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataArrayCollectionIteratorWrap : public VtkCollectionIteratorWrap
 {
@@ -35,6 +36,10 @@ class VtkDataArrayCollectionIteratorWrap : public VtkCollectionIteratorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCollection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAARRAYCOLLECTIONITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAARRAYCOLLECTIONITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

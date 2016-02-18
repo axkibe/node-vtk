@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkVoxelModellerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkVoxelModellerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+#ifdef VTK_NODE_PLUS_VTKVOXELMODELLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOXELMODELLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

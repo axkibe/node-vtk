@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropCollectionWrap.h"
 #include "vtkImageSliceCollectionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageSliceWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkImageSliceCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Sort", Sort);
 	Nan::SetPrototypeMethod(tpl, "sort", Sort);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESLICECOLLECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESLICECOLLECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

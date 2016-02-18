@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridVolumeRayCastIteratorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkUnstructuredGridVolumeRayCastIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
 	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMERAYCASTITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMERAYCASTITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

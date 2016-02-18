@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamerBaseWrap.h"
 #include "vtkPolyDataStreamerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkPolyDataStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfStreamDivisions", SetNumberOfStreamDivisions);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATASTREAMERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATASTREAMERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

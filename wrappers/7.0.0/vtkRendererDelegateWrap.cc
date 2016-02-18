@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkRendererDelegateWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkRendererDelegateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsedOn", UsedOn);
 	Nan::SetPrototypeMethod(tpl, "usedOn", UsedOn);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERERDELEGATEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERERDELEGATEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

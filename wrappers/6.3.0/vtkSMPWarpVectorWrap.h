@@ -10,6 +10,7 @@
 #include <vtkSMPWarpVector.h>
 
 #include "vtkWarpVectorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSMPWarpVectorWrap : public VtkWarpVectorWrap
 {
@@ -33,6 +34,10 @@ class VtkSMPWarpVectorWrap : public VtkWarpVectorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMPWARPVECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMPWARPVECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

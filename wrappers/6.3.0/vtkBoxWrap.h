@@ -10,6 +10,7 @@
 #include <vtkBox.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoxWrap : public VtkImplicitFunctionWrap
 {
@@ -42,6 +43,10 @@ class VtkBoxWrap : public VtkImplicitFunctionWrap
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOXWRAP_CLASSDEF
+#endif
 };
 
 #endif

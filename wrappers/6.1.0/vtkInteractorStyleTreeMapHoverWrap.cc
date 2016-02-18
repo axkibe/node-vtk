@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleImageWrap.h"
 #include "vtkInteractorStyleTreeMapHoverWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTreeMapLayoutWrap.h"
 #include "vtkTreeMapToPolyDataWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkInteractorStyleTreeMapHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTreeMapToPolyData", SetTreeMapToPolyData);
 	Nan::SetPrototypeMethod(tpl, "setTreeMapToPolyData", SetTreeMapToPolyData);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETREEMAPHOVERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLETREEMAPHOVERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

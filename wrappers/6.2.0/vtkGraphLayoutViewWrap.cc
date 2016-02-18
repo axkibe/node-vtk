@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderViewWrap.h"
 #include "vtkGraphLayoutViewWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkEdgeLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -349,6 +349,9 @@ void VtkGraphLayoutViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZoomToSelection", ZoomToSelection);
 	Nan::SetPrototypeMethod(tpl, "zoomToSelection", ZoomToSelection);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHLAYOUTVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkAdjacencyMatrixToEdgeTableWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkAdjacencyMatrixToEdgeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValueArrayName", SetValueArrayName);
 	Nan::SetPrototypeMethod(tpl, "setValueArrayName", SetValueArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKADJACENCYMATRIXTOEDGETABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKADJACENCYMATRIXTOEDGETABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

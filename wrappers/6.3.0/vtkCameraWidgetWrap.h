@@ -10,6 +10,7 @@
 #include <vtkCameraWidget.h>
 
 #include "vtkBorderWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraWidgetWrap : public VtkBorderWidgetWrap
 {
@@ -35,6 +36,10 @@ class VtkCameraWidgetWrap : public VtkBorderWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

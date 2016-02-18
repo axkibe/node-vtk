@@ -10,6 +10,7 @@
 #include <vtkImageShiftScale.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageShiftScaleWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkImageShiftScaleWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOutputScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShift(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESHIFTSCALEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESHIFTSCALEWRAP_CLASSDEF
+#endif
 };
 
 #endif

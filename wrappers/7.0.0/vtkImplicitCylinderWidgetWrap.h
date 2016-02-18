@@ -10,6 +10,7 @@
 #include <vtkImplicitCylinderWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitCylinderWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -37,6 +38,10 @@ class VtkImplicitCylinderWidgetWrap : public VtkAbstractWidgetWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITCYLINDERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITCYLINDERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
 #include "vtkUnstructuredGridPreIntegrationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkUnstructuredGridPreIntegrationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIntegrator", SetIntegrator);
 	Nan::SetPrototypeMethod(tpl, "setIntegrator", SetIntegrator);
 
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDPREINTEGRATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDPREINTEGRATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

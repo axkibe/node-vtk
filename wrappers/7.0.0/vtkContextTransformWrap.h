@@ -10,6 +10,7 @@
 #include <vtkContextTransform.h>
 
 #include "vtkAbstractContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextTransformWrap : public VtkAbstractContextItemWrap
 {
@@ -61,6 +62,10 @@ class VtkContextTransformWrap : public VtkAbstractContextItemWrap
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZoomOnMouseWheelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZoomOnMouseWheelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

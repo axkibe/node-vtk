@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageButterworthLowPassWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkImageButterworthLowPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCutOff", SetZCutOff);
 	Nan::SetPrototypeMethod(tpl, "setZCutOff", SetZCutOff);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEBUTTERWORTHLOWPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEBUTTERWORTHLOWPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

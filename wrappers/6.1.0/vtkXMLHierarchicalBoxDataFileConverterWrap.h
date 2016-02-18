@@ -10,6 +10,7 @@
 #include <vtkXMLHierarchicalBoxDataFileConverter.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLHierarchicalBoxDataFileConverterWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkXMLHierarchicalBoxDataFileConverterWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAFILECONVERTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAFILECONVERTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

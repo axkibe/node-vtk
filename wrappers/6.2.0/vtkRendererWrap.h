@@ -10,6 +10,7 @@
 #include <vtkRenderer.h>
 
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRendererWrap : public VtkViewportWrap
 {
@@ -140,6 +141,10 @@ class VtkRendererWrap : public VtkViewportWrap
 		static void VisibleActorCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibleVolumeCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WorldToView(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERERWRAP_CLASSDEF
+#endif
 };
 
 #endif

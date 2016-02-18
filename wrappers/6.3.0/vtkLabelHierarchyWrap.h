@@ -10,6 +10,7 @@
 #include <vtkLabelHierarchy.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelHierarchyWrap : public VtkPointSetWrap
 {
@@ -57,6 +58,10 @@ class VtkLabelHierarchyWrap : public VtkPointSetWrap
 		static void SetSizes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetLabelCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELHIERARCHYWRAP_CLASSDEF
+#endif
 };
 
 #endif

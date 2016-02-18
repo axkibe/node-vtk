@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUndirectedGraphAlgorithmWrap.h"
 #include "vtkXGMLReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkXGMLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+#ifdef VTK_NODE_PLUS_VTKXGMLREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXGMLREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

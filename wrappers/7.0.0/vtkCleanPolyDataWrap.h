@@ -10,6 +10,7 @@
 #include <vtkCleanPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCleanPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -73,6 +74,10 @@ class VtkCleanPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetToleranceIsAbsolute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToleranceIsAbsoluteOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToleranceIsAbsoluteOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLEANPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLEANPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

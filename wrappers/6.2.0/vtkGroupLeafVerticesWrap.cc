@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAlgorithmWrap.h"
 #include "vtkGroupLeafVerticesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkGroupLeafVerticesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGroupDomain", SetGroupDomain);
 	Nan::SetPrototypeMethod(tpl, "setGroupDomain", SetGroupDomain);
 
+#ifdef VTK_NODE_PLUS_VTKGROUPLEAFVERTICESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGROUPLEAFVERTICESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

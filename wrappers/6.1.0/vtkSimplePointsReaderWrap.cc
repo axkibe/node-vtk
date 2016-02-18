@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSimplePointsReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkSimplePointsReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLEPOINTSREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLEPOINTSREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

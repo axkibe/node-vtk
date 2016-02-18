@@ -10,6 +10,7 @@
 #include <vtkSelectionAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSelectionAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkSelectionAlgorithmWrap : public VtkAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSELECTIONALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSELECTIONALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

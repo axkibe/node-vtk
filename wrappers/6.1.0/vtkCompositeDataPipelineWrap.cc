@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStreamingDemandDrivenPipelineWrap.h"
 #include "vtkCompositeDataPipelineWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
 #include "vtkInformationIntegerVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkCompositeDataPipelineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "UPDATE_COMPOSITE_INDICES", UPDATE_COMPOSITE_INDICES);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAPIPELINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEDATAPIPELINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

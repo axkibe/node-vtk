@@ -10,6 +10,7 @@
 #include <vtkMultiBlockPLOT3DReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiBlockPLOT3DReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -91,6 +92,10 @@ class VtkMultiBlockPLOT3DReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetXYZFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoDimensionalGeometryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoDimensionalGeometryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIBLOCKPLOT3DREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTIBLOCKPLOT3DREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

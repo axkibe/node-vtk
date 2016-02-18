@@ -10,6 +10,7 @@
 #include <vtkInformationExecutivePortVectorKey.h>
 
 #include "vtkInformationKeyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationExecutivePortVectorKeyWrap : public VtkInformationKeyWrap
 {
@@ -39,6 +40,10 @@ class VtkInformationExecutivePortVectorKeyWrap : public VtkInformationKeyWrap
 		static void Report(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONEXECUTIVEPORTVECTORKEYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONEXECUTIVEPORTVECTORKEYWRAP_CLASSDEF
+#endif
 };
 
 #endif

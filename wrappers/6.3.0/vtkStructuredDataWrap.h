@@ -10,6 +10,7 @@
 #include <vtkStructuredData.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredDataWrap : public VtkObjectWrap
 {
@@ -44,6 +45,10 @@ class VtkStructuredDataWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkRenderedGraphRepresentation.h>
 
 #include "vtkRenderedRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderedGraphRepresentationWrap : public VtkRenderedRepresentationWrap
 {
@@ -177,6 +178,10 @@ class VtkRenderedGraphRepresentationWrap : public VtkRenderedRepresentationWrap
 		static void VertexIconVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VertexLabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VertexLabelVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDEREDGRAPHREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDEREDGRAPHREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkForceDirectedLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkForceDirectedLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -66,6 +67,10 @@ class VtkForceDirectedLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetThreeDimensionalLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFORCEDIRECTEDLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFORCEDIRECTEDLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkResliceCursorLineRepresentationWrap.h"
 #include "vtkResliceCursorThickLineRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkResliceCursorThickLineRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResliceParameters", SetResliceParameters);
 	Nan::SetPrototypeMethod(tpl, "setResliceParameters", SetResliceParameters);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORTHICKLINEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICECURSORTHICKLINEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

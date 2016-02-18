@@ -10,6 +10,7 @@
 #include <vtkMultiNewickTreeReader.h>
 
 #include "vtkDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiNewickTreeReaderWrap : public VtkDataReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkMultiNewickTreeReaderWrap : public VtkDataReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTINEWICKTREEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTINEWICKTREEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

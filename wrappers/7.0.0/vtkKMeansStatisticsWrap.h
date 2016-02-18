@@ -10,6 +10,7 @@
 #include <vtkKMeansStatistics.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKMeansStatisticsWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkKMeansStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void SetKValuesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxNumIterations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKMEANSSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKMEANSSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

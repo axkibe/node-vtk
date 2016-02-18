@@ -10,6 +10,7 @@
 #include <vtkBlankStructuredGrid.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBlankStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkBlankStructuredGridWrap : public VtkStructuredGridAlgorithmWrap
 		static void SetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxBlankingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinBlankingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

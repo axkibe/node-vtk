@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageGaussianSmoothWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkImageGaussianSmoothWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStandardDeviations", SetStandardDeviations);
 	Nan::SetPrototypeMethod(tpl, "setStandardDeviations", SetStandardDeviations);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEGAUSSIANSMOOTHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEGAUSSIANSMOOTHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

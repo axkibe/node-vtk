@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOverlappingAMRAlgorithmWrap.h"
 #include "vtkAMRGaussianPulseSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkAMRGaussianPulseSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZPulseWidth", SetZPulseWidth);
 	Nan::SetPrototypeMethod(tpl, "setZPulseWidth", SetZPulseWidth);
 
+#ifdef VTK_NODE_PLUS_VTKAMRGAUSSIANPULSESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRGAUSSIANPULSESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

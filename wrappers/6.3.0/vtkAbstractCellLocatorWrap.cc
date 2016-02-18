@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLocatorWrap.h"
 #include "vtkAbstractCellLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -127,6 +127,9 @@ void VtkAbstractCellLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseExistingSearchStructureOn", UseExistingSearchStructureOn);
 	Nan::SetPrototypeMethod(tpl, "useExistingSearchStructureOn", UseExistingSearchStructureOn);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTCELLLOCATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTCELLLOCATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

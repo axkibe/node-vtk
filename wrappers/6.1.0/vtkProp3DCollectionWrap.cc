@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropCollectionWrap.h"
 #include "vtkProp3DCollectionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkProp3DCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKPROP3DCOLLECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROP3DCOLLECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

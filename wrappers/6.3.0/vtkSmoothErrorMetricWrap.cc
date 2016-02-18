@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGenericSubdivisionErrorMetricWrap.h"
 #include "vtkSmoothErrorMetricWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkSmoothErrorMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAngleTolerance", SetAngleTolerance);
 	Nan::SetPrototypeMethod(tpl, "setAngleTolerance", SetAngleTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKSMOOTHERRORMETRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSMOOTHERRORMETRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

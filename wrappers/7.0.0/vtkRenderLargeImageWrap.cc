@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkRenderLargeImageWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkRenderLargeImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMagnification", SetMagnification);
 	Nan::SetPrototypeMethod(tpl, "setMagnification", SetMagnification);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERLARGEIMAGEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERLARGEIMAGEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

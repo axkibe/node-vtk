@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkTransformTextureCoordsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkTransformTextureCoordsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMTEXTURECOORDSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFORMTEXTURECOORDSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGlyph3DMapperWrap.h"
 #include "vtkOpenGLGlyph3DMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkOpenGLGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLGLYPH3DMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLGLYPH3DMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageYIQToRGBWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkImageYIQToRGBWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximum", SetMaximum);
 	Nan::SetPrototypeMethod(tpl, "setMaximum", SetMaximum);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEYIQTORGBWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEYIQTORGBWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

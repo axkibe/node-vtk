@@ -10,6 +10,7 @@
 #include <vtkChartLegend.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartLegendWrap : public VtkContextItemWrap
 {
@@ -58,6 +59,10 @@ class VtkChartLegendWrap : public VtkContextItemWrap
 		static void SetSymbolWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVerticalAlignment(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTLEGENDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTLEGENDWRAP_CLASSDEF
+#endif
 };
 
 #endif

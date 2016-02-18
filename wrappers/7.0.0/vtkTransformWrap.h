@@ -10,6 +10,7 @@
 #include <vtkTransform.h>
 
 #include "vtkLinearTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformWrap : public VtkLinearTransformWrap
 {
@@ -61,6 +62,10 @@ class VtkTransformWrap : public VtkLinearTransformWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

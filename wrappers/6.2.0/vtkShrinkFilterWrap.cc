@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkShrinkFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkShrinkFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkFactor", SetShrinkFactor);
 	Nan::SetPrototypeMethod(tpl, "setShrinkFactor", SetShrinkFactor);
 
+#ifdef VTK_NODE_PLUS_VTKSHRINKFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHRINKFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

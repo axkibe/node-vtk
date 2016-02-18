@@ -10,6 +10,7 @@
 #include <vtkConvexPointSet.h>
 
 #include "vtkCell3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConvexPointSetWrap : public VtkCell3DWrap
 {
@@ -45,6 +46,10 @@ class VtkConvexPointSetWrap : public VtkCell3DWrap
 		static void RequiresInitialization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONVEXPOINTSETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONVEXPOINTSETWRAP_CLASSDEF
+#endif
 };
 
 #endif

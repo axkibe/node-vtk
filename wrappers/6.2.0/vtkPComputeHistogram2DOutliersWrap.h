@@ -10,6 +10,7 @@
 #include <vtkPComputeHistogram2DOutliers.h>
 
 #include "vtkComputeHistogram2DOutliersWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPComputeHistogram2DOutliersWrap : public VtkComputeHistogram2DOutliersWrap
 {
@@ -35,6 +36,10 @@ class VtkPComputeHistogram2DOutliersWrap : public VtkComputeHistogram2DOutliersW
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPCOMPUTEHISTOGRAM2DOUTLIERSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPCOMPUTEHISTOGRAM2DOUTLIERSWRAP_CLASSDEF
+#endif
 };
 
 #endif

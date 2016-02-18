@@ -10,6 +10,7 @@
 #include <vtkTemporalFractal.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalFractalWrap : public VtkAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkTemporalFractalWrap : public VtkAlgorithmWrap
 		static void SetTwoDimensional(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoDimensionalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwoDimensionalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALFRACTALWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALFRACTALWRAP_CLASSDEF
+#endif
 };
 
 #endif

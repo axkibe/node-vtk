@@ -10,6 +10,7 @@
 #include <vtkImplicitModeller.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitModellerWrap : public VtkImageAlgorithmWrap
 {
@@ -88,6 +89,10 @@ class VtkImplicitModellerWrap : public VtkImageAlgorithmWrap
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToMaximumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartAppend(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITMODELLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITMODELLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

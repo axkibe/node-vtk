@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLMultiBlockDataWriterWrap.h"
 #include "vtkXMLPMultiBlockDataWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkXMLPMultiBlockDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
+#ifdef VTK_NODE_PLUS_VTKXMLPMULTIBLOCKDATAWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLPMULTIBLOCKDATAWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

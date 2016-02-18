@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMutableGraphHelperWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkMutableGraphHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+#ifdef VTK_NODE_PLUS_VTKMUTABLEGRAPHHELPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMUTABLEGRAPHHELPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointPlacerWrap.h"
 #include "vtkTerrainDataPointPlacerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkPropPickerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkTerrainDataPointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ValidateWorldPosition", ValidateWorldPosition);
 	Nan::SetPrototypeMethod(tpl, "validateWorldPosition", ValidateWorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKTERRAINDATAPOINTPLACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTERRAINDATAPOINTPLACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

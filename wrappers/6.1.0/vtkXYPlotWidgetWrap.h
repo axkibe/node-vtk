@@ -10,6 +10,7 @@
 #include <vtkXYPlotWidget.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXYPlotWidgetWrap : public VtkInteractorObserverWrap
 {
@@ -36,6 +37,10 @@ class VtkXYPlotWidgetWrap : public VtkInteractorObserverWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXYPlotActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXYPLOTWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXYPLOTWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

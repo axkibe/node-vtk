@@ -10,6 +10,7 @@
 #include <vtkImageButterworthHighPass.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageButterworthHighPassWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImageButterworthHighPassWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetXCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEBUTTERWORTHHIGHPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEBUTTERWORTHHIGHPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

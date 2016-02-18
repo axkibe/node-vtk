@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWidgetEventTranslatorWrap.h"
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkAbstractWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProcessEvents", SetProcessEvents);
 	Nan::SetPrototypeMethod(tpl, "setProcessEvents", SetProcessEvents);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

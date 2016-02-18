@@ -10,6 +10,7 @@
 #include <vtkBlockIdScalars.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBlockIdScalarsWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkBlockIdScalarsWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBLOCKIDSCALARSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBLOCKIDSCALARSWRAP_CLASSDEF
+#endif
 };
 
 #endif

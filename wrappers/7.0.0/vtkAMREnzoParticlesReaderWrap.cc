@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAMRBaseParticlesReaderWrap.h"
 #include "vtkAMREnzoParticlesReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkAMREnzoParticlesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleType", SetParticleType);
 	Nan::SetPrototypeMethod(tpl, "setParticleType", SetParticleType);
 
+#ifdef VTK_NODE_PLUS_VTKAMRENZOPARTICLESREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRENZOPARTICLESREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

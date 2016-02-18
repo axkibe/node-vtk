@@ -10,6 +10,7 @@
 #include <vtkPyramid.h>
 
 #include "vtkCell3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPyramidWrap : public VtkCell3DWrap
 {
@@ -48,6 +49,10 @@ class VtkPyramidWrap : public VtkCell3DWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPYRAMIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPYRAMIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

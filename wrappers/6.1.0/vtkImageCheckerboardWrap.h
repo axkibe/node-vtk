@@ -10,6 +10,7 @@
 #include <vtkImageCheckerboard.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCheckerboardWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkImageCheckerboardWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetInput1Data(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput2Data(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECHECKERBOARDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECHECKERBOARDWRAP_CLASSDEF
+#endif
 };
 
 #endif

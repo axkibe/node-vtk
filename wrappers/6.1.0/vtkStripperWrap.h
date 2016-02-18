@@ -10,6 +10,7 @@
 #include <vtkStripper.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStripperWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkStripperWrap : public VtkPolyDataAlgorithmWrap
 		static void SetPassCellDataAsFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThroughCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThroughPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRIPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRIPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

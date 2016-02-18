@@ -10,6 +10,7 @@
 #include <vtkPolynomialSolversUnivariate.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolynomialSolversUnivariateWrap : public VtkObjectWrap
 {
@@ -35,6 +36,10 @@ class VtkPolynomialSolversUnivariateWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDivisionTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYNOMIALSOLVERSUNIVARIATEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYNOMIALSOLVERSUNIVARIATEWRAP_CLASSDEF
+#endif
 };
 
 #endif

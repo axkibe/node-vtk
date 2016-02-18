@@ -10,6 +10,7 @@
 #include <vtkFixedSizeHandleRepresentation3D.h>
 
 #include "vtkPolygonalHandleRepresentation3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFixedSizeHandleRepresentation3DWrap : public VtkPolygonalHandleRepresentation3DWrap
 {
@@ -38,6 +39,10 @@ class VtkFixedSizeHandleRepresentation3DWrap : public VtkPolygonalHandleRepresen
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleSizeInPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleSizeToleranceInPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIXEDSIZEHANDLEREPRESENTATION3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIXEDSIZEHANDLEREPRESENTATION3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkVoxelModeller.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVoxelModellerWrap : public VtkImageAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkVoxelModellerWrap : public VtkImageAlgorithmWrap
 		static void SetScalarTypeToUnsignedInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedLong(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOXELMODELLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOXELMODELLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPairwiseExtractHistogram2D.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPairwiseExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkPairwiseExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 		static void SetScalarTypeToUnsignedInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedLong(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPAIRWISEEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPAIRWISEEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

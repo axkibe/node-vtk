@@ -10,6 +10,7 @@
 #include <vtkTreeFieldAggregator.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeFieldAggregatorWrap : public VtkTreeAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTreeFieldAggregatorWrap : public VtkTreeAlgorithmWrap
 		static void SetLeafVertexUnitSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEFIELDAGGREGATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEFIELDAGGREGATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

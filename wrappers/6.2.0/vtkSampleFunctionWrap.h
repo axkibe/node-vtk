@@ -10,6 +10,7 @@
 #include <vtkSampleFunction.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSampleFunctionWrap : public VtkImageAlgorithmWrap
 {
@@ -66,6 +67,10 @@ class VtkSampleFunctionWrap : public VtkImageAlgorithmWrap
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSAMPLEFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSAMPLEFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

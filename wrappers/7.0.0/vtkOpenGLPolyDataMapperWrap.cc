@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataMapperWrap.h"
 #include "vtkOpenGLPolyDataMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkActorWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkAbstractMapperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -138,6 +138,9 @@ void VtkOpenGLPolyDataMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLPOLYDATAMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLPOLYDATAMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

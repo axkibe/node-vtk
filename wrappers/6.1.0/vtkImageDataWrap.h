@@ -10,6 +10,7 @@
 #include <vtkImageData.h>
 
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataWrap : public VtkDataSetWrap
 {
@@ -70,6 +71,10 @@ class VtkImageDataWrap : public VtkDataSetWrap
 		static void SetScalarType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

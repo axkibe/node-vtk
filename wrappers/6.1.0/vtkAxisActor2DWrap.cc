@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkAxisActor2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -316,6 +316,9 @@ void VtkAxisActor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKAXISACTOR2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXISACTOR2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

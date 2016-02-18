@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPickerWrap.h"
 #include "vtkResliceCursorPickerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkResliceCursorPolyDataAlgorithmWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkResliceCursorPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransformMatrix", SetTransformMatrix);
 	Nan::SetPrototypeMethod(tpl, "setTransformMatrix", SetTransformMatrix);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICECURSORPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

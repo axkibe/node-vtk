@@ -10,6 +10,7 @@
 #include <vtkStreamingStatistics.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamingStatisticsWrap : public VtkTableAlgorithmWrap
 {
@@ -34,6 +35,10 @@ class VtkStreamingStatisticsWrap : public VtkTableAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStatisticsAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMINGSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMINGSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageCursor3D.h>
 
 #include "vtkImageInPlaceFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCursor3DWrap : public VtkImageInPlaceFilterWrap
 {
@@ -39,6 +40,10 @@ class VtkImageCursor3DWrap : public VtkImageInPlaceFilterWrap
 		static void SetCursorPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCursorValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECURSOR3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECURSOR3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

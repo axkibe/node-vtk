@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridVolumeMapper.h>
 
 #include "vtkAbstractVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 {
@@ -40,6 +41,10 @@ class VtkUnstructuredGridVolumeMapperWrap : public VtkAbstractVolumeMapperWrap
 		static void SetBlendModeToComposite(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBlendModeToMaximumIntensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

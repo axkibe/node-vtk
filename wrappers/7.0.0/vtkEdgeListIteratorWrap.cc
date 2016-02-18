@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkEdgeListIteratorWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkGraphEdgeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkEdgeListIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGraph", SetGraph);
 	Nan::SetPrototypeMethod(tpl, "setGraph", SetGraph);
 
+#ifdef VTK_NODE_PLUS_VTKEDGELISTITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEDGELISTITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

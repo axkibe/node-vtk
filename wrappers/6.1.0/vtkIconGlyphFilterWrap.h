@@ -10,6 +10,7 @@
 #include <vtkIconGlyphFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -64,6 +65,10 @@ class VtkIconGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetUseIconSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIconSizeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseIconSizeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKICONGLYPHFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKICONGLYPHFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

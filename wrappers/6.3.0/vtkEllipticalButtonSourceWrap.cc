@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkButtonSourceWrap.h"
 #include "vtkEllipticalButtonSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -149,6 +149,9 @@ void VtkEllipticalButtonSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+#ifdef VTK_NODE_PLUS_VTKELLIPTICALBUTTONSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKELLIPTICALBUTTONSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

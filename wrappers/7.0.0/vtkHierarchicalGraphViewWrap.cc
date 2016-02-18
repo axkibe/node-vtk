@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutViewWrap.h"
 #include "vtkHierarchicalGraphViewWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataRepresentationWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkHierarchicalGraphViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHierarchyFromInputConnection", SetHierarchyFromInputConnection);
 	Nan::SetPrototypeMethod(tpl, "setHierarchyFromInputConnection", SetHierarchyFromInputConnection);
 
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALGRAPHVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHIERARCHICALGRAPHVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

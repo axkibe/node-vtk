@@ -10,6 +10,7 @@
 #include <vtkTreeMapLayout.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeMapLayoutWrap : public VtkTreeAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkTreeMapLayoutWrap : public VtkTreeAlgorithmWrap
 		static void SetLayoutStrategy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRectanglesFieldName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSizeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEMAPLAYOUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEMAPLAYOUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

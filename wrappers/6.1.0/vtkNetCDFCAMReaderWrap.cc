@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkNetCDFCAMReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkNetCDFCAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleLevelOn", SingleLevelOn);
 	Nan::SetPrototypeMethod(tpl, "singleLevelOn", SingleLevelOn);
 
+#ifdef VTK_NODE_PLUS_VTKNETCDFCAMREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNETCDFCAMREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

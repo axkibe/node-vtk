@@ -10,6 +10,7 @@
 #include <vtkWeightedTransformFilter.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWeightedTransformFilterWrap : public VtkPointSetAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkWeightedTransformFilterWrap : public VtkPointSetAlgorithmWrap
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransformIndexArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWeightArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWEIGHTEDTRANSFORMFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWEIGHTEDTRANSFORMFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

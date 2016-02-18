@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricPluckerConoidWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkParametricPluckerConoidWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetN", SetN);
 	Nan::SetPrototypeMethod(tpl, "setN", SetN);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICPLUCKERCONOIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICPLUCKERCONOIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

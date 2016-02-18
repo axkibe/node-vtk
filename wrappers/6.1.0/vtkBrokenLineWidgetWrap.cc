@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkBrokenLineWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -189,6 +189,9 @@ void VtkBrokenLineWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectedLineProperty", SetSelectedLineProperty);
 	Nan::SetPrototypeMethod(tpl, "setSelectedLineProperty", SetSelectedLineProperty);
 
+#ifdef VTK_NODE_PLUS_VTKBROKENLINEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBROKENLINEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

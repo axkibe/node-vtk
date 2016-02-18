@@ -10,6 +10,7 @@
 #include <vtkPYoungsMaterialInterface.h>
 
 #include "vtkYoungsMaterialInterfaceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPYoungsMaterialInterfaceWrap : public VtkYoungsMaterialInterfaceWrap
 {
@@ -35,6 +36,10 @@ class VtkPYoungsMaterialInterfaceWrap : public VtkYoungsMaterialInterfaceWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPYOUNGSMATERIALINTERFACEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPYOUNGSMATERIALINTERFACEWRAP_CLASSDEF
+#endif
 };
 
 #endif

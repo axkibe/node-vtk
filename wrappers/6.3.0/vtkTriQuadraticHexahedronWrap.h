@@ -10,6 +10,7 @@
 #include <vtkTriQuadraticHexahedron.h>
 
 #include "vtkNonLinearCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTriQuadraticHexahedronWrap : public VtkNonLinearCellWrap
 {
@@ -45,6 +46,10 @@ class VtkTriQuadraticHexahedronWrap : public VtkNonLinearCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRIQUADRATICHEXAHEDRONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRIQUADRATICHEXAHEDRONWRAP_CLASSDEF
+#endif
 };
 
 #endif

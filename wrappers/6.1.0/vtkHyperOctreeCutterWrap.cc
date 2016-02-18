@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkHyperOctreeCutterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -124,6 +124,9 @@ void VtkHyperOctreeCutterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValue", SetValue);
 	Nan::SetPrototypeMethod(tpl, "setValue", SetValue);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREECUTTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREECUTTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkRowQueryToTableWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRowQueryWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkRowQueryToTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQuery", SetQuery);
 	Nan::SetPrototypeMethod(tpl, "setQuery", SetQuery);
 
+#ifdef VTK_NODE_PLUS_VTKROWQUERYTOTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKROWQUERYTOTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderRepresentationWrap.h"
 #include "vtkLogoRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkLogoRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImageProperty", SetImageProperty);
 	Nan::SetPrototypeMethod(tpl, "setImageProperty", SetImageProperty);
 
+#ifdef VTK_NODE_PLUS_VTKLOGOREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLOGOREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

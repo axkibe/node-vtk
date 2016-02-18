@@ -10,6 +10,7 @@
 #include <vtkCheckerboardSplatter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCheckerboardSplatterWrap : public VtkImageAlgorithmWrap
 {
@@ -92,6 +93,10 @@ class VtkCheckerboardSplatterWrap : public VtkImageAlgorithmWrap
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarWarping(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHECKERBOARDSPLATTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHECKERBOARDSPLATTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

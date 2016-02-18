@@ -10,6 +10,7 @@
 #include <vtkContinuousValueWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContinuousValueWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -37,6 +38,10 @@ class VtkContinuousValueWidgetWrap : public VtkAbstractWidgetWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTINUOUSVALUEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTINUOUSVALUEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageSeedConnectivityWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageConnectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -60,6 +60,15 @@ void VtkImageSeedConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDimensionality", GetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "getDimensionality", GetDimensionality);
 
+	Nan::SetPrototypeMethod(tpl, "GetInputConnectValue", GetInputConnectValue);
+	Nan::SetPrototypeMethod(tpl, "getInputConnectValue", GetInputConnectValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputConnectedValue", GetOutputConnectedValue);
+	Nan::SetPrototypeMethod(tpl, "getOutputConnectedValue", GetOutputConnectedValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetOutputUnconnectedValue", GetOutputUnconnectedValue);
+	Nan::SetPrototypeMethod(tpl, "getOutputUnconnectedValue", GetOutputUnconnectedValue);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -75,6 +84,18 @@ void VtkImageSeedConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+	Nan::SetPrototypeMethod(tpl, "SetInputConnectValue", SetInputConnectValue);
+	Nan::SetPrototypeMethod(tpl, "setInputConnectValue", SetInputConnectValue);
+
+	Nan::SetPrototypeMethod(tpl, "SetOutputConnectedValue", SetOutputConnectedValue);
+	Nan::SetPrototypeMethod(tpl, "setOutputConnectedValue", SetOutputConnectedValue);
+
+	Nan::SetPrototypeMethod(tpl, "SetOutputUnconnectedValue", SetOutputUnconnectedValue);
+	Nan::SetPrototypeMethod(tpl, "setOutputUnconnectedValue", SetOutputUnconnectedValue);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESEEDCONNECTIVITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -192,6 +213,48 @@ void VtkImageSeedConnectivityWrap::GetDimensionality(const Nan::FunctionCallback
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkImageSeedConnectivityWrap::GetInputConnectValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetInputConnectValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageSeedConnectivityWrap::GetOutputConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputConnectedValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageSeedConnectivityWrap::GetOutputUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOutputUnconnectedValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkImageSeedConnectivityWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
@@ -293,6 +356,63 @@ void VtkImageSeedConnectivityWrap::SetDimensionality(const Nan::FunctionCallback
 		}
 		native->SetDimensionality(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageSeedConnectivityWrap::SetInputConnectValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetInputConnectValue(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageSeedConnectivityWrap::SetOutputConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputConnectedValue(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageSeedConnectivityWrap::SetOutputUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageSeedConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkImageSeedConnectivityWrap>(info.Holder());
+	vtkImageSeedConnectivity *native = (vtkImageSeedConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOutputUnconnectedValue(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

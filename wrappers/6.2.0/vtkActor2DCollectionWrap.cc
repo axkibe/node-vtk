@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropCollectionWrap.h"
 #include "vtkActor2DCollectionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkActor2DCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Sort", Sort);
 	Nan::SetPrototypeMethod(tpl, "sort", Sort);
 
+#ifdef VTK_NODE_PLUS_VTKACTOR2DCOLLECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKACTOR2DCOLLECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

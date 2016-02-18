@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTreeRingToPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkTreeRingToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkPercentage", SetShrinkPercentage);
 	Nan::SetPrototypeMethod(tpl, "setShrinkPercentage", SetShrinkPercentage);
 
+#ifdef VTK_NODE_PLUS_VTKTREERINGTOPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREERINGTOPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

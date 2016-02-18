@@ -10,6 +10,7 @@
 #include <vtkAVSucdReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAVSucdReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkAVSucdReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetCellArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAVSUCDREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAVSUCDREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

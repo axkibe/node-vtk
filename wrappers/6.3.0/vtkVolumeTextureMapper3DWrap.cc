@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeMapperWrap.h"
 #include "vtkVolumeTextureMapper3DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkVolumeTextureMapper3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseCompressedTexture", SetUseCompressedTexture);
 	Nan::SetPrototypeMethod(tpl, "setUseCompressedTexture", SetUseCompressedTexture);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

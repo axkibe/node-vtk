@@ -10,6 +10,7 @@
 #include <vtkSurfaceReconstructionFilter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSurfaceReconstructionFilterWrap : public VtkImageAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkSurfaceReconstructionFilterWrap : public VtkImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNeighborhoodSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSURFACERECONSTRUCTIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSURFACERECONSTRUCTIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -117,6 +117,9 @@ void VtkVolumeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateTransferFunctions", UpdateTransferFunctions);
 	Nan::SetPrototypeMethod(tpl, "updateTransferFunctions", UpdateTransferFunctions);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

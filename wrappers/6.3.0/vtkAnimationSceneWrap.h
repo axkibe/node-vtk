@@ -10,6 +10,7 @@
 #include <vtkAnimationScene.h>
 
 #include "vtkAnimationCueWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAnimationSceneWrap : public VtkAnimationCueWrap
 {
@@ -51,6 +52,10 @@ class VtkAnimationSceneWrap : public VtkAnimationCueWrap
 		static void SetPlayMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stop(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANIMATIONSCENEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANIMATIONSCENEWRAP_CLASSDEF
+#endif
 };
 
 #endif

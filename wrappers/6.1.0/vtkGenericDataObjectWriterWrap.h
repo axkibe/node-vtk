@@ -10,6 +10,7 @@
 #include <vtkGenericDataObjectWriter.h>
 
 #include "vtkDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericDataObjectWriterWrap : public VtkDataWriterWrap
 {
@@ -33,6 +34,10 @@ class VtkGenericDataObjectWriterWrap : public VtkDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICDATAOBJECTWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICDATAOBJECTWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

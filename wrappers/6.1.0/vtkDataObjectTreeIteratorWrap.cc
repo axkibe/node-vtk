@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCompositeDataIteratorWrap.h"
 #include "vtkDataObjectTreeIteratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -54,6 +54,9 @@ void VtkDataObjectTreeIteratorWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetCurrentDataObject", GetCurrentDataObject);
 	Nan::SetPrototypeMethod(tpl, "getCurrentDataObject", GetCurrentDataObject);
+
+	Nan::SetPrototypeMethod(tpl, "GetCurrentFlatIndex", GetCurrentFlatIndex);
+	Nan::SetPrototypeMethod(tpl, "getCurrentFlatIndex", GetCurrentFlatIndex);
 
 	Nan::SetPrototypeMethod(tpl, "GetCurrentMetaData", GetCurrentMetaData);
 	Nan::SetPrototypeMethod(tpl, "getCurrentMetaData", GetCurrentMetaData);
@@ -103,6 +106,9 @@ void VtkDataObjectTreeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VisitOnlyLeavesOn", VisitOnlyLeavesOn);
 	Nan::SetPrototypeMethod(tpl, "visitOnlyLeavesOn", VisitOnlyLeavesOn);
 
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTTREEITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAOBJECTTREEITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -167,6 +173,20 @@ void VtkDataObjectTreeIteratorWrap::GetCurrentDataObject(const Nan::FunctionCall
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkDataObjectTreeIteratorWrap::GetCurrentFlatIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDataObjectTreeIteratorWrap *wrapper = ObjectWrap::Unwrap<VtkDataObjectTreeIteratorWrap>(info.Holder());
+	vtkDataObjectTreeIterator *native = (vtkDataObjectTreeIterator *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentFlatIndex();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDataObjectTreeIteratorWrap::GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -10,6 +10,7 @@
 #include <vtkResliceCursor.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorWrap : public VtkObjectWrap
 {
@@ -60,6 +61,10 @@ class VtkResliceCursorWrap : public VtkObjectWrap
 		static void ThickModeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThickModeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORWRAP_CLASSDEF
+#endif
 };
 
 #endif

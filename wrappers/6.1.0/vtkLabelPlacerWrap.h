@@ -10,6 +10,7 @@
 #include <vtkLabelPlacer.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelPlacerWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -70,6 +71,10 @@ class VtkLabelPlacerWrap : public VtkPolyDataAlgorithmWrap
 		static void UseDepthBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

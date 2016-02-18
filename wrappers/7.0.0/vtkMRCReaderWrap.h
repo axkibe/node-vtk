@@ -10,6 +10,7 @@
 #include <vtkMRCReader.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMRCReaderWrap : public VtkImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkMRCReaderWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMRCREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMRCREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

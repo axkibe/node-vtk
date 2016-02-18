@@ -10,6 +10,7 @@
 #include <vtkRenderedTreeAreaRepresentation.h>
 
 #include "vtkRenderedRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderedTreeAreaRepresentationWrap : public VtkRenderedRepresentationWrap
 {
@@ -90,6 +91,10 @@ class VtkRenderedTreeAreaRepresentationWrap : public VtkRenderedRepresentationWr
 		static void SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDEREDTREEAREAREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDEREDTREEAREAREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

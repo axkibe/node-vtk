@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkPropCollectionWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkAssemblyPathsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -238,6 +238,9 @@ void VtkPropWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKPROPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

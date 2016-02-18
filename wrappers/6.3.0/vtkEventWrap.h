@@ -10,6 +10,7 @@
 #include <vtkEvent.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEventWrap : public VtkObjectWrap
 {
@@ -41,6 +42,10 @@ class VtkEventWrap : public VtkObjectWrap
 		static void SetKeySym(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModifier(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepeatCount(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEVENTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEVENTWRAP_CLASSDEF
+#endif
 };
 
 #endif

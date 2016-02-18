@@ -10,6 +10,7 @@
 #include <vtkOpenGLStickMapper.h>
 
 #include "vtkOpenGLPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLStickMapperWrap : public VtkOpenGLPolyDataMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLStickMapperWrap : public VtkOpenGLPolyDataMapperWrap
 		static void SetOrientationArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionIdArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLSTICKMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLSTICKMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitSumWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkImplicitSumWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormalizeByWeight", SetNormalizeByWeight);
 	Nan::SetPrototypeMethod(tpl, "setNormalizeByWeight", SetNormalizeByWeight);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITSUMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITSUMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSpherePuzzleArrowsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSpherePuzzleWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkSpherePuzzleArrowsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPermutationComponent", SetPermutationComponent);
 	Nan::SetPrototypeMethod(tpl, "setPermutationComponent", SetPermutationComponent);
 
+#ifdef VTK_NODE_PLUS_VTKSPHEREPUZZLEARROWSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPHEREPUZZLEARROWSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitHaloWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkImplicitHaloWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadius", SetRadius);
 	Nan::SetPrototypeMethod(tpl, "setRadius", SetRadius);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITHALOWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITHALOWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

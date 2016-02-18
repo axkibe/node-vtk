@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkRectilinearGridWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkPassInputTypeAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKPASSINPUTTYPEALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPASSINPUTTYPEALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

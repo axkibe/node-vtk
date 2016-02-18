@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
 #include "vtkUnstructuredGridHomogeneousRayIntegratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkUnstructuredGridHomogeneousRayIntegratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransferFunctionTableSize", SetTransferFunctionTableSize);
 	Nan::SetPrototypeMethod(tpl, "setTransferFunctionTableSize", SetTransferFunctionTableSize);
 
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDHOMOGENEOUSRAYINTEGRATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDHOMOGENEOUSRAYINTEGRATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

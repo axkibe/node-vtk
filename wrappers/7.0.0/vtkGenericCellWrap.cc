@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCellWrap.h"
 #include "vtkGenericCellWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -226,6 +226,9 @@ void VtkGenericCellWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICCELLWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICCELLWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

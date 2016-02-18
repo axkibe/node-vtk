@@ -10,6 +10,7 @@
 #include <vtkFreeTypeLabelRenderStrategy.h>
 
 #include "vtkLabelRenderStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFreeTypeLabelRenderStrategyWrap : public VtkLabelRenderStrategyWrap
 {
@@ -36,6 +37,10 @@ class VtkFreeTypeLabelRenderStrategyWrap : public VtkLabelRenderStrategyWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsBoundedSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFREETYPELABELRENDERSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFREETYPELABELRENDERSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

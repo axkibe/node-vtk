@@ -10,6 +10,7 @@
 #include <vtkSliderRepresentation2D.h>
 
 #include "vtkSliderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSliderRepresentation2DWrap : public VtkSliderRepresentationWrap
 {
@@ -52,6 +53,10 @@ class VtkSliderRepresentation2DWrap : public VtkSliderRepresentationWrap
 		static void SetTitleText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLIDERREPRESENTATION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLIDERREPRESENTATION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

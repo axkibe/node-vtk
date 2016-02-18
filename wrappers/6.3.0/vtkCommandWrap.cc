@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectBaseWrap.h"
 #include "vtkCommandWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkCommandWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassiveObserver", SetPassiveObserver);
 	Nan::SetPrototypeMethod(tpl, "setPassiveObserver", SetPassiveObserver);
 
+#ifdef VTK_NODE_PLUS_VTKCOMMANDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMMANDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

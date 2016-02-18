@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataWriterWrap.h"
 #include "vtkStructuredPointsWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkStructuredPointsWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDPOINTSWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDPOINTSWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

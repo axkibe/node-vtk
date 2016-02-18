@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkSTLWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkSTLWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileTypeToBinary", SetFileTypeToBinary);
 	Nan::SetPrototypeMethod(tpl, "setFileTypeToBinary", SetFileTypeToBinary);
 
+#ifdef VTK_NODE_PLUS_VTKSTLWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTLWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

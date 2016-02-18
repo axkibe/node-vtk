@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMultiThreaderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkMultiThreaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TerminateThread", TerminateThread);
 	Nan::SetPrototypeMethod(tpl, "terminateThread", TerminateThread);
 
+#ifdef VTK_NODE_PLUS_VTKMULTITHREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTITHREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

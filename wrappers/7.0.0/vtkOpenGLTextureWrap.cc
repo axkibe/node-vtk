@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTextureWrap.h"
 #include "vtkOpenGLTextureWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkOpenGLTextureWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureType", SetTextureType);
 	Nan::SetPrototypeMethod(tpl, "setTextureType", SetTextureType);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLTEXTUREWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLTEXTUREWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

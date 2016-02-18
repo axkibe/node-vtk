@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkImageToPolyDataFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -177,6 +177,9 @@ void VtkImageToPolyDataFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SmoothingOn", SmoothingOn);
 	Nan::SetPrototypeMethod(tpl, "smoothingOn", SmoothingOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGETOPOLYDATAFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGETOPOLYDATAFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

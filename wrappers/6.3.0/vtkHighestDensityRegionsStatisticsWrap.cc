@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkHighestDensityRegionsStatisticsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkHighestDensityRegionsStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSmoothHC2", SetSmoothHC2);
 	Nan::SetPrototypeMethod(tpl, "setSmoothHC2", SetSmoothHC2);
 
+#ifdef VTK_NODE_PLUS_VTKHIGHESTDENSITYREGIONSSTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHIGHESTDENSITYREGIONSSTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

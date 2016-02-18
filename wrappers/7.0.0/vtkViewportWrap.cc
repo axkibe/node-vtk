@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkActor2DCollectionWrap.h"
 #include "vtkAssemblyPathWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkViewportWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetCurrentPickId", GetCurrentPickId);
+	Nan::SetPrototypeMethod(tpl, "getCurrentPickId", GetCurrentPickId);
 
 	Nan::SetPrototypeMethod(tpl, "GetDisplayPoint", GetDisplayPoint);
 	Nan::SetPrototypeMethod(tpl, "getDisplayPoint", GetDisplayPoint);
@@ -182,6 +185,9 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBackground2", SetBackground2);
 	Nan::SetPrototypeMethod(tpl, "setBackground2", SetBackground2);
 
+	Nan::SetPrototypeMethod(tpl, "SetCurrentPickId", SetCurrentPickId);
+	Nan::SetPrototypeMethod(tpl, "setCurrentPickId", SetCurrentPickId);
+
 	Nan::SetPrototypeMethod(tpl, "SetDisplayPoint", SetDisplayPoint);
 	Nan::SetPrototypeMethod(tpl, "setDisplayPoint", SetDisplayPoint);
 
@@ -212,6 +218,9 @@ void VtkViewportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
+#ifdef VTK_NODE_PLUS_VTKVIEWPORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIEWPORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -419,6 +428,20 @@ void VtkViewportWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkViewportWrap::GetCurrentPickId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCurrentPickId();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkViewportWrap::GetDisplayPoint(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -1218,6 +1241,25 @@ void VtkViewportWrap::SetBackground2(const Nan::FunctionCallbackInfo<v8::Value>&
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkViewportWrap::SetCurrentPickId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkViewportWrap *wrapper = ObjectWrap::Unwrap<VtkViewportWrap>(info.Holder());
+	vtkViewport *native = (vtkViewport *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetCurrentPickId(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

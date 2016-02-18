@@ -10,6 +10,7 @@
 #include <vtkXMLHierarchicalBoxDataWriter.h>
 
 #include "vtkXMLUniformGridAMRWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLHierarchicalBoxDataWriterWrap : public VtkXMLUniformGridAMRWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkXMLHierarchicalBoxDataWriterWrap : public VtkXMLUniformGridAMRWriterWra
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

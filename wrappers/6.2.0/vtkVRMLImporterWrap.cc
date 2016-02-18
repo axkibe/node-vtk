@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImporterWrap.h"
 #include "vtkVRMLImporterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkVRMLImporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShapeResolution", SetShapeResolution);
 	Nan::SetPrototypeMethod(tpl, "setShapeResolution", SetShapeResolution);
 
+#ifdef VTK_NODE_PLUS_VTKVRMLIMPORTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVRMLIMPORTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

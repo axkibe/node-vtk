@@ -10,6 +10,7 @@
 #include <vtkFocalPlanePointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFocalPlanePointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -39,6 +40,10 @@ class VtkFocalPlanePointPlacerWrap : public VtkPointPlacerWrap
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFOCALPLANEPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFOCALPLANEPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkSimple3DCirclesStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimple3DCirclesStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -63,6 +64,10 @@ class VtkSimple3DCirclesStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetMinimumRadian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLE3DCIRCLESSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLE3DCIRCLESSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

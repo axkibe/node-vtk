@@ -10,6 +10,7 @@
 #include <vtkAbstractPolygonalHandleRepresentation3D.h>
 
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresentationWrap
 {
@@ -71,6 +72,10 @@ class VtkAbstractPolygonalHandleRepresentation3DWrap : public VtkHandleRepresent
 		static void SmoothMotionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPOLYGONALHANDLEREPRESENTATION3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTPOLYGONALHANDLEREPRESENTATION3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

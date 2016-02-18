@@ -10,6 +10,7 @@
 #include <vtkReebGraph.h>
 
 #include "vtkMutableDirectedGraphWrap.h"
+#include "../../plus/plus.h"
 
 class VtkReebGraphWrap : public VtkMutableDirectedGraphWrap
 {
@@ -39,6 +40,10 @@ class VtkReebGraphWrap : public VtkMutableDirectedGraphWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Set(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Simplify(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREEBGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREEBGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

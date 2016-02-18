@@ -10,6 +10,7 @@
 #include <vtkAxis.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxisWrap : public VtkContextItemWrap
 {
@@ -95,6 +96,10 @@ class VtkAxisWrap : public VtkContextItemWrap
 		static void SetUnscaledMinimumLimit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUnscaledRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXISWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXISWRAP_CLASSDEF
+#endif
 };
 
 #endif

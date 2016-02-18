@@ -10,6 +10,7 @@
 #include <vtkAffineWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAffineWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -37,6 +38,10 @@ class VtkAffineWidgetWrap : public VtkAbstractWidgetWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAFFINEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAFFINEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropWrap.h"
 #include "vtkLegendScaleActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -247,6 +247,9 @@ void VtkLegendScaleActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TopAxisVisibilityOn", TopAxisVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "topAxisVisibilityOn", TopAxisVisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKLEGENDSCALEACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLEGENDSCALEACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

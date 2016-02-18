@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMoleculeReaderBaseWrap.h"
 #include "vtkGaussianCubeReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTransformWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkGaussianCubeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+#ifdef VTK_NODE_PLUS_VTKGAUSSIANCUBEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGAUSSIANCUBEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

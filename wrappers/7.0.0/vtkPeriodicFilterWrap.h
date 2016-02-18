@@ -10,6 +10,7 @@
 #include <vtkPeriodicFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPeriodicFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -29,6 +30,7 @@ class VtkPeriodicFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIterationModeMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,11 +39,16 @@ class VtkPeriodicFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllIndices(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIterationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIterationModeToDirectNb(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIterationModeToMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPeriods(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPERIODICFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPERIODICFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

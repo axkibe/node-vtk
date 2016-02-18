@@ -10,6 +10,7 @@
 #include <vtkTextSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTextSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetForegroundColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetText(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

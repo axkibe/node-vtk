@@ -10,6 +10,7 @@
 #include <vtkMoleculeReaderBase.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMoleculeReaderBaseWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkMoleculeReaderBaseWrap : public VtkPolyDataAlgorithmWrap
 		static void SetBScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHBScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMOLECULEREADERBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMOLECULEREADERBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkExtractPiece.h>
 
 #include "vtkCompositeDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractPieceWrap : public VtkCompositeDataSetAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkExtractPieceWrap : public VtkCompositeDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

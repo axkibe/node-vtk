@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkMCubesWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkMCubesWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLimitsFileName", SetLimitsFileName);
 	Nan::SetPrototypeMethod(tpl, "setLimitsFileName", SetLimitsFileName);
 
+#ifdef VTK_NODE_PLUS_VTKMCUBESWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMCUBESWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

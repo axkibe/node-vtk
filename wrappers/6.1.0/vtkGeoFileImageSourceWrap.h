@@ -10,6 +10,7 @@
 #include <vtkGeoFileImageSource.h>
 
 #include "vtkGeoSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoFileImageSourceWrap : public VtkGeoSourceWrap
 {
@@ -37,6 +38,10 @@ class VtkGeoFileImageSourceWrap : public VtkGeoSourceWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPath(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOFILEIMAGESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOFILEIMAGESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

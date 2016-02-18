@@ -10,6 +10,7 @@
 #include <vtkSpanTreeLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSpanTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -38,6 +39,10 @@ class VtkSpanTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDepthFirstSpanningTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPANTREELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPANTREELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

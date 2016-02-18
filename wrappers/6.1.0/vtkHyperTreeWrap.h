@@ -10,6 +10,7 @@
 #include <vtkHyperTree.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperTreeWrap : public VtkObjectWrap
 {
@@ -29,10 +30,15 @@ class VtkHyperTreeWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CreateInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPERTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPERTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

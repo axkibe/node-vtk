@@ -10,6 +10,7 @@
 #include <vtkCaptionRepresentation.h>
 
 #include "vtkBorderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCaptionRepresentationWrap : public VtkBorderRepresentationWrap
 {
@@ -51,6 +52,10 @@ class VtkCaptionRepresentationWrap : public VtkBorderRepresentationWrap
 		static void SetAnchorRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCaptionActor2D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFontFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAPTIONREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAPTIONREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

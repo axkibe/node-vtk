@@ -10,6 +10,7 @@
 #include <vtkAMRVolumeMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 {
@@ -78,6 +79,10 @@ class VtkAMRVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void SetUseDefaultThreading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateResampler(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateResamplerFrustrumMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAxisExtendedWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkAxisExtendedWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SimplicityMax", SimplicityMax);
 	Nan::SetPrototypeMethod(tpl, "simplicityMax", SimplicityMax);
 
+#ifdef VTK_NODE_PLUS_VTKAXISEXTENDEDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXISEXTENDEDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

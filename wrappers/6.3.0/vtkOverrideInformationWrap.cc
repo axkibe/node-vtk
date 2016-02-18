@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOverrideInformationWrap.h"
 #include "vtkObjectFactoryWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkOverrideInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDescription", SetDescription);
 	Nan::SetPrototypeMethod(tpl, "setDescription", SetDescription);
 
+#ifdef VTK_NODE_PLUS_VTKOVERRIDEINFORMATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOVERRIDEINFORMATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

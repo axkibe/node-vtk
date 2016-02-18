@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDecimateProWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -215,6 +215,9 @@ void VtkDecimateProWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplittingOn", SplittingOn);
 	Nan::SetPrototypeMethod(tpl, "splittingOn", SplittingOn);
 
+#ifdef VTK_NODE_PLUS_VTKDECIMATEPROWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDECIMATEPROWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

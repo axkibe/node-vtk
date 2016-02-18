@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWarpTransformWrap.h"
 #include "vtkBSplineTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -101,6 +101,9 @@ void VtkBSplineTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDisplacementScale", SetDisplacementScale);
 	Nan::SetPrototypeMethod(tpl, "setDisplacementScale", SetDisplacementScale);
 
+#ifdef VTK_NODE_PLUS_VTKBSPLINETRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBSPLINETRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

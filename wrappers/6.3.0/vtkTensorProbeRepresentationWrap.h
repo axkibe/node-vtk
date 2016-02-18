@@ -10,6 +10,7 @@
 #include <vtkTensorProbeRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTensorProbeRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -42,6 +43,10 @@ class VtkTensorProbeRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProbePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTrajectory(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTENSORPROBEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTENSORPROBEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

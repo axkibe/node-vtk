@@ -10,6 +10,7 @@
 #include <vtkHighestDensityRegionsStatistics.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHighestDensityRegionsStatisticsWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkHighestDensityRegionsStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void SetSigma(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSmoothHC1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSmoothHC2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIGHESTDENSITYREGIONSSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIGHESTDENSITYREGIONSSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

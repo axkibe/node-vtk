@@ -10,6 +10,7 @@
 #include <vtkProp3DFollower.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProp3DFollowerWrap : public VtkProp3DWrap
 {
@@ -46,6 +47,10 @@ class VtkProp3DFollowerWrap : public VtkProp3DWrap
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProp3D(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROP3DFOLLOWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROP3DFOLLOWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageAccumulateWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageStencilDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -132,6 +132,9 @@ void VtkImageAccumulateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStencilData", SetStencilData);
 	Nan::SetPrototypeMethod(tpl, "setStencilData", SetStencilData);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEACCUMULATEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEACCUMULATEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

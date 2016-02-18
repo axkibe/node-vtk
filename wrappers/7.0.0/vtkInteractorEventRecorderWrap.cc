@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorObserverWrap.h"
 #include "vtkInteractorEventRecorderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkInteractorEventRecorderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTOREVENTRECORDERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTOREVENTRECORDERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

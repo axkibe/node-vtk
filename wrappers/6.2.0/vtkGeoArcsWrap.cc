@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGeoArcsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkGeoArcsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubdivisions", SetNumberOfSubdivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSubdivisions", SetNumberOfSubdivisions);
 
+#ifdef VTK_NODE_PLUS_VTKGEOARCSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOARCSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

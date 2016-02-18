@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPainterDeviceAdapterWrap.h"
 #include "vtkOpenGLPainterDeviceAdapterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkOpenGLPainterDeviceAdapterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stencil", Stencil);
 	Nan::SetPrototypeMethod(tpl, "stencil", Stencil);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLPAINTERDEVICEADAPTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLPAINTERDEVICEADAPTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

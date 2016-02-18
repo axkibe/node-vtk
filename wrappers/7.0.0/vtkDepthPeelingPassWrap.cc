@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkDepthPeelingPassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationIntegerVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkDepthPeelingPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslucentZTextureUnit", TranslucentZTextureUnit);
 	Nan::SetPrototypeMethod(tpl, "translucentZTextureUnit", TranslucentZTextureUnit);
 
+#ifdef VTK_NODE_PLUS_VTKDEPTHPEELINGPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEPTHPEELINGPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

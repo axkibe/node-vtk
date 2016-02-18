@@ -10,6 +10,7 @@
 #include <vtkImageGaussianSmooth.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageGaussianSmoothWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkImageGaussianSmoothWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetRadiusFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStandardDeviations(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEGAUSSIANSMOOTHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEGAUSSIANSMOOTHWRAP_CLASSDEF
+#endif
 };
 
 #endif

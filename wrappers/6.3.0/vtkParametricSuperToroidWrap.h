@@ -10,6 +10,7 @@
 #include <vtkParametricSuperToroid.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricSuperToroidWrap : public VtkParametricFunctionWrap
 {
@@ -50,6 +51,10 @@ class VtkParametricSuperToroidWrap : public VtkParametricFunctionWrap
 		static void SetXRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICSUPERTOROIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICSUPERTOROIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

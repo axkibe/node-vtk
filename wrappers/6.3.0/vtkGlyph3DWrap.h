@@ -10,6 +10,7 @@
 #include <vtkGlyph3D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGlyph3DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -89,6 +90,10 @@ class VtkGlyph3DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetVectorModeToUseNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToUseVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToVectorRotationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLYPH3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLYPH3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

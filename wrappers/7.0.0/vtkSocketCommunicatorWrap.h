@@ -10,6 +10,7 @@
 #include <vtkSocketCommunicator.h>
 
 #include "vtkCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSocketCommunicatorWrap : public VtkCommunicatorWrap
 {
@@ -58,6 +59,10 @@ class VtkSocketCommunicatorWrap : public VtkCommunicatorWrap
 		static void SetReportErrors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSocket(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSOCKETCOMMUNICATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSOCKETCOMMUNICATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

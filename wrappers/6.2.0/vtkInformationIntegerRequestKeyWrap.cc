@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationIntegerRequestKeyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkInformationIntegerRequestKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StoreMetaData", StoreMetaData);
 	Nan::SetPrototypeMethod(tpl, "storeMetaData", StoreMetaData);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONINTEGERREQUESTKEYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONINTEGERREQUESTKEYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

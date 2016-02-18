@@ -10,6 +10,7 @@
 #include <vtkCellDistanceSelector.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellDistanceSelectorWrap : public VtkSelectionAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkCellDistanceSelectorWrap : public VtkSelectionAlgorithmWrap
 		static void SetInputMeshConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLDISTANCESELECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLDISTANCESELECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

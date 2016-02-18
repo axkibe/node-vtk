@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTextMapperWrap.h"
 #include "vtkOpenGLFreeTypeTextMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkOpenGLFreeTypeTextMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLFREETYPETEXTMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLFREETYPETEXTMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

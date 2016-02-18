@@ -10,6 +10,7 @@
 #include <vtkOutlineCornerFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOutlineCornerFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkOutlineCornerFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCornerFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOUTLINECORNERFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOUTLINECORNERFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

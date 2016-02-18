@@ -10,6 +10,7 @@
 #include <vtkRearrangeFields.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRearrangeFieldsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkRearrangeFieldsWrap : public VtkDataSetAlgorithmWrap
 		static void RemoveAllOperations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveOperation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREARRANGEFIELDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREARRANGEFIELDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

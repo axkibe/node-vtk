@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkFixedPointRayCastImageWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkFixedPointRayCastImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseZBufferOn", UseZBufferOn);
 	Nan::SetPrototypeMethod(tpl, "useZBufferOn", UseZBufferOn);
 
+#ifdef VTK_NODE_PLUS_VTKFIXEDPOINTRAYCASTIMAGEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFIXEDPOINTRAYCASTIMAGEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

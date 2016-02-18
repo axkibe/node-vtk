@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExtentTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkExtentTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKEXTENTTRANSLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTENTTRANSLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

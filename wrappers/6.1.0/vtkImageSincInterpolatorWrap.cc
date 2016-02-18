@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractImageInterpolatorWrap.h"
 #include "vtkImageSincInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -161,6 +161,9 @@ void VtkImageSincInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseWindowParameterOn", UseWindowParameterOn);
 	Nan::SetPrototypeMethod(tpl, "useWindowParameterOn", UseWindowParameterOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESINCINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESINCINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

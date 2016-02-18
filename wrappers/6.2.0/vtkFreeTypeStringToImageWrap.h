@@ -10,6 +10,7 @@
 #include <vtkFreeTypeStringToImage.h>
 
 #include "vtkStringToImageWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFreeTypeStringToImageWrap : public VtkStringToImageWrap
 {
@@ -35,6 +36,10 @@ class VtkFreeTypeStringToImageWrap : public VtkStringToImageWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToPowerOfTwo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFREETYPESTRINGTOIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFREETYPESTRINGTOIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

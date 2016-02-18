@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkFeatureEdgesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -147,6 +147,9 @@ void VtkFeatureEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
+#ifdef VTK_NODE_PLUS_VTKFEATUREEDGESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFEATUREEDGESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

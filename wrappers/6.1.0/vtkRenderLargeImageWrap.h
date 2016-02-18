@@ -10,6 +10,7 @@
 #include <vtkRenderLargeImage.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderLargeImageWrap : public VtkAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkRenderLargeImageWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERLARGEIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERLARGEIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

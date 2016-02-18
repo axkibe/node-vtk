@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOpenGLModelViewProjectionMonitorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkOpenGLModelViewProjectionMonitorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLMODELVIEWPROJECTIONMONITORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLMODELVIEWPROJECTIONMONITORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

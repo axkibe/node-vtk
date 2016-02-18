@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPolyDataSilhouetteWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -139,6 +139,9 @@ void VtkPolyDataSilhouetteWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVector", SetVector);
 	Nan::SetPrototypeMethod(tpl, "setVector", SetVector);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATASILHOUETTEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATASILHOUETTEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

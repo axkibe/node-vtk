@@ -10,6 +10,7 @@
 #include <vtkIncrementalOctreeNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIncrementalOctreeNodeWrap : public VtkObjectWrap
 {
@@ -48,6 +49,10 @@ class VtkIncrementalOctreeNodeWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINCREMENTALOCTREENODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINCREMENTALOCTREENODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageSlabWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -149,6 +149,9 @@ void VtkImageSlabWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TrapezoidIntegrationOn", TrapezoidIntegrationOn);
 	Nan::SetPrototypeMethod(tpl, "trapezoidIntegrationOn", TrapezoidIntegrationOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESLABWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESLABWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

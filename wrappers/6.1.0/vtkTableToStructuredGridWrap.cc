@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStructuredGridAlgorithmWrap.h"
 #include "vtkTableToStructuredGridWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkTableToStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZComponent", SetZComponent);
 	Nan::SetPrototypeMethod(tpl, "setZComponent", SetZComponent);
 
+#ifdef VTK_NODE_PLUS_VTKTABLETOSTRUCTUREDGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLETOSTRUCTUREDGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

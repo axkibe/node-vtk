@@ -10,6 +10,7 @@
 #include <vtkPointSet.h>
 
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointSetWrap : public VtkDataSetWrap
 {
@@ -43,6 +44,10 @@ class VtkPointSetWrap : public VtkDataSetWrap
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTSETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTSETWRAP_CLASSDEF
+#endif
 };
 
 #endif

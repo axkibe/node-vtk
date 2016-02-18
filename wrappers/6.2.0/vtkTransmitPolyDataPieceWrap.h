@@ -10,6 +10,7 @@
 #include <vtkTransmitPolyDataPiece.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransmitPolyDataPieceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkTransmitPolyDataPieceWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSMITPOLYDATAPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSMITPOLYDATAPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

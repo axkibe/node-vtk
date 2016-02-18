@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkDataObjectToDataSetFilterWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkStructuredGridWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkRectilinearGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -255,6 +255,9 @@ void VtkDataObjectToDataSetFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertsComponent", SetVertsComponent);
 	Nan::SetPrototypeMethod(tpl, "setVertsComponent", SetVertsComponent);
 
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTTODATASETFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAOBJECTTODATASETFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

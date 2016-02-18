@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkTemporalSnapToTimeStepWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkTemporalSnapToTimeStepWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSnapModeToNextBelowOrEqual", SetSnapModeToNextBelowOrEqual);
 	Nan::SetPrototypeMethod(tpl, "setSnapModeToNextBelowOrEqual", SetSnapModeToNextBelowOrEqual);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSNAPTOTIMESTEPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALSNAPTOTIMESTEPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

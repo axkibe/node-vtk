@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageDataStreamerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkExtentTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkImageDataStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateWholeExtent", UpdateWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "updateWholeExtent", UpdateWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATASTREAMERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEDATASTREAMERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

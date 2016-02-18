@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageDecomposeFilterWrap.h"
 #include "vtkImageSeparableConvolutionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkFloatArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkImageSeparableConvolutionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZKernel", SetZKernel);
 	Nan::SetPrototypeMethod(tpl, "setZKernel", SetZKernel);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESEPARABLECONVOLUTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESEPARABLECONVOLUTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractMapper3DWrap.h"
 #include "vtkAbstractVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkAbstractVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
 	Nan::SetPrototypeMethod(tpl, "setScalarModeToUsePointFieldData", SetScalarModeToUsePointFieldData);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTVOLUMEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTVOLUMEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

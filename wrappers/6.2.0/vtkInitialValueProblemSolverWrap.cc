@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkInitialValueProblemSolverWrap.h"
 #include "vtkFunctionSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkInitialValueProblemSolverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFunctionSet", SetFunctionSet);
 	Nan::SetPrototypeMethod(tpl, "setFunctionSet", SetFunctionSet);
 
+#ifdef VTK_NODE_PLUS_VTKINITIALVALUEPROBLEMSOLVERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINITIALVALUEPROBLEMSOLVERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

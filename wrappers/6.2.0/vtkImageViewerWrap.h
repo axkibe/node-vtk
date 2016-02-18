@@ -10,6 +10,7 @@
 #include <vtkImageViewer.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageViewerWrap : public VtkObjectWrap
 {
@@ -59,6 +60,10 @@ class VtkImageViewerWrap : public VtkObjectWrap
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetupInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEVIEWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEVIEWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

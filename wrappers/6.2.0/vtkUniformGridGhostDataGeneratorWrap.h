@@ -10,6 +10,7 @@
 #include <vtkUniformGridGhostDataGenerator.h>
 
 #include "vtkDataSetGhostGeneratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformGridGhostDataGeneratorWrap : public VtkDataSetGhostGeneratorWrap
 {
@@ -33,6 +34,10 @@ class VtkUniformGridGhostDataGeneratorWrap : public VtkDataSetGhostGeneratorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDGHOSTDATAGENERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMGRIDGHOSTDATAGENERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

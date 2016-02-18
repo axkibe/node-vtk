@@ -10,6 +10,7 @@
 #include <vtkTulipReader.h>
 
 #include "vtkUndirectedGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTulipReaderWrap : public VtkUndirectedGraphAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkTulipReaderWrap : public VtkUndirectedGraphAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTULIPREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTULIPREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

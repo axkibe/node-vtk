@@ -10,6 +10,7 @@
 #include <vtkImageSlabReslice.h>
 
 #include "vtkImageResliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSlabResliceWrap : public VtkImageResliceWrap
 {
@@ -43,6 +44,10 @@ class VtkImageSlabResliceWrap : public VtkImageResliceWrap
 		static void SetBlendModeToMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlabResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlabThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESLABRESLICEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESLABRESLICEWRAP_CLASSDEF
+#endif
 };
 
 #endif

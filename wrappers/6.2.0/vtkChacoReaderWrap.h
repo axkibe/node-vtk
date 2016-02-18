@@ -10,6 +10,7 @@
 #include <vtkChacoReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChacoReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -60,6 +61,10 @@ class VtkChacoReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetGenerateGlobalElementIdArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateGlobalNodeIdArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateVertexWeightArrays(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHACOREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHACOREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

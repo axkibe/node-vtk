@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractMapperWrap.h"
 #include "vtkMapper2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKMAPPER2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMAPPER2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

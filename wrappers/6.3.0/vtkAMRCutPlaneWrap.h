@@ -10,6 +10,7 @@
 #include <vtkAMRCutPlane.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRCutPlaneWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkAMRCutPlaneWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetUseNativeCutter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNativeCutterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNativeCutterOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRCUTPLANEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRCUTPLANEWRAP_CLASSDEF
+#endif
 };
 
 #endif

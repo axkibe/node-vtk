@@ -10,6 +10,7 @@
 #include <vtkMutexLock.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMutexLockWrap : public VtkObjectWrap
 {
@@ -35,6 +36,10 @@ class VtkMutexLockWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Unlock(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMUTEXLOCKWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMUTEXLOCKWRAP_CLASSDEF
+#endif
 };
 
 #endif

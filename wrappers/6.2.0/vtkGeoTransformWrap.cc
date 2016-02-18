@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractTransformWrap.h"
 #include "vtkGeoTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGeoProjectionWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkGeoTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TransformPoints", TransformPoints);
 	Nan::SetPrototypeMethod(tpl, "transformPoints", TransformPoints);
 
+#ifdef VTK_NODE_PLUS_VTKGEOTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

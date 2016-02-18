@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkAssemblyWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkAssemblyPathWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkAssemblyPathsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -114,6 +114,9 @@ void VtkAssemblyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKASSEMBLYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKASSEMBLYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

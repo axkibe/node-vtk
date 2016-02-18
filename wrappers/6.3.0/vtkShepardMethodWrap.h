@@ -10,6 +10,7 @@
 #include <vtkShepardMethod.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkShepardMethodWrap : public VtkImageAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkShepardMethodWrap : public VtkImageAlgorithmWrap
 		static void SetModelBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNullValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSHEPARDMETHODWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSHEPARDMETHODWRAP_CLASSDEF
+#endif
 };
 
 #endif

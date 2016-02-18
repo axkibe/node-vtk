@@ -10,6 +10,7 @@
 #include <vtkScalarBarActor.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScalarBarActorWrap : public VtkActor2DWrap
 {
@@ -133,6 +134,10 @@ class VtkScalarBarActorWrap : public VtkActor2DWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseOpacityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseOpacityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCALARBARACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCALARBARACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkInformationStringVectorKey.h>
 
 #include "vtkInformationKeyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationStringVectorKeyWrap : public VtkInformationKeyWrap
 {
@@ -38,6 +39,10 @@ class VtkInformationStringVectorKeyWrap : public VtkInformationKeyWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Set(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONSTRINGVECTORKEYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONSTRINGVECTORKEYWRAP_CLASSDEF
+#endif
 };
 
 #endif

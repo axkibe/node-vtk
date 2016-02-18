@@ -10,6 +10,7 @@
 #include <vtkAMRInterpolatedVelocityField.h>
 
 #include "vtkAbstractInterpolatedVelocityFieldWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRInterpolatedVelocityFieldWrap : public VtkAbstractInterpolatedVelocityFieldWrap
 {
@@ -36,6 +37,10 @@ class VtkAMRInterpolatedVelocityFieldWrap : public VtkAbstractInterpolatedVeloci
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAMRData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLastDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

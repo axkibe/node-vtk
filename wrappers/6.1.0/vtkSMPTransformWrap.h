@@ -10,6 +10,7 @@
 #include <vtkSMPTransform.h>
 
 #include "vtkTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSMPTransformWrap : public VtkTransformWrap
 {
@@ -37,6 +38,10 @@ class VtkSMPTransformWrap : public VtkTransformWrap
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMPTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMPTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

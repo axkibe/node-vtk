@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSelectionAlgorithmWrap.h"
 #include "vtkComputeHistogram2DOutliersWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -79,6 +79,9 @@ void VtkComputeHistogram2DOutliersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 	Nan::SetPrototypeMethod(tpl, "setPreferredNumberOfOutliers", SetPreferredNumberOfOutliers);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPUTEHISTOGRAM2DOUTLIERSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPUTEHISTOGRAM2DOUTLIERSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

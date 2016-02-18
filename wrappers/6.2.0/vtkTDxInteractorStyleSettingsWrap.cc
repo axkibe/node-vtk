@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkTDxInteractorStyleSettingsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkTDxInteractorStyleSettingsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseRotationZ", SetUseRotationZ);
 	Nan::SetPrototypeMethod(tpl, "setUseRotationZ", SetUseRotationZ);
 
+#ifdef VTK_NODE_PLUS_VTKTDXINTERACTORSTYLESETTINGSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTDXINTERACTORSTYLESETTINGSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

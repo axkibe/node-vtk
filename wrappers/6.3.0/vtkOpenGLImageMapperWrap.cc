@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageMapperWrap.h"
 #include "vtkOpenGLImageMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkOpenGLImageMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLIMAGEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLIMAGEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

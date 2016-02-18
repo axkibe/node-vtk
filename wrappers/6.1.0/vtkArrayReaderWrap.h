@@ -10,6 +10,7 @@
 #include <vtkArrayReader.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArrayReaderWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkArrayReaderWrap : public VtkArrayDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARRAYREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARRAYREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkTemporalFractalWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkTemporalFractalWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwoDimensionalOn", TwoDimensionalOn);
 	Nan::SetPrototypeMethod(tpl, "twoDimensionalOn", TwoDimensionalOn);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALFRACTALWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALFRACTALWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

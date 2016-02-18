@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricBoyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkParametricBoyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZScale", SetZScale);
 	Nan::SetPrototypeMethod(tpl, "setZScale", SetZScale);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICBOYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICBOYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

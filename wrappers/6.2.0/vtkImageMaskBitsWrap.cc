@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageMaskBitsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +50,9 @@ void VtkImageMaskBitsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMasks", GetMasks);
+	Nan::SetPrototypeMethod(tpl, "getMasks", GetMasks);
+
 	Nan::SetPrototypeMethod(tpl, "GetOperation", GetOperation);
 	Nan::SetPrototypeMethod(tpl, "getOperation", GetOperation);
 
@@ -61,6 +64,12 @@ void VtkImageMaskBitsWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
+
+	Nan::SetPrototypeMethod(tpl, "SetMask", SetMask);
+	Nan::SetPrototypeMethod(tpl, "setMask", SetMask);
+
+	Nan::SetPrototypeMethod(tpl, "SetMasks", SetMasks);
+	Nan::SetPrototypeMethod(tpl, "setMasks", SetMasks);
 
 	Nan::SetPrototypeMethod(tpl, "SetOperation", SetOperation);
 	Nan::SetPrototypeMethod(tpl, "setOperation", SetOperation);
@@ -80,6 +89,9 @@ void VtkImageMaskBitsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOperationToXor", SetOperationToXor);
 	Nan::SetPrototypeMethod(tpl, "setOperationToXor", SetOperationToXor);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMASKBITSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMASKBITSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -121,6 +133,23 @@ void VtkImageMaskBitsWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageMaskBitsWrap::GetMasks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
+	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
+	unsigned int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMasks();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(unsigned int));
+	Local<v8::Uint32Array> at = v8::Uint32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(unsigned int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageMaskBitsWrap::GetOperation(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -209,6 +238,126 @@ void VtkImageMaskBitsWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Valu
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageMaskBitsWrap::SetMask(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
+	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMask(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageMaskBitsWrap::SetMasks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMaskBitsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMaskBitsWrap>(info.Holder());
+	vtkImageMaskBits *native = (vtkImageMaskBits *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32Array())
+	{
+		v8::Local<v8::Uint32Array>a0(v8::Local<v8::Uint32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMasks(
+			(unsigned int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMasks(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetMasks(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetMasks(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				return;
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetMasks(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

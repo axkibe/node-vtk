@@ -10,6 +10,7 @@
 #include <vtkEarthSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEarthSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkEarthSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOnRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEARTHSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEARTHSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

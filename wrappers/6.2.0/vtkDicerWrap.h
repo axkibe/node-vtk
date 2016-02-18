@@ -10,6 +10,7 @@
 #include <vtkDicer.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDicerWrap : public VtkDataSetAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkDicerWrap : public VtkDataSetAlgorithmWrap
 		static void SetFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPointsPerPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDICERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDICERWRAP_CLASSDEF
+#endif
 };
 
 #endif

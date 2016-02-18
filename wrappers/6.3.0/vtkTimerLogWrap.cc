@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkTimerLogWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -127,6 +127,9 @@ void VtkTimerLogWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StopTimer", StopTimer);
 	Nan::SetPrototypeMethod(tpl, "stopTimer", StopTimer);
 
+#ifdef VTK_NODE_PLUS_VTKTIMERLOGWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTIMERLOGWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

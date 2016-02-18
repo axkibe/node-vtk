@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointPlacerWrap.h"
 #include "vtkImageActorPointPlacerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkImageActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkImageActorPointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ValidateWorldPosition", ValidateWorldPosition);
 	Nan::SetPrototypeMethod(tpl, "validateWorldPosition", ValidateWorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEACTORPOINTPLACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEACTORPOINTPLACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

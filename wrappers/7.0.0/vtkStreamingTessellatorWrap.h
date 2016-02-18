@@ -10,6 +10,7 @@
 #include <vtkStreamingTessellator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamingTessellatorWrap : public VtkObjectWrap
 {
@@ -42,6 +43,10 @@ class VtkStreamingTessellatorWrap : public VtkObjectWrap
 		static void SetFieldSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSubdivisionAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMINGTESSELLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMINGTESSELLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

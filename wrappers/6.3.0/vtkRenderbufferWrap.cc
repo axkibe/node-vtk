@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkRenderbufferWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,11 +47,23 @@ void VtkRenderbufferWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkRenderbufferWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "Create", Create);
+	Nan::SetPrototypeMethod(tpl, "create", Create);
+
+	Nan::SetPrototypeMethod(tpl, "CreateColorAttachment", CreateColorAttachment);
+	Nan::SetPrototypeMethod(tpl, "createColorAttachment", CreateColorAttachment);
+
+	Nan::SetPrototypeMethod(tpl, "CreateDepthAttachment", CreateDepthAttachment);
+	Nan::SetPrototypeMethod(tpl, "createDepthAttachment", CreateDepthAttachment);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
 	Nan::SetPrototypeMethod(tpl, "GetContext", GetContext);
 	Nan::SetPrototypeMethod(tpl, "getContext", GetContext);
+
+	Nan::SetPrototypeMethod(tpl, "GetHandle", GetHandle);
+	Nan::SetPrototypeMethod(tpl, "getHandle", GetHandle);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -68,6 +80,9 @@ void VtkRenderbufferWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERBUFFERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERBUFFERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -95,6 +110,85 @@ void VtkRenderbufferWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkRenderbufferWrap::Create(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
+	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				int r;
+				if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				r = native->Create(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				info.GetReturnValue().Set(Nan::New(r));
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderbufferWrap::CreateColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
+	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->CreateColorAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkRenderbufferWrap::CreateDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
+	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->CreateDepthAttachment(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkRenderbufferWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -132,6 +226,20 @@ void VtkRenderbufferWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkRenderbufferWrap::GetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkRenderbufferWrap *wrapper = ObjectWrap::Unwrap<VtkRenderbufferWrap>(info.Holder());
+	vtkRenderbuffer *native = (vtkRenderbuffer *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHandle();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkRenderbufferWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -10,6 +10,7 @@
 #include <vtkThresholdTable.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThresholdTableWrap : public VtkTableAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkThresholdTableWrap : public VtkTableAlgorithmWrap
 		static void SetMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdBetween(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDTABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHRESHOLDTABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

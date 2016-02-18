@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkRectilinearWipeRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkRectilinearWipeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARWIPEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTILINEARWIPEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

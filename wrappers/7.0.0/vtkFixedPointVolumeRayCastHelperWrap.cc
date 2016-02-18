@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkFixedPointVolumeRayCastHelperWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkFixedPointVolumeRayCastMapperWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkFixedPointVolumeRayCastHelperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTHELPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTHELPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

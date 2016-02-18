@@ -10,6 +10,7 @@
 #include <vtkMergeFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkMergeFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetTensorsData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorsConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorsData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

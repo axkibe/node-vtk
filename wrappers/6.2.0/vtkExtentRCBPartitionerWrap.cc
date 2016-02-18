@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExtentRCBPartitionerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -91,6 +91,9 @@ void VtkExtentRCBPartitionerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPartitions", SetNumberOfPartitions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPartitions", SetNumberOfPartitions);
 
+#ifdef VTK_NODE_PLUS_VTKEXTENTRCBPARTITIONERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTENTRCBPARTITIONERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

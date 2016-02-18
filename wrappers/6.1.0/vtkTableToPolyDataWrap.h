@@ -10,6 +10,7 @@
 #include <vtkTableToPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -71,6 +72,10 @@ class VtkTableToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetZColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZColumnIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLETOPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLETOPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

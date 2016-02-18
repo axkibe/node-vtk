@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkColorSeriesWrap.h"
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkColorSeriesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfColors", SetNumberOfColors);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfColors", SetNumberOfColors);
 
+#ifdef VTK_NODE_PLUS_VTKCOLORSERIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLORSERIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

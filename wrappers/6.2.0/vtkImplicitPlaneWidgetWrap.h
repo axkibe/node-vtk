@@ -10,6 +10,7 @@
 #include <vtkImplicitPlaneWidget.h>
 
 #include "vtkPolyDataSourceWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 {
@@ -91,6 +92,10 @@ class VtkImplicitPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void TubingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TubingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePlacement(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPLANEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITPLANEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

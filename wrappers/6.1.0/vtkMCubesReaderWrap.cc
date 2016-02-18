@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMCubesReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -144,6 +144,9 @@ void VtkMCubesReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
+#ifdef VTK_NODE_PLUS_VTKMCUBESREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMCUBESREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

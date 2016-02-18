@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkEventWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkEventWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepeatCount", SetRepeatCount);
 	Nan::SetPrototypeMethod(tpl, "setRepeatCount", SetRepeatCount);
 
+#ifdef VTK_NODE_PLUS_VTKEVENTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEVENTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

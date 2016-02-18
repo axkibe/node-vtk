@@ -10,6 +10,7 @@
 #include <vtkExtractUnstructuredGrid.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractUnstructuredGridWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -54,6 +55,10 @@ class VtkExtractUnstructuredGridWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

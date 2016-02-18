@@ -10,6 +10,7 @@
 #include <vtkMergeColumns.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeColumnsWrap : public VtkTableAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkMergeColumnsWrap : public VtkTableAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergedColumnName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGECOLUMNSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGECOLUMNSWRAP_CLASSDEF
+#endif
 };
 
 #endif

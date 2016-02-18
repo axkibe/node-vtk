@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkArrayIteratorWrap.h"
 #include "vtkBitArrayIteratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkBitArrayIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKBITARRAYITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBITARRAYITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

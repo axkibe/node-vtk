@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkProjectedTerrainPathWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkProjectedTerrainPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+#ifdef VTK_NODE_PLUS_VTKPROJECTEDTERRAINPATHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROJECTEDTERRAINPATHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

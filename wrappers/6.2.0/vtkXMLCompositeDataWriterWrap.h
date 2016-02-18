@@ -10,6 +10,7 @@
 #include <vtkXMLCompositeDataWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLCompositeDataWriterWrap : public VtkXMLWriterWrap
 {
@@ -38,6 +39,10 @@ class VtkXMLCompositeDataWriterWrap : public VtkXMLWriterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGhostLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteMetaFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLCOMPOSITEDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLCOMPOSITEDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

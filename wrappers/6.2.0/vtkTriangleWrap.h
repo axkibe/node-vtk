@@ -10,6 +10,7 @@
 #include <vtkTriangle.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTriangleWrap : public VtkCellWrap
 {
@@ -57,6 +58,10 @@ class VtkTriangleWrap : public VtkCellWrap
 		static void TriangleArea(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangleCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRIANGLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRIANGLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkContextInteractorStyle.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextInteractorStyleWrap : public VtkInteractorStyleWrap
 {
@@ -46,8 +47,13 @@ class VtkContextInteractorStyleWrap : public VtkInteractorStyleWrap
 		static void OnRightButtonDown(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnRightButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnSceneModified(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OnSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTINTERACTORSTYLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTINTERACTORSTYLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

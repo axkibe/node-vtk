@@ -10,6 +10,7 @@
 #include <vtkView.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkViewWrap : public VtkObjectWrap
 {
@@ -49,6 +50,10 @@ class VtkViewWrap : public VtkObjectWrap
 		static void SetRepresentationFromInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnRegisterProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

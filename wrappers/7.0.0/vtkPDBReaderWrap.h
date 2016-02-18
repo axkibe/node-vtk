@@ -10,6 +10,7 @@
 #include <vtkPDBReader.h>
 
 #include "vtkMoleculeReaderBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPDBReaderWrap : public VtkMoleculeReaderBaseWrap
 {
@@ -33,6 +34,10 @@ class VtkPDBReaderWrap : public VtkMoleculeReaderBaseWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPDBREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPDBREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

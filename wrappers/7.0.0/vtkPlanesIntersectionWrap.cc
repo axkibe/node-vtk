@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlanesWrap.h"
 #include "vtkPlanesIntersectionWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPlanesIntersectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRegionVertices", SetRegionVertices);
 	Nan::SetPrototypeMethod(tpl, "setRegionVertices", SetRegionVertices);
 
+#ifdef VTK_NODE_PLUS_VTKPLANESINTERSECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLANESINTERSECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkPointWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -160,6 +160,9 @@ void VtkPointWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ZShadowsOn", ZShadowsOn);
 	Nan::SetPrototypeMethod(tpl, "zShadowsOn", ZShadowsOn);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

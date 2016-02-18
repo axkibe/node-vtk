@@ -10,6 +10,7 @@
 #include <vtkXMLUniformGridAMRReader.h>
 
 #include "vtkXMLCompositeDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUniformGridAMRReaderWrap : public VtkXMLCompositeDataReaderWrap
 {
@@ -30,9 +31,15 @@ class VtkXMLUniformGridAMRReaderWrap : public VtkXMLCompositeDataReaderWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumLevelsToReadByDefault(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaximumLevelsToReadByDefault(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

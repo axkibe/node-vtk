@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPropertyWrap.h"
 #include "vtkActorWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkShaderDeviceAdapter2Wrap.h"
 #include "vtkTextureWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -318,6 +318,9 @@ void VtkPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShadingOn", ShadingOn);
 	Nan::SetPrototypeMethod(tpl, "shadingOn", ShadingOn);
 
+#ifdef VTK_NODE_PLUS_VTKPROPERTYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROPERTYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

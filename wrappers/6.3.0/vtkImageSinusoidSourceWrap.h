@@ -10,6 +10,7 @@
 #include <vtkImageSinusoidSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSinusoidSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkImageSinusoidSourceWrap : public VtkImageAlgorithmWrap
 		static void SetPeriod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPhase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESINUSOIDSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESINUSOIDSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

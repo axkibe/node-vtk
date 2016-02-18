@@ -10,6 +10,7 @@
 #include <vtkDICOMImageReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkDICOMImageReaderWrap : public VtkImageReader2Wrap
 {
@@ -49,6 +50,10 @@ class VtkDICOMImageReaderWrap : public VtkImageReader2Wrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDirectoryName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDICOMIMAGEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDICOMIMAGEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderRepresentationWrap.h"
 #include "vtkTextRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkTextRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindowLocation", SetWindowLocation);
 	Nan::SetPrototypeMethod(tpl, "setWindowLocation", SetWindowLocation);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

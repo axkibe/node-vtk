@@ -10,6 +10,7 @@
 #include <vtkGeoTerrainNode.h>
 
 #include "vtkGeoTreeNodeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTerrainNodeWrap : public VtkGeoTreeNodeWrap
 {
@@ -55,6 +56,10 @@ class VtkGeoTerrainNodeWrap : public VtkGeoTreeNodeWrap
 		static void SetProjectionBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateBoundingSphere(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTERRAINNODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTERRAINNODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkClosedSurfacePointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClosedSurfacePointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -44,6 +45,10 @@ class VtkClosedSurfacePointPlacerWrap : public VtkPointPlacerWrap
 		static void SetBoundingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLOSEDSURFACEPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLOSEDSURFACEPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

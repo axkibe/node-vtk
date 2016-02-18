@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkYoungsMaterialInterfaceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -179,6 +179,9 @@ void VtkYoungsMaterialInterfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseFractionAsDistanceOn", UseFractionAsDistanceOn);
 	Nan::SetPrototypeMethod(tpl, "useFractionAsDistanceOn", UseFractionAsDistanceOn);
 
+#ifdef VTK_NODE_PLUS_VTKYOUNGSMATERIALINTERFACEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKYOUNGSMATERIALINTERFACEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

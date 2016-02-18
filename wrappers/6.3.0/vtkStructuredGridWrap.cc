@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetWrap.h"
 #include "vtkStructuredGridWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -114,6 +114,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

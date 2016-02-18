@@ -10,6 +10,7 @@
 #include <vtkOpenGLVolumeTextureMapper2D.h>
 
 #include "vtkVolumeTextureMapper2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLVolumeTextureMapper2DWrap : public VtkVolumeTextureMapper2DWrap
 {
@@ -34,6 +35,10 @@ class VtkOpenGLVolumeTextureMapper2DWrap : public VtkVolumeTextureMapper2DWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLVOLUMETEXTUREMAPPER2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLVOLUMETEXTUREMAPPER2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

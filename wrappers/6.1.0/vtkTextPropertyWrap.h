@@ -10,6 +10,7 @@
 #include <vtkTextProperty.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextPropertyWrap : public VtkObjectWrap
 {
@@ -90,6 +91,10 @@ class VtkTextPropertyWrap : public VtkObjectWrap
 		static void ShadowOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadowOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

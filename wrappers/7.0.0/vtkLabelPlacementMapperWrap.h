@@ -10,6 +10,7 @@
 #include <vtkLabelPlacementMapper.h>
 
 #include "vtkMapper2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLabelPlacementMapperWrap : public VtkMapper2DWrap
 {
@@ -89,6 +90,10 @@ class VtkLabelPlacementMapperWrap : public VtkMapper2DWrap
 		static void UseDepthBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLABELPLACEMENTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLABELPLACEMENTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

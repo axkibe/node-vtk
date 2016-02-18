@@ -10,6 +10,7 @@
 #include <vtkBarChartActor.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBarChartActorWrap : public VtkActor2DWrap
 {
@@ -64,6 +65,10 @@ class VtkBarChartActorWrap : public VtkActor2DWrap
 		static void SetYTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TitleVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TitleVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBARCHARTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBARCHARTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

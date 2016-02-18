@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPolyDataPointSamplerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkPolyDataPointSamplerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenerateVertices", SetGenerateVertices);
 	Nan::SetPrototypeMethod(tpl, "setGenerateVertices", SetGenerateVertices);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAPOINTSAMPLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATAPOINTSAMPLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

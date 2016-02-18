@@ -10,6 +10,7 @@
 #include <vtkHierarchicalDataLevelFilter.h>
 
 #include "vtkLevelIdScalarsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalDataLevelFilterWrap : public VtkLevelIdScalarsWrap
 {
@@ -33,6 +34,10 @@ class VtkHierarchicalDataLevelFilterWrap : public VtkLevelIdScalarsWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALDATALEVELFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALDATALEVELFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageOrthoPlanes.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageOrthoPlanesWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkImageOrthoPlanesWrap : public VtkObjectWrap
 		static void ResetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEORTHOPLANESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEORTHOPLANESWRAP_CLASSDEF
+#endif
 };
 
 #endif

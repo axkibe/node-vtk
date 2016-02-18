@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleJoystickActor.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleJoystickActorWrap : public VtkInteractorStyleWrap
 {
@@ -45,6 +46,10 @@ class VtkInteractorStyleJoystickActorWrap : public VtkInteractorStyleWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Spin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UniformScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEJOYSTICKACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEJOYSTICKACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

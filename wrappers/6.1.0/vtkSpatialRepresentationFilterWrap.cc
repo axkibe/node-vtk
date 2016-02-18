@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkSpatialRepresentationFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkSpatialRepresentationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpatialRepresentation", SetSpatialRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setSpatialRepresentation", SetSpatialRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKSPATIALREPRESENTATIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPATIALREPRESENTATIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCursor2DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -149,6 +149,9 @@ void VtkCursor2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WrapOn", WrapOn);
 	Nan::SetPrototypeMethod(tpl, "wrapOn", WrapOn);
 
+#ifdef VTK_NODE_PLUS_VTKCURSOR2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCURSOR2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

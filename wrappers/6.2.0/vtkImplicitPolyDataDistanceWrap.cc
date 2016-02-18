@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitPolyDataDistanceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkImplicitPolyDataDistanceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPOLYDATADISTANCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITPOLYDATADISTANCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

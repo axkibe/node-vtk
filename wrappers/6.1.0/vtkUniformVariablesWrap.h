@@ -10,6 +10,7 @@
 #include <vtkUniformVariables.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformVariablesWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkUniformVariablesWrap : public VtkObjectWrap
 		static void Send(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SendCurrentUniform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMVARIABLESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMVARIABLESWRAP_CLASSDEF
+#endif
 };
 
 #endif

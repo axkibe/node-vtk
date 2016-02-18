@@ -10,6 +10,7 @@
 #include <vtkSTLReader.h>
 
 #include "vtkAbstractPolyDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSTLReaderWrap : public VtkAbstractPolyDataReaderWrap
 {
@@ -43,6 +44,10 @@ class VtkSTLReaderWrap : public VtkAbstractPolyDataReaderWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTags(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTLREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTLREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

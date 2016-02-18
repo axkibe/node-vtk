@@ -10,6 +10,7 @@
 #include <vtkCollapseVerticesByArray.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCollapseVerticesByArrayWrap : public VtkGraphAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkCollapseVerticesByArrayWrap : public VtkGraphAlgorithmWrap
 		static void SetEdgesCollapsedArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVerticesCollapsedArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLLAPSEVERTICESBYARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLLAPSEVERTICESBYARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

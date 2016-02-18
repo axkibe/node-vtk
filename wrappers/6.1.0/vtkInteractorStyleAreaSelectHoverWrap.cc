@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleRubberBand2DWrap.h"
 #include "vtkInteractorStyleAreaSelectHoverWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAreaLayoutWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkInteractorStyleAreaSelectHoverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEAREASELECTHOVERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEAREASELECTHOVERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

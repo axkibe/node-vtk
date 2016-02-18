@@ -10,6 +10,7 @@
 #include <vtkActor2DCollection.h>
 
 #include "vtkPropCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkActor2DCollectionWrap : public VtkPropCollectionWrap
 {
@@ -41,6 +42,10 @@ class VtkActor2DCollectionWrap : public VtkPropCollectionWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Sort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKACTOR2DCOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKACTOR2DCOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

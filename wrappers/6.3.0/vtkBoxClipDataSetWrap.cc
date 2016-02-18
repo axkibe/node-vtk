@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkBoxClipDataSetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkBoxClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfOutputs", GetNumberOfOutputs);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfOutputs", GetNumberOfOutputs);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrientation", GetOrientation);
+	Nan::SetPrototypeMethod(tpl, "getOrientation", GetOrientation);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -103,6 +106,12 @@ void VtkBoxClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLocator", SetLocator);
 	Nan::SetPrototypeMethod(tpl, "setLocator", SetLocator);
 
+	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
+	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
+
+#ifdef VTK_NODE_PLUS_VTKBOXCLIPDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBOXCLIPDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -294,6 +303,20 @@ void VtkBoxClipDataSetWrap::GetNumberOfOutputs(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkBoxClipDataSetWrap::GetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBoxClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkBoxClipDataSetWrap>(info.Holder());
+	vtkBoxClipDataSet *native = (vtkBoxClipDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientation();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkBoxClipDataSetWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBoxClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkBoxClipDataSetWrap>(info.Holder());
@@ -461,6 +484,25 @@ void VtkBoxClipDataSetWrap::SetLocator(const Nan::FunctionCallbackInfo<v8::Value
 		}
 		native->SetLocator(
 			(vtkIncrementalPointLocator *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBoxClipDataSetWrap::SetOrientation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBoxClipDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkBoxClipDataSetWrap>(info.Holder());
+	vtkBoxClipDataSet *native = (vtkBoxClipDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrientation(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

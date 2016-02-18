@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractPointLocatorWrap.h"
 #include "vtkOctreePointLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkOctreePointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumPointsPerRegion", SetMaximumPointsPerRegion);
 	Nan::SetPrototypeMethod(tpl, "setMaximumPointsPerRegion", SetMaximumPointsPerRegion);
 
+#ifdef VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

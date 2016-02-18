@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageDataLIC2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkImageDataLIC2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSteps", SetSteps);
 	Nan::SetPrototypeMethod(tpl, "setSteps", SetSteps);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATALIC2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEDATALIC2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

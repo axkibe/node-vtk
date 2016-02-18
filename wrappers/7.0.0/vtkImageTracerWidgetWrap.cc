@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkImageTracerWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPolyDataWrap.h"
 #include "vtkGlyphSource2DWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -247,6 +247,9 @@ void VtkImageTracerWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SnapToImageOn", SnapToImageOn);
 	Nan::SetPrototypeMethod(tpl, "snapToImageOn", SnapToImageOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGETRACERWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGETRACERWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

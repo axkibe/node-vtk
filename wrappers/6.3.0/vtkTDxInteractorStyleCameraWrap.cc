@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTDxInteractorStyleWrap.h"
 #include "vtkTDxInteractorStyleCameraWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,9 @@ void VtkTDxInteractorStyleCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKTDXINTERACTORSTYLECAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTDXINTERACTORSTYLECAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

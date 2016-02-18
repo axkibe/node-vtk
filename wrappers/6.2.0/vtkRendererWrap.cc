@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkViewportWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkObjectWrap.h"
@@ -24,6 +23,7 @@
 #include "vtkRendererDelegateWrap.h"
 #include "vtkHardwareSelectorWrap.h"
 #include "vtkTextureWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -395,6 +395,9 @@ void VtkRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WorldToView", WorldToView);
 	Nan::SetPrototypeMethod(tpl, "worldToView", WorldToView);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

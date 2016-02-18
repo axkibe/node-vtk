@@ -10,6 +10,7 @@
 #include <vtkScalarsToColorsPainter.h>
 
 #include "vtkPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScalarsToColorsPainterWrap : public VtkPainterWrap
 {
@@ -51,6 +52,10 @@ class VtkScalarsToColorsPainterWrap : public VtkPainterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void USE_LOOKUP_TABLE_SCALAR_RANGE(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCALARSTOCOLORSPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

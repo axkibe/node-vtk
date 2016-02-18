@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkColorTransferControlPointsItemWrap.h"
 #include "vtkCompositeControlPointsItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkColorTransferFunctionWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkCompositeControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseOpacityPointHandles", SetUseOpacityPointHandles);
 	Nan::SetPrototypeMethod(tpl, "setUseOpacityPointHandles", SetUseOpacityPointHandles);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITECONTROLPOINTSITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITECONTROLPOINTSITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

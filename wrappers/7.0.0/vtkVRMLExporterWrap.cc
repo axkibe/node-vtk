@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExporterWrap.h"
 #include "vtkVRMLExporterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkVRMLExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpeed", SetSpeed);
 	Nan::SetPrototypeMethod(tpl, "setSpeed", SetSpeed);
 
+#ifdef VTK_NODE_PLUS_VTKVRMLEXPORTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVRMLEXPORTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

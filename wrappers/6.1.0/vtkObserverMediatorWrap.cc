@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkObserverMediatorWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkObserverMediatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+#ifdef VTK_NODE_PLUS_VTKOBSERVERMEDIATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBSERVERMEDIATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

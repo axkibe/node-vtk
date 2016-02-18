@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkConeWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkConeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAngle", SetAngle);
 	Nan::SetPrototypeMethod(tpl, "setAngle", SetAngle);
 
+#ifdef VTK_NODE_PLUS_VTKCONEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeMapperWrap.h"
 #include "vtkAMRVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkCameraWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -202,6 +202,9 @@ void VtkAMRVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateResamplerFrustrumMethod", UpdateResamplerFrustrumMethod);
 	Nan::SetPrototypeMethod(tpl, "updateResamplerFrustrumMethod", UpdateResamplerFrustrumMethod);
 
+#ifdef VTK_NODE_PLUS_VTKAMRVOLUMEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRVOLUMEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

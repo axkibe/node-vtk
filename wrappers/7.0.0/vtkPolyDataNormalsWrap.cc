@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPolyDataNormalsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -167,6 +167,9 @@ void VtkPolyDataNormalsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplittingOn", SplittingOn);
 	Nan::SetPrototypeMethod(tpl, "splittingOn", SplittingOn);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYDATANORMALSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYDATANORMALSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

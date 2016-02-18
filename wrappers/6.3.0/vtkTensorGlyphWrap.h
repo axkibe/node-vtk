@@ -10,6 +10,7 @@
 #include <vtkTensorGlyph.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTensorGlyphWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -72,6 +73,10 @@ class VtkTensorGlyphWrap : public VtkPolyDataAlgorithmWrap
 		static void SymmetricOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeGlyphsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeGlyphsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTENSORGLYPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTENSORGLYPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

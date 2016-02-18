@@ -10,6 +10,7 @@
 #include <vtkCell.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellWrap : public VtkObjectWrap
 {
@@ -49,6 +50,10 @@ class VtkCellWrap : public VtkObjectWrap
 		static void RequiresInitialization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLWRAP_CLASSDEF
+#endif
 };
 
 #endif

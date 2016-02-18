@@ -10,6 +10,7 @@
 #include <vtkImageLogic.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageLogicWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkImageLogicWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOperationToOr(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToXor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputTrueValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGELOGICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGELOGICWRAP_CLASSDEF
+#endif
 };
 
 #endif

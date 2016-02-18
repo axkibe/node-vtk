@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleRubberBand2DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkInteractorStyleRubberBand2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderOnMouseMove", SetRenderOnMouseMove);
 	Nan::SetPrototypeMethod(tpl, "setRenderOnMouseMove", SetRenderOnMouseMove);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

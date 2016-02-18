@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkNIFTIImageHeaderWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -238,6 +238,9 @@ void VtkNIFTIImageHeaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXYZTUnits", SetXYZTUnits);
 	Nan::SetPrototypeMethod(tpl, "setXYZTUnits", SetXYZTUnits);
 
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEHEADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNIFTIIMAGEHEADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

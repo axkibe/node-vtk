@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageLogicWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkImageLogicWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputTrueValue", SetOutputTrueValue);
 	Nan::SetPrototypeMethod(tpl, "setOutputTrueValue", SetOutputTrueValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGELOGICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGELOGICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

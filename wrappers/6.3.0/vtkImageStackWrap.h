@@ -10,6 +10,7 @@
 #include <vtkImageStack.h>
 
 #include "vtkImageSliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageStackWrap : public VtkImageSliceWrap
 {
@@ -53,6 +54,10 @@ class VtkImageStackWrap : public VtkImageSliceWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetActiveLayer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESTACKWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESTACKWRAP_CLASSDEF
+#endif
 };
 
 #endif

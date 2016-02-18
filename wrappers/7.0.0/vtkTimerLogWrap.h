@@ -10,6 +10,7 @@
 #include <vtkTimerLog.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTimerLogWrap : public VtkObjectWrap
 {
@@ -56,6 +57,10 @@ class VtkTimerLogWrap : public VtkObjectWrap
 		static void SetMaxEntries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StopTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTIMERLOGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTIMERLOGWRAP_CLASSDEF
+#endif
 };
 
 #endif

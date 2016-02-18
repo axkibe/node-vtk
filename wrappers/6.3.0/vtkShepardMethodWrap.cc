@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkShepardMethodWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkShepardMethodWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSampleDimensions", SetSampleDimensions);
 	Nan::SetPrototypeMethod(tpl, "setSampleDimensions", SetSampleDimensions);
 
+#ifdef VTK_NODE_PLUS_VTKSHEPARDMETHODWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHEPARDMETHODWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

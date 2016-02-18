@@ -10,6 +10,7 @@
 #include <vtkAreaPicker.h>
 
 #include "vtkAbstractPropPickerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAreaPickerWrap : public VtkAbstractPropPickerWrap
 {
@@ -42,6 +43,10 @@ class VtkAreaPickerWrap : public VtkAbstractPropPickerWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickCoords(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAREAPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAREAPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

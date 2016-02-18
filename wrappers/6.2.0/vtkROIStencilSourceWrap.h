@@ -10,6 +10,7 @@
 #include <vtkROIStencilSource.h>
 
 #include "vtkImageStencilSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkROIStencilSourceWrap : public VtkImageStencilSourceWrap
 {
@@ -45,6 +46,10 @@ class VtkROIStencilSourceWrap : public VtkImageStencilSourceWrap
 		static void SetShapeToCylinderY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShapeToCylinderZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShapeToEllipsoid(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKROISTENCILSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKROISTENCILSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

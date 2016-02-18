@@ -10,6 +10,7 @@
 #include <vtkGenericAttributeCollection.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericAttributeCollectionWrap : public VtkObjectWrap
 {
@@ -52,6 +53,10 @@ class VtkGenericAttributeCollectionWrap : public VtkObjectWrap
 		static void SetActiveAttribute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAttributesToInterpolateToAll(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICATTRIBUTECOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICATTRIBUTECOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

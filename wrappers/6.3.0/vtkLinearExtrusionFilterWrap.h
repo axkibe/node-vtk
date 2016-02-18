@@ -10,6 +10,7 @@
 #include <vtkLinearExtrusionFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLinearExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkLinearExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetExtrusionTypeToVectorExtrusion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEAREXTRUSIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEAREXTRUSIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

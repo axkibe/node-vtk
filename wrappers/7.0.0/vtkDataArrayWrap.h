@@ -10,6 +10,7 @@
 #include <vtkDataArray.h>
 
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataArrayWrap : public VtkAbstractArrayWrap
 {
@@ -59,6 +60,10 @@ class VtkDataArrayWrap : public VtkAbstractArrayWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

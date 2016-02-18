@@ -10,6 +10,7 @@
 #include <vtkDIMACSGraphReader.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDIMACSGraphReaderWrap : public VtkGraphAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkDIMACSGraphReaderWrap : public VtkGraphAlgorithmWrap
 		static void SetEdgeAttributeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexAttributeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIMACSGRAPHREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIMACSGRAPHREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

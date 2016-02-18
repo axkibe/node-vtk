@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReader2Wrap.h"
 #include "vtkTIFFReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,9 @@ void VtkTIFFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetFileExtensions", GetFileExtensions);
 	Nan::SetPrototypeMethod(tpl, "getFileExtensions", GetFileExtensions);
 
+	Nan::SetPrototypeMethod(tpl, "GetOrientationType", GetOrientationType);
+	Nan::SetPrototypeMethod(tpl, "getOrientationType", GetOrientationType);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrientationTypeSpecifiedFlag", GetOrientationTypeSpecifiedFlag);
 	Nan::SetPrototypeMethod(tpl, "getOrientationTypeSpecifiedFlag", GetOrientationTypeSpecifiedFlag);
 
@@ -86,6 +89,9 @@ void VtkTIFFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetOrientationType", SetOrientationType);
+	Nan::SetPrototypeMethod(tpl, "setOrientationType", SetOrientationType);
+
 	Nan::SetPrototypeMethod(tpl, "SetOriginSpecifiedFlag", SetOriginSpecifiedFlag);
 	Nan::SetPrototypeMethod(tpl, "setOriginSpecifiedFlag", SetOriginSpecifiedFlag);
 
@@ -98,6 +104,9 @@ void VtkTIFFReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SpacingSpecifiedFlagOn", SpacingSpecifiedFlagOn);
 	Nan::SetPrototypeMethod(tpl, "spacingSpecifiedFlagOn", SpacingSpecifiedFlagOn);
 
+#ifdef VTK_NODE_PLUS_VTKTIFFREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTIFFREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -189,6 +198,20 @@ void VtkTIFFReaderWrap::GetFileExtensions(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetFileExtensions();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkTIFFReaderWrap::GetOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOrientationType();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkTIFFReaderWrap::GetOrientationTypeSpecifiedFlag(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -340,6 +363,25 @@ void VtkTIFFReaderWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>&
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTIFFReaderWrap::SetOrientationType(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTIFFReaderWrap *wrapper = ObjectWrap::Unwrap<VtkTIFFReaderWrap>(info.Holder());
+	vtkTIFFReader *native = (vtkTIFFReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOrientationType(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkContourWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContourRepresentationWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkContourWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetState", SetWidgetState);
 	Nan::SetPrototypeMethod(tpl, "setWidgetState", SetWidgetState);
 
+#ifdef VTK_NODE_PLUS_VTKCONTOURWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTOURWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

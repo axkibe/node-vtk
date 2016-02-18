@@ -10,6 +10,7 @@
 #include <vtkImageDataStreamer.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataStreamerWrap : public VtkImageAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkImageDataStreamerWrap : public VtkImageAlgorithmWrap
 		static void SetNumberOfStreamDivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATASTREAMERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATASTREAMERWRAP_CLASSDEF
+#endif
 };
 
 #endif

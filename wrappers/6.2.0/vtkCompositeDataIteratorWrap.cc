@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCompositeDataIteratorWrap.h"
 #include "vtkCompositeDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkCompositeDataIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SkipEmptyNodesOn", SkipEmptyNodesOn);
 	Nan::SetPrototypeMethod(tpl, "skipEmptyNodesOn", SkipEmptyNodesOn);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEDATAITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

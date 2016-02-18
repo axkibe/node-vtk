@@ -10,6 +10,7 @@
 #include <vtkPassThrough.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPassThroughWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkPassThroughWrap : public VtkPassInputTypeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDeepCopyInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPASSTHROUGHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPASSTHROUGHWRAP_CLASSDEF
+#endif
 };
 
 #endif

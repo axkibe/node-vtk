@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeIteratorWrap.h"
 #include "vtkTreeDFSIteratorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkTreeDFSIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMode", SetMode);
 	Nan::SetPrototypeMethod(tpl, "setMode", SetMode);
 
+#ifdef VTK_NODE_PLUS_VTKTREEDFSITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEDFSITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

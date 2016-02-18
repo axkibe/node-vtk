@@ -10,6 +10,7 @@
 #include <vtkStreamTracer.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -78,6 +79,10 @@ class VtkStreamTracerWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceStreamlinesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SurfaceStreamlinesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMTRACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMTRACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

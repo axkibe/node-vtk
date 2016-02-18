@@ -10,6 +10,7 @@
 #include <vtkGLSLShaderDeviceAdapter2.h>
 
 #include "vtkShaderDeviceAdapter2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkGLSLShaderDeviceAdapter2Wrap : public VtkShaderDeviceAdapter2Wrap
 {
@@ -34,6 +35,10 @@ class VtkGLSLShaderDeviceAdapter2Wrap : public VtkShaderDeviceAdapter2Wrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PrepareForRender(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLSLSHADERDEVICEADAPTER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLSLSHADERDEVICEADAPTER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

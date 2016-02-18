@@ -10,6 +10,7 @@
 #include <vtkWindow.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWindowWrap : public VtkObjectWrap
 {
@@ -65,6 +66,10 @@ class VtkWindowWrap : public VtkObjectWrap
 		static void SetTileScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTileViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindowName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

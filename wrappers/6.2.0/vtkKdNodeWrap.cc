@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkKdNodeWrap.h"
 #include "vtkPlanesIntersectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -161,6 +161,9 @@ void VtkKdNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUp", SetUp);
 	Nan::SetPrototypeMethod(tpl, "setUp", SetUp);
 
+#ifdef VTK_NODE_PLUS_VTKKDNODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKDNODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

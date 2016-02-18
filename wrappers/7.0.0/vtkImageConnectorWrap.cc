@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkImageConnectorWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +50,12 @@ void VtkImageConnectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetConnectedValue", GetConnectedValue);
+	Nan::SetPrototypeMethod(tpl, "getConnectedValue", GetConnectedValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetUnconnectedValue", GetUnconnectedValue);
+	Nan::SetPrototypeMethod(tpl, "getUnconnectedValue", GetUnconnectedValue);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -65,6 +71,15 @@ void VtkImageConnectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetConnectedValue", SetConnectedValue);
+	Nan::SetPrototypeMethod(tpl, "setConnectedValue", SetConnectedValue);
+
+	Nan::SetPrototypeMethod(tpl, "SetUnconnectedValue", SetUnconnectedValue);
+	Nan::SetPrototypeMethod(tpl, "setUnconnectedValue", SetUnconnectedValue);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECONNECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECONNECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -106,6 +121,34 @@ void VtkImageConnectorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Val
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkImageConnectorWrap::GetConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
+	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetConnectedValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageConnectorWrap::GetUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
+	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetUnconnectedValue();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkImageConnectorWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -258,6 +301,44 @@ void VtkImageConnectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConnectorWrap::SetConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
+	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetConnectedValue(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageConnectorWrap::SetUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageConnectorWrap *wrapper = ObjectWrap::Unwrap<VtkImageConnectorWrap>(info.Holder());
+	vtkImageConnector *native = (vtkImageConnector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetUnconnectedValue(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

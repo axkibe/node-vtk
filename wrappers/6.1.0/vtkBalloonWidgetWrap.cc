@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHoverWidgetWrap.h"
 #include "vtkBalloonWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPropWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkAbstractPropPickerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkBalloonWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateBalloonString", UpdateBalloonString);
 	Nan::SetPrototypeMethod(tpl, "updateBalloonString", UpdateBalloonString);
 
+#ifdef VTK_NODE_PLUS_VTKBALLOONWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBALLOONWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

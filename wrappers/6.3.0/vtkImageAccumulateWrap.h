@@ -10,6 +10,7 @@
 #include <vtkImageAccumulate.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageAccumulateWrap : public VtkImageAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkImageAccumulateWrap : public VtkImageAlgorithmWrap
 		static void SetIgnoreZero(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverseStencil(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStencilData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEACCUMULATEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEACCUMULATEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGreedyTerrainDecimationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkGreedyTerrainDecimationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRelativeError", SetRelativeError);
 	Nan::SetPrototypeMethod(tpl, "setRelativeError", SetRelativeError);
 
+#ifdef VTK_NODE_PLUS_VTKGREEDYTERRAINDECIMATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGREEDYTERRAINDECIMATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

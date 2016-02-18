@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkDescriptiveStatisticsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -112,6 +112,9 @@ void VtkDescriptiveStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnbiasedVarianceOn", UnbiasedVarianceOn);
 	Nan::SetPrototypeMethod(tpl, "unbiasedVarianceOn", UnbiasedVarianceOn);
 
+#ifdef VTK_NODE_PLUS_VTKDESCRIPTIVESTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDESCRIPTIVESTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

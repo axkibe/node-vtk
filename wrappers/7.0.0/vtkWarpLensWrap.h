@@ -10,6 +10,7 @@
 #include <vtkWarpLens.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWarpLensWrap : public VtkPointSetAlgorithmWrap
 {
@@ -56,6 +57,10 @@ class VtkWarpLensWrap : public VtkPointSetAlgorithmWrap
 		static void SetP1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetP2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPrincipalPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWARPLENSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWARPLENSWRAP_CLASSDEF
+#endif
 };
 
 #endif

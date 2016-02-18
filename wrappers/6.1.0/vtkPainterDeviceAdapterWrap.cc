@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPainterDeviceAdapterWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,9 @@ void VtkPainterDeviceAdapterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAttributePointer", SetAttributePointer);
 	Nan::SetPrototypeMethod(tpl, "setAttributePointer", SetAttributePointer);
 
+#ifdef VTK_NODE_PLUS_VTKPAINTERDEVICEADAPTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPAINTERDEVICEADAPTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

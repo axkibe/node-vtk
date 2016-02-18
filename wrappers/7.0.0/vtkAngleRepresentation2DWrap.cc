@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAngleRepresentationWrap.h"
 #include "vtkAngleRepresentation2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLeaderActor2DWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkAngleRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoint2DisplayPosition", SetPoint2DisplayPosition);
 	Nan::SetPrototypeMethod(tpl, "setPoint2DisplayPosition", SetPoint2DisplayPosition);
 
+#ifdef VTK_NODE_PLUS_VTKANGLEREPRESENTATION2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANGLEREPRESENTATION2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

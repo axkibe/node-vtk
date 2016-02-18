@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleUnicamWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkInteractorStyleUnicamWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWorldUpVector", SetWorldUpVector);
 	Nan::SetPrototypeMethod(tpl, "setWorldUpVector", SetWorldUpVector);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEUNICAMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEUNICAMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

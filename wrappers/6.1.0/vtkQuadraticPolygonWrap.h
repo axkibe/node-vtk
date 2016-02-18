@@ -10,6 +10,7 @@
 #include <vtkQuadraticPolygon.h>
 
 #include "vtkNonLinearCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadraticPolygonWrap : public VtkNonLinearCellWrap
 {
@@ -47,6 +48,10 @@ class VtkQuadraticPolygonWrap : public VtkNonLinearCellWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseMVCInterpolation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRATICPOLYGONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRATICPOLYGONWRAP_CLASSDEF
+#endif
 };
 
 #endif

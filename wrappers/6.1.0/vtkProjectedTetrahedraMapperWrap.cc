@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
 #include "vtkProjectedTetrahedraMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataArrayWrap.h"
 #include "vtkVolumePropertyWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkProjectedTetrahedraMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVisibilitySort", SetVisibilitySort);
 	Nan::SetPrototypeMethod(tpl, "setVisibilitySort", SetVisibilitySort);
 
+#ifdef VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

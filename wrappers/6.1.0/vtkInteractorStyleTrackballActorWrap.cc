@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleTrackballActorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkInteractorStyleTrackballActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UniformScale", UniformScale);
 	Nan::SetPrototypeMethod(tpl, "uniformScale", UniformScale);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

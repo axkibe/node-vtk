@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleDrawPolygon.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleDrawPolygonWrap : public VtkInteractorStyleWrap
 {
@@ -40,6 +41,10 @@ class VtkInteractorStyleDrawPolygonWrap : public VtkInteractorStyleWrap
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDrawPolygonPixels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEDRAWPOLYGONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEDRAWPOLYGONWRAP_CLASSDEF
+#endif
 };
 
 #endif

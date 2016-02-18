@@ -10,6 +10,7 @@
 #include <vtkAbstractTransform.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractTransformWrap : public VtkObjectWrap
 {
@@ -46,6 +47,10 @@ class VtkAbstractTransformWrap : public VtkObjectWrap
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformVectorAtPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

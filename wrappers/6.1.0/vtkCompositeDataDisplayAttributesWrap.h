@@ -10,6 +10,7 @@
 #include <vtkCompositeDataDisplayAttributes.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeDataDisplayAttributesWrap : public VtkObjectWrap
 {
@@ -29,16 +30,32 @@ class VtkCompositeDataDisplayAttributesWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasBlockOpacities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasBlockVisibilities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void HasBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockOpacities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockVisibilites(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATADISPLAYATTRIBUTESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEDATADISPLAYATTRIBUTESWRAP_CLASSDEF
+#endif
 };
 
 #endif

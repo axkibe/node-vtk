@@ -10,6 +10,7 @@
 #include <vtkMarchingSquares.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMarchingSquaresWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkMarchingSquaresWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMARCHINGSQUARESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMARCHINGSQUARESWRAP_CLASSDEF
+#endif
 };
 
 #endif

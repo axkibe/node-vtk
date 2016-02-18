@@ -10,6 +10,7 @@
 #include <vtkWidgetRepresentation.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWidgetRepresentationWrap : public VtkPropWrap
 {
@@ -70,6 +71,10 @@ class VtkWidgetRepresentationWrap : public VtkPropWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWIDGETREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWIDGETREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

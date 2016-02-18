@@ -10,6 +10,7 @@
 #include <vtkPath.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPathWrap : public VtkPointSetWrap
 {
@@ -40,6 +41,10 @@ class VtkPathWrap : public VtkPointSetWrap
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

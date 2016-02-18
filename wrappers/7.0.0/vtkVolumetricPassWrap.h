@@ -10,6 +10,7 @@
 #include <vtkVolumetricPass.h>
 
 #include "vtkDefaultPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumetricPassWrap : public VtkDefaultPassWrap
 {
@@ -33,6 +34,10 @@ class VtkVolumetricPassWrap : public VtkDefaultPassWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMETRICPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMETRICPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

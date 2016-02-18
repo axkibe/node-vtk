@@ -10,6 +10,7 @@
 #include <vtkFrustumCoverageCuller.h>
 
 #include "vtkCullerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFrustumCoverageCullerWrap : public VtkCullerWrap
 {
@@ -45,6 +46,10 @@ class VtkFrustumCoverageCullerWrap : public VtkCullerWrap
 		static void SetSortingStyleToBackToFront(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSortingStyleToFrontToBack(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSortingStyleToNone(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFRUSTUMCOVERAGECULLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFRUSTUMCOVERAGECULLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

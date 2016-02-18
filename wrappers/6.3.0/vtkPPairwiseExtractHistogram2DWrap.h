@@ -10,6 +10,7 @@
 #include <vtkPPairwiseExtractHistogram2D.h>
 
 #include "vtkPairwiseExtractHistogram2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPPairwiseExtractHistogram2DWrap : public VtkPairwiseExtractHistogram2DWrap
 {
@@ -35,6 +36,10 @@ class VtkPPairwiseExtractHistogram2DWrap : public VtkPairwiseExtractHistogram2DW
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPPAIRWISEEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPPAIRWISEEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

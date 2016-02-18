@@ -10,6 +10,7 @@
 #include <vtkModelMetadata.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkModelMetadataWrap : public VtkObjectWrap
 {
@@ -76,6 +77,10 @@ class VtkModelMetadataWrap : public VtkObjectWrap
 		static void SetNumberOfSideSets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStepIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTitle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMODELMETADATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMODELMETADATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

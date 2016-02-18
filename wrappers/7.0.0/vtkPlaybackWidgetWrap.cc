@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderWidgetWrap.h"
 #include "vtkPlaybackWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlaybackRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPlaybackWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKPLAYBACKWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLAYBACKWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

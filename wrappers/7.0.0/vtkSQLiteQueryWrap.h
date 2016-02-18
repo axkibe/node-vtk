@@ -10,6 +10,7 @@
 #include <vtkSQLiteQuery.h>
 
 #include "vtkSQLQueryWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSQLiteQueryWrap : public VtkSQLQueryWrap
 {
@@ -46,6 +47,10 @@ class VtkSQLiteQueryWrap : public VtkSQLQueryWrap
 		static void RollbackTransaction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuery(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSQLITEQUERYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSQLITEQUERYWRAP_CLASSDEF
+#endif
 };
 
 #endif

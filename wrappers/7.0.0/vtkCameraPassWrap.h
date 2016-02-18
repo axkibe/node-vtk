@@ -10,6 +10,7 @@
 #include <vtkCameraPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraPassWrap : public VtkRenderPassWrap
 {
@@ -38,6 +39,10 @@ class VtkCameraPassWrap : public VtkRenderPassWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAspectRatioOverride(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDelegatePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

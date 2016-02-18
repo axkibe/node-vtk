@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractGridConnectivityWrap.h"
 #include "vtkStructuredAMRGridConnectivityWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPointDataWrap.h"
 #include "vtkCellDataWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkStructuredAMRGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfNeighbors", GetNumberOfNeighbors);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfNeighbors", GetNumberOfNeighbors);
 
+	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
+	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -96,6 +99,9 @@ void VtkStructuredAMRGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNodeCentered", SetNodeCentered);
 	Nan::SetPrototypeMethod(tpl, "setNodeCentered", SetNodeCentered);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDAMRGRIDCONNECTIVITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDAMRGRIDCONNECTIVITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -290,6 +296,33 @@ void VtkStructuredAMRGridConnectivityWrap::GetNumberOfNeighbors(const Nan::Funct
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredAMRGridConnectivityWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredAMRGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredAMRGridConnectivityWrap>(info.Holder());
+	vtkStructuredAMRGridConnectivity *native = (vtkStructuredAMRGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsInt32())
+			{
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->Initialize(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Int32Value()
+				);
+				return;
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

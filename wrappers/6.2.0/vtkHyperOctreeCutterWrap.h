@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeCutter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeCutterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -54,6 +55,10 @@ class VtkHyperOctreeCutterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSortByToSortByCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSortByToSortByValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREECUTTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREECUTTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

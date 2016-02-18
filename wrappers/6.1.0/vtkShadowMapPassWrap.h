@@ -10,6 +10,7 @@
 #include <vtkShadowMapPass.h>
 
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkShadowMapPassWrap : public VtkRenderPassWrap
 {
@@ -38,6 +39,10 @@ class VtkShadowMapPassWrap : public VtkRenderPassWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpaquePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShadowMapBakerPass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSHADOWMAPPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSHADOWMAPPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageMapper3D.h>
 
 #include "vtkAbstractMapper3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMapper3DWrap : public VtkAbstractMapper3DWrap
 {
@@ -63,6 +64,10 @@ class VtkImageMapper3DWrap : public VtkAbstractMapper3DWrap
 		static void SliceFacesCameraOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StreamingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StreamingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPPER3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAPPER3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkApplyIcons.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkApplyIconsWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkApplyIconsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetUseLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPLYICONSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPLYICONSWRAP_CLASSDEF
+#endif
 };
 
 #endif

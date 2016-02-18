@@ -10,6 +10,7 @@
 #include <vtkImplicitHalo.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitHaloWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkImplicitHaloWrap : public VtkImplicitFunctionWrap
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFadeOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITHALOWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITHALOWRAP_CLASSDEF
+#endif
 };
 
 #endif

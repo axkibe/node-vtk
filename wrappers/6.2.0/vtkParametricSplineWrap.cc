@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricSplineWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSplineWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -154,6 +154,9 @@ void VtkParametricSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZSpline", SetZSpline);
 	Nan::SetPrototypeMethod(tpl, "setZSpline", SetZSpline);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICSPLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICSPLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

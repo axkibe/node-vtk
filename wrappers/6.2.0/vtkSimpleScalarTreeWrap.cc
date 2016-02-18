@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkScalarTreeWrap.h"
 #include "vtkSimpleScalarTreeWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkSimpleScalarTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxLevel", SetMaxLevel);
 	Nan::SetPrototypeMethod(tpl, "setMaxLevel", SetMaxLevel);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLESCALARTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLESCALARTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

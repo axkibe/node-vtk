@@ -10,6 +10,7 @@
 #include <vtkRectilinearGridReader.h>
 
 #include "vtkDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridReaderWrap : public VtkDataReaderWrap
 {
@@ -36,6 +37,10 @@ class VtkRectilinearGridReaderWrap : public VtkDataReaderWrap
 		static void ReadMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

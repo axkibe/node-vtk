@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExtractLevelWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,6 +47,9 @@ void VtkExtractLevelWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkExtractLevelWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddLevel", AddLevel);
+	Nan::SetPrototypeMethod(tpl, "addLevel", AddLevel);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -59,9 +62,15 @@ void VtkExtractLevelWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "RemoveAllLevels", RemoveAllLevels);
 	Nan::SetPrototypeMethod(tpl, "removeAllLevels", RemoveAllLevels);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveLevel", RemoveLevel);
+	Nan::SetPrototypeMethod(tpl, "removeLevel", RemoveLevel);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTLEVELWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTLEVELWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -89,6 +98,25 @@ void VtkExtractLevelWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkExtractLevelWrap::AddLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractLevelWrap *wrapper = ObjectWrap::Unwrap<VtkExtractLevelWrap>(info.Holder());
+	vtkExtractLevel *native = (vtkExtractLevel *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddLevel(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractLevelWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -160,6 +188,25 @@ void VtkExtractLevelWrap::RemoveAllLevels(const Nan::FunctionCallbackInfo<v8::Va
 		return;
 	}
 	native->RemoveAllLevels();
+}
+
+void VtkExtractLevelWrap::RemoveLevel(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractLevelWrap *wrapper = ObjectWrap::Unwrap<VtkExtractLevelWrap>(info.Holder());
+	vtkExtractLevel *native = (vtkExtractLevel *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveLevel(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractLevelWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitSelectionLoopWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkImplicitSelectionLoopWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormal", SetNormal);
 	Nan::SetPrototypeMethod(tpl, "setNormal", SetNormal);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITSELECTIONLOOPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITSELECTIONLOOPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

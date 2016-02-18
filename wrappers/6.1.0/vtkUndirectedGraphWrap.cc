@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphWrap.h"
 #include "vtkUndirectedGraphWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkUndirectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

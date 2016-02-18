@@ -10,6 +10,7 @@
 #include <vtkSimpleCellTessellator.h>
 
 #include "vtkGenericCellTessellatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimpleCellTessellatorWrap : public VtkGenericCellTessellatorWrap
 {
@@ -44,6 +45,10 @@ class VtkSimpleCellTessellatorWrap : public VtkGenericCellTessellatorWrap
 		static void SetSubdivisionLevels(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Tessellate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLECELLTESSELLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLECELLTESSELLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStandardPolyDataPainterWrap.h"
 #include "vtkValuePainterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationDoubleVectorKeyWrap.h"
 #include "vtkInformationStringKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkValuePainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+#ifdef VTK_NODE_PLUS_VTKVALUEPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVALUEPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

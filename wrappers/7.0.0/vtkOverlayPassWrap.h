@@ -10,6 +10,7 @@
 #include <vtkOverlayPass.h>
 
 #include "vtkDefaultPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOverlayPassWrap : public VtkDefaultPassWrap
 {
@@ -33,6 +34,10 @@ class VtkOverlayPassWrap : public VtkDefaultPassWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOVERLAYPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOVERLAYPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

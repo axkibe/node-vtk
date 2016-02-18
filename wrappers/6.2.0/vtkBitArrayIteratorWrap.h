@@ -10,6 +10,7 @@
 #include <vtkBitArrayIterator.h>
 
 #include "vtkArrayIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBitArrayIteratorWrap : public VtkArrayIteratorWrap
 {
@@ -38,6 +39,10 @@ class VtkBitArrayIteratorWrap : public VtkArrayIteratorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBITARRAYITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBITARRAYITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

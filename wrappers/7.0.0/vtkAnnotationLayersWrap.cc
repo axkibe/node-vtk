@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkAnnotationLayersWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkSelectionWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -57,6 +57,9 @@ void VtkAnnotationLayersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetAnnotation", GetAnnotation);
+	Nan::SetPrototypeMethod(tpl, "getAnnotation", GetAnnotation);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -68,6 +71,9 @@ void VtkAnnotationLayersWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetData", GetData);
 	Nan::SetPrototypeMethod(tpl, "getData", GetData);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfAnnotations", GetNumberOfAnnotations);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfAnnotations", GetNumberOfAnnotations);
 
 	Nan::SetPrototypeMethod(tpl, "Initialize", Initialize);
 	Nan::SetPrototypeMethod(tpl, "initialize", Initialize);
@@ -93,6 +99,9 @@ void VtkAnnotationLayersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKANNOTATIONLAYERSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANNOTATIONLAYERSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -157,6 +166,36 @@ void VtkAnnotationLayersWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value
 		native->DeepCopy(
 			(vtkDataObject *) a0->native.GetPointer()
 		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAnnotationLayersWrap::GetAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
+	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkAnnotation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetAnnotation(
+			info[0]->Uint32Value()
+		);
+		VtkAnnotationWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkAnnotationWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkAnnotationWrap *w = new VtkAnnotationWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
@@ -279,6 +318,20 @@ void VtkAnnotationLayersWrap::GetData(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAnnotationLayersWrap::GetNumberOfAnnotations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAnnotationLayersWrap *wrapper = ObjectWrap::Unwrap<VtkAnnotationLayersWrap>(info.Holder());
+	vtkAnnotationLayers *native = (vtkAnnotationLayers *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfAnnotations();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkAnnotationLayersWrap::Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info)

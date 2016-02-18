@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkDirectoryWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -56,6 +56,9 @@ void VtkDirectoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetCurrentWorkingDirectory", GetCurrentWorkingDirectory);
+	Nan::SetPrototypeMethod(tpl, "getCurrentWorkingDirectory", GetCurrentWorkingDirectory);
+
 	Nan::SetPrototypeMethod(tpl, "GetFiles", GetFiles);
 	Nan::SetPrototypeMethod(tpl, "getFiles", GetFiles);
 
@@ -77,6 +80,9 @@ void VtkDirectoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKDIRECTORYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDIRECTORYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -162,6 +168,32 @@ void VtkDirectoryWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDirectoryWrap::GetCurrentWorkingDirectory(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDirectoryWrap *wrapper = ObjectWrap::Unwrap<VtkDirectoryWrap>(info.Holder());
+	vtkDirectory *native = (vtkDirectory *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			char const * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetCurrentWorkingDirectory(
+				*a0,
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkDirectoryWrap::GetFiles(const Nan::FunctionCallbackInfo<v8::Value>& info)

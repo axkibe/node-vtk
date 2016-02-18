@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSpherePuzzleWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkSpherePuzzleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoint", SetPoint);
 	Nan::SetPrototypeMethod(tpl, "setPoint", SetPoint);
 
+#ifdef VTK_NODE_PLUS_VTKSPHEREPUZZLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPHEREPUZZLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGenericCellTessellatorWrap.h"
 #include "vtkSimpleCellTessellatorWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkCellArrayWrap.h"
 #include "vtkPointDataWrap.h"
 #include "vtkGenericDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkSimpleCellTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+#ifdef VTK_NODE_PLUS_VTKSIMPLECELLTESSELLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSIMPLECELLTESSELLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

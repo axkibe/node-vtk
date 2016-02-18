@@ -10,6 +10,7 @@
 #include <vtkStructuredGridAppend.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridAppendWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkStructuredGridAppendWrap : public VtkStructuredGridAlgorithmWrap
 		static void ReplaceNthInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDAPPENDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDAPPENDWRAP_CLASSDEF
+#endif
 };
 
 #endif

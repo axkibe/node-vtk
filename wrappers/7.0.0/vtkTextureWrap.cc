@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkTextureWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -194,6 +194,9 @@ void VtkTextureWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

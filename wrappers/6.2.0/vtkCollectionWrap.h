@@ -10,6 +10,7 @@
 #include <vtkCollection.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCollectionWrap : public VtkObjectWrap
 {
@@ -44,6 +45,10 @@ class VtkCollectionWrap : public VtkObjectWrap
 		static void RemoveItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReplaceItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

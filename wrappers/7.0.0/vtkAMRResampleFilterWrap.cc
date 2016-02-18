@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkAMRResampleFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkAMRResampleFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseBiasVector", SetUseBiasVector);
 	Nan::SetPrototypeMethod(tpl, "setUseBiasVector", SetUseBiasVector);
 
+#ifdef VTK_NODE_PLUS_VTKAMRRESAMPLEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRRESAMPLEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

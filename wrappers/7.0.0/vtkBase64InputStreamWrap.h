@@ -10,6 +10,7 @@
 #include <vtkBase64InputStream.h>
 
 #include "vtkInputStreamWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBase64InputStreamWrap : public VtkInputStreamWrap
 {
@@ -35,6 +36,10 @@ class VtkBase64InputStreamWrap : public VtkInputStreamWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartReading(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBASE64INPUTSTREAMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBASE64INPUTSTREAMWRAP_CLASSDEF
+#endif
 };
 
 #endif

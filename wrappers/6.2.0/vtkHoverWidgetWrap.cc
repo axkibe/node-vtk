@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkHoverWidgetWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkHoverWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimerDuration", SetTimerDuration);
 	Nan::SetPrototypeMethod(tpl, "setTimerDuration", SetTimerDuration);
 
+#ifdef VTK_NODE_PLUS_VTKHOVERWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHOVERWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

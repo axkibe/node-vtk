@@ -10,6 +10,7 @@
 #include <vtkVolumeCollection.h>
 
 #include "vtkPropCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeCollectionWrap : public VtkPropCollectionWrap
 {
@@ -36,6 +37,10 @@ class VtkVolumeCollectionWrap : public VtkPropCollectionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMECOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMECOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

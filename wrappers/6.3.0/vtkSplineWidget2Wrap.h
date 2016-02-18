@@ -10,6 +10,7 @@
 #include <vtkSplineWidget2.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineWidget2Wrap : public VtkAbstractWidgetWrap
 {
@@ -35,6 +36,10 @@ class VtkSplineWidget2Wrap : public VtkAbstractWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEWIDGET2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEWIDGET2WRAP_CLASSDEF
+#endif
 };
 
 #endif

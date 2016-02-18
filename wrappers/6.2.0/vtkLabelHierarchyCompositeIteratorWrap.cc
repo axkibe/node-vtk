@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLabelHierarchyIteratorWrap.h"
 #include "vtkLabelHierarchyCompositeIteratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkLabelHierarchyWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkLabelHierarchyCompositeIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYCOMPOSITEITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELHIERARCHYCOMPOSITEITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkXMLStructuredDataWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLStructuredDataWriterWrap : public VtkXMLWriterWrap
 {
@@ -39,6 +40,10 @@ class VtkXMLStructuredDataWriterWrap : public VtkXMLWriterWrap
 		static void SetExtentTranslator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLSTRUCTUREDDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLSTRUCTUREDDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

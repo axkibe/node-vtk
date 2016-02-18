@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkUncertaintyTubeFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkUncertaintyTubeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSides", SetNumberOfSides);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSides", SetNumberOfSides);
 
+#ifdef VTK_NODE_PLUS_VTKUNCERTAINTYTUBEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNCERTAINTYTUBEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkFrustumSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPlanesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkFrustumSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowLinesOn", ShowLinesOn);
 	Nan::SetPrototypeMethod(tpl, "showLinesOn", ShowLinesOn);
 
+#ifdef VTK_NODE_PLUS_VTKFRUSTUMSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFRUSTUMSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

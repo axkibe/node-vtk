@@ -10,6 +10,7 @@
 #include <vtkThresholdPoints.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThresholdPointsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkThresholdPointsWrap : public VtkPolyDataAlgorithmWrap
 		static void ThresholdBetween(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByLower(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByUpper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHRESHOLDPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

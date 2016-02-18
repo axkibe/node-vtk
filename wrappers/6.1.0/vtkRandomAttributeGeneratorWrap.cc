@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkRandomAttributeGeneratorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -311,6 +311,9 @@ void VtkRandomAttributeGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfComponents", SetNumberOfComponents);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfComponents", SetNumberOfComponents);
 
+#ifdef VTK_NODE_PLUS_VTKRANDOMATTRIBUTEGENERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRANDOMATTRIBUTEGENERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

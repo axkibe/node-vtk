@@ -10,6 +10,7 @@
 #include <vtkPassArrays.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPassArraysWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkPassArraysWrap : public VtkDataObjectAlgorithmWrap
 		static void SetUseFieldTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFieldTypesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFieldTypesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPASSARRAYSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPASSARRAYSWRAP_CLASSDEF
+#endif
 };
 
 #endif

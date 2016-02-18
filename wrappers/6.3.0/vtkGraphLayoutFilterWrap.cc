@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGraphLayoutFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -113,6 +113,9 @@ void VtkGraphLayoutFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHLAYOUTFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

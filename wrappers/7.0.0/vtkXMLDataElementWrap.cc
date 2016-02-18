@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkXMLDataElementWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -172,6 +172,9 @@ void VtkXMLDataElementWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParent", SetParent);
 	Nan::SetPrototypeMethod(tpl, "setParent", SetParent);
 
+#ifdef VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLDATAELEMENTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

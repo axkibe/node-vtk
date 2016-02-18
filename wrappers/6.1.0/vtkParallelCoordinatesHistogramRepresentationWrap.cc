@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParallelCoordinatesRepresentationWrap.h"
 #include "vtkParallelCoordinatesHistogramRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewThemeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -111,6 +111,9 @@ void VtkParallelCoordinatesHistogramRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseHistogramsOn", UseHistogramsOn);
 	Nan::SetPrototypeMethod(tpl, "useHistogramsOn", UseHistogramsOn);
 
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESHISTOGRAMREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARALLELCOORDINATESHISTOGRAMREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkPiecewisePointHandleItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkPiecewisePointHandleItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPiecewiseFunction", SetPiecewiseFunction);
 	Nan::SetPrototypeMethod(tpl, "setPiecewiseFunction", SetPiecewiseFunction);
 
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEPOINTHANDLEITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIECEWISEPOINTHANDLEITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

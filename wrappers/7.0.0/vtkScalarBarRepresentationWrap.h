@@ -10,6 +10,7 @@
 #include <vtkScalarBarRepresentation.h>
 
 #include "vtkBorderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScalarBarRepresentationWrap : public VtkBorderRepresentationWrap
 {
@@ -50,6 +51,10 @@ class VtkScalarBarRepresentationWrap : public VtkBorderRepresentationWrap
 		static void SetScalarBarActor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCALARBARREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCALARBARREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

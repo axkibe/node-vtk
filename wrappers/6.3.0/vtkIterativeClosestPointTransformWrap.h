@@ -10,6 +10,7 @@
 #include <vtkIterativeClosestPointTransform.h>
 
 #include "vtkLinearTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIterativeClosestPointTransformWrap : public VtkLinearTransformWrap
 {
@@ -65,6 +66,10 @@ class VtkIterativeClosestPointTransformWrap : public VtkLinearTransformWrap
 		static void SetTarget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartByMatchingCentroidsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartByMatchingCentroidsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKITERATIVECLOSESTPOINTTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKITERATIVECLOSESTPOINTTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

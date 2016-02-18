@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMoleculeReaderBaseWrap.h"
 #include "vtkXYZMolReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkXYZMolReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStep", SetTimeStep);
 	Nan::SetPrototypeMethod(tpl, "setTimeStep", SetTimeStep);
 
+#ifdef VTK_NODE_PLUS_VTKXYZMOLREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXYZMOLREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkGeoSphereTransform.h>
 
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoSphereTransformWrap : public VtkAbstractTransformWrap
 {
@@ -42,6 +43,10 @@ class VtkGeoSphereTransformWrap : public VtkAbstractTransformWrap
 		static void SetToRectangular(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToRectangularOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToRectangularOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOSPHERETRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOSPHERETRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

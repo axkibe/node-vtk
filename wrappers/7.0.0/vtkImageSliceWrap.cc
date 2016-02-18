@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkImageSliceWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -129,6 +129,9 @@ void VtkImageSliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESLICEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESLICEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

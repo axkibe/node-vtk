@@ -10,6 +10,7 @@
 #include <vtkWarpScalar.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWarpScalarWrap : public VtkPointSetAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkWarpScalarWrap : public VtkPointSetAlgorithmWrap
 		static void UseNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void XYPlaneOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void XYPlaneOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWARPSCALARWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWARPSCALARWRAP_CLASSDEF
+#endif
 };
 
 #endif

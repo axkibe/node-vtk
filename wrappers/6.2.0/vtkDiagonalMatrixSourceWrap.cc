@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkArrayDataAlgorithmWrap.h"
 #include "vtkDiagonalMatrixSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkDiagonalMatrixSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSuperDiagonal", SetSuperDiagonal);
 	Nan::SetPrototypeMethod(tpl, "setSuperDiagonal", SetSuperDiagonal);
 
+#ifdef VTK_NODE_PLUS_VTKDIAGONALMATRIXSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDIAGONALMATRIXSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkInteractorStyleTrackballCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Spin", Spin);
 	Nan::SetPrototypeMethod(tpl, "spin", Spin);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLCAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLETRACKBALLCAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

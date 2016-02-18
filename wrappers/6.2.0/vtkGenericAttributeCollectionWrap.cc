@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGenericAttributeCollectionWrap.h"
 #include "vtkGenericAttributeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkGenericAttributeCollectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICATTRIBUTECOLLECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICATTRIBUTECOLLECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

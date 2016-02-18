@@ -10,6 +10,7 @@
 #include <vtkRandomGraphSource.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRandomGraphSourceWrap : public VtkGraphAlgorithmWrap
 {
@@ -81,6 +82,10 @@ class VtkRandomGraphSourceWrap : public VtkGraphAlgorithmWrap
 		static void StartWithTreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeProbabilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeProbabilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRANDOMGRAPHSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRANDOMGRAPHSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkStringArray.h>
 
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStringArrayWrap : public VtkAbstractArrayWrap
 {
@@ -47,6 +48,10 @@ class VtkStringArrayWrap : public VtkAbstractArrayWrap
 		static void NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRINGARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRINGARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCellLocator.h>
 
 #include "vtkAbstractCellLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellLocatorWrap : public VtkAbstractCellLocatorWrap
 {
@@ -44,6 +45,10 @@ class VtkCellLocatorWrap : public VtkAbstractCellLocatorWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfCellsPerBucket(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkMeshQuality.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMeshQualityWrap : public VtkDataSetAlgorithmWrap
 {
@@ -201,6 +202,10 @@ class VtkMeshQualityWrap : public VtkDataSetAlgorithmWrap
 		static void TriangleShapeAndSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VolumeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VolumeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMESHQUALITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMESHQUALITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGenericEnSightReaderWrap.h"
 #include "vtkEnSightReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkEnSightReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 	Nan::SetPrototypeMethod(tpl, "setParticleCoordinatesByIndex", SetParticleCoordinatesByIndex);
 
+#ifdef VTK_NODE_PLUS_VTKENSIGHTREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENSIGHTREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

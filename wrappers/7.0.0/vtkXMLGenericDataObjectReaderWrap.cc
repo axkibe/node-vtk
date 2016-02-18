@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLDataReaderWrap.h"
 #include "vtkXMLGenericDataObjectReaderWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkRectilinearGridWrap.h"
 #include "vtkStructuredGridWrap.h"
 #include "vtkUnstructuredGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkXMLGenericDataObjectReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetupEmptyOutput", SetupEmptyOutput);
 	Nan::SetPrototypeMethod(tpl, "setupEmptyOutput", SetupEmptyOutput);
 
+#ifdef VTK_NODE_PLUS_VTKXMLGENERICDATAOBJECTREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLGENERICDATAOBJECTREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

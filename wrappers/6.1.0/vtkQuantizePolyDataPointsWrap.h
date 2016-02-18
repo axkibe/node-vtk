@@ -10,6 +10,7 @@
 #include <vtkQuantizePolyDataPoints.h>
 
 #include "vtkCleanPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuantizePolyDataPointsWrap : public VtkCleanPolyDataWrap
 {
@@ -39,6 +40,10 @@ class VtkQuantizePolyDataPointsWrap : public VtkCleanPolyDataWrap
 		static void OperateOnPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUANTIZEPOLYDATAPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUANTIZEPOLYDATAPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

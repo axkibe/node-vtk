@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkRTAnalyticSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkRTAnalyticSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZMag", SetZMag);
 	Nan::SetPrototypeMethod(tpl, "setZMag", SetZMag);
 
+#ifdef VTK_NODE_PLUS_VTKRTANALYTICSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRTANALYTICSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

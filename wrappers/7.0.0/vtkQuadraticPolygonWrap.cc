@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkNonLinearCellWrap.h"
 #include "vtkQuadraticPolygonWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkIdListWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -105,6 +105,9 @@ void VtkQuadraticPolygonWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Triangulate", Triangulate);
 	Nan::SetPrototypeMethod(tpl, "triangulate", Triangulate);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRATICPOLYGONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRATICPOLYGONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

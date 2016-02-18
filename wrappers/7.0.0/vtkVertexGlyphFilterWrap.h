@@ -10,6 +10,7 @@
 #include <vtkVertexGlyphFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVertexGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkVertexGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVERTEXGLYPHFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVERTEXGLYPHFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

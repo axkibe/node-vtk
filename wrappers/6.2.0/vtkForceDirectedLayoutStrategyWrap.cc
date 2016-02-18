@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkForceDirectedLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -158,6 +158,9 @@ void VtkForceDirectedLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 	Nan::SetPrototypeMethod(tpl, "threeDimensionalLayoutOn", ThreeDimensionalLayoutOn);
 
+#ifdef VTK_NODE_PLUS_VTKFORCEDIRECTEDLAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFORCEDIRECTEDLAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

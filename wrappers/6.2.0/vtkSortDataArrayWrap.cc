@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSortDataArrayWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkSortDataArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SortArrayByComponent", SortArrayByComponent);
 	Nan::SetPrototypeMethod(tpl, "sortArrayByComponent", SortArrayByComponent);
 
+#ifdef VTK_NODE_PLUS_VTKSORTDATAARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSORTDATAARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

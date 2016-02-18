@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkImageItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkImageItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImage", SetImage);
 	Nan::SetPrototypeMethod(tpl, "setImage", SetImage);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

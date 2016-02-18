@@ -10,6 +10,7 @@
 #include <vtkFacetReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkFacetReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFACETREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFACETREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

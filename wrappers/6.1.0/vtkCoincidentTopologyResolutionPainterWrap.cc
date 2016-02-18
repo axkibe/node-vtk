@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataPainterWrap.h"
 #include "vtkCoincidentTopologyResolutionPainterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationDoubleKeyWrap.h"
 #include "vtkInformationDoubleVectorKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkCoincidentTopologyResolutionPainterWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "Z_SHIFT", Z_SHIFT);
 
+#ifdef VTK_NODE_PLUS_VTKCOINCIDENTTOPOLOGYRESOLUTIONPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOINCIDENTTOPOLOGYRESOLUTIONPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

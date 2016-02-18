@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetWrap.h"
 #include "vtkPathWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIntArrayWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCodes", SetCodes);
 	Nan::SetPrototypeMethod(tpl, "setCodes", SetCodes);
 
+#ifdef VTK_NODE_PLUS_VTKPATHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPATHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

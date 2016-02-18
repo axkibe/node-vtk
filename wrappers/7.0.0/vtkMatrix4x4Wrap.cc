@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkMatrix4x4Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zero", Zero);
 	Nan::SetPrototypeMethod(tpl, "zero", Zero);
 
+#ifdef VTK_NODE_PLUS_VTKMATRIX4X4WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMATRIX4X4WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

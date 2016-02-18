@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderedRepresentationWrap.h"
 #include "vtkRenderedTreeAreaRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkLabeledDataMapperWrap.h"
 #include "vtkViewThemeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -235,6 +235,9 @@ void VtkRenderedTreeAreaRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+#ifdef VTK_NODE_PLUS_VTKRENDEREDTREEAREAREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDEREDTREEAREAREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

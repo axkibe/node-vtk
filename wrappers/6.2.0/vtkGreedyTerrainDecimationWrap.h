@@ -10,6 +10,7 @@
 #include <vtkGreedyTerrainDecimation.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGreedyTerrainDecimationWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkGreedyTerrainDecimationWrap : public VtkPolyDataAlgorithmWrap
 		static void SetErrorMeasureToSpecifiedReduction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReduction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRelativeError(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGREEDYTERRAINDECIMATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGREEDYTERRAINDECIMATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

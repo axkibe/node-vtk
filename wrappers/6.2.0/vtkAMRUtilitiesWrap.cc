@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAMRUtilitiesWrap.h"
 #include "vtkOverlappingAMRWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkAMRUtilitiesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StripGhostLayers", StripGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "stripGhostLayers", StripGhostLayers);
 
+#ifdef VTK_NODE_PLUS_VTKAMRUTILITIESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRUTILITIESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

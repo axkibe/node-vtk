@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTensorGlyphWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -178,6 +178,9 @@ void VtkTensorGlyphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreeGlyphsOn", ThreeGlyphsOn);
 	Nan::SetPrototypeMethod(tpl, "threeGlyphsOn", ThreeGlyphsOn);
 
+#ifdef VTK_NODE_PLUS_VTKTENSORGLYPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTENSORGLYPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

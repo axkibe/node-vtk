@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkArrayDataWriterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkArrayDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteToOutputStringOn", WriteToOutputStringOn);
 	Nan::SetPrototypeMethod(tpl, "writeToOutputStringOn", WriteToOutputStringOn);
 
+#ifdef VTK_NODE_PLUS_VTKARRAYDATAWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARRAYDATAWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

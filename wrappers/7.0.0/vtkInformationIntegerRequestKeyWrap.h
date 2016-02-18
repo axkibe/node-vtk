@@ -10,6 +10,7 @@
 #include <vtkInformationIntegerRequestKey.h>
 
 #include "vtkInformationIntegerKeyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationIntegerRequestKeyWrap : public VtkInformationIntegerKeyWrap
 {
@@ -37,6 +38,10 @@ class VtkInformationIntegerRequestKeyWrap : public VtkInformationIntegerKeyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StoreMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONINTEGERREQUESTKEYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONINTEGERREQUESTKEYWRAP_CLASSDEF
+#endif
 };
 
 #endif

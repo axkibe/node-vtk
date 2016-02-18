@@ -10,6 +10,7 @@
 #include <vtkRenderView.h>
 
 #include "vtkRenderViewBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 {
@@ -74,6 +75,10 @@ class VtkRenderViewWrap : public VtkRenderViewBaseWrap
 		static void SetSelectionModeToFrustum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToSurface(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

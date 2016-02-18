@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageResliceWrap.h"
 #include "vtkImageSlabResliceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkImageSlabResliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSlabThickness", SetSlabThickness);
 	Nan::SetPrototypeMethod(tpl, "setSlabThickness", SetSlabThickness);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESLABRESLICEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESLABRESLICEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

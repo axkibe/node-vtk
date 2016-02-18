@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropertyWrap.h"
 #include "vtkOpenGLPropertyWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,8 @@
 #include "vtkRendererWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkShaderDeviceAdapter2Wrap.h"
+#include "vtkOpenGLRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +79,12 @@ void VtkOpenGLPropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaterialProperties", SetMaterialProperties);
+	Nan::SetPrototypeMethod(tpl, "setMaterialProperties", SetMaterialProperties);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPROPERTYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLPROPERTYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -311,6 +318,567 @@ void VtkOpenGLPropertyWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Val
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkOpenGLPropertyWrap::SetMaterialProperties(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLPropertyWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLPropertyWrap>(info.Holder());
+	vtkOpenGLProperty *native = (vtkOpenGLProperty *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												(double *)(a2->Buffer()->GetContents().Data()),
+												info[3]->NumberValue(),
+												(double *)(a4->Buffer()->GetContents().Data()),
+												info[5]->NumberValue(),
+												(double *)(a6->Buffer()->GetContents().Data()),
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+							else if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												(double *)(a2->Buffer()->GetContents().Data()),
+												info[3]->NumberValue(),
+												(double *)(a4->Buffer()->GetContents().Data()),
+												info[5]->NumberValue(),
+												b6,
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+					else if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												(double *)(a2->Buffer()->GetContents().Data()),
+												info[3]->NumberValue(),
+												b4,
+												info[5]->NumberValue(),
+												b6,
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												b2,
+												info[3]->NumberValue(),
+												b4,
+												info[5]->NumberValue(),
+												b6,
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+					else if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsArray())
+							{
+								v8::Local<v8::Array>a6(v8::Local<v8::Array>::Cast(info[6]->ToObject()));
+								double b6[3];
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								for( i = 0; i < 3; i++ )
+								{
+									if( !a6->Get(i)->IsNumber() )
+									{
+										Nan::ThrowError("Array contents invalid.");
+										return;
+									}
+									b6[i] = a6->Get(i)->NumberValue();
+								}
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												b2,
+												info[3]->NumberValue(),
+												(double *)(a4->Buffer()->GetContents().Data()),
+												info[5]->NumberValue(),
+												b6,
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsFloat64Array())
+			{
+				v8::Local<v8::Float64Array>a2(v8::Local<v8::Float64Array>::Cast(info[2]->ToObject()));
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												(double *)(a2->Buffer()->GetContents().Data()),
+												info[3]->NumberValue(),
+												b4,
+												info[5]->NumberValue(),
+												(double *)(a6->Buffer()->GetContents().Data()),
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			else if(info.Length() > 2 && info[2]->IsArray())
+			{
+				v8::Local<v8::Array>a2(v8::Local<v8::Array>::Cast(info[2]->ToObject()));
+				double b2[3];
+				if( a2->Length() < 3 )
+				{
+					Nan::ThrowError("Array too short.");
+					return;
+				}
+
+				for( i = 0; i < 3; i++ )
+				{
+					if( !a2->Get(i)->IsNumber() )
+					{
+						Nan::ThrowError("Array contents invalid.");
+						return;
+					}
+					b2[i] = a2->Get(i)->NumberValue();
+				}
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+					if(info.Length() > 4 && info[4]->IsArray())
+					{
+						v8::Local<v8::Array>a4(v8::Local<v8::Array>::Cast(info[4]->ToObject()));
+						double b4[3];
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						for( i = 0; i < 3; i++ )
+						{
+							if( !a4->Get(i)->IsNumber() )
+							{
+								Nan::ThrowError("Array contents invalid.");
+								return;
+							}
+							b4[i] = a4->Get(i)->NumberValue();
+						}
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												b2,
+												info[3]->NumberValue(),
+												b4,
+												info[5]->NumberValue(),
+												(double *)(a6->Buffer()->GetContents().Data()),
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+					else if(info.Length() > 4 && info[4]->IsFloat64Array())
+					{
+						v8::Local<v8::Float64Array>a4(v8::Local<v8::Float64Array>::Cast(info[4]->ToObject()));
+						if( a4->Length() < 3 )
+						{
+							Nan::ThrowError("Array too short.");
+							return;
+						}
+
+						if(info.Length() > 5 && info[5]->IsNumber())
+						{
+							if(info.Length() > 6 && info[6]->IsFloat64Array())
+							{
+								v8::Local<v8::Float64Array>a6(v8::Local<v8::Float64Array>::Cast(info[6]->ToObject()));
+								if( a6->Length() < 3 )
+								{
+									Nan::ThrowError("Array too short.");
+									return;
+								}
+
+								if(info.Length() > 7 && info[7]->IsNumber())
+								{
+									if(info.Length() > 8 && info[8]->IsNumber())
+									{
+										if(info.Length() > 9 && info[9]->IsObject() && (Nan::New(VtkOpenGLRenderWindowWrap::ptpl))->HasInstance(info[9]))
+										{
+											VtkOpenGLRenderWindowWrap *a9 = ObjectWrap::Unwrap<VtkOpenGLRenderWindowWrap>(info[9]->ToObject());
+																						if(info.Length() != 10)
+											{
+												Nan::ThrowError("Too many parameters.");
+												return;
+											}
+											native->SetMaterialProperties(
+												info[0]->Uint32Value(),
+												info[1]->NumberValue(),
+												b2,
+												info[3]->NumberValue(),
+												(double *)(a4->Buffer()->GetContents().Data()),
+												info[5]->NumberValue(),
+												(double *)(a6->Buffer()->GetContents().Data()),
+												info[7]->NumberValue(),
+												info[8]->NumberValue(),
+												(vtkOpenGLRenderWindow *) a9->native.GetPointer()
+											);
+											return;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

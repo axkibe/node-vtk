@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkChartLegendWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPenWrap.h"
 #include "vtkBrushWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -139,6 +139,9 @@ void VtkChartLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKCHARTLEGENDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHARTLEGENDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

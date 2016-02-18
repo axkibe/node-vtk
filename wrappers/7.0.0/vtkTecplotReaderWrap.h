@@ -10,6 +10,7 @@
 #include <vtkTecplotReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTecplotReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTecplotReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataArrayStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTECPLOTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTECPLOTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

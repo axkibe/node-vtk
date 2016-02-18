@@ -10,6 +10,7 @@
 #include <vtkImageActorPointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageActorPointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -42,6 +43,10 @@ class VtkImageActorPointPlacerWrap : public VtkPointPlacerWrap
 		static void UpdateInternalState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEACTORPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEACTORPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

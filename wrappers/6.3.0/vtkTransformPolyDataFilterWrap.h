@@ -10,6 +10,7 @@
 #include <vtkTransformPolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkTransformPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkProteinRibbonFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkProteinRibbonFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSubdivideFactor", SetSubdivideFactor);
 	Nan::SetPrototypeMethod(tpl, "setSubdivideFactor", SetSubdivideFactor);
 
+#ifdef VTK_NODE_PLUS_VTKPROTEINRIBBONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROTEINRIBBONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

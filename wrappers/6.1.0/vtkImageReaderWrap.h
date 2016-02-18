@@ -10,6 +10,7 @@
 #include <vtkImageReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageReaderWrap : public VtkImageReader2Wrap
 {
@@ -41,6 +42,10 @@ class VtkImageReaderWrap : public VtkImageReader2Wrap
 		static void SetDataVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

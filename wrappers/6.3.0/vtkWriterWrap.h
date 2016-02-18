@@ -10,6 +10,7 @@
 #include <vtkWriter.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWriterWrap : public VtkAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkWriterWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

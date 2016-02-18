@@ -10,6 +10,7 @@
 #include <vtkOutlineSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkOutlineSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetCorners(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOUTLINESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOUTLINESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkTransformFilter.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformFilterWrap : public VtkPointSetAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkTransformFilterWrap : public VtkPointSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkMergeFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkMergeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorsData", SetVectorsData);
 	Nan::SetPrototypeMethod(tpl, "setVectorsData", SetVectorsData);
 
+#ifdef VTK_NODE_PLUS_VTKMERGEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

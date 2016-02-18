@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCellPickerWrap.h"
 #include "vtkVolumePickerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkVolumePickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPickCroppingPlanes", SetPickCroppingPlanes);
 	Nan::SetPrototypeMethod(tpl, "setPickCroppingPlanes", SetPickCroppingPlanes);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMEPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMEPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

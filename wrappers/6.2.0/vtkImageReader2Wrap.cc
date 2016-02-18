@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageReader2Wrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -219,6 +219,9 @@ void VtkImageReader2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEREADER2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEREADER2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

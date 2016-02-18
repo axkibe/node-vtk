@@ -10,6 +10,7 @@
 #include <vtkGeoArcs.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoArcsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkGeoArcsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetExplodeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobeRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOARCSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOARCSWRAP_CLASSDEF
+#endif
 };
 
 #endif

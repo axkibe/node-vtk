@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderViewWrap.h"
 #include "vtkGeoViewWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkImageDataWrap.h"
 #include "vtkGeoInteractorStyleWrap.h"
 #include "vtkGeoTerrainWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkGeoViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerrain", SetTerrain);
 	Nan::SetPrototypeMethod(tpl, "setTerrain", SetTerrain);
 
+#ifdef VTK_NODE_PLUS_VTKGEOVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

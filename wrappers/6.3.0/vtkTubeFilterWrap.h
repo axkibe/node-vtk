@@ -10,6 +10,7 @@
 #include <vtkTubeFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -89,6 +90,10 @@ class VtkTubeFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SidesShareVerticesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDefaultNormalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDefaultNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTUBEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTUBEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

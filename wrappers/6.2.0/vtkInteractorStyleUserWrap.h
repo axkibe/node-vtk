@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleUser.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleUserWrap : public VtkInteractorStyleWrap
 {
@@ -55,6 +56,10 @@ class VtkInteractorStyleUserWrap : public VtkInteractorStyleWrap
 		static void OnRightButtonUp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void OnTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEUSERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEUSERWRAP_CLASSDEF
+#endif
 };
 
 #endif

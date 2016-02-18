@@ -10,6 +10,7 @@
 #include <vtkVoxelContoursToSurfaceFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVoxelContoursToSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkVoxelContoursToSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMemoryLimitInBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOXELCONTOURSTOSURFACEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOXELCONTOURSTOSURFACEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

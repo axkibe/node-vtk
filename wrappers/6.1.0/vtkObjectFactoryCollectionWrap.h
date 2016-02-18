@@ -10,6 +10,7 @@
 #include <vtkObjectFactoryCollection.h>
 
 #include "vtkCollectionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkObjectFactoryCollectionWrap : public VtkCollectionWrap
 {
@@ -35,6 +36,10 @@ class VtkObjectFactoryCollectionWrap : public VtkCollectionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJECTFACTORYCOLLECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJECTFACTORYCOLLECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

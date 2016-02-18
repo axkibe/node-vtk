@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContourLineInterpolatorWrap.h"
 #include "vtkTerrainContourLineInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkContourRepresentationWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkProjectedTerrainPathWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkTerrainContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImageData", SetImageData);
 	Nan::SetPrototypeMethod(tpl, "setImageData", SetImageData);
 
+#ifdef VTK_NODE_PLUS_VTKTERRAINCONTOURLINEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTERRAINCONTOURLINEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

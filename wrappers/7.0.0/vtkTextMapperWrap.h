@@ -10,6 +10,7 @@
 #include <vtkTextMapper.h>
 
 #include "vtkMapper2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextMapperWrap : public VtkMapper2DWrap
 {
@@ -44,6 +45,10 @@ class VtkTextMapperWrap : public VtkMapper2DWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

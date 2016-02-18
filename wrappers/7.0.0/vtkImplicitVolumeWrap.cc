@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitVolumeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkImplicitVolumeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVolume", SetVolume);
 	Nan::SetPrototypeMethod(tpl, "setVolume", SetVolume);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITVOLUMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITVOLUMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

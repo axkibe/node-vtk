@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkAttributeClustering2DLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkAttributeClustering2DLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexAttribute", SetVertexAttribute);
 	Nan::SetPrototypeMethod(tpl, "setVertexAttribute", SetVertexAttribute);
 
+#ifdef VTK_NODE_PLUS_VTKATTRIBUTECLUSTERING2DLAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKATTRIBUTECLUSTERING2DLAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

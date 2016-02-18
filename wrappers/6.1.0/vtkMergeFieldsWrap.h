@@ -10,6 +10,7 @@
 #include <vtkMergeFields.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeFieldsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkMergeFieldsWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputField(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGEFIELDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGEFIELDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkCellQualityWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -174,6 +174,9 @@ void VtkCellQualityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TriangleStripArea", TriangleStripArea);
 	Nan::SetPrototypeMethod(tpl, "triangleStripArea", TriangleStripArea);
 
+#ifdef VTK_NODE_PLUS_VTKCELLQUALITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLQUALITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

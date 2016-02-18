@@ -10,6 +10,7 @@
 #include <vtkStructuredAMRGridConnectivity.h>
 
 #include "vtkAbstractGridConnectivityWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredAMRGridConnectivityWrap : public VtkAbstractGridConnectivityWrap
 {
@@ -37,6 +38,7 @@ class VtkStructuredAMRGridConnectivityWrap : public VtkAbstractGridConnectivityW
 		static void GetGhostedExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfNeighbors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RegisterGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,6 +46,10 @@ class VtkStructuredAMRGridConnectivityWrap : public VtkAbstractGridConnectivityW
 		static void SetBalancedRefinement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNodeCentered(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDAMRGRIDCONNECTIVITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDAMRGRIDCONNECTIVITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkBorderWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBorderWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -44,6 +45,10 @@ class VtkBorderWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResizable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBORDERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBORDERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

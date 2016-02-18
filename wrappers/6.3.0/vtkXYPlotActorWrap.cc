@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkXYPlotActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -20,6 +19,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkProperty2DWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -703,6 +703,9 @@ void VtkXYPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ViewportToPlotCoordinate", ViewportToPlotCoordinate);
 	Nan::SetPrototypeMethod(tpl, "viewportToPlotCoordinate", ViewportToPlotCoordinate);
 
+#ifdef VTK_NODE_PLUS_VTKXYPLOTACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXYPLOTACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

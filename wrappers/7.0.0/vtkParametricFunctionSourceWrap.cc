@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkParametricFunctionSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -198,6 +198,9 @@ void VtkParametricFunctionSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWResolution", SetWResolution);
 	Nan::SetPrototypeMethod(tpl, "setWResolution", SetWResolution);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

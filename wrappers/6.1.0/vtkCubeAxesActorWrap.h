@@ -10,6 +10,7 @@
 #include <vtkCubeAxesActor.h>
 
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCubeAxesActorWrap : public VtkActorWrap
 {
@@ -244,6 +245,10 @@ class VtkCubeAxesActorWrap : public VtkActorWrap
 		static void ZAxisTickVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZAxisVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZAxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCUBEAXESACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCUBEAXESACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

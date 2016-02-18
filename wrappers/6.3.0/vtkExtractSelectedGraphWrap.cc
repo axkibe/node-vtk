@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkExtractSelectedGraphWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkExtractSelectedGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTSELECTEDGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

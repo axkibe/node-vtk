@@ -10,6 +10,7 @@
 #include <vtkDescriptiveStatistics.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDescriptiveStatisticsWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkDescriptiveStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void SignedDeviationsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnbiasedVarianceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnbiasedVarianceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDESCRIPTIVESTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDESCRIPTIVESTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

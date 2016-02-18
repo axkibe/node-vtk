@@ -10,6 +10,7 @@
 #include <vtkAnnotationLayers.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAnnotationLayersWrap : public VtkDataObjectWrap
 {
@@ -31,10 +32,12 @@ class VtkAnnotationLayersWrap : public VtkDataObjectWrap
 
 		static void AddAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfAnnotations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -43,6 +46,10 @@ class VtkAnnotationLayersWrap : public VtkDataObjectWrap
 		static void SetCurrentAnnotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANNOTATIONLAYERSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANNOTATIONLAYERSWRAP_CLASSDEF
+#endif
 };
 
 #endif

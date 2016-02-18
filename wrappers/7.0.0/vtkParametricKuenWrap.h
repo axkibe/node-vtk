@@ -10,6 +10,7 @@
 #include <vtkParametricKuen.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricKuenWrap : public VtkParametricFunctionWrap
 {
@@ -36,6 +37,10 @@ class VtkParametricKuenWrap : public VtkParametricFunctionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICKUENWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICKUENWRAP_CLASSDEF
+#endif
 };
 
 #endif

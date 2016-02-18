@@ -10,6 +10,7 @@
 #include <vtkAxisFollower.h>
 
 #include "vtkFollowerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxisFollowerWrap : public VtkFollowerWrap
 {
@@ -59,6 +60,10 @@ class VtkAxisFollowerWrap : public VtkFollowerWrap
 		static void SetScreenOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewAngleLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXISFOLLOWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXISFOLLOWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

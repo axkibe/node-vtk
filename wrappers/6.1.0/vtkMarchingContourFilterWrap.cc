@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMarchingContourFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -132,6 +132,9 @@ void VtkMarchingContourFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarTreeOn", UseScalarTreeOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarTreeOn", UseScalarTreeOn);
 
+#ifdef VTK_NODE_PLUS_VTKMARCHINGCONTOURFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMARCHINGCONTOURFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

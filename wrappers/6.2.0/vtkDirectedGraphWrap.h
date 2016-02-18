@@ -10,6 +10,7 @@
 #include <vtkDirectedGraph.h>
 
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDirectedGraphWrap : public VtkGraphWrap
 {
@@ -36,6 +37,10 @@ class VtkDirectedGraphWrap : public VtkGraphWrap
 		static void IsStructureValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIRECTEDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIRECTEDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

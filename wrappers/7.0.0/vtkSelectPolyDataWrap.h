@@ -10,6 +10,7 @@
 #include <vtkSelectPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSelectPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkSelectPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSelectionModeToClosestPointRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToLargestRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionModeToSmallestRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSELECTPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSELECTPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

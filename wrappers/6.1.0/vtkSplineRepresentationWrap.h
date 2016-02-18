@@ -10,6 +10,7 @@
 #include <vtkSplineRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -81,6 +82,10 @@ class VtkSplineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

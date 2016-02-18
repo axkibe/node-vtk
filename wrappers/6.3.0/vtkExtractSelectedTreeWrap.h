@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedTree.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedTreeWrap : public VtkTreeAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkExtractSelectedTreeWrap : public VtkTreeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

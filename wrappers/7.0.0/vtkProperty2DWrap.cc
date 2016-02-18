@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkProperty2DWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -113,6 +113,9 @@ void VtkProperty2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
 	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
+#ifdef VTK_NODE_PLUS_VTKPROPERTY2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROPERTY2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

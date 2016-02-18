@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCirclePackToPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -54,6 +54,9 @@ void VtkCirclePackToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetResolution", GetResolution);
+	Nan::SetPrototypeMethod(tpl, "getResolution", GetResolution);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -66,6 +69,12 @@ void VtkCirclePackToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCirclesArrayName", SetCirclesArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCirclesArrayName", SetCirclesArrayName);
 
+	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
+	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
+
+#ifdef VTK_NODE_PLUS_VTKCIRCLEPACKTOPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCIRCLEPACKTOPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -133,6 +142,20 @@ void VtkCirclePackToPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkCirclePackToPolyDataWrap::GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCirclePackToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCirclePackToPolyDataWrap>(info.Holder());
+	vtkCirclePackToPolyData *native = (vtkCirclePackToPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetResolution();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkCirclePackToPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -225,6 +248,25 @@ void VtkCirclePackToPolyDataWrap::SetCirclesArrayName(const Nan::FunctionCallbac
 		}
 		native->SetCirclesArrayName(
 			*a0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCirclePackToPolyDataWrap::SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCirclePackToPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkCirclePackToPolyDataWrap>(info.Holder());
+	vtkCirclePackToPolyData *native = (vtkCirclePackToPolyData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetResolution(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

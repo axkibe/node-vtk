@@ -10,6 +10,7 @@
 #include <vtkExecutive.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExecutiveWrap : public VtkObjectWrap
 {
@@ -54,6 +55,10 @@ class VtkExecutiveWrap : public VtkObjectWrap
 		static void SetSharedOutputInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXECUTIVEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXECUTIVEWRAP_CLASSDEF
+#endif
 };
 
 #endif

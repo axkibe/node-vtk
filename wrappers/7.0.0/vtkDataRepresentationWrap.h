@@ -10,6 +10,7 @@
 #include <vtkDataRepresentation.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataRepresentationWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkDataRepresentationWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetSelectionType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateAnnotations(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkArrayCalculatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -209,6 +209,9 @@ void VtkArrayCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResultTCoords", SetResultTCoords);
 	Nan::SetPrototypeMethod(tpl, "setResultTCoords", SetResultTCoords);
 
+#ifdef VTK_NODE_PLUS_VTKARRAYCALCULATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARRAYCALCULATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

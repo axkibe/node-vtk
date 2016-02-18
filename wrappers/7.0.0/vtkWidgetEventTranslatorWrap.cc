@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkWidgetEventTranslatorWrap.h"
 #include "vtkEventWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkWidgetEventTranslatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
+#ifdef VTK_NODE_PLUS_VTKWIDGETEVENTTRANSLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWIDGETEVENTTRANSLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

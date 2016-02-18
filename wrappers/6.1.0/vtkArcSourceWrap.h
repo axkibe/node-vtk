@@ -10,6 +10,7 @@
 #include <vtkArcSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkArcSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetUseNormalAndAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalAndAngleOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalAndAngleOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARCSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARCSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCompositeDataPipeline.h>
 
 #include "vtkStreamingDemandDrivenPipelineWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeDataPipelineWrap : public VtkStreamingDemandDrivenPipelineWrap
 {
@@ -38,6 +39,10 @@ class VtkCompositeDataPipelineWrap : public VtkStreamingDemandDrivenPipelineWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UPDATE_COMPOSITE_INDICES(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAPIPELINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEDATAPIPELINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

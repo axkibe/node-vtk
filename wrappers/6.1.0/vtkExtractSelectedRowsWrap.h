@@ -10,6 +10,7 @@
 #include <vtkExtractSelectedRows.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractSelectedRowsWrap : public VtkTableAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkExtractSelectedRowsWrap : public VtkTableAlgorithmWrap
 		static void SetAddOriginalRowIdsArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAnnotationLayersConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTSELECTEDROWSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTSELECTEDROWSWRAP_CLASSDEF
+#endif
 };
 
 #endif

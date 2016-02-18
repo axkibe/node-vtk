@@ -10,6 +10,7 @@
 #include <vtkBSplineTransform.h>
 
 #include "vtkWarpTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBSplineTransformWrap : public VtkWarpTransformWrap
 {
@@ -46,6 +47,10 @@ class VtkBSplineTransformWrap : public VtkWarpTransformWrap
 		static void SetCoefficientConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCoefficientData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDisplacementScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBSPLINETRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBSPLINETRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageEllipsoidSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkImageEllipsoidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEELLIPSOIDSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEELLIPSOIDSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

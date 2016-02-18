@@ -10,6 +10,7 @@
 #include <vtkPolyDataNormals.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataNormalsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -69,6 +70,10 @@ class VtkPolyDataNormalsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSplitting(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplittingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplittingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATANORMALSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATANORMALSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPlotBag.h>
 
 #include "vtkPlotPointsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotBagWrap : public VtkPlotPointsWrap
 {
@@ -43,6 +44,10 @@ class VtkPlotBagWrap : public VtkPlotPointsWrap
 		static void SetLinePen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointPen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTBAGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTBAGWRAP_CLASSDEF
+#endif
 };
 
 #endif

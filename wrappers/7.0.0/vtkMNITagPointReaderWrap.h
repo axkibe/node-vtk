@@ -10,6 +10,7 @@
 #include <vtkMNITagPointReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMNITagPointReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkMNITagPointReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMNITAGPOINTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMNITAGPOINTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

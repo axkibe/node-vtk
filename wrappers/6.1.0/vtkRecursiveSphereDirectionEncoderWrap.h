@@ -10,6 +10,7 @@
 #include <vtkRecursiveSphereDirectionEncoder.h>
 
 #include "vtkDirectionEncoderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRecursiveSphereDirectionEncoderWrap : public VtkDirectionEncoderWrap
 {
@@ -38,6 +39,10 @@ class VtkRecursiveSphereDirectionEncoderWrap : public VtkDirectionEncoderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRecursionDepth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECURSIVESPHEREDIRECTIONENCODERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECURSIVESPHEREDIRECTIONENCODERWRAP_CLASSDEF
+#endif
 };
 
 #endif

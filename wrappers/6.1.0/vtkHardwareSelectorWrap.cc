@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkHardwareSelectorWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkSelectionWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GenerateSelection", GenerateSelection);
 	Nan::SetPrototypeMethod(tpl, "generateSelection", GenerateSelection);
 
+	Nan::SetPrototypeMethod(tpl, "GetArea", GetArea);
+	Nan::SetPrototypeMethod(tpl, "getArea", GetArea);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -91,11 +94,20 @@ void VtkHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RenderCompositeIndex", RenderCompositeIndex);
+	Nan::SetPrototypeMethod(tpl, "renderCompositeIndex", RenderCompositeIndex);
+
+	Nan::SetPrototypeMethod(tpl, "RenderProcessId", RenderProcessId);
+	Nan::SetPrototypeMethod(tpl, "renderProcessId", RenderProcessId);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "Select", Select);
 	Nan::SetPrototypeMethod(tpl, "select", Select);
+
+	Nan::SetPrototypeMethod(tpl, "SetArea", SetArea);
+	Nan::SetPrototypeMethod(tpl, "setArea", SetArea);
 
 	Nan::SetPrototypeMethod(tpl, "SetFieldAssociation", SetFieldAssociation);
 	Nan::SetPrototypeMethod(tpl, "setFieldAssociation", SetFieldAssociation);
@@ -109,6 +121,9 @@ void VtkHardwareSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseProcessIdFromData", SetUseProcessIdFromData);
 	Nan::SetPrototypeMethod(tpl, "setUseProcessIdFromData", SetUseProcessIdFromData);
 
+#ifdef VTK_NODE_PLUS_VTKHARDWARESELECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHARDWARESELECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -192,6 +207,112 @@ void VtkHardwareSelectorWrap::GenerateSelection(const Nan::FunctionCallbackInfo<
 {
 	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
 	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32Array())
+	{
+		v8::Local<v8::Uint32Array>a0(v8::Local<v8::Uint32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		vtkSelection * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GenerateSelection(
+			(unsigned int *)(a0->Buffer()->GetContents().Data())
+		);
+		VtkSelectionWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkSelectionWrap *w = new VtkSelectionWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+		vtkSelection * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GenerateSelection(
+			b0
+		);
+		VtkSelectionWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkSelectionWrap *w = new VtkSelectionWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+					vtkSelection * r;
+					if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					r = native->GenerateSelection(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					VtkSelectionWrap::InitPtpl();
+					v8::Local<v8::Value> argv[1] =
+						{ Nan::New(vtkNodeJsNoWrap) };
+					v8::Local<v8::Function> cons =
+						Nan::New<v8::FunctionTemplate>(VtkSelectionWrap::ptpl)->GetFunction();
+					v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+					VtkSelectionWrap *w = new VtkSelectionWrap();
+					w->native = r;
+					w->Wrap(wo);
+					info.GetReturnValue().Set(wo);
+					return;
+				}
+			}
+		}
+	}
 	vtkSelection * r;
 	if(info.Length() != 0)
 	{
@@ -209,6 +330,23 @@ void VtkHardwareSelectorWrap::GenerateSelection(const Nan::FunctionCallbackInfo<
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHardwareSelectorWrap::GetArea(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	unsigned int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetArea();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(unsigned int));
+	Local<v8::Uint32Array> at = v8::Uint32Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(unsigned int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkHardwareSelectorWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -379,6 +517,44 @@ void VtkHardwareSelectorWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Va
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkHardwareSelectorWrap::RenderCompositeIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RenderCompositeIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkHardwareSelectorWrap::RenderProcessId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RenderProcessId(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkHardwareSelectorWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
@@ -431,6 +607,86 @@ void VtkHardwareSelectorWrap::Select(const Nan::FunctionCallbackInfo<v8::Value>&
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkHardwareSelectorWrap::SetArea(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHardwareSelectorWrap *wrapper = ObjectWrap::Unwrap<VtkHardwareSelectorWrap>(info.Holder());
+	vtkHardwareSelector *native = (vtkHardwareSelector *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32Array())
+	{
+		v8::Local<v8::Uint32Array>a0(v8::Local<v8::Uint32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetArea(
+			(unsigned int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned int b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetArea(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetArea(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHardwareSelectorWrap::SetFieldAssociation(const Nan::FunctionCallbackInfo<v8::Value>& info)

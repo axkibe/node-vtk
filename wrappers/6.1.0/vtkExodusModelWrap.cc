@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExodusModelWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkModelMetadataWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkExodusModelWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnpackExodusModel", UnpackExodusModel);
 	Nan::SetPrototypeMethod(tpl, "unpackExodusModel", UnpackExodusModel);
 
+#ifdef VTK_NODE_PLUS_VTKEXODUSMODELWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXODUSMODELWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

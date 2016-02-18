@@ -10,6 +10,7 @@
 #include <vtkPolygonalSurfaceContourLineInterpolator.h>
 
 #include "vtkPolyDataContourLineInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolygonalSurfaceContourLineInterpolatorWrap : public VtkPolyDataContourLineInterpolatorWrap
 {
@@ -37,6 +38,10 @@ class VtkPolygonalSurfaceContourLineInterpolatorWrap : public VtkPolyDataContour
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDistanceOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYGONALSURFACECONTOURLINEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYGONALSURFACECONTOURLINEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

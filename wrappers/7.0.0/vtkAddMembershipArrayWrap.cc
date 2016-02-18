@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkAddMembershipArrayWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkAddMembershipArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputArrayName", SetOutputArrayName);
 	Nan::SetPrototypeMethod(tpl, "setOutputArrayName", SetOutputArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKADDMEMBERSHIPARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKADDMEMBERSHIPARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkTessellatedBoxSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTessellatedBoxSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkTessellatedBoxSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetQuads(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTESSELLATEDBOXSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTESSELLATEDBOXSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

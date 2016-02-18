@@ -10,6 +10,7 @@
 #include <vtkBooleanTexture.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBooleanTextureWrap : public VtkImageAlgorithmWrap
 {
@@ -30,15 +31,37 @@ class VtkBooleanTextureWrap : public VtkImageAlgorithmWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetInOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOnIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOnOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOnOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOutOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetInOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOnIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOnOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOnOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutIn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetOutOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThickness(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOOLEANTEXTUREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOOLEANTEXTUREWRAP_CLASSDEF
+#endif
 };
 
 #endif

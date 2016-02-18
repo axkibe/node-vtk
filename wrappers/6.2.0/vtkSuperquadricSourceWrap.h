@@ -10,6 +10,7 @@
 #include <vtkSuperquadricSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSuperquadricSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -62,6 +63,10 @@ class VtkSuperquadricSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetZAxisOfSymmetry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToroidalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToroidalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUPERQUADRICSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUPERQUADRICSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkInformationIterator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInformationIteratorWrap : public VtkObjectWrap
 {
@@ -41,6 +42,10 @@ class VtkInformationIteratorWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInformationWeak(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINFORMATIONITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

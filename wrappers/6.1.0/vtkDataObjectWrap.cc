@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkInformationWrap.h"
@@ -21,6 +20,7 @@
 #include "vtkInformationDoubleVectorKeyWrap.h"
 #include "vtkInformationIntegerVectorKeyWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -221,6 +221,9 @@ void VtkDataObjectWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "VERTEX_DATA_VECTOR", VERTEX_DATA_VECTOR);
 
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAOBJECTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

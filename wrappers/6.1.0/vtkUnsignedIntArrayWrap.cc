@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataArrayWrap.h"
 #include "vtkUnsignedIntArrayWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -53,6 +53,15 @@ void VtkUnsignedIntArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMax", GetDataTypeValueMax);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMax", GetDataTypeValueMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMin", GetDataTypeValueMin);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMin", GetDataTypeValueMin);
+
+	Nan::SetPrototypeMethod(tpl, "GetValueRange", GetValueRange);
+	Nan::SetPrototypeMethod(tpl, "getValueRange", GetValueRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -62,6 +71,9 @@ void VtkUnsignedIntArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKUNSIGNEDINTARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSIGNEDINTARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -117,6 +129,68 @@ void VtkUnsignedIntArrayWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetDataType();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnsignedIntArrayWrap::GetDataTypeValueMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnsignedIntArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedIntArrayWrap>(info.Holder());
+	vtkUnsignedIntArray *native = (vtkUnsignedIntArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMax();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnsignedIntArrayWrap::GetDataTypeValueMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnsignedIntArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedIntArrayWrap>(info.Holder());
+	vtkUnsignedIntArray *native = (vtkUnsignedIntArray *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMin();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUnsignedIntArrayWrap::GetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUnsignedIntArrayWrap *wrapper = ObjectWrap::Unwrap<VtkUnsignedIntArrayWrap>(info.Holder());
+	vtkUnsignedIntArray *native = (vtkUnsignedIntArray *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		unsigned int const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetValueRange(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(unsigned int));
+		Local<v8::Uint32Array> at = v8::Uint32Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(unsigned int));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	unsigned int const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(unsigned int));
+	Local<v8::Uint32Array> at = v8::Uint32Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(unsigned int));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkUnsignedIntArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

@@ -10,6 +10,7 @@
 #include <vtkCompassWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompassWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -41,6 +42,10 @@ class VtkCompassWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPASSWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPASSWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkOpenGLProjectedAAHexahedraMapper.h>
 
 #include "vtkProjectedAAHexahedraMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLProjectedAAHexahedraMapperWrap : public VtkProjectedAAHexahedraMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLProjectedAAHexahedraMapperWrap : public VtkProjectedAAHexahedraMa
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPROJECTEDAAHEXAHEDRAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLPROJECTEDAAHEXAHEDRAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

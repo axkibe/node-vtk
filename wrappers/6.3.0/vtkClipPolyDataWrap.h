@@ -10,6 +10,7 @@
 #include <vtkClipPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClipPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -56,6 +57,10 @@ class VtkClipPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLIPPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLIPPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

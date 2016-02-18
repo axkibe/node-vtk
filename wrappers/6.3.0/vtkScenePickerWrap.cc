@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkScenePickerWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkScenePickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+#ifdef VTK_NODE_PLUS_VTKSCENEPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCENEPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

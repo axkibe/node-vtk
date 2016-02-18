@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProbeFilterWrap.h"
 #include "vtkCompositeDataProbeFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkCompositeDataProbeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassPartialArrays", SetPassPartialArrays);
 	Nan::SetPrototypeMethod(tpl, "setPassPartialArrays", SetPassPartialArrays);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAPROBEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEDATAPROBEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

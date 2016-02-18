@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkVoxelContoursToSurfaceFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkVoxelContoursToSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpacing", SetSpacing);
 	Nan::SetPrototypeMethod(tpl, "setSpacing", SetSpacing);
 
+#ifdef VTK_NODE_PLUS_VTKVOXELCONTOURSTOSURFACEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOXELCONTOURSTOSURFACEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

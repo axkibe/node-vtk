@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCleanPolyDataWrap.h"
 #include "vtkQuantizePolyDataPointsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkQuantizePolyDataPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQFactor", SetQFactor);
 	Nan::SetPrototypeMethod(tpl, "setQFactor", SetQFactor);
 
+#ifdef VTK_NODE_PLUS_VTKQUANTIZEPOLYDATAPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUANTIZEPOLYDATAPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

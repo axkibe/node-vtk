@@ -10,6 +10,7 @@
 #include <vtkLinearSubdivisionFilter.h>
 
 #include "vtkInterpolatingSubdivisionFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLinearSubdivisionFilterWrap : public VtkInterpolatingSubdivisionFilterWrap
 {
@@ -33,6 +34,10 @@ class VtkLinearSubdivisionFilterWrap : public VtkInterpolatingSubdivisionFilterW
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEARSUBDIVISIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEARSUBDIVISIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

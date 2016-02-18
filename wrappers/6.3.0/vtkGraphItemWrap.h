@@ -10,6 +10,7 @@
 #include <vtkGraphItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphItemWrap : public VtkContextItemWrap
 {
@@ -39,6 +40,10 @@ class VtkGraphItemWrap : public VtkContextItemWrap
 		static void StartLayoutAnimation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StopLayoutAnimation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

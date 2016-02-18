@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkProgrammableGlyphFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkPointDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkProgrammableGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSourceData", SetSourceData);
 	Nan::SetPrototypeMethod(tpl, "setSourceData", SetSourceData);
 
+#ifdef VTK_NODE_PLUS_VTKPROGRAMMABLEGLYPHFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROGRAMMABLEGLYPHFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

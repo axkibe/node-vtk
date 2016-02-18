@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOverlappingAMRLevelIdScalarsWrap.h"
 #include "vtkLevelIdScalarsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -59,6 +59,9 @@ void VtkLevelIdScalarsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKLEVELIDSCALARSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLEVELIDSCALARSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

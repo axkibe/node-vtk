@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkScalarsToColorsItemWrap.h"
 #include "vtkColorTransferFunctionItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkColorTransferFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkColorTransferFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetColorTransferFunction", SetColorTransferFunction);
 	Nan::SetPrototypeMethod(tpl, "setColorTransferFunction", SetColorTransferFunction);
 
+#ifdef VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

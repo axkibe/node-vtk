@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkButtonRepresentationWrap.h"
 #include "vtkTexturedButtonRepresentation2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -120,6 +120,9 @@ void VtkTexturedButtonRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTUREDBUTTONREPRESENTATION2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTUREDBUTTONREPRESENTATION2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

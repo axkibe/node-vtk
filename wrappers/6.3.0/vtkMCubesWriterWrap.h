@@ -10,6 +10,7 @@
 #include <vtkMCubesWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMCubesWriterWrap : public VtkWriterWrap
 {
@@ -38,6 +39,10 @@ class VtkMCubesWriterWrap : public VtkWriterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLimitsFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMCUBESWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMCUBESWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

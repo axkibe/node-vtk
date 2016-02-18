@@ -10,6 +10,7 @@
 #include <vtkTensor.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTensorWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkTensorWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTENSORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTENSORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCheckerboardRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCheckerboardRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -57,6 +58,10 @@ class VtkCheckerboardRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetRightRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTopRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SliderValueChanged(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHECKERBOARDREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHECKERBOARDREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

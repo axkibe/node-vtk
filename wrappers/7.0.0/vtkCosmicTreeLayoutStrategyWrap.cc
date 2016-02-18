@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkCosmicTreeLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkCosmicTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SizeLeafNodesOnlyOn", SizeLeafNodesOnlyOn);
 	Nan::SetPrototypeMethod(tpl, "sizeLeafNodesOnlyOn", SizeLeafNodesOnlyOn);
 
+#ifdef VTK_NODE_PLUS_VTKCOSMICTREELAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOSMICTREELAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

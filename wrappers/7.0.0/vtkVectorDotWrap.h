@@ -10,6 +10,7 @@
 #include <vtkVectorDot.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVectorDotWrap : public VtkDataSetAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkVectorDotWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMapScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVECTORDOTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVECTORDOTWRAP_CLASSDEF
+#endif
 };
 
 #endif

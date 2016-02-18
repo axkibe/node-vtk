@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAMRInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,8 +67,26 @@ void VtkAMRInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGridDescription", GetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "getGridDescription", GetGridDescription);
 
+	Nan::SetPrototypeMethod(tpl, "GetIndex", GetIndex);
+	Nan::SetPrototypeMethod(tpl, "getIndex", GetIndex);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfDataSets", GetNumberOfDataSets);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfDataSets", GetNumberOfDataSets);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfLevels", GetNumberOfLevels);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfLevels", GetNumberOfLevels);
+
 	Nan::SetPrototypeMethod(tpl, "GetOrigin", GetOrigin);
 	Nan::SetPrototypeMethod(tpl, "getOrigin", GetOrigin);
+
+	Nan::SetPrototypeMethod(tpl, "GetRefinementRatio", GetRefinementRatio);
+	Nan::SetPrototypeMethod(tpl, "getRefinementRatio", GetRefinementRatio);
+
+	Nan::SetPrototypeMethod(tpl, "GetSpacing", GetSpacing);
+	Nan::SetPrototypeMethod(tpl, "getSpacing", GetSpacing);
+
+	Nan::SetPrototypeMethod(tpl, "GetTotalNumberOfBlocks", GetTotalNumberOfBlocks);
+	Nan::SetPrototypeMethod(tpl, "getTotalNumberOfBlocks", GetTotalNumberOfBlocks);
 
 	Nan::SetPrototypeMethod(tpl, "HasChildrenInformation", HasChildrenInformation);
 	Nan::SetPrototypeMethod(tpl, "hasChildrenInformation", HasChildrenInformation);
@@ -76,11 +94,17 @@ void VtkAMRInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "HasRefinementRatio", HasRefinementRatio);
 	Nan::SetPrototypeMethod(tpl, "hasRefinementRatio", HasRefinementRatio);
 
+	Nan::SetPrototypeMethod(tpl, "HasSpacing", HasSpacing);
+	Nan::SetPrototypeMethod(tpl, "hasSpacing", HasSpacing);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
+
+	Nan::SetPrototypeMethod(tpl, "PrintParentChildInfo", PrintParentChildInfo);
+	Nan::SetPrototypeMethod(tpl, "printParentChildInfo", PrintParentChildInfo);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
@@ -91,6 +115,12 @@ void VtkAMRInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGridDescription", SetGridDescription);
 	Nan::SetPrototypeMethod(tpl, "setGridDescription", SetGridDescription);
 
+	Nan::SetPrototypeMethod(tpl, "SetRefinementRatio", SetRefinementRatio);
+	Nan::SetPrototypeMethod(tpl, "setRefinementRatio", SetRefinementRatio);
+
+#ifdef VTK_NODE_PLUS_VTKAMRINFORMATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRINFORMATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -227,6 +257,66 @@ void VtkAMRInformationWrap::GetGridDescription(const Nan::FunctionCallbackInfo<v
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
+void VtkAMRInformationWrap::GetIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->GetIndex(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInformationWrap::GetNumberOfDataSets(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		unsigned int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetNumberOfDataSets(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInformationWrap::GetNumberOfLevels(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfLevels();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAMRInformationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
@@ -283,6 +373,102 @@ void VtkAMRInformationWrap::GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAMRInformationWrap::GetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetRefinementRatio(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInformationWrap::GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSpacing(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSpacing(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInformationWrap::GetTotalNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetTotalNumberOfBlocks();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAMRInformationWrap::HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
@@ -309,6 +495,27 @@ void VtkAMRInformationWrap::HasRefinementRatio(const Nan::FunctionCallbackInfo<v
 	}
 	r = native->HasRefinementRatio();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAMRInformationWrap::HasSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasSpacing(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRInformationWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -354,6 +561,29 @@ void VtkAMRInformationWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::Valu
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkAMRInformationWrap::PrintParentChildInfo(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->PrintParentChildInfo(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkAMRInformationWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -425,6 +655,29 @@ void VtkAMRInformationWrap::SetGridDescription(const Nan::FunctionCallbackInfo<v
 			info[0]->Int32Value()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAMRInformationWrap::SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAMRInformationWrap *wrapper = ObjectWrap::Unwrap<VtkAMRInformationWrap>(info.Holder());
+	vtkAMRInformation *native = (vtkAMRInformation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetRefinementRatio(
+				info[0]->Uint32Value(),
+				info[1]->Int32Value()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

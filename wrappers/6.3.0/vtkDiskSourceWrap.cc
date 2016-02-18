@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDiskSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -113,6 +113,9 @@ void VtkDiskSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRadialResolution", SetRadialResolution);
 	Nan::SetPrototypeMethod(tpl, "setRadialResolution", SetRadialResolution);
 
+#ifdef VTK_NODE_PLUS_VTKDISKSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDISKSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

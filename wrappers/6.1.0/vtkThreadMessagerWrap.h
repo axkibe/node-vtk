@@ -10,6 +10,7 @@
 #include <vtkThreadMessager.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThreadMessagerWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkThreadMessagerWrap : public VtkObjectWrap
 		static void SendWakeMessage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForMessage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForReceiver(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHREADMESSAGERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHREADMESSAGERWRAP_CLASSDEF
+#endif
 };
 
 #endif

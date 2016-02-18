@@ -10,6 +10,7 @@
 #include <vtkGeoAssignCoordinates.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkGeoAssignCoordinatesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetLatitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLongitudeArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOASSIGNCOORDINATESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOASSIGNCOORDINATESWRAP_CLASSDEF
+#endif
 };
 
 #endif

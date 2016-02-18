@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageChangeInformationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -120,6 +120,9 @@ void VtkImageChangeInformationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpacingScale", SetSpacingScale);
 	Nan::SetPrototypeMethod(tpl, "setSpacingScale", SetSpacingScale);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECHANGEINFORMATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECHANGEINFORMATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

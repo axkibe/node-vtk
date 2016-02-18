@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotAreaWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkPlotAreaWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateCache", UpdateCache);
 	Nan::SetPrototypeMethod(tpl, "updateCache", UpdateCache);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTAREAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTAREAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -276,7 +279,31 @@ void VtkPlotAreaWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotAreaWrap *wrapper = ObjectWrap::Unwrap<VtkPlotAreaWrap>(info.Holder());
 	vtkPlotArea *native = (vtkPlotArea *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetColor(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

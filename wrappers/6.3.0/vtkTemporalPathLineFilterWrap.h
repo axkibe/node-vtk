@@ -10,6 +10,7 @@
 #include <vtkTemporalPathLineFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalPathLineFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -35,6 +36,7 @@ class VtkTemporalPathLineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void GetKeepDeadTrails(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaskPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxStepDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxTrackLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -42,8 +44,13 @@ class VtkTemporalPathLineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetKeepDeadTrails(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxStepDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxTrackLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALPATHLINEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALPATHLINEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

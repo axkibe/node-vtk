@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageMandelbrotSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,15 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetConstantSize", GetConstantSize);
 	Nan::SetPrototypeMethod(tpl, "getConstantSize", GetConstantSize);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterations", GetMaximumNumberOfIterations);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterations", GetMaximumNumberOfIterations);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterationsMaxValue", GetMaximumNumberOfIterationsMaxValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterationsMaxValue", GetMaximumNumberOfIterationsMaxValue);
+
+	Nan::SetPrototypeMethod(tpl, "GetMaximumNumberOfIterationsMinValue", GetMaximumNumberOfIterationsMinValue);
+	Nan::SetPrototypeMethod(tpl, "getMaximumNumberOfIterationsMinValue", GetMaximumNumberOfIterationsMinValue);
+
 	Nan::SetPrototypeMethod(tpl, "GetOriginCX", GetOriginCX);
 	Nan::SetPrototypeMethod(tpl, "getOriginCX", GetOriginCX);
 
@@ -101,6 +110,9 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetConstantSize", SetConstantSize);
 	Nan::SetPrototypeMethod(tpl, "setConstantSize", SetConstantSize);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfIterations", SetMaximumNumberOfIterations);
+	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfIterations", SetMaximumNumberOfIterations);
+
 	Nan::SetPrototypeMethod(tpl, "SetOriginCX", SetOriginCX);
 	Nan::SetPrototypeMethod(tpl, "setOriginCX", SetOriginCX);
 
@@ -122,6 +134,9 @@ void VtkImageMandelbrotSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMANDELBROTSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMANDELBROTSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -220,6 +235,48 @@ void VtkImageMandelbrotSourceWrap::GetConstantSize(const Nan::FunctionCallbackIn
 		return;
 	}
 	r = native->GetConstantSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageMandelbrotSourceWrap::GetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterations();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageMandelbrotSourceWrap::GetMaximumNumberOfIterationsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterationsMaxValue();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkImageMandelbrotSourceWrap::GetMaximumNumberOfIterationsMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	unsigned short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumNumberOfIterationsMinValue();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -515,6 +572,25 @@ void VtkImageMandelbrotSourceWrap::SetConstantSize(const Nan::FunctionCallbackIn
 		}
 		native->SetConstantSize(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageMandelbrotSourceWrap::SetMaximumNumberOfIterations(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMandelbrotSourceWrap *wrapper = ObjectWrap::Unwrap<VtkImageMandelbrotSourceWrap>(info.Holder());
+	vtkImageMandelbrotSource *native = (vtkImageMandelbrotSource *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumNumberOfIterations(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

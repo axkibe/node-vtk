@@ -10,6 +10,7 @@
 #include <vtkHierarchicalBoxDataSet.h>
 
 #include "vtkOverlappingAMRWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalBoxDataSetWrap : public VtkOverlappingAMRWrap
 {
@@ -36,6 +37,10 @@ class VtkHierarchicalBoxDataSetWrap : public VtkOverlappingAMRWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALBOXDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALBOXDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRectilinearGridAlgorithmWrap.h"
 #include "vtkRectilinearGridClipWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkRectilinearGridClipWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputWholeExtent", SetOutputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setOutputWholeExtent", SetOutputWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDCLIPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTILINEARGRIDCLIPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

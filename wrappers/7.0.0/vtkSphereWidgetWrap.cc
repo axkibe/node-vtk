@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtk3DWidgetWrap.h"
 #include "vtkSphereWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkSphereWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -176,6 +176,9 @@ void VtkSphereWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslationOn", TranslationOn);
 	Nan::SetPrototypeMethod(tpl, "translationOn", TranslationOn);
 
+#ifdef VTK_NODE_PLUS_VTKSPHEREWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPHEREWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

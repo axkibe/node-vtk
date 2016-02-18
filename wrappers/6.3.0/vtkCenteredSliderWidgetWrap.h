@@ -10,6 +10,7 @@
 #include <vtkCenteredSliderWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCenteredSliderWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -37,6 +38,10 @@ class VtkCenteredSliderWidgetWrap : public VtkAbstractWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCENTEREDSLIDERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCENTEREDSLIDERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkWarpLensWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -129,6 +129,9 @@ void VtkWarpLensWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPrincipalPoint", SetPrincipalPoint);
 	Nan::SetPrototypeMethod(tpl, "setPrincipalPoint", SetPrincipalPoint);
 
+#ifdef VTK_NODE_PLUS_VTKWARPLENSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWARPLENSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

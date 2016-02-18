@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExtractBlockWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,6 +47,9 @@ void VtkExtractBlockWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkExtractBlockWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddIndex", AddIndex);
+	Nan::SetPrototypeMethod(tpl, "addIndex", AddIndex);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -77,6 +80,9 @@ void VtkExtractBlockWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "RemoveAllIndices", RemoveAllIndices);
 	Nan::SetPrototypeMethod(tpl, "removeAllIndices", RemoveAllIndices);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveIndex", RemoveIndex);
+	Nan::SetPrototypeMethod(tpl, "removeIndex", RemoveIndex);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -86,6 +92,9 @@ void VtkExtractBlockWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPruneOutput", SetPruneOutput);
 	Nan::SetPrototypeMethod(tpl, "setPruneOutput", SetPruneOutput);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTBLOCKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTBLOCKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -113,6 +122,25 @@ void VtkExtractBlockWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkExtractBlockWrap::AddIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
+	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractBlockWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -260,6 +288,25 @@ void VtkExtractBlockWrap::RemoveAllIndices(const Nan::FunctionCallbackInfo<v8::V
 		return;
 	}
 	native->RemoveAllIndices();
+}
+
+void VtkExtractBlockWrap::RemoveIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkExtractBlockWrap *wrapper = ObjectWrap::Unwrap<VtkExtractBlockWrap>(info.Holder());
+	vtkExtractBlock *native = (vtkExtractBlock *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkExtractBlockWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

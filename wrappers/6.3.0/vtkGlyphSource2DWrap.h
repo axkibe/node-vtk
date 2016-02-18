@@ -10,6 +10,7 @@
 #include <vtkGlyphSource2D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGlyphSource2DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -82,6 +83,10 @@ class VtkGlyphSource2DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRotationAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScale2(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLYPHSOURCE2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLYPHSOURCE2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

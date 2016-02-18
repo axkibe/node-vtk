@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointPlacerWrap.h"
 #include "vtkBoundedPlanePointPlacerWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPlaneCollectionWrap.h"
 #include "vtkPlanesWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkBoundedPlanePointPlacerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ValidateWorldPosition", ValidateWorldPosition);
 	Nan::SetPrototypeMethod(tpl, "validateWorldPosition", ValidateWorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKBOUNDEDPLANEPOINTPLACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBOUNDEDPLANEPOINTPLACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkUndirectedGraphAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUndirectedGraphAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkUndirectedGraphAlgorithmWrap : public VtkAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

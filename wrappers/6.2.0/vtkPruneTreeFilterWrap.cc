@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAlgorithmWrap.h"
 #include "vtkPruneTreeFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkPruneTreeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShouldPruneParentVertex", SetShouldPruneParentVertex);
 	Nan::SetPrototypeMethod(tpl, "setShouldPruneParentVertex", SetShouldPruneParentVertex);
 
+#ifdef VTK_NODE_PLUS_VTKPRUNETREEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPRUNETREEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

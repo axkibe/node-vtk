@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkQuadricWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkQuadricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCoefficients", SetCoefficients);
 	Nan::SetPrototypeMethod(tpl, "setCoefficients", SetCoefficients);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

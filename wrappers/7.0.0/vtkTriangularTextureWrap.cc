@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkTriangularTextureWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkTriangularTextureWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetYSize", SetYSize);
 	Nan::SetPrototypeMethod(tpl, "setYSize", SetYSize);
 
+#ifdef VTK_NODE_PLUS_VTKTRIANGULARTEXTUREWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRIANGULARTEXTUREWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

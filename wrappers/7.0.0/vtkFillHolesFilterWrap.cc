@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkFillHolesFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkFillHolesFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHoleSize", SetHoleSize);
 	Nan::SetPrototypeMethod(tpl, "setHoleSize", SetHoleSize);
 
+#ifdef VTK_NODE_PLUS_VTKFILLHOLESFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFILLHOLESFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

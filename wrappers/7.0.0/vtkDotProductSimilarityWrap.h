@@ -10,6 +10,7 @@
 #include <vtkDotProductSimilarity.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDotProductSimilarityWrap : public VtkTableAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkDotProductSimilarityWrap : public VtkTableAlgorithmWrap
 		static void SetMinimumThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSecondFirst(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUpperDiagonal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDOTPRODUCTSIMILARITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDOTPRODUCTSIMILARITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

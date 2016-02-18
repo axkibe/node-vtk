@@ -10,6 +10,7 @@
 #include <vtkMolecule.h>
 
 #include "vtkUndirectedGraphWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMoleculeWrap : public VtkUndirectedGraphWrap
 {
@@ -45,6 +46,10 @@ class VtkMoleculeWrap : public VtkUndirectedGraphWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopyAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMOLECULEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMOLECULEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkInputStreamWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkInputStreamWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartReading", StartReading);
 	Nan::SetPrototypeMethod(tpl, "startReading", StartReading);
 
+#ifdef VTK_NODE_PLUS_VTKINPUTSTREAMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINPUTSTREAMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

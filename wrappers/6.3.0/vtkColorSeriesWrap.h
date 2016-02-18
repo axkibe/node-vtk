@@ -10,6 +10,7 @@
 #include <vtkColorSeries.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkColorSeriesWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkColorSeriesWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorScheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLORSERIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLORSERIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

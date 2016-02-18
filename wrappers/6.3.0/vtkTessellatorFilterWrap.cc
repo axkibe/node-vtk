@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkTessellatorFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkStreamingTessellatorWrap.h"
 #include "vtkDataSetEdgeSubdivisionCriterionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -115,6 +115,9 @@ void VtkTessellatorFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTessellator", SetTessellator);
 	Nan::SetPrototypeMethod(tpl, "setTessellator", SetTessellator);
 
+#ifdef VTK_NODE_PLUS_VTKTESSELLATORFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTESSELLATORFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

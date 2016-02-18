@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -166,6 +166,9 @@ void VtkParametricFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TwistVOn", TwistVOn);
 	Nan::SetPrototypeMethod(tpl, "twistVOn", TwistVOn);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

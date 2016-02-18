@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSectorSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkSectorSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCoord", SetZCoord);
 	Nan::SetPrototypeMethod(tpl, "setZCoord", SetZCoord);
 
+#ifdef VTK_NODE_PLUS_VTKSECTORSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSECTORSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

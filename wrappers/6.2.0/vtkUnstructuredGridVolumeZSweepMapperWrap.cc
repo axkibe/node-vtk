@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
 #include "vtkUnstructuredGridVolumeZSweepMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -122,6 +122,9 @@ void VtkUnstructuredGridVolumeZSweepMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRayIntegrator", SetRayIntegrator);
 	Nan::SetPrototypeMethod(tpl, "setRayIntegrator", SetRayIntegrator);
 
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMEZSWEEPMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDVOLUMEZSWEEPMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

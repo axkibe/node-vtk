@@ -10,6 +10,7 @@
 #include <vtkPMaskPoints.h>
 
 #include "vtkMaskPointsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPMaskPointsWrap : public VtkMaskPointsWrap
 {
@@ -35,6 +36,10 @@ class VtkPMaskPointsWrap : public VtkMaskPointsWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPMASKPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPMASKPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

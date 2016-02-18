@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPainterPolyDataMapperWrap.h"
 #include "vtkCompositePolyDataMapper2Wrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCompositeDataDisplayAttributesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -48,6 +48,12 @@ void VtkCompositePolyDataMapper2Wrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkCompositePolyDataMapper2Wrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBlockOpacity", GetBlockOpacity);
+	Nan::SetPrototypeMethod(tpl, "getBlockOpacity", GetBlockOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "GetBlockVisibility", GetBlockVisibility);
+	Nan::SetPrototypeMethod(tpl, "getBlockVisibility", GetBlockVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -63,21 +69,42 @@ void VtkCompositePolyDataMapper2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveBlockColor", RemoveBlockColor);
+	Nan::SetPrototypeMethod(tpl, "removeBlockColor", RemoveBlockColor);
+
 	Nan::SetPrototypeMethod(tpl, "RemoveBlockColors", RemoveBlockColors);
 	Nan::SetPrototypeMethod(tpl, "removeBlockColors", RemoveBlockColors);
 
 	Nan::SetPrototypeMethod(tpl, "RemoveBlockOpacities", RemoveBlockOpacities);
 	Nan::SetPrototypeMethod(tpl, "removeBlockOpacities", RemoveBlockOpacities);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveBlockOpacity", RemoveBlockOpacity);
+	Nan::SetPrototypeMethod(tpl, "removeBlockOpacity", RemoveBlockOpacity);
+
 	Nan::SetPrototypeMethod(tpl, "RemoveBlockVisibilites", RemoveBlockVisibilites);
 	Nan::SetPrototypeMethod(tpl, "removeBlockVisibilites", RemoveBlockVisibilites);
+
+	Nan::SetPrototypeMethod(tpl, "RemoveBlockVisibility", RemoveBlockVisibility);
+	Nan::SetPrototypeMethod(tpl, "removeBlockVisibility", RemoveBlockVisibility);
 
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetBlockColor", SetBlockColor);
+	Nan::SetPrototypeMethod(tpl, "setBlockColor", SetBlockColor);
+
+	Nan::SetPrototypeMethod(tpl, "SetBlockOpacity", SetBlockOpacity);
+	Nan::SetPrototypeMethod(tpl, "setBlockOpacity", SetBlockOpacity);
+
+	Nan::SetPrototypeMethod(tpl, "SetBlockVisibility", SetBlockVisibility);
+	Nan::SetPrototypeMethod(tpl, "setBlockVisibility", SetBlockVisibility);
+
 	Nan::SetPrototypeMethod(tpl, "SetCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "setCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -105,6 +132,48 @@ void VtkCompositePolyDataMapper2Wrap::New(const Nan::FunctionCallbackInfo<v8::Va
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkCompositePolyDataMapper2Wrap::GetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		double r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetBlockOpacity(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCompositePolyDataMapper2Wrap::GetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		bool r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetBlockVisibility(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCompositePolyDataMapper2Wrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -203,6 +272,25 @@ void VtkCompositePolyDataMapper2Wrap::NewInstance(const Nan::FunctionCallbackInf
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkCompositePolyDataMapper2Wrap::RemoveBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveBlockColor(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCompositePolyDataMapper2Wrap::RemoveBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
@@ -227,6 +315,25 @@ void VtkCompositePolyDataMapper2Wrap::RemoveBlockOpacities(const Nan::FunctionCa
 	native->RemoveBlockOpacities();
 }
 
+void VtkCompositePolyDataMapper2Wrap::RemoveBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveBlockOpacity(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkCompositePolyDataMapper2Wrap::RemoveBlockVisibilites(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
@@ -237,6 +344,25 @@ void VtkCompositePolyDataMapper2Wrap::RemoveBlockVisibilites(const Nan::Function
 		return;
 	}
 	native->RemoveBlockVisibilites();
+}
+
+void VtkCompositePolyDataMapper2Wrap::RemoveBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveBlockVisibility(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -266,6 +392,134 @@ void VtkCompositePolyDataMapper2Wrap::SafeDownCast(const Nan::FunctionCallbackIn
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCompositePolyDataMapper2Wrap::SetBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetBlockColor(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetBlockColor(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsNumber())
+		{
+			if(info.Length() > 2 && info[2]->IsNumber())
+			{
+				if(info.Length() > 3 && info[3]->IsNumber())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetBlockColor(
+						info[0]->Uint32Value(),
+						info[1]->NumberValue(),
+						info[2]->NumberValue(),
+						info[3]->NumberValue()
+					);
+					return;
+				}
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCompositePolyDataMapper2Wrap::SetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsNumber())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetBlockOpacity(
+				info[0]->Uint32Value(),
+				info[1]->NumberValue()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkCompositePolyDataMapper2Wrap::SetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkCompositePolyDataMapper2Wrap *wrapper = ObjectWrap::Unwrap<VtkCompositePolyDataMapper2Wrap>(info.Holder());
+	vtkCompositePolyDataMapper2 *native = (vtkCompositePolyDataMapper2 *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsBoolean())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetBlockVisibility(
+				info[0]->Uint32Value(),
+				info[1]->BooleanValue()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

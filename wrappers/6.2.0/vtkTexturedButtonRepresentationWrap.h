@@ -10,6 +10,7 @@
 #include <vtkTexturedButtonRepresentation.h>
 
 #include "vtkButtonRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTexturedButtonRepresentationWrap : public VtkButtonRepresentationWrap
 {
@@ -58,6 +59,10 @@ class VtkTexturedButtonRepresentationWrap : public VtkButtonRepresentationWrap
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectingProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREDBUTTONREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREDBUTTONREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

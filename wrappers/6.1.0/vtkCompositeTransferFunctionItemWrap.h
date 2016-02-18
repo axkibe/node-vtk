@@ -10,6 +10,7 @@
 #include <vtkCompositeTransferFunctionItem.h>
 
 #include "vtkColorTransferFunctionItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeTransferFunctionItemWrap : public VtkColorTransferFunctionItemWrap
 {
@@ -35,6 +36,10 @@ class VtkCompositeTransferFunctionItemWrap : public VtkColorTransferFunctionItem
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITETRANSFERFUNCTIONITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITETRANSFERFUNCTIONITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

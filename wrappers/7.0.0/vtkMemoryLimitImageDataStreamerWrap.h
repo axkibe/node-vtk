@@ -10,6 +10,7 @@
 #include <vtkMemoryLimitImageDataStreamer.h>
 
 #include "vtkImageDataStreamerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMemoryLimitImageDataStreamerWrap : public VtkImageDataStreamerWrap
 {
@@ -33,6 +34,10 @@ class VtkMemoryLimitImageDataStreamerWrap : public VtkImageDataStreamerWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMEMORYLIMITIMAGEDATASTREAMERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMEMORYLIMITIMAGEDATASTREAMERWRAP_CLASSDEF
+#endif
 };
 
 #endif

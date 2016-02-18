@@ -10,6 +10,7 @@
 #include <vtkImageStencilToImage.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageStencilToImageWrap : public VtkImageAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkImageStencilToImageWrap : public VtkImageAlgorithmWrap
 		static void SetOutputScalarTypeToUnsignedLong(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutsideValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILTOIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESTENCILTOIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

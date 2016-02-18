@@ -10,6 +10,7 @@
 #include <vtkRenderViewBase.h>
 
 #include "vtkViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderViewBaseWrap : public VtkViewWrap
 {
@@ -42,6 +43,10 @@ class VtkRenderViewBaseWrap : public VtkViewWrap
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERVIEWBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERVIEWBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

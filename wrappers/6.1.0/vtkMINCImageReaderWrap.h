@@ -10,6 +10,7 @@
 #include <vtkMINCImageReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkMINCImageReaderWrap : public VtkImageReader2Wrap
 {
@@ -49,6 +50,10 @@ class VtkMINCImageReaderWrap : public VtkImageReader2Wrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRescaleRealValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMINCIMAGEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

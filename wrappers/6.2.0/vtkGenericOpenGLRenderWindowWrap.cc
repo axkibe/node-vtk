@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOpenGLRenderWindowWrap.h"
 #include "vtkGenericOpenGLRenderWindowWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,24 @@ void VtkGenericOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetBackBuffer", SetBackBuffer);
+	Nan::SetPrototypeMethod(tpl, "setBackBuffer", SetBackBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetBackLeftBuffer", SetBackLeftBuffer);
+	Nan::SetPrototypeMethod(tpl, "setBackLeftBuffer", SetBackLeftBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetBackRightBuffer", SetBackRightBuffer);
+	Nan::SetPrototypeMethod(tpl, "setBackRightBuffer", SetBackRightBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetFrontBuffer", SetFrontBuffer);
+	Nan::SetPrototypeMethod(tpl, "setFrontBuffer", SetFrontBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetFrontLeftBuffer", SetFrontLeftBuffer);
+	Nan::SetPrototypeMethod(tpl, "setFrontLeftBuffer", SetFrontLeftBuffer);
+
+	Nan::SetPrototypeMethod(tpl, "SetFrontRightBuffer", SetFrontRightBuffer);
+	Nan::SetPrototypeMethod(tpl, "setFrontRightBuffer", SetFrontRightBuffer);
+
 	Nan::SetPrototypeMethod(tpl, "SetFullScreen", SetFullScreen);
 	Nan::SetPrototypeMethod(tpl, "setFullScreen", SetFullScreen);
 
@@ -128,6 +146,9 @@ void VtkGenericOpenGLRenderWindowWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WindowRemap", WindowRemap);
 	Nan::SetPrototypeMethod(tpl, "windowRemap", WindowRemap);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICOPENGLRENDERWINDOWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICOPENGLRENDERWINDOWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -397,6 +418,120 @@ void VtkGenericOpenGLRenderWindowWrap::SafeDownCast(const Nan::FunctionCallbackI
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetBackBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetBackLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackLeftBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetBackRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetBackRightBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetFrontBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFrontBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetFrontLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFrontLeftBuffer(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericOpenGLRenderWindowWrap::SetFrontRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericOpenGLRenderWindowWrap *wrapper = ObjectWrap::Unwrap<VtkGenericOpenGLRenderWindowWrap>(info.Holder());
+	vtkGenericOpenGLRenderWindow *native = (vtkGenericOpenGLRenderWindow *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetFrontRightBuffer(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

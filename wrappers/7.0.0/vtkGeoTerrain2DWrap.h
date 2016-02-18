@@ -10,6 +10,7 @@
 #include <vtkGeoTerrain2D.h>
 
 #include "vtkGeoTerrainWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTerrain2DWrap : public VtkGeoTerrainWrap
 {
@@ -38,6 +39,10 @@ class VtkGeoTerrain2DWrap : public VtkGeoTerrainWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocationTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTERRAIN2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTERRAIN2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkQuaternionInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkQuaternionInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInterpolationTypeToSpline", SetInterpolationTypeToSpline);
 	Nan::SetPrototypeMethod(tpl, "setInterpolationTypeToSpline", SetInterpolationTypeToSpline);
 
+#ifdef VTK_NODE_PLUS_VTKQUATERNIONINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUATERNIONINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

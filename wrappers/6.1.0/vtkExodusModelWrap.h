@@ -10,6 +10,7 @@
 #include <vtkExodusModel.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExodusModelWrap : public VtkObjectWrap
 {
@@ -47,6 +48,10 @@ class VtkExodusModelWrap : public VtkObjectWrap
 		static void SetLocalInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetModelMetadata(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnpackExodusModel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXODUSMODELWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXODUSMODELWRAP_CLASSDEF
+#endif
 };
 
 #endif

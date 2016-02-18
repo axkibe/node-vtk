@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkParallelopipedRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkHandleRepresentationWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkParallelopipedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Translate", Translate);
 	Nan::SetPrototypeMethod(tpl, "translate", Translate);
 
+#ifdef VTK_NODE_PLUS_VTKPARALLELOPIPEDREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARALLELOPIPEDREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

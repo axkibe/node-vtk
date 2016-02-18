@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAreaViewWrap.h"
 #include "vtkTreeRingViewWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkTreeRingViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRootAtCenter", SetRootAtCenter);
 	Nan::SetPrototypeMethod(tpl, "setRootAtCenter", SetRootAtCenter);
 
+#ifdef VTK_NODE_PLUS_VTKTREERINGVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREERINGVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

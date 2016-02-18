@@ -10,6 +10,7 @@
 #include <vtkThreadedSynchronizedTemplates3D.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThreadedSynchronizedTemplates3DWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkThreadedSynchronizedTemplates3DWrap : public VtkMultiBlockDataSetAlgori
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHREADEDSYNCHRONIZEDTEMPLATES3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHREADEDSYNCHRONIZEDTEMPLATES3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

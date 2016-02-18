@@ -10,6 +10,7 @@
 #include <vtkGridSynchronizedTemplates3D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGridSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkGridSynchronizedTemplates3DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRIDSYNCHRONIZEDTEMPLATES3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRIDSYNCHRONIZEDTEMPLATES3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

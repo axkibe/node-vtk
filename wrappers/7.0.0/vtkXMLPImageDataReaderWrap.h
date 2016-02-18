@@ -10,6 +10,7 @@
 #include <vtkXMLPImageDataReader.h>
 
 #include "vtkXMLPStructuredDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPImageDataReaderWrap : public VtkXMLPStructuredDataReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkXMLPImageDataReaderWrap : public VtkXMLPStructuredDataReaderWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPIMAGEDATAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPIMAGEDATAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

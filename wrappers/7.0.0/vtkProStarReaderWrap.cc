@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkProStarReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkProStarReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKPROSTARREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROSTARREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

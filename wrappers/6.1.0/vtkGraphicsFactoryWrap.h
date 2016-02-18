@@ -10,6 +10,7 @@
 #include <vtkGraphicsFactory.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphicsFactoryWrap : public VtkObjectWrap
 {
@@ -39,6 +40,10 @@ class VtkGraphicsFactoryWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffScreenOnlyMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseMesaClasses(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHICSFACTORYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHICSFACTORYWRAP_CLASSDEF
+#endif
 };
 
 #endif

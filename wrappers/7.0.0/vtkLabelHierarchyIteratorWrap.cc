@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkLabelHierarchyIteratorWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkLabelHierarchyWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkLabelHierarchyIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTraversedBounds", SetTraversedBounds);
 	Nan::SetPrototypeMethod(tpl, "setTraversedBounds", SetTraversedBounds);
 
+#ifdef VTK_NODE_PLUS_VTKLABELHIERARCHYITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELHIERARCHYITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

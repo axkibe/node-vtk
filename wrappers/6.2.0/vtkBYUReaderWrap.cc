@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkBYUReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -140,6 +140,9 @@ void VtkBYUReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureFileName", SetTextureFileName);
 	Nan::SetPrototypeMethod(tpl, "setTextureFileName", SetTextureFileName);
 
+#ifdef VTK_NODE_PLUS_VTKBYUREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBYUREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

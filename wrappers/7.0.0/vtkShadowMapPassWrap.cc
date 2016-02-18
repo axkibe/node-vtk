@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkShadowMapPassWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkShadowMapBakerPassWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
 #include "vtkShaderProgramWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkShadowMapPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShadowMapPass", ShadowMapPass);
 	Nan::SetPrototypeMethod(tpl, "shadowMapPass", ShadowMapPass);
 
+#ifdef VTK_NODE_PLUS_VTKSHADOWMAPPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHADOWMAPPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRectilinearGridAlgorithmWrap.h"
 #include "vtkNetCDFPOPReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkNetCDFPOPReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVariableArrayStatus", SetVariableArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setVariableArrayStatus", SetVariableArrayStatus);
 
+#ifdef VTK_NODE_PLUS_VTKNETCDFPOPREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNETCDFPOPREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

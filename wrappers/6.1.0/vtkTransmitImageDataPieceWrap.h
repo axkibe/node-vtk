@@ -10,6 +10,7 @@
 #include <vtkTransmitImageDataPiece.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransmitImageDataPieceWrap : public VtkImageAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkTransmitImageDataPieceWrap : public VtkImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSMITIMAGEDATAPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSMITIMAGEDATAPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

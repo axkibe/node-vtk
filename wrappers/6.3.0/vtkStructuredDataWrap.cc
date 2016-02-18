@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkStructuredDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -91,6 +91,9 @@ void VtkStructuredDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExtent", SetExtent);
 	Nan::SetPrototypeMethod(tpl, "setExtent", SetExtent);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

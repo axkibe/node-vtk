@@ -10,6 +10,7 @@
 #include <vtkProteinRibbonFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProteinRibbonFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkProteinRibbonFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetDrawSmallMoleculesAsSpheres(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSphereResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSubdivideFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROTEINRIBBONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROTEINRIBBONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataReaderWrap.h"
 #include "vtkRectilinearGridReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRectilinearGridWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkRectilinearGridReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTILINEARGRIDREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkProbeFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -146,6 +146,9 @@ void VtkProbeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SpatialMatchOn", SpatialMatchOn);
 	Nan::SetPrototypeMethod(tpl, "spatialMatchOn", SpatialMatchOn);
 
+#ifdef VTK_NODE_PLUS_VTKPROBEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROBEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

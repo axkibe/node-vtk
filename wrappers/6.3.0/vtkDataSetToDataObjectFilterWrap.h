@@ -10,6 +10,7 @@
 #include <vtkDataSetToDataObjectFilter.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetToDataObjectFilterWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkDataSetToDataObjectFilterWrap : public VtkDataObjectAlgorithmWrap
 		static void SetTopology(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopologyOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TopologyOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETTODATAOBJECTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETTODATAOBJECTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

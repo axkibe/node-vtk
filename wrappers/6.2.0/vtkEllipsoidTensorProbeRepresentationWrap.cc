@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTensorProbeRepresentationWrap.h"
 #include "vtkEllipsoidTensorProbeRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkEllipsoidTensorProbeRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SelectProbe", SelectProbe);
 	Nan::SetPrototypeMethod(tpl, "selectProbe", SelectProbe);
 
+#ifdef VTK_NODE_PLUS_VTKELLIPSOIDTENSORPROBEREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKELLIPSOIDTENSORPROBEREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

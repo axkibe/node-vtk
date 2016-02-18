@@ -10,6 +10,7 @@
 #include <vtkImageDecomposeFilter.h>
 
 #include "vtkImageIterateFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDecomposeFilterWrap : public VtkImageIterateFilterWrap
 {
@@ -35,6 +36,10 @@ class VtkImageDecomposeFilterWrap : public VtkImageIterateFilterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDECOMPOSEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDECOMPOSEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

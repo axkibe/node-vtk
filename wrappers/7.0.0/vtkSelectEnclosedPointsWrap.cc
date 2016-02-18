@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkSelectEnclosedPointsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkSelectEnclosedPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKSELECTENCLOSEDPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSELECTENCLOSEDPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

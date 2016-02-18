@@ -10,6 +10,7 @@
 #include <vtkAreaContourSpectrumFilter.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAreaContourSpectrumFilterWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkAreaContourSpectrumFilterWrap : public VtkDataObjectAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAREACONTOURSPECTRUMFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAREACONTOURSPECTRUMFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

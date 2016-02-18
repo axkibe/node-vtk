@@ -10,6 +10,7 @@
 #include <vtkParallelAMRUtilities.h>
 
 #include "vtkAMRUtilitiesWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelAMRUtilitiesWrap : public VtkAMRUtilitiesWrap
 {
@@ -35,6 +36,10 @@ class VtkParallelAMRUtilitiesWrap : public VtkAMRUtilitiesWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELAMRUTILITIESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELAMRUTILITIESWRAP_CLASSDEF
+#endif
 };
 
 #endif

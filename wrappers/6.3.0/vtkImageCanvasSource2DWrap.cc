@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageCanvasSource2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -153,6 +153,9 @@ void VtkImageCanvasSource2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECANVASSOURCE2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECANVASSOURCE2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

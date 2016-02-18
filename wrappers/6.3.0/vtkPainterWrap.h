@@ -10,6 +10,7 @@
 #include <vtkPainter.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPainterWrap : public VtkObjectWrap
 {
@@ -50,6 +51,10 @@ class VtkPainterWrap : public VtkObjectWrap
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

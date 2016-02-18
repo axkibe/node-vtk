@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkStreamerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkInitialValueProblemSolverWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -197,6 +197,9 @@ void VtkStreamerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VorticityOn", VorticityOn);
 	Nan::SetPrototypeMethod(tpl, "vorticityOn", VorticityOn);
 
+#ifdef VTK_NODE_PLUS_VTKSTREAMERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTREAMERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

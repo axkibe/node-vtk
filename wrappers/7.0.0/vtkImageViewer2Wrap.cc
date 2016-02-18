@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkImageViewer2Wrap.h"
 #include "vtkImageDataWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkImageMapToWindowLevelColorsWrap.h"
 #include "vtkInteractorStyleImageWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -168,6 +168,9 @@ void VtkImageViewer2Wrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateDisplayExtent", UpdateDisplayExtent);
 	Nan::SetPrototypeMethod(tpl, "updateDisplayExtent", UpdateDisplayExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEVIEWER2WRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEVIEWER2WRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

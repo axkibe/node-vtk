@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDensifyPolyDataWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +50,9 @@ void VtkDensifyPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfSubdivisions", GetNumberOfSubdivisions);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfSubdivisions", GetNumberOfSubdivisions);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -59,6 +62,12 @@ void VtkDensifyPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubdivisions", SetNumberOfSubdivisions);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfSubdivisions", SetNumberOfSubdivisions);
+
+#ifdef VTK_NODE_PLUS_VTKDENSIFYPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDENSIFYPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -100,6 +109,20 @@ void VtkDensifyPolyDataWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Va
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkDensifyPolyDataWrap::GetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDensifyPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDensifyPolyDataWrap>(info.Holder());
+	vtkDensifyPolyData *native = (vtkDensifyPolyData *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfSubdivisions();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkDensifyPolyDataWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +196,25 @@ void VtkDensifyPolyDataWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Va
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDensifyPolyDataWrap::SetNumberOfSubdivisions(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDensifyPolyDataWrap *wrapper = ObjectWrap::Unwrap<VtkDensifyPolyDataWrap>(info.Holder());
+	vtkDensifyPolyData *native = (vtkDensifyPolyData *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfSubdivisions(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

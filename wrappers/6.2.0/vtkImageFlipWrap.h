@@ -10,6 +10,7 @@
 #include <vtkImageFlip.h>
 
 #include "vtkImageResliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageFlipWrap : public VtkImageResliceWrap
 {
@@ -45,6 +46,10 @@ class VtkImageFlipWrap : public VtkImageResliceWrap
 		static void SetFilteredAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFlipAboutOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreserveImageExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEFLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEFLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

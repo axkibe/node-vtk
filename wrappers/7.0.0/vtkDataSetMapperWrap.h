@@ -10,6 +10,7 @@
 #include <vtkDataSetMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetMapperWrap : public VtkMapperWrap
 {
@@ -38,6 +39,10 @@ class VtkDataSetMapperWrap : public VtkMapperWrap
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

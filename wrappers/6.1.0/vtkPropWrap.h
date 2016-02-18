@@ -10,6 +10,7 @@
 #include <vtkProp.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPropWrap : public VtkObjectWrap
 {
@@ -88,6 +89,10 @@ class VtkPropWrap : public VtkObjectWrap
 		static void UseBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROPWRAP_CLASSDEF
+#endif
 };
 
 #endif

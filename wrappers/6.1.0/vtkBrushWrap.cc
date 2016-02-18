@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkBrushWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -53,8 +53,14 @@ void VtkBrushWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetColor", GetColor);
+	Nan::SetPrototypeMethod(tpl, "getColor", GetColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetColorF", GetColorF);
 	Nan::SetPrototypeMethod(tpl, "getColorF", GetColorF);
+
+	Nan::SetPrototypeMethod(tpl, "GetOpacity", GetOpacity);
+	Nan::SetPrototypeMethod(tpl, "getOpacity", GetOpacity);
 
 	Nan::SetPrototypeMethod(tpl, "GetOpacityF", GetOpacityF);
 	Nan::SetPrototypeMethod(tpl, "getOpacityF", GetOpacityF);
@@ -74,8 +80,14 @@ void VtkBrushWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetColor", SetColor);
+	Nan::SetPrototypeMethod(tpl, "setColor", SetColor);
+
 	Nan::SetPrototypeMethod(tpl, "SetColorF", SetColorF);
 	Nan::SetPrototypeMethod(tpl, "setColorF", SetColorF);
+
+	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
+	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
 	Nan::SetPrototypeMethod(tpl, "SetOpacityF", SetOpacityF);
 	Nan::SetPrototypeMethod(tpl, "setOpacityF", SetOpacityF);
@@ -86,6 +98,9 @@ void VtkBrushWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTextureProperties", SetTextureProperties);
 	Nan::SetPrototypeMethod(tpl, "setTextureProperties", SetTextureProperties);
 
+#ifdef VTK_NODE_PLUS_VTKBRUSHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBRUSHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -149,6 +164,62 @@ void VtkBrushWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
 }
 
+void VtkBrushWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
+	vtkBrush *native = (vtkBrush *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint8Array())
+	{
+		v8::Local<v8::Uint8Array>a0(v8::Local<v8::Uint8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			(unsigned char *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned char b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBrushWrap::GetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
@@ -203,6 +274,20 @@ void VtkBrushWrap::GetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info)
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBrushWrap::GetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
+	vtkBrush *native = (vtkBrush *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetOpacity();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkBrushWrap::GetOpacityF(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -332,6 +417,97 @@ void VtkBrushWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkBrushWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
+	vtkBrush *native = (vtkBrush *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint8Array())
+	{
+		v8::Local<v8::Uint8Array>a0(v8::Local<v8::Uint8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColor(
+			(unsigned char *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned char b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetColor(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+								if(info.Length() != 3)
+				{
+					Nan::ThrowError("Too many parameters.");
+					return;
+				}
+				native->SetColor(
+					info[0]->Uint32Value(),
+					info[1]->Uint32Value(),
+					info[2]->Uint32Value()
+				);
+				return;
+			}
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkBrushWrap::SetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
@@ -419,6 +595,25 @@ void VtkBrushWrap::SetColorF(const Nan::FunctionCallbackInfo<v8::Value>& info)
 				return;
 			}
 		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkBrushWrap::SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkBrushWrap *wrapper = ObjectWrap::Unwrap<VtkBrushWrap>(info.Holder());
+	vtkBrush *native = (vtkBrush *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetOpacity(
+			info[0]->Uint32Value()
+		);
+		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

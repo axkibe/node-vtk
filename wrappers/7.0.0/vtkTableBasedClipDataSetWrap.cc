@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkTableBasedClipDataSetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
 #include "vtkUnstructuredGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -158,6 +158,9 @@ void VtkTableBasedClipDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseValueAsOffsetOn", UseValueAsOffsetOn);
 	Nan::SetPrototypeMethod(tpl, "useValueAsOffsetOn", UseValueAsOffsetOn);
 
+#ifdef VTK_NODE_PLUS_VTKTABLEBASEDCLIPDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLEBASEDCLIPDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

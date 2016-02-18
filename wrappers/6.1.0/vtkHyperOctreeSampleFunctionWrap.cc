@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHyperOctreeAlgorithmWrap.h"
 #include "vtkHyperOctreeSampleFunctionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkHyperOctreeSampleFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREESAMPLEFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREESAMPLEFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

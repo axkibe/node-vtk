@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExecutiveWrap.h"
 #include "vtkDemandDrivenPipelineWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationRequestKeyWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkDemandDrivenPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePipelineMTime", UpdatePipelineMTime);
 	Nan::SetPrototypeMethod(tpl, "updatePipelineMTime", UpdatePipelineMTime);
 
+#ifdef VTK_NODE_PLUS_VTKDEMANDDRIVENPIPELINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEMANDDRIVENPIPELINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

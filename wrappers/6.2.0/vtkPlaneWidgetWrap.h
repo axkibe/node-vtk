@@ -10,6 +10,7 @@
 #include <vtkPlaneWidget.h>
 
 #include "vtkPolyDataSourceWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 {
@@ -76,6 +77,10 @@ class VtkPlaneWidgetWrap : public VtkPolyDataSourceWidgetWrap
 		static void SetRepresentationToWireframe(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePlacement(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLANEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLANEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

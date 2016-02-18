@@ -10,6 +10,7 @@
 #include <vtkGeoCamera.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoCameraWrap : public VtkObjectWrap
 {
@@ -57,6 +58,10 @@ class VtkGeoCameraWrap : public VtkObjectWrap
 		static void SetOriginLatitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOriginLongitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

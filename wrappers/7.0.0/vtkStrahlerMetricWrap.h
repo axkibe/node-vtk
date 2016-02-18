@@ -10,6 +10,7 @@
 #include <vtkStrahlerMetric.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStrahlerMetricWrap : public VtkTreeAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkStrahlerMetricWrap : public VtkTreeAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMetricArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRAHLERMETRICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRAHLERMETRICWRAP_CLASSDEF
+#endif
 };
 
 #endif

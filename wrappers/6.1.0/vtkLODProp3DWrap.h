@@ -10,6 +10,7 @@
 #include <vtkLODProp3D.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLODProp3DWrap : public VtkProp3DWrap
 {
@@ -80,6 +81,10 @@ class VtkLODProp3DWrap : public VtkProp3DWrap
 		static void SetSelectedLODID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedPickLODID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLODPROP3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLODPROP3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

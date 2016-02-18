@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkFieldDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -58,6 +58,9 @@ void VtkTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "Dump", Dump);
+	Nan::SetPrototypeMethod(tpl, "dump", Dump);
+
 	Nan::SetPrototypeMethod(tpl, "GetAttributesAsFieldData", GetAttributesAsFieldData);
 	Nan::SetPrototypeMethod(tpl, "getAttributesAsFieldData", GetAttributesAsFieldData);
 
@@ -97,6 +100,9 @@ void VtkTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -162,6 +168,29 @@ void VtkTableWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info)
 			(vtkDataObject *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkTableWrap::Dump(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTableWrap *wrapper = ObjectWrap::Unwrap<VtkTableWrap>(info.Holder());
+	vtkTable *native = (vtkTable *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->Dump(
+				info[0]->Uint32Value(),
+				info[1]->Int32Value()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

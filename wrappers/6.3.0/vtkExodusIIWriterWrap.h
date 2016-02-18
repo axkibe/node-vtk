@@ -10,6 +10,7 @@
 #include <vtkExodusIIWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExodusIIWriterWrap : public VtkWriterWrap
 {
@@ -59,6 +60,10 @@ class VtkExodusIIWriterWrap : public VtkWriterWrap
 		static void WriteOutGlobalElementIdArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteOutGlobalNodeIdArrayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteOutGlobalNodeIdArrayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXODUSIIWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXODUSIIWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPolyLine.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyLineWrap : public VtkCellWrap
 {
@@ -44,6 +45,10 @@ class VtkPolyLineWrap : public VtkCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

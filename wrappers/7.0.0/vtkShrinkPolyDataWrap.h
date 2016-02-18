@@ -10,6 +10,7 @@
 #include <vtkShrinkPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkShrinkPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkShrinkPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShrinkFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSHRINKPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSHRINKPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

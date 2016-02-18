@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkTransmitImageDataPieceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkTransmitImageDataPieceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCreateGhostCells", SetCreateGhostCells);
 	Nan::SetPrototypeMethod(tpl, "setCreateGhostCells", SetCreateGhostCells);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSMITIMAGEDATAPIECEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSMITIMAGEDATAPIECEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

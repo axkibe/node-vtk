@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkAppendFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkDataSetCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkAppendFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputPointsPrecision", SetOutputPointsPrecision);
 	Nan::SetPrototypeMethod(tpl, "setOutputPointsPrecision", SetOutputPointsPrecision);
 
+#ifdef VTK_NODE_PLUS_VTKAPPENDFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPENDFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

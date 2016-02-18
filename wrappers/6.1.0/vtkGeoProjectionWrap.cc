@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGeoProjectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkGeoProjectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOptionalParameter", SetOptionalParameter);
 	Nan::SetPrototypeMethod(tpl, "setOptionalParameter", SetOptionalParameter);
 
+#ifdef VTK_NODE_PLUS_VTKGEOPROJECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOPROJECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

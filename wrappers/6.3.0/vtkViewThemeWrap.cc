@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkViewThemeWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -261,6 +261,9 @@ void VtkViewThemeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexLabelColor", SetVertexLabelColor);
 	Nan::SetPrototypeMethod(tpl, "setVertexLabelColor", SetVertexLabelColor);
 
+#ifdef VTK_NODE_PLUS_VTKVIEWTHEMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIEWTHEMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

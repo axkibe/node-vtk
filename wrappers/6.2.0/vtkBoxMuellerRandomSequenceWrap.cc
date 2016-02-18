@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGaussianRandomSequenceWrap.h"
 #include "vtkBoxMuellerRandomSequenceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRandomSequenceWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkBoxMuellerRandomSequenceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUniformSequence", SetUniformSequence);
 	Nan::SetPrototypeMethod(tpl, "setUniformSequence", SetUniformSequence);
 
+#ifdef VTK_NODE_PLUS_VTKBOXMUELLERRANDOMSEQUENCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBOXMUELLERRANDOMSEQUENCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

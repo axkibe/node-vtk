@@ -10,6 +10,7 @@
 #include <vtkTreeOrbitLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeOrbitLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -42,6 +43,10 @@ class VtkTreeOrbitLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetChildRadiusFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLeafSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLogSpacingValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEORBITLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEORBITLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

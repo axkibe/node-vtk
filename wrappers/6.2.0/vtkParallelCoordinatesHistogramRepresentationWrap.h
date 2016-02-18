@@ -10,6 +10,7 @@
 #include <vtkParallelCoordinatesHistogramRepresentation.h>
 
 #include "vtkParallelCoordinatesRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelCoordinatesHistogramRepresentationWrap : public VtkParallelCoordinatesRepresentationWrap
 {
@@ -50,6 +51,10 @@ class VtkParallelCoordinatesHistogramRepresentationWrap : public VtkParallelCoor
 		static void SwapAxisPositions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseHistogramsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseHistogramsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESHISTOGRAMREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELCOORDINATESHISTOGRAMREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

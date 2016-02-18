@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
 #include "vtkUnstructuredGridLinearRayIntegratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkUnstructuredGridLinearRayIntegratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDLINEARRAYINTEGRATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDLINEARRAYINTEGRATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

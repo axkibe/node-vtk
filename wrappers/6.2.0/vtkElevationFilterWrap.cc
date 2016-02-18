@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkElevationFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkElevationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+#ifdef VTK_NODE_PLUS_VTKELEVATIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKELEVATIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

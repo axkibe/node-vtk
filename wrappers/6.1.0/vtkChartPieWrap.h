@@ -10,6 +10,7 @@
 #include <vtkChartPie.h>
 
 #include "vtkChartWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartPieWrap : public VtkChartWrap
 {
@@ -39,6 +40,10 @@ class VtkChartPieWrap : public VtkChartWrap
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShowLegend(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTPIEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTPIEWRAP_CLASSDEF
+#endif
 };
 
 #endif

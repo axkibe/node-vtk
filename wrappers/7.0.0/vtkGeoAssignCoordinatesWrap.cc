@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkGeoAssignCoordinatesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkGeoAssignCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTransform", SetTransform);
 	Nan::SetPrototypeMethod(tpl, "setTransform", SetTransform);
 
+#ifdef VTK_NODE_PLUS_VTKGEOASSIGNCOORDINATESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOASSIGNCOORDINATESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

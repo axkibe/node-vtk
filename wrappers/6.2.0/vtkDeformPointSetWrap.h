@@ -10,6 +10,7 @@
 #include <vtkDeformPointSet.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDeformPointSetWrap : public VtkPointSetAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkDeformPointSetWrap : public VtkPointSetAlgorithmWrap
 		static void SetControlMeshConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetControlMeshData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInitializeWeights(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEFORMPOINTSETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEFORMPOINTSETWRAP_CLASSDEF
+#endif
 };
 
 #endif

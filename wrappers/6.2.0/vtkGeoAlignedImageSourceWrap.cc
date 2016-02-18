@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGeoSourceWrap.h"
 #include "vtkGeoAlignedImageSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGeoTreeNodeWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkGeoAlignedImageSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPowerOfTwoSize", SetPowerOfTwoSize);
 	Nan::SetPrototypeMethod(tpl, "setPowerOfTwoSize", SetPowerOfTwoSize);
 
+#ifdef VTK_NODE_PLUS_VTKGEOALIGNEDIMAGESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOALIGNEDIMAGESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

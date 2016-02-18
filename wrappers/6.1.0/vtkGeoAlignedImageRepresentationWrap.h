@@ -10,6 +10,7 @@
 #include <vtkGeoAlignedImageRepresentation.h>
 
 #include "vtkDataRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoAlignedImageRepresentationWrap : public VtkDataRepresentationWrap
 {
@@ -37,6 +38,10 @@ class VtkGeoAlignedImageRepresentationWrap : public VtkDataRepresentationWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SaveDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOALIGNEDIMAGEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOALIGNEDIMAGEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

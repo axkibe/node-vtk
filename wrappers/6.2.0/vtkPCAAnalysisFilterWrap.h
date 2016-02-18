@@ -10,6 +10,7 @@
 #include <vtkPCAAnalysisFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPCAAnalysisFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkPCAAnalysisFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPCAANALYSISFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPCAANALYSISFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

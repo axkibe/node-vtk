@@ -10,6 +10,7 @@
 #include <vtkASCIITextCodec.h>
 
 #include "vtkTextCodecWrap.h"
+#include "../../plus/plus.h"
 
 class VtkASCIITextCodecWrap : public VtkTextCodecWrap
 {
@@ -35,6 +36,10 @@ class VtkASCIITextCodecWrap : public VtkTextCodecWrap
 		static void Name(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKASCIITEXTCODECWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKASCIITEXTCODECWRAP_CLASSDEF
+#endif
 };
 
 #endif

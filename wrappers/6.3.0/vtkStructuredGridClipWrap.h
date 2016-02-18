@@ -10,6 +10,7 @@
 #include <vtkStructuredGridClip.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridClipWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkStructuredGridClipWrap : public VtkStructuredGridAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClipData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

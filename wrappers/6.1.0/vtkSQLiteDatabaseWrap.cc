@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSQLDatabaseWrap.h"
 #include "vtkSQLiteDatabaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSQLQueryWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkSQLiteDatabaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDatabaseFileName", SetDatabaseFileName);
 	Nan::SetPrototypeMethod(tpl, "setDatabaseFileName", SetDatabaseFileName);
 
+#ifdef VTK_NODE_PLUS_VTKSQLITEDATABASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSQLITEDATABASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

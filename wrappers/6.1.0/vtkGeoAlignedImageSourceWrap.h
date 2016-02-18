@@ -10,6 +10,7 @@
 #include <vtkGeoAlignedImageSource.h>
 
 #include "vtkGeoSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoAlignedImageSourceWrap : public VtkGeoSourceWrap
 {
@@ -49,6 +50,10 @@ class VtkGeoAlignedImageSourceWrap : public VtkGeoSourceWrap
 		static void SetLongitudeRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOverlap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPowerOfTwoSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOALIGNEDIMAGESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOALIGNEDIMAGESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

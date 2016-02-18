@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkHierarchicalGraphPipelineWrap.h"
 #include "vtkActorWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkViewThemeWrap.h"
 #include "vtkRenderViewWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkHierarchicalGraphPipelineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VisibilityOn", VisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "visibilityOn", VisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALGRAPHPIPELINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHIERARCHICALGRAPHPIPELINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

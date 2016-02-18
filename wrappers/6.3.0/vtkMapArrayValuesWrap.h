@@ -10,6 +10,7 @@
 #include <vtkMapArrayValues.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMapArrayValuesWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkMapArrayValuesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMAPARRAYVALUESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMAPARRAYVALUESWRAP_CLASSDEF
+#endif
 };
 
 #endif

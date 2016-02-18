@@ -10,6 +10,7 @@
 #include <vtkFlyingEdgesPlaneCutter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFlyingEdgesPlaneCutterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkFlyingEdgesPlaneCutterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetArrayComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFLYINGEDGESPLANECUTTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFLYINGEDGESPLANECUTTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

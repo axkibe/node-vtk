@@ -10,6 +10,7 @@
 #include <vtkPolygonsPainter.h>
 
 #include "vtkPrimitivePainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolygonsPainterWrap : public VtkPrimitivePainterWrap
 {
@@ -33,6 +34,10 @@ class VtkPolygonsPainterWrap : public VtkPrimitivePainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYGONSPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYGONSPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

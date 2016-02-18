@@ -10,6 +10,7 @@
 #include <vtkGenericGlyph3DFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericGlyph3DFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -88,6 +89,10 @@ class VtkGenericGlyph3DFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetVectorModeToUseNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToUseVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToVectorRotationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICGLYPH3DFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICGLYPH3DFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkCheckerboardWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCheckerboardRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkCheckerboardWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKCHECKERBOARDWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHECKERBOARDWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

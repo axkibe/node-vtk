@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSelectionAlgorithmWrap.h"
 #include "vtkCellDistanceSelectorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkSelectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkCellDistanceSelectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputSelectionConnection", SetInputSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setInputSelectionConnection", SetInputSelectionConnection);
 
+#ifdef VTK_NODE_PLUS_VTKCELLDISTANCESELECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLDISTANCESELECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

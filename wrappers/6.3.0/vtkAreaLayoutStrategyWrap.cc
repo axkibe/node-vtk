@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAreaLayoutStrategyWrap.h"
 #include "vtkTreeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkAreaLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShrinkPercentage", SetShrinkPercentage);
 	Nan::SetPrototypeMethod(tpl, "setShrinkPercentage", SetShrinkPercentage);
 
+#ifdef VTK_NODE_PLUS_VTKAREALAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAREALAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

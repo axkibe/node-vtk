@@ -10,6 +10,7 @@
 #include <vtkImplicitSelectionLoop.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitSelectionLoopWrap : public VtkImplicitFunctionWrap
 {
@@ -43,6 +44,10 @@ class VtkImplicitSelectionLoopWrap : public VtkImplicitFunctionWrap
 		static void SetAutomaticNormalGeneration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLoop(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITSELECTIONLOOPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITSELECTIONLOOPWRAP_CLASSDEF
+#endif
 };
 
 #endif

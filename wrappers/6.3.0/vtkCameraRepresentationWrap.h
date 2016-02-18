@@ -10,6 +10,7 @@
 #include <vtkCameraRepresentation.h>
 
 #include "vtkBorderRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraRepresentationWrap : public VtkBorderRepresentationWrap
 {
@@ -53,6 +54,10 @@ class VtkCameraRepresentationWrap : public VtkBorderRepresentationWrap
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfFrames(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

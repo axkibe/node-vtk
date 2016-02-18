@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkPCAAnalysisFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkFloatArrayWrap.h"
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkPCAAnalysisFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKPCAANALYSISFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPCAANALYSISFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

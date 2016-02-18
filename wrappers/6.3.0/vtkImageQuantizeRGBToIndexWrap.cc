@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageQuantizeRGBToIndexWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkImageQuantizeRGBToIndexWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfColors", SetNumberOfColors);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfColors", SetNumberOfColors);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEQUANTIZERGBTOINDEXWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEQUANTIZERGBTOINDEXWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

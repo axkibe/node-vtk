@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageWeightedSumWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkImageWeightedSumWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWeights", SetWeights);
 	Nan::SetPrototypeMethod(tpl, "setWeights", SetWeights);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEWEIGHTEDSUMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEWEIGHTEDSUMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkLinearContourLineInterpolator.h>
 
 #include "vtkContourLineInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLinearContourLineInterpolatorWrap : public VtkContourLineInterpolatorWrap
 {
@@ -34,6 +35,10 @@ class VtkLinearContourLineInterpolatorWrap : public VtkContourLineInterpolatorWr
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEARCONTOURLINEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEARCONTOURLINEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

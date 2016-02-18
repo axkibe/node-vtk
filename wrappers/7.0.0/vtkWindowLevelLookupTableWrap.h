@@ -10,6 +10,7 @@
 #include <vtkWindowLevelLookupTable.h>
 
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWindowLevelLookupTableWrap : public VtkLookupTableWrap
 {
@@ -46,6 +47,10 @@ class VtkWindowLevelLookupTableWrap : public VtkLookupTableWrap
 		static void SetMaximumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumTableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWINDOWLEVELLOOKUPTABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWINDOWLEVELLOOKUPTABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

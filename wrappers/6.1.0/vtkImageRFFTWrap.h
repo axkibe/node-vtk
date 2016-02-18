@@ -10,6 +10,7 @@
 #include <vtkImageRFFT.h>
 
 #include "vtkImageFourierFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageRFFTWrap : public VtkImageFourierFilterWrap
 {
@@ -34,6 +35,10 @@ class VtkImageRFFTWrap : public VtkImageFourierFilterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERFFTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERFFTWRAP_CLASSDEF
+#endif
 };
 
 #endif

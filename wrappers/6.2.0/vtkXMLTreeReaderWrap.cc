@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAlgorithmWrap.h"
 #include "vtkXMLTreeReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkXMLTreeReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXMLString", SetXMLString);
 	Nan::SetPrototypeMethod(tpl, "setXMLString", SetXMLString);
 
+#ifdef VTK_NODE_PLUS_VTKXMLTREEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLTREEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

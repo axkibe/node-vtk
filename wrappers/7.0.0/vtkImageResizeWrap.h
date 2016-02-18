@@ -10,6 +10,7 @@
 #include <vtkImageResize.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageResizeWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkImageResizeWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetResizeMethodToMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResizeMethodToOutputDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResizeMethodToOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERESIZEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERESIZEWRAP_CLASSDEF
+#endif
 };
 
 #endif

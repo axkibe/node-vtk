@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitBooleanWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkImplicitBooleanWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOperationTypeToUnionOfMagnitudes", SetOperationTypeToUnionOfMagnitudes);
 	Nan::SetPrototypeMethod(tpl, "setOperationTypeToUnionOfMagnitudes", SetOperationTypeToUnionOfMagnitudes);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITBOOLEANWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITBOOLEANWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

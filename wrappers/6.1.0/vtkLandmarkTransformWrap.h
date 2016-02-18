@@ -10,6 +10,7 @@
 #include <vtkLandmarkTransform.h>
 
 #include "vtkLinearTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLandmarkTransformWrap : public VtkLinearTransformWrap
 {
@@ -45,6 +46,10 @@ class VtkLandmarkTransformWrap : public VtkLinearTransformWrap
 		static void SetModeToSimilarity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetLandmarks(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLANDMARKTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLANDMARKTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

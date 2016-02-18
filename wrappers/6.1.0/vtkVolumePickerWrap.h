@@ -10,6 +10,7 @@
 #include <vtkVolumePicker.h>
 
 #include "vtkCellPickerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumePickerWrap : public VtkCellPickerWrap
 {
@@ -38,6 +39,10 @@ class VtkVolumePickerWrap : public VtkCellPickerWrap
 		static void PickCroppingPlanesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickCroppingPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMEPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMEPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

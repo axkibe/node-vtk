@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkTemporalShiftScaleWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkTemporalShiftScaleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScale", SetScale);
 	Nan::SetPrototypeMethod(tpl, "setScale", SetScale);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSHIFTSCALEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALSHIFTSCALEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

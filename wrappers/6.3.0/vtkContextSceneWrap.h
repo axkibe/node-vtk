@@ -10,6 +10,7 @@
 #include <vtkContextScene.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextSceneWrap : public VtkObjectWrap
 {
@@ -29,12 +30,15 @@ class VtkContextSceneWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearItems(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAnnotationLink(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDirty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfItems(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSceneHeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSceneWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -58,6 +62,10 @@ class VtkContextSceneWrap : public VtkObjectWrap
 		static void SetScaleTiles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseBufferId(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTSCENEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTSCENEWRAP_CLASSDEF
+#endif
 };
 
 #endif

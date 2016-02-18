@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageLaplacianWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkImageLaplacianWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGELAPLACIANWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGELAPLACIANWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractCellLocatorWrap.h"
 #include "vtkModifiedBSPTreeWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPointsWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkIdListCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkModifiedBSPTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKMODIFIEDBSPTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMODIFIEDBSPTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

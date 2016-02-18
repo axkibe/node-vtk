@@ -10,6 +10,7 @@
 #include <vtkColorTransferControlPointsItem.h>
 
 #include "vtkControlPointsItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkColorTransferControlPointsItemWrap : public VtkControlPointsItemWrap
 {
@@ -37,6 +38,10 @@ class VtkColorTransferControlPointsItemWrap : public VtkControlPointsItemWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorFill(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLORTRANSFERCONTROLPOINTSITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLORTRANSFERCONTROLPOINTSITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

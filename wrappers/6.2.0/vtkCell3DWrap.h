@@ -10,6 +10,7 @@
 #include <vtkCell3D.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCell3DWrap : public VtkCellWrap
 {
@@ -38,6 +39,10 @@ class VtkCell3DWrap : public VtkCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMergeTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELL3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELL3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

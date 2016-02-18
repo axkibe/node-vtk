@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkInteractorObserverWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkCommandWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -142,6 +142,9 @@ void VtkInteractorObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPickingManaged", SetPickingManaged);
 	Nan::SetPrototypeMethod(tpl, "setPickingManaged", SetPickingManaged);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTOROBSERVERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkExtractGrid.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractGridWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractGridWrap : public VtkStructuredGridAlgorithmWrap
 		static void SetIncludeBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

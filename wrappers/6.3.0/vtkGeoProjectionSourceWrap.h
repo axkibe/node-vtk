@@ -10,6 +10,7 @@
 #include <vtkGeoProjectionSource.h>
 
 #include "vtkGeoSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoProjectionSourceWrap : public VtkGeoSourceWrap
 {
@@ -40,6 +41,10 @@ class VtkGeoProjectionSourceWrap : public VtkGeoSourceWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinCellsPerNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProjection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOPROJECTIONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOPROJECTIONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

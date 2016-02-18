@@ -10,6 +10,7 @@
 #include <vtkImageConnector.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageConnectorWrap : public VtkObjectWrap
 {
@@ -30,11 +31,19 @@ class VtkImageConnectorWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void MarkData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllSeeds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetConnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetUnconnectedValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECONNECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECONNECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

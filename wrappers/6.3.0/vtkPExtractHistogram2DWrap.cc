@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExtractHistogram2DWrap.h"
 #include "vtkPExtractHistogram2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+#ifdef VTK_NODE_PLUS_VTKPEXTRACTHISTOGRAM2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPEXTRACTHISTOGRAM2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

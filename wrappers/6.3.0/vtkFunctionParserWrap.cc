@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkFunctionParserWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -130,6 +130,9 @@ void VtkFunctionParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorVariableValue", SetVectorVariableValue);
 	Nan::SetPrototypeMethod(tpl, "setVectorVariableValue", SetVectorVariableValue);
 
+#ifdef VTK_NODE_PLUS_VTKFUNCTIONPARSERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFUNCTIONPARSERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

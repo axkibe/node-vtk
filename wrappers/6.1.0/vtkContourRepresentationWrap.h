@@ -10,6 +10,7 @@
 #include <vtkContourRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContourRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -90,6 +91,10 @@ class VtkContourRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ShowSelectedNodesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSelectedNodesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToggleActiveNodeSelected(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTOURREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTOURREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

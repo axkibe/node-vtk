@@ -10,6 +10,7 @@
 #include <vtkGroupLeafVertices.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGroupLeafVerticesWrap : public VtkTreeAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkGroupLeafVerticesWrap : public VtkTreeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGroupDomain(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGROUPLEAFVERTICESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGROUPLEAFVERTICESWRAP_CLASSDEF
+#endif
 };
 
 #endif

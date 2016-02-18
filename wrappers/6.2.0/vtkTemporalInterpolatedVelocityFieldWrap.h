@@ -10,6 +10,7 @@
 #include <vtkTemporalInterpolatedVelocityField.h>
 
 #include "vtkFunctionSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 {
@@ -41,6 +42,10 @@ class VtkTemporalInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void SelectVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataSetAtTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowCacheResults(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

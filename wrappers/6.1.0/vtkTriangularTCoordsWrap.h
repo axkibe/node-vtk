@@ -10,6 +10,7 @@
 #include <vtkTriangularTCoords.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTriangularTCoordsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkTriangularTCoordsWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRIANGULARTCOORDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRIANGULARTCOORDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

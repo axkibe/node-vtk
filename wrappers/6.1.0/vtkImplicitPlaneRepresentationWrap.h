@@ -10,6 +10,7 @@
 #include <vtkImplicitPlaneRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitPlaneRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -109,6 +110,10 @@ class VtkImplicitPlaneRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void TubingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePlacement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPLANEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITPLANEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

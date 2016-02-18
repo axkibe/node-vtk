@@ -10,6 +10,7 @@
 #include <vtkGeoView.h>
 
 #include "vtkRenderViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoViewWrap : public VtkRenderViewWrap
 {
@@ -45,6 +46,10 @@ class VtkGeoViewWrap : public VtkRenderViewWrap
 		static void SetGeoInteractorStyle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerrain(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

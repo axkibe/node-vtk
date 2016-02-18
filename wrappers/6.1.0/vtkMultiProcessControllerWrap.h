@@ -10,6 +10,7 @@
 #include <vtkMultiProcessController.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiProcessControllerWrap : public VtkObjectWrap
 {
@@ -65,6 +66,10 @@ class VtkMultiProcessControllerWrap : public VtkObjectWrap
 		static void TriggerBreakRMIs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriggerRMI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriggerRMIOnAllChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIPROCESSCONTROLLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTIPROCESSCONTROLLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkOpenGLPolyDataMapper.h>
 
 #include "vtkPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLPolyDataMapperWrap : public VtkPolyDataMapperWrap
 {
@@ -36,6 +37,10 @@ class VtkOpenGLPolyDataMapperWrap : public VtkPolyDataMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPOLYDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLPOLYDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkMultiCorrelativeStatisticsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkMultiCorrelativeStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMedianAbsoluteDeviation", SetMedianAbsoluteDeviation);
 	Nan::SetPrototypeMethod(tpl, "setMedianAbsoluteDeviation", SetMedianAbsoluteDeviation);
 
+#ifdef VTK_NODE_PLUS_VTKMULTICORRELATIVESTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTICORRELATIVESTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkRectilinearGridToTetrahedraWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkRectilinearGridToTetrahedraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTetraPerCellTo6", SetTetraPerCellTo6);
 	Nan::SetPrototypeMethod(tpl, "setTetraPerCellTo6", SetTetraPerCellTo6);
 
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDTOTETRAHEDRAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTILINEARGRIDTOTETRAHEDRAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

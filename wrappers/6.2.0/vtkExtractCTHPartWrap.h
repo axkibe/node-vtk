@@ -10,6 +10,7 @@
 #include <vtkExtractCTHPart.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractCTHPartWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkExtractCTHPartWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetGenerateTriangles(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRemoveGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolumeFractionSurfaceValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTCTHPARTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTCTHPARTWRAP_CLASSDEF
+#endif
 };
 
 #endif

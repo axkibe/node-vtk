@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkProcessWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -175,6 +175,9 @@ void VtkMultiProcessControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TriggerRMIOnAllChildren", TriggerRMIOnAllChildren);
 	Nan::SetPrototypeMethod(tpl, "triggerRMIOnAllChildren", TriggerRMIOnAllChildren);
 
+#ifdef VTK_NODE_PLUS_VTKMULTIPROCESSCONTROLLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTIPROCESSCONTROLLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

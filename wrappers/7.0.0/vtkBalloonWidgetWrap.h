@@ -10,6 +10,7 @@
 #include <vtkBalloonWidget.h>
 
 #include "vtkHoverWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBalloonWidgetWrap : public VtkHoverWidgetWrap
 {
@@ -46,6 +47,10 @@ class VtkBalloonWidgetWrap : public VtkHoverWidgetWrap
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateBalloonImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateBalloonString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBALLOONWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBALLOONWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

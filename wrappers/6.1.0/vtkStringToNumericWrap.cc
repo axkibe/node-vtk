@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkStringToNumericWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -167,6 +167,9 @@ void VtkStringToNumericWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TrimWhitespacePriorToNumericConversionOn", TrimWhitespacePriorToNumericConversionOn);
 	Nan::SetPrototypeMethod(tpl, "trimWhitespacePriorToNumericConversionOn", TrimWhitespacePriorToNumericConversionOn);
 
+#ifdef VTK_NODE_PLUS_VTKSTRINGTONUMERICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRINGTONUMERICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

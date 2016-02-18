@@ -10,6 +10,7 @@
 #include <vtkFastNumericConversion.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFastNumericConversionWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkFastNumericConversionWrap : public VtkObjectWrap
 		static void TestQuickFloor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TestRound(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TestSafeFloor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFASTNUMERICCONVERSIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFASTNUMERICCONVERSIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

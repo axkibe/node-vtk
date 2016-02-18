@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkContourTriangulatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkCellArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkContourTriangulatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TriangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 	Nan::SetPrototypeMethod(tpl, "triangulationErrorDisplayOn", TriangulationErrorDisplayOn);
 
+#ifdef VTK_NODE_PLUS_VTKCONTOURTRIANGULATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTOURTRIANGULATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkBivariateLinearTableThreshold.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBivariateLinearTableThresholdWrap : public VtkTableAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkBivariateLinearTableThresholdWrap : public VtkTableAlgorithmWrap
 		static void SetUseNormalizedDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalizedDistanceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseNormalizedDistanceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBIVARIATELINEARTABLETHRESHOLDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBIVARIATELINEARTABLETHRESHOLDWRAP_CLASSDEF
+#endif
 };
 
 #endif

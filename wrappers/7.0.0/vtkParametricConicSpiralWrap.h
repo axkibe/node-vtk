@@ -10,6 +10,7 @@
 #include <vtkParametricConicSpiral.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricConicSpiralWrap : public VtkParametricFunctionWrap
 {
@@ -44,6 +45,10 @@ class VtkParametricConicSpiralWrap : public VtkParametricFunctionWrap
 		static void SetB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetC(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetN(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICCONICSPIRALWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICCONICSPIRALWRAP_CLASSDEF
+#endif
 };
 
 #endif

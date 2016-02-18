@@ -10,6 +10,7 @@
 #include <vtkCellDerivatives.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellDerivativesWrap : public VtkDataSetAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkCellDerivativesWrap : public VtkDataSetAlgorithmWrap
 		static void SetVectorModeToComputeGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToComputeVorticity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToPassVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLDERIVATIVESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLDERIVATIVESWRAP_CLASSDEF
+#endif
 };
 
 #endif

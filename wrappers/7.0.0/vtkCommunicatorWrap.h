@@ -10,6 +10,7 @@
 #include <vtkCommunicator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCommunicatorWrap : public VtkObjectWrap
 {
@@ -53,6 +54,10 @@ class VtkCommunicatorWrap : public VtkObjectWrap
 		static void SetNumberOfProcesses(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnMarshalDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMMUNICATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMMUNICATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

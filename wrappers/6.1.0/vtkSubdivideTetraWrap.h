@@ -10,6 +10,7 @@
 #include <vtkSubdivideTetra.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSubdivideTetraWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkSubdivideTetraWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSUBDIVIDETETRAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSUBDIVIDETETRAWRAP_CLASSDEF
+#endif
 };
 
 #endif

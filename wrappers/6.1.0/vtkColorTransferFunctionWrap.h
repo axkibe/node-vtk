@@ -10,6 +10,7 @@
 #include <vtkColorTransferFunction.h>
 
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 {
@@ -78,6 +79,10 @@ class VtkColorTransferFunctionWrap : public VtkScalarsToColorsWrap
 		static void SetScaleToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleToLog10(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLORTRANSFERFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

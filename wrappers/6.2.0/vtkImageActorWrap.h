@@ -10,6 +10,7 @@
 #include <vtkImageActor.h>
 
 #include "vtkImageSliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageActorWrap : public VtkImageSliceWrap
 {
@@ -55,6 +56,10 @@ class VtkImageActorWrap : public VtkImageSliceWrap
 		static void SetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

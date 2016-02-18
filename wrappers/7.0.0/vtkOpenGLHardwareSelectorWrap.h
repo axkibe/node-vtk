@@ -10,6 +10,7 @@
 #include <vtkOpenGLHardwareSelector.h>
 
 #include "vtkHardwareSelectorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLHardwareSelectorWrap : public VtkHardwareSelectorWrap
 {
@@ -34,7 +35,13 @@ class VtkOpenGLHardwareSelectorWrap : public VtkHardwareSelectorWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderCompositeIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RenderProcessId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLHARDWARESELECTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLHARDWARESELECTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

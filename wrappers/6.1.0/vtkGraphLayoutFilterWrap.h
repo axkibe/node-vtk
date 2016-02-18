@@ -10,6 +10,7 @@
 #include <vtkGraphLayoutFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphLayoutFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkGraphLayoutFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetThreeDimensionalLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHLAYOUTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

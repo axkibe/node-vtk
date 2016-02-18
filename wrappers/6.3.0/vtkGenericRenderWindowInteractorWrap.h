@@ -10,6 +10,7 @@
 #include <vtkGenericRenderWindowInteractor.h>
 
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericRenderWindowInteractorWrap : public VtkRenderWindowInteractorWrap
 {
@@ -38,6 +39,10 @@ class VtkGenericRenderWindowInteractorWrap : public VtkRenderWindowInteractorWra
 		static void TimerEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimerEventResetsTimerOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimerEventResetsTimerOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICRENDERWINDOWINTERACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICRENDERWINDOWINTERACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkTemporalSnapToTimeStep.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalSnapToTimeStepWrap : public VtkAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkTemporalSnapToTimeStepWrap : public VtkAlgorithmWrap
 		static void SetSnapModeToNearest(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSnapModeToNextAboveOrEqual(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSnapModeToNextBelowOrEqual(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSNAPTOTIMESTEPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALSNAPTOTIMESTEPWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageReader2Factory.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageReader2FactoryWrap : public VtkObjectWrap
 {
@@ -36,6 +37,10 @@ class VtkImageReader2FactoryWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RegisterReader(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEREADER2FACTORYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEREADER2FACTORYWRAP_CLASSDEF
+#endif
 };
 
 #endif

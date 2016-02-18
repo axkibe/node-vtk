@@ -10,6 +10,7 @@
 #include <vtkAppendSelection.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAppendSelectionWrap : public VtkSelectionAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkAppendSelectionWrap : public VtkSelectionAlgorithmWrap
 		static void SetUserManagedInputs(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserManagedInputsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UserManagedInputsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPENDSELECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPENDSELECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

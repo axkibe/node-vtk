@@ -10,6 +10,7 @@
 #include <vtkProcrustesAlignmentFilter.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProcrustesAlignmentFilterWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkProcrustesAlignmentFilterWrap : public VtkMultiBlockDataSetAlgorithmWra
 		static void SetStartFromCentroid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartFromCentroidOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartFromCentroidOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROCRUSTESALIGNMENTFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROCRUSTESALIGNMENTFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

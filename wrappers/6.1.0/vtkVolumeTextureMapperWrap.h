@@ -10,6 +10,7 @@
 #include <vtkVolumeTextureMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeTextureMapperWrap : public VtkVolumeMapperWrap
 {
@@ -41,6 +42,10 @@ class VtkVolumeTextureMapperWrap : public VtkVolumeMapperWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGradientEstimator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

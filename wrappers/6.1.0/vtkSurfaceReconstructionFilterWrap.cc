@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkSurfaceReconstructionFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkSurfaceReconstructionFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSampleSpacing", SetSampleSpacing);
 	Nan::SetPrototypeMethod(tpl, "setSampleSpacing", SetSampleSpacing);
 
+#ifdef VTK_NODE_PLUS_VTKSURFACERECONSTRUCTIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSURFACERECONSTRUCTIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

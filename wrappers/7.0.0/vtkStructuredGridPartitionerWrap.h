@@ -10,6 +10,7 @@
 #include <vtkStructuredGridPartitioner.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkStructuredGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWra
 		static void SetDuplicateNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDPARTITIONERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDPARTITIONERWRAP_CLASSDEF
+#endif
 };
 
 #endif

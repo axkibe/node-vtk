@@ -10,6 +10,7 @@
 #include <vtkGeneralTransform.h>
 
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeneralTransformWrap : public VtkAbstractTransformWrap
 {
@@ -54,6 +55,10 @@ class VtkGeneralTransformWrap : public VtkAbstractTransformWrap
 		static void Scale(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Translate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERALTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERALTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

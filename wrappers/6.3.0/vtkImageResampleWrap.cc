@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageResliceWrap.h"
 #include "vtkImageResampleWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkImageResampleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGERESAMPLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGERESAMPLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

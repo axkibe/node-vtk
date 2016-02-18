@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkParticleReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkParticleReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwapBytesOn", SwapBytesOn);
 	Nan::SetPrototypeMethod(tpl, "swapBytesOn", SwapBytesOn);
 
+#ifdef VTK_NODE_PLUS_VTKPARTICLEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARTICLEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

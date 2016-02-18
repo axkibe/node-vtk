@@ -10,6 +10,7 @@
 #include <vtkPolyDataToImageStencil.h>
 
 #include "vtkImageStencilSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataToImageStencilWrap : public VtkImageStencilSourceWrap
 {
@@ -39,6 +40,10 @@ class VtkPolyDataToImageStencilWrap : public VtkImageStencilSourceWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATATOIMAGESTENCILWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATATOIMAGESTENCILWRAP_CLASSDEF
+#endif
 };
 
 #endif

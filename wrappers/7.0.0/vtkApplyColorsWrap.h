@@ -10,6 +10,7 @@
 #include <vtkApplyColors.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkApplyColorsWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -77,6 +78,10 @@ class VtkApplyColorsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void UseCurrentAnnotationColorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsePointLookupTableOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsePointLookupTableOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPLYCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPLYCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

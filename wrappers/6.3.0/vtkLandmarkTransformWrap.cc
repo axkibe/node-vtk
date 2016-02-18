@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLinearTransformWrap.h"
 #include "vtkLandmarkTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -97,6 +97,9 @@ void VtkLandmarkTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTargetLandmarks", SetTargetLandmarks);
 	Nan::SetPrototypeMethod(tpl, "setTargetLandmarks", SetTargetLandmarks);
 
+#ifdef VTK_NODE_PLUS_VTKLANDMARKTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLANDMARKTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

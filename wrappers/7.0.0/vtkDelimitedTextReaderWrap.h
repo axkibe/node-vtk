@@ -10,6 +10,7 @@
 #include <vtkDelimitedTextReader.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDelimitedTextReaderWrap : public VtkTableAlgorithmWrap
 {
@@ -50,6 +51,7 @@ class VtkDelimitedTextReaderWrap : public VtkTableAlgorithmWrap
 		static void GetOutputPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetReplacementCharacter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetUTF8FieldDelimiters(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -79,6 +81,7 @@ class VtkDelimitedTextReaderWrap : public VtkTableAlgorithmWrap
 		static void SetOutputPedigreeIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPedigreeIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetReplacementCharacter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStringDelimiter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTrimWhitespacePriorToNumericConversion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUTF8FieldDelimiters(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -90,6 +93,10 @@ class VtkDelimitedTextReaderWrap : public VtkTableAlgorithmWrap
 		static void TrimWhitespacePriorToNumericConversionOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseStringDelimiterOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseStringDelimiterOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDELIMITEDTEXTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDELIMITEDTEXTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

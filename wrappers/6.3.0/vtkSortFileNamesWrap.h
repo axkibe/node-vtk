@@ -10,6 +10,7 @@
 #include <vtkSortFileNames.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSortFileNamesWrap : public VtkObjectWrap
 {
@@ -55,6 +56,10 @@ class VtkSortFileNamesWrap : public VtkObjectWrap
 		static void SkipDirectoriesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SkipDirectoriesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSORTFILENAMESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSORTFILENAMESWRAP_CLASSDEF
+#endif
 };
 
 #endif

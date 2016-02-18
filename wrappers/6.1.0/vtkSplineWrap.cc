@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSplineWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -139,6 +139,9 @@ void VtkSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRightValue", SetRightValue);
 	Nan::SetPrototypeMethod(tpl, "setRightValue", SetRightValue);
 
+#ifdef VTK_NODE_PLUS_VTKSPLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

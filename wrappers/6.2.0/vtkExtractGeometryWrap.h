@@ -10,6 +10,7 @@
 #include <vtkExtractGeometry.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractGeometryWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkExtractGeometryWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetExtractInside(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtractOnlyBoundaryCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImplicitFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTGEOMETRYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTGEOMETRYWRAP_CLASSDEF
+#endif
 };
 
 #endif

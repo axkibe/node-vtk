@@ -10,6 +10,7 @@
 #include <vtkPointsPainter.h>
 
 #include "vtkPrimitivePainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointsPainterWrap : public VtkPrimitivePainterWrap
 {
@@ -33,6 +34,10 @@ class VtkPointsPainterWrap : public VtkPrimitivePainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTSPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTSPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkRendererSource.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRendererSourceWrap : public VtkAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkRendererSourceWrap : public VtkAlgorithmWrap
 		static void SetWholeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WholeWindowOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WholeWindowOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERERSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERERSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

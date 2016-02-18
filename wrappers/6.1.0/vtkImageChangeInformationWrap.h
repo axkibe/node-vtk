@@ -10,6 +10,7 @@
 #include <vtkImageChangeInformation.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageChangeInformationWrap : public VtkImageAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkImageChangeInformationWrap : public VtkImageAlgorithmWrap
 		static void SetOutputOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpacingScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECHANGEINFORMATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECHANGEINFORMATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

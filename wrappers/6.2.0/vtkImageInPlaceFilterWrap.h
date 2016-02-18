@@ -10,6 +10,7 @@
 #include <vtkImageInPlaceFilter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageInPlaceFilterWrap : public VtkImageAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkImageInPlaceFilterWrap : public VtkImageAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEINPLACEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEINPLACEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

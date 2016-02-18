@@ -10,6 +10,7 @@
 #include <vtkUniformGridAMRDataIterator.h>
 
 #include "vtkCompositeDataIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformGridAMRDataIteratorWrap : public VtkCompositeDataIteratorWrap
 {
@@ -31,6 +32,9 @@ class VtkUniformGridAMRDataIteratorWrap : public VtkCompositeDataIteratorWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentFlatIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GoToFirstItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GoToNextItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -39,6 +43,10 @@ class VtkUniformGridAMRDataIteratorWrap : public VtkCompositeDataIteratorWrap
 		static void IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDAMRDATAITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMGRIDAMRDATAITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVisibilitySortWrap.h"
 #include "vtkCellCenterDepthSortWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdTypeArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkCellCenterDepthSortWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKCELLCENTERDEPTHSORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLCENTERDEPTHSORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

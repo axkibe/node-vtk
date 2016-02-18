@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContourGridWrap.h"
 #include "vtkSMPContourGridWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkSMPContourGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMergePieces", SetMergePieces);
 	Nan::SetPrototypeMethod(tpl, "setMergePieces", SetMergePieces);
 
+#ifdef VTK_NODE_PLUS_VTKSMPCONTOURGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSMPCONTOURGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

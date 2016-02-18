@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkCullerWrap.h"
 #include "vtkFrustumCoverageCullerWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkFrustumCoverageCullerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSortingStyleToNone", SetSortingStyleToNone);
 	Nan::SetPrototypeMethod(tpl, "setSortingStyleToNone", SetSortingStyleToNone);
 
+#ifdef VTK_NODE_PLUS_VTKFRUSTUMCOVERAGECULLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFRUSTUMCOVERAGECULLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

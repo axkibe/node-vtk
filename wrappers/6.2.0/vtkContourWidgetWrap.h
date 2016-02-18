@@ -10,6 +10,7 @@
 #include <vtkContourWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContourWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -53,6 +54,10 @@ class VtkContourWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetFollowCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidgetState(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTOURWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTOURWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

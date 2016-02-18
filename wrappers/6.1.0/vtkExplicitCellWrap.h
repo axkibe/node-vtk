@@ -10,6 +10,7 @@
 #include <vtkExplicitCell.h>
 
 #include "vtkNonLinearCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExplicitCellWrap : public VtkNonLinearCellWrap
 {
@@ -36,6 +37,10 @@ class VtkExplicitCellWrap : public VtkNonLinearCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataSet(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXPLICITCELLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXPLICITCELLWRAP_CLASSDEF
+#endif
 };
 
 #endif

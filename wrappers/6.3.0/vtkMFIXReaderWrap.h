@@ -10,6 +10,7 @@
 #include <vtkMFIXReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMFIXReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkMFIXReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMFIXREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMFIXREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

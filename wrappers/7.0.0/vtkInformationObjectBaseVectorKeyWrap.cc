@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInformationKeyWrap.h"
 #include "vtkInformationObjectBaseVectorKeyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkInformationObjectBaseVectorKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Size", Size);
 	Nan::SetPrototypeMethod(tpl, "size", Size);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONOBJECTBASEVECTORKEYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONOBJECTBASEVECTORKEYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

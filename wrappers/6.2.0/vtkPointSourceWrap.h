@@ -10,6 +10,7 @@
 #include <vtkPointSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkPointSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetDistributionToUniform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

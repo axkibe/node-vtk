@@ -10,6 +10,7 @@
 #include <vtkOpenGLProperty.h>
 
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLPropertyWrap : public VtkPropertyWrap
 {
@@ -37,6 +38,10 @@ class VtkOpenGLPropertyWrap : public VtkPropertyWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

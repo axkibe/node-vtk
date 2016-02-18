@@ -10,6 +10,7 @@
 #include <vtkSphereHandleRepresentation.h>
 
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphereHandleRepresentationWrap : public VtkHandleRepresentationWrap
 {
@@ -64,6 +65,10 @@ class VtkSphereHandleRepresentationWrap : public VtkHandleRepresentationWrap
 		static void TranslationModeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationModeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHEREHANDLEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHEREHANDLEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkVectorDotWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkVectorDotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+#ifdef VTK_NODE_PLUS_VTKVECTORDOTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVECTORDOTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

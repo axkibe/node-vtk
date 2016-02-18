@@ -10,6 +10,7 @@
 #include <vtkParametricTorus.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricTorusWrap : public VtkParametricFunctionWrap
 {
@@ -40,6 +41,10 @@ class VtkParametricTorusWrap : public VtkParametricFunctionWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCrossSectionRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRingRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICTORUSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICTORUSWRAP_CLASSDEF
+#endif
 };
 
 #endif

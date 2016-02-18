@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkSeedWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkSeedRepresentationWrap.h"
 #include "vtkHandleWidgetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkSeedWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKSEEDWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSEEDWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

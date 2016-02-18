@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkSelectionNodeWrap.h"
 #include "vtkAbstractArrayWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationDoubleKeyWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -147,6 +147,9 @@ void VtkSelectionNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnionSelectionList", UnionSelectionList);
 	Nan::SetPrototypeMethod(tpl, "unionSelectionList", UnionSelectionList);
 
+#ifdef VTK_NODE_PLUS_VTKSELECTIONNODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSELECTIONNODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

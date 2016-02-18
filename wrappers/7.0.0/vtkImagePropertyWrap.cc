@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkImagePropertyWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -200,6 +200,9 @@ void VtkImagePropertyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 	Nan::SetPrototypeMethod(tpl, "useLookupTableScalarRangeOn", UseLookupTableScalarRangeOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEPROPERTYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEPROPERTYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

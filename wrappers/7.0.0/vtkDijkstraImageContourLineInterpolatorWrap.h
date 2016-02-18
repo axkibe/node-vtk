@@ -10,6 +10,7 @@
 #include <vtkDijkstraImageContourLineInterpolator.h>
 
 #include "vtkContourLineInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDijkstraImageContourLineInterpolatorWrap : public VtkContourLineInterpolatorWrap
 {
@@ -37,6 +38,10 @@ class VtkDijkstraImageContourLineInterpolatorWrap : public VtkContourLineInterpo
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCostImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDIJKSTRAIMAGECONTOURLINEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDIJKSTRAIMAGECONTOURLINEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

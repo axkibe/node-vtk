@@ -10,6 +10,7 @@
 #include <vtkDEMReader.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 {
@@ -52,6 +53,10 @@ class VtkDEMReaderWrap : public VtkImageAlgorithmWrap
 		static void SetElevationReferenceToElevationBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetElevationReferenceToSeaLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEMREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEMREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

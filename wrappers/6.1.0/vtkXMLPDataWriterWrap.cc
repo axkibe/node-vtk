@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLWriterWrap.h"
 #include "vtkXMLPDataWriterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkXMLPDataWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteSummaryFileOn", WriteSummaryFileOn);
 	Nan::SetPrototypeMethod(tpl, "writeSummaryFileOn", WriteSummaryFileOn);
 
+#ifdef VTK_NODE_PLUS_VTKXMLPDATAWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLPDATAWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

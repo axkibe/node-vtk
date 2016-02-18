@@ -10,6 +10,7 @@
 #include <vtkExtentTranslator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtentTranslatorWrap : public VtkObjectWrap
 {
@@ -51,6 +52,10 @@ class VtkExtentTranslatorWrap : public VtkObjectWrap
 		static void SetSplitModeToZSlab(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UPDATE_SPLIT_MODE(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTENTTRANSLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTENTTRANSLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

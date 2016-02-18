@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHomogeneousTransformWrap.h"
 #include "vtkMatrixToHomogeneousTransformWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkMatrixToHomogeneousTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput", SetInput);
 	Nan::SetPrototypeMethod(tpl, "setInput", SetInput);
 
+#ifdef VTK_NODE_PLUS_VTKMATRIXTOHOMOGENEOUSTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMATRIXTOHOMOGENEOUSTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkControlPointsItemWrap.h"
 #include "vtkPiecewiseControlPointsItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkPiecewiseControlPointsItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetStrokeMode", SetStrokeMode);
 	Nan::SetPrototypeMethod(tpl, "setStrokeMode", SetStrokeMode);
 
+#ifdef VTK_NODE_PLUS_VTKPIECEWISECONTROLPOINTSITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIECEWISECONTROLPOINTSITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkOverlappingAMRAlgorithmWrap.h"
 #include "vtkAMRBaseReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkDataArraySelectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkAMRBaseReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointArrayStatus", SetPointArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setPointArrayStatus", SetPointArrayStatus);
 
+#ifdef VTK_NODE_PLUS_VTKAMRBASEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRBASEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

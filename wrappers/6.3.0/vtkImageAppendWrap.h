@@ -10,6 +10,7 @@
 #include <vtkImageAppend.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageAppendWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImageAppendWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetAppendAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreserveExtents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEAPPENDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEAPPENDWRAP_CLASSDEF
+#endif
 };
 
 #endif

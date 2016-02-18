@@ -10,6 +10,7 @@
 #include <vtkSTLWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSTLWriterWrap : public VtkWriterWrap
 {
@@ -42,6 +43,10 @@ class VtkSTLWriterWrap : public VtkWriterWrap
 		static void SetFileType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileTypeToASCII(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileTypeToBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTLWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTLWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkPolyLineWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyLineRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkPolyLineWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYLINEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYLINEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

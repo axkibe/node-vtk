@@ -10,6 +10,7 @@
 #include <vtkPointWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -66,6 +67,10 @@ class VtkPointWidgetWrap : public Vtk3DWidgetWrap
 		static void YShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

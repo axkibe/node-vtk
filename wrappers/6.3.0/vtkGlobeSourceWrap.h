@@ -10,6 +10,7 @@
 #include <vtkGlobeSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGlobeSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -70,6 +71,10 @@ class VtkGlobeSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartLatitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartLongitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGLOBESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGLOBESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

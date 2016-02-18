@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDemandDrivenPipelineWrap.h"
 #include "vtkStreamingDemandDrivenPipelineWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkInformationIntegerVectorKeyWrap.h"
 #include "vtkInformationDoubleVectorKeyWrap.h"
 #include "vtkInformationDoubleKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -158,6 +158,9 @@ void VtkStreamingDemandDrivenPipelineWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "WHOLE_EXTENT", WHOLE_EXTENT);
 
+#ifdef VTK_NODE_PLUS_VTKSTREAMINGDEMANDDRIVENPIPELINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTREAMINGDEMANDDRIVENPIPELINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

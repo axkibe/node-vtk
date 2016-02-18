@@ -10,6 +10,7 @@
 #include <vtkOverlappingAMRLevelIdScalars.h>
 
 #include "vtkOverlappingAMRAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOverlappingAMRLevelIdScalarsWrap : public VtkOverlappingAMRAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkOverlappingAMRLevelIdScalarsWrap : public VtkOverlappingAMRAlgorithmWra
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOVERLAPPINGAMRLEVELIDSCALARSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOVERLAPPINGAMRLEVELIDSCALARSWRAP_CLASSDEF
+#endif
 };
 
 #endif

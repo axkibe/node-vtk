@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleRubberBand3D.h>
 
 #include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleRubberBand3DWrap : public VtkInteractorStyleTrackballCameraWrap
 {
@@ -49,6 +50,10 @@ class VtkInteractorStyleRubberBand3DWrap : public VtkInteractorStyleTrackballCam
 		static void RenderOnMouseMoveOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

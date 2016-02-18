@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkCollapseGraphWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkCollapseGraphWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionConnection", SetSelectionConnection);
 	Nan::SetPrototypeMethod(tpl, "setSelectionConnection", SetSelectionConnection);
 
+#ifdef VTK_NODE_PLUS_VTKCOLLAPSEGRAPHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOLLAPSEGRAPHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

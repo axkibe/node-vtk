@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageImportWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -140,6 +140,9 @@ void VtkImageImportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWholeExtent", SetWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setWholeExtent", SetWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEIMPORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEIMPORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

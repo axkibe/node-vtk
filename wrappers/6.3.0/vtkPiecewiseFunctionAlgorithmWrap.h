@@ -10,6 +10,7 @@
 #include <vtkPiecewiseFunctionAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewiseFunctionAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkPiecewiseFunctionAlgorithmWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISEFUNCTIONALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

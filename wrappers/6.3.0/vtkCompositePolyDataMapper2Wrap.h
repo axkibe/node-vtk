@@ -10,6 +10,7 @@
 #include <vtkCompositePolyDataMapper2.h>
 
 #include "vtkPainterPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositePolyDataMapper2Wrap : public VtkPainterPolyDataMapperWrap
 {
@@ -29,16 +30,28 @@ class VtkCompositePolyDataMapper2Wrap : public VtkPainterPolyDataMapperWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompositeDataDisplayAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetIsOpaque(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockOpacities(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveBlockVisibilites(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBlockVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompositeDataDisplayAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEPOLYDATAMAPPER2WRAP_CLASSDEF
+#endif
 };
 
 #endif

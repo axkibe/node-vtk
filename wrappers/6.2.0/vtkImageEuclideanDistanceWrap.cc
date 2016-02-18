@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageDecomposeFilterWrap.h"
 #include "vtkImageEuclideanDistanceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkImageEuclideanDistanceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplitExtent", SplitExtent);
 	Nan::SetPrototypeMethod(tpl, "splitExtent", SplitExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEEUCLIDEANDISTANCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEEUCLIDEANDISTANCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

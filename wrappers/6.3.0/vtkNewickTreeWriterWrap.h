@@ -10,6 +10,7 @@
 #include <vtkNewickTreeWriter.h>
 
 #include "vtkDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNewickTreeWriterWrap : public VtkDataWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkNewickTreeWriterWrap : public VtkDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNEWICKTREEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNEWICKTREEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

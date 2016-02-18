@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDecimatePolylineFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkDecimatePolylineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTargetReduction", SetTargetReduction);
 	Nan::SetPrototypeMethod(tpl, "setTargetReduction", SetTargetReduction);
 
+#ifdef VTK_NODE_PLUS_VTKDECIMATEPOLYLINEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDECIMATEPOLYLINEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

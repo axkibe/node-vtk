@@ -10,6 +10,7 @@
 #include <vtkSquarifyLayoutStrategy.h>
 
 #include "vtkTreeMapLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSquarifyLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 {
@@ -34,6 +35,10 @@ class VtkSquarifyLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSQUARIFYLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSQUARIFYLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

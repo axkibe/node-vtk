@@ -10,6 +10,7 @@
 #include <vtkBooleanOperationPolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBooleanOperationPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkBooleanOperationPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOperationToUnion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReorientDifferenceCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOOLEANOPERATIONPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOOLEANOPERATIONPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

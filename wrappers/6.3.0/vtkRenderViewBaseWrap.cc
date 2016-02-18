@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkViewWrap.h"
 #include "vtkRenderViewBaseWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkRenderViewBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRenderer", SetRenderer);
 	Nan::SetPrototypeMethod(tpl, "setRenderer", SetRenderer);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERVIEWBASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERVIEWBASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

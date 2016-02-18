@@ -10,6 +10,7 @@
 #include <vtkHyperTreeGridAxisCut.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperTreeGridAxisCutWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkHyperTreeGridAxisCutWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlaneNormalAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlanePosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPERTREEGRIDAXISCUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPERTREEGRIDAXISCUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPLYWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPLYWriterWrap : public VtkWriterWrap
 {
@@ -31,6 +32,7 @@ class VtkPLYWriterWrap : public VtkWriterWrap
 
 		static void GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetComponentMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +53,7 @@ class VtkPLYWriterWrap : public VtkWriterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorModeToDefault(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetColorModeToOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -69,6 +72,10 @@ class VtkPLYWriterWrap : public VtkWriterWrap
 		static void SetTextureCoordinatesName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureCoordinatesNameToTextureUV(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureCoordinatesNameToUV(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLYWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLYWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

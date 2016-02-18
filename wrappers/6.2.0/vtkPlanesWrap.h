@@ -10,6 +10,7 @@
 #include <vtkPlanes.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlanesWrap : public VtkImplicitFunctionWrap
 {
@@ -43,6 +44,10 @@ class VtkPlanesWrap : public VtkImplicitFunctionWrap
 		static void SetFrustumPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLANESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLANESWRAP_CLASSDEF
+#endif
 };
 
 #endif

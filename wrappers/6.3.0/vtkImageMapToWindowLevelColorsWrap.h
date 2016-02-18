@@ -10,6 +10,7 @@
 #include <vtkImageMapToWindowLevelColors.h>
 
 #include "vtkImageMapToColorsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMapToWindowLevelColorsWrap : public VtkImageMapToColorsWrap
 {
@@ -37,6 +38,10 @@ class VtkImageMapToWindowLevelColorsWrap : public VtkImageMapToColorsWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOWINDOWLEVELCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAPTOWINDOWLEVELCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

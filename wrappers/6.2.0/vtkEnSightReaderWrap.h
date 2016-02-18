@@ -10,6 +10,7 @@
 #include <vtkEnSightReader.h>
 
 #include "vtkGenericEnSightReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEnSightReaderWrap : public VtkGenericEnSightReaderWrap
 {
@@ -39,6 +40,10 @@ class VtkEnSightReaderWrap : public VtkGenericEnSightReaderWrap
 		static void ParticleCoordinatesByIndexOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParticleCoordinatesByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKENSIGHTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKENSIGHTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

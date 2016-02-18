@@ -10,6 +10,7 @@
 #include <vtkProjectedTerrainPath.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProjectedTerrainPathWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkProjectedTerrainPathWrap : public VtkPolyDataAlgorithmWrap
 		static void SetProjectionModeToSimple(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROJECTEDTERRAINPATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROJECTEDTERRAINPATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

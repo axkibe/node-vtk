@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkRotationFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkRotationFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfCopies", SetNumberOfCopies);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfCopies", SetNumberOfCopies);
 
+#ifdef VTK_NODE_PLUS_VTKROTATIONFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKROTATIONFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkBiDimensionalWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBiDimensionalWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -42,6 +43,10 @@ class VtkBiDimensionalWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidgetStateToManipulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidgetStateToStart(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBIDIMENSIONALWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBIDIMENSIONALWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtk3DSImporter.h>
 
 #include "vtkImporterWrap.h"
+#include "../../plus/plus.h"
 
 class Vtk3DSImporterWrap : public VtkImporterWrap
 {
@@ -39,6 +40,10 @@ class Vtk3DSImporterWrap : public VtkImporterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeNormals(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTK3DSIMPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTK3DSIMPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -4,8 +4,8 @@
 #define VTK_WRAPPING_CXX
 #include <nan.h>
 
-
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -51,6 +51,9 @@ void VtkObjectBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "IsTypeOf", IsTypeOf);
 	Nan::SetPrototypeMethod(tpl, "isTypeOf", IsTypeOf);
 
+#ifdef VTK_NODE_PLUS_VTKOBJECTBASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOBJECTBASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

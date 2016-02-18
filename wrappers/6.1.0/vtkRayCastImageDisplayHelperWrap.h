@@ -10,6 +10,7 @@
 #include <vtkRayCastImageDisplayHelper.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRayCastImageDisplayHelperWrap : public VtkObjectWrap
 {
@@ -39,6 +40,10 @@ class VtkRayCastImageDisplayHelperWrap : public VtkObjectWrap
 		static void PreMultipliedColorsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreMultipliedColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRAYCASTIMAGEDISPLAYHELPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRAYCASTIMAGEDISPLAYHELPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

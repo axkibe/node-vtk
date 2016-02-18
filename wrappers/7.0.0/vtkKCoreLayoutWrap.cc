@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkKCoreLayoutWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkKCoreLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPolarCoordsRadiusArrayName", SetPolarCoordsRadiusArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKCORELAYOUTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

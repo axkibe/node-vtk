@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkEdgeLayoutStrategyWrap.h"
 #include "vtkArcParallelEdgeStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkArcParallelEdgeStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfSubdivisions", SetNumberOfSubdivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfSubdivisions", SetNumberOfSubdivisions);
 
+#ifdef VTK_NODE_PLUS_VTKARCPARALLELEDGESTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARCPARALLELEDGESTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

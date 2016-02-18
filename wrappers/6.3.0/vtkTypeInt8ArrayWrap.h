@@ -10,6 +10,7 @@
 #include <vtkTypeInt8Array.h>
 
 #include "vtkCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTypeInt8ArrayWrap : public VtkCharArrayWrap
 {
@@ -33,6 +34,10 @@ class VtkTypeInt8ArrayWrap : public VtkCharArrayWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTYPEINT8ARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTYPEINT8ARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkInteractorStyleMultiTouchCameraWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkInteractorStyleMultiTouchCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMotionFactor", SetMotionFactor);
 	Nan::SetPrototypeMethod(tpl, "setMotionFactor", SetMotionFactor);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEMULTITOUCHCAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEMULTITOUCHCAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

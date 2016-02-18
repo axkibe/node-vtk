@@ -10,6 +10,7 @@
 #include <vtkSimpleBondPerceiver.h>
 
 #include "vtkMoleculeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSimpleBondPerceiverWrap : public VtkMoleculeAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkSimpleBondPerceiverWrap : public VtkMoleculeAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSIMPLEBONDPERCEIVERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSIMPLEBONDPERCEIVERWRAP_CLASSDEF
+#endif
 };
 
 #endif

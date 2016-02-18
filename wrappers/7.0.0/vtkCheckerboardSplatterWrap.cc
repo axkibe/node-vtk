@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkCheckerboardSplatterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -239,6 +239,9 @@ void VtkCheckerboardSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKCHECKERBOARDSPLATTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHECKERBOARDSPLATTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

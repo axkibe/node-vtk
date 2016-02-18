@@ -10,6 +10,7 @@
 #include <vtkLight.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLightWrap : public VtkObjectWrap
 {
@@ -78,6 +79,10 @@ class VtkLightWrap : public VtkObjectWrap
 		static void ShallowClone(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwitchOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwitchOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLIGHTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLIGHTWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkMPASReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -162,6 +162,9 @@ void VtkMPASReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVerticalLevel", SetVerticalLevel);
 	Nan::SetPrototypeMethod(tpl, "setVerticalLevel", SetVerticalLevel);
 
+#ifdef VTK_NODE_PLUS_VTKMPASREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMPASREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

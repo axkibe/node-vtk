@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkIconGlyphFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -152,6 +152,9 @@ void VtkIconGlyphFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseIconSizeOn", UseIconSizeOn);
 	Nan::SetPrototypeMethod(tpl, "useIconSizeOn", UseIconSizeOn);
 
+#ifdef VTK_NODE_PLUS_VTKICONGLYPHFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKICONGLYPHFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

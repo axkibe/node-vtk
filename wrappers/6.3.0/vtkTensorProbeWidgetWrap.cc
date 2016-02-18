@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkTensorProbeWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTensorProbeRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkTensorProbeWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKTENSORPROBEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTENSORPROBEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkStructuredGridConnectivity.h>
 
 #include "vtkAbstractGridConnectivityWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridConnectivityWrap : public VtkAbstractGridConnectivityWrap
 {
@@ -43,7 +44,12 @@ class VtkStructuredGridConnectivityWrap : public VtkAbstractGridConnectivityWrap
 		static void RegisterGrid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGhostedGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfGrids(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCONNECTIVITYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDCONNECTIVITYWRAP_CLASSDEF
+#endif
 };
 
 #endif

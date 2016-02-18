@@ -10,6 +10,7 @@
 #include <vtkGridTransform.h>
 
 #include "vtkWarpTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGridTransformWrap : public VtkWarpTransformWrap
 {
@@ -47,6 +48,10 @@ class VtkGridTransformWrap : public VtkWarpTransformWrap
 		static void SetInterpolationModeToCubic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToNearestNeighbor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRIDTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRIDTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

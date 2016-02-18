@@ -10,6 +10,7 @@
 #include <vtkImplicitSum.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitSumWrap : public VtkImplicitFunctionWrap
 {
@@ -42,6 +43,10 @@ class VtkImplicitSumWrap : public VtkImplicitFunctionWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFunctionWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalizeByWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITSUMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITSUMWRAP_CLASSDEF
+#endif
 };
 
 #endif

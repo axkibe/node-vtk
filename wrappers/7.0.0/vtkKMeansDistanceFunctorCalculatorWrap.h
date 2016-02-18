@@ -10,6 +10,7 @@
 #include <vtkKMeansDistanceFunctorCalculator.h>
 
 #include "vtkKMeansDistanceFunctorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkKMeansDistanceFunctorCalculatorWrap : public VtkKMeansDistanceFunctorWrap
 {
@@ -37,6 +38,10 @@ class VtkKMeansDistanceFunctorCalculatorWrap : public VtkKMeansDistanceFunctorWr
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDistanceExpression(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFunctionParser(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKKMEANSDISTANCEFUNCTORCALCULATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKKMEANSDISTANCEFUNCTORCALCULATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

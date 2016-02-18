@@ -10,6 +10,7 @@
 #include <vtkVoidArray.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVoidArrayWrap : public VtkObjectWrap
 {
@@ -39,6 +40,10 @@ class VtkVoidArrayWrap : public VtkObjectWrap
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOIDARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOIDARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

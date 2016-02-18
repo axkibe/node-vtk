@@ -10,6 +10,7 @@
 #include <vtkRectilinearGridToTetrahedra.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridToTetrahedraWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkRectilinearGridToTetrahedraWrap : public VtkUnstructuredGridAlgorithmWr
 		static void SetTetraPerCellTo5(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTetraPerCellTo5And12(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTetraPerCellTo6(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDTOTETRAHEDRAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDTOTETRAHEDRAWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkVolumeRayCastMIPFunction.h>
 
 #include "vtkVolumeRayCastFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeRayCastMIPFunctionWrap : public VtkVolumeRayCastFunctionWrap
 {
@@ -40,6 +41,10 @@ class VtkVolumeRayCastMIPFunctionWrap : public VtkVolumeRayCastFunctionWrap
 		static void SetMaximizeMethod(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximizeMethodToOpacity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximizeMethodToScalarValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTMIPFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMERAYCASTMIPFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

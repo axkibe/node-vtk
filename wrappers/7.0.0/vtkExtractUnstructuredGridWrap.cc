@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkExtractUnstructuredGridWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkExtractUnstructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointClipping", SetPointClipping);
 	Nan::SetPrototypeMethod(tpl, "setPointClipping", SetPointClipping);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

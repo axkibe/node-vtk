@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkXMLParserWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkXMLParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Parse", Parse);
 	Nan::SetPrototypeMethod(tpl, "parse", Parse);
 
+	Nan::SetPrototypeMethod(tpl, "ParseChunk", ParseChunk);
+	Nan::SetPrototypeMethod(tpl, "parseChunk", ParseChunk);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -85,6 +88,9 @@ void VtkXMLParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetIgnoreCharacterData", SetIgnoreCharacterData);
 	Nan::SetPrototypeMethod(tpl, "setIgnoreCharacterData", SetIgnoreCharacterData);
 
+#ifdef VTK_NODE_PLUS_VTKXMLPARSERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLPARSERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -250,6 +256,21 @@ void VtkXMLParserWrap::Parse(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	if(info.Length() > 0 && info[0]->IsString())
 	{
 		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->Parse(
+				*a0,
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 		int r;
 		if(info.Length() != 1)
 		{
@@ -270,6 +291,32 @@ void VtkXMLParserWrap::Parse(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 	r = native->Parse();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkXMLParserWrap::ParseChunk(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLParserWrap *wrapper = ObjectWrap::Unwrap<VtkXMLParserWrap>(info.Holder());
+	vtkXMLParser *native = (vtkXMLParser *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsString())
+	{
+		Nan::Utf8String a0(info[0]);
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			int r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->ParseChunk(
+				*a0,
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkXMLParserWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

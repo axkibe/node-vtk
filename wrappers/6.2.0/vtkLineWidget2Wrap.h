@@ -10,6 +10,7 @@
 #include <vtkLineWidget2.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLineWidget2Wrap : public VtkAbstractWidgetWrap
 {
@@ -38,6 +39,10 @@ class VtkLineWidget2Wrap : public VtkAbstractWidgetWrap
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEWIDGET2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEWIDGET2WRAP_CLASSDEF
+#endif
 };
 
 #endif

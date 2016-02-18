@@ -10,6 +10,7 @@
 #include <vtkGPUVolumeRayCastMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 {
@@ -52,6 +53,10 @@ class VtkGPUVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void SetMaskTypeToBinary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskTypeToLabelMap(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReportProgress(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

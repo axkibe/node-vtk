@@ -10,6 +10,7 @@
 #include <vtkProjectSphereFilter.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProjectSphereFilterWrap : public VtkPointSetAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkProjectSphereFilterWrap : public VtkPointSetAlgorithmWrap
 		static void SetTranslateZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslateZOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslateZOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROJECTSPHEREFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROJECTSPHEREFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCenterOfMass.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCenterOfMassWrap : public VtkPointSetAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkCenterOfMassWrap : public VtkPointSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseScalarsAsWeights(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCENTEROFMASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCENTEROFMASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

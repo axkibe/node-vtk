@@ -10,6 +10,7 @@
 #include <vtkPolyDataPointSampler.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataPointSamplerWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkPolyDataPointSamplerWrap : public VtkPolyDataAlgorithmWrap
 		static void SetGenerateInteriorPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateVertexPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAPOINTSAMPLERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATAPOINTSAMPLERWRAP_CLASSDEF
+#endif
 };
 
 #endif

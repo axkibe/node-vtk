@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkSliderRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -191,6 +191,9 @@ void VtkSliderRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowSliderLabelOn", ShowSliderLabelOn);
 	Nan::SetPrototypeMethod(tpl, "showSliderLabelOn", ShowSliderLabelOn);
 
+#ifdef VTK_NODE_PLUS_VTKSLIDERREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSLIDERREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

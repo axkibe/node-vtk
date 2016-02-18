@@ -10,6 +10,7 @@
 #include <vtkStreamGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkStreamGraphWrap : public VtkGraphAlgorithmWrap
 		static void SetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkConvexHull2D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConvexHull2DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkConvexHull2DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutline(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONVEXHULL2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONVEXHULL2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

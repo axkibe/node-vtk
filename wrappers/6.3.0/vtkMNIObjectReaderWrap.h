@@ -10,6 +10,7 @@
 #include <vtkMNIObjectReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMNIObjectReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkMNIObjectReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMNIOBJECTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMNIOBJECTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

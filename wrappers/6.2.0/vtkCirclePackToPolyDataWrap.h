@@ -10,6 +10,7 @@
 #include <vtkCirclePackToPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCirclePackToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -31,10 +32,16 @@ class VtkCirclePackToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCirclesArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCIRCLEPACKTOPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCIRCLEPACKTOPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

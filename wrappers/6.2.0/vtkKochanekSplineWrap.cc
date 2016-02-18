@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSplineWrap.h"
 #include "vtkKochanekSplineWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkKochanekSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDefaultTension", SetDefaultTension);
 	Nan::SetPrototypeMethod(tpl, "setDefaultTension", SetDefaultTension);
 
+#ifdef VTK_NODE_PLUS_VTKKOCHANEKSPLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKOCHANEKSPLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkSeedRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSeedRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -36,6 +37,8 @@ class VtkSeedRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfSeeds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSeedDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSeedWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetToleranceMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -46,7 +49,12 @@ class VtkSeedRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void RemoveLastHandle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSeedDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSEEDREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSEEDREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

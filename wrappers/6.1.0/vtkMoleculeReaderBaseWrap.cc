@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMoleculeReaderBaseWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkMoleculeReaderBaseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHBScale", SetHBScale);
 	Nan::SetPrototypeMethod(tpl, "setHBScale", SetHBScale);
 
+#ifdef VTK_NODE_PLUS_VTKMOLECULEREADERBASEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMOLECULEREADERBASEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

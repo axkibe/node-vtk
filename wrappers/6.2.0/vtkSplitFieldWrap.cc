@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkSplitFieldWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkSplitFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Split", Split);
 	Nan::SetPrototypeMethod(tpl, "split", Split);
 
+#ifdef VTK_NODE_PLUS_VTKSPLITFIELDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLITFIELDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

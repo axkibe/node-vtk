@@ -10,6 +10,7 @@
 #include <vtkGeoGraticule.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoGraticuleWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkGeoGraticuleWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLatitudeLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLongitudeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLongitudeLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOGRATICULEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOGRATICULEWRAP_CLASSDEF
+#endif
 };
 
 #endif

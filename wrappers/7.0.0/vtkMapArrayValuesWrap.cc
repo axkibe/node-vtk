@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkMapArrayValuesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkMapArrayValuesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassArray", SetPassArray);
 	Nan::SetPrototypeMethod(tpl, "setPassArray", SetPassArray);
 
+#ifdef VTK_NODE_PLUS_VTKMAPARRAYVALUESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMAPARRAYVALUESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkThreshold.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThresholdWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -70,6 +71,10 @@ class VtkThresholdWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void ThresholdByUpper(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseContinuousCellRangeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseContinuousCellRangeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHRESHOLDWRAP_CLASSDEF
+#endif
 };
 
 #endif

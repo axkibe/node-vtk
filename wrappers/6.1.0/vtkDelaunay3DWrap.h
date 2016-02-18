@@ -10,6 +10,7 @@
 #include <vtkDelaunay3D.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDelaunay3DWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkDelaunay3DWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetOffset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDELAUNAY3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDELAUNAY3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkResliceImageViewer.h>
 
 #include "vtkImageViewer2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceImageViewerWrap : public VtkImageViewer2Wrap
 {
@@ -58,6 +59,10 @@ class VtkResliceImageViewerWrap : public VtkImageViewer2Wrap
 		static void SetThickMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SliceScrollOnMouseWheelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SliceScrollOnMouseWheelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICEIMAGEVIEWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkEncodedGradientShader.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEncodedGradientShaderWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkEncodedGradientShaderWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetActiveComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateShadingTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKENCODEDGRADIENTSHADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKENCODEDGRADIENTSHADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkDebugLeaks.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDebugLeaksWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkDebugLeaksWrap : public VtkObjectWrap
 		static void PrintCurrentLeaks(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExitError(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEBUGLEAKSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEBUGLEAKSWRAP_CLASSDEF
+#endif
 };
 
 #endif

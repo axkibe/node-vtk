@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkHyperTreeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -46,6 +46,9 @@ void VtkHyperTreeWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkHyperTreeWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "CreateInstance", CreateInstance);
+	Nan::SetPrototypeMethod(tpl, "createInstance", CreateInstance);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -58,6 +61,9 @@ void VtkHyperTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKHYPERTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPERTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -84,6 +90,40 @@ void VtkHyperTreeWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkHyperTreeWrap::CreateInstance(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkHyperTreeWrap *wrapper = ObjectWrap::Unwrap<VtkHyperTreeWrap>(info.Holder());
+	vtkHyperTree *native = (vtkHyperTree *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			vtkHyperTree * r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->CreateInstance(
+				info[0]->Uint32Value(),
+				info[1]->Uint32Value()
+			);
+			VtkHyperTreeWrap::InitPtpl();
+			v8::Local<v8::Value> argv[1] =
+				{ Nan::New(vtkNodeJsNoWrap) };
+			v8::Local<v8::Function> cons =
+				Nan::New<v8::FunctionTemplate>(VtkHyperTreeWrap::ptpl)->GetFunction();
+			v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+			VtkHyperTreeWrap *w = new VtkHyperTreeWrap();
+			w->native = r;
+			w->Wrap(wo);
+			info.GetReturnValue().Set(wo);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkHyperTreeWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)

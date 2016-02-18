@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitWindowFunctionWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkImplicitWindowFunctionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWindowValues", SetWindowValues);
 	Nan::SetPrototypeMethod(tpl, "setWindowValues", SetWindowValues);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITWINDOWFUNCTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITWINDOWFUNCTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataCompressorWrap.h"
 #include "vtkZLibDataCompressorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkZLibDataCompressorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompressionLevel", SetCompressionLevel);
 	Nan::SetPrototypeMethod(tpl, "setCompressionLevel", SetCompressionLevel);
 
+#ifdef VTK_NODE_PLUS_VTKZLIBDATACOMPRESSORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKZLIBDATACOMPRESSORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

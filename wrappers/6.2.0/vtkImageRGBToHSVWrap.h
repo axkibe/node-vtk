@@ -10,6 +10,7 @@
 #include <vtkImageRGBToHSV.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageRGBToHSVWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkImageRGBToHSVWrap : public VtkThreadedImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERGBTOHSVWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERGBTOHSVWRAP_CLASSDEF
+#endif
 };
 
 #endif

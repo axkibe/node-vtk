@@ -10,6 +10,7 @@
 #include <vtkSphere.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphereWrap : public VtkImplicitFunctionWrap
 {
@@ -39,6 +40,10 @@ class VtkSphereWrap : public VtkImplicitFunctionWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHEREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHEREWRAP_CLASSDEF
+#endif
 };
 
 #endif

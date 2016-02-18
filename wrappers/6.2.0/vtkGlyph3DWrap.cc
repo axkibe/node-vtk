@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGlyph3DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -230,6 +230,9 @@ void VtkGlyph3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 	Nan::SetPrototypeMethod(tpl, "setVectorModeToVectorRotationOff", SetVectorModeToVectorRotationOff);
 
+#ifdef VTK_NODE_PLUS_VTKGLYPH3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGLYPH3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

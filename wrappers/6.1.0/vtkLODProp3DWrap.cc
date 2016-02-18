@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkLODProp3DWrap.h"
 #include "vtkObjectWrap.h"
@@ -21,6 +20,7 @@
 #include "vtkPropWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -212,6 +212,9 @@ void VtkLODProp3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKLODPROP3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLODPROP3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

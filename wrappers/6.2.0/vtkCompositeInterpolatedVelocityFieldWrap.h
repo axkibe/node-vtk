@@ -10,6 +10,7 @@
 #include <vtkCompositeInterpolatedVelocityField.h>
 
 #include "vtkAbstractInterpolatedVelocityFieldWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeInterpolatedVelocityFieldWrap : public VtkAbstractInterpolatedVelocityFieldWrap
 {
@@ -35,6 +36,10 @@ class VtkCompositeInterpolatedVelocityFieldWrap : public VtkAbstractInterpolated
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

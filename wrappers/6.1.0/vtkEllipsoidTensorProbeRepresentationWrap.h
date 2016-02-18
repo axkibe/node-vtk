@@ -10,6 +10,7 @@
 #include <vtkEllipsoidTensorProbeRepresentation.h>
 
 #include "vtkTensorProbeRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEllipsoidTensorProbeRepresentationWrap : public VtkTensorProbeRepresentationWrap
 {
@@ -38,6 +39,10 @@ class VtkEllipsoidTensorProbeRepresentationWrap : public VtkTensorProbeRepresent
 		static void RenderOpaqueGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SelectProbe(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKELLIPSOIDTENSORPROBEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKELLIPSOIDTENSORPROBEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

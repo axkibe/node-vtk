@@ -10,6 +10,7 @@
 #include <vtkImageDifference.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDifferenceWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -48,6 +49,10 @@ class VtkImageDifferenceWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetImageConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetImageData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDIFFERENCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDIFFERENCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

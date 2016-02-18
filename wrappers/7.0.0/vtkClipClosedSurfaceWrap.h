@@ -10,6 +10,7 @@
 #include <vtkClipClosedSurface.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClipClosedSurfaceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -69,6 +70,10 @@ class VtkClipClosedSurfaceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTriangulationErrorDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangulationErrorDisplayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangulationErrorDisplayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLIPCLOSEDSURFACEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLIPCLOSEDSURFACEWRAP_CLASSDEF
+#endif
 };
 
 #endif

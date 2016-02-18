@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkBSPIntersectionsWrap.h"
 #include "vtkBSPCutsWrap.h"
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -96,6 +96,9 @@ void VtkBSPIntersectionsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCuts", SetCuts);
 	Nan::SetPrototypeMethod(tpl, "setCuts", SetCuts);
 
+#ifdef VTK_NODE_PLUS_VTKBSPINTERSECTIONSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBSPINTERSECTIONSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

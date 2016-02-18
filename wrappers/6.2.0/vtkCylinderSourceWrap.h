@@ -10,6 +10,7 @@
 #include <vtkCylinderSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCylinderSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkCylinderSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCYLINDERSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCYLINDERSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

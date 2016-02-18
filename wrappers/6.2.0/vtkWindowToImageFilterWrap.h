@@ -10,6 +10,7 @@
 #include <vtkWindowToImageFilter.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkWindowToImageFilterWrap : public VtkAlgorithmWrap
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShouldRerenderOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShouldRerenderOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWINDOWTOIMAGEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWINDOWTOIMAGEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

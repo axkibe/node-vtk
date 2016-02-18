@@ -10,6 +10,7 @@
 #include <vtkProStarReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProStarReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkProStarReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROSTARREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROSTARREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

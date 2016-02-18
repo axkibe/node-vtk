@@ -10,6 +10,7 @@
 #include <vtkGenericOpenGLRenderWindow.h>
 
 #include "vtkOpenGLRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 {
@@ -45,6 +46,12 @@ class VtkGenericOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void PopState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PushState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBackBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBackLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBackRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFrontBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFrontLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetFrontRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFullScreen(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIsCurrent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIsDirect(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -56,6 +63,10 @@ class VtkGenericOpenGLRenderWindowWrap : public VtkOpenGLRenderWindowWrap
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportsOpenGL(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WindowRemap(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICOPENGLRENDERWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICOPENGLRENDERWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

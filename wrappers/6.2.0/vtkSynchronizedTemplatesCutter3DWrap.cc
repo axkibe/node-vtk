@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSynchronizedTemplates3DWrap.h"
 #include "vtkSynchronizedTemplatesCutter3DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkSynchronizedTemplatesCutter3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThreadedExecute", ThreadedExecute);
 	Nan::SetPrototypeMethod(tpl, "threadedExecute", ThreadedExecute);
 
+#ifdef VTK_NODE_PLUS_VTKSYNCHRONIZEDTEMPLATESCUTTER3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSYNCHRONIZEDTEMPLATESCUTTER3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

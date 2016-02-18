@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkOpenFOAMReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -240,6 +240,9 @@ void VtkOpenFOAMReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeValue", SetTimeValue);
 	Nan::SetPrototypeMethod(tpl, "setTimeValue", SetTimeValue);
 
+#ifdef VTK_NODE_PLUS_VTKOPENFOAMREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENFOAMREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

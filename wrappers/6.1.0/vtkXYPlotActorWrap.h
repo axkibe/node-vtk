@@ -10,6 +10,7 @@
 #include <vtkXYPlotActor.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXYPlotActorWrap : public VtkActor2DWrap
 {
@@ -244,6 +245,10 @@ class VtkXYPlotActorWrap : public VtkActor2DWrap
 		static void ShowReferenceYLineOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowReferenceYLineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewportToPlotCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXYPLOTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXYPLOTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

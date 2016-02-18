@@ -10,6 +10,7 @@
 #include <vtkSmartVolumeMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 {
@@ -53,6 +54,10 @@ class VtkSmartVolumeMapperWrap : public VtkVolumeMapperWrap
 		static void SetRequestedRenderModeToDefault(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderModeToRayCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRequestedRenderModeToRayCastAndTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSMARTVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

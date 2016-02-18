@@ -10,6 +10,7 @@
 #include <vtkGeoTerrain.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoTerrainWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkGeoTerrainWrap : public VtkObjectWrap
 		static void SetMaxLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSource(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOTERRAINWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOTERRAINWRAP_CLASSDEF
+#endif
 };
 
 #endif

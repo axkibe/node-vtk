@@ -10,6 +10,7 @@
 #include <vtkQuadricClustering.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadricClusteringWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -81,6 +82,10 @@ class VtkQuadricClusteringWrap : public VtkPolyDataAlgorithmWrap
 		static void UseInputPointsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInternalTrianglesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInternalTrianglesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRICCLUSTERINGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRICCLUSTERINGWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkIcicleView.h>
 
 #include "vtkTreeAreaViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIcicleViewWrap : public VtkTreeAreaViewWrap
 {
@@ -45,6 +46,10 @@ class VtkIcicleViewWrap : public VtkTreeAreaViewWrap
 		static void TopToBottomOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseGradientColoringOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseGradientColoringOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKICICLEVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKICICLEVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

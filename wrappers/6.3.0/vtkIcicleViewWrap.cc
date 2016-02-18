@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAreaViewWrap.h"
 #include "vtkIcicleViewWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkIcicleViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseGradientColoringOn", UseGradientColoringOn);
 	Nan::SetPrototypeMethod(tpl, "useGradientColoringOn", UseGradientColoringOn);
 
+#ifdef VTK_NODE_PLUS_VTKICICLEVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKICICLEVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

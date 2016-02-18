@@ -10,6 +10,7 @@
 #include <vtkPlot.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotWrap : public VtkContextItemWrap
 {
@@ -61,6 +62,10 @@ class VtkPlotWrap : public VtkContextItemWrap
 		static void SetUseIndexForXSeries(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTWRAP_CLASSDEF
+#endif
 };
 
 #endif

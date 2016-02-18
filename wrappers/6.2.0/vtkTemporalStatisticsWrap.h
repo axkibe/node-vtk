@@ -10,6 +10,7 @@
 #include <vtkTemporalStatistics.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalStatisticsWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkTemporalStatisticsWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetComputeMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeMinimum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALSTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

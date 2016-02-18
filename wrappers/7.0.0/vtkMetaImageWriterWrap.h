@@ -10,6 +10,7 @@
 #include <vtkMetaImageWriter.h>
 
 #include "vtkImageWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMetaImageWriterWrap : public VtkImageWriterWrap
 {
@@ -40,6 +41,10 @@ class VtkMetaImageWriterWrap : public VtkImageWriterWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRAWFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMETAIMAGEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMETAIMAGEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

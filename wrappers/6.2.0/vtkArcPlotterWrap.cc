@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkArcPlotterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCameraWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -156,6 +156,9 @@ void VtkArcPlotterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseDefaultNormalOn", UseDefaultNormalOn);
 	Nan::SetPrototypeMethod(tpl, "useDefaultNormalOn", UseDefaultNormalOn);
 
+#ifdef VTK_NODE_PLUS_VTKARCPLOTTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARCPLOTTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

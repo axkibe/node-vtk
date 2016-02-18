@@ -10,6 +10,7 @@
 #include <vtkRTXMLPolyDataReader.h>
 
 #include "vtkXMLPolyDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRTXMLPolyDataReaderWrap : public VtkXMLPolyDataReaderWrap
 {
@@ -39,6 +40,10 @@ class VtkRTXMLPolyDataReaderWrap : public VtkXMLPolyDataReaderWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateToNextFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRTXMLPOLYDATAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRTXMLPOLYDATAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

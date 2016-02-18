@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlot3DWrap.h"
 #include "vtkPlotSurfaceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -67,6 +67,9 @@ void VtkPlotSurfaceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTSURFACEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkCellTypes.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCellTypesWrap : public VtkObjectWrap
 {
@@ -32,16 +33,26 @@ class VtkCellTypesWrap : public VtkObjectWrap
 		static void Allocate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellLocation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassNameFromTypeId(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTypeIdFromClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InsertCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InsertNextCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void InsertNextType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void IsType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellTypes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCELLTYPESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCELLTYPESWRAP_CLASSDEF
+#endif
 };
 
 #endif

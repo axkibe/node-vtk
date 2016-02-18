@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageDataWrap.h"
 #include "vtkUniformGridWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellBlanking", GetCellBlanking);
+	Nan::SetPrototypeMethod(tpl, "getCellBlanking", GetCellBlanking);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellVisibilityArray", GetCellVisibilityArray);
 	Nan::SetPrototypeMethod(tpl, "getCellVisibilityArray", GetCellVisibilityArray);
 
@@ -87,6 +90,9 @@ void VtkUniformGridWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMaxCellSize", GetMaxCellSize);
 	Nan::SetPrototypeMethod(tpl, "getMaxCellSize", GetMaxCellSize);
+
+	Nan::SetPrototypeMethod(tpl, "GetPointBlanking", GetPointBlanking);
+	Nan::SetPrototypeMethod(tpl, "getPointBlanking", GetPointBlanking);
 
 	Nan::SetPrototypeMethod(tpl, "GetPointVisibilityArray", GetPointVisibilityArray);
 	Nan::SetPrototypeMethod(tpl, "getPointVisibilityArray", GetPointVisibilityArray);
@@ -121,6 +127,9 @@ void VtkUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnBlankPoint", UnBlankPoint);
 	Nan::SetPrototypeMethod(tpl, "unBlankPoint", UnBlankPoint);
 
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -268,6 +277,20 @@ void VtkUniformGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& in
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkUniformGridWrap::GetCellBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
+	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCellBlanking();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkUniformGridWrap::GetCellVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
@@ -403,6 +426,20 @@ void VtkUniformGridWrap::GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 	r = native->GetMaxCellSize();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkUniformGridWrap::GetPointBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkUniformGridWrap *wrapper = ObjectWrap::Unwrap<VtkUniformGridWrap>(info.Holder());
+	vtkUniformGrid *native = (vtkUniformGrid *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointBlanking();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 

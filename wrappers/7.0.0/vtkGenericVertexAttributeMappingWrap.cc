@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGenericVertexAttributeMappingWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -49,8 +49,26 @@ void VtkGenericVertexAttributeMappingWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "AddMapping", AddMapping);
 	Nan::SetPrototypeMethod(tpl, "addMapping", AddMapping);
 
+	Nan::SetPrototypeMethod(tpl, "GetArrayName", GetArrayName);
+	Nan::SetPrototypeMethod(tpl, "getArrayName", GetArrayName);
+
+	Nan::SetPrototypeMethod(tpl, "GetAttributeName", GetAttributeName);
+	Nan::SetPrototypeMethod(tpl, "getAttributeName", GetAttributeName);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
+
+	Nan::SetPrototypeMethod(tpl, "GetComponent", GetComponent);
+	Nan::SetPrototypeMethod(tpl, "getComponent", GetComponent);
+
+	Nan::SetPrototypeMethod(tpl, "GetFieldAssociation", GetFieldAssociation);
+	Nan::SetPrototypeMethod(tpl, "getFieldAssociation", GetFieldAssociation);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfMappings", GetNumberOfMappings);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfMappings", GetNumberOfMappings);
+
+	Nan::SetPrototypeMethod(tpl, "GetTextureUnit", GetTextureUnit);
+	Nan::SetPrototypeMethod(tpl, "getTextureUnit", GetTextureUnit);
 
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
@@ -67,6 +85,9 @@ void VtkGenericVertexAttributeMappingWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICVERTEXATTRIBUTEMAPPINGWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICVERTEXATTRIBUTEMAPPINGWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -154,6 +175,48 @@ void VtkGenericVertexAttributeMappingWrap::AddMapping(const Nan::FunctionCallbac
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkGenericVertexAttributeMappingWrap::GetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetArrayName(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericVertexAttributeMappingWrap::GetAttributeName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetAttributeName(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkGenericVertexAttributeMappingWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
@@ -166,6 +229,83 @@ void VtkGenericVertexAttributeMappingWrap::GetClassName(const Nan::FunctionCallb
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkGenericVertexAttributeMappingWrap::GetComponent(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetComponent(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericVertexAttributeMappingWrap::GetFieldAssociation(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetFieldAssociation(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGenericVertexAttributeMappingWrap::GetNumberOfMappings(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfMappings();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGenericVertexAttributeMappingWrap::GetTextureUnit(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGenericVertexAttributeMappingWrap *wrapper = ObjectWrap::Unwrap<VtkGenericVertexAttributeMappingWrap>(info.Holder());
+	vtkGenericVertexAttributeMapping *native = (vtkGenericVertexAttributeMapping *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetTextureUnit(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkGenericVertexAttributeMappingWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

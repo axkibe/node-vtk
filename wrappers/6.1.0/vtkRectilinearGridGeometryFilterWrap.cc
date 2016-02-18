@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkRectilinearGridGeometryFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkRectilinearGridGeometryFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExtent", SetExtent);
 	Nan::SetPrototypeMethod(tpl, "setExtent", SetExtent);
 
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDGEOMETRYFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRECTILINEARGRIDGEOMETRYFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

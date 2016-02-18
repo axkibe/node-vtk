@@ -10,6 +10,7 @@
 #include <vtkImageConvolve.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageConvolveWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkImageConvolveWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetKernel5x5x5(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKernel7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKernel7x7x7(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECONVOLVEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECONVOLVEWRAP_CLASSDEF
+#endif
 };
 
 #endif

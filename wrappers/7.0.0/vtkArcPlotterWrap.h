@@ -10,6 +10,7 @@
 #include <vtkArcPlotter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkArcPlotterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkArcPlotterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetUseDefaultNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDefaultNormalOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDefaultNormalOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKARCPLOTTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKARCPLOTTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

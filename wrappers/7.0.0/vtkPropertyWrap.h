@@ -10,6 +10,7 @@
 #include <vtkProperty.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPropertyWrap : public VtkObjectWrap
 {
@@ -118,6 +119,10 @@ class VtkPropertyWrap : public VtkObjectWrap
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

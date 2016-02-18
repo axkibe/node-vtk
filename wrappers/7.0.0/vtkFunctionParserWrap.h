@@ -10,6 +10,7 @@
 #include <vtkFunctionParser.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFunctionParserWrap : public VtkObjectWrap
 {
@@ -57,6 +58,10 @@ class VtkFunctionParserWrap : public VtkObjectWrap
 		static void SetReplacementValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarVariableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorVariableValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFUNCTIONPARSERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFUNCTIONPARSERWRAP_CLASSDEF
+#endif
 };
 
 #endif

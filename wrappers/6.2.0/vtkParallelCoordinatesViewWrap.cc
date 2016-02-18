@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderViewWrap.h"
 #include "vtkParallelCoordinatesViewWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewThemeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkParallelCoordinatesViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumNumberOfBrushPoints", SetMaximumNumberOfBrushPoints);
 	Nan::SetPrototypeMethod(tpl, "setMaximumNumberOfBrushPoints", SetMaximumNumberOfBrushPoints);
 
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARALLELCOORDINATESVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

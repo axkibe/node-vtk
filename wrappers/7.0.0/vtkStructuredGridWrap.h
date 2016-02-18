@@ -10,6 +10,7 @@
 #include <vtkStructuredGrid.h>
 
 #include "vtkPointSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStructuredGridWrap : public VtkPointSetWrap
 {
@@ -50,6 +51,10 @@ class VtkStructuredGridWrap : public VtkPointSetWrap
 		static void SetDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

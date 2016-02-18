@@ -10,6 +10,7 @@
 #include <vtkAffineRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAffineRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -38,6 +39,10 @@ class VtkAffineRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAFFINEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAFFINEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

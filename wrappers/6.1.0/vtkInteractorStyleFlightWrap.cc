@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleFlightWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -167,6 +167,9 @@ void VtkInteractorStyleFlightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartReverseFly", StartReverseFly);
 	Nan::SetPrototypeMethod(tpl, "startReverseFly", StartReverseFly);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEFLIGHTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLEFLIGHTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

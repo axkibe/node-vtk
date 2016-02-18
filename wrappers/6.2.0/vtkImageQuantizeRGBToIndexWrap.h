@@ -10,6 +10,7 @@
 #include <vtkImageQuantizeRGBToIndex.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageQuantizeRGBToIndexWrap : public VtkImageAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkImageQuantizeRGBToIndexWrap : public VtkImageAlgorithmWrap
 		static void SetInitializeExecuteTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupIndexExecuteTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEQUANTIZERGBTOINDEXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEQUANTIZERGBTOINDEXWRAP_CLASSDEF
+#endif
 };
 
 #endif

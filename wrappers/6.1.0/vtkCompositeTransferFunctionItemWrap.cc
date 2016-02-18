@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkColorTransferFunctionItemWrap.h"
 #include "vtkCompositeTransferFunctionItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPiecewiseFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkCompositeTransferFunctionItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpacityFunction", SetOpacityFunction);
 	Nan::SetPrototypeMethod(tpl, "setOpacityFunction", SetOpacityFunction);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITETRANSFERFUNCTIONITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITETRANSFERFUNCTIONITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

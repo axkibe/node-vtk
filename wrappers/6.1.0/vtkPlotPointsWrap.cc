@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotPointsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkPlotPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

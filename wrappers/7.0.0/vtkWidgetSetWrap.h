@@ -10,6 +10,7 @@
 #include <vtkWidgetSet.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkWidgetSetWrap : public VtkObjectWrap
 {
@@ -33,11 +34,17 @@ class VtkWidgetSetWrap : public VtkObjectWrap
 		static void EnabledOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void EnabledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNthWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfWidgets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveWidget(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKWIDGETSETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKWIDGETSETWRAP_CLASSDEF
+#endif
 };
 
 #endif

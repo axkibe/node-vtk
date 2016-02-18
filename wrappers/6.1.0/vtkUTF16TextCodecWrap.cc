@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTextCodecWrap.h"
 #include "vtkUTF16TextCodecWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkUTF16TextCodecWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBigEndian", SetBigEndian);
 	Nan::SetPrototypeMethod(tpl, "setBigEndian", SetBigEndian);
 
+#ifdef VTK_NODE_PLUS_VTKUTF16TEXTCODECWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUTF16TEXTCODECWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

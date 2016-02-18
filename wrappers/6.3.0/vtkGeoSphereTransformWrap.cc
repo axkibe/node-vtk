@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractTransformWrap.h"
 #include "vtkGeoSphereTransformWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkGeoSphereTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ToRectangularOn", ToRectangularOn);
 	Nan::SetPrototypeMethod(tpl, "toRectangularOn", ToRectangularOn);
 
+#ifdef VTK_NODE_PLUS_VTKGEOSPHERETRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOSPHERETRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkHyperOctree.h>
 
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeWrap : public VtkDataSetWrap
 {
@@ -61,6 +62,10 @@ class VtkHyperOctreeWrap : public VtkDataSetWrap
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SubdivideLeaf(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

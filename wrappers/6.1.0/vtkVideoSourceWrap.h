@@ -10,6 +10,7 @@
 #include <vtkVideoSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVideoSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -75,6 +76,10 @@ class VtkVideoSourceWrap : public VtkImageAlgorithmWrap
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartTimeStamp(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Stop(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIDEOSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIDEOSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

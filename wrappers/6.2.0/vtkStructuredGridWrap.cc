@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetWrap.h"
 #include "vtkStructuredGridWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -58,6 +58,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "DeepCopy", DeepCopy);
 	Nan::SetPrototypeMethod(tpl, "deepCopy", DeepCopy);
 
+	Nan::SetPrototypeMethod(tpl, "GetCellBlanking", GetCellBlanking);
+	Nan::SetPrototypeMethod(tpl, "getCellBlanking", GetCellBlanking);
+
 	Nan::SetPrototypeMethod(tpl, "GetCellDims", GetCellDims);
 	Nan::SetPrototypeMethod(tpl, "getCellDims", GetCellDims);
 
@@ -91,6 +94,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetPoint", GetPoint);
 	Nan::SetPrototypeMethod(tpl, "getPoint", GetPoint);
 
+	Nan::SetPrototypeMethod(tpl, "GetPointBlanking", GetPointBlanking);
+	Nan::SetPrototypeMethod(tpl, "getPointBlanking", GetPointBlanking);
+
 	Nan::SetPrototypeMethod(tpl, "GetPointVisibilityArray", GetPointVisibilityArray);
 	Nan::SetPrototypeMethod(tpl, "getPointVisibilityArray", GetPointVisibilityArray);
 
@@ -121,6 +127,9 @@ void VtkStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -188,6 +197,20 @@ void VtkStructuredGridWrap::DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>&
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridWrap::GetCellBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetCellBlanking();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStructuredGridWrap::GetCellDims(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -558,6 +581,20 @@ void VtkStructuredGridWrap::GetPoint(const Nan::FunctionCallbackInfo<v8::Value>&
 		}
 	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkStructuredGridWrap::GetPointBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkStructuredGridWrap *wrapper = ObjectWrap::Unwrap<VtkStructuredGridWrap>(info.Holder());
+	vtkStructuredGrid *native = (vtkStructuredGrid *)wrapper->native.GetPointer();
+	unsigned char r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetPointBlanking();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkStructuredGridWrap::GetPointVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info)

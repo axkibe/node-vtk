@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkResliceCursorActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkPropertyWrap.h"
 #include "vtkActorWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkResliceCursorActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUserMatrix", SetUserMatrix);
 	Nan::SetPrototypeMethod(tpl, "setUserMatrix", SetUserMatrix);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICECURSORACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

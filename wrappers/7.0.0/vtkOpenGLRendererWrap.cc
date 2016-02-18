@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRendererWrap.h"
 #include "vtkOpenGLRendererWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderPassWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -81,6 +81,9 @@ void VtkOpenGLRendererWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateLights", UpdateLights);
 	Nan::SetPrototypeMethod(tpl, "updateLights", UpdateLights);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLRENDERERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLRENDERERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

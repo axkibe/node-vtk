@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractCellLocatorWrap.h"
 #include "vtkCellLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkCellLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfCellsPerBucket", SetNumberOfCellsPerBucket);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfCellsPerBucket", SetNumberOfCellsPerBucket);
 
+#ifdef VTK_NODE_PLUS_VTKCELLLOCATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLLOCATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

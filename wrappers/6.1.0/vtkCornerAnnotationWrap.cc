@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkCornerAnnotationWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkImageActorWrap.h"
 #include "vtkImageMapToWindowLevelColorsWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -163,6 +163,9 @@ void VtkCornerAnnotationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShowSliceAndImageOn", ShowSliceAndImageOn);
 	Nan::SetPrototypeMethod(tpl, "showSliceAndImageOn", ShowSliceAndImageOn);
 
+#ifdef VTK_NODE_PLUS_VTKCORNERANNOTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCORNERANNOTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

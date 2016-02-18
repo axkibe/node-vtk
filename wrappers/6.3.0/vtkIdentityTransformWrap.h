@@ -10,6 +10,7 @@
 #include <vtkIdentityTransform.h>
 
 #include "vtkLinearTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIdentityTransformWrap : public VtkLinearTransformWrap
 {
@@ -42,6 +43,10 @@ class VtkIdentityTransformWrap : public VtkLinearTransformWrap
 		static void TransformPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformPointsNormalsVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TransformVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIDENTITYTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIDENTITYTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

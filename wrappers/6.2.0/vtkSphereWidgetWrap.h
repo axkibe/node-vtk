@@ -10,6 +10,7 @@
 #include <vtkSphereWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphereWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -71,6 +72,10 @@ class VtkSphereWidgetWrap : public Vtk3DWidgetWrap
 		static void SetTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHEREWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHEREWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

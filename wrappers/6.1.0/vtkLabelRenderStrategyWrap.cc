@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkLabelRenderStrategyWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkLabelRenderStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SupportsRotation", SupportsRotation);
 	Nan::SetPrototypeMethod(tpl, "supportsRotation", SupportsRotation);
 
+#ifdef VTK_NODE_PLUS_VTKLABELRENDERSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELRENDERSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

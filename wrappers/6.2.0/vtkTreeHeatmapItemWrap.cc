@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkTreeHeatmapItemWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkTableWrap.h"
 #include "vtkDendrogramItemWrap.h"
 #include "vtkHeatmapItemWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +50,9 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
 	tpl->SetClassName(Nan::New("VtkTreeHeatmapItemWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	Nan::SetPrototypeMethod(tpl, "CollapseToNumberOfLeafNodes", CollapseToNumberOfLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "collapseToNumberOfLeafNodes", CollapseToNumberOfLeafNodes);
 
 	Nan::SetPrototypeMethod(tpl, "GetBounds", GetBounds);
 	Nan::SetPrototypeMethod(tpl, "getBounds", GetBounds);
@@ -123,6 +126,9 @@ void VtkTreeHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTreeColorArray", SetTreeColorArray);
 	Nan::SetPrototypeMethod(tpl, "setTreeColorArray", SetTreeColorArray);
 
+#ifdef VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -150,6 +156,25 @@ void VtkTreeHeatmapItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkTreeHeatmapItemWrap::CollapseToNumberOfLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkTreeHeatmapItemWrap *wrapper = ObjectWrap::Unwrap<VtkTreeHeatmapItemWrap>(info.Holder());
+	vtkTreeHeatmapItem *native = (vtkTreeHeatmapItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->CollapseToNumberOfLeafNodes(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkTreeHeatmapItemWrap::GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info)

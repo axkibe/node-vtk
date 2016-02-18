@@ -10,6 +10,7 @@
 #include <vtkBoundedPlanePointPlacer.h>
 
 #include "vtkPointPlacerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoundedPlanePointPlacerWrap : public VtkPointPlacerWrap
 {
@@ -53,6 +54,10 @@ class VtkBoundedPlanePointPlacerWrap : public VtkPointPlacerWrap
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ValidateWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOUNDEDPLANEPOINTPLACERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOUNDEDPLANEPOINTPLACERWRAP_CLASSDEF
+#endif
 };
 
 #endif

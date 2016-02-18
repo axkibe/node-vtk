@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageWriterWrap.h"
 #include "vtkPNGWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -63,6 +63,9 @@ void VtkPNGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetResult", GetResult);
 	Nan::SetPrototypeMethod(tpl, "getResult", GetResult);
 
+	Nan::SetPrototypeMethod(tpl, "GetWriteToMemory", GetWriteToMemory);
+	Nan::SetPrototypeMethod(tpl, "getWriteToMemory", GetWriteToMemory);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -78,6 +81,9 @@ void VtkPNGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResult", SetResult);
 	Nan::SetPrototypeMethod(tpl, "setResult", SetResult);
 
+	Nan::SetPrototypeMethod(tpl, "SetWriteToMemory", SetWriteToMemory);
+	Nan::SetPrototypeMethod(tpl, "setWriteToMemory", SetWriteToMemory);
+
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
@@ -87,6 +93,9 @@ void VtkPNGWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteToMemoryOn", WriteToMemoryOn);
 	Nan::SetPrototypeMethod(tpl, "writeToMemoryOn", WriteToMemoryOn);
 
+#ifdef VTK_NODE_PLUS_VTKPNGWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPNGWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -193,6 +202,20 @@ void VtkPNGWriterWrap::GetResult(const Nan::FunctionCallbackInfo<v8::Value>& inf
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPNGWriterWrap::GetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPNGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPNGWriterWrap>(info.Holder());
+	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetWriteToMemory();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPNGWriterWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -304,6 +327,25 @@ void VtkPNGWriterWrap::SetResult(const Nan::FunctionCallbackInfo<v8::Value>& inf
 		}
 		native->SetResult(
 			(vtkUnsignedCharArray *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPNGWriterWrap::SetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPNGWriterWrap *wrapper = ObjectWrap::Unwrap<VtkPNGWriterWrap>(info.Holder());
+	vtkPNGWriter *native = (vtkPNGWriter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetWriteToMemory(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

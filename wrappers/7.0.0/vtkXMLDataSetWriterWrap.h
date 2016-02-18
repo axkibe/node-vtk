@@ -10,6 +10,7 @@
 #include <vtkXMLDataSetWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLDataSetWriterWrap : public VtkXMLWriterWrap
 {
@@ -34,6 +35,10 @@ class VtkXMLDataSetWriterWrap : public VtkXMLWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLDATASETWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLDATASETWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

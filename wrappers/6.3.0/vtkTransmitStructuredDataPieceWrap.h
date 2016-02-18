@@ -10,6 +10,7 @@
 #include <vtkTransmitStructuredDataPiece.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransmitStructuredDataPieceWrap : public VtkDataSetAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkTransmitStructuredDataPieceWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSMITSTRUCTUREDDATAPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSMITSTRUCTUREDDATAPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

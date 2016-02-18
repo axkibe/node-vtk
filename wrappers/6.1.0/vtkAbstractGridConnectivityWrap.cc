@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAbstractGridConnectivityWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
 #include "vtkPointDataWrap.h"
 #include "vtkCellDataWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,12 @@ void VtkAbstractGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetGhostedPoints", GetGhostedPoints);
 	Nan::SetPrototypeMethod(tpl, "getGhostedPoints", GetGhostedPoints);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfGhostLayers", GetNumberOfGhostLayers);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfGhostLayers", GetNumberOfGhostLayers);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfGrids", GetNumberOfGrids);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfGrids", GetNumberOfGrids);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -77,6 +83,12 @@ void VtkAbstractGridConnectivityWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfGhostLayers", SetNumberOfGhostLayers);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfGhostLayers", SetNumberOfGhostLayers);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTGRIDCONNECTIVITYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTGRIDCONNECTIVITYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -269,6 +281,34 @@ void VtkAbstractGridConnectivityWrap::GetGhostedPoints(const Nan::FunctionCallba
 	Nan::ThrowError("Parameter mismatch");
 }
 
+void VtkAbstractGridConnectivityWrap::GetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
+	vtkAbstractGridConnectivity *native = (vtkAbstractGridConnectivity *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfGhostLayers();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkAbstractGridConnectivityWrap::GetNumberOfGrids(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
+	vtkAbstractGridConnectivity *native = (vtkAbstractGridConnectivity *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfGrids();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
 void VtkAbstractGridConnectivityWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
@@ -340,6 +380,25 @@ void VtkAbstractGridConnectivityWrap::SafeDownCast(const Nan::FunctionCallbackIn
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkAbstractGridConnectivityWrap::SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkAbstractGridConnectivityWrap *wrapper = ObjectWrap::Unwrap<VtkAbstractGridConnectivityWrap>(info.Holder());
+	vtkAbstractGridConnectivity *native = (vtkAbstractGridConnectivity *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfGhostLayers(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

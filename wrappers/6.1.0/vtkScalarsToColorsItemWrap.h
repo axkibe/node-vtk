@@ -10,6 +10,7 @@
 #include <vtkScalarsToColorsItem.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScalarsToColorsItemWrap : public VtkPlotWrap
 {
@@ -40,6 +41,10 @@ class VtkScalarsToColorsItemWrap : public VtkPlotWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaskAboveCurve(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUserBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCALARSTOCOLORSITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

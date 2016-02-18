@@ -10,6 +10,7 @@
 #include <vtkRegularPolygonSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRegularPolygonSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkRegularPolygonSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetNumberOfSides(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKREGULARPOLYGONSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKREGULARPOLYGONSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

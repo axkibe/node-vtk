@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkLabeledDataMapperWrap.h"
 #include "vtkDynamic2DLabelMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkDynamic2DLabelMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReversePriority", SetReversePriority);
 	Nan::SetPrototypeMethod(tpl, "setReversePriority", SetReversePriority);
 
+#ifdef VTK_NODE_PLUS_VTKDYNAMIC2DLABELMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDYNAMIC2DLABELMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

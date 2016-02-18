@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkBYUWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -123,6 +123,9 @@ void VtkBYUWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteTextureOn", WriteTextureOn);
 	Nan::SetPrototypeMethod(tpl, "writeTextureOn", WriteTextureOn);
 
+#ifdef VTK_NODE_PLUS_VTKBYUWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBYUWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkChooserPainter.h>
 
 #include "vtkPolyDataPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChooserPainterWrap : public VtkPolyDataPainterWrap
 {
@@ -41,6 +42,10 @@ class VtkChooserPainterWrap : public VtkPolyDataPainterWrap
 		static void SetVertPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLinesPainterForWireframesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLinesPainterForWireframesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHOOSERPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHOOSERPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

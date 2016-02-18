@@ -10,6 +10,7 @@
 #include <vtkVolume16Reader.h>
 
 #include "vtkVolumeReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolume16ReaderWrap : public VtkVolumeReaderWrap
 {
@@ -33,6 +34,7 @@ class VtkVolume16ReaderWrap : public VtkVolumeReaderWrap
 		static void GetDataByteOrder(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataByteOrderAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDataMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetImage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -44,11 +46,16 @@ class VtkVolume16ReaderWrap : public VtkVolumeReaderWrap
 		static void SetDataByteOrderToBigEndian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataByteOrderToLittleEndian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataDimensions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDataMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHeaderSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSwapBytes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBytesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUME16READERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUME16READERWRAP_CLASSDEF
+#endif
 };
 
 #endif

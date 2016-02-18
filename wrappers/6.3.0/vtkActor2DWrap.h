@@ -10,6 +10,7 @@
 #include <vtkActor2D.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkActor2DWrap : public VtkPropWrap
 {
@@ -59,6 +60,10 @@ class VtkActor2DWrap : public VtkPropWrap
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

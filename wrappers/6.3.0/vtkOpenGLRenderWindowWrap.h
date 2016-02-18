@@ -10,6 +10,7 @@
 #include <vtkOpenGLRenderWindow.h>
 
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 {
@@ -29,9 +30,15 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void GetBackBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBackRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthBufferSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtensionManager(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrontBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrontLeftBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetFrontRightBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalMaximumNumberOfMultiSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHardwareSupport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPixelData(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -51,6 +58,10 @@ class VtkOpenGLRenderWindowWrap : public VtkRenderWindowWrap
 		static void SetZbufferData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StereoUpdate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WaitForCompletion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLRENDERWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLRENDERWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

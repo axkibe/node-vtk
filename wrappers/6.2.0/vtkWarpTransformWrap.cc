@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractTransformWrap.h"
 #include "vtkWarpTransformWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkWarpTransformWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TemplateTransformPoint", TemplateTransformPoint);
 	Nan::SetPrototypeMethod(tpl, "templateTransformPoint", TemplateTransformPoint);
 
+#ifdef VTK_NODE_PLUS_VTKWARPTRANSFORMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWARPTRANSFORMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

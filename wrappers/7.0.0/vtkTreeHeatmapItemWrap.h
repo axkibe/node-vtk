@@ -10,6 +10,7 @@
 #include <vtkTreeHeatmapItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 {
@@ -29,6 +30,7 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void CollapseToNumberOfLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -53,6 +55,10 @@ class VtkTreeHeatmapItemWrap : public VtkContextItemWrap
 		static void SetTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTreeColorArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREEHEATMAPITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

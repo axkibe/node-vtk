@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageCheckerboardWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkImageCheckerboardWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfDivisions", SetNumberOfDivisions);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfDivisions", SetNumberOfDivisions);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECHECKERBOARDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECHECKERBOARDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleMultiTouchCamera.h>
 
 #include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleMultiTouchCameraWrap : public VtkInteractorStyleTrackballCameraWrap
 {
@@ -39,6 +40,10 @@ class VtkInteractorStyleMultiTouchCameraWrap : public VtkInteractorStyleTrackbal
 		static void OnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMotionFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEMULTITOUCHCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEMULTITOUCHCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

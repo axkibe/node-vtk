@@ -10,6 +10,7 @@
 #include <vtkCategoryLegend.h>
 
 #include "vtkChartLegendWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCategoryLegendWrap : public VtkChartLegendWrap
 {
@@ -38,6 +39,10 @@ class VtkCategoryLegendWrap : public VtkChartLegendWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarsToColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCATEGORYLEGENDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCATEGORYLEGENDWRAP_CLASSDEF
+#endif
 };
 
 #endif

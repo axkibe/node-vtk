@@ -10,6 +10,7 @@
 #include <vtkImageCacheFilter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCacheFilterWrap : public VtkImageAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkImageCacheFilterWrap : public VtkImageAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECACHEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECACHEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

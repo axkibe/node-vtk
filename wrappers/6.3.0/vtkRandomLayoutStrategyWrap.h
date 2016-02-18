@@ -10,6 +10,7 @@
 #include <vtkRandomLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRandomLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -49,6 +50,10 @@ class VtkRandomLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetThreeDimensionalLayout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreeDimensionalLayoutOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRANDOMLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRANDOMLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

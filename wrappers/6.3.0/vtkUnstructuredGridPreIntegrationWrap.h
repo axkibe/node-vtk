@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridPreIntegration.h>
 
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridPreIntegrationWrap : public VtkUnstructuredGridVolumeRayIntegratorWrap
 {
@@ -47,6 +48,10 @@ class VtkUnstructuredGridPreIntegrationWrap : public VtkUnstructuredGridVolumeRa
 		static void SetIntegrationTableLengthResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrationTableScalarResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIntegrator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDPREINTEGRATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDPREINTEGRATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

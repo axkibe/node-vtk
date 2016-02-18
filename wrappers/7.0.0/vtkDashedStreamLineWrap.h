@@ -10,6 +10,7 @@
 #include <vtkDashedStreamLine.h>
 
 #include "vtkStreamLineWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDashedStreamLineWrap : public VtkStreamLineWrap
 {
@@ -37,6 +38,10 @@ class VtkDashedStreamLineWrap : public VtkStreamLineWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDashFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDASHEDSTREAMLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDASHEDSTREAMLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

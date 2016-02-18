@@ -10,6 +10,7 @@
 #include <vtkExtractTemporalFieldData.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractTemporalFieldDataWrap : public VtkTableAlgorithmWrap
 {
@@ -34,6 +35,10 @@ class VtkExtractTemporalFieldDataWrap : public VtkTableAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTTEMPORALFIELDDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTTEMPORALFIELDDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

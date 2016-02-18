@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkProcessGroupWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,6 +93,9 @@ void VtkProcessGroupWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCommunicator", SetCommunicator);
 	Nan::SetPrototypeMethod(tpl, "setCommunicator", SetCommunicator);
 
+#ifdef VTK_NODE_PLUS_VTKPROCESSGROUPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROCESSGROUPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

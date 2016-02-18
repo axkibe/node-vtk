@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPainterWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateBounds", UpdateBounds);
 	Nan::SetPrototypeMethod(tpl, "updateBounds", UpdateBounds);
 
+#ifdef VTK_NODE_PLUS_VTKPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

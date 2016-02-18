@@ -10,6 +10,7 @@
 #include <vtkProgrammableElectronicData.h>
 
 #include "vtkAbstractElectronicDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProgrammableElectronicDataWrap : public VtkAbstractElectronicDataWrap
 {
@@ -38,6 +39,10 @@ class VtkProgrammableElectronicDataWrap : public VtkAbstractElectronicDataWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetElectronDensity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPadding(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROGRAMMABLEELECTRONICDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROGRAMMABLEELECTRONICDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

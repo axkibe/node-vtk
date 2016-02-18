@@ -10,6 +10,7 @@
 #include <vtkScalarsToColors.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkScalarsToColorsWrap : public VtkObjectWrap
 {
@@ -63,6 +64,10 @@ class VtkScalarsToColorsWrap : public VtkObjectWrap
 		static void SetVectorModeToRGBColors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsingLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSCALARSTOCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSCALARSTOCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetWrap.h"
 #include "vtkHyperOctreeWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkDataSetAttributesWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -148,6 +148,9 @@ void VtkHyperOctreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SubdivideLeaf", SubdivideLeaf);
 	Nan::SetPrototypeMethod(tpl, "subdivideLeaf", SubdivideLeaf);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

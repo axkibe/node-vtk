@@ -10,6 +10,7 @@
 #include <vtkSphericalTransform.h>
 
 #include "vtkWarpTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphericalTransformWrap : public VtkWarpTransformWrap
 {
@@ -34,6 +35,10 @@ class VtkSphericalTransformWrap : public VtkWarpTransformWrap
 		static void MakeTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHERICALTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHERICALTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

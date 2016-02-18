@@ -10,6 +10,7 @@
 #include <vtkContext2D.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContext2DWrap : public VtkObjectWrap
 {
@@ -61,6 +62,10 @@ class VtkContext2DWrap : public VtkObjectWrap
 		static void PushMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXT2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXT2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

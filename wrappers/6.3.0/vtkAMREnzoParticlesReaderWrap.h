@@ -10,6 +10,7 @@
 #include <vtkAMREnzoParticlesReader.h>
 
 #include "vtkAMRBaseParticlesReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMREnzoParticlesReaderWrap : public VtkAMRBaseParticlesReaderWrap
 {
@@ -36,6 +37,10 @@ class VtkAMREnzoParticlesReaderWrap : public VtkAMRBaseParticlesReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParticleType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRENZOPARTICLESREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRENZOPARTICLESREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

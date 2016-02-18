@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageStencilToImageWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkImageStencilToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutsideValue", SetOutsideValue);
 	Nan::SetPrototypeMethod(tpl, "setOutsideValue", SetOutsideValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILTOIMAGEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESTENCILTOIMAGEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

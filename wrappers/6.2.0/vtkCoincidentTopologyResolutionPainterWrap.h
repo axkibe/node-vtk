@@ -10,6 +10,7 @@
 #include <vtkCoincidentTopologyResolutionPainter.h>
 
 #include "vtkPolyDataPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCoincidentTopologyResolutionPainterWrap : public VtkPolyDataPainterWrap
 {
@@ -37,6 +38,10 @@ class VtkCoincidentTopologyResolutionPainterWrap : public VtkPolyDataPainterWrap
 		static void RESOLVE_COINCIDENT_TOPOLOGY(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Z_SHIFT(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOINCIDENTTOPOLOGYRESOLUTIONPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOINCIDENTTOPOLOGYRESOLUTIONPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkMergeGraphs.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMergeGraphsWrap : public VtkGraphAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkMergeGraphsWrap : public VtkGraphAlgorithmWrap
 		static void SetUseEdgeWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseEdgeWindowOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMERGEGRAPHSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMERGEGRAPHSWRAP_CLASSDEF
+#endif
 };
 
 #endif

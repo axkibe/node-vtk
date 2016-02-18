@@ -10,6 +10,7 @@
 #include <vtkSelectionNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSelectionNodeWrap : public VtkObjectWrap
 {
@@ -68,6 +69,10 @@ class VtkSelectionNodeWrap : public VtkObjectWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SubtractSelectionList(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnionSelectionList(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSELECTIONNODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSELECTIONNODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

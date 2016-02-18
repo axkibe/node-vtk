@@ -10,6 +10,7 @@
 #include <vtkTexture.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextureWrap : public VtkImageAlgorithmWrap
 {
@@ -75,6 +76,10 @@ class VtkTextureWrap : public VtkImageAlgorithmWrap
 		static void SetRepeat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRestrictPowerOf2ImageSmaller(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREWRAP_CLASSDEF
+#endif
 };
 
 #endif

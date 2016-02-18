@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleAreaSelectHover.h>
 
 #include "vtkInteractorStyleRubberBand2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleAreaSelectHoverWrap : public VtkInteractorStyleRubberBand2DWrap
 {
@@ -46,6 +47,10 @@ class VtkInteractorStyleAreaSelectHoverWrap : public VtkInteractorStyleRubberBan
 		static void SetUseRectangularCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseRectangularCoordinatesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEAREASELECTHOVERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEAREASELECTHOVERWRAP_CLASSDEF
+#endif
 };
 
 #endif

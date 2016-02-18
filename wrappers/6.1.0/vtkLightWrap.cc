@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkLightWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -195,6 +195,9 @@ void VtkLightWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SwitchOn", SwitchOn);
 	Nan::SetPrototypeMethod(tpl, "switchOn", SwitchOn);
 
+#ifdef VTK_NODE_PLUS_VTKLIGHTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLIGHTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

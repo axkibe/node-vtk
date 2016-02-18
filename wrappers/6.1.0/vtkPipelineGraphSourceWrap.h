@@ -10,6 +10,7 @@
 #include <vtkPipelineGraphSource.h>
 
 #include "vtkDirectedGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPipelineGraphSourceWrap : public VtkDirectedGraphAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkPipelineGraphSourceWrap : public VtkDirectedGraphAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveSink(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIPELINEGRAPHSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIPELINEGRAPHSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

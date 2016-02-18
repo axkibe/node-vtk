@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPixelBufferObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,12 @@ void VtkPixelBufferObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetContext", GetContext);
 	Nan::SetPrototypeMethod(tpl, "getContext", GetContext);
 
+	Nan::SetPrototypeMethod(tpl, "GetHandle", GetHandle);
+	Nan::SetPrototypeMethod(tpl, "getHandle", GetHandle);
+
+	Nan::SetPrototypeMethod(tpl, "GetSize", GetSize);
+	Nan::SetPrototypeMethod(tpl, "getSize", GetSize);
+
 	Nan::SetPrototypeMethod(tpl, "GetType", GetType);
 	Nan::SetPrototypeMethod(tpl, "getType", GetType);
 
@@ -89,6 +95,9 @@ void VtkPixelBufferObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetContext", SetContext);
 	Nan::SetPrototypeMethod(tpl, "setContext", SetContext);
 
+	Nan::SetPrototypeMethod(tpl, "SetSize", SetSize);
+	Nan::SetPrototypeMethod(tpl, "setSize", SetSize);
+
 	Nan::SetPrototypeMethod(tpl, "SetType", SetType);
 	Nan::SetPrototypeMethod(tpl, "setType", SetType);
 
@@ -104,6 +113,9 @@ void VtkPixelBufferObjectWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnmapUnpackedBuffer", UnmapUnpackedBuffer);
 	Nan::SetPrototypeMethod(tpl, "unmapUnpackedBuffer", UnmapUnpackedBuffer);
 
+#ifdef VTK_NODE_PLUS_VTKPIXELBUFFEROBJECTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPIXELBUFFEROBJECTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -206,6 +218,34 @@ void VtkPixelBufferObjectWrap::GetContext(const Nan::FunctionCallbackInfo<v8::Va
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkPixelBufferObjectWrap::GetHandle(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
+	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetHandle();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkPixelBufferObjectWrap::GetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
+	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSize();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkPixelBufferObjectWrap::GetType(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -379,6 +419,38 @@ void VtkPixelBufferObjectWrap::SetContext(const Nan::FunctionCallbackInfo<v8::Va
 		}
 		native->SetContext(
 			(vtkRenderWindow *) a0->native.GetPointer()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkPixelBufferObjectWrap::SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPixelBufferObjectWrap *wrapper = ObjectWrap::Unwrap<VtkPixelBufferObjectWrap>(info.Holder());
+	vtkPixelBufferObject *native = (vtkPixelBufferObject *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsInt32())
+		{
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetSize(
+				info[0]->Uint32Value(),
+				info[1]->Int32Value()
+			);
+			return;
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSize(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

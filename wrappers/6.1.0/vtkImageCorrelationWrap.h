@@ -10,6 +10,7 @@
 #include <vtkImageCorrelation.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCorrelationWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkImageCorrelationWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput1Data(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput2Data(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECORRELATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECORRELATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

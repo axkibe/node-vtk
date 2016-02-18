@@ -10,6 +10,7 @@
 #include <vtkCachedStreamingDemandDrivenPipeline.h>
 
 #include "vtkStreamingDemandDrivenPipelineWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCachedStreamingDemandDrivenPipelineWrap : public VtkStreamingDemandDrivenPipelineWrap
 {
@@ -36,6 +37,10 @@ class VtkCachedStreamingDemandDrivenPipelineWrap : public VtkStreamingDemandDriv
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCACHEDSTREAMINGDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCACHEDSTREAMINGDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

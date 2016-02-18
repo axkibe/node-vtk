@@ -10,6 +10,7 @@
 #include <vtkHierarchicalGraphPipeline.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalGraphPipelineWrap : public VtkObjectWrap
 {
@@ -63,6 +64,10 @@ class VtkHierarchicalGraphPipelineWrap : public VtkObjectWrap
 		static void SetVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALGRAPHPIPELINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALGRAPHPIPELINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridAlgorithm.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridAlgorithmWrap : public VtkAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkUnstructuredGridAlgorithmWrap : public VtkAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDALGORITHMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDALGORITHMWRAP_CLASSDEF
+#endif
 };
 
 #endif

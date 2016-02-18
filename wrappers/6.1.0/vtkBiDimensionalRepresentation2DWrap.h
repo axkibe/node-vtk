@@ -10,6 +10,7 @@
 #include <vtkBiDimensionalRepresentation2D.h>
 
 #include "vtkBiDimensionalRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBiDimensionalRepresentation2DWrap : public VtkBiDimensionalRepresentationWrap
 {
@@ -49,6 +50,10 @@ class VtkBiDimensionalRepresentation2DWrap : public VtkBiDimensionalRepresentati
 		static void StartWidgetDefinition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetManipulation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBIDIMENSIONALREPRESENTATION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBIDIMENSIONALREPRESENTATION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

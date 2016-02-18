@@ -10,6 +10,7 @@
 #include <vtkOpenGLGPUVolumeRayCastMapper.h>
 
 #include "vtkGPUVolumeRayCastMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLGPUVolumeRayCastMapperWrap : public VtkGPUVolumeRayCastMapperWrap
 {
@@ -33,9 +34,14 @@ class VtkOpenGLGPUVolumeRayCastMapperWrap : public VtkGPUVolumeRayCastMapperWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsRenderSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void OpenGLErrorMessage(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void PrintError(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLGPUVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

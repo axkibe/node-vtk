@@ -10,6 +10,7 @@
 #include <vtkResliceCursorRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -79,6 +80,10 @@ class VtkResliceCursorRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void ShowReslicedImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseImageActorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseImageActorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

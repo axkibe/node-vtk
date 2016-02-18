@@ -10,6 +10,7 @@
 #include <vtkImageToPolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageToPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -72,6 +73,10 @@ class VtkImageToPolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSubImageSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SmoothingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SmoothingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETOPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETOPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

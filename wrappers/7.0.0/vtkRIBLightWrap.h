@@ -10,6 +10,7 @@
 #include <vtkRIBLight.h>
 
 #include "vtkLightWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRIBLightWrap : public VtkLightWrap
 {
@@ -38,6 +39,10 @@ class VtkRIBLightWrap : public VtkLightWrap
 		static void SetShadows(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadowsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShadowsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRIBLIGHTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRIBLIGHTWRAP_CLASSDEF
+#endif
 };
 
 #endif

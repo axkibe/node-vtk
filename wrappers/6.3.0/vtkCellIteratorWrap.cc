@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCellIteratorWrap.h"
 #include "vtkObjectBaseWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkGenericCellWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkCellIteratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKCELLITERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLITERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

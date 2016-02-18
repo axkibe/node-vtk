@@ -10,6 +10,7 @@
 #include <vtkMultiCorrelativeStatistics.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiCorrelativeStatisticsWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -34,6 +35,10 @@ class VtkMultiCorrelativeStatisticsWrap : public VtkStatisticsAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTICORRELATIVESTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTICORRELATIVESTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

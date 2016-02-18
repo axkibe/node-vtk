@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGenericSubdivisionErrorMetricWrap.h"
 #include "vtkGenericAdaptorCellWrap.h"
 #include "vtkGenericDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkGenericSubdivisionErrorMetricWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenericCell", SetGenericCell);
 	Nan::SetPrototypeMethod(tpl, "setGenericCell", SetGenericCell);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICSUBDIVISIONERRORMETRICWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICSUBDIVISIONERRORMETRICWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkHeatmapItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkStringArrayWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -98,6 +98,9 @@ void VtkHeatmapItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTable", SetTable);
 	Nan::SetPrototypeMethod(tpl, "setTable", SetTable);
 
+#ifdef VTK_NODE_PLUS_VTKHEATMAPITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHEATMAPITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

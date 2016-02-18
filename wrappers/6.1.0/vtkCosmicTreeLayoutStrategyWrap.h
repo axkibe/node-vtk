@@ -10,6 +10,7 @@
 #include <vtkCosmicTreeLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCosmicTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -42,6 +43,10 @@ class VtkCosmicTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetSizeLeafNodesOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SizeLeafNodesOnlyOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SizeLeafNodesOnlyOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOSMICTREELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOSMICTREELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

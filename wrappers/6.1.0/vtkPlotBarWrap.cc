@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotBarWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkColorSeriesWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkPlotBarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOrientation", SetOrientation);
 	Nan::SetPrototypeMethod(tpl, "setOrientation", SetOrientation);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTBARWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTBARWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -521,7 +524,31 @@ void VtkPlotBarWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotBarWrap *wrapper = ObjectWrap::Unwrap<VtkPlotBarWrap>(info.Holder());
 	vtkPlotBar *native = (vtkPlotBar *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetColor(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContourRepresentationWrap.h"
 #include "vtkFocalPlaneContourRepresentationWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkFocalPlaneContourRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateLines", UpdateLines);
 	Nan::SetPrototypeMethod(tpl, "updateLines", UpdateLines);
 
+#ifdef VTK_NODE_PLUS_VTKFOCALPLANECONTOURREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFOCALPLANECONTOURREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

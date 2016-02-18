@@ -10,6 +10,7 @@
 #include <vtkUniformGrid.h>
 
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUniformGridWrap : public VtkImageDataWrap
 {
@@ -35,12 +36,14 @@ class VtkUniformGridWrap : public VtkImageDataWrap
 		static void BlankPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void CopyStructure(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCellBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCellVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGridDescription(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPointBlanking(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetPointVisibilityArray(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Initialize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -52,6 +55,10 @@ class VtkUniformGridWrap : public VtkImageDataWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBlankCell(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBlankPoint(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

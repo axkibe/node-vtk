@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageMaskWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkImageMaskWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNotMask", SetNotMask);
 	Nan::SetPrototypeMethod(tpl, "setNotMask", SetNotMask);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMASKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMASKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

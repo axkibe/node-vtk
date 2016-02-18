@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkTransformWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPerspectiveTransformWrap.h"
 #include "vtkHomogeneousTransformWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -333,6 +333,9 @@ void VtkCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Zoom", Zoom);
 	Nan::SetPrototypeMethod(tpl, "zoom", Zoom);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

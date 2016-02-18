@@ -10,6 +10,7 @@
 #include <vtkLeaderActor2D.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLeaderActor2DWrap : public VtkActor2DWrap
 {
@@ -88,6 +89,10 @@ class VtkLeaderActor2DWrap : public VtkActor2DWrap
 		static void SetMinimumArrowSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLEADERACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLEADERACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

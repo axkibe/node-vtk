@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageHistogramWrap.h"
 #include "vtkImageHistogramStatisticsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkImageHistogramStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetAutoRangePercentiles", SetAutoRangePercentiles);
 	Nan::SetPrototypeMethod(tpl, "setAutoRangePercentiles", SetAutoRangePercentiles);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEHISTOGRAMSTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEHISTOGRAMSTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkEncodedGradientEstimator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEncodedGradientEstimatorWrap : public VtkObjectWrap
 {
@@ -67,6 +68,10 @@ class VtkEncodedGradientEstimatorWrap : public VtkObjectWrap
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZeroPadOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZeroPadOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKENCODEDGRADIENTESTIMATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKENCODEDGRADIENTESTIMATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

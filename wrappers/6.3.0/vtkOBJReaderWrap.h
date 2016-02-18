@@ -10,6 +10,7 @@
 #include <vtkOBJReader.h>
 
 #include "vtkAbstractPolyDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOBJReaderWrap : public VtkAbstractPolyDataReaderWrap
 {
@@ -33,6 +34,10 @@ class VtkOBJReaderWrap : public VtkAbstractPolyDataReaderWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

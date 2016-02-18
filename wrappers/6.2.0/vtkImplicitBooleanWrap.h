@@ -10,6 +10,7 @@
 #include <vtkImplicitBoolean.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitBooleanWrap : public VtkImplicitFunctionWrap
 {
@@ -47,6 +48,10 @@ class VtkImplicitBooleanWrap : public VtkImplicitFunctionWrap
 		static void SetOperationTypeToIntersection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationTypeToUnion(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationTypeToUnionOfMagnitudes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITBOOLEANWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITBOOLEANWRAP_CLASSDEF
+#endif
 };
 
 #endif

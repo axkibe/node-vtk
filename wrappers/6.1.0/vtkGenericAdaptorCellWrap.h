@@ -10,6 +10,7 @@
 #include <vtkGenericAdaptorCell.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericAdaptorCellWrap : public VtkObjectWrap
 {
@@ -41,6 +42,10 @@ class VtkGenericAdaptorCellWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Tessellate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TriangulateFace(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICADAPTORCELLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICADAPTORCELLWRAP_CLASSDEF
+#endif
 };
 
 #endif

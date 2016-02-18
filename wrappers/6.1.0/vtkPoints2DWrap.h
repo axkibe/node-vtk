@@ -10,6 +10,7 @@
 #include <vtkPoints2D.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPoints2DWrap : public VtkObjectWrap
 {
@@ -56,6 +57,10 @@ class VtkPoints2DWrap : public VtkObjectWrap
 		static void SetDataTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTS2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTS2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

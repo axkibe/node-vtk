@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkExtractPolyDataGeometryWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkExtractPolyDataGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassPoints", SetPassPoints);
 	Nan::SetPrototypeMethod(tpl, "setPassPoints", SetPassPoints);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTPOLYDATAGEOMETRYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTPOLYDATAGEOMETRYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

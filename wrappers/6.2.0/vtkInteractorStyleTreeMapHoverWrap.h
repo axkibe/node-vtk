@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleTreeMapHover.h>
 
 #include "vtkInteractorStyleImageWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleTreeMapHoverWrap : public VtkInteractorStyleImageWrap
 {
@@ -49,6 +50,10 @@ class VtkInteractorStyleTreeMapHoverWrap : public VtkInteractorStyleImageWrap
 		static void SetSelectionLightColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTreeMapToPolyData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETREEMAPHOVERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLETREEMAPHOVERWRAP_CLASSDEF
+#endif
 };
 
 #endif

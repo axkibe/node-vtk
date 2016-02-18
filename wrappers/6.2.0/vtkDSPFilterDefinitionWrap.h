@@ -10,6 +10,7 @@
 #include <vtkDSPFilterDefinition.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDSPFilterDefinitionWrap : public VtkObjectWrap
 {
@@ -49,6 +50,10 @@ class VtkDSPFilterDefinitionWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputVariableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDSPFILTERDEFINITIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDSPFILTERDEFINITIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

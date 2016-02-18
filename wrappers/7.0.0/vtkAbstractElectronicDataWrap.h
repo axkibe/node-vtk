@@ -10,6 +10,7 @@
 #include <vtkAbstractElectronicData.h>
 
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractElectronicDataWrap : public VtkDataObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkAbstractElectronicDataWrap : public VtkDataObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTELECTRONICDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTELECTRONICDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

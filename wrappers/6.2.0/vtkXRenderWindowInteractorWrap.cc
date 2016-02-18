@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkXRenderWindowInteractorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkXRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateSize", UpdateSize);
 	Nan::SetPrototypeMethod(tpl, "updateSize", UpdateSize);
 
+#ifdef VTK_NODE_PLUS_VTKXRENDERWINDOWINTERACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXRENDERWINDOWINTERACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

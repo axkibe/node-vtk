@@ -10,6 +10,7 @@
 #include <vtkBSPIntersections.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBSPIntersectionsWrap : public VtkObjectWrap
 {
@@ -45,6 +46,10 @@ class VtkBSPIntersectionsWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetComputeIntersectionsUsingDataBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCuts(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBSPINTERSECTIONSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBSPINTERSECTIONSWRAP_CLASSDEF
+#endif
 };
 
 #endif

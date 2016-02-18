@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInformationKeyWrap.h"
 #include "vtkInformationVariantKeyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkInformationVariantKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONVARIANTKEYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONVARIANTKEYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

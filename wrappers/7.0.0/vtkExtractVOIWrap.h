@@ -10,6 +10,7 @@
 #include <vtkExtractVOI.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractVOIWrap : public VtkImageAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkExtractVOIWrap : public VtkImageAlgorithmWrap
 		static void SetIncludeBoundary(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleRate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVOI(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTVOIWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTVOIWRAP_CLASSDEF
+#endif
 };
 
 #endif

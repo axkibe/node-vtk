@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkProp3DWrap.h"
 #include "vtkLightActorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLightWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkLightActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLight", SetLight);
 	Nan::SetPrototypeMethod(tpl, "setLight", SetLight);
 
+#ifdef VTK_NODE_PLUS_VTKLIGHTACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLIGHTACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

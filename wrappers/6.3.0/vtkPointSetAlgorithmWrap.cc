@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkStructuredGridWrap.h"
 #include "vtkUnstructuredGridWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkPointSetAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInputData", SetInputData);
 	Nan::SetPrototypeMethod(tpl, "setInputData", SetInputData);
 
+#ifdef VTK_NODE_PLUS_VTKPOINTSETALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOINTSETALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

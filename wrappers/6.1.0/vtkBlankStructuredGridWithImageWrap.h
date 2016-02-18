@@ -10,6 +10,7 @@
 #include <vtkBlankStructuredGridWithImage.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBlankStructuredGridWithImageWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkBlankStructuredGridWithImageWrap : public VtkStructuredGridAlgorithmWra
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBlankingInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWITHIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWITHIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

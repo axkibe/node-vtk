@@ -10,6 +10,7 @@
 #include <vtkVRMLImporter.h>
 
 #include "vtkImporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVRMLImporterWrap : public VtkImporterWrap
 {
@@ -41,6 +42,10 @@ class VtkVRMLImporterWrap : public VtkImporterWrap
 		static void exitField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void exitNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void useNode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVRMLIMPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVRMLIMPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

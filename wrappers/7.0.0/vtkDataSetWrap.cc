@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkInformationVectorWrap.h"
 #include "vtkFieldDataWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -154,6 +154,9 @@ void VtkDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePointGhostArrayCache", UpdatePointGhostArrayCache);
 	Nan::SetPrototypeMethod(tpl, "updatePointGhostArrayCache", UpdatePointGhostArrayCache);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

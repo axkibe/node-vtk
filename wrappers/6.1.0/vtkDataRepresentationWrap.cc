@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkDataRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkSelectionWrap.h"
 #include "vtkAnnotationLayersWrap.h"
 #include "vtkStringArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -132,6 +132,9 @@ void VtkDataRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateSelection", UpdateSelection);
 	Nan::SetPrototypeMethod(tpl, "updateSelection", UpdateSelection);
 
+#ifdef VTK_NODE_PLUS_VTKDATAREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

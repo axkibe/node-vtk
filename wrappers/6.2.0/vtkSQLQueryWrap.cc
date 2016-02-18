@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRowQueryWrap.h"
 #include "vtkSQLQueryWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSQLDatabaseWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -90,6 +90,9 @@ void VtkSQLQueryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetQuery", SetQuery);
 	Nan::SetPrototypeMethod(tpl, "setQuery", SetQuery);
 
+#ifdef VTK_NODE_PLUS_VTKSQLQUERYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSQLQUERYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -154,6 +157,66 @@ void VtkSQLQueryWrap::BindParameter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			info.GetReturnValue().Set(Nan::New(r));
 			return;
 		}
+		else if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Uint32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
 		else if(info.Length() > 1 && info[1]->IsNumber())
 		{
 			bool r;
@@ -165,6 +228,21 @@ void VtkSQLQueryWrap::BindParameter(const Nan::FunctionCallbackInfo<v8::Value>& 
 			r = native->BindParameter(
 				info[0]->Int32Value(),
 				info[1]->NumberValue()
+			);
+			info.GetReturnValue().Set(Nan::New(r));
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsInt32())
+		{
+			bool r;
+			if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			r = native->BindParameter(
+				info[0]->Int32Value(),
+				info[1]->Int32Value()
 			);
 			info.GetReturnValue().Set(Nan::New(r));
 			return;

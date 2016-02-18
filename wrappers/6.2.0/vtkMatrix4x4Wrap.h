@@ -10,6 +10,7 @@
 #include <vtkMatrix4x4.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMatrix4x4Wrap : public VtkObjectWrap
 {
@@ -46,6 +47,10 @@ class VtkMatrix4x4Wrap : public VtkObjectWrap
 		static void SetElement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Transpose(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Zero(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMATRIX4X4WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMATRIX4X4WRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageCorrelationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkImageCorrelationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInput2Data", SetInput2Data);
 	Nan::SetPrototypeMethod(tpl, "setInput2Data", SetInput2Data);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGECORRELATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGECORRELATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

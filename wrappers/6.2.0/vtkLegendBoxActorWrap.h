@@ -10,6 +10,7 @@
 #include <vtkLegendBoxActor.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLegendBoxActorWrap : public VtkActor2DWrap
 {
@@ -83,6 +84,10 @@ class VtkLegendBoxActorWrap : public VtkActor2DWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBackgroundOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBackgroundOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLEGENDBOXACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLEGENDBOXACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

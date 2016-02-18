@@ -10,6 +10,7 @@
 #include <vtkOrientationMarkerWidget.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOrientationMarkerWidgetWrap : public VtkInteractorObserverWrap
 {
@@ -46,6 +47,10 @@ class VtkOrientationMarkerWidgetWrap : public VtkInteractorObserverWrap
 		static void SetOutlineColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKORIENTATIONMARKERWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKORIENTATIONMARKERWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

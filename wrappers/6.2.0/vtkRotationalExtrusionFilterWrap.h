@@ -10,6 +10,7 @@
 #include <vtkRotationalExtrusionFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRotationalExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkRotationalExtrusionFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetDeltaRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTranslation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKROTATIONALEXTRUSIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKROTATIONALEXTRUSIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkOutputWindow.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOutputWindowWrap : public VtkObjectWrap
 {
@@ -43,6 +44,10 @@ class VtkOutputWindowWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPromptUser(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOUTPUTWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOUTPUTWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

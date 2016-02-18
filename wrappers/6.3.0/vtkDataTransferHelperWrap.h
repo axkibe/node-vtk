@@ -10,6 +10,7 @@
 #include <vtkDataTransferHelper.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataTransferHelperWrap : public VtkObjectWrap
 {
@@ -56,6 +57,10 @@ class VtkDataTransferHelperWrap : public VtkObjectWrap
 		static void SetShaderSupportsTextureInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTextureExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATATRANSFERHELPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATATRANSFERHELPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

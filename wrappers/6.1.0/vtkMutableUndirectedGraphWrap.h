@@ -10,6 +10,7 @@
 #include <vtkMutableUndirectedGraph.h>
 
 #include "vtkUndirectedGraphWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMutableUndirectedGraphWrap : public VtkUndirectedGraphWrap
 {
@@ -36,6 +37,10 @@ class VtkMutableUndirectedGraphWrap : public VtkUndirectedGraphWrap
 		static void RemoveEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveVertices(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMUTABLEUNDIRECTEDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMUTABLEUNDIRECTEDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

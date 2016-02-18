@@ -10,6 +10,7 @@
 #include <vtkFieldDataSerializer.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFieldDataSerializerWrap : public VtkObjectWrap
 {
@@ -33,6 +34,10 @@ class VtkFieldDataSerializerWrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIELDDATASERIALIZERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIELDDATASERIALIZERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPruneTreeFilter.h>
 
 #include "vtkTreeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPruneTreeFilterWrap : public VtkTreeAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkPruneTreeFilterWrap : public VtkTreeAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetShouldPruneParentVertex(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPRUNETREEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPRUNETREEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

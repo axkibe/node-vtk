@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridGeometryFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridGeometryFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkUnstructuredGridGeometryFilterWrap : public VtkUnstructuredGridAlgorith
 		static void SetPassThroughCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThroughPointIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDGEOMETRYFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDGEOMETRYFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

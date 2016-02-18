@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricSuperToroidWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkParametricSuperToroidWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZRadius", SetZRadius);
 	Nan::SetPrototypeMethod(tpl, "setZRadius", SetZRadius);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICSUPERTOROIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICSUPERTOROIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkChartBox.h>
 
 #include "vtkChartWrap.h"
+#include "../../plus/plus.h"
 
 class VtkChartBoxWrap : public VtkChartWrap
 {
@@ -43,6 +44,10 @@ class VtkChartBoxWrap : public VtkChartWrap
 		static void SetSelectedColumn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTooltip(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCHARTBOXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCHARTBOXWRAP_CLASSDEF
+#endif
 };
 
 #endif

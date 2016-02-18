@@ -10,6 +10,7 @@
 #include <vtkOpenFOAMReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenFOAMReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -93,6 +94,10 @@ class VtkOpenFOAMReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetReadZones(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRefresh(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENFOAMREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENFOAMREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

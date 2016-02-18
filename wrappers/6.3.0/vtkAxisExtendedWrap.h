@@ -10,6 +10,7 @@
 #include <vtkAxisExtended.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxisExtendedWrap : public VtkObjectWrap
 {
@@ -53,6 +54,10 @@ class VtkAxisExtendedWrap : public VtkObjectWrap
 		static void SetPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Simplicity(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SimplicityMax(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXISEXTENDEDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXISEXTENDEDWRAP_CLASSDEF
+#endif
 };
 
 #endif

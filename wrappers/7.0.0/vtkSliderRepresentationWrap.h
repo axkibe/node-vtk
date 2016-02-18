@@ -10,6 +10,7 @@
 #include <vtkSliderRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSliderRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -77,6 +78,10 @@ class VtkSliderRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSliderLabelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShowSliderLabelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLIDERREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLIDERREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

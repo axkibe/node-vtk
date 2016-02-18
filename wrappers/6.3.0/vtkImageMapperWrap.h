@@ -10,6 +10,7 @@
 #include <vtkImageMapper.h>
 
 #include "vtkMapper2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMapperWrap : public VtkMapper2DWrap
 {
@@ -56,6 +57,10 @@ class VtkImageMapperWrap : public VtkMapper2DWrap
 		static void SetZSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCustomExtentsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCustomExtentsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

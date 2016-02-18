@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkIncrementalPointLocatorWrap.h"
 #include "vtkIncrementalOctreePointLocatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -116,6 +116,9 @@ void VtkIncrementalOctreePointLocatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 	Nan::SetPrototypeMethod(tpl, "setMaxPointsPerLeaf", SetMaxPointsPerLeaf);
 
+#ifdef VTK_NODE_PLUS_VTKINCREMENTALOCTREEPOINTLOCATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINCREMENTALOCTREEPOINTLOCATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

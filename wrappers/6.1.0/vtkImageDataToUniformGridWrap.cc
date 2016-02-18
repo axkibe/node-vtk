@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkImageDataToUniformGridWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkImageDataToUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReverse", SetReverse);
 	Nan::SetPrototypeMethod(tpl, "setReverse", SetReverse);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATATOUNIFORMGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEDATATOUNIFORMGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

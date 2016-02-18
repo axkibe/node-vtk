@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataSourceWidgetWrap.h"
 #include "vtkPlaneWidgetWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPlaneWrap.h"
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -192,6 +192,9 @@ void VtkPlaneWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePlacement", UpdatePlacement);
 	Nan::SetPrototypeMethod(tpl, "updatePlacement", UpdatePlacement);
 
+#ifdef VTK_NODE_PLUS_VTKPLANEWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLANEWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

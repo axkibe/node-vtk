@@ -10,6 +10,7 @@
 #include <vtkImageSlab.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSlabWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkImageSlabWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetTrapezoidIntegration(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TrapezoidIntegrationOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TrapezoidIntegrationOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESLABWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESLABWRAP_CLASSDEF
+#endif
 };
 
 #endif

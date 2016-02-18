@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPickerWrap.h"
 #include "vtkCellPickerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkAbstractCellLocatorWrap.h"
 #include "vtkTextureWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -140,6 +140,9 @@ void VtkCellPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseVolumeGradientOpacityOn", UseVolumeGradientOpacityOn);
 	Nan::SetPrototypeMethod(tpl, "useVolumeGradientOpacityOn", UseVolumeGradientOpacityOn);
 
+#ifdef VTK_NODE_PLUS_VTKCELLPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

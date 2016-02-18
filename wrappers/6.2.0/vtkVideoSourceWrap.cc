@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkVideoSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -185,6 +185,9 @@ void VtkVideoSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Stop", Stop);
 	Nan::SetPrototypeMethod(tpl, "stop", Stop);
 
+#ifdef VTK_NODE_PLUS_VTKVIDEOSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIDEOSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

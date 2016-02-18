@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkScalarTreeWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkScalarTreeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
 	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARTREEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARTREEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

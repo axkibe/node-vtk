@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkVolumeTextureMapperWrap.h"
 #include "vtkVolumeTextureMapper2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkVolumeTextureMapper2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTargetTextureSize", SetTargetTextureSize);
 	Nan::SetPrototypeMethod(tpl, "setTargetTextureSize", SetTargetTextureSize);
 
+#ifdef VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

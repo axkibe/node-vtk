@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkMaskPointsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkMaskPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SingleVertexPerCellOn", SingleVertexPerCellOn);
 	Nan::SetPrototypeMethod(tpl, "singleVertexPerCellOn", SingleVertexPerCellOn);
 
+#ifdef VTK_NODE_PLUS_VTKMASKPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMASKPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

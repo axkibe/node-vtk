@@ -10,6 +10,7 @@
 #include <vtkLookupTableItem.h>
 
 #include "vtkScalarsToColorsItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLookupTableItemWrap : public VtkScalarsToColorsItemWrap
 {
@@ -35,6 +36,10 @@ class VtkLookupTableItemWrap : public VtkScalarsToColorsItemWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLOOKUPTABLEITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

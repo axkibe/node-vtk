@@ -10,6 +10,7 @@
 #include <vtkInterpolateDataSetAttributes.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInterpolateDataSetAttributesWrap : public VtkDataSetAlgorithmWrap
 {
@@ -38,6 +39,10 @@ class VtkInterpolateDataSetAttributesWrap : public VtkDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetT(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERPOLATEDATASETATTRIBUTESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERPOLATEDATASETATTRIBUTESWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkParametricFunctionWrap.h"
 #include "vtkParametricBohemianDomeWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -86,6 +86,9 @@ void VtkParametricBohemianDomeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetC", SetC);
 	Nan::SetPrototypeMethod(tpl, "setC", SetC);
 
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICBOHEMIANDOMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPARAMETRICBOHEMIANDOMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

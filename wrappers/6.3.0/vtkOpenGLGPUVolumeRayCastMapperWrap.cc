@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGPUVolumeRayCastMapperWrap.h"
 #include "vtkOpenGLGPUVolumeRayCastMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
 #include "vtkVolumePropertyWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +62,9 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "OpenGLErrorMessage", OpenGLErrorMessage);
+	Nan::SetPrototypeMethod(tpl, "openGLErrorMessage", OpenGLErrorMessage);
+
 	Nan::SetPrototypeMethod(tpl, "PrintError", PrintError);
 	Nan::SetPrototypeMethod(tpl, "printError", PrintError);
 
@@ -71,6 +74,9 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLGPUVOLUMERAYCASTMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLGPUVOLUMERAYCASTMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -184,6 +190,27 @@ void VtkOpenGLGPUVolumeRayCastMapperWrap::NewInstance(const Nan::FunctionCallbac
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkOpenGLGPUVolumeRayCastMapperWrap::OpenGLErrorMessage(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkOpenGLGPUVolumeRayCastMapperWrap *wrapper = ObjectWrap::Unwrap<VtkOpenGLGPUVolumeRayCastMapperWrap>(info.Holder());
+	vtkOpenGLGPUVolumeRayCastMapper *native = (vtkOpenGLGPUVolumeRayCastMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->OpenGLErrorMessage(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkOpenGLGPUVolumeRayCastMapperWrap::PrintError(const Nan::FunctionCallbackInfo<v8::Value>& info)

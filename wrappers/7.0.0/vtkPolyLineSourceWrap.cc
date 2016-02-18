@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPolyLineSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkPolyLineSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoints", SetPoints);
 	Nan::SetPrototypeMethod(tpl, "setPoints", SetPoints);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYLINESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYLINESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

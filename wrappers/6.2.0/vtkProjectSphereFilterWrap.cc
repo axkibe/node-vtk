@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkProjectSphereFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkProjectSphereFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TranslateZOn", TranslateZOn);
 	Nan::SetPrototypeMethod(tpl, "translateZOn", TranslateZOn);
 
+#ifdef VTK_NODE_PLUS_VTKPROJECTSPHEREFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROJECTSPHEREFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkPNGWriter.h>
 
 #include "vtkImageWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPNGWriterWrap : public VtkImageWriterWrap
 {
@@ -34,14 +35,20 @@ class VtkPNGWriterWrap : public VtkImageWriterWrap
 		static void GetCompressionLevelMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCompressionLevelMinValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetResult(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompressionLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResult(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetWriteToMemory(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToMemoryOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteToMemoryOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPNGWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPNGWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

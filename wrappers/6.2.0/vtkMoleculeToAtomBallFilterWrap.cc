@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMoleculeToPolyDataFilterWrap.h"
 #include "vtkMoleculeToAtomBallFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkMoleculeToAtomBallFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResolution", SetResolution);
 	Nan::SetPrototypeMethod(tpl, "setResolution", SetResolution);
 
+#ifdef VTK_NODE_PLUS_VTKMOLECULETOATOMBALLFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMOLECULETOATOMBALLFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

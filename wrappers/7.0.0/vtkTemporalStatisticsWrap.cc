@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkTemporalStatisticsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkTemporalStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetComputeStandardDeviation", SetComputeStandardDeviation);
 	Nan::SetPrototypeMethod(tpl, "setComputeStandardDeviation", SetComputeStandardDeviation);
 
+#ifdef VTK_NODE_PLUS_VTKTEMPORALSTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEMPORALSTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

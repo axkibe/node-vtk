@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageIterateFilterWrap.h"
 #include "vtkImageDecomposeFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkImageDecomposeFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensionality", SetDimensionality);
 	Nan::SetPrototypeMethod(tpl, "setDimensionality", SetDimensionality);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEDECOMPOSEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEDECOMPOSEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkTextureMapToPlane.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextureMapToPlaneWrap : public VtkDataSetAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkTextureMapToPlaneWrap : public VtkDataSetAlgorithmWrap
 		static void SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREMAPTOPLANEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREMAPTOPLANEWRAP_CLASSDEF
+#endif
 };
 
 #endif

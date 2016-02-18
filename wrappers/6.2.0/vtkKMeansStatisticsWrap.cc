@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkKMeansStatisticsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkKMeansDistanceFunctorWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkKMeansStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKKMEANSSTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKKMEANSSTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

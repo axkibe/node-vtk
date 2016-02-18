@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkRenderWindowWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkPickingManagerWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkObserverMediatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -392,6 +392,9 @@ void VtkRenderWindowInteractorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UserCallback", UserCallback);
 	Nan::SetPrototypeMethod(tpl, "userCallback", UserCallback);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERWINDOWINTERACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERWINDOWINTERACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

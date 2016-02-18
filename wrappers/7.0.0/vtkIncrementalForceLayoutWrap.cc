@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalForceLayoutWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkIncrementalForceLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdatePositions", UpdatePositions);
 	Nan::SetPrototypeMethod(tpl, "updatePositions", UpdatePositions);
 
+#ifdef VTK_NODE_PLUS_VTKINCREMENTALFORCELAYOUTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINCREMENTALFORCELAYOUTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

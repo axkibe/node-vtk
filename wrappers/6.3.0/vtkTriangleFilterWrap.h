@@ -10,6 +10,7 @@
 #include <vtkTriangleFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTriangleFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkTriangleFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassLines(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassVerts(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRIANGLEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRIANGLEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

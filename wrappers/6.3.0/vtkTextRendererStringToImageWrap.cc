@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStringToImageWrap.h"
 #include "vtkTextRendererStringToImageWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkTextRendererStringToImageWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleToPowerOfTwo", SetScaleToPowerOfTwo);
 	Nan::SetPrototypeMethod(tpl, "setScaleToPowerOfTwo", SetScaleToPowerOfTwo);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTRENDERERSTRINGTOIMAGEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTRENDERERSTRINGTOIMAGEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

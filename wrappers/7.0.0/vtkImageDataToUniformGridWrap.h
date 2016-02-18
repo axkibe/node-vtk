@@ -10,6 +10,7 @@
 #include <vtkImageDataToUniformGrid.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataToUniformGridWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkImageDataToUniformGridWrap : public VtkDataObjectAlgorithmWrap
 		static void ReverseOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATATOUNIFORMGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATATOUNIFORMGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

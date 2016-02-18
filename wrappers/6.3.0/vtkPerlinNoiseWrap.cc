@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkPerlinNoiseWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -83,6 +83,9 @@ void VtkPerlinNoiseWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPhase", SetPhase);
 	Nan::SetPrototypeMethod(tpl, "setPhase", SetPhase);
 
+#ifdef VTK_NODE_PLUS_VTKPERLINNOISEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPERLINNOISEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

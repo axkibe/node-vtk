@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkTransferAttributesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkTransferAttributesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTargetFieldType", SetTargetFieldType);
 	Nan::SetPrototypeMethod(tpl, "setTargetFieldType", SetTargetFieldType);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSFERATTRIBUTESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSFERATTRIBUTESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

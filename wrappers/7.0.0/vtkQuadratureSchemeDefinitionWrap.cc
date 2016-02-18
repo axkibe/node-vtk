@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkQuadratureSchemeDefinitionWrap.h"
 #include "vtkInformationQuadratureSchemeDefinitionVectorKeyWrap.h"
 #include "vtkInformationStringKeyWrap.h"
 #include "vtkXMLDataElementWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkQuadratureSchemeDefinitionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SaveState", SaveState);
 	Nan::SetPrototypeMethod(tpl, "saveState", SaveState);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRATURESCHEMEDEFINITIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRATURESCHEMEDEFINITIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

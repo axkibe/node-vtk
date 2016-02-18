@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkPairwiseExtractHistogram2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkExtractHistogram2DWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -111,6 +111,9 @@ void VtkPairwiseExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 	Nan::SetPrototypeMethod(tpl, "setScalarTypeToUnsignedShort", SetScalarTypeToUnsignedShort);
 
+#ifdef VTK_NODE_PLUS_VTKPAIRWISEEXTRACTHISTOGRAM2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPAIRWISEEXTRACTHISTOGRAM2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

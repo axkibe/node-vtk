@@ -10,6 +10,7 @@
 #include <vtkImageGaussianSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageGaussianSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkImageGaussianSourceWrap : public VtkImageAlgorithmWrap
 		static void SetMaximum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStandardDeviation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEGAUSSIANSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEGAUSSIANSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

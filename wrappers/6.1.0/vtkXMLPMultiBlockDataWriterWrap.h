@@ -10,6 +10,7 @@
 #include <vtkXMLPMultiBlockDataWriter.h>
 
 #include "vtkXMLMultiBlockDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPMultiBlockDataWriterWrap : public VtkXMLMultiBlockDataWriterWrap
 {
@@ -36,6 +37,10 @@ class VtkXMLPMultiBlockDataWriterWrap : public VtkXMLMultiBlockDataWriterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWriteMetaFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPMULTIBLOCKDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPMULTIBLOCKDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

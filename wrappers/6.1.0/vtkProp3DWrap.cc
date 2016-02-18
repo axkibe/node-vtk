@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPropWrap.h"
 #include "vtkProp3DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLinearTransformWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -154,6 +154,9 @@ void VtkProp3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKPROP3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROP3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkPainterPolyDataMapper.h>
 
 #include "vtkPolyDataMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPainterPolyDataMapperWrap : public VtkPolyDataMapperWrap
 {
@@ -45,6 +46,10 @@ class VtkPainterPolyDataMapperWrap : public VtkPolyDataMapperWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionPainter(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPAINTERPOLYDATAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPAINTERPOLYDATAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

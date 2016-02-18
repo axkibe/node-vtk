@@ -10,6 +10,7 @@
 #include <vtkEDLShading.h>
 
 #include "vtkDepthImageProcessingPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEDLShadingWrap : public VtkDepthImageProcessingPassWrap
 {
@@ -34,6 +35,10 @@ class VtkEDLShadingWrap : public VtkDepthImageProcessingPassWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEDLSHADINGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEDLSHADINGWRAP_CLASSDEF
+#endif
 };
 
 #endif

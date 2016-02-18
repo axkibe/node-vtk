@@ -10,6 +10,7 @@
 #include <vtkIncrementalOctreePointLocator.h>
 
 #include "vtkIncrementalPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkIncrementalOctreePointLocatorWrap : public VtkIncrementalPointLocatorWrap
 {
@@ -51,6 +52,10 @@ class VtkIncrementalOctreePointLocatorWrap : public VtkIncrementalPointLocatorWr
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBuildCubicOctree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaxPointsPerLeaf(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINCREMENTALOCTREEPOINTLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINCREMENTALOCTREEPOINTLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

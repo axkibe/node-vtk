@@ -10,6 +10,7 @@
 #include <vtkMatricizeArray.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMatricizeArrayWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkMatricizeArrayWrap : public VtkArrayDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMATRICIZEARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMATRICIZEARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCylinder.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCylinderWrap : public VtkImplicitFunctionWrap
 {
@@ -41,6 +42,10 @@ class VtkCylinderWrap : public VtkImplicitFunctionWrap
 		static void SetAxis(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCYLINDERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCYLINDERWRAP_CLASSDEF
+#endif
 };
 
 #endif

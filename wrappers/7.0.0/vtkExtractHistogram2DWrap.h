@@ -10,6 +10,7 @@
 #include <vtkExtractHistogram2D.h>
 
 #include "vtkStatisticsAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkExtractHistogram2DWrap : public VtkStatisticsAlgorithmWrap
 		static void SwapColumnsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCustomHistogramExtentsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseCustomHistogramExtentsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

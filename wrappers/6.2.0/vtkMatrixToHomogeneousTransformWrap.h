@@ -10,6 +10,7 @@
 #include <vtkMatrixToHomogeneousTransform.h>
 
 #include "vtkHomogeneousTransformWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMatrixToHomogeneousTransformWrap : public VtkHomogeneousTransformWrap
 {
@@ -37,6 +38,10 @@ class VtkMatrixToHomogeneousTransformWrap : public VtkHomogeneousTransformWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMATRIXTOHOMOGENEOUSTRANSFORMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMATRIXTOHOMOGENEOUSTRANSFORMWRAP_CLASSDEF
+#endif
 };
 
 #endif

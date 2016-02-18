@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkBiDimensionalWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkBiDimensionalRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkBiDimensionalWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidgetStateToStart", SetWidgetStateToStart);
 	Nan::SetPrototypeMethod(tpl, "setWidgetStateToStart", SetWidgetStateToStart);
 
+#ifdef VTK_NODE_PLUS_VTKBIDIMENSIONALWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBIDIMENSIONALWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

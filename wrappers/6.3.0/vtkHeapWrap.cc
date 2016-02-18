@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkHeapWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkHeapWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StringDup", StringDup);
 	Nan::SetPrototypeMethod(tpl, "stringDup", StringDup);
 
+#ifdef VTK_NODE_PLUS_VTKHEAPWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHEAPWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageReader2Wrap.h"
 #include "vtkMetaImageReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -128,6 +128,9 @@ void VtkMetaImageReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKMETAIMAGEREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMETAIMAGEREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

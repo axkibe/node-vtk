@@ -10,6 +10,7 @@
 #include <vtkImageRectilinearWipe.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageRectilinearWipeWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkImageRectilinearWipeWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetWipeToUpperLeft(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWipeToUpperRight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWipeToVertical(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERECTILINEARWIPEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERECTILINEARWIPEWRAP_CLASSDEF
+#endif
 };
 
 #endif

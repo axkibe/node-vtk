@@ -10,6 +10,7 @@
 #include <vtkImageDataLIC2D.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataLIC2DWrap : public VtkImageAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkImageDataLIC2DWrap : public VtkImageAlgorithmWrap
 		static void SetMagnification(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStepSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSteps(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATALIC2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATALIC2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

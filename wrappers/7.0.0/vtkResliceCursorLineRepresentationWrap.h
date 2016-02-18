@@ -10,6 +10,7 @@
 #include <vtkResliceCursorLineRepresentation.h>
 
 #include "vtkResliceCursorRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorLineRepresentationWrap : public VtkResliceCursorRepresentationWrap
 {
@@ -46,6 +47,10 @@ class VtkResliceCursorLineRepresentationWrap : public VtkResliceCursorRepresenta
 		static void SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORLINEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORLINEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

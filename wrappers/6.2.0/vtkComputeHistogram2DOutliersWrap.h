@@ -10,6 +10,7 @@
 #include <vtkComputeHistogram2DOutliers.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkComputeHistogram2DOutliersWrap : public VtkSelectionAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkComputeHistogram2DOutliersWrap : public VtkSelectionAlgorithmWrap
 		static void SetInputHistogramMultiBlockConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputTableConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPreferredNumberOfOutliers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPUTEHISTOGRAM2DOUTLIERSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPUTEHISTOGRAM2DOUTLIERSWRAP_CLASSDEF
+#endif
 };
 
 #endif

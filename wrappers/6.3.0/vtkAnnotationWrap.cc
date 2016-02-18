@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkAnnotationWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkInformationDoubleKeyWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationDataObjectKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkAnnotationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKANNOTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANNOTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

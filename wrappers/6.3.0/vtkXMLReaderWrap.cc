@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkXMLReaderWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataArraySelectionWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkXMLDataParserWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -138,6 +138,9 @@ void VtkXMLReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTimeStepRange", SetTimeStepRange);
 	Nan::SetPrototypeMethod(tpl, "setTimeStepRange", SetTimeStepRange);
 
+#ifdef VTK_NODE_PLUS_VTKXMLREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

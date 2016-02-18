@@ -10,6 +10,7 @@
 #include <vtkMoleculeMapper.h>
 
 #include "vtkMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMoleculeMapperWrap : public VtkMapperWrap
 {
@@ -32,6 +33,7 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void FillInputPortInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAtomicRadiusType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAtomicRadiusTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBondColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBondColorModeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -57,6 +59,7 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void SetAtomicRadiusTypeToCovalentRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAtomicRadiusTypeToUnitRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAtomicRadiusTypeToVDWRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBondColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorModeToDiscreteByAtom(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetBondColorModeToSingleColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -70,6 +73,10 @@ class VtkMoleculeMapperWrap : public VtkMapperWrap
 		static void UseMultiCylindersForBondsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseMultiCylindersForBondsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseVDWSpheresSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMOLECULEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMOLECULEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

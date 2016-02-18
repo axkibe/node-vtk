@@ -10,6 +10,7 @@
 #include <vtkTableExtentTranslator.h>
 
 #include "vtkExtentTranslatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableExtentTranslatorWrap : public VtkExtentTranslatorWrap
 {
@@ -42,6 +43,10 @@ class VtkTableExtentTranslatorWrap : public VtkExtentTranslatorWrap
 		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPiecesInTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPieceAvailable(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLEEXTENTTRANSLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLEEXTENTTRANSLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkMNIObjectWriterWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkMapperWrap.h"
 #include "vtkLookupTableWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -114,6 +114,9 @@ void VtkMNIObjectWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProperty", SetProperty);
 	Nan::SetPrototypeMethod(tpl, "setProperty", SetProperty);
 
+#ifdef VTK_NODE_PLUS_VTKMNIOBJECTWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMNIOBJECTWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

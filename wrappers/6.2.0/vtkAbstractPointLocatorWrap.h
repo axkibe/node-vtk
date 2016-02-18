@@ -10,6 +10,7 @@
 #include <vtkAbstractPointLocator.h>
 
 #include "vtkLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractPointLocatorWrap : public VtkLocatorWrap
 {
@@ -35,6 +36,10 @@ class VtkAbstractPointLocatorWrap : public VtkLocatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPOINTLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTPOINTLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkRenderedRepresentation.h>
 
 #include "vtkDataRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderedRepresentationWrap : public VtkDataRepresentationWrap
 {
@@ -35,6 +36,10 @@ class VtkRenderedRepresentationWrap : public VtkDataRepresentationWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLabelRenderMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDEREDREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDEREDREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

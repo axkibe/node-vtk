@@ -10,6 +10,7 @@
 #include <vtkNIFTIImageReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkNIFTIImageReaderWrap : public VtkImageReader2Wrap
 {
@@ -52,6 +53,10 @@ class VtkNIFTIImageReaderWrap : public VtkImageReader2Wrap
 		static void SetTimeAsVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TimeAsVectorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNIFTIIMAGEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNIFTIIMAGEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

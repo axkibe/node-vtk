@@ -10,6 +10,7 @@
 #include <vtkExtractUnstructuredGridPiece.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractUnstructuredGridPieceWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkExtractUnstructuredGridPieceWrap : public VtkUnstructuredGridAlgorithmW
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTUNSTRUCTUREDGRIDPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

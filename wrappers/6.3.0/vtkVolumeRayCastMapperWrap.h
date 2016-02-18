@@ -10,6 +10,7 @@
 #include <vtkVolumeRayCastMapper.h>
 
 #include "vtkVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 {
@@ -68,6 +69,10 @@ class VtkVolumeRayCastMapperWrap : public VtkVolumeMapperWrap
 		static void SetNumberOfThreads(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVolumeRayCastFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMERAYCASTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

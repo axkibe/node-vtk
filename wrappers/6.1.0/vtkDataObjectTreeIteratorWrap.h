@@ -10,6 +10,7 @@
 #include <vtkDataObjectTreeIterator.h>
 
 #include "vtkCompositeDataIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataObjectTreeIteratorWrap : public VtkCompositeDataIteratorWrap
 {
@@ -31,6 +32,7 @@ class VtkDataObjectTreeIteratorWrap : public VtkCompositeDataIteratorWrap
 
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetCurrentFlatIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetCurrentMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTraverseSubTree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisitOnlyLeaves(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +49,10 @@ class VtkDataObjectTreeIteratorWrap : public VtkCompositeDataIteratorWrap
 		static void TraverseSubTreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisitOnlyLeavesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VisitOnlyLeavesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTTREEITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAOBJECTTREEITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

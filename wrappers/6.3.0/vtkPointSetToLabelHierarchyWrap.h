@@ -10,6 +10,7 @@
 #include <vtkPointSetToLabelHierarchy.h>
 
 #include "vtkLabelHierarchyAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPointSetToLabelHierarchyWrap : public VtkLabelHierarchyAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkPointSetToLabelHierarchyWrap : public VtkLabelHierarchyAlgorithmWrap
 		static void SetUseUnicodeStrings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseUnicodeStringsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOINTSETTOLABELHIERARCHYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOINTSETTOLABELHIERARCHYWRAP_CLASSDEF
+#endif
 };
 
 #endif

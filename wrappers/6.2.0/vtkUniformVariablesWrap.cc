@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkUniformVariablesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkUniformVariablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Start", Start);
 	Nan::SetPrototypeMethod(tpl, "start", Start);
 
+#ifdef VTK_NODE_PLUS_VTKUNIFORMVARIABLESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNIFORMVARIABLESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

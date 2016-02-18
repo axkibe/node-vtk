@@ -10,6 +10,7 @@
 #include <vtkProgrammableGlyphFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProgrammableGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkProgrammableGlyphFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetColorModeToColorBySource(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROGRAMMABLEGLYPHFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROGRAMMABLEGLYPHFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAbstractContextItem.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractContextItemWrap : public VtkObjectWrap
 {
@@ -29,9 +30,12 @@ class VtkAbstractContextItemWrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void AddItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ClearItems(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInteractive(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetItem(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfItems(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -47,6 +51,10 @@ class VtkAbstractContextItemWrap : public VtkObjectWrap
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisible(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTCONTEXTITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTCONTEXTITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

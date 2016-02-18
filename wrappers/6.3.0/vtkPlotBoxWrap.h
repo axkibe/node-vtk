@@ -10,6 +10,7 @@
 #include <vtkPlotBox.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotBoxWrap : public VtkPlotWrap
 {
@@ -41,6 +42,10 @@ class VtkPlotBoxWrap : public VtkPlotWrap
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLookupTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTBOXWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTBOXWRAP_CLASSDEF
+#endif
 };
 
 #endif

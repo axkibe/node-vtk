@@ -10,6 +10,7 @@
 #include <vtkCameraActor.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraActorWrap : public VtkProp3DWrap
 {
@@ -42,6 +43,10 @@ class VtkCameraActorWrap : public VtkProp3DWrap
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWidthByHeightRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

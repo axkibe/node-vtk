@@ -10,6 +10,7 @@
 #include <vtkDemandDrivenPipeline.h>
 
 #include "vtkExecutiveWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDemandDrivenPipelineWrap : public VtkExecutiveWrap
 {
@@ -48,6 +49,10 @@ class VtkDemandDrivenPipelineWrap : public VtkExecutiveWrap
 		static void UpdateDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdatePipelineMTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEMANDDRIVENPIPELINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

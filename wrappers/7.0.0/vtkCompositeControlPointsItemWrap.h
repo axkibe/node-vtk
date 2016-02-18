@@ -10,6 +10,7 @@
 #include <vtkCompositeControlPointsItem.h>
 
 #include "vtkColorTransferControlPointsItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositeControlPointsItemWrap : public VtkColorTransferControlPointsItemWrap
 {
@@ -40,6 +41,10 @@ class VtkCompositeControlPointsItemWrap : public VtkColorTransferControlPointsIt
 		static void SetOpacityFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointsFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUseOpacityPointHandles(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITECONTROLPOINTSITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITECONTROLPOINTSITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

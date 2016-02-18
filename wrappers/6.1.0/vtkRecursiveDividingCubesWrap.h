@@ -10,6 +10,7 @@
 #include <vtkRecursiveDividingCubes.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRecursiveDividingCubesWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkRecursiveDividingCubesWrap : public VtkPolyDataAlgorithmWrap
 		static void SetDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIncrement(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECURSIVEDIVIDINGCUBESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECURSIVEDIVIDINGCUBESWRAP_CLASSDEF
+#endif
 };
 
 #endif

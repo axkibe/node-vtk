@@ -10,6 +10,7 @@
 #include <vtkGenerateIndexArray.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenerateIndexArrayWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkGenerateIndexArrayWrap : public VtkDataObjectAlgorithmWrap
 		static void SetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPedigreeID(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReferenceArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERATEINDEXARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERATEINDEXARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

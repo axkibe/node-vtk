@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkSplitColumnComponentsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkSplitColumnComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNamingModeToNumberWithUnderscores", SetNamingModeToNumberWithUnderscores);
 	Nan::SetPrototypeMethod(tpl, "setNamingModeToNumberWithUnderscores", SetNamingModeToNumberWithUnderscores);
 
+#ifdef VTK_NODE_PLUS_VTKSPLITCOLUMNCOMPONENTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPLITCOLUMNCOMPONENTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

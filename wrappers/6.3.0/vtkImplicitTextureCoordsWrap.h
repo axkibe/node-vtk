@@ -10,6 +10,7 @@
 #include <vtkImplicitTextureCoords.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImplicitTextureCoordsWrap : public VtkDataSetAlgorithmWrap
 		static void SetRFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITTEXTURECOORDSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITTEXTURECOORDSWRAP_CLASSDEF
+#endif
 };
 
 #endif

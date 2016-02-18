@@ -10,6 +10,7 @@
 #include <vtkPCAStatistics.h>
 
 #include "vtkMultiCorrelativeStatisticsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPCAStatisticsWrap : public VtkMultiCorrelativeStatisticsWrap
 {
@@ -53,6 +54,10 @@ class VtkPCAStatisticsWrap : public VtkMultiCorrelativeStatisticsWrap
 		static void SetNormalizationScheme(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalizationSchemeByName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpecifiedNormalization(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPCASTATISTICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPCASTATISTICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

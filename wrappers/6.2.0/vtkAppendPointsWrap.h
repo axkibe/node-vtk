@@ -10,6 +10,7 @@
 #include <vtkAppendPoints.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAppendPointsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkAppendPointsWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputIdArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAPPENDPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAPPENDPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

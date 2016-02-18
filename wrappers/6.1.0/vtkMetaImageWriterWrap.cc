@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageWriterWrap.h"
 #include "vtkMetaImageWriterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkMetaImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+#ifdef VTK_NODE_PLUS_VTKMETAIMAGEWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMETAIMAGEWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkDistancePolyDataFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDistancePolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkDistancePolyDataFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSignedDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SignedDistanceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SignedDistanceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDISTANCEPOLYDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDISTANCEPOLYDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

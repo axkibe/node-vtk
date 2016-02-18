@@ -10,6 +10,7 @@
 #include <vtkImageEllipsoidSource.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageEllipsoidSourceWrap : public VtkImageAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkImageEllipsoidSourceWrap : public VtkImageAlgorithmWrap
 		static void SetOutputScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRadius(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEELLIPSOIDSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEELLIPSOIDSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

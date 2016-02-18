@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkTransposeTableWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkTransposeTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseIdColumnOn", UseIdColumnOn);
 	Nan::SetPrototypeMethod(tpl, "useIdColumnOn", UseIdColumnOn);
 
+#ifdef VTK_NODE_PLUS_VTKTRANSPOSETABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTRANSPOSETABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

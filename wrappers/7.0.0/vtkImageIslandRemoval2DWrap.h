@@ -10,6 +10,7 @@
 #include <vtkImageIslandRemoval2D.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageIslandRemoval2DWrap : public VtkImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImageIslandRemoval2DWrap : public VtkImageAlgorithmWrap
 		static void SetSquareNeighborhood(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SquareNeighborhoodOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SquareNeighborhoodOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEISLANDREMOVAL2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEISLANDREMOVAL2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkConnectivityFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -149,6 +149,9 @@ void VtkConnectivityFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarRange", SetScalarRange);
 	Nan::SetPrototypeMethod(tpl, "setScalarRange", SetScalarRange);
 
+#ifdef VTK_NODE_PLUS_VTKCONNECTIVITYFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONNECTIVITYFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

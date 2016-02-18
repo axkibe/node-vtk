@@ -10,6 +10,7 @@
 #include <vtkViewDependentErrorMetric.h>
 
 #include "vtkGenericSubdivisionErrorMetricWrap.h"
+#include "../../plus/plus.h"
 
 class VtkViewDependentErrorMetricWrap : public VtkGenericSubdivisionErrorMetricWrap
 {
@@ -37,6 +38,10 @@ class VtkViewDependentErrorMetricWrap : public VtkGenericSubdivisionErrorMetricW
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPixelTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVIEWDEPENDENTERRORMETRICWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVIEWDEPENDENTERRORMETRICWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageReslice.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageResliceWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -121,6 +122,10 @@ class VtkImageResliceWrap : public VtkThreadedImageAlgorithmWrap
 		static void TransformInputSamplingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WrapOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WrapOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERESLICEWRAP_CLASSDEF
+#endif
 };
 
 #endif

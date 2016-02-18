@@ -10,6 +10,7 @@
 #include <vtkParametricBohemianDome.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricBohemianDomeWrap : public VtkParametricFunctionWrap
 {
@@ -42,6 +43,10 @@ class VtkParametricBohemianDomeWrap : public VtkParametricFunctionWrap
 		static void SetA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetC(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICBOHEMIANDOMEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICBOHEMIANDOMEWRAP_CLASSDEF
+#endif
 };
 
 #endif

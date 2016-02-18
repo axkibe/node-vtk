@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkNonLinearCellWrap.h"
 #include "vtkExplicitCellWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkExplicitCellWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDataSet", SetDataSet);
 	Nan::SetPrototypeMethod(tpl, "setDataSet", SetDataSet);
 
+#ifdef VTK_NODE_PLUS_VTKEXPLICITCELLWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXPLICITCELLWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

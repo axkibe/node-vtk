@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkChartWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkChartLegendWrap.h"
 #include "vtkTextPropertyWrap.h"
 #include "vtkBrushWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -179,6 +179,9 @@ void VtkChartWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTopBorder", SetTopBorder);
 	Nan::SetPrototypeMethod(tpl, "setTopBorder", SetTopBorder);
 
+#ifdef VTK_NODE_PLUS_VTKCHARTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHARTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

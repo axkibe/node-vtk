@@ -10,6 +10,7 @@
 #include <vtkHierarchicalGraphView.h>
 
 #include "vtkGraphLayoutViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHierarchicalGraphViewWrap : public VtkGraphLayoutViewWrap
 {
@@ -58,6 +59,10 @@ class VtkHierarchicalGraphViewWrap : public VtkGraphLayoutViewWrap
 		static void SetGraphVisibility(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHierarchyFromInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHierarchyFromInputConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHIERARCHICALGRAPHVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHIERARCHICALGRAPHVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkFlyingEdges2D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFlyingEdges2DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkFlyingEdges2DWrap : public VtkPolyDataAlgorithmWrap
 		static void SetComputeScalars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfContours(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFLYINGEDGES2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFLYINGEDGES2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

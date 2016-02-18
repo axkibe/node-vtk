@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkClearRGBPassWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkClearRGBPassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBackground", SetBackground);
 	Nan::SetPrototypeMethod(tpl, "setBackground", SetBackground);
 
+#ifdef VTK_NODE_PLUS_VTKCLEARRGBPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCLEARRGBPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

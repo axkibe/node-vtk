@@ -10,6 +10,7 @@
 #include <vtkHedgeHog.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHedgeHogWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkHedgeHogWrap : public VtkPolyDataAlgorithmWrap
 		static void SetVectorMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToUseNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorModeToUseVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHEDGEHOGWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHEDGEHOGWRAP_CLASSDEF
+#endif
 };
 
 #endif

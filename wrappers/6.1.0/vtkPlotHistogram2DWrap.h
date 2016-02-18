@@ -10,6 +10,7 @@
 #include <vtkPlotHistogram2D.h>
 
 #include "vtkPlotWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotHistogram2DWrap : public VtkPlotWrap
 {
@@ -40,6 +41,10 @@ class VtkPlotHistogram2DWrap : public VtkPlotWrap
 		static void SetInputData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTHISTOGRAM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTHISTOGRAM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

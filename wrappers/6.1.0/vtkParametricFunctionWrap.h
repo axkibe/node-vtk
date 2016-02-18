@@ -10,6 +10,7 @@
 #include <vtkParametricFunction.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricFunctionWrap : public VtkObjectWrap
 {
@@ -69,6 +70,10 @@ class VtkParametricFunctionWrap : public VtkObjectWrap
 		static void TwistUOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwistVOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TwistVOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

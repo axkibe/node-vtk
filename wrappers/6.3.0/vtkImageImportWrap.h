@@ -10,6 +10,7 @@
 #include <vtkImageImport.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageImportWrap : public VtkImageAlgorithmWrap
 {
@@ -60,6 +61,10 @@ class VtkImageImportWrap : public VtkImageAlgorithmWrap
 		static void SetNumberOfScalarComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEIMPORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEIMPORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

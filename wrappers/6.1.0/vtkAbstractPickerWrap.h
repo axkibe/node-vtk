@@ -10,6 +10,7 @@
 #include <vtkAbstractPicker.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractPickerWrap : public VtkObjectWrap
 {
@@ -45,6 +46,10 @@ class VtkAbstractPickerWrap : public VtkObjectWrap
 		static void PickFromListOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPickFromList(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

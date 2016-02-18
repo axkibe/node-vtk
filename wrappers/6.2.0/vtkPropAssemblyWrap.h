@@ -10,6 +10,7 @@
 #include <vtkPropAssembly.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPropAssemblyWrap : public VtkPropWrap
 {
@@ -48,6 +49,10 @@ class VtkPropAssemblyWrap : public VtkPropWrap
 		static void RenderVolumetricGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROPASSEMBLYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROPASSEMBLYWRAP_CLASSDEF
+#endif
 };
 
 #endif

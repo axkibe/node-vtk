@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkInteractorStyleTerrainWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkInteractorStyleTerrainWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLatLongLines", SetLatLongLines);
 	Nan::SetPrototypeMethod(tpl, "setLatLongLines", SetLatLongLines);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLETERRAINWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLETERRAINWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

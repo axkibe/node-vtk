@@ -10,6 +10,7 @@
 #include <vtkImageCanvasSource2D.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageCanvasSource2DWrap : public VtkImageAlgorithmWrap
 {
@@ -64,6 +65,10 @@ class VtkImageCanvasSource2DWrap : public VtkImageAlgorithmWrap
 		static void SetScalarTypeToUnsignedInt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedLong(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarTypeToUnsignedShort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECANVASSOURCE2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECANVASSOURCE2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

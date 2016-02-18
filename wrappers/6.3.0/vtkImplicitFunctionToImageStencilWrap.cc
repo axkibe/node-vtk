@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageStencilSourceWrap.h"
 #include "vtkImplicitFunctionToImageStencilWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkImplicitFunctionToImageStencilWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetThreshold", SetThreshold);
 	Nan::SetPrototypeMethod(tpl, "setThreshold", SetThreshold);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITFUNCTIONTOIMAGESTENCILWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITFUNCTIONTOIMAGESTENCILWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

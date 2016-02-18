@@ -10,6 +10,7 @@
 #include <vtkRandomAttributeGenerator.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRandomAttributeGeneratorWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -117,6 +118,10 @@ class VtkRandomAttributeGeneratorWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetMaximumComponentValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumComponentValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRANDOMATTRIBUTEGENERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRANDOMATTRIBUTEGENERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

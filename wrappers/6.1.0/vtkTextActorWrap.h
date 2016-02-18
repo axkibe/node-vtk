@@ -10,6 +10,7 @@
 #include <vtkTextActor.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTextActorWrap : public VtkActor2DWrap
 {
@@ -65,6 +66,10 @@ class VtkTextActorWrap : public VtkActor2DWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBorderAlignOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBorderAlignOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

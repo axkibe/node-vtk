@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStructuredGridAlgorithmWrap.h"
 #include "vtkStructuredGridLIC2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkStructuredGridLIC2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSteps", SetSteps);
 	Nan::SetPrototypeMethod(tpl, "setSteps", SetSteps);
 
+#ifdef VTK_NODE_PLUS_VTKSTRUCTUREDGRIDLIC2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRUCTUREDGRIDLIC2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

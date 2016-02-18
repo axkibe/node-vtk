@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkDendrogramItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTreeWrap.h"
 #include "vtkContext2DWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -48,6 +48,9 @@ void VtkDendrogramItemWrap::InitPtpl()
 	tpl->Inherit(Nan::New<FunctionTemplate>(VtkContextItemWrap::ptpl));
 	tpl->SetClassName(Nan::New("VtkDendrogramItemWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	Nan::SetPrototypeMethod(tpl, "CollapseToNumberOfLeafNodes", CollapseToNumberOfLeafNodes);
+	Nan::SetPrototypeMethod(tpl, "collapseToNumberOfLeafNodes", CollapseToNumberOfLeafNodes);
 
 	Nan::SetPrototypeMethod(tpl, "ComputeLabelWidth", ComputeLabelWidth);
 	Nan::SetPrototypeMethod(tpl, "computeLabelWidth", ComputeLabelWidth);
@@ -139,6 +142,9 @@ void VtkDendrogramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTree", SetTree);
 	Nan::SetPrototypeMethod(tpl, "setTree", SetTree);
 
+#ifdef VTK_NODE_PLUS_VTKDENDROGRAMITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDENDROGRAMITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -166,6 +172,25 @@ void VtkDendrogramItemWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkDendrogramItemWrap::CollapseToNumberOfLeafNodes(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDendrogramItemWrap *wrapper = ObjectWrap::Unwrap<VtkDendrogramItemWrap>(info.Holder());
+	vtkDendrogramItem *native = (vtkDendrogramItem *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->CollapseToNumberOfLeafNodes(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkDendrogramItemWrap::ComputeLabelWidth(const Nan::FunctionCallbackInfo<v8::Value>& info)

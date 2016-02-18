@@ -10,6 +10,7 @@
 #include <vtkPlotLine.h>
 
 #include "vtkPlotPointsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPlotLineWrap : public VtkPlotPointsWrap
 {
@@ -38,6 +39,10 @@ class VtkPlotLineWrap : public VtkPlotPointsWrap
 		static void PolyLineOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPLOTLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPLOTLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

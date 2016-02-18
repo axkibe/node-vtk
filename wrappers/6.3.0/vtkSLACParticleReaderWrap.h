@@ -10,6 +10,7 @@
 #include <vtkSLACParticleReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSLACParticleReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -36,6 +37,10 @@ class VtkSLACParticleReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLACPARTICLEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLACPARTICLEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

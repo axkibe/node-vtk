@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkSelectPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -139,6 +139,9 @@ void VtkSelectPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionModeToSmallestRegion", SetSelectionModeToSmallestRegion);
 	Nan::SetPrototypeMethod(tpl, "setSelectionModeToSmallestRegion", SetSelectionModeToSmallestRegion);
 
+#ifdef VTK_NODE_PLUS_VTKSELECTPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSELECTPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

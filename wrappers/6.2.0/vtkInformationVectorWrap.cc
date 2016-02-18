@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkInformationVectorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfInformationObjects", SetNumberOfInformationObjects);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfInformationObjects", SetNumberOfInformationObjects);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONVECTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONVECTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

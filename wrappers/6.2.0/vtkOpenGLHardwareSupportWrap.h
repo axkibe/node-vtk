@@ -10,6 +10,7 @@
 #include <vtkOpenGLHardwareSupport.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLHardwareSupportWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkOpenGLHardwareSupportWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetExtensionManager(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLHARDWARESUPPORTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLHARDWARESUPPORTWRAP_CLASSDEF
+#endif
 };
 
 #endif

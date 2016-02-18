@@ -10,6 +10,7 @@
 #include <vtkFLUENTReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFLUENTReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -47,6 +48,10 @@ class VtkFLUENTReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetDataByteOrderToBigEndian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDataByteOrderToLittleEndian(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFLUENTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFLUENTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

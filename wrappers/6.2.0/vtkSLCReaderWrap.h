@@ -10,6 +10,7 @@
 #include <vtkSLCReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkSLCReaderWrap : public VtkImageReader2Wrap
 {
@@ -39,6 +40,10 @@ class VtkSLCReaderWrap : public VtkImageReader2Wrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLCREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLCREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

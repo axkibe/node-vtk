@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGeoTreeNodeWrap.h"
 #include "vtkGeoTerrainNodeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkGeoTerrainNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateBoundingSphere", UpdateBoundingSphere);
 	Nan::SetPrototypeMethod(tpl, "updateBoundingSphere", UpdateBoundingSphere);
 
+#ifdef VTK_NODE_PLUS_VTKGEOTERRAINNODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOTERRAINNODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

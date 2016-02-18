@@ -10,6 +10,7 @@
 #include <vtkOpenGLProjectedTetrahedraMapper.h>
 
 #include "vtkProjectedTetrahedraMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLProjectedTetrahedraMapperWrap : public VtkProjectedTetrahedraMapperWrap
 {
@@ -40,6 +41,10 @@ class VtkOpenGLProjectedTetrahedraMapperWrap : public VtkProjectedTetrahedraMapp
 		static void SetUseFloatingPointFrameBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFloatingPointFrameBufferOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseFloatingPointFrameBufferOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLPROJECTEDTETRAHEDRAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLPROJECTEDTETRAHEDRAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

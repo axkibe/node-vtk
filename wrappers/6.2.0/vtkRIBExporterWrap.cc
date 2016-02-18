@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkExporterWrap.h"
 #include "vtkRIBExporterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -113,6 +113,9 @@ void VtkRIBExporterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTexturePrefix", SetTexturePrefix);
 	Nan::SetPrototypeMethod(tpl, "setTexturePrefix", SetTexturePrefix);
 
+#ifdef VTK_NODE_PLUS_VTKRIBEXPORTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRIBEXPORTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

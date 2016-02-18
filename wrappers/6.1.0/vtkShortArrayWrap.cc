@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataArrayWrap.h"
 #include "vtkShortArrayWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -53,6 +53,15 @@ void VtkShortArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetDataType", GetDataType);
 	Nan::SetPrototypeMethod(tpl, "getDataType", GetDataType);
 
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMax", GetDataTypeValueMax);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMax", GetDataTypeValueMax);
+
+	Nan::SetPrototypeMethod(tpl, "GetDataTypeValueMin", GetDataTypeValueMin);
+	Nan::SetPrototypeMethod(tpl, "getDataTypeValueMin", GetDataTypeValueMin);
+
+	Nan::SetPrototypeMethod(tpl, "GetValueRange", GetValueRange);
+	Nan::SetPrototypeMethod(tpl, "getValueRange", GetValueRange);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -62,6 +71,9 @@ void VtkShortArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKSHORTARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSHORTARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -117,6 +129,68 @@ void VtkShortArrayWrap::GetDataType(const Nan::FunctionCallbackInfo<v8::Value>& 
 	}
 	r = native->GetDataType();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkShortArrayWrap::GetDataTypeValueMax(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShortArrayWrap *wrapper = ObjectWrap::Unwrap<VtkShortArrayWrap>(info.Holder());
+	vtkShortArray *native = (vtkShortArray *)wrapper->native.GetPointer();
+	short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMax();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkShortArrayWrap::GetDataTypeValueMin(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShortArrayWrap *wrapper = ObjectWrap::Unwrap<VtkShortArrayWrap>(info.Holder());
+	vtkShortArray *native = (vtkShortArray *)wrapper->native.GetPointer();
+	short r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetDataTypeValueMin();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkShortArrayWrap::GetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkShortArrayWrap *wrapper = ObjectWrap::Unwrap<VtkShortArrayWrap>(info.Holder());
+	vtkShortArray *native = (vtkShortArray *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsInt32())
+	{
+		short const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetValueRange(
+			info[0]->Int32Value()
+		);
+		Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(short));
+		Local<v8::Int16Array> at = v8::Int16Array::New(ab, 0, 2);
+		memcpy(ab->GetContents().Data(), r, 2 * sizeof(short));
+		info.GetReturnValue().Set(at);
+		return;
+	}
+	short const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetValueRange();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 2 * sizeof(short));
+	Local<v8::Int16Array> at = v8::Int16Array::New(ab, 0, 2);
+	memcpy(ab->GetContents().Data(), r, 2 * sizeof(short));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkShortArrayWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)

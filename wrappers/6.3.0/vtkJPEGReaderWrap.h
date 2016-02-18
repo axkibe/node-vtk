@@ -10,6 +10,7 @@
 #include <vtkJPEGReader.h>
 
 #include "vtkImageReader2Wrap.h"
+#include "../../plus/plus.h"
 
 class VtkJPEGReaderWrap : public VtkImageReader2Wrap
 {
@@ -36,6 +37,10 @@ class VtkJPEGReaderWrap : public VtkImageReader2Wrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKJPEGREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKJPEGREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

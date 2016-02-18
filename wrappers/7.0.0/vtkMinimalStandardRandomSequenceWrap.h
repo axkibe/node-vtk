@@ -10,6 +10,7 @@
 #include <vtkMinimalStandardRandomSequence.h>
 
 #include "vtkRandomSequenceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMinimalStandardRandomSequenceWrap : public VtkRandomSequenceWrap
 {
@@ -39,6 +40,10 @@ class VtkMinimalStandardRandomSequenceWrap : public VtkRandomSequenceWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSeedOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMINIMALSTANDARDRANDOMSEQUENCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMINIMALSTANDARDRANDOMSEQUENCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

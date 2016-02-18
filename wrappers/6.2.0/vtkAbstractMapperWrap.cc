@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkAbstractMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkPlaneWrap.h"
 #include "vtkPlaneCollectionWrap.h"
 #include "vtkPlanesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkAbstractMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

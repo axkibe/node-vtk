@@ -10,6 +10,7 @@
 #include <vtkSphereRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -83,6 +84,10 @@ class VtkSphereRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetThetaResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHEREREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHEREREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

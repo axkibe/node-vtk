@@ -10,6 +10,7 @@
 #include <vtkOBBTree.h>
 
 #include "vtkAbstractCellLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOBBTreeWrap : public VtkAbstractCellLocatorWrap
 {
@@ -39,6 +40,10 @@ class VtkOBBTreeWrap : public VtkAbstractCellLocatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBBTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBBTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

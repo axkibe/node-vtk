@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkDelimitedTextReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetReadFromInputString", GetReadFromInputString);
 	Nan::SetPrototypeMethod(tpl, "getReadFromInputString", GetReadFromInputString);
 
+	Nan::SetPrototypeMethod(tpl, "GetReplacementCharacter", GetReplacementCharacter);
+	Nan::SetPrototypeMethod(tpl, "getReplacementCharacter", GetReplacementCharacter);
+
 	Nan::SetPrototypeMethod(tpl, "GetStringDelimiter", GetStringDelimiter);
 	Nan::SetPrototypeMethod(tpl, "getStringDelimiter", GetStringDelimiter);
 
@@ -197,6 +200,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReadFromInputString", SetReadFromInputString);
 	Nan::SetPrototypeMethod(tpl, "setReadFromInputString", SetReadFromInputString);
 
+	Nan::SetPrototypeMethod(tpl, "SetReplacementCharacter", SetReplacementCharacter);
+	Nan::SetPrototypeMethod(tpl, "setReplacementCharacter", SetReplacementCharacter);
+
 	Nan::SetPrototypeMethod(tpl, "SetStringDelimiter", SetStringDelimiter);
 	Nan::SetPrototypeMethod(tpl, "setStringDelimiter", SetStringDelimiter);
 
@@ -230,6 +236,9 @@ void VtkDelimitedTextReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseStringDelimiterOn", UseStringDelimiterOn);
 	Nan::SetPrototypeMethod(tpl, "useStringDelimiterOn", UseStringDelimiterOn);
 
+#ifdef VTK_NODE_PLUS_VTKDELIMITEDTEXTREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDELIMITEDTEXTREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -538,6 +547,20 @@ void VtkDelimitedTextReaderWrap::GetReadFromInputString(const Nan::FunctionCallb
 		return;
 	}
 	r = native->GetReadFromInputString();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkDelimitedTextReaderWrap::GetReplacementCharacter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetReplacementCharacter();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1045,6 +1068,25 @@ void VtkDelimitedTextReaderWrap::SetReadFromInputString(const Nan::FunctionCallb
 		}
 		native->SetReadFromInputString(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkDelimitedTextReaderWrap::SetReplacementCharacter(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkDelimitedTextReaderWrap *wrapper = ObjectWrap::Unwrap<VtkDelimitedTextReaderWrap>(info.Holder());
+	vtkDelimitedTextReader *native = (vtkDelimitedTextReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetReplacementCharacter(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

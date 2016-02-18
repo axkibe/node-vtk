@@ -10,6 +10,7 @@
 #include <vtkDataSetSurfaceFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkDataSetSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void UnstructuredGridExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseStripsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseStripsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETSURFACEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETSURFACEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

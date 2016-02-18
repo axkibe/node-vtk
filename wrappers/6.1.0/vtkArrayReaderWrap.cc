@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkArrayDataAlgorithmWrap.h"
 #include "vtkArrayReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkArrayReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetReadFromInputString", SetReadFromInputString);
 	Nan::SetPrototypeMethod(tpl, "setReadFromInputString", SetReadFromInputString);
 
+#ifdef VTK_NODE_PLUS_VTKARRAYREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARRAYREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

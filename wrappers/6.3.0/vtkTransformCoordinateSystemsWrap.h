@@ -10,6 +10,7 @@
 #include <vtkTransformCoordinateSystems.h>
 
 #include "vtkPointSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformCoordinateSystemsWrap : public VtkPointSetAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTransformCoordinateSystemsWrap : public VtkPointSetAlgorithmWrap
 		static void SetOutputCoordinateSystemToViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputCoordinateSystemToWorld(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMCOORDINATESYSTEMSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMCOORDINATESYSTEMSWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkStringToCategoryWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkStringToCategoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCategoryArrayName", SetCategoryArrayName);
 	Nan::SetPrototypeMethod(tpl, "setCategoryArrayName", SetCategoryArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKSTRINGTOCATEGORYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTRINGTOCATEGORYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

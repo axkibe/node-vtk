@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataReaderWrap.h"
 #include "vtkCompositeDataReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCompositeDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -66,6 +66,9 @@ void VtkCompositeDataReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutput", SetOutput);
 	Nan::SetPrototypeMethod(tpl, "setOutput", SetOutput);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEDATAREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEDATAREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

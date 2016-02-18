@@ -10,6 +10,7 @@
 #include <vtkPKdTree.h>
 
 #include "vtkKdTreeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPKdTreeWrap : public VtkKdTreeWrap
 {
@@ -54,6 +55,10 @@ class VtkPKdTreeWrap : public VtkKdTreeWrap
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewOrderAllProcessesFromPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ViewOrderAllProcessesInDirection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPKDTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPKDTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

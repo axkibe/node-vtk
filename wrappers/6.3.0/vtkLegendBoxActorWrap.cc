@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkLegendBoxActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkPropWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -216,6 +216,9 @@ void VtkLegendBoxActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseBackgroundOn", UseBackgroundOn);
 	Nan::SetPrototypeMethod(tpl, "useBackgroundOn", UseBackgroundOn);
 
+#ifdef VTK_NODE_PLUS_VTKLEGENDBOXACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLEGENDBOXACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExodusIIReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkFloatArrayWrap.h"
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -725,6 +725,9 @@ void VtkExodusIIReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetXMLFileName", SetXMLFileName);
 	Nan::SetPrototypeMethod(tpl, "setXMLFileName", SetXMLFileName);
 
+#ifdef VTK_NODE_PLUS_VTKEXODUSIIREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXODUSIIREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

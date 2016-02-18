@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotPieWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkColorSeriesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkPlotPieWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimensions", SetDimensions);
 	Nan::SetPrototypeMethod(tpl, "setDimensions", SetDimensions);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTPIEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTPIEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkImageClip.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageClipWrap : public VtkImageAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkImageClipWrap : public VtkImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClipData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGECLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGECLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

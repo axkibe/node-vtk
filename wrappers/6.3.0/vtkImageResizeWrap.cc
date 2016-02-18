@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageResizeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractImageInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -150,6 +150,9 @@ void VtkImageResizeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 	Nan::SetPrototypeMethod(tpl, "setResizeMethodToOutputSpacing", SetResizeMethodToOutputSpacing);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGERESIZEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGERESIZEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

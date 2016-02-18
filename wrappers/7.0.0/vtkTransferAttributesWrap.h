@@ -10,6 +10,7 @@
 #include <vtkTransferAttributes.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransferAttributesWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkTransferAttributesWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetSourceFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetFieldType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFERATTRIBUTESWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFERATTRIBUTESWRAP_CLASSDEF
+#endif
 };
 
 #endif

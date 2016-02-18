@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridBunykRayCastFunction.h>
 
 #include "vtkUnstructuredGridVolumeRayCastFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridBunykRayCastFunctionWrap : public VtkUnstructuredGridVolumeRayCastFunctionWrap
 {
@@ -39,6 +40,10 @@ class VtkUnstructuredGridBunykRayCastFunctionWrap : public VtkUnstructuredGridVo
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDBUNYKRAYCASTFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDBUNYKRAYCASTFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

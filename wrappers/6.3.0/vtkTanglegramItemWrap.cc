@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkTanglegramItemWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTreeWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -103,6 +103,9 @@ void VtkTanglegramItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTree2Label", SetTree2Label);
 	Nan::SetPrototypeMethod(tpl, "setTree2Label", SetTree2Label);
 
+#ifdef VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTANGLEGRAMITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

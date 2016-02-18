@@ -10,6 +10,7 @@
 #include <vtkHyperTreeGrid.h>
 
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperTreeGridWrap : public VtkDataSetWrap
 {
@@ -34,12 +35,16 @@ class VtkHyperTreeGridWrap : public VtkDataSetWrap
 		static void DeepCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateSuperCursorTraversalTable(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateTrees(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetBranchFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetExtentType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetGridSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaterialMaskIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMaxCellSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfChildren(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetTransposedRootIndexing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetXCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetYCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -50,7 +55,10 @@ class VtkHyperTreeGridWrap : public VtkDataSetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SIZES(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetBranchFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDimension(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGridExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetGridSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIndexingModeToIJK(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetIndexingModeToKJI(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaterialMask(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -60,6 +68,10 @@ class VtkHyperTreeGridWrap : public VtkDataSetWrap
 		static void SetYCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCoordinates(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPERTREEGRIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPERTREEGRIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

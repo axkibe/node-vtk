@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkLookupTableWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnsignedCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -165,6 +165,9 @@ void VtkLookupTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsingLogScale", UsingLogScale);
 	Nan::SetPrototypeMethod(tpl, "usingLogScale", UsingLogScale);
 
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

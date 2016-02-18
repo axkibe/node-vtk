@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAreaViewWrap.h"
 #include "vtkTreeMapViewWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAreaLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -78,6 +78,9 @@ void VtkTreeMapViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 	Nan::SetPrototypeMethod(tpl, "setLayoutStrategyToSquarify", SetLayoutStrategyToSquarify);
 
+#ifdef VTK_NODE_PLUS_VTKTREEMAPVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTREEMAPVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

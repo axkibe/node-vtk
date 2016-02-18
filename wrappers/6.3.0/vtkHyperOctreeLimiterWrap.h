@@ -10,6 +10,7 @@
 #include <vtkHyperOctreeLimiter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperOctreeLimiterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkHyperOctreeLimiterWrap : public VtkDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREELIMITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPEROCTREELIMITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

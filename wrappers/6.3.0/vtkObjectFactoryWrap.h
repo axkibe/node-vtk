@@ -10,6 +10,7 @@
 #include <vtkObjectFactory.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkObjectFactoryWrap : public VtkObjectWrap
 {
@@ -53,6 +54,10 @@ class VtkObjectFactoryWrap : public VtkObjectWrap
 		static void SetEnableFlag(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnRegisterAllFactories(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnRegisterFactory(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJECTFACTORYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJECTFACTORYWRAP_CLASSDEF
+#endif
 };
 
 #endif

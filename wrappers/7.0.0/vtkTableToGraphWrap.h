@@ -10,6 +10,7 @@
 #include <vtkTableToGraph.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTableToGraphWrap : public VtkGraphAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkTableToGraphWrap : public VtkGraphAlgorithmWrap
 		static void SetDirected(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLinkGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertexTableConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTABLETOGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTABLETOGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

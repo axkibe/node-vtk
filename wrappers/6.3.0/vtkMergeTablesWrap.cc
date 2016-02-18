@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkMergeTablesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkMergeTablesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSecondTablePrefix", SetSecondTablePrefix);
 	Nan::SetPrototypeMethod(tpl, "setSecondTablePrefix", SetSecondTablePrefix);
 
+#ifdef VTK_NODE_PLUS_VTKMERGETABLESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGETABLESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

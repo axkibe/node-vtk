@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkImplicitDataSetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkImplicitDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutValue", SetOutValue);
 	Nan::SetPrototypeMethod(tpl, "setOutValue", SetOutValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMPLICITDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMPLICITDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

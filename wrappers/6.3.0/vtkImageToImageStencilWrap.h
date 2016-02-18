@@ -10,6 +10,7 @@
 #include <vtkImageToImageStencil.h>
 
 #include "vtkImageStencilAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageToImageStencilWrap : public VtkImageStencilAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkImageToImageStencilWrap : public VtkImageStencilAlgorithmWrap
 		static void ThresholdBetween(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByLower(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThresholdByUpper(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGETOIMAGESTENCILWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGETOIMAGESTENCILWRAP_CLASSDEF
+#endif
 };
 
 #endif

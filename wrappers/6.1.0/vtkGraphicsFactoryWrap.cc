@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGraphicsFactoryWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkGraphicsFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetUseMesaClasses", SetUseMesaClasses);
 	Nan::SetPrototypeMethod(tpl, "setUseMesaClasses", SetUseMesaClasses);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHICSFACTORYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHICSFACTORYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

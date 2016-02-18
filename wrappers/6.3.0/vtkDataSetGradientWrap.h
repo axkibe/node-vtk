@@ -10,6 +10,7 @@
 #include <vtkDataSetGradient.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetGradientWrap : public VtkDataSetAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkDataSetGradientWrap : public VtkDataSetAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResultArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETGRADIENTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETGRADIENTWRAP_CLASSDEF
+#endif
 };
 
 #endif

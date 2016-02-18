@@ -10,6 +10,7 @@
 #include <vtkFiniteDifferenceGradientEstimator.h>
 
 #include "vtkEncodedGradientEstimatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFiniteDifferenceGradientEstimatorWrap : public VtkEncodedGradientEstimatorWrap
 {
@@ -35,6 +36,10 @@ class VtkFiniteDifferenceGradientEstimatorWrap : public VtkEncodedGradientEstima
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSampleSpacingInVoxels(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFINITEDIFFERENCEGRADIENTESTIMATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFINITEDIFFERENCEGRADIENTESTIMATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAxesActor.h>
 
 #include "vtkProp3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxesActorWrap : public VtkProp3DWrap
 {
@@ -106,6 +107,10 @@ class VtkAxesActorWrap : public VtkProp3DWrap
 		static void SetYAxisLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZAxisLabelText(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXESACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXESACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

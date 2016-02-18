@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridHomogeneousRayIntegrator.h>
 
 #include "vtkUnstructuredGridVolumeRayIntegratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridHomogeneousRayIntegratorWrap : public VtkUnstructuredGridVolumeRayIntegratorWrap
 {
@@ -36,6 +37,10 @@ class VtkUnstructuredGridHomogeneousRayIntegratorWrap : public VtkUnstructuredGr
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransferFunctionTableSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDHOMOGENEOUSRAYINTEGRATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDHOMOGENEOUSRAYINTEGRATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

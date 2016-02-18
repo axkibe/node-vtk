@@ -10,6 +10,7 @@
 #include <vtkOBJImporter.h>
 
 #include "vtkImporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOBJImporterWrap : public VtkImporterWrap
 {
@@ -39,6 +40,10 @@ class VtkOBJImporterWrap : public VtkImporterWrap
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileNameMTL(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexturePath(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJIMPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJIMPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

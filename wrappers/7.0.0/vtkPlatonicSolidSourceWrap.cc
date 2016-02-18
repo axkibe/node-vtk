@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkPlatonicSolidSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkPlatonicSolidSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSolidTypeToTetrahedron", SetSolidTypeToTetrahedron);
 	Nan::SetPrototypeMethod(tpl, "setSolidTypeToTetrahedron", SetSolidTypeToTetrahedron);
 
+#ifdef VTK_NODE_PLUS_VTKPLATONICSOLIDSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLATONICSOLIDSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

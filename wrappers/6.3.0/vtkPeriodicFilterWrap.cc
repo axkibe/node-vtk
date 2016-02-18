@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkPeriodicFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -47,6 +47,9 @@ void VtkPeriodicFilterWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkPeriodicFilterWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "AddIndex", AddIndex);
+	Nan::SetPrototypeMethod(tpl, "addIndex", AddIndex);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -71,6 +74,9 @@ void VtkPeriodicFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "RemoveAllIndices", RemoveAllIndices);
 	Nan::SetPrototypeMethod(tpl, "removeAllIndices", RemoveAllIndices);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveIndex", RemoveIndex);
+	Nan::SetPrototypeMethod(tpl, "removeIndex", RemoveIndex);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
@@ -86,6 +92,9 @@ void VtkPeriodicFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfPeriods", SetNumberOfPeriods);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfPeriods", SetNumberOfPeriods);
 
+#ifdef VTK_NODE_PLUS_VTKPERIODICFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPERIODICFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -112,6 +121,25 @@ void VtkPeriodicFilterWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& info
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkPeriodicFilterWrap::AddIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
+	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->AddIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPeriodicFilterWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -239,6 +267,25 @@ void VtkPeriodicFilterWrap::RemoveAllIndices(const Nan::FunctionCallbackInfo<v8:
 		return;
 	}
 	native->RemoveAllIndices();
+}
+
+void VtkPeriodicFilterWrap::RemoveIndex(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkPeriodicFilterWrap *wrapper = ObjectWrap::Unwrap<VtkPeriodicFilterWrap>(info.Holder());
+	vtkPeriodicFilter *native = (vtkPeriodicFilter *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveIndex(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkPeriodicFilterWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

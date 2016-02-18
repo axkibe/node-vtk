@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkEncodedGradientShaderWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkEncodedGradientEstimatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkEncodedGradientShaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateShadingTable", UpdateShadingTable);
 	Nan::SetPrototypeMethod(tpl, "updateShadingTable", UpdateShadingTable);
 
+#ifdef VTK_NODE_PLUS_VTKENCODEDGRADIENTSHADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENCODEDGRADIENTSHADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapperWrap.h"
 #include "vtkGlyph3DMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -14,6 +13,7 @@
 #include "vtkPolyDataWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetScaling", GetScaling);
 	Nan::SetPrototypeMethod(tpl, "getScaling", GetScaling);
+
+	Nan::SetPrototypeMethod(tpl, "GetSelectionColorId", GetSelectionColorId);
+	Nan::SetPrototypeMethod(tpl, "getSelectionColorId", GetSelectionColorId);
 
 	Nan::SetPrototypeMethod(tpl, "GetSource", GetSource);
 	Nan::SetPrototypeMethod(tpl, "getSource", GetSource);
@@ -208,6 +211,9 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectMode", SetSelectMode);
 	Nan::SetPrototypeMethod(tpl, "setSelectMode", SetSelectMode);
 
+	Nan::SetPrototypeMethod(tpl, "SetSelectionColorId", SetSelectionColorId);
+	Nan::SetPrototypeMethod(tpl, "setSelectionColorId", SetSelectionColorId);
+
 	Nan::SetPrototypeMethod(tpl, "SetSelectionIdArray", SetSelectionIdArray);
 	Nan::SetPrototypeMethod(tpl, "setSelectionIdArray", SetSelectionIdArray);
 
@@ -238,6 +244,9 @@ void VtkGlyph3DMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseSelectionIdsOn", UseSelectionIdsOn);
 	Nan::SetPrototypeMethod(tpl, "useSelectionIdsOn", UseSelectionIdsOn);
 
+#ifdef VTK_NODE_PLUS_VTKGLYPH3DMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGLYPH3DMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -543,6 +552,20 @@ void VtkGlyph3DMapperWrap::GetScaling(const Nan::FunctionCallbackInfo<v8::Value>
 		return;
 	}
 	r = native->GetScaling();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkGlyph3DMapperWrap::GetSelectionColorId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetSelectionColorId();
 	info.GetReturnValue().Set(Nan::New(r));
 }
 
@@ -1228,6 +1251,25 @@ void VtkGlyph3DMapperWrap::SetSelectMode(const Nan::FunctionCallbackInfo<v8::Val
 		}
 		native->SetSelectMode(
 			info[0]->Int32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkGlyph3DMapperWrap::SetSelectionColorId(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkGlyph3DMapperWrap *wrapper = ObjectWrap::Unwrap<VtkGlyph3DMapperWrap>(info.Holder());
+	vtkGlyph3DMapper *native = (vtkGlyph3DMapper *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetSelectionColorId(
+			info[0]->Uint32Value()
 		);
 		return;
 	}

@@ -10,6 +10,7 @@
 #include <vtkAMRGaussianPulseSource.h>
 
 #include "vtkOverlappingAMRAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRGaussianPulseSourceWrap : public VtkOverlappingAMRAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkAMRGaussianPulseSourceWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void SetYPulseWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZPulseOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZPulseWidth(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRGAUSSIANPULSESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRGAUSSIANPULSESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

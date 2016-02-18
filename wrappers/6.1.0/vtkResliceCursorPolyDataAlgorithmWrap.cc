@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkResliceCursorPolyDataAlgorithmWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkResliceCursorWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -115,6 +115,9 @@ void VtkResliceCursorPolyDataAlgorithmWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSliceBounds", SetSliceBounds);
 	Nan::SetPrototypeMethod(tpl, "setSliceBounds", SetSliceBounds);
 
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORPOLYDATAALGORITHMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRESLICECURSORPOLYDATAALGORITHMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

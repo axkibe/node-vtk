@@ -10,6 +10,7 @@
 #include <vtkParticleTracerBase.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParticleTracerBaseWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -72,6 +73,10 @@ class VtkParticleTracerBaseWrap : public VtkPolyDataAlgorithmWrap
 		static void SetStaticSeeds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminalSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminationTime(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARTICLETRACERBASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARTICLETRACERBASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

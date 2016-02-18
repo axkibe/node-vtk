@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLUniformGridAMRWriterWrap.h"
 #include "vtkXMLPUniformGridAMRWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkXMLPUniformGridAMRWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWriteMetaFile", SetWriteMetaFile);
 	Nan::SetPrototypeMethod(tpl, "setWriteMetaFile", SetWriteMetaFile);
 
+#ifdef VTK_NODE_PLUS_VTKXMLPUNIFORMGRIDAMRWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLPUNIFORMGRIDAMRWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

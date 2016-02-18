@@ -10,6 +10,7 @@
 #include <vtkLookupTable.h>
 
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 {
@@ -68,6 +69,10 @@ class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 		static void SetTableRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsingLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPieceScalars.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPieceScalarsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkPieceScalarsWrap : public VtkDataSetAlgorithmWrap
 		static void SetRandomMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToCellData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToPointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECESCALARSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECESCALARSWRAP_CLASSDEF
+#endif
 };
 
 #endif

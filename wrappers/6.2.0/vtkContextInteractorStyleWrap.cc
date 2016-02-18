@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleWrap.h"
 #include "vtkContextInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContextSceneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,12 +99,18 @@ void VtkContextInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "OnSceneModified", OnSceneModified);
 	Nan::SetPrototypeMethod(tpl, "onSceneModified", OnSceneModified);
 
+	Nan::SetPrototypeMethod(tpl, "OnSelection", OnSelection);
+	Nan::SetPrototypeMethod(tpl, "onSelection", OnSelection);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTINTERACTORSTYLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTINTERACTORSTYLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -370,6 +376,62 @@ void VtkContextInteractorStyleWrap::OnSceneModified(const Nan::FunctionCallbackI
 		return;
 	}
 	native->OnSceneModified();
+}
+
+void VtkContextInteractorStyleWrap::OnSelection(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkContextInteractorStyleWrap *wrapper = ObjectWrap::Unwrap<VtkContextInteractorStyleWrap>(info.Holder());
+	vtkContextInteractorStyle *native = (vtkContextInteractorStyle *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32Array())
+	{
+		v8::Local<v8::Uint32Array>a0(v8::Local<v8::Uint32Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 5 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->OnSelection(
+			(unsigned int *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned int b0[5];
+		if( a0->Length() < 5 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 5; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->OnSelection(
+			b0
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkContextInteractorStyleWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)

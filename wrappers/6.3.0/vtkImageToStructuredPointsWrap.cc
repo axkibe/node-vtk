@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageToStructuredPointsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkStructuredPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkImageToStructuredPointsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorInputData", SetVectorInputData);
 	Nan::SetPrototypeMethod(tpl, "setVectorInputData", SetVectorInputData);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGETOSTRUCTUREDPOINTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGETOSTRUCTUREDPOINTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

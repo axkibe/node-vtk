@@ -10,6 +10,7 @@
 #include <vtkGenericDataSetTessellator.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericDataSetTessellatorWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkGenericDataSetTessellatorWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetKeepCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICDATASETTESSELLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICDATASETTESSELLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

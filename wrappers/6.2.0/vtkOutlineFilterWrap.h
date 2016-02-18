@@ -10,6 +10,7 @@
 #include <vtkOutlineFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGenerateFaces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOUTLINEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOUTLINEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

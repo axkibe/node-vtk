@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkTextCodecFactoryWrap.h"
 #include "vtkTextCodecWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkTextCodecFactoryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 	Nan::SetPrototypeMethod(tpl, "unRegisterAllCreateCallbacks", UnRegisterAllCreateCallbacks);
 
+#ifdef VTK_NODE_PLUS_VTKTEXTCODECFACTORYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTEXTCODECFACTORYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

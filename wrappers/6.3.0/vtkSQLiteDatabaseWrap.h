@@ -10,6 +10,7 @@
 #include <vtkSQLiteDatabase.h>
 
 #include "vtkSQLDatabaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSQLiteDatabaseWrap : public VtkSQLDatabaseWrap
 {
@@ -45,6 +46,10 @@ class VtkSQLiteDatabaseWrap : public VtkSQLDatabaseWrap
 		static void Open(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDatabaseFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSQLITEDATABASEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSQLITEDATABASEWRAP_CLASSDEF
+#endif
 };
 
 #endif

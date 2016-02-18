@@ -10,6 +10,7 @@
 #include <vtkTypeUInt32Array.h>
 
 #include "vtkUnsignedIntArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTypeUInt32ArrayWrap : public VtkUnsignedIntArrayWrap
 {
@@ -33,6 +34,10 @@ class VtkTypeUInt32ArrayWrap : public VtkUnsignedIntArrayWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTYPEUINT32ARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTYPEUINT32ARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

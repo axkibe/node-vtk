@@ -10,6 +10,7 @@
 #include <vtkStringToCategory.h>
 
 #include "vtkDataObjectAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStringToCategoryWrap : public VtkDataObjectAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkStringToCategoryWrap : public VtkDataObjectAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCategoryArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTRINGTOCATEGORYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTRINGTOCATEGORYWRAP_CLASSDEF
+#endif
 };
 
 #endif

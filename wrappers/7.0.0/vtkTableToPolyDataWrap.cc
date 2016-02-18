@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkTableToPolyDataWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -173,6 +173,9 @@ void VtkTableToPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZComponent", SetZComponent);
 	Nan::SetPrototypeMethod(tpl, "setZComponent", SetZComponent);
 
+#ifdef VTK_NODE_PLUS_VTKTABLETOPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLETOPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

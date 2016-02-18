@@ -10,6 +10,7 @@
 #include <vtkProbePolyhedron.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProbePolyhedronWrap : public VtkDataSetAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkProbePolyhedronWrap : public VtkDataSetAlgorithmWrap
 		static void SetProbePointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSourceData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROBEPOLYHEDRONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROBEPOLYHEDRONWRAP_CLASSDEF
+#endif
 };
 
 #endif

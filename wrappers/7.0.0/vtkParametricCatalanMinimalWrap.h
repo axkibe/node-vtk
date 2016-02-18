@@ -10,6 +10,7 @@
 #include <vtkParametricCatalanMinimal.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricCatalanMinimalWrap : public VtkParametricFunctionWrap
 {
@@ -36,6 +37,10 @@ class VtkParametricCatalanMinimalWrap : public VtkParametricFunctionWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICCATALANMINIMALWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICCATALANMINIMALWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkProgressObserverWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkProgressObserverWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateProgress", UpdateProgress);
 	Nan::SetPrototypeMethod(tpl, "updateProgress", UpdateProgress);
 
+#ifdef VTK_NODE_PLUS_VTKPROGRESSOBSERVERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROGRESSOBSERVERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

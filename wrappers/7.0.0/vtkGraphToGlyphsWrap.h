@@ -10,6 +10,7 @@
 #include <vtkGraphToGlyphs.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphToGlyphsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkGraphToGlyphsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaling(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScreenSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHTOGLYPHSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHTOGLYPHSWRAP_CLASSDEF
+#endif
 };
 
 #endif

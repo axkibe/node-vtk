@@ -10,6 +10,7 @@
 #include <vtkAngularPeriodicFilter.h>
 
 #include "vtkPeriodicFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAngularPeriodicFilterWrap : public VtkPeriodicFilterWrap
 {
@@ -52,6 +53,10 @@ class VtkAngularPeriodicFilterWrap : public VtkPeriodicFilterWrap
 		static void SetRotationMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRotationModeToArrayValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRotationModeToDirectAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANGULARPERIODICFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANGULARPERIODICFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

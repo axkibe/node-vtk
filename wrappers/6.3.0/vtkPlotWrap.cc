@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContextItemWrap.h"
 #include "vtkPlotWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkTableWrap.h"
 #include "vtkIdTypeArrayWrap.h"
 #include "vtkAxisWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -189,6 +189,9 @@ void VtkPlotWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UpdateCache", UpdateCache);
 	Nan::SetPrototypeMethod(tpl, "updateCache", UpdateCache);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -315,7 +318,55 @@ void VtkPlotWrap::GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
 	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
 	size_t i;
-	if(info.Length() > 0 && info[0]->IsFloat64Array())
+	if(info.Length() > 0 && info[0]->IsUint8Array())
+	{
+		v8::Local<v8::Uint8Array>a0(v8::Local<v8::Uint8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			(unsigned char *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned char b0[3];
+		if( a0->Length() < 3 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 3; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->GetColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsFloat64Array())
 	{
 		v8::Local<v8::Float64Array>a0(v8::Local<v8::Float64Array>::Cast(info[0]->ToObject()));
 		if( a0->Length() < 3 )
@@ -884,7 +935,31 @@ void VtkPlotWrap::SetColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkPlotWrap *wrapper = ObjectWrap::Unwrap<VtkPlotWrap>(info.Holder());
 	vtkPlot *native = (vtkPlot *)wrapper->native.GetPointer();
-	if(info.Length() > 0 && info[0]->IsNumber())
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetColor(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+			}
+		}
+	}
+	else if(info.Length() > 0 && info[0]->IsNumber())
 	{
 		if(info.Length() > 1 && info[1]->IsNumber())
 		{

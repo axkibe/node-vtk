@@ -10,6 +10,7 @@
 #include <vtkSectorSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSectorSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkSectorSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRadialResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetZCoord(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSECTORSOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSECTORSOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

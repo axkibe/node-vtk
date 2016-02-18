@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkRendererSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -118,6 +118,9 @@ void VtkRendererSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WholeWindowOn", WholeWindowOn);
 	Nan::SetPrototypeMethod(tpl, "wholeWindowOn", WholeWindowOn);
 
+#ifdef VTK_NODE_PLUS_VTKRENDERERSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKRENDERERSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

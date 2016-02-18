@@ -10,6 +10,7 @@
 #include <vtkMNITagPointWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMNITagPointWriterWrap : public VtkWriterWrap
 {
@@ -50,6 +51,10 @@ class VtkMNITagPointWriterWrap : public VtkWriterWrap
 		static void SetStructureIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWeights(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMNITAGPOINTWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMNITAGPOINTWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

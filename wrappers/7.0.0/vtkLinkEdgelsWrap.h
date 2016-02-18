@@ -10,6 +10,7 @@
 #include <vtkLinkEdgels.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLinkEdgelsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkLinkEdgelsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetGradientThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLinkThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPhiThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINKEDGELSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINKEDGELSWRAP_CLASSDEF
+#endif
 };
 
 #endif

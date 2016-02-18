@@ -10,6 +10,7 @@
 #include <vtkAngleRepresentation2D.h>
 
 #include "vtkAngleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAngleRepresentation2DWrap : public VtkAngleRepresentationWrap
 {
@@ -49,6 +50,10 @@ class VtkAngleRepresentation2DWrap : public VtkAngleRepresentationWrap
 		static void SetCenterDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint1DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint2DisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKANGLEREPRESENTATION2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKANGLEREPRESENTATION2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkVolumeTextureMapper2D.h>
 
 #include "vtkVolumeTextureMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVolumeTextureMapper2DWrap : public VtkVolumeTextureMapperWrap
 {
@@ -42,6 +43,10 @@ class VtkVolumeTextureMapper2DWrap : public VtkVolumeTextureMapperWrap
 		static void SetMaximumNumberOfPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumStorageSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTargetTextureSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVOLUMETEXTUREMAPPER2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

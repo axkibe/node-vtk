@@ -10,6 +10,7 @@
 #include <vtkContextBufferId.h>
 
 #include "vtkAbstractContextBufferIdWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextBufferIdWrap : public VtkAbstractContextBufferIdWrap
 {
@@ -36,6 +37,10 @@ class VtkContextBufferIdWrap : public VtkAbstractContextBufferIdWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTBUFFERIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTBUFFERIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

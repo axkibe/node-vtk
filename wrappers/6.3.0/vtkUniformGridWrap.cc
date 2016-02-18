@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageDataWrap.h"
 #include "vtkUniformGridWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -101,6 +101,9 @@ void VtkUniformGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnBlankPoint", UnBlankPoint);
 	Nan::SetPrototypeMethod(tpl, "unBlankPoint", UnBlankPoint);
 
+#ifdef VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKUNIFORMGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

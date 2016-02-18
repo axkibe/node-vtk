@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageStencilSourceWrap.h"
 #include "vtkROIStencilSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkROIStencilSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetShapeToEllipsoid", SetShapeToEllipsoid);
 	Nan::SetPrototypeMethod(tpl, "setShapeToEllipsoid", SetShapeToEllipsoid);
 
+#ifdef VTK_NODE_PLUS_VTKROISTENCILSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKROISTENCILSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

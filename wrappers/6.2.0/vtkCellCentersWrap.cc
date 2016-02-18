@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCellCentersWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkCellCentersWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "VertexCellsOn", VertexCellsOn);
 	Nan::SetPrototypeMethod(tpl, "vertexCellsOn", VertexCellsOn);
 
+#ifdef VTK_NODE_PLUS_VTKCELLCENTERSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCELLCENTERSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

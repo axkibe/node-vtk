@@ -10,6 +10,7 @@
 #include <vtkTexturedActor2D.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTexturedActor2DWrap : public VtkActor2DWrap
 {
@@ -40,6 +41,10 @@ class VtkTexturedActor2DWrap : public VtkActor2DWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexture(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEXTUREDACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEXTUREDACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageMapToColorsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkImageMapToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassAlphaToOutput", SetPassAlphaToOutput);
 	Nan::SetPrototypeMethod(tpl, "setPassAlphaToOutput", SetPassAlphaToOutput);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

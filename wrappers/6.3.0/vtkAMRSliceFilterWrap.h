@@ -10,6 +10,7 @@
 #include <vtkAMRSliceFilter.h>
 
 #include "vtkOverlappingAMRAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAMRSliceFilterWrap : public VtkOverlappingAMRAlgorithmWrap
 {
@@ -51,6 +52,10 @@ class VtkAMRSliceFilterWrap : public VtkOverlappingAMRAlgorithmWrap
 		static void SetMaxResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOffSetFromOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAMRSLICEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAMRSLICEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkCMLMoleculeReader.h>
 
 #include "vtkMoleculeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCMLMoleculeReaderWrap : public VtkMoleculeAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkCMLMoleculeReaderWrap : public VtkMoleculeAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCMLMOLECULEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCMLMOLECULEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

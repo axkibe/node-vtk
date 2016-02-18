@@ -10,6 +10,7 @@
 #include <vtkClipHyperOctree.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkClipHyperOctreeWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -53,6 +54,10 @@ class VtkClipHyperOctreeWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetInsideOut(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetLocator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCLIPHYPEROCTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCLIPHYPEROCTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

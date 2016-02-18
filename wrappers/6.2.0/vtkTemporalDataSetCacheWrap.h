@@ -10,6 +10,7 @@
 #include <vtkTemporalDataSetCache.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalDataSetCacheWrap : public VtkAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkTemporalDataSetCacheWrap : public VtkAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCacheSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALDATASETCACHEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALDATASETCACHEWRAP_CLASSDEF
+#endif
 };
 
 #endif

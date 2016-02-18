@@ -10,6 +10,7 @@
 #include <vtkSplineWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplineWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -80,6 +81,10 @@ class VtkSplineWidgetWrap : public Vtk3DWidgetWrap
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedHandleProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectedLineProperty(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLINEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLINEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

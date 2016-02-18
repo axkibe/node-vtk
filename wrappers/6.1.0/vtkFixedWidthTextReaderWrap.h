@@ -10,6 +10,7 @@
 #include <vtkFixedWidthTextReader.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFixedWidthTextReaderWrap : public VtkTableAlgorithmWrap
 {
@@ -45,6 +46,10 @@ class VtkFixedWidthTextReaderWrap : public VtkTableAlgorithmWrap
 		static void SetStripWhiteSpace(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripWhiteSpaceOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StripWhiteSpaceOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIXEDWIDTHTEXTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIXEDWIDTHTEXTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageMathematics.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMathematicsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -66,6 +67,10 @@ class VtkImageMathematicsWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOperationToSquare(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToSquareRoot(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToSubtract(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMATHEMATICSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMATHEMATICSWRAP_CLASSDEF
+#endif
 };
 
 #endif

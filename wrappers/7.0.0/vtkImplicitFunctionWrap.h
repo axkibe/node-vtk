@@ -10,6 +10,7 @@
 #include <vtkImplicitFunction.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitFunctionWrap : public VtkObjectWrap
 {
@@ -38,6 +39,10 @@ class VtkImplicitFunctionWrap : public VtkObjectWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITFUNCTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITFUNCTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

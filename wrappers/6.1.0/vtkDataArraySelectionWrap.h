@@ -10,6 +10,7 @@
 #include <vtkDataArraySelection.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataArraySelectionWrap : public VtkObjectWrap
 {
@@ -50,6 +51,10 @@ class VtkDataArraySelectionWrap : public VtkObjectWrap
 		static void RemoveArrayByIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveArrayByName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAARRAYSELECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAARRAYSELECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

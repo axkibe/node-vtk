@@ -10,6 +10,7 @@
 #include <vtkOpenGLLabeledContourMapper.h>
 
 #include "vtkLabeledContourMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLLabeledContourMapperWrap : public VtkLabeledContourMapperWrap
 {
@@ -33,6 +34,10 @@ class VtkOpenGLLabeledContourMapperWrap : public VtkLabeledContourMapperWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLLABELEDCONTOURMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLLABELEDCONTOURMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

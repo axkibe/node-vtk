@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageIslandRemoval2DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkImageIslandRemoval2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SquareNeighborhoodOn", SquareNeighborhoodOn);
 	Nan::SetPrototypeMethod(tpl, "squareNeighborhoodOn", SquareNeighborhoodOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEISLANDREMOVAL2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEISLANDREMOVAL2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkNetCDFCAMReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkNetCDFCAMReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -46,6 +47,10 @@ class VtkNetCDFCAMReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetSingleLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleLevelOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SingleLevelOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKNETCDFCAMREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKNETCDFCAMREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkSliceAndDiceLayoutStrategy.h>
 
 #include "vtkTreeMapLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSliceAndDiceLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 {
@@ -34,6 +35,10 @@ class VtkSliceAndDiceLayoutStrategyWrap : public VtkTreeMapLayoutStrategyWrap
 		static void Layout(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSLICEANDDICELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSLICEANDDICELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

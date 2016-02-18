@@ -10,6 +10,7 @@
 #include <vtkUnstructuredGridCellIterator.h>
 
 #include "vtkCellIteratorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUnstructuredGridCellIteratorWrap : public VtkCellIteratorWrap
 {
@@ -34,6 +35,10 @@ class VtkUnstructuredGridCellIteratorWrap : public VtkCellIteratorWrap
 		static void IsDoneWithTraversal(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDCELLITERATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNSTRUCTUREDGRIDCELLITERATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

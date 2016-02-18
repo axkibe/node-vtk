@@ -10,6 +10,7 @@
 #include <vtkParametricPluckerConoid.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricPluckerConoidWrap : public VtkParametricFunctionWrap
 {
@@ -38,6 +39,10 @@ class VtkParametricPluckerConoidWrap : public VtkParametricFunctionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetN(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICPLUCKERCONOIDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICPLUCKERCONOIDWRAP_CLASSDEF
+#endif
 };
 
 #endif

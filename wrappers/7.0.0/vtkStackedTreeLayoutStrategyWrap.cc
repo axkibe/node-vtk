@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAreaLayoutStrategyWrap.h"
 #include "vtkStackedTreeLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTreeWrap.h"
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkStackedTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 	Nan::SetPrototypeMethod(tpl, "useRectangularCoordinatesOn", UseRectangularCoordinatesOn);
 
+#ifdef VTK_NODE_PLUS_VTKSTACKEDTREELAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSTACKEDTREELAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

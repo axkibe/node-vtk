@@ -10,6 +10,7 @@
 #include <vtkGeoInteractorStyle.h>
 
 #include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 {
@@ -59,6 +60,10 @@ class VtkGeoInteractorStyleWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void SetLockHeading(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartState(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGEOINTERACTORSTYLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGEOINTERACTORSTYLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

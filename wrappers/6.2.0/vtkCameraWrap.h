@@ -10,6 +10,7 @@
 #include <vtkCamera.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCameraWrap : public VtkObjectWrap
 {
@@ -123,6 +124,10 @@ class VtkCameraWrap : public VtkObjectWrap
 		static void ViewingRaysModified(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Yaw(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Zoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCAMERAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCAMERAWRAP_CLASSDEF
+#endif
 };
 
 #endif

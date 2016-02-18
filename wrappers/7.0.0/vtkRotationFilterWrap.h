@@ -10,6 +10,7 @@
 #include <vtkRotationFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRotationFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -50,6 +51,10 @@ class VtkRotationFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetCenter(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCopyInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfCopies(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKROTATIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKROTATIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPChacoReader.h>
 
 #include "vtkChacoReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPChacoReaderWrap : public VtkChacoReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkPChacoReaderWrap : public VtkChacoReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPCHACOREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPCHACOREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkExodusIIReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -254,6 +255,10 @@ class VtkExodusIIReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SetSqueezePoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXMLFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXODUSIIREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXODUSIIREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGeoCameraWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkGeoTerrainNodeWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -132,6 +132,9 @@ void VtkGeoCameraWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTilt", SetTilt);
 	Nan::SetPrototypeMethod(tpl, "setTilt", SetTilt);
 
+#ifdef VTK_NODE_PLUS_VTKGEOCAMERAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOCAMERAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

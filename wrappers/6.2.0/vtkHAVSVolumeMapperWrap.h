@@ -10,6 +10,7 @@
 #include <vtkHAVSVolumeMapper.h>
 
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHAVSVolumeMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 {
@@ -47,6 +48,10 @@ class VtkHAVSVolumeMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 		static void SetLevelOfDetailMethodField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPartiallyRemoveNonConvexities(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SupportedByHardware(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHAVSVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHAVSVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

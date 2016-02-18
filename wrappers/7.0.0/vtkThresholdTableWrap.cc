@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkThresholdTableWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkThresholdTableWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ThresholdBetween", ThresholdBetween);
 	Nan::SetPrototypeMethod(tpl, "thresholdBetween", ThresholdBetween);
 
+#ifdef VTK_NODE_PLUS_VTKTHRESHOLDTABLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHRESHOLDTABLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

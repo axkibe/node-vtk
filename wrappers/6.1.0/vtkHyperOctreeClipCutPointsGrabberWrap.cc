@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHyperOctreePointsGrabberWrap.h"
 #include "vtkHyperOctreeClipCutPointsGrabberWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkOrderedTriangulatorWrap.h"
 #include "vtkPolygonWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -76,6 +76,9 @@ void VtkHyperOctreeClipCutPointsGrabberWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDimension", SetDimension);
 	Nan::SetPrototypeMethod(tpl, "setDimension", SetDimension);
 
+#ifdef VTK_NODE_PLUS_VTKHYPEROCTREECLIPCUTPOINTSGRABBERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKHYPEROCTREECLIPCUTPOINTSGRABBERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

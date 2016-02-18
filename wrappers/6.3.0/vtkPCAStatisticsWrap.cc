@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiCorrelativeStatisticsWrap.h"
 #include "vtkPCAStatisticsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTableWrap.h"
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkPCAStatisticsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSpecifiedNormalization", SetSpecifiedNormalization);
 	Nan::SetPrototypeMethod(tpl, "setSpecifiedNormalization", SetSpecifiedNormalization);
 
+#ifdef VTK_NODE_PLUS_VTKPCASTATISTICSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPCASTATISTICSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

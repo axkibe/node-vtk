@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkFastSplatterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkFastSplatterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplatConnection", SetSplatConnection);
 	Nan::SetPrototypeMethod(tpl, "setSplatConnection", SetSplatConnection);
 
+#ifdef VTK_NODE_PLUS_VTKFASTSPLATTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFASTSPLATTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

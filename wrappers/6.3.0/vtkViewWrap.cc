@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkViewWrap.h"
 #include "vtkDataRepresentationWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkViewThemeWrap.h"
 #include "vtkCommandWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -111,6 +111,9 @@ void VtkViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

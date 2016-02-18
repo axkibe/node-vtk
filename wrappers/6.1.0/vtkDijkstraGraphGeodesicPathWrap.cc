@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphGeodesicPathWrap.h"
 #include "vtkDijkstraGraphGeodesicPathWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkIdListWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkDoubleArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -110,6 +110,9 @@ void VtkDijkstraGraphGeodesicPathWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseScalarWeightsOn", UseScalarWeightsOn);
 	Nan::SetPrototypeMethod(tpl, "useScalarWeightsOn", UseScalarWeightsOn);
 
+#ifdef VTK_NODE_PLUS_VTKDIJKSTRAGRAPHGEODESICPATHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDIJKSTRAGRAPHGEODESICPATHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

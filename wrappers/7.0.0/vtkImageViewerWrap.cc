@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkImageViewerWrap.h"
 #include "vtkImageDataWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkImageMapperWrap.h"
 #include "vtkActor2DWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkImageViewerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetupInteractor", SetupInteractor);
 	Nan::SetPrototypeMethod(tpl, "setupInteractor", SetupInteractor);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEVIEWERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEVIEWERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

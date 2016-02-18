@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphLayoutStrategyWrap.h"
 #include "vtkSpanTreeLayoutStrategyWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkSpanTreeLayoutStrategyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDepthFirstSpanningTree", SetDepthFirstSpanningTree);
 	Nan::SetPrototypeMethod(tpl, "setDepthFirstSpanningTree", SetDepthFirstSpanningTree);
 
+#ifdef VTK_NODE_PLUS_VTKSPANTREELAYOUTSTRATEGYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPANTREELAYOUTSTRATEGYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

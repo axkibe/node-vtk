@@ -10,6 +10,7 @@
 #include <vtkTimeSourceExample.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTimeSourceExampleWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkTimeSourceExampleWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetGrowing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXAmplitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYAmplitude(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTIMESOURCEEXAMPLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTIMESOURCEEXAMPLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

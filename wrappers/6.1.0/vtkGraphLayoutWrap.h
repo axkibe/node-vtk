@@ -10,6 +10,7 @@
 #include <vtkGraphLayout.h>
 
 #include "vtkGraphAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphLayoutWrap : public VtkGraphAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkGraphLayoutWrap : public VtkGraphAlgorithmWrap
 		static void SetZRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseTransformOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseTransformOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHLAYOUTWRAP_CLASSDEF
+#endif
 };
 
 #endif

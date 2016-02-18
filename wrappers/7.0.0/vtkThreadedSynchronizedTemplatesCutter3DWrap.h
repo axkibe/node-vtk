@@ -10,6 +10,7 @@
 #include <vtkThreadedSynchronizedTemplatesCutter3D.h>
 
 #include "vtkThreadedSynchronizedTemplates3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkThreadedSynchronizedTemplatesCutter3DWrap : public VtkThreadedSynchronizedTemplates3DWrap
 {
@@ -40,6 +41,10 @@ class VtkThreadedSynchronizedTemplatesCutter3DWrap : public VtkThreadedSynchroni
 		static void SetCutFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputPointsPrecision(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ThreadedExecute(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTHREADEDSYNCHRONIZEDTEMPLATESCUTTER3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTHREADEDSYNCHRONIZEDTEMPLATESCUTTER3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

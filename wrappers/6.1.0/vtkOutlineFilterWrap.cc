@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkOutlineFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkOutlineFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenerateFaces", SetGenerateFaces);
 	Nan::SetPrototypeMethod(tpl, "setGenerateFaces", SetGenerateFaces);
 
+#ifdef VTK_NODE_PLUS_VTKOUTLINEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOUTLINEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkEnSightWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkUnstructuredGridWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -120,6 +120,9 @@ void VtkEnSightWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteSOSCaseFile", WriteSOSCaseFile);
 	Nan::SetPrototypeMethod(tpl, "writeSOSCaseFile", WriteSOSCaseFile);
 
+#ifdef VTK_NODE_PLUS_VTKENSIGHTWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKENSIGHTWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

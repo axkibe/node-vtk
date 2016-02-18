@@ -10,6 +10,7 @@
 #include <vtkTreeLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -56,6 +57,10 @@ class VtkTreeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void SetRadial(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReverseEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRotation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTREELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTREELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

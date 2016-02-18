@@ -10,6 +10,7 @@
 #include <vtkDatabaseToTableReader.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDatabaseToTableReaderWrap : public VtkTableAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkDatabaseToTableReaderWrap : public VtkTableAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDatabase(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTableName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATABASETOTABLEREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATABASETOTABLEREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

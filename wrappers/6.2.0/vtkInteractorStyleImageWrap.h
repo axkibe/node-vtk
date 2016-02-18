@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleImage.h>
 
 #include "vtkInteractorStyleTrackballCameraWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleImageWrap : public VtkInteractorStyleTrackballCameraWrap
 {
@@ -73,6 +74,10 @@ class VtkInteractorStyleImageWrap : public VtkInteractorStyleTrackballCameraWrap
 		static void StartSlice(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEIMAGEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEIMAGEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkContourLineInterpolatorWrap.h"
 #include "vtkBezierContourLineInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkContourRepresentationWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkBezierContourLineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMaximumCurveLineSegments", SetMaximumCurveLineSegments);
 	Nan::SetPrototypeMethod(tpl, "setMaximumCurveLineSegments", SetMaximumCurveLineSegments);
 
+#ifdef VTK_NODE_PLUS_VTKBEZIERCONTOURLINEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBEZIERCONTOURLINEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

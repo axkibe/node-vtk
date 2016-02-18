@@ -10,6 +10,7 @@
 #include <vtkProp3DAxisFollower.h>
 
 #include "vtkProp3DFollowerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProp3DAxisFollowerWrap : public VtkProp3DFollowerWrap
 {
@@ -61,6 +62,10 @@ class VtkProp3DAxisFollowerWrap : public VtkProp3DFollowerWrap
 		static void SetViewAngleLODThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROP3DAXISFOLLOWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROP3DAXISFOLLOWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

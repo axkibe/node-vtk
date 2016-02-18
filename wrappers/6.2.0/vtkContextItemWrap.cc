@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractContextItemWrap.h"
 #include "vtkContextItemWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkContextItemWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOpacity", SetOpacity);
 	Nan::SetPrototypeMethod(tpl, "setOpacity", SetOpacity);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTITEMWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTITEMWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

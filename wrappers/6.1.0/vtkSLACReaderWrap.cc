@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkSLACReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDoubleArrayWrap.h"
 #include "vtkInformationIntegerKeyWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,12 @@ void VtkSLACReaderWrap::InitPtpl()
 
 	Nan::SetPrototypeMethod(tpl, "GetMeshFileName", GetMeshFileName);
 	Nan::SetPrototypeMethod(tpl, "getMeshFileName", GetMeshFileName);
+
+	Nan::SetPrototypeMethod(tpl, "GetModeFileName", GetModeFileName);
+	Nan::SetPrototypeMethod(tpl, "getModeFileName", GetModeFileName);
+
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfModeFileNames", GetNumberOfModeFileNames);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfModeFileNames", GetNumberOfModeFileNames);
 
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfVariableArrays", GetNumberOfVariableArrays);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfVariableArrays", GetNumberOfVariableArrays);
@@ -151,6 +157,9 @@ void VtkSLACReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVariableArrayStatus", SetVariableArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setVariableArrayStatus", SetVariableArrayStatus);
 
+#ifdef VTK_NODE_PLUS_VTKSLACREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSLACREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -271,6 +280,41 @@ void VtkSLACReaderWrap::GetMeshFileName(const Nan::FunctionCallbackInfo<v8::Valu
 	}
 	r = native->GetMeshFileName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkSLACReaderWrap::GetModeFileName(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
+	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		char const * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetModeFileName(
+			info[0]->Uint32Value()
+		);
+		info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSLACReaderWrap::GetNumberOfModeFileNames(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSLACReaderWrap *wrapper = ObjectWrap::Unwrap<VtkSLACReaderWrap>(info.Holder());
+	vtkSLACReader *native = (vtkSLACReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfModeFileNames();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkSLACReaderWrap::GetNumberOfVariableArrays(const Nan::FunctionCallbackInfo<v8::Value>& info)

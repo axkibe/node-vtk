@@ -10,6 +10,7 @@
 #include <vtkMath.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMathWrap : public VtkObjectWrap
 {
@@ -90,6 +91,10 @@ class VtkMathWrap : public VtkObjectWrap
 		static void UninitializeBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void XYZToLab(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void XYZToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMATHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMATHWRAP_CLASSDEF
+#endif
 };
 
 #endif

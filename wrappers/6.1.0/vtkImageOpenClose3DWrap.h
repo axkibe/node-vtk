@@ -10,6 +10,7 @@
 #include <vtkImageOpenClose3D.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageOpenClose3DWrap : public VtkImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkImageOpenClose3DWrap : public VtkImageAlgorithmWrap
 		static void SetCloseValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetKernelSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOpenValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEOPENCLOSE3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEOPENCLOSE3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

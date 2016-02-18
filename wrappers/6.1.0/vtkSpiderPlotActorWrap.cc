@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActor2DWrap.h"
 #include "vtkSpiderPlotActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkLegendBoxActorWrap.h"
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -191,6 +191,9 @@ void VtkSpiderPlotActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKSPIDERPLOTACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSPIDERPLOTACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

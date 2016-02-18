@@ -10,6 +10,7 @@
 #include <vtkPolyLineSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyLineSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkPolyLineSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClosed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYLINESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYLINESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

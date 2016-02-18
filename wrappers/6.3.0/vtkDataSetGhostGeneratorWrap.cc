@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkDataSetGhostGeneratorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkDataSetGhostGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfGhostLayers", SetNumberOfGhostLayers);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfGhostLayers", SetNumberOfGhostLayers);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETGHOSTGENERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETGHOSTGENERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

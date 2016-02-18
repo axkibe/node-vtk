@@ -10,6 +10,7 @@
 #include <vtkAddMembershipArray.h>
 
 #include "vtkPassInputTypeAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAddMembershipArrayWrap : public VtkPassInputTypeAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkAddMembershipArrayWrap : public VtkPassInputTypeAlgorithmWrap
 		static void SetInputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKADDMEMBERSHIPARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKADDMEMBERSHIPARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

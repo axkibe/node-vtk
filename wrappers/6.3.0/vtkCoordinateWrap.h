@@ -10,6 +10,7 @@
 #include <vtkCoordinate.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCoordinateWrap : public VtkObjectWrap
 {
@@ -54,6 +55,10 @@ class VtkCoordinateWrap : public VtkObjectWrap
 		static void SetReferenceCoordinate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewport(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOORDINATEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOORDINATEWRAP_CLASSDEF
+#endif
 };
 
 #endif

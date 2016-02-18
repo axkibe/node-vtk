@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleTrackballCameraWrap.h"
 #include "vtkGeoInteractorStyleWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkGeoCameraWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -140,6 +140,9 @@ void VtkGeoInteractorStyleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WidgetInteraction", WidgetInteraction);
 	Nan::SetPrototypeMethod(tpl, "widgetInteraction", WidgetInteraction);
 
+#ifdef VTK_NODE_PLUS_VTKGEOINTERACTORSTYLEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOINTERACTORSTYLEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

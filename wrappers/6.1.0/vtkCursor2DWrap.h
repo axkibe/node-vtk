@@ -10,6 +10,7 @@
 #include <vtkCursor2D.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCursor2DWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -63,6 +64,10 @@ class VtkCursor2DWrap : public VtkPolyDataAlgorithmWrap
 		static void TranslationModeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WrapOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WrapOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCURSOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCURSOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

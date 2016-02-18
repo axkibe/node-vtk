@@ -10,6 +10,7 @@
 #include <vtkResliceCursorWidget.h>
 
 #include "vtkAbstractWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorWidgetWrap : public VtkAbstractWidgetWrap
 {
@@ -42,6 +43,10 @@ class VtkResliceCursorWidgetWrap : public VtkAbstractWidgetWrap
 		static void SetEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetManageWindowLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

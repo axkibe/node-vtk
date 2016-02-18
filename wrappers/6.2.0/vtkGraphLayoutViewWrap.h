@@ -10,6 +10,7 @@
 #include <vtkGraphLayoutView.h>
 
 #include "vtkRenderViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphLayoutViewWrap : public VtkRenderViewWrap
 {
@@ -129,6 +130,10 @@ class VtkGraphLayoutViewWrap : public VtkRenderViewWrap
 		static void VertexLabelVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void VertexLabelVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZoomToSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHLAYOUTVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

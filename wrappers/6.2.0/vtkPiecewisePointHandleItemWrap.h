@@ -10,6 +10,7 @@
 #include <vtkPiecewisePointHandleItem.h>
 
 #include "vtkContextItemWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPiecewisePointHandleItemWrap : public VtkContextItemWrap
 {
@@ -36,6 +37,10 @@ class VtkPiecewisePointHandleItemWrap : public VtkContextItemWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPiecewiseFunction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPIECEWISEPOINTHANDLEITEMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPIECEWISEPOINTHANDLEITEMWRAP_CLASSDEF
+#endif
 };
 
 #endif

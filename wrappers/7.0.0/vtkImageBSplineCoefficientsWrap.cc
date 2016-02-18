@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageBSplineCoefficientsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -137,6 +137,9 @@ void VtkImageBSplineCoefficientsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SplitExtent", SplitExtent);
 	Nan::SetPrototypeMethod(tpl, "splitExtent", SplitExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEBSPLINECOEFFICIENTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEBSPLINECOEFFICIENTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

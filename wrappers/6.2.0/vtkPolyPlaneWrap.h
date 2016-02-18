@@ -10,6 +10,7 @@
 #include <vtkPolyPlane.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyPlaneWrap : public VtkImplicitFunctionWrap
 {
@@ -37,6 +38,10 @@ class VtkPolyPlaneWrap : public VtkImplicitFunctionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPolyLine(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYPLANEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYPLANEWRAP_CLASSDEF
+#endif
 };
 
 #endif

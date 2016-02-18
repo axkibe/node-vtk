@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStatisticsAlgorithmWrap.h"
 #include "vtkExtractHistogram2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataArrayWrap.h"
 #include "vtkDataObjectCollectionWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -147,6 +147,9 @@ void VtkExtractHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 	Nan::SetPrototypeMethod(tpl, "useCustomHistogramExtentsOn", UseCustomHistogramExtentsOn);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTHISTOGRAM2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTHISTOGRAM2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

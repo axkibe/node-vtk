@@ -10,6 +10,7 @@
 #include <vtkFrameBufferObject2.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 {
@@ -29,6 +30,16 @@ class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 	private:
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
+		static void ActivateDrawBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ActivateDrawBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void ActivateReadBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddRenColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddRenDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddTexColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void AddTexDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Bind(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void Blit(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckFrameBufferStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeactivateDrawBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DeactivateReadBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -37,10 +48,22 @@ class VtkFrameBufferObject2Wrap : public VtkObjectWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveRenColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveRenColorAttachments(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveRenDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveTexColorAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveTexColorAttachments(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveTexDepthAttachment(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RestorePreviousBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SaveCurrentBindings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SaveCurrentBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECT2WRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECT2WRAP_CLASSDEF
+#endif
 };
 
 #endif

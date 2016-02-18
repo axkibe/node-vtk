@@ -10,6 +10,7 @@
 #include <vtkContourFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContourFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -67,6 +68,10 @@ class VtkContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarTreeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseScalarTreeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTOURFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTOURFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

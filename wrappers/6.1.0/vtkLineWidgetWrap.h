@@ -10,6 +10,7 @@
 #include <vtkLineWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLineWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -58,6 +59,10 @@ class VtkLineWidgetWrap : public Vtk3DWidgetWrap
 		static void SetPoint1(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPoint2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLINEWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLINEWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

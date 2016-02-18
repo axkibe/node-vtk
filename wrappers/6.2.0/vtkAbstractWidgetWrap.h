@@ -10,6 +10,7 @@
 #include <vtkAbstractWidget.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractWidgetWrap : public VtkInteractorObserverWrap
 {
@@ -49,6 +50,10 @@ class VtkAbstractWidgetWrap : public VtkInteractorObserverWrap
 		static void SetManagesCursor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetParent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetProcessEvents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

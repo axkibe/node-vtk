@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleSwitch.h>
 
 #include "vtkInteractorStyleSwitchBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleSwitchWrap : public VtkInteractorStyleSwitchBaseWrap
 {
@@ -43,6 +44,10 @@ class VtkInteractorStyleSwitchWrap : public VtkInteractorStyleSwitchBaseWrap
 		static void SetCurrentStyleToTrackballCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDefaultRenderer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInteractor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLESWITCHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLESWITCHWRAP_CLASSDEF
+#endif
 };
 
 #endif

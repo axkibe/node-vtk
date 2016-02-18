@@ -10,6 +10,7 @@
 #include <vtkOctreePointLocator.h>
 
 #include "vtkAbstractPointLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOctreePointLocatorWrap : public VtkAbstractPointLocatorWrap
 {
@@ -49,6 +50,10 @@ class VtkOctreePointLocatorWrap : public VtkAbstractPointLocatorWrap
 		static void SetCreateCubicOctants(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFudgeFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumPointsPerRegion(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOCTREEPOINTLOCATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

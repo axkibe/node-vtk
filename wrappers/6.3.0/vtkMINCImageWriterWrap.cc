@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageWriterWrap.h"
 #include "vtkMINCImageWriterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMatrix4x4Wrap.h"
 #include "vtkMINCImageAttributesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -115,6 +115,9 @@ void VtkMINCImageWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+#ifdef VTK_NODE_PLUS_VTKMINCIMAGEWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMINCIMAGEWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

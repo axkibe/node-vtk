@@ -10,6 +10,7 @@
 #include <vtkTDxInteractorStyle.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTDxInteractorStyleWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkTDxInteractorStyleWrap : public VtkObjectWrap
 		static void OnButtonReleasedEvent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTDXINTERACTORSTYLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTDXINTERACTORSTYLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

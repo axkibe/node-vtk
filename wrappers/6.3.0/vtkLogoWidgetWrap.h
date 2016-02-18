@@ -10,6 +10,7 @@
 #include <vtkLogoWidget.h>
 
 #include "vtkBorderWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLogoWidgetWrap : public VtkBorderWidgetWrap
 {
@@ -35,6 +36,10 @@ class VtkLogoWidgetWrap : public VtkBorderWidgetWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRepresentation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLOGOWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLOGOWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkMatrixMathFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMatrixMathFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkMatrixMathFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetOperationToEigenvalue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToEigenvector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOperationToInverse(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMATRIXMATHFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMATRIXMATHFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

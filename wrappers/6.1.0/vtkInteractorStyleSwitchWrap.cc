@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInteractorStyleSwitchBaseWrap.h"
 #include "vtkInteractorStyleSwitchWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
 #include "vtkInteractorStyleWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkInteractorStyleSwitchWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInteractor", SetInteractor);
 	Nan::SetPrototypeMethod(tpl, "setInteractor", SetInteractor);
 
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLESWITCHWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINTERACTORSTYLESWITCHWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

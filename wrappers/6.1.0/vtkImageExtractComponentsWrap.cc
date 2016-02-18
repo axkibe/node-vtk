@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageExtractComponentsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -68,6 +68,9 @@ void VtkImageExtractComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetComponents", SetComponents);
 	Nan::SetPrototypeMethod(tpl, "setComponents", SetComponents);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEEXTRACTCOMPONENTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEEXTRACTCOMPONENTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

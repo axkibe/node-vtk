@@ -10,6 +10,7 @@
 #include <vtkResliceCursorPicker.h>
 
 #include "vtkPickerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkResliceCursorPickerWrap : public VtkPickerWrap
 {
@@ -40,6 +41,10 @@ class VtkResliceCursorPickerWrap : public VtkPickerWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResliceCursorAlgorithm(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTransformMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRESLICECURSORPICKERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRESLICECURSORPICKERWRAP_CLASSDEF
+#endif
 };
 
 #endif

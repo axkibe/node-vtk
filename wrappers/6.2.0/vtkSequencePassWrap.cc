@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderPassWrap.h"
 #include "vtkSequencePassWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkRenderPassCollectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -70,6 +70,9 @@ void VtkSequencePassWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPasses", SetPasses);
 	Nan::SetPrototypeMethod(tpl, "setPasses", SetPasses);
 
+#ifdef VTK_NODE_PLUS_VTKSEQUENCEPASSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSEQUENCEPASSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

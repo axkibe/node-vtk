@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageResliceWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkGarbageCollectorWrap.h"
 #include "vtkImageStencilDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -354,6 +354,9 @@ void VtkImageResliceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WrapOn", WrapOn);
 	Nan::SetPrototypeMethod(tpl, "wrapOn", WrapOn);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGERESLICEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

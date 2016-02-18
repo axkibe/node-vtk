@@ -10,6 +10,7 @@
 #include <vtkRenderedSurfaceRepresentation.h>
 
 #include "vtkRenderedRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderedSurfaceRepresentationWrap : public VtkRenderedRepresentationWrap
 {
@@ -36,6 +37,10 @@ class VtkRenderedSurfaceRepresentationWrap : public VtkRenderedRepresentationWra
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCellColorArrayName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDEREDSURFACEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDEREDSURFACEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkExtentSplitterWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkExtentSplitterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointMode", SetPointMode);
 	Nan::SetPrototypeMethod(tpl, "setPointMode", SetPointMode);
 
+#ifdef VTK_NODE_PLUS_VTKEXTENTSPLITTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTENTSPLITTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

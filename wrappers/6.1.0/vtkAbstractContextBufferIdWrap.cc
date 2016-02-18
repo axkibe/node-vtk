@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAbstractContextBufferIdWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkAbstractContextBufferIdWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetWidth", SetWidth);
 	Nan::SetPrototypeMethod(tpl, "setWidth", SetWidth);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTCONTEXTBUFFERIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTCONTEXTBUFFERIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

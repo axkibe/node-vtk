@@ -10,6 +10,7 @@
 #include <vtkCompositePainter.h>
 
 #include "vtkPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompositePainterWrap : public VtkPainterWrap
 {
@@ -37,6 +38,10 @@ class VtkCompositePainterWrap : public VtkPainterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompositeDataDisplayAttributes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPOSITEPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

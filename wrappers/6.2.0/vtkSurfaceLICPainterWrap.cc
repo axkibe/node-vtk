@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPainterWrap.h"
 #include "vtkSurfaceLICPainterWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkDataObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkRenderWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -288,6 +288,9 @@ void VtkSurfaceLICPainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WriteTimerLog", WriteTimerLog);
 	Nan::SetPrototypeMethod(tpl, "writeTimerLog", WriteTimerLog);
 
+#ifdef VTK_NODE_PLUS_VTKSURFACELICPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSURFACELICPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

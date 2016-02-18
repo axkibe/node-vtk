@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLCompositeDataReaderWrap.h"
 #include "vtkXMLUniformGridAMRReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +50,9 @@ void VtkXMLUniformGridAMRReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
+	Nan::SetPrototypeMethod(tpl, "GetMaximumLevelsToReadByDefault", GetMaximumLevelsToReadByDefault);
+	Nan::SetPrototypeMethod(tpl, "getMaximumLevelsToReadByDefault", GetMaximumLevelsToReadByDefault);
+
 	Nan::SetPrototypeMethod(tpl, "IsA", IsA);
 	Nan::SetPrototypeMethod(tpl, "isA", IsA);
 
@@ -59,6 +62,12 @@ void VtkXMLUniformGridAMRReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetMaximumLevelsToReadByDefault", SetMaximumLevelsToReadByDefault);
+	Nan::SetPrototypeMethod(tpl, "setMaximumLevelsToReadByDefault", SetMaximumLevelsToReadByDefault);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLUNIFORMGRIDAMRREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -100,6 +109,20 @@ void VtkXMLUniformGridAMRReaderWrap::GetClassName(const Nan::FunctionCallbackInf
 	}
 	r = native->GetClassName();
 	info.GetReturnValue().Set(Nan::New(r).ToLocalChecked());
+}
+
+void VtkXMLUniformGridAMRReaderWrap::GetMaximumLevelsToReadByDefault(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLUniformGridAMRReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUniformGridAMRReaderWrap>(info.Holder());
+	vtkXMLUniformGridAMRReader *native = (vtkXMLUniformGridAMRReader *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetMaximumLevelsToReadByDefault();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkXMLUniformGridAMRReaderWrap::IsA(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -173,6 +196,25 @@ void VtkXMLUniformGridAMRReaderWrap::SafeDownCast(const Nan::FunctionCallbackInf
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkXMLUniformGridAMRReaderWrap::SetMaximumLevelsToReadByDefault(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkXMLUniformGridAMRReaderWrap *wrapper = ObjectWrap::Unwrap<VtkXMLUniformGridAMRReaderWrap>(info.Holder());
+	vtkXMLUniformGridAMRReader *native = (vtkXMLUniformGridAMRReader *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetMaximumLevelsToReadByDefault(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

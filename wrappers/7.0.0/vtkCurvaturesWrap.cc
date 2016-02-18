@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkCurvaturesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkCurvaturesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInvertMeanCurvature", SetInvertMeanCurvature);
 	Nan::SetPrototypeMethod(tpl, "setInvertMeanCurvature", SetInvertMeanCurvature);
 
+#ifdef VTK_NODE_PLUS_VTKCURVATURESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCURVATURESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

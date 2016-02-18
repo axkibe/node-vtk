@@ -10,6 +10,7 @@
 #include <vtkPResampleFilter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPResampleFilterWrap : public VtkImageAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkPResampleFilterWrap : public VtkImageAlgorithmWrap
 		static void SetUseInputBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInputBoundsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseInputBoundsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPRESAMPLEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPRESAMPLEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

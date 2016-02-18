@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkArcSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -143,6 +143,9 @@ void VtkArcSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseNormalAndAngleOn", UseNormalAndAngleOn);
 	Nan::SetPrototypeMethod(tpl, "useNormalAndAngleOn", UseNormalAndAngleOn);
 
+#ifdef VTK_NODE_PLUS_VTKARCSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARCSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

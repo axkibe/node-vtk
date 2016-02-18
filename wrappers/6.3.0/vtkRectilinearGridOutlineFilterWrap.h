@@ -10,6 +10,7 @@
 #include <vtkRectilinearGridOutlineFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkRectilinearGridOutlineFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDOUTLINEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDOUTLINEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

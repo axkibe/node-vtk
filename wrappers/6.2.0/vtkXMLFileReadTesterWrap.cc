@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLParserWrap.h"
 #include "vtkXMLFileReadTesterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkXMLFileReadTesterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TestReadFile", TestReadFile);
 	Nan::SetPrototypeMethod(tpl, "testReadFile", TestReadFile);
 
+#ifdef VTK_NODE_PLUS_VTKXMLFILEREADTESTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLFILEREADTESTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

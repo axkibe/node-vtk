@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkDataSetSurfaceFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -127,6 +127,9 @@ void VtkDataSetSurfaceFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseStripsOn", UseStripsOn);
 	Nan::SetPrototypeMethod(tpl, "useStripsOn", UseStripsOn);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETSURFACEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETSURFACEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

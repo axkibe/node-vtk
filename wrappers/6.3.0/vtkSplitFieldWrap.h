@@ -10,6 +10,7 @@
 #include <vtkSplitField.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSplitFieldWrap : public VtkDataSetAlgorithmWrap
 {
@@ -35,6 +36,10 @@ class VtkSplitFieldWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Split(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPLITFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPLITFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

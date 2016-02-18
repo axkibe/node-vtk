@@ -10,6 +10,7 @@
 #include <vtkVRMLExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkVRMLExporterWrap : public VtkExporterWrap
 {
@@ -37,6 +38,10 @@ class VtkVRMLExporterWrap : public VtkExporterWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVRMLEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVRMLEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

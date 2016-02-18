@@ -10,6 +10,7 @@
 #include <vtkFollower.h>
 
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFollowerWrap : public VtkActorWrap
 {
@@ -42,6 +43,10 @@ class VtkFollowerWrap : public VtkActorWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCamera(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFOLLOWERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFOLLOWERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageMagnify.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageMagnifyWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkImageMagnifyWrap : public VtkThreadedImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolate(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMagnificationFactors(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAGNIFYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEMAGNIFYWRAP_CLASSDEF
+#endif
 };
 
 #endif

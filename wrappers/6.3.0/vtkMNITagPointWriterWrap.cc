@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWriterWrap.h"
 #include "vtkMNITagPointWriterWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkStringArrayWrap.h"
 #include "vtkDoubleArrayWrap.h"
 #include "vtkIntArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -114,6 +114,9 @@ void VtkMNITagPointWriterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Write", Write);
 	Nan::SetPrototypeMethod(tpl, "write", Write);
 
+#ifdef VTK_NODE_PLUS_VTKMNITAGPOINTWRITERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMNITAGPOINTWRITERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

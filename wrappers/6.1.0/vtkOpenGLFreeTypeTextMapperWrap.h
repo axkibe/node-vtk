@@ -10,6 +10,7 @@
 #include <vtkOpenGLFreeTypeTextMapper.h>
 
 #include "vtkTextMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLFreeTypeTextMapperWrap : public VtkTextMapperWrap
 {
@@ -37,6 +38,10 @@ class VtkOpenGLFreeTypeTextMapperWrap : public VtkTextMapperWrap
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLFREETYPETEXTMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLFREETYPETEXTMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

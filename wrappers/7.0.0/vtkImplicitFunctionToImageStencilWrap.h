@@ -10,6 +10,7 @@
 #include <vtkImplicitFunctionToImageStencil.h>
 
 #include "vtkImageStencilSourceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitFunctionToImageStencilWrap : public VtkImageStencilSourceWrap
 {
@@ -37,6 +38,10 @@ class VtkImplicitFunctionToImageStencilWrap : public VtkImageStencilSourceWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThreshold(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITFUNCTIONTOIMAGESTENCILWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITFUNCTIONTOIMAGESTENCILWRAP_CLASSDEF
+#endif
 };
 
 #endif

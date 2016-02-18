@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkLabelSizeCalculatorWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkTextPropertyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkLabelSizeCalculatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLabelSizeArrayName", SetLabelSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setLabelSizeArrayName", SetLabelSizeArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKLABELSIZECALCULATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLABELSIZECALCULATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

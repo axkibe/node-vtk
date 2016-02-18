@@ -10,6 +10,7 @@
 #include <vtkBrownianPoints.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBrownianPointsWrap : public VtkDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkBrownianPointsWrap : public VtkDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMinimumSpeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBROWNIANPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBROWNIANPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

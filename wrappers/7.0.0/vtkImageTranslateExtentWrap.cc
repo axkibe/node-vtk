@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageTranslateExtentWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkImageTranslateExtentWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTranslation", SetTranslation);
 	Nan::SetPrototypeMethod(tpl, "setTranslation", SetTranslation);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGETRANSLATEEXTENTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGETRANSLATEEXTENTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

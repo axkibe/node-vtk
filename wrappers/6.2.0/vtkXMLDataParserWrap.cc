@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkXMLParserWrap.h"
 #include "vtkXMLDataParserWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkXMLDataElementWrap.h"
 #include "vtkDataCompressorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkXMLDataParserWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompressor", SetCompressor);
 	Nan::SetPrototypeMethod(tpl, "setCompressor", SetCompressor);
 
+#ifdef VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLDATAPARSERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

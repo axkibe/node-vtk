@@ -10,6 +10,7 @@
 #include <vtkDecimatePro.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDecimateProWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -85,6 +86,10 @@ class VtkDecimateProWrap : public VtkPolyDataAlgorithmWrap
 		static void SetTargetReduction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplittingOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplittingOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDECIMATEPROWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDECIMATEPROWRAP_CLASSDEF
+#endif
 };
 
 #endif

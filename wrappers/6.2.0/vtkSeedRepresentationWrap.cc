@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkWidgetRepresentationWrap.h"
 #include "vtkSeedRepresentationWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkHandleRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,12 @@ void VtkSeedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetNumberOfSeeds", GetNumberOfSeeds);
 	Nan::SetPrototypeMethod(tpl, "getNumberOfSeeds", GetNumberOfSeeds);
 
+	Nan::SetPrototypeMethod(tpl, "GetSeedDisplayPosition", GetSeedDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "getSeedDisplayPosition", GetSeedDisplayPosition);
+
+	Nan::SetPrototypeMethod(tpl, "GetSeedWorldPosition", GetSeedWorldPosition);
+	Nan::SetPrototypeMethod(tpl, "getSeedWorldPosition", GetSeedWorldPosition);
+
 	Nan::SetPrototypeMethod(tpl, "GetTolerance", GetTolerance);
 	Nan::SetPrototypeMethod(tpl, "getTolerance", GetTolerance);
 
@@ -99,9 +105,15 @@ void VtkSeedRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHandleRepresentation", SetHandleRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setHandleRepresentation", SetHandleRepresentation);
 
+	Nan::SetPrototypeMethod(tpl, "SetSeedDisplayPosition", SetSeedDisplayPosition);
+	Nan::SetPrototypeMethod(tpl, "setSeedDisplayPosition", SetSeedDisplayPosition);
+
 	Nan::SetPrototypeMethod(tpl, "SetTolerance", SetTolerance);
 	Nan::SetPrototypeMethod(tpl, "setTolerance", SetTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKSEEDREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSEEDREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -264,6 +276,29 @@ void VtkSeedRepresentationWrap::GetHandleRepresentation(const Nan::FunctionCallb
 {
 	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
 	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkHandleRepresentation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetHandleRepresentation(
+			info[0]->Uint32Value()
+		);
+		VtkHandleRepresentationWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkHandleRepresentationWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkHandleRepresentationWrap *w = new VtkHandleRepresentationWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
 	vtkHandleRepresentation * r;
 	if(info.Length() != 0)
 	{
@@ -295,6 +330,128 @@ void VtkSeedRepresentationWrap::GetNumberOfSeeds(const Nan::FunctionCallbackInfo
 	}
 	r = native->GetNumberOfSeeds();
 	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkSeedRepresentationWrap::GetSeedDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
+	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSeedDisplayPosition(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSeedDisplayPosition(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSeedRepresentationWrap::GetSeedWorldPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
+	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSeedWorldPosition(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->GetSeedWorldPosition(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkSeedRepresentationWrap::GetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -474,6 +631,67 @@ void VtkSeedRepresentationWrap::SetHandleRepresentation(const Nan::FunctionCallb
 			(vtkHandleRepresentation *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkSeedRepresentationWrap::SetSeedDisplayPosition(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkSeedRepresentationWrap *wrapper = ObjectWrap::Unwrap<VtkSeedRepresentationWrap>(info.Holder());
+	vtkSeedRepresentation *native = (vtkSeedRepresentation *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsFloat64Array())
+		{
+			v8::Local<v8::Float64Array>a1(v8::Local<v8::Float64Array>::Cast(info[1]->ToObject()));
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetSeedDisplayPosition(
+				info[0]->Uint32Value(),
+				(double *)(a1->Buffer()->GetContents().Data())
+			);
+			return;
+		}
+		else if(info.Length() > 1 && info[1]->IsArray())
+		{
+			v8::Local<v8::Array>a1(v8::Local<v8::Array>::Cast(info[1]->ToObject()));
+			double b1[3];
+			if( a1->Length() < 3 )
+			{
+				Nan::ThrowError("Array too short.");
+				return;
+			}
+
+			for( i = 0; i < 3; i++ )
+			{
+				if( !a1->Get(i)->IsNumber() )
+				{
+					Nan::ThrowError("Array contents invalid.");
+					return;
+				}
+				b1[i] = a1->Get(i)->NumberValue();
+			}
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetSeedDisplayPosition(
+				info[0]->Uint32Value(),
+				b1
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

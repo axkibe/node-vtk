@@ -10,6 +10,7 @@
 #include <vtkQuaternionInterpolator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuaternionInterpolatorWrap : public VtkObjectWrap
 {
@@ -46,6 +47,10 @@ class VtkQuaternionInterpolatorWrap : public VtkObjectWrap
 		static void SetInterpolationType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationTypeToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationTypeToSpline(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUATERNIONINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUATERNIONINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSplineWrap.h"
 #include "vtkSCurveSplineWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkSCurveSplineWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNodeWeight", SetNodeWeight);
 	Nan::SetPrototypeMethod(tpl, "setNodeWeight", SetNodeWeight);
 
+#ifdef VTK_NODE_PLUS_VTKSCURVESPLINEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCURVESPLINEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

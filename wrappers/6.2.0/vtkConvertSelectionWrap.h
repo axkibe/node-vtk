@@ -10,6 +10,7 @@
 #include <vtkConvertSelection.h>
 
 #include "vtkSelectionAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConvertSelectionWrap : public VtkSelectionAlgorithmWrap
 {
@@ -61,6 +62,10 @@ class VtkConvertSelectionWrap : public VtkSelectionAlgorithmWrap
 		static void ToPedigreeIdSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToSelectionType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ToValueSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONVERTSELECTIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONVERTSELECTIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

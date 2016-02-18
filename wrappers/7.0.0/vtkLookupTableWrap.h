@@ -10,6 +10,7 @@
 #include <vtkLookupTable.h>
 
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 {
@@ -39,6 +40,7 @@ class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 		static void GetBelowRangeColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColorAsUnsignedChars(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetHueRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLogRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNanColor(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -80,6 +82,10 @@ class VtkLookupTableWrap : public VtkScalarsToColorsWrap
 		static void UseBelowRangeColorOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseBelowRangeColorOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UsingLogScale(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKLOOKUPTABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkAxisActor2D.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAxisActor2DWrap : public VtkActor2DWrap
 {
@@ -117,6 +118,10 @@ class VtkAxisActor2DWrap : public VtkActor2DWrap
 		static void TickVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TitleVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TitleVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKAXISACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKAXISACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkPolyDataPainter.h>
 
 #include "vtkPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyDataPainterWrap : public VtkPainterWrap
 {
@@ -39,6 +40,10 @@ class VtkPolyDataPainterWrap : public VtkPainterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SHADER_DEVICE_ADAPTOR(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYDATAPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYDATAPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

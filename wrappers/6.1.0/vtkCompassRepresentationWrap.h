@@ -10,6 +10,7 @@
 #include <vtkCompassRepresentation.h>
 
 #include "vtkContinuousValueWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentationWrap
 {
@@ -61,6 +62,10 @@ class VtkCompassRepresentationWrap : public VtkContinuousValueWidgetRepresentati
 		static void UpdateDistance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UpdateTilt(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOMPASSREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOMPASSREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkBoxWidget.h>
 
 #include "vtk3DWidgetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBoxWidgetWrap : public Vtk3DWidgetWrap
 {
@@ -71,6 +72,10 @@ class VtkBoxWidgetWrap : public Vtk3DWidgetWrap
 		static void SetTranslationEnabled(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationEnabledOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TranslationEnabledOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBOXWIDGETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBOXWIDGETWRAP_CLASSDEF
+#endif
 };
 
 #endif

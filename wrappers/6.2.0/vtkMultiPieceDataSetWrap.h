@@ -10,6 +10,7 @@
 #include <vtkMultiPieceDataSet.h>
 
 #include "vtkDataObjectTreeWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMultiPieceDataSetWrap : public VtkDataObjectTreeWrap
 {
@@ -33,10 +34,19 @@ class VtkMultiPieceDataSetWrap : public VtkDataObjectTreeWrap
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetPieceAsDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIPIECEDATASETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMULTIPIECEDATASETWRAP_CLASSDEF
+#endif
 };
 
 #endif

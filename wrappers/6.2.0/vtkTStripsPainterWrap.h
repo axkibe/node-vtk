@@ -10,6 +10,7 @@
 #include <vtkTStripsPainter.h>
 
 #include "vtkPrimitivePainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTStripsPainterWrap : public VtkPrimitivePainterWrap
 {
@@ -33,6 +34,10 @@ class VtkTStripsPainterWrap : public VtkPrimitivePainterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTSTRIPSPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTSTRIPSPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

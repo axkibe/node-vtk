@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDistanceRepresentationWrap.h"
 #include "vtkDistanceRepresentation2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkProperty2DWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkDistanceRepresentation2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoint2WorldPosition", SetPoint2WorldPosition);
 	Nan::SetPrototypeMethod(tpl, "setPoint2WorldPosition", SetPoint2WorldPosition);
 
+#ifdef VTK_NODE_PLUS_VTKDISTANCEREPRESENTATION2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDISTANCEREPRESENTATION2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

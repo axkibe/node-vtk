@@ -10,6 +10,7 @@
 #include <vtkConeLayoutStrategy.h>
 
 #include "vtkGraphLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 {
@@ -38,6 +39,10 @@ class VtkConeLayoutStrategyWrap : public VtkGraphLayoutStrategyWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCompression(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONELAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkStreamLine.h>
 
 #include "vtkStreamerWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStreamLineWrap : public VtkStreamerWrap
 {
@@ -37,6 +38,10 @@ class VtkStreamLineWrap : public VtkStreamerWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStepLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTREAMLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTREAMLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

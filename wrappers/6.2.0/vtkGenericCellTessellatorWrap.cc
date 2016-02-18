@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkGenericCellTessellatorWrap.h"
 #include "vtkCollectionWrap.h"
 #include "vtkGenericDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkGenericCellTessellatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMeasurement", SetMeasurement);
 	Nan::SetPrototypeMethod(tpl, "setMeasurement", SetMeasurement);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICCELLTESSELLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICCELLTESSELLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

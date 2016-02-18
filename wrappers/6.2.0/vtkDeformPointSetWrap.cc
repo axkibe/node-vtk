@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkDeformPointSetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -82,6 +82,9 @@ void VtkDeformPointSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetInitializeWeights", SetInitializeWeights);
 	Nan::SetPrototypeMethod(tpl, "setInitializeWeights", SetInitializeWeights);
 
+#ifdef VTK_NODE_PLUS_VTKDEFORMPOINTSETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDEFORMPOINTSETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

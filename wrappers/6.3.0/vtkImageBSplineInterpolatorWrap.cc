@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractImageInterpolatorWrap.h"
 #include "vtkImageBSplineInterpolatorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkImageBSplineInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSplineDegree", SetSplineDegree);
 	Nan::SetPrototypeMethod(tpl, "setSplineDegree", SetSplineDegree);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEBSPLINEINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEBSPLINEINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

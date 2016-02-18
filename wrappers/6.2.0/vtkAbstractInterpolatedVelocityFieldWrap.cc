@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkFunctionSetWrap.h"
 #include "vtkAbstractInterpolatedVelocityFieldWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataSetWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkAbstractInterpolatedVelocityFieldWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNormalizeVector", SetNormalizeVector);
 	Nan::SetPrototypeMethod(tpl, "setNormalizeVector", SetNormalizeVector);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTINTERPOLATEDVELOCITYFIELDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTINTERPOLATEDVELOCITYFIELDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

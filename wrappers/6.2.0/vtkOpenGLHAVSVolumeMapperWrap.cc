@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkHAVSVolumeMapperWrap.h"
 #include "vtkOpenGLHAVSVolumeMapperWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkVolumeWrap.h"
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkOpenGLHAVSVolumeMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SupportedByHardware", SupportedByHardware);
 	Nan::SetPrototypeMethod(tpl, "supportedByHardware", SupportedByHardware);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLHAVSVOLUMEMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLHAVSVOLUMEMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

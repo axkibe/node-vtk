@@ -10,6 +10,7 @@
 #include <vtkXMLUnstructuredDataReader.h>
 
 #include "vtkXMLDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLUnstructuredDataReaderWrap : public VtkXMLDataReaderWrap
 {
@@ -35,6 +36,10 @@ class VtkXMLUnstructuredDataReaderWrap : public VtkXMLDataReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetupUpdateExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDDATAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLUNSTRUCTUREDDATAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkXMLHierarchicalBoxDataFileConverterWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkXMLHierarchicalBoxDataFileConverterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputFileName", SetOutputFileName);
 	Nan::SetPrototypeMethod(tpl, "setOutputFileName", SetOutputFileName);
 
+#ifdef VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAFILECONVERTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKXMLHIERARCHICALBOXDATAFILECONVERTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

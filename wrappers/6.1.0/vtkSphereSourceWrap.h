@@ -10,6 +10,7 @@
 #include <vtkSphereSource.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSphereSourceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -69,6 +70,10 @@ class VtkSphereSourceWrap : public VtkPolyDataAlgorithmWrap
 		static void SetStartPhi(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStartTheta(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetThetaResolution(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSPHERESOURCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSPHERESOURCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

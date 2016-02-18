@@ -10,6 +10,7 @@
 #include <vtkImageBSplineCoefficients.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageBSplineCoefficientsWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -59,6 +60,10 @@ class VtkImageBSplineCoefficientsWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetOutputScalarTypeToFloat(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSplineDegree(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SplitExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEBSPLINECOEFFICIENTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEBSPLINECOEFFICIENTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

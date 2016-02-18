@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkWindowToImageFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkImageDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -139,6 +139,9 @@ void VtkWindowToImageFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShouldRerenderOn", ShouldRerenderOn);
 	Nan::SetPrototypeMethod(tpl, "shouldRerenderOn", ShouldRerenderOn);
 
+#ifdef VTK_NODE_PLUS_VTKWINDOWTOIMAGEFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWINDOWTOIMAGEFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

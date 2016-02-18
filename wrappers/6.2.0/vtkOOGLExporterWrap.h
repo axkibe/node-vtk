@@ -10,6 +10,7 @@
 #include <vtkOOGLExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOOGLExporterWrap : public VtkExporterWrap
 {
@@ -35,6 +36,10 @@ class VtkOOGLExporterWrap : public VtkExporterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOOGLEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOOGLEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

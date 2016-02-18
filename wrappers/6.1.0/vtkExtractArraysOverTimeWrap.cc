@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkExtractArraysOverTimeWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
 #include "vtkExtractSelectionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkExtractArraysOverTimeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSelectionExtractor", SetSelectionExtractor);
 	Nan::SetPrototypeMethod(tpl, "setSelectionExtractor", SetSelectionExtractor);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTARRAYSOVERTIMEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTARRAYSOVERTIMEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkHull.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHullWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -43,6 +44,10 @@ class VtkHullWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPlanes(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHULLWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHULLWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkInformationKeyWrap.h"
 #include "vtkInformationExecutivePortKeyWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkExecutiveWrap.h"
 #include "vtkGarbageCollectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkInformationExecutivePortKeyWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "ShallowCopy", ShallowCopy);
 	Nan::SetPrototypeMethod(tpl, "shallowCopy", ShallowCopy);
 
+#ifdef VTK_NODE_PLUS_VTKINFORMATIONEXECUTIVEPORTKEYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINFORMATIONEXECUTIVEPORTKEYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

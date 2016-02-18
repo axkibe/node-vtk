@@ -10,6 +10,7 @@
 #include <vtkProp3D.h>
 
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProp3DWrap : public VtkPropWrap
 {
@@ -64,6 +65,10 @@ class VtkProp3DWrap : public VtkPropWrap
 		static void SetUserMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetUserTransform(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROP3DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROP3DWRAP_CLASSDEF
+#endif
 };
 
 #endif

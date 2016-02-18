@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkConvexHull2DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkRendererWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -127,6 +127,9 @@ void VtkConvexHull2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScaleFactor", SetScaleFactor);
 	Nan::SetPrototypeMethod(tpl, "setScaleFactor", SetScaleFactor);
 
+#ifdef VTK_NODE_PLUS_VTKCONVEXHULL2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONVEXHULL2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

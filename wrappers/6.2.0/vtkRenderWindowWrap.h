@@ -10,6 +10,7 @@
 #include <vtkRenderWindow.h>
 
 #include "vtkWindowWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRenderWindowWrap : public VtkWindowWrap
 {
@@ -143,6 +144,10 @@ class VtkRenderWindowWrap : public VtkWindowWrap
 		static void SupportsOpenGL(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBuffersOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SwapBuffersOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRENDERWINDOWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRENDERWINDOWWRAP_CLASSDEF
+#endif
 };
 
 #endif

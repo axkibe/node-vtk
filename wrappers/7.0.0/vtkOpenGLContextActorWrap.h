@@ -10,6 +10,7 @@
 #include <vtkOpenGLContextActor.h>
 
 #include "vtkContextActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLContextActorWrap : public VtkContextActorWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLContextActorWrap : public VtkContextActorWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderOverlay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLCONTEXTACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLCONTEXTACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

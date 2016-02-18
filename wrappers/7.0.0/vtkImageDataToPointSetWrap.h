@@ -10,6 +10,7 @@
 #include <vtkImageDataToPointSet.h>
 
 #include "vtkStructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageDataToPointSetWrap : public VtkStructuredGridAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkImageDataToPointSetWrap : public VtkStructuredGridAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEDATATOPOINTSETWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEDATATOPOINTSETWRAP_CLASSDEF
+#endif
 };
 
 #endif

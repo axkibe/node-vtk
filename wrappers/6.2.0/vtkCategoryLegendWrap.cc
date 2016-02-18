@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkChartLegendWrap.h"
 #include "vtkCategoryLegendWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkScalarsToColorsWrap.h"
 #include "vtkVariantArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkCategoryLegendWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValues", SetValues);
 	Nan::SetPrototypeMethod(tpl, "setValues", SetValues);
 
+#ifdef VTK_NODE_PLUS_VTKCATEGORYLEGENDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCATEGORYLEGENDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

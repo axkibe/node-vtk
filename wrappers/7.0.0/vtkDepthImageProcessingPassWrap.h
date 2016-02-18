@@ -10,6 +10,7 @@
 #include <vtkDepthImageProcessingPass.h>
 
 #include "vtkImageProcessingPassWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDepthImageProcessingPassWrap : public VtkImageProcessingPassWrap
 {
@@ -36,6 +37,10 @@ class VtkDepthImageProcessingPassWrap : public VtkImageProcessingPassWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDelegatePass(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEPTHIMAGEPROCESSINGPASSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEPTHIMAGEPROCESSINGPASSWRAP_CLASSDEF
+#endif
 };
 
 #endif

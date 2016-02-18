@@ -10,6 +10,7 @@
 #include <vtkImageWriter.h>
 
 #include "vtkImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageWriterWrap : public VtkImageAlgorithmWrap
 {
@@ -44,6 +45,10 @@ class VtkImageWriterWrap : public VtkImageAlgorithmWrap
 		static void SetFilePattern(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFilePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

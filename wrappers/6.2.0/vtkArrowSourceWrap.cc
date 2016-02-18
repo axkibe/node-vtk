@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkArrowSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -131,6 +131,9 @@ void VtkArrowSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTipResolution", SetTipResolution);
 	Nan::SetPrototypeMethod(tpl, "setTipResolution", SetTipResolution);
 
+#ifdef VTK_NODE_PLUS_VTKARROWSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKARROWSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

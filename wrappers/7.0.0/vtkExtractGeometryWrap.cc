@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkExtractGeometryWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -102,6 +102,9 @@ void VtkExtractGeometryWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetImplicitFunction", SetImplicitFunction);
 	Nan::SetPrototypeMethod(tpl, "setImplicitFunction", SetImplicitFunction);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTGEOMETRYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTGEOMETRYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkProjectedTetrahedraMapper.h>
 
 #include "vtkUnstructuredGridVolumeMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkProjectedTetrahedraMapperWrap : public VtkUnstructuredGridVolumeMapperWrap
 {
@@ -37,6 +38,10 @@ class VtkProjectedTetrahedraMapperWrap : public VtkUnstructuredGridVolumeMapperW
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVisibilitySort(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPROJECTEDTETRAHEDRAMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

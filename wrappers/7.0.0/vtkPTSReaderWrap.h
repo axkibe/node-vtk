@@ -10,6 +10,7 @@
 #include <vtkPTSReader.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPTSReaderWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkPTSReaderWrap : public VtkPolyDataAlgorithmWrap
 		static void SetLimitToMaxNumberOfPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputDataTypeIsDouble(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetReadBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPTSREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPTSREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

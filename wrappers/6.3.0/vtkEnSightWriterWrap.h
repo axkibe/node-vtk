@@ -10,6 +10,7 @@
 #include <vtkEnSightWriter.h>
 
 #include "vtkWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkEnSightWriterWrap : public VtkWriterWrap
 {
@@ -53,6 +54,10 @@ class VtkEnSightWriterWrap : public VtkWriterWrap
 		static void SetTransientGeometry(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteCaseFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WriteSOSCaseFile(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKENSIGHTWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKENSIGHTWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

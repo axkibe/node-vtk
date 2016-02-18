@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPlotWrap.h"
 #include "vtkPlotHistogram2DWrap.h"
 #include "vtkObjectWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkTableWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -84,6 +84,9 @@ void VtkPlotHistogram2DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Update", Update);
 	Nan::SetPrototypeMethod(tpl, "update", Update);
 
+#ifdef VTK_NODE_PLUS_VTKPLOTHISTOGRAM2DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLOTHISTOGRAM2DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

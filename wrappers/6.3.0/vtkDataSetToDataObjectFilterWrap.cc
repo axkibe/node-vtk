@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkDataSetToDataObjectFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -119,6 +119,9 @@ void VtkDataSetToDataObjectFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TopologyOn", TopologyOn);
 	Nan::SetPrototypeMethod(tpl, "topologyOn", TopologyOn);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETTODATAOBJECTFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETTODATAOBJECTFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

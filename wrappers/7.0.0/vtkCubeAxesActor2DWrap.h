@@ -10,6 +10,7 @@
 #include <vtkCubeAxesActor2D.h>
 
 #include "vtkActor2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCubeAxesActor2DWrap : public VtkActor2DWrap
 {
@@ -113,6 +114,10 @@ class VtkCubeAxesActor2DWrap : public VtkActor2DWrap
 		static void YAxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZAxisVisibilityOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ZAxisVisibilityOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCUBEAXESACTOR2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCUBEAXESACTOR2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

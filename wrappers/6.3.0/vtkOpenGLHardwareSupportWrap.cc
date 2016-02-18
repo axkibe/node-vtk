@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkOpenGLHardwareSupportWrap.h"
 #include "vtkOpenGLExtensionManagerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkOpenGLHardwareSupportWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetExtensionManager", SetExtensionManager);
 	Nan::SetPrototypeMethod(tpl, "setExtensionManager", SetExtensionManager);
 
+#ifdef VTK_NODE_PLUS_VTKOPENGLHARDWARESUPPORTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKOPENGLHARDWARESUPPORTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkParallelCoordinatesView.h>
 
 #include "vtkRenderViewWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParallelCoordinatesViewWrap : public VtkRenderViewWrap
 {
@@ -54,6 +55,10 @@ class VtkParallelCoordinatesViewWrap : public VtkRenderViewWrap
 		static void SetInspectMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInspectModeToManipulateAxes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMaximumNumberOfBrushPoints(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARALLELCOORDINATESVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARALLELCOORDINATESVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

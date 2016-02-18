@@ -10,6 +10,7 @@
 #include <vtkPReflectionFilter.h>
 
 #include "vtkReflectionFilterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPReflectionFilterWrap : public VtkReflectionFilterWrap
 {
@@ -35,6 +36,10 @@ class VtkPReflectionFilterWrap : public VtkReflectionFilterWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPREFLECTIONFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPREFLECTIONFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

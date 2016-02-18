@@ -10,6 +10,7 @@
 #include <vtkGenericDataObjectReader.h>
 
 #include "vtkDataReaderWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericDataObjectReaderWrap : public VtkDataReaderWrap
 {
@@ -43,6 +44,10 @@ class VtkGenericDataObjectReaderWrap : public VtkDataReaderWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void ReadOutputType(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICDATAOBJECTREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICDATAOBJECTREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

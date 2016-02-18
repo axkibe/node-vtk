@@ -10,6 +10,7 @@
 #include <vtkDataSetTriangleFilter.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetTriangleFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkDataSetTriangleFilterWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetTetrahedraOnly(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TetrahedraOnlyOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void TetrahedraOnlyOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETTRIANGLEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETTRIANGLEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

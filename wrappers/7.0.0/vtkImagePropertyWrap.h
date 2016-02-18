@@ -10,6 +10,7 @@
 #include <vtkImageProperty.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImagePropertyWrap : public VtkObjectWrap
 {
@@ -80,6 +81,10 @@ class VtkImagePropertyWrap : public VtkObjectWrap
 		static void SetUseLookupTableScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableScalarRangeOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseLookupTableScalarRangeOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEPROPERTYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEPROPERTYWRAP_CLASSDEF
+#endif
 };
 
 #endif

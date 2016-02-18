@@ -10,6 +10,7 @@
 #include <vtkGenericGeometryFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGenericGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -57,6 +58,10 @@ class VtkGenericGeometryFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetMerging(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThroughCellIds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPointClipping(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGENERICGEOMETRYFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGENERICGEOMETRYFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGeoGraticuleWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -107,6 +107,9 @@ void VtkGeoGraticuleWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLongitudeLevel", SetLongitudeLevel);
 	Nan::SetPrototypeMethod(tpl, "setLongitudeLevel", SetLongitudeLevel);
 
+#ifdef VTK_NODE_PLUS_VTKGEOGRATICULEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGEOGRATICULEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

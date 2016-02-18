@@ -10,6 +10,7 @@
 #include <vtkUndirectedGraph.h>
 
 #include "vtkGraphWrap.h"
+#include "../../plus/plus.h"
 
 class VtkUndirectedGraphWrap : public VtkGraphWrap
 {
@@ -36,6 +37,10 @@ class VtkUndirectedGraphWrap : public VtkGraphWrap
 		static void IsStructureValid(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKUNDIRECTEDGRAPHWRAP_CLASSDEF
+#endif
 };
 
 #endif

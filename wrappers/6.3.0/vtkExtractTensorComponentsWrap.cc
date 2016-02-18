@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkExtractTensorComponentsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -191,6 +191,9 @@ void VtkExtractTensorComponentsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorComponents", SetVectorComponents);
 	Nan::SetPrototypeMethod(tpl, "setVectorComponents", SetVectorComponents);
 
+#ifdef VTK_NODE_PLUS_VTKEXTRACTTENSORCOMPONENTSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKEXTRACTTENSORCOMPONENTSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

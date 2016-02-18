@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkQuadricClusteringWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkFeatureEdgesWrap.h"
 #include "vtkPolyDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -205,6 +205,9 @@ void VtkQuadricClusteringWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UseInternalTrianglesOn", UseInternalTrianglesOn);
 	Nan::SetPrototypeMethod(tpl, "useInternalTrianglesOn", UseInternalTrianglesOn);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRICCLUSTERINGWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRICCLUSTERINGWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkChacoReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -140,6 +140,9 @@ void VtkChacoReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 	Nan::SetPrototypeMethod(tpl, "setGenerateVertexWeightArrays", SetGenerateVertexWeightArrays);
 
+#ifdef VTK_NODE_PLUS_VTKCHACOREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCHACOREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

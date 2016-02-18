@@ -10,6 +10,7 @@
 #include <vtkAbstractInterpolatedVelocityField.h>
 
 #include "vtkFunctionSetWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 {
@@ -46,6 +47,10 @@ class VtkAbstractInterpolatedVelocityFieldWrap : public VtkFunctionSetWrap
 		static void SelectVectors(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCaching(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalizeVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTINTERPOLATEDVELOCITYFIELDWRAP_CLASSDEF
+#endif
 };
 
 #endif

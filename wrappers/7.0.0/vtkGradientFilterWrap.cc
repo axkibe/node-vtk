@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataSetAlgorithmWrap.h"
 #include "vtkGradientFilterWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -146,6 +146,9 @@ void VtkGradientFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVorticityArrayName", SetVorticityArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVorticityArrayName", SetVorticityArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKGRADIENTFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRADIENTFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

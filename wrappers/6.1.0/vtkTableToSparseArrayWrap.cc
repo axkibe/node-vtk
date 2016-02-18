@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkArrayDataAlgorithmWrap.h"
 #include "vtkTableToSparseArrayWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -74,6 +74,9 @@ void VtkTableToSparseArrayWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetValueColumn", SetValueColumn);
 	Nan::SetPrototypeMethod(tpl, "setValueColumn", SetValueColumn);
 
+#ifdef VTK_NODE_PLUS_VTKTABLETOSPARSEARRAYWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTABLETOSPARSEARRAYWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

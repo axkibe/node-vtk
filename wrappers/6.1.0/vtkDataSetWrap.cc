@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectWrap.h"
 #include "vtkDataSetWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkFieldDataWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -120,6 +120,9 @@ void VtkDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "Squeeze", Squeeze);
 	Nan::SetPrototypeMethod(tpl, "squeeze", Squeeze);
 
+#ifdef VTK_NODE_PLUS_VTKDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

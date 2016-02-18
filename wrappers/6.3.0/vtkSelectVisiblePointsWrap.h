@@ -10,6 +10,7 @@
 #include <vtkSelectVisiblePoints.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkSelectVisiblePointsWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -49,6 +50,10 @@ class VtkSelectVisiblePointsWrap : public VtkPolyDataAlgorithmWrap
 		static void SetSelection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSelectionWindow(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSELECTVISIBLEPOINTSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSELECTVISIBLEPOINTSWRAP_CLASSDEF
+#endif
 };
 
 #endif

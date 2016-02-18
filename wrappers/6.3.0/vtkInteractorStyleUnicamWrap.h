@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleUnicam.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleUnicamWrap : public VtkInteractorStyleWrap
 {
@@ -40,6 +41,10 @@ class VtkInteractorStyleUnicamWrap : public VtkInteractorStyleWrap
 		static void OnTimer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWorldUpVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEUNICAMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEUNICAMWRAP_CLASSDEF
+#endif
 };
 
 #endif

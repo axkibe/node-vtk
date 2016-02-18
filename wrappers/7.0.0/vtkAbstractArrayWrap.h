@@ -10,6 +10,7 @@
 #include <vtkAbstractArray.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractArrayWrap : public VtkObjectWrap
 {
@@ -41,6 +42,7 @@ class VtkAbstractArrayWrap : public VtkObjectWrap
 		static void GetDataTypeAsString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataTypeSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaxDiscreteValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetNumberOfComponentsMaxValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -55,8 +57,13 @@ class VtkAbstractArrayWrap : public VtkObjectWrap
 		static void PER_COMPONENT(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Reset(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetMaxDiscreteValues(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfComponents(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

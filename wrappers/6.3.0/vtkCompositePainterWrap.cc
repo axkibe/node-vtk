@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPainterWrap.h"
 #include "vtkCompositePainterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkInformationObjectBaseKeyWrap.h"
 #include "vtkCompositeDataDisplayAttributesWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkCompositePainterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 	Nan::SetPrototypeMethod(tpl, "setCompositeDataDisplayAttributes", SetCompositeDataDisplayAttributes);
 
+#ifdef VTK_NODE_PLUS_VTKCOMPOSITEPAINTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMPOSITEPAINTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

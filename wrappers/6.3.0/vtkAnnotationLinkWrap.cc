@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAnnotationLayersAlgorithmWrap.h"
 #include "vtkAnnotationLinkWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAnnotationLayersWrap.h"
 #include "vtkSelectionWrap.h"
 #include "vtkTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -89,6 +89,9 @@ void VtkAnnotationLinkWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetCurrentSelection", SetCurrentSelection);
 	Nan::SetPrototypeMethod(tpl, "setCurrentSelection", SetCurrentSelection);
 
+#ifdef VTK_NODE_PLUS_VTKANNOTATIONLINKWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKANNOTATIONLINKWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

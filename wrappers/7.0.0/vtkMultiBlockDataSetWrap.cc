@@ -5,13 +5,14 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectTreeWrap.h"
 #include "vtkMultiBlockDataSetWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkDataObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkCompositeDataIteratorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -50,6 +51,9 @@ void VtkMultiBlockDataSetWrap::InitPtpl()
 	tpl->SetClassName(Nan::New("VtkMultiBlockDataSetWrap").ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
+	Nan::SetPrototypeMethod(tpl, "GetBlock", GetBlock);
+	Nan::SetPrototypeMethod(tpl, "getBlock", GetBlock);
+
 	Nan::SetPrototypeMethod(tpl, "GetClassName", GetClassName);
 	Nan::SetPrototypeMethod(tpl, "getClassName", GetClassName);
 
@@ -62,6 +66,9 @@ void VtkMultiBlockDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMetaData", GetMetaData);
 	Nan::SetPrototypeMethod(tpl, "getMetaData", GetMetaData);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfBlocks", GetNumberOfBlocks);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfBlocks", GetNumberOfBlocks);
+
 	Nan::SetPrototypeMethod(tpl, "HasMetaData", HasMetaData);
 	Nan::SetPrototypeMethod(tpl, "hasMetaData", HasMetaData);
 
@@ -71,9 +78,21 @@ void VtkMultiBlockDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "NewInstance", NewInstance);
 	Nan::SetPrototypeMethod(tpl, "newInstance", NewInstance);
 
+	Nan::SetPrototypeMethod(tpl, "RemoveBlock", RemoveBlock);
+	Nan::SetPrototypeMethod(tpl, "removeBlock", RemoveBlock);
+
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetBlock", SetBlock);
+	Nan::SetPrototypeMethod(tpl, "setBlock", SetBlock);
+
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfBlocks", SetNumberOfBlocks);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfBlocks", SetNumberOfBlocks);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIBLOCKDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTIBLOCKDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -101,6 +120,36 @@ void VtkMultiBlockDataSetWrap::New(const Nan::FunctionCallbackInfo<v8::Value>& i
 	}
 
 	info.GetReturnValue().Set(info.This());
+}
+
+void VtkMultiBlockDataSetWrap::GetBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
+	vtkMultiBlockDataSet *native = (vtkMultiBlockDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkDataObject * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetBlock(
+			info[0]->Uint32Value()
+		);
+		VtkDataObjectWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkDataObjectWrap *w = new VtkDataObjectWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
 }
 
 void VtkMultiBlockDataSetWrap::GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -218,7 +267,44 @@ void VtkMultiBlockDataSetWrap::GetMetaData(const Nan::FunctionCallbackInfo<v8::V
 		info.GetReturnValue().Set(wo);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetMetaData(
+			info[0]->Uint32Value()
+		);
+		VtkInformationWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiBlockDataSetWrap::GetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
+	vtkMultiBlockDataSet *native = (vtkMultiBlockDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfBlocks();
+	info.GetReturnValue().Set(Nan::New(r));
 }
 
 void VtkMultiBlockDataSetWrap::HasMetaData(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -236,6 +322,20 @@ void VtkMultiBlockDataSetWrap::HasMetaData(const Nan::FunctionCallbackInfo<v8::V
 		}
 		r = native->HasMetaData(
 			(vtkCompositeDataIterator *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasMetaData(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -288,6 +388,25 @@ void VtkMultiBlockDataSetWrap::NewInstance(const Nan::FunctionCallbackInfo<v8::V
 	info.GetReturnValue().Set(wo);
 }
 
+void VtkMultiBlockDataSetWrap::RemoveBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
+	vtkMultiBlockDataSet *native = (vtkMultiBlockDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->RemoveBlock(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
 void VtkMultiBlockDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info)
 {
 	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
@@ -314,6 +433,49 @@ void VtkMultiBlockDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		w->native = r;
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiBlockDataSetWrap::SetBlock(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
+	vtkMultiBlockDataSet *native = (vtkMultiBlockDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetBlock(
+				info[0]->Uint32Value(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			return;
+		}
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiBlockDataSetWrap::SetNumberOfBlocks(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiBlockDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiBlockDataSetWrap>(info.Holder());
+	vtkMultiBlockDataSet *native = (vtkMultiBlockDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfBlocks(
+			info[0]->Uint32Value()
+		);
 		return;
 	}
 	Nan::ThrowError("Parameter mismatch");

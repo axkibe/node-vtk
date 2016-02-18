@@ -10,6 +10,7 @@
 #include <vtkPExtractHistogram2D.h>
 
 #include "vtkExtractHistogram2DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPExtractHistogram2DWrap : public VtkExtractHistogram2DWrap
 {
@@ -35,6 +36,10 @@ class VtkPExtractHistogram2DWrap : public VtkExtractHistogram2DWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPEXTRACTHISTOGRAM2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPolynomialSolversUnivariateWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -64,6 +64,9 @@ void VtkPolynomialSolversUnivariateWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDivisionTolerance", SetDivisionTolerance);
 	Nan::SetPrototypeMethod(tpl, "setDivisionTolerance", SetDivisionTolerance);
 
+#ifdef VTK_NODE_PLUS_VTKPOLYNOMIALSOLVERSUNIVARIATEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPOLYNOMIALSOLVERSUNIVARIATEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

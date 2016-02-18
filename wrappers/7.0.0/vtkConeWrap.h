@@ -10,6 +10,7 @@
 #include <vtkCone.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkConeWrap : public VtkImplicitFunctionWrap
 {
@@ -39,6 +40,10 @@ class VtkConeWrap : public VtkImplicitFunctionWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAngle(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONEWRAP_CLASSDEF
+#endif
 };
 
 #endif

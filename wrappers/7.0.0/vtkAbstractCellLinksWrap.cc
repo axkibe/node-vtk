@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAbstractCellLinksWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -58,6 +58,9 @@ void VtkAbstractCellLinksWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTCELLLINKSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTCELLLINKSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

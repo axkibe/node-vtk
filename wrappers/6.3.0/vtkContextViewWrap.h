@@ -10,6 +10,7 @@
 #include <vtkContextView.h>
 
 #include "vtkRenderViewBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkContextViewWrap : public VtkRenderViewBaseWrap
 {
@@ -37,6 +38,10 @@ class VtkContextViewWrap : public VtkRenderViewBaseWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScene(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCONTEXTVIEWWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCONTEXTVIEWWRAP_CLASSDEF
+#endif
 };
 
 #endif

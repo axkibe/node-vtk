@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkSocketControllerWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSocketCommunicatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -93,6 +93,9 @@ void VtkSocketControllerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForConnection", WaitForConnection);
 	Nan::SetPrototypeMethod(tpl, "waitForConnection", WaitForConnection);
 
+#ifdef VTK_NODE_PLUS_VTKSOCKETCONTROLLERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSOCKETCONTROLLERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

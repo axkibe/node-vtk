@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkArrayDataAlgorithmWrap.h"
 #include "vtkNormalizeMatrixVectorsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -71,6 +71,9 @@ void VtkNormalizeMatrixVectorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVectorDimension", SetVectorDimension);
 	Nan::SetPrototypeMethod(tpl, "setVectorDimension", SetVectorDimension);
 
+#ifdef VTK_NODE_PLUS_VTKNORMALIZEMATRIXVECTORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKNORMALIZEMATRIXVECTORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkImageHistogram.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageHistogramWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -65,6 +66,10 @@ class VtkImageHistogramWrap : public VtkThreadedImageAlgorithmWrap
 		static void SetNumberOfBins(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStencilConnection(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStencilData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEHISTOGRAMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEHISTOGRAMWRAP_CLASSDEF
+#endif
 };
 
 #endif

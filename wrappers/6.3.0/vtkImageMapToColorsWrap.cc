@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkThreadedImageAlgorithmWrap.h"
 #include "vtkImageMapToColorsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -57,6 +57,9 @@ void VtkImageMapToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetLookupTable", GetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "getLookupTable", GetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "GetNaNColor", GetNaNColor);
+	Nan::SetPrototypeMethod(tpl, "getNaNColor", GetNaNColor);
+
 	Nan::SetPrototypeMethod(tpl, "GetOutputFormat", GetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "getOutputFormat", GetOutputFormat);
 
@@ -84,6 +87,9 @@ void VtkImageMapToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLookupTable", SetLookupTable);
 	Nan::SetPrototypeMethod(tpl, "setLookupTable", SetLookupTable);
 
+	Nan::SetPrototypeMethod(tpl, "SetNaNColor", SetNaNColor);
+	Nan::SetPrototypeMethod(tpl, "setNaNColor", SetNaNColor);
+
 	Nan::SetPrototypeMethod(tpl, "SetOutputFormat", SetOutputFormat);
 	Nan::SetPrototypeMethod(tpl, "setOutputFormat", SetOutputFormat);
 
@@ -102,6 +108,9 @@ void VtkImageMapToColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPassAlphaToOutput", SetPassAlphaToOutput);
 	Nan::SetPrototypeMethod(tpl, "setPassAlphaToOutput", SetPassAlphaToOutput);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEMAPTOCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -180,6 +189,23 @@ void VtkImageMapToColorsWrap::GetLookupTable(const Nan::FunctionCallbackInfo<v8:
 	w->native = r;
 	w->Wrap(wo);
 	info.GetReturnValue().Set(wo);
+}
+
+void VtkImageMapToColorsWrap::GetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
+	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
+	unsigned char const * r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNaNColor();
+	Local<v8::ArrayBuffer> ab = v8::ArrayBuffer::New(v8::Isolate::GetCurrent(), 4 * sizeof(unsigned char));
+	Local<v8::Uint8Array> at = v8::Uint8Array::New(ab, 0, 4);
+	memcpy(ab->GetContents().Data(), r, 4 * sizeof(unsigned char));
+	info.GetReturnValue().Set(at);
 }
 
 void VtkImageMapToColorsWrap::GetOutputFormat(const Nan::FunctionCallbackInfo<v8::Value>& info)
@@ -345,6 +371,86 @@ void VtkImageMapToColorsWrap::SetLookupTable(const Nan::FunctionCallbackInfo<v8:
 			(vtkScalarsToColors *) a0->native.GetPointer()
 		);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkImageMapToColorsWrap::SetNaNColor(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkImageMapToColorsWrap *wrapper = ObjectWrap::Unwrap<VtkImageMapToColorsWrap>(info.Holder());
+	vtkImageMapToColors *native = (vtkImageMapToColors *)wrapper->native.GetPointer();
+	size_t i;
+	if(info.Length() > 0 && info[0]->IsUint8Array())
+	{
+		v8::Local<v8::Uint8Array>a0(v8::Local<v8::Uint8Array>::Cast(info[0]->ToObject()));
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNaNColor(
+			(unsigned char *)(a0->Buffer()->GetContents().Data())
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsArray())
+	{
+		v8::Local<v8::Array>a0(v8::Local<v8::Array>::Cast(info[0]->ToObject()));
+		unsigned char b0[4];
+		if( a0->Length() < 4 )
+		{
+			Nan::ThrowError("Array too short.");
+			return;
+		}
+
+		for( i = 0; i < 4; i++ )
+		{
+			if( !a0->Get(i)->IsUint32() )
+			{
+				Nan::ThrowError("Array contents invalid.");
+				return;
+			}
+			b0[i] = a0->Get(i)->Uint32Value();
+		}
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNaNColor(
+			b0
+		);
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsUint32())
+		{
+			if(info.Length() > 2 && info[2]->IsUint32())
+			{
+				if(info.Length() > 3 && info[3]->IsUint32())
+				{
+										if(info.Length() != 4)
+					{
+						Nan::ThrowError("Too many parameters.");
+						return;
+					}
+					native->SetNaNColor(
+						info[0]->Uint32Value(),
+						info[1]->Uint32Value(),
+						info[2]->Uint32Value(),
+						info[3]->Uint32Value()
+					);
+					return;
+				}
+			}
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

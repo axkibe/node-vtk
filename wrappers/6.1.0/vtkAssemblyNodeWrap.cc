@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkAssemblyNodeWrap.h"
 #include "vtkPropWrap.h"
 #include "vtkMatrix4x4Wrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -72,6 +72,9 @@ void VtkAssemblyNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewProp", SetViewProp);
 	Nan::SetPrototypeMethod(tpl, "setViewProp", SetViewProp);
 
+#ifdef VTK_NODE_PLUS_VTKASSEMBLYNODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKASSEMBLYNODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

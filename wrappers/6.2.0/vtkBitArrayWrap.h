@@ -10,6 +10,7 @@
 #include <vtkBitArray.h>
 
 #include "vtkDataArrayWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBitArrayWrap : public VtkDataArrayWrap
 {
@@ -45,6 +46,10 @@ class VtkBitArrayWrap : public VtkDataArrayWrap
 		static void RemoveLastTuple(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Squeeze(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBITARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBITARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

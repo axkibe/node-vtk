@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkAMRToMultiBlockFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkMultiProcessControllerWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkAMRToMultiBlockFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetController", SetController);
 	Nan::SetPrototypeMethod(tpl, "setController", SetController);
 
+#ifdef VTK_NODE_PLUS_VTKAMRTOMULTIBLOCKFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAMRTOMULTIBLOCKFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

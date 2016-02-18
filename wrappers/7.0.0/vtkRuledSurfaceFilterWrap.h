@@ -10,6 +10,7 @@
 #include <vtkRuledSurfaceFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRuledSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -66,6 +67,10 @@ class VtkRuledSurfaceFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetRuledMode(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRuledModeToPointWalk(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRuledModeToResample(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRULEDSURFACEFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRULEDSURFACEFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

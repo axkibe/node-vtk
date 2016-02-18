@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPointSetAlgorithmWrap.h"
 #include "vtkWarpScalarWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -99,6 +99,9 @@ void VtkWarpScalarWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "XYPlaneOn", XYPlaneOn);
 	Nan::SetPrototypeMethod(tpl, "xYPlaneOn", XYPlaneOn);
 
+#ifdef VTK_NODE_PLUS_VTKWARPSCALARWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKWARPSCALARWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

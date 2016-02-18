@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkIncrementalOctreeNodeWrap.h"
 #include "vtkIdListWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -104,6 +104,9 @@ void VtkIncrementalOctreeNodeWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetBounds", SetBounds);
 	Nan::SetPrototypeMethod(tpl, "setBounds", SetBounds);
 
+#ifdef VTK_NODE_PLUS_VTKINCREMENTALOCTREENODEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKINCREMENTALOCTREENODEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

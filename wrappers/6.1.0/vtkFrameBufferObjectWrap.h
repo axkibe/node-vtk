@@ -10,6 +10,7 @@
 #include <vtkFrameBufferObject.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFrameBufferObjectWrap : public VtkObjectWrap
 {
@@ -30,23 +31,36 @@ class VtkFrameBufferObjectWrap : public VtkObjectWrap
 		static void New(const Nan::FunctionCallbackInfo<v8::Value>& info);
 
 		static void Bind(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void CheckFrameBufferStatus(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetColorBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDepthBufferNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetLastSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumNumberOfActiveTargets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetMaximumNumberOfRenderTargets(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetNumberOfRenderTargets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsSupported(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveAllColorBuffers(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void RemoveColorBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RenderQuad(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetActiveBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetColorBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetContext(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDepthBuffer(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDepthBufferNeeded(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetNumberOfRenderTargets(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Start(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartNonOrtho(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UnBind(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFRAMEBUFFEROBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

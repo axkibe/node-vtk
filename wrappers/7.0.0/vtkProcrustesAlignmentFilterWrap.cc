@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
 #include "vtkProcrustesAlignmentFilterWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkLandmarkTransformWrap.h"
 #include "vtkPointsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -85,6 +85,9 @@ void VtkProcrustesAlignmentFilterWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StartFromCentroidOn", StartFromCentroidOn);
 	Nan::SetPrototypeMethod(tpl, "startFromCentroidOn", StartFromCentroidOn);
 
+#ifdef VTK_NODE_PLUS_VTKPROCRUSTESALIGNMENTFILTERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPROCRUSTESALIGNMENTFILTERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

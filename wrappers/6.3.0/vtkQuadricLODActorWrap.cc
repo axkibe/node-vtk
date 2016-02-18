@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActorWrap.h"
 #include "vtkQuadricLODActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkViewportWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkPropWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -192,6 +192,9 @@ void VtkQuadricLODActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "StaticOn", StaticOn);
 	Nan::SetPrototypeMethod(tpl, "staticOn", StaticOn);
 
+#ifdef VTK_NODE_PLUS_VTKQUADRICLODACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKQUADRICLODACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

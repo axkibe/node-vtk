@@ -10,6 +10,7 @@
 #include <vtkDistanceRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDistanceRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -59,6 +60,10 @@ class VtkDistanceRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDISTANCEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDISTANCEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

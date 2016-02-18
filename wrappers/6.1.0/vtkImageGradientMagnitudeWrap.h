@@ -10,6 +10,7 @@
 #include <vtkImageGradientMagnitude.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageGradientMagnitudeWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkImageGradientMagnitudeWrap : public VtkThreadedImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDimensionality(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetHandleBoundaries(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEGRADIENTMAGNITUDEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEGRADIENTMAGNITUDEWRAP_CLASSDEF
+#endif
 };
 
 #endif

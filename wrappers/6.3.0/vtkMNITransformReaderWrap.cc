@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAlgorithmWrap.h"
 #include "vtkMNITransformReaderWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkAbstractTransformWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkMNITransformReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetFileName", SetFileName);
 	Nan::SetPrototypeMethod(tpl, "setFileName", SetFileName);
 
+#ifdef VTK_NODE_PLUS_VTKMNITRANSFORMREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMNITRANSFORMREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

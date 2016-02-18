@@ -10,6 +10,7 @@
 #include <vtkMPASReader.h>
 
 #include "vtkUnstructuredGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 {
@@ -75,6 +76,10 @@ class VtkMPASReaderWrap : public VtkUnstructuredGridAlgorithmWrap
 		static void SetVerticalLevel(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDimensionedArrayNamesOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseDimensionedArrayNamesOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMPASREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMPASREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

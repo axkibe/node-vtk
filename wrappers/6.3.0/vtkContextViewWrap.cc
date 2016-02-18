@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRenderViewBaseWrap.h"
 #include "vtkContextViewWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkContext2DWrap.h"
 #include "vtkContextSceneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkContextViewWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScene", SetScene);
 	Nan::SetPrototypeMethod(tpl, "setScene", SetScene);
 
+#ifdef VTK_NODE_PLUS_VTKCONTEXTVIEWWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCONTEXTVIEWWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

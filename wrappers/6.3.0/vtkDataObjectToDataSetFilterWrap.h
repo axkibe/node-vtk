@@ -10,6 +10,7 @@
 #include <vtkDataObjectToDataSetFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataObjectToDataSetFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -96,6 +97,10 @@ class VtkDataObjectToDataSetFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetSpacingComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStripsComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVertsComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTTODATASETFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAOBJECTTODATASETFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

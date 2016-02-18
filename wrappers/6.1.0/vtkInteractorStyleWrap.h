@@ -10,6 +10,7 @@
 #include <vtkInteractorStyle.h>
 
 #include "vtkInteractorObserverWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 {
@@ -103,6 +104,10 @@ class VtkInteractorStyleWrap : public VtkInteractorObserverWrap
 		static void UseTimersOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void UseTimersOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Zoom(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

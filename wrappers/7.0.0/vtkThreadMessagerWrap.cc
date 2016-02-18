@@ -5,9 +5,9 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkThreadMessagerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -73,6 +73,9 @@ void VtkThreadMessagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "WaitForReceiver", WaitForReceiver);
 	Nan::SetPrototypeMethod(tpl, "waitForReceiver", WaitForReceiver);
 
+#ifdef VTK_NODE_PLUS_VTKTHREADMESSAGERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKTHREADMESSAGERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

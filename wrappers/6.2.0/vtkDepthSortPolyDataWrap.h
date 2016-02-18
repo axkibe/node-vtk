@@ -10,6 +10,7 @@
 #include <vtkDepthSortPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDepthSortPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkDepthSortPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SetVector(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SortScalarsOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SortScalarsOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDEPTHSORTPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDEPTHSORTPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

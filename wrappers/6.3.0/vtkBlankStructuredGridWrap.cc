@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkStructuredGridAlgorithmWrap.h"
 #include "vtkBlankStructuredGridWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -95,6 +95,9 @@ void VtkBlankStructuredGridWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMinBlankingValue", SetMinBlankingValue);
 	Nan::SetPrototypeMethod(tpl, "setMinBlankingValue", SetMinBlankingValue);
 
+#ifdef VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBLANKSTRUCTUREDGRIDWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

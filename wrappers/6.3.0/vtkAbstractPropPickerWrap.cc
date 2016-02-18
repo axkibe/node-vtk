@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractPickerWrap.h"
 #include "vtkAbstractPropPickerWrap.h"
 #include "vtkObjectWrap.h"
@@ -17,6 +16,7 @@
 #include "vtkVolumeWrap.h"
 #include "vtkAssemblyWrap.h"
 #include "vtkPropAssemblyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -94,6 +94,9 @@ void VtkAbstractPropPickerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPath", SetPath);
 	Nan::SetPrototypeMethod(tpl, "setPath", SetPath);
 
+#ifdef VTK_NODE_PLUS_VTKABSTRACTPROPPICKERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKABSTRACTPROPPICKERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

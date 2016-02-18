@@ -10,6 +10,7 @@
 #include <vtkXMLReader.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLReaderWrap : public VtkAlgorithmWrap
 {
@@ -58,6 +59,10 @@ class VtkXMLReaderWrap : public VtkAlgorithmWrap
 		static void SetReadFromInputString(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTimeStepRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

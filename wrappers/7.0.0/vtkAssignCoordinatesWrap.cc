@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkAssignCoordinatesWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -80,6 +80,9 @@ void VtkAssignCoordinatesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetZCoordArrayName", SetZCoordArrayName);
 	Nan::SetPrototypeMethod(tpl, "setZCoordArrayName", SetZCoordArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKASSIGNCOORDINATESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKASSIGNCOORDINATESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

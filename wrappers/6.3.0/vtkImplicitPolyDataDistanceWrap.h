@@ -10,6 +10,7 @@
 #include <vtkImplicitPolyDataDistance.h>
 
 #include "vtkImplicitFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImplicitPolyDataDistanceWrap : public VtkImplicitFunctionWrap
 {
@@ -42,6 +43,10 @@ class VtkImplicitPolyDataDistanceWrap : public VtkImplicitFunctionWrap
 		static void SetNoGradient(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNoValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTolerance(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMPLICITPOLYDATADISTANCEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMPLICITPOLYDATADISTANCEWRAP_CLASSDEF
+#endif
 };
 
 #endif

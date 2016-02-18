@@ -10,6 +10,7 @@
 #include <vtkDataReader.h>
 
 #include "vtkAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataReaderWrap : public VtkAlgorithmWrap
 {
@@ -124,6 +125,10 @@ class VtkDataReaderWrap : public VtkAlgorithmWrap
 		static void SetTCoordsName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTensorsName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorsName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATAREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATAREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

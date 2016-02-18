@@ -10,6 +10,7 @@
 #include <vtkFieldDataToAttributeDataFilter.h>
 
 #include "vtkDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFieldDataToAttributeDataFilterWrap : public VtkDataSetAlgorithmWrap
 {
@@ -77,6 +78,10 @@ class VtkFieldDataToAttributeDataFilterWrap : public VtkDataSetAlgorithmWrap
 		static void SetTCoordComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTensorComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetVectorComponent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIELDDATATOATTRIBUTEDATAFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIELDDATATOATTRIBUTEDATAFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkTemporalInterpolator.h>
 
 #include "vtkMultiTimeStepAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTemporalInterpolatorWrap : public VtkMultiTimeStepAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkTemporalInterpolatorWrap : public VtkMultiTimeStepAlgorithmWrap
 		static void SetCacheData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetDiscreteTimeStepInterval(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetResampleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTEMPORALINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTEMPORALINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

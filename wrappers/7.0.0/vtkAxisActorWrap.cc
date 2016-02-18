@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkActorWrap.h"
 #include "vtkAxisActorWrap.h"
 #include "vtkObjectWrap.h"
@@ -18,6 +17,7 @@
 #include "vtkStringArrayWrap.h"
 #include "vtkAxisFollowerWrap.h"
 #include "vtkProp3DAxisFollowerWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -545,6 +545,9 @@ void VtkAxisActorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "TitleVisibilityOn", TitleVisibilityOn);
 	Nan::SetPrototypeMethod(tpl, "titleVisibilityOn", TitleVisibilityOn);
 
+#ifdef VTK_NODE_PLUS_VTKAXISACTORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAXISACTORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

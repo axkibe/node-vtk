@@ -10,6 +10,7 @@
 #include <vtkCPExodusIIInSituReader.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCPExodusIIInSituReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkCPExodusIIInSituReaderWrap : public VtkMultiBlockDataSetAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCurrentTimeStep(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFileName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCPEXODUSIIINSITUREADERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCPEXODUSIIINSITUREADERWRAP_CLASSDEF
+#endif
 };
 
 #endif

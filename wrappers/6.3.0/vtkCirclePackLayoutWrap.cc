@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTreeAlgorithmWrap.h"
 #include "vtkCirclePackLayoutWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkCirclePackLayoutStrategyWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkCirclePackLayoutWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSizeArrayName", SetSizeArrayName);
 	Nan::SetPrototypeMethod(tpl, "setSizeArrayName", SetSizeArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKCIRCLEPACKLAYOUTWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCIRCLEPACKLAYOUTWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

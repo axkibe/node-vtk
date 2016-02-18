@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCameraInterpolatorWrap.h"
 #include "vtkCameraWrap.h"
 #include "vtkTupleInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -138,6 +138,9 @@ void VtkCameraInterpolatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetViewUpInterpolator", SetViewUpInterpolator);
 	Nan::SetPrototypeMethod(tpl, "setViewUpInterpolator", SetViewUpInterpolator);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAINTERPOLATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAINTERPOLATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

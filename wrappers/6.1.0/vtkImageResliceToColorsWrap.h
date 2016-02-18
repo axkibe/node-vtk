@@ -10,6 +10,7 @@
 #include <vtkImageResliceToColors.h>
 
 #include "vtkImageResliceWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageResliceToColorsWrap : public VtkImageResliceWrap
 {
@@ -47,6 +48,10 @@ class VtkImageResliceToColorsWrap : public VtkImageResliceWrap
 		static void SetOutputFormatToLuminanceAlpha(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGB(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputFormatToRGBA(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICETOCOLORSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERESLICETOCOLORSWRAP_CLASSDEF
+#endif
 };
 
 #endif

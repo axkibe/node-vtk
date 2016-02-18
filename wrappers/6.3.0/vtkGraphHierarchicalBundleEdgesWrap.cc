@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkGraphAlgorithmWrap.h"
 #include "vtkGraphHierarchicalBundleEdgesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkInformationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -87,6 +87,9 @@ void VtkGraphHierarchicalBundleEdgesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetDirectMapping", SetDirectMapping);
 	Nan::SetPrototypeMethod(tpl, "setDirectMapping", SetDirectMapping);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHHIERARCHICALBUNDLEEDGESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHHIERARCHICALBUNDLEEDGESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

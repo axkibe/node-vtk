@@ -10,6 +10,7 @@
 #include <vtkImageWeightedSum.h>
 
 #include "vtkThreadedImageAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageWeightedSumWrap : public VtkThreadedImageAlgorithmWrap
 {
@@ -42,6 +43,10 @@ class VtkImageWeightedSumWrap : public VtkThreadedImageAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNormalizeByWeight(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWeights(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEWEIGHTEDSUMWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEWEIGHTEDSUMWRAP_CLASSDEF
+#endif
 };
 
 #endif

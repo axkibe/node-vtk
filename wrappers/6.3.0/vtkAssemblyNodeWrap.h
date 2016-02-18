@@ -10,6 +10,7 @@
 #include <vtkAssemblyNode.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAssemblyNodeWrap : public VtkObjectWrap
 {
@@ -37,6 +38,10 @@ class VtkAssemblyNodeWrap : public VtkObjectWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMatrix(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetViewProp(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKASSEMBLYNODEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKASSEMBLYNODEWRAP_CLASSDEF
+#endif
 };
 
 #endif

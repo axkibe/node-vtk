@@ -10,6 +10,7 @@
 #include <vtkHyperStreamline.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkHyperStreamlineWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -80,6 +81,10 @@ class VtkHyperStreamlineWrap : public VtkPolyDataAlgorithmWrap
 		static void SetStartPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetStepLength(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTerminalEigenvalue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKHYPERSTREAMLINEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKHYPERSTREAMLINEWRAP_CLASSDEF
+#endif
 };
 
 #endif

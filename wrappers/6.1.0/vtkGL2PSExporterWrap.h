@@ -10,6 +10,7 @@
 #include <vtkGL2PSExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGL2PSExporterWrap : public VtkExporterWrap
 {
@@ -102,6 +103,10 @@ class VtkGL2PSExporterWrap : public VtkExporterWrap
 		static void UsePainterSettings(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write3DPropsAsRasterImageOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Write3DPropsAsRasterImageOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGL2PSEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGL2PSEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,13 +5,15 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectTreeWrap.h"
 #include "vtkMultiPieceDataSetWrap.h"
 #include "vtkObjectWrap.h"
+#include "vtkDataSetWrap.h"
+#include "vtkDataObjectWrap.h"
 #include "vtkInformationWrap.h"
 #include "vtkInformationVectorWrap.h"
 #include "vtkCompositeDataIteratorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -62,6 +64,15 @@ void VtkMultiPieceDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "GetMetaData", GetMetaData);
 	Nan::SetPrototypeMethod(tpl, "getMetaData", GetMetaData);
 
+	Nan::SetPrototypeMethod(tpl, "GetNumberOfPieces", GetNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "getNumberOfPieces", GetNumberOfPieces);
+
+	Nan::SetPrototypeMethod(tpl, "GetPiece", GetPiece);
+	Nan::SetPrototypeMethod(tpl, "getPiece", GetPiece);
+
+	Nan::SetPrototypeMethod(tpl, "GetPieceAsDataObject", GetPieceAsDataObject);
+	Nan::SetPrototypeMethod(tpl, "getPieceAsDataObject", GetPieceAsDataObject);
+
 	Nan::SetPrototypeMethod(tpl, "HasMetaData", HasMetaData);
 	Nan::SetPrototypeMethod(tpl, "hasMetaData", HasMetaData);
 
@@ -74,6 +85,15 @@ void VtkMultiPieceDataSetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SafeDownCast", SafeDownCast);
 	Nan::SetPrototypeMethod(tpl, "safeDownCast", SafeDownCast);
 
+	Nan::SetPrototypeMethod(tpl, "SetNumberOfPieces", SetNumberOfPieces);
+	Nan::SetPrototypeMethod(tpl, "setNumberOfPieces", SetNumberOfPieces);
+
+	Nan::SetPrototypeMethod(tpl, "SetPiece", SetPiece);
+	Nan::SetPrototypeMethod(tpl, "setPiece", SetPiece);
+
+#ifdef VTK_NODE_PLUS_VTKMULTIPIECEDATASETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMULTIPIECEDATASETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
@@ -218,6 +238,103 @@ void VtkMultiPieceDataSetWrap::GetMetaData(const Nan::FunctionCallbackInfo<v8::V
 		info.GetReturnValue().Set(wo);
 		return;
 	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkInformation * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetMetaData(
+			info[0]->Uint32Value()
+		);
+		VtkInformationWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkInformationWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkInformationWrap *w = new VtkInformationWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiPieceDataSetWrap::GetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
+	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
+	unsigned int r;
+	if(info.Length() != 0)
+	{
+		Nan::ThrowError("Too many parameters.");
+		return;
+	}
+	r = native->GetNumberOfPieces();
+	info.GetReturnValue().Set(Nan::New(r));
+}
+
+void VtkMultiPieceDataSetWrap::GetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
+	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkDataSet * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetPiece(
+			info[0]->Uint32Value()
+		);
+		VtkDataSetWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkDataSetWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkDataSetWrap *w = new VtkDataSetWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiPieceDataSetWrap::GetPieceAsDataObject(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
+	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		vtkDataObject * r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->GetPieceAsDataObject(
+			info[0]->Uint32Value()
+		);
+		VtkDataObjectWrap::InitPtpl();
+		v8::Local<v8::Value> argv[1] =
+			{ Nan::New(vtkNodeJsNoWrap) };
+		v8::Local<v8::Function> cons =
+			Nan::New<v8::FunctionTemplate>(VtkDataObjectWrap::ptpl)->GetFunction();
+		v8::Local<v8::Object> wo = cons->NewInstance(1, argv);
+		VtkDataObjectWrap *w = new VtkDataObjectWrap();
+		w->native = r;
+		w->Wrap(wo);
+		info.GetReturnValue().Set(wo);
+		return;
+	}
 	Nan::ThrowError("Parameter mismatch");
 }
 
@@ -236,6 +353,20 @@ void VtkMultiPieceDataSetWrap::HasMetaData(const Nan::FunctionCallbackInfo<v8::V
 		}
 		r = native->HasMetaData(
 			(vtkCompositeDataIterator *) a0->native.GetPointer()
+		);
+		info.GetReturnValue().Set(Nan::New(r));
+		return;
+	}
+	else if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		int r;
+		if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		r = native->HasMetaData(
+			info[0]->Uint32Value()
 		);
 		info.GetReturnValue().Set(Nan::New(r));
 		return;
@@ -315,6 +446,49 @@ void VtkMultiPieceDataSetWrap::SafeDownCast(const Nan::FunctionCallbackInfo<v8::
 		w->Wrap(wo);
 		info.GetReturnValue().Set(wo);
 		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiPieceDataSetWrap::SetNumberOfPieces(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
+	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+				if(info.Length() != 1)
+		{
+			Nan::ThrowError("Too many parameters.");
+			return;
+		}
+		native->SetNumberOfPieces(
+			info[0]->Uint32Value()
+		);
+		return;
+	}
+	Nan::ThrowError("Parameter mismatch");
+}
+
+void VtkMultiPieceDataSetWrap::SetPiece(const Nan::FunctionCallbackInfo<v8::Value>& info)
+{
+	VtkMultiPieceDataSetWrap *wrapper = ObjectWrap::Unwrap<VtkMultiPieceDataSetWrap>(info.Holder());
+	vtkMultiPieceDataSet *native = (vtkMultiPieceDataSet *)wrapper->native.GetPointer();
+	if(info.Length() > 0 && info[0]->IsUint32())
+	{
+		if(info.Length() > 1 && info[1]->IsObject() && (Nan::New(VtkDataObjectWrap::ptpl))->HasInstance(info[1]))
+		{
+			VtkDataObjectWrap *a1 = ObjectWrap::Unwrap<VtkDataObjectWrap>(info[1]->ToObject());
+						if(info.Length() != 2)
+			{
+				Nan::ThrowError("Too many parameters.");
+				return;
+			}
+			native->SetPiece(
+				info[0]->Uint32Value(),
+				(vtkDataObject *) a1->native.GetPointer()
+			);
+			return;
+		}
 	}
 	Nan::ThrowError("Parameter mismatch");
 }

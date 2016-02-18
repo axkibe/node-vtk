@@ -10,6 +10,7 @@
 #include <vtkPhyloXMLTreeWriter.h>
 
 #include "vtkXMLWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPhyloXMLTreeWriterWrap : public VtkXMLWriterWrap
 {
@@ -36,6 +37,10 @@ class VtkPhyloXMLTreeWriterWrap : public VtkXMLWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPHYLOXMLTREEWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPHYLOXMLTREEWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

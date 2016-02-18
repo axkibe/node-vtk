@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkCommunicatorWrap.h"
 #include "vtkDataObjectWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkCharArrayWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -121,6 +121,9 @@ void VtkCommunicatorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UnMarshalDataObject", UnMarshalDataObject);
 	Nan::SetPrototypeMethod(tpl, "unMarshalDataObject", UnMarshalDataObject);
 
+#ifdef VTK_NODE_PLUS_VTKCOMMUNICATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCOMMUNICATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkBandedPolyDataContourFilter.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkBandedPolyDataContourFilterWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -55,6 +56,10 @@ class VtkBandedPolyDataContourFilterWrap : public VtkPolyDataAlgorithmWrap
 		static void SetScalarModeToIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetValue(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKBANDEDPOLYDATACONTOURFILTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKBANDEDPOLYDATACONTOURFILTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkStaticCellLinks.h>
 
 #include "vtkAbstractCellLinksWrap.h"
+#include "../../plus/plus.h"
 
 class VtkStaticCellLinksWrap : public VtkAbstractCellLinksWrap
 {
@@ -35,6 +36,10 @@ class VtkStaticCellLinksWrap : public VtkAbstractCellLinksWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKSTATICCELLLINKSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKSTATICCELLLINKSWRAP_CLASSDEF
+#endif
 };
 
 #endif

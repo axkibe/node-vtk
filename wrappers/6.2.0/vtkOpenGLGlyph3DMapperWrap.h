@@ -10,6 +10,7 @@
 #include <vtkOpenGLGlyph3DMapper.h>
 
 #include "vtkGlyph3DMapperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOpenGLGlyph3DMapperWrap : public VtkGlyph3DMapperWrap
 {
@@ -35,6 +36,10 @@ class VtkOpenGLGlyph3DMapperWrap : public VtkGlyph3DMapperWrap
 		static void ReleaseGraphicsResources(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Render(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOPENGLGLYPH3DMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOPENGLGLYPH3DMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkAppendPolyDataWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPolyDataWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -109,6 +109,9 @@ void VtkAppendPolyDataWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UserManagedInputsOn", UserManagedInputsOn);
 	Nan::SetPrototypeMethod(tpl, "userManagedInputsOn", UserManagedInputsOn);
 
+#ifdef VTK_NODE_PLUS_VTKAPPENDPOLYDATAWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPENDPOLYDATAWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

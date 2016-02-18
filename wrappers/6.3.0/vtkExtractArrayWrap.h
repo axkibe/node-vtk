@@ -10,6 +10,7 @@
 #include <vtkExtractArray.h>
 
 #include "vtkArrayDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractArrayWrap : public VtkArrayDataAlgorithmWrap
 {
@@ -33,6 +34,10 @@ class VtkExtractArrayWrap : public VtkArrayDataAlgorithmWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTARRAYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTARRAYWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderWidgetWrap.h"
 #include "vtkScalarBarWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarBarRepresentationWrap.h"
 #include "vtkScalarBarActorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkScalarBarWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetScalarBarActor", SetScalarBarActor);
 	Nan::SetPrototypeMethod(tpl, "setScalarBarActor", SetScalarBarActor);
 
+#ifdef VTK_NODE_PLUS_VTKSCALARBARWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSCALARBARWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

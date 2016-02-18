@@ -10,6 +10,7 @@
 #include <vtkImageInterpolator.h>
 
 #include "vtkAbstractImageInterpolatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 {
@@ -41,6 +42,10 @@ class VtkImageInterpolatorWrap : public VtkAbstractImageInterpolatorWrap
 		static void SetInterpolationModeToCubic(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToLinear(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInterpolationModeToNearest(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGEINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGEINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

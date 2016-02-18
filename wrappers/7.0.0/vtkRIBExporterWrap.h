@@ -10,6 +10,7 @@
 #include <vtkRIBExporter.h>
 
 #include "vtkExporterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRIBExporterWrap : public VtkExporterWrap
 {
@@ -51,6 +52,10 @@ class VtkRIBExporterWrap : public VtkExporterWrap
 		static void SetPixelSamples(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSize(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetTexturePrefix(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRIBEXPORTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRIBEXPORTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

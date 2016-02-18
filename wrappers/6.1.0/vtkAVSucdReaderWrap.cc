@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkUnstructuredGridAlgorithmWrap.h"
 #include "vtkAVSucdReaderWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -149,6 +149,9 @@ void VtkAVSucdReaderWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPointArrayStatus", SetPointArrayStatus);
 	Nan::SetPrototypeMethod(tpl, "setPointArrayStatus", SetPointArrayStatus);
 
+#ifdef VTK_NODE_PLUS_VTKAVSUCDREADERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAVSUCDREADERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

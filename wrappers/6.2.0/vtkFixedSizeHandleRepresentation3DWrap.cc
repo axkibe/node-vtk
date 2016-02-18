@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolygonalHandleRepresentation3DWrap.h"
 #include "vtkFixedSizeHandleRepresentation3DWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSphereSourceWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -75,6 +75,9 @@ void VtkFixedSizeHandleRepresentation3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 	Nan::SetPrototypeMethod(tpl, "setHandleSizeToleranceInPixels", SetHandleSizeToleranceInPixels);
 
+#ifdef VTK_NODE_PLUS_VTKFIXEDSIZEHANDLEREPRESENTATION3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKFIXEDSIZEHANDLEREPRESENTATION3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPassInputTypeAlgorithmWrap.h"
 #include "vtkApplyColorsWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkScalarsToColorsWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -192,6 +192,9 @@ void VtkApplyColorsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UsePointLookupTableOn", UsePointLookupTableOn);
 	Nan::SetPrototypeMethod(tpl, "usePointLookupTableOn", UsePointLookupTableOn);
 
+#ifdef VTK_NODE_PLUS_VTKAPPLYCOLORSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPLYCOLORSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

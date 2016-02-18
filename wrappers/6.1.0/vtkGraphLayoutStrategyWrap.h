@@ -10,6 +10,7 @@
 #include <vtkGraphLayoutStrategy.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphLayoutStrategyWrap : public VtkObjectWrap
 {
@@ -40,6 +41,10 @@ class VtkGraphLayoutStrategyWrap : public VtkObjectWrap
 		static void SetEdgeWeightField(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGraph(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetWeightEdges(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHLAYOUTSTRATEGYWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHLAYOUTSTRATEGYWRAP_CLASSDEF
+#endif
 };
 
 #endif

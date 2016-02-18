@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkMapperWrap.h"
 #include "vtkGraphMapperWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkWindowWrap.h"
 #include "vtkGraphWrap.h"
 #include "vtkLookupTableWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -221,6 +221,9 @@ void VtkGraphMapperWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetVertexColorArrayName", SetVertexColorArrayName);
 	Nan::SetPrototypeMethod(tpl, "setVertexColorArrayName", SetVertexColorArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGRAPHMAPPERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

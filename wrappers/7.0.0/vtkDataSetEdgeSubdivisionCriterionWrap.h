@@ -10,6 +10,7 @@
 #include <vtkDataSetEdgeSubdivisionCriterion.h>
 
 #include "vtkEdgeSubdivisionCriterionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkDataSetEdgeSubdivisionCriterionWrap : public VtkEdgeSubdivisionCriterionWrap
 {
@@ -42,6 +43,10 @@ class VtkDataSetEdgeSubdivisionCriterionWrap : public VtkEdgeSubdivisionCriterio
 		static void SetChordError2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetFieldError2(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetMesh(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKDATASETEDGESUBDIVISIONCRITERIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKDATASETEDGESUBDIVISIONCRITERIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

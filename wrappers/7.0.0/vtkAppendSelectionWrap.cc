@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkSelectionAlgorithmWrap.h"
 #include "vtkAppendSelectionWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkSelectionWrap.h"
 #include "vtkAlgorithmOutputWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -100,6 +100,9 @@ void VtkAppendSelectionWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "UserManagedInputsOn", UserManagedInputsOn);
 	Nan::SetPrototypeMethod(tpl, "userManagedInputsOn", UserManagedInputsOn);
 
+#ifdef VTK_NODE_PLUS_VTKAPPENDSELECTIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKAPPENDSELECTIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

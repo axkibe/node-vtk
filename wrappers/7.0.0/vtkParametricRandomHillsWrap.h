@@ -10,6 +10,7 @@
 #include <vtkParametricRandomHills.h>
 
 #include "vtkParametricFunctionWrap.h"
+#include "../../plus/plus.h"
 
 class VtkParametricRandomHillsWrap : public VtkParametricFunctionWrap
 {
@@ -59,6 +60,10 @@ class VtkParametricRandomHillsWrap : public VtkParametricFunctionWrap
 		static void SetRandomSeed(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetXVarianceScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetYVarianceScaleFactor(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPARAMETRICRANDOMHILLSWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPARAMETRICRANDOMHILLSWRAP_CLASSDEF
+#endif
 };
 
 #endif

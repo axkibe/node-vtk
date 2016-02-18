@@ -10,6 +10,7 @@
 #include <vtkImageResliceMapper.h>
 
 #include "vtkImageMapper3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageResliceMapperWrap : public VtkImageMapper3DWrap
 {
@@ -74,6 +75,10 @@ class VtkImageResliceMapperWrap : public VtkImageMapper3DWrap
 		static void SetSlabTypeToMin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlabTypeToSum(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSlicePlane(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGERESLICEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGERESLICEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

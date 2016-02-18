@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleRubberBand2D.h>
 
 #include "vtkInteractorStyleWrap.h"
+#include "../../plus/plus.h"
 
 class VtkInteractorStyleRubberBand2DWrap : public VtkInteractorStyleWrap
 {
@@ -49,6 +50,10 @@ class VtkInteractorStyleRubberBand2DWrap : public VtkInteractorStyleWrap
 		static void RenderOnMouseMoveOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRenderOnMouseMove(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND2DWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKINTERACTORSTYLERUBBERBAND2DWRAP_CLASSDEF
+#endif
 };
 
 #endif

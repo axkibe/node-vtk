@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkBorderRepresentationWrap.h"
 #include "vtkCameraRepresentationWrap.h"
 #include "vtkObjectWrap.h"
@@ -16,6 +15,7 @@
 #include "vtkPropCollectionWrap.h"
 #include "vtkWindowWrap.h"
 #include "vtkViewportWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -126,6 +126,9 @@ void VtkCameraRepresentationWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfFrames", SetNumberOfFrames);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfFrames", SetNumberOfFrames);
 
+#ifdef VTK_NODE_PLUS_VTKCAMERAREPRESENTATIONWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKCAMERAREPRESENTATIONWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageAlgorithmWrap.h"
 #include "vtkImageGridSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkImageGridSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetLineValue", SetLineValue);
 	Nan::SetPrototypeMethod(tpl, "setLineValue", SetLineValue);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEGRIDSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEGRIDSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

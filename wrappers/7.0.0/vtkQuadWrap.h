@@ -10,6 +10,7 @@
 #include <vtkQuad.h>
 
 #include "vtkCellWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadWrap : public VtkCellWrap
 {
@@ -46,6 +47,10 @@ class VtkQuadWrap : public VtkCellWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkQuadricLODActor.h>
 
 #include "vtkActorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkQuadricLODActorWrap : public VtkActorWrap
 {
@@ -75,6 +76,10 @@ class VtkQuadricLODActorWrap : public VtkActorWrap
 		static void ShallowCopy(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StaticOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKQUADRICLODACTORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKQUADRICLODACTORWRAP_CLASSDEF
+#endif
 };
 
 #endif

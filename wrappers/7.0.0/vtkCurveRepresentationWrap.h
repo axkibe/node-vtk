@@ -10,6 +10,7 @@
 #include <vtkCurveRepresentation.h>
 
 #include "vtkWidgetRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 {
@@ -71,6 +72,10 @@ class VtkCurveRepresentationWrap : public VtkWidgetRepresentationWrap
 		static void SetProjectionPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void StartWidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void WidgetInteraction(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCURVEREPRESENTATIONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCURVEREPRESENTATIONWRAP_CLASSDEF
+#endif
 };
 
 #endif

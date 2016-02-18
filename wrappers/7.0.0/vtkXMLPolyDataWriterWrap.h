@@ -10,6 +10,7 @@
 #include <vtkXMLPolyDataWriter.h>
 
 #include "vtkXMLUnstructuredDataWriterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkXMLPolyDataWriterWrap : public VtkXMLUnstructuredDataWriterWrap
 {
@@ -35,6 +36,10 @@ class VtkXMLPolyDataWriterWrap : public VtkXMLUnstructuredDataWriterWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKXMLPOLYDATAWRITERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKXMLPOLYDATAWRITERWRAP_CLASSDEF
+#endif
 };
 
 #endif

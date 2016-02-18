@@ -10,6 +10,7 @@
 #include <vtkTransformInterpolator.h>
 
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 class VtkTransformInterpolatorWrap : public VtkObjectWrap
 {
@@ -53,6 +54,10 @@ class VtkTransformInterpolatorWrap : public VtkObjectWrap
 		static void SetPositionInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetRotationInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScaleInterpolator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKTRANSFORMINTERPOLATORWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKTRANSFORMINTERPOLATORWRAP_CLASSDEF
+#endif
 };
 
 #endif

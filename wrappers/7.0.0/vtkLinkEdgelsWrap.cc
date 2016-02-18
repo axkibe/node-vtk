@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkLinkEdgelsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkLinkEdgelsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPhiThreshold", SetPhiThreshold);
 	Nan::SetPrototypeMethod(tpl, "setPhiThreshold", SetPhiThreshold);
 
+#ifdef VTK_NODE_PLUS_VTKLINKEDGELSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKLINKEDGELSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

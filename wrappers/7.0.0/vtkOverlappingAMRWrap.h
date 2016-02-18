@@ -10,6 +10,7 @@
 #include <vtkOverlappingAMR.h>
 
 #include "vtkUniformGridAMRWrap.h"
+#include "../../plus/plus.h"
 
 class VtkOverlappingAMRWrap : public VtkUniformGridAMRWrap
 {
@@ -31,19 +32,30 @@ class VtkOverlappingAMRWrap : public VtkUniformGridAMRWrap
 
 		static void Audit(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GenerateParentChildInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetBounds(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetDataObjectType(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetOrigin(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void HasChildrenInformation(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NUMBER_OF_BLANKED_POINTS(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewIterator(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void PrintParentChildInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetAMRBlockSourceIndex(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetAMRInfo(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetRefinementRatio(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetSpacing(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOVERLAPPINGAMRWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOVERLAPPINGAMRWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -10,6 +10,7 @@
 #include <vtkImageSliceMapper.h>
 
 #include "vtkImageMapper3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkImageSliceMapperWrap : public VtkImageMapper3DWrap
 {
@@ -55,6 +56,10 @@ class VtkImageSliceMapperWrap : public VtkImageMapper3DWrap
 		static void SetOrientationToZ(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSliceNumber(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Update(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKIMAGESLICEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKIMAGESLICEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

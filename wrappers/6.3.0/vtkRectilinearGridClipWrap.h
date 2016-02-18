@@ -10,6 +10,7 @@
 #include <vtkRectilinearGridClip.h>
 
 #include "vtkRectilinearGridAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridClipWrap : public VtkRectilinearGridAlgorithmWrap
 {
@@ -40,6 +41,10 @@ class VtkRectilinearGridClipWrap : public VtkRectilinearGridAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetClipData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetOutputWholeExtent(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDCLIPWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDCLIPWRAP_CLASSDEF
+#endif
 };
 
 #endif

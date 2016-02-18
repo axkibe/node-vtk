@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkMergeColumnsWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkMergeColumnsWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetMergedColumnName", SetMergedColumnName);
 	Nan::SetPrototypeMethod(tpl, "setMergedColumnName", SetMergedColumnName);
 
+#ifdef VTK_NODE_PLUS_VTKMERGECOLUMNSWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMERGECOLUMNSWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

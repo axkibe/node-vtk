@@ -10,6 +10,7 @@
 #include <vtkRectilinearGridPartitioner.h>
 
 #include "vtkMultiBlockDataSetAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkRectilinearGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkRectilinearGridPartitionerWrap : public VtkMultiBlockDataSetAlgorithmWr
 		static void SetDuplicateNodes(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfGhostLayers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetNumberOfPartitions(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKRECTILINEARGRIDPARTITIONERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKRECTILINEARGRIDPARTITIONERWRAP_CLASSDEF
+#endif
 };
 
 #endif

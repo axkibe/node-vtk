@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkObjectWrap.h"
 #include "vtkPickingManagerWrap.h"
 #include "vtkRenderWindowInteractorWrap.h"
@@ -13,6 +12,7 @@
 #include "vtkAssemblyPathWrap.h"
 #include "vtkAbstractPropPickerWrap.h"
 #include "vtkRendererWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -108,6 +108,9 @@ void VtkPickingManagerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOptimizeOnInteractorEvents", SetOptimizeOnInteractorEvents);
 	Nan::SetPrototypeMethod(tpl, "setOptimizeOnInteractorEvents", SetOptimizeOnInteractorEvents);
 
+#ifdef VTK_NODE_PLUS_VTKPICKINGMANAGERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPICKINGMANAGERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

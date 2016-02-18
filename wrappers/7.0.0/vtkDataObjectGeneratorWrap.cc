@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkDataObjectAlgorithmWrap.h"
 #include "vtkDataObjectGeneratorWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -65,6 +65,9 @@ void VtkDataObjectGeneratorWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetProgram", SetProgram);
 	Nan::SetPrototypeMethod(tpl, "setProgram", SetProgram);
 
+#ifdef VTK_NODE_PLUS_VTKDATAOBJECTGENERATORWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKDATAOBJECTGENERATORWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkRandomSequenceWrap.h"
 #include "vtkMinimalStandardRandomSequenceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkMinimalStandardRandomSequenceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetSeedOnly", SetSeedOnly);
 	Nan::SetPrototypeMethod(tpl, "setSeedOnly", SetSeedOnly);
 
+#ifdef VTK_NODE_PLUS_VTKMINIMALSTANDARDRANDOMSEQUENCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKMINIMALSTANDARDRANDOMSEQUENCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

@@ -10,6 +10,7 @@
 #include <vtkFixedPointVolumeRayCastCompositeShadeHelper.h>
 
 #include "vtkFixedPointVolumeRayCastHelperWrap.h"
+#include "../../plus/plus.h"
 
 class VtkFixedPointVolumeRayCastCompositeShadeHelperWrap : public VtkFixedPointVolumeRayCastHelperWrap
 {
@@ -34,6 +35,10 @@ class VtkFixedPointVolumeRayCastCompositeShadeHelperWrap : public VtkFixedPointV
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTCOMPOSITESHADEHELPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKFIXEDPOINTVOLUMERAYCASTCOMPOSITESHADEHELPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

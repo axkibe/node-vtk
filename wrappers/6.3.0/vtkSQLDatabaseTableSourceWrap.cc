@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkTableAlgorithmWrap.h"
 #include "vtkSQLDatabaseTableSourceWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -77,6 +77,9 @@ void VtkSQLDatabaseTableSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPedigreeIdArrayName", SetPedigreeIdArrayName);
 	Nan::SetPrototypeMethod(tpl, "setPedigreeIdArrayName", SetPedigreeIdArrayName);
 
+#ifdef VTK_NODE_PLUS_VTKSQLDATABASETABLESOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKSQLDATABASETABLESOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

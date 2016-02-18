@@ -10,6 +10,7 @@
 #include <vtkModifiedBSPTree.h>
 
 #include "vtkAbstractCellLocatorWrap.h"
+#include "../../plus/plus.h"
 
 class VtkModifiedBSPTreeWrap : public VtkAbstractCellLocatorWrap
 {
@@ -39,6 +40,10 @@ class VtkModifiedBSPTreeWrap : public VtkAbstractCellLocatorWrap
 		static void IsA(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKMODIFIEDBSPTREEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKMODIFIEDBSPTREEWRAP_CLASSDEF
+#endif
 };
 
 #endif

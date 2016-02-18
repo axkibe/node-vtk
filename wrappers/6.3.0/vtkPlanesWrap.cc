@@ -5,13 +5,13 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImplicitFunctionWrap.h"
 #include "vtkPlanesWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkPointsWrap.h"
 #include "vtkDataArrayWrap.h"
 #include "vtkPlaneWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -92,6 +92,9 @@ void VtkPlanesWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetPoints", SetPoints);
 	Nan::SetPrototypeMethod(tpl, "setPoints", SetPoints);
 
+#ifdef VTK_NODE_PLUS_VTKPLANESWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKPLANESWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

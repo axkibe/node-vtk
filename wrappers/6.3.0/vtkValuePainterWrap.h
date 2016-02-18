@@ -10,6 +10,7 @@
 #include <vtkValuePainter.h>
 
 #include "vtkStandardPolyDataPainterWrap.h"
+#include "../../plus/plus.h"
 
 class VtkValuePainterWrap : public VtkStandardPolyDataPainterWrap
 {
@@ -41,6 +42,10 @@ class VtkValuePainterWrap : public VtkStandardPolyDataPainterWrap
 		static void SetInputArrayToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetInputComponentToProcess(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarRange(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKVALUEPAINTERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKVALUEPAINTERWRAP_CLASSDEF
+#endif
 };
 
 #endif

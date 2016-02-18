@@ -10,6 +10,7 @@
 #include <vtkObject.h>
 
 #include "vtkObjectBaseWrap.h"
+#include "../../plus/plus.h"
 
 class VtkObjectWrap : public VtkObjectBaseWrap
 {
@@ -33,6 +34,7 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 		static void DebugOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void DebugOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetClassName(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void GetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalWarningDisplayOff(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void GlobalWarningDisplayOn(const Nan::FunctionCallbackInfo<v8::Value>& info);
@@ -45,7 +47,12 @@ class VtkObjectWrap : public VtkObjectBaseWrap
 		static void RemoveObserver(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void RemoveObservers(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
+		static void SetDebug(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetGlobalWarningDisplay(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKOBJECTWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKOBJECTWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,12 +5,12 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageStencilAlgorithmWrap.h"
 #include "vtkImageStencilSourceWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkImageDataWrap.h"
 #include "vtkGarbageCollectorWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -88,6 +88,9 @@ void VtkImageStencilSourceWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetOutputWholeExtent", SetOutputWholeExtent);
 	Nan::SetPrototypeMethod(tpl, "setOutputWholeExtent", SetOutputWholeExtent);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGESTENCILSOURCEWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGESTENCILSOURCEWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

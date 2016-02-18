@@ -10,6 +10,7 @@
 #include <vtkExtractPolyDataPiece.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkExtractPolyDataPieceWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -37,6 +38,10 @@ class VtkExtractPolyDataPieceWrap : public VtkPolyDataAlgorithmWrap
 		static void NewInstance(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetCreateGhostCells(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKEXTRACTPOLYDATAPIECEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKEXTRACTPOLYDATAPIECEWRAP_CLASSDEF
+#endif
 };
 
 #endif

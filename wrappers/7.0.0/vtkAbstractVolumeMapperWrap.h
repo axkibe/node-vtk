@@ -10,6 +10,7 @@
 #include <vtkAbstractVolumeMapper.h>
 
 #include "vtkAbstractMapper3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 {
@@ -49,6 +50,10 @@ class VtkAbstractVolumeMapperWrap : public VtkAbstractMapper3DWrap
 		static void SetScalarModeToUseCellFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToUsePointData(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetScalarModeToUsePointFieldData(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKABSTRACTVOLUMEMAPPERWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKABSTRACTVOLUMEMAPPERWRAP_CLASSDEF
+#endif
 };
 
 #endif

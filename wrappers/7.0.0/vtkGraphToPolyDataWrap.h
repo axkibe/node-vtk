@@ -10,6 +10,7 @@
 #include <vtkGraphToPolyData.h>
 
 #include "vtkPolyDataAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkGraphToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 {
@@ -39,6 +40,10 @@ class VtkGraphToPolyDataWrap : public VtkPolyDataAlgorithmWrap
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeGlyphOutput(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetEdgeGlyphPosition(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKGRAPHTOPOLYDATAWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKGRAPHTOPOLYDATAWRAP_CLASSDEF
+#endif
 };
 
 #endif

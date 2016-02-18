@@ -10,6 +10,7 @@
 #include <vtkCollectTable.h>
 
 #include "vtkTableAlgorithmWrap.h"
+#include "../../plus/plus.h"
 
 class VtkCollectTableWrap : public VtkTableAlgorithmWrap
 {
@@ -41,6 +42,10 @@ class VtkCollectTableWrap : public VtkTableAlgorithmWrap
 		static void SetController(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetPassThrough(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SetSocketController(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKCOLLECTTABLEWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKCOLLECTTABLEWRAP_CLASSDEF
+#endif
 };
 
 #endif

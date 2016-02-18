@@ -5,10 +5,10 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkImageSpatialAlgorithmWrap.h"
 #include "vtkImageAnisotropicDiffusion3DWrap.h"
 #include "vtkObjectWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -125,6 +125,9 @@ void VtkImageAnisotropicDiffusion3DWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetNumberOfIterations", SetNumberOfIterations);
 	Nan::SetPrototypeMethod(tpl, "setNumberOfIterations", SetNumberOfIterations);
 
+#ifdef VTK_NODE_PLUS_VTKIMAGEANISOTROPICDIFFUSION3DWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKIMAGEANISOTROPICDIFFUSION3DWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

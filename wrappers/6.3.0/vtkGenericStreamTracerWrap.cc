@@ -5,7 +5,6 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkPolyDataAlgorithmWrap.h"
 #include "vtkGenericStreamTracerWrap.h"
 #include "vtkObjectWrap.h"
@@ -15,6 +14,7 @@
 #include "vtkInitialValueProblemSolverWrap.h"
 #include "vtkGenericDataSetWrap.h"
 #include "vtkGenericInterpolatedVelocityFieldWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -254,6 +254,9 @@ void VtkGenericStreamTracerWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetTerminalSpeed", SetTerminalSpeed);
 	Nan::SetPrototypeMethod(tpl, "setTerminalSpeed", SetTerminalSpeed);
 
+#ifdef VTK_NODE_PLUS_VTKGENERICSTREAMTRACERWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKGENERICSTREAMTRACERWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 

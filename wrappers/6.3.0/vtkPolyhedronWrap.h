@@ -10,6 +10,7 @@
 #include <vtkPolyhedron.h>
 
 #include "vtkCell3DWrap.h"
+#include "../../plus/plus.h"
 
 class VtkPolyhedronWrap : public VtkCell3DWrap
 {
@@ -47,6 +48,10 @@ class VtkPolyhedronWrap : public VtkCell3DWrap
 		static void RequiresInitialization(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void SafeDownCast(const Nan::FunctionCallbackInfo<v8::Value>& info);
 		static void Triangulate(const Nan::FunctionCallbackInfo<v8::Value>& info);
+
+#ifdef VTK_NODE_PLUS_VTKPOLYHEDRONWRAP_CLASSDEF
+		VTK_NODE_PLUS_VTKPOLYHEDRONWRAP_CLASSDEF
+#endif
 };
 
 #endif

@@ -5,11 +5,11 @@
 #define VTK_STREAMS_FWD_ONLY
 #include <nan.h>
 
-
 #include "vtkAbstractWidgetWrap.h"
 #include "vtkButtonWidgetWrap.h"
 #include "vtkObjectWrap.h"
 #include "vtkButtonRepresentationWrap.h"
+#include "../../plus/plus.h"
 
 using namespace v8;
 
@@ -69,6 +69,9 @@ void VtkButtonWidgetWrap::InitPtpl()
 	Nan::SetPrototypeMethod(tpl, "SetRepresentation", SetRepresentation);
 	Nan::SetPrototypeMethod(tpl, "setRepresentation", SetRepresentation);
 
+#ifdef VTK_NODE_PLUS_VTKBUTTONWIDGETWRAP_INITPTPL
+	VTK_NODE_PLUS_VTKBUTTONWIDGETWRAP_INITPTPL
+#endif
 	ptpl.Reset( tpl );
 }
 
